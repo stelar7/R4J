@@ -30,8 +30,6 @@ public class DataCall
     private URLEndpoint         endpoint;
     private String              key;
 
-    public Optional<Exception> exception;
-
     private static final String STATIC_PREFIX = "api/lol/static-data";
     private static final String HTTP          = "http://";
     private static final String HTTPS         = "https://";
@@ -128,7 +126,7 @@ public class DataCall
 
             sb.append(dc.server.getURL()).append(dc.endpoint.getValue());
 
-            withURLData("{server}", dc.server.toReadable());
+            withURLData("{region}", dc.server.toReadable());
             withURLData("{version}", dc.endpoint.getVersion());
 
             dc.urlData.forEach((k, v) -> {
@@ -148,10 +146,10 @@ public class DataCall
         {
             if (!dc.endpoint.getValue().startsWith(HTTP))
             {
-                dc.exception = DataCall.limiter.get(dc.server).acquire();
-                if (dc.exception != null && dc.exception.isPresent())
+                Optional<Exception> error = DataCall.limiter.get(dc.server).acquire();
+                if (error.isPresent())
                 {
-                    return new Pair<>(ResponseType.USER_ERROR, new APIError(dc.exception.get()));
+                    return new Pair<>(ResponseType.USER_ERROR, new APIError(error.get()));
                 }
             }
 
@@ -215,7 +213,6 @@ public class DataCall
                 {
                     br.lines().forEach(s -> data.append(s));
                 }
-
                 con.disconnect();
 
                 Object dtoobj = ((APIObject) dc.endpoint.type.newInstance()).createFromString(dc.endpoint.type, data.toString());

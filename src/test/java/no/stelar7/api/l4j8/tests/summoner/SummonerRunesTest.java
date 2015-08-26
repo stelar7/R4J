@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.tests;
+package no.stelar7.api.l4j8.tests.summoner;
 
 import java.util.Map;
 
@@ -11,11 +11,12 @@ import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
+import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SummonerNameById
+public class SummonerRunesTest
 {
 
     DataCallBuilder builder = DataCall.builder();
@@ -25,7 +26,7 @@ public class SummonerNameById
     {
         builder.withAPIKey(SecretFile.API_KEY);
         builder.withServer(Server.EUW);
-        builder.withEndpoint(URLEndpoint.SUMMONER_NAMES_BY_ID);
+        builder.withEndpoint(URLEndpoint.SUMMONER_RUNES_BY_ID);
     }
 
     public void parseResult(Pair<ResponseType, Object> result)

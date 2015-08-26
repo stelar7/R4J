@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.tests;
+package no.stelar7.api.l4j8.tests.matchlist;
 
 import java.util.Map;
 
@@ -8,14 +8,13 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.DataCall;
+import no.stelar7.api.l4j8.basic.*;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.tests.SecretFile;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SummonerByIdTest
+public class MatchListTest
 {
 
     DataCallBuilder builder = DataCall.builder();
@@ -25,7 +24,7 @@ public class SummonerByIdTest
     {
         builder.withAPIKey(SecretFile.API_KEY);
         builder.withServer(Server.EUW);
-        builder.withEndpoint(URLEndpoint.SUMMONERS_BY_ID);
+        builder.withEndpoint(URLEndpoint.MATCHLIST);
     }
 
     public void parseResult(Pair<ResponseType, Object> result)
@@ -56,10 +55,16 @@ public class SummonerByIdTest
     }
 
     @Test
-    public void testSingle()
+    public void testManyWithParam()
     {
-        System.err.println("TESTING SINGLE");
+        System.err.println("TESTING MANY WITH PARAMS");
+
         builder.withURLData("{summonerId}", "19613950");
+
+        builder.withURLParameter("championIds", "266");
+        builder.withURLParameter("rankedQueues", Constants.RankedQueue.RANKED_SOLO_5X5);
+        builder.withURLParameter("seasons", Constants.Season.SEASON_2015);
+
         Pair<ResponseType, Object> summonerCall = builder.build();
         parseResult(summonerCall);
     }
@@ -68,9 +73,8 @@ public class SummonerByIdTest
     public void testMany()
     {
         System.err.println("TESTING MANY");
+
         builder.withURLData("{summonerId}", "19613950");
-        builder.withURLData("{summonerId}", "22291359");
-        builder.withURLData("{summonerId}", "33540589");
 
         Pair<ResponseType, Object> summonerCall = builder.build();
         parseResult(summonerCall);

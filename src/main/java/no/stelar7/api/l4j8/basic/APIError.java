@@ -15,8 +15,8 @@ public class APIError extends APIObject
 
     public APIError(Exception e)
     {
-        e.printStackTrace();
         error = APIErrorType.API_ERROR;
+        e.printStackTrace();
     }
 
     public APIError(int responseCode)
@@ -35,7 +35,7 @@ public class APIError extends APIObject
     @Override
     public String toString()
     {
-        return error.toString();
+        return "APIError [error=" + error + "]";
     }
 
 }

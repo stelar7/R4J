@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.tests;
+package no.stelar7.api.l4j8.tests.summoner;
 
 import java.util.Map;
 
@@ -11,11 +11,12 @@ import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
+import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SummonerByNameTest
+public class SummonerByIdTest
 {
 
     DataCallBuilder builder = DataCall.builder();
@@ -25,7 +26,7 @@ public class SummonerByNameTest
     {
         builder.withAPIKey(SecretFile.API_KEY);
         builder.withServer(Server.EUW);
-        builder.withEndpoint(URLEndpoint.SUMMONERS_BY_NAME);
+        builder.withEndpoint(URLEndpoint.SUMMONERS_BY_ID);
     }
 
     public void parseResult(Pair<ResponseType, Object> result)
@@ -59,7 +60,7 @@ public class SummonerByNameTest
     public void testSingle()
     {
         System.err.println("TESTING SINGLE");
-        builder.withURLData("{summonerName}", "stelar7");
+        builder.withURLData("{summonerId}", "19613950");
         Pair<ResponseType, Object> summonerCall = builder.build();
         parseResult(summonerCall);
     }
@@ -68,9 +69,9 @@ public class SummonerByNameTest
     public void testMany()
     {
         System.err.println("TESTING MANY");
-        builder.withURLData("{summonerName}", "stelar7");
-        builder.withURLData("{summonerName}", "henriko950");
-        builder.withURLData("{summonerName}", "vibbsen");
+        builder.withURLData("{summonerId}", "19613950");
+        builder.withURLData("{summonerId}", "22291359");
+        builder.withURLData("{summonerId}", "33540589");
 
         Pair<ResponseType, Object> summonerCall = builder.build();
         parseResult(summonerCall);

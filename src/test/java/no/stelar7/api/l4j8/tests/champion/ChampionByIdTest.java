@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.tests;
+package no.stelar7.api.l4j8.tests.champion;
 
 import java.util.Map;
 
@@ -11,11 +11,12 @@ import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
+import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SummonerMasteriesTest
+public class ChampionByIdTest
 {
 
     DataCallBuilder builder = DataCall.builder();
@@ -25,7 +26,7 @@ public class SummonerMasteriesTest
     {
         builder.withAPIKey(SecretFile.API_KEY);
         builder.withServer(Server.EUW);
-        builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
+        builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
     }
 
     public void parseResult(Pair<ResponseType, Object> result)
@@ -59,7 +60,19 @@ public class SummonerMasteriesTest
     public void testSingle()
     {
         System.err.println("TESTING SINGLE");
-        builder.withURLData("{summonerId}", "19613950");
+        builder.withURLData("{id}", "266");
+        Pair<ResponseType, Object> summonerCall = builder.build();
+        parseResult(summonerCall);
+    }
+
+    @Test
+    public void testManyWithParam()
+    {
+        System.err.println("TESTING MANY WITH PARAMS");
+        
+        builder.withURLData("{id}", "");
+        builder.withURLParameter("freeToPlay", "true");
+        
         Pair<ResponseType, Object> summonerCall = builder.build();
         parseResult(summonerCall);
     }
@@ -68,10 +81,7 @@ public class SummonerMasteriesTest
     public void testMany()
     {
         System.err.println("TESTING MANY");
-        builder.withURLData("{summonerId}", "19613950");
-        builder.withURLData("{summonerId}", "22291359");
-        builder.withURLData("{summonerId}", "33540589");
-
+        builder.withURLData("{id}", "");
         Pair<ResponseType, Object> summonerCall = builder.build();
         parseResult(summonerCall);
     }
