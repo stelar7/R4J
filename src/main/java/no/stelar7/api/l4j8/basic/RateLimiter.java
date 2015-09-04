@@ -19,29 +19,30 @@ public class RateLimiter extends TimerTask
         this(9, TimeUnit.SECONDS.toMillis(10));
     }
 
-    public RateLimiter(int calls, long millis)
+    public RateLimiter(final int calls, final long millis)
     {
-        s = new Semaphore(calls);
-        time = millis;
-        count = calls;
-        t.scheduleAtFixedRate(this, 0, time);
-    }
-
-    public void run()
-    {
-        s.release(count - s.availablePermits());
+        this.s = new Semaphore(calls);
+        this.time = millis;
+        this.count = calls;
+        this.t.scheduleAtFixedRate(this, 0, this.time);
     }
 
     public Optional<Exception> acquire()
     {
         try
         {
-            s.acquire();
+            this.s.acquire();
             return Optional.empty();
-        } catch (Exception e)
+        } catch (final Exception e)
         {
             e.printStackTrace();
             return Optional.of(e);
         }
+    }
+
+    @Override
+    public void run()
+    {
+        this.s.release(this.count - this.s.availablePermits());
     }
 }

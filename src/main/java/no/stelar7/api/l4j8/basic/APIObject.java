@@ -18,23 +18,23 @@ import no.stelar7.api.l4j8.dto.summoner.runes.RunePage;
 
 public class APIObject
 {
-    Object createFromString(Class<?> returnType, String json) throws Exception
+    Object createFromString(final Class<?> returnType, final String json) throws Exception
     {
-        ObjectMapper mapper = new ObjectMapper();
+        final ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        JsonNode node = mapper.readTree(json);
+        final JsonNode node = mapper.readTree(json);
 
         if (returnType.equals(Summoner.class))
         {
-            Map<Object, Summoner> summoners = new HashMap<>();
+            final Map<Object, Summoner> summoners = new HashMap<>();
             node.fields().forEachRemaining(m -> {
                 try
                 {
-                    Summoner summoner = mapper.readValue(m.getValue().toString(), Summoner.class);
+                    final Summoner summoner = mapper.readValue(m.getValue().toString(), Summoner.class);
                     summoners.put(m.getKey(), summoner);
-                } catch (Exception e)
+                } catch (final Exception e)
                 {
                     e.printStackTrace();
                 }
@@ -44,16 +44,16 @@ public class APIObject
 
         if (returnType.equals(MasteryPage.class) || returnType.equals(RunePage.class))
         {
-            Map<Object, List<Object>> masteries = new HashMap<>();
+            final Map<Object, List<Object>> masteries = new HashMap<>();
             node.fields().forEachRemaining(m -> {
-                List<Object> pages = new ArrayList<>();
+                final List<Object> pages = new ArrayList<>();
 
                 m.getValue().get("pages").iterator().forEachRemaining(n -> {
                     try
                     {
-                        Object page = mapper.readValue(n.toString(), returnType);
+                        final Object page = mapper.readValue(n.toString(), returnType);
                         pages.add(page);
-                    } catch (Exception e)
+                    } catch (final Exception e)
                     {
                         e.printStackTrace();
                     }
@@ -66,30 +66,30 @@ public class APIObject
 
         if (returnType.equals(StringMap.class))
         {
-            Map<String, String> data = new HashMap<>();
+            final Map<String, String> data = new HashMap<>();
             node.fields().forEachRemaining(e -> data.put(e.getKey(), e.getValue().toString()));
             return data;
         }
 
         if (returnType.equals(Champion.class))
         {
-            List<Object> champs = new ArrayList<>();
+            final List<Object> champs = new ArrayList<>();
 
             if (node.has("champions"))
             {
                 node.get("champions").forEach(n -> {
                     try
                     {
-                        Object champ = mapper.readValue(n.toString(), returnType);
+                        final Object champ = mapper.readValue(n.toString(), returnType);
                         champs.add(champ);
-                    } catch (Exception e)
+                    } catch (final Exception e)
                     {
                         e.printStackTrace();
                     }
                 });
             } else
             {
-                Object champ = mapper.readValue(node.toString(), returnType);
+                final Object champ = mapper.readValue(node.toString(), returnType);
                 champs.add(champ);
             }
 
@@ -98,13 +98,13 @@ public class APIObject
 
         if (returnType.equals(MatchReference.class))
         {
-            List<Object> matches = new ArrayList<>();
+            final List<Object> matches = new ArrayList<>();
             node.get("matches").forEach(n -> {
                 try
                 {
-                    Object match = mapper.readValue(n.toString(), returnType);
+                    final Object match = mapper.readValue(n.toString(), returnType);
                     matches.add(match);
-                } catch (Exception e)
+                } catch (final Exception e)
                 {
                     e.printStackTrace();
                 }

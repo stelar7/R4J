@@ -12,30 +12,30 @@ public class MasteryPage extends APIObject
     private List<Mastery> masteries;
     private String        name;
 
-    public boolean isCurrent()
-    {
-        return current;
-    }
-
     public long getId()
     {
-        return id;
+        return this.id;
     }
 
     public List<Mastery> getMasteries()
     {
-        return Collections.unmodifiableList(masteries);
+        return Collections.unmodifiableList(this.masteries);
     }
 
     public String getName()
     {
-        return name;
+        return this.name;
+    }
+
+    public boolean isCurrent()
+    {
+        return this.current;
     }
 
     @Override
     public String toString()
     {
-        return "MasteryPage [current=" + current + ", id=" + id + ", masteries=" + masteries + ", name=" + name + "]";
+        return "MasteryPage [current=" + this.current + ", id=" + this.id + ", masteries=" + this.masteries + ", name=" + this.name + "]";
     }
 
 }

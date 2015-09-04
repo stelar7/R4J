@@ -7,19 +7,19 @@ public class Mastery extends APIObject
     private int id;
     private int rank;
 
-    public int getRank()
-    {
-        return rank;
-    }
-
     public int getId()
     {
-        return id;
+        return this.id;
+    }
+
+    public int getRank()
+    {
+        return this.rank;
     }
 
     @Override
     public String toString()
     {
-        return "Mastery [id=" + id + ", rank=" + rank + "]";
+        return "Mastery [id=" + this.id + ", rank=" + this.rank + "]";
     }
 }

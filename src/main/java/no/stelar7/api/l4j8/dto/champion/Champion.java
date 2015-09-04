@@ -11,39 +11,39 @@ public class Champion extends APIObject
     boolean rankedPlayEnabled;
     int     id;
 
+    public int getId()
+    {
+        return this.id;
+    }
+
     public boolean isActive()
     {
-        return active;
+        return this.active;
     }
 
     public boolean isBotEnabled()
     {
-        return botEnabled;
+        return this.botEnabled;
     }
 
     public boolean isBotMmEnabled()
     {
-        return botMmEnabled;
+        return this.botMmEnabled;
     }
 
     public boolean isFreeToPlay()
     {
-        return freeToPlay;
-    }
-
-    public int getId()
-    {
-        return id;
+        return this.freeToPlay;
     }
 
     public boolean isRankedPlayEnabled()
     {
-        return rankedPlayEnabled;
+        return this.rankedPlayEnabled;
     }
 
     @Override
     public String toString()
     {
-        return "Champion [active=" + active + ", botEnabled=" + botEnabled + ", botMmEnabled=" + botMmEnabled + ", freeToPlay=" + freeToPlay + ", id=" + id + ", rankedPlayEnabled=" + rankedPlayEnabled + "]";
+        return "Champion [active=" + this.active + ", botEnabled=" + this.botEnabled + ", botMmEnabled=" + this.botMmEnabled + ", freeToPlay=" + this.freeToPlay + ", id=" + this.id + ", rankedPlayEnabled=" + this.rankedPlayEnabled + "]";
     }
 }

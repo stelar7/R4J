@@ -8,20 +8,20 @@ public class Rune extends APIObject
     private int runeId;
     private int runeSlotId;
 
-    public int getRuneSlotId()
-    {
-        return runeSlotId;
-    }
-
     public int getRuneId()
     {
-        return runeId;
+        return this.runeId;
+    }
+
+    public int getRuneSlotId()
+    {
+        return this.runeSlotId;
     }
 
     @Override
     public String toString()
     {
-        return "Rune [runeId=" + runeId + ", runeSlotId=" + runeSlotId + "]";
+        return "Rune [runeId=" + this.runeId + ", runeSlotId=" + this.runeSlotId + "]";
     }
 
 }

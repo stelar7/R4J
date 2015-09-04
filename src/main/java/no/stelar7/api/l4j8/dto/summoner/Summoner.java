@@ -12,32 +12,32 @@ public class Summoner extends APIObject
 
     public Long getId()
     {
-        return id;
+        return this.id;
     }
 
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
     public int getProfileIconId()
     {
-        return profileIconId;
+        return this.profileIconId;
     }
 
     public Long getRevisionDate()
     {
-        return revisionDate;
+        return this.revisionDate;
     }
 
     public int getSummonerLevel()
     {
-        return summonerLevel;
+        return this.summonerLevel;
     }
-    
+
     @Override
     public String toString()
     {
-        return "Summoner [id=" + id + ", name=" + name + ", profileIconId=" + profileIconId + ", revisionDate=" + revisionDate + ", summonerLevel=" + summonerLevel + "]";
+        return "Summoner [id=" + this.id + ", name=" + this.name + ", profileIconId=" + this.profileIconId + ", revisionDate=" + this.revisionDate + ", summonerLevel=" + this.summonerLevel + "]";
     }
 }

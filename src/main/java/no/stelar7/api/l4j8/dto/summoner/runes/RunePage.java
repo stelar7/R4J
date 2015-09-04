@@ -13,29 +13,29 @@ public class RunePage extends APIObject
     private List<Rune> slots;
     private String     name;
 
-    public boolean isCurrent()
-    {
-        return current;
-    }
-
     public long getId()
     {
-        return id;
-    }
-
-    public List<Rune> getSlots()
-    {
-        return Collections.unmodifiableList(slots);
+        return this.id;
     }
 
     public String getName()
     {
-        return name;
+        return this.name;
+    }
+
+    public List<Rune> getSlots()
+    {
+        return Collections.unmodifiableList(this.slots);
+    }
+
+    public boolean isCurrent()
+    {
+        return this.current;
     }
 
     @Override
     public String toString()
     {
-        return "RunePage [current=" + current + ", id=" + id + ", slots=" + slots + ", name=" + name + "]";
+        return "RunePage [current=" + this.current + ", id=" + this.id + ", slots=" + this.slots + ", name=" + this.name + "]";
     }
 }

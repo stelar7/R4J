@@ -13,21 +13,21 @@ public class APIError extends APIObject
 
     APIErrorType error;
 
-    public APIError(Exception e)
+    public APIError(final Exception e)
     {
-        error = APIErrorType.API_ERROR;
+        this.error = APIErrorType.API_ERROR;
         e.printStackTrace();
     }
 
-    public APIError(int responseCode)
+    public APIError(final int responseCode)
     {
         switch (responseCode)
         {
             case 400:
-                error = APIErrorType.BAD_REQUEST;
+                this.error = APIErrorType.BAD_REQUEST;
                 break;
             default:
-                error = APIErrorType.SERVER_ERROR;
+                this.error = APIErrorType.SERVER_ERROR;
                 break;
         }
     }
@@ -35,7 +35,7 @@ public class APIError extends APIObject
     @Override
     public String toString()
     {
-        return "APIError [error=" + error + "]";
+        return "APIError [error=" + this.error + "]";
     }
 
 }

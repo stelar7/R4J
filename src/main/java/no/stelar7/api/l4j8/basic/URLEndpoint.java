@@ -21,25 +21,25 @@ public enum URLEndpoint
     String version;
     Class<?> type;
 
-    private URLEndpoint(final String value, final String version, Class<?> type)
+    private URLEndpoint(final String value, final String version, final Class<?> type)
     {
         this.value = value;
         this.version = version;
         this.type = type;
     }
 
-    public String getVersion()
+    public Object getType()
     {
-        return version;
+        return this.type;
     }
 
     public String getValue()
     {
-        return value;
+        return this.value;
     }
 
-    public Object getType()
+    public String getVersion()
     {
-        return type;
+        return this.version;
     }
 }

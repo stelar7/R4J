@@ -15,47 +15,47 @@ public class MatchReference extends APIObject
 
     public long getChampion()
     {
-        return champion;
+        return this.champion;
     }
 
     public String getLane()
     {
-        return lane;
+        return this.lane;
     }
 
     public long getMatchId()
     {
-        return matchId;
+        return this.matchId;
     }
 
     public String getPlatformId()
     {
-        return platformId;
+        return this.platformId;
     }
 
     public String getQueue()
     {
-        return queue;
+        return this.queue;
     }
 
     public String getRole()
     {
-        return role;
+        return this.role;
     }
 
     public String getSeason()
     {
-        return season;
+        return this.season;
     }
 
     public long getTimestamp()
     {
-        return timestamp;
+        return this.timestamp;
     }
 
     @Override
     public String toString()
     {
-        return "MatchReference [champion=" + champion + ", lane=" + lane + ", matchId=" + matchId + ", platformId=" + platformId + ", queue=" + queue + ", role=" + role + ", season=" + season + ", timestamp=" + timestamp + "]";
+        return "MatchReference [champion=" + this.champion + ", lane=" + this.lane + ", matchId=" + this.matchId + ", platformId=" + this.platformId + ", queue=" + this.queue + ", role=" + this.role + ", season=" + this.season + ", timestamp=" + this.timestamp + "]";
     }
 }

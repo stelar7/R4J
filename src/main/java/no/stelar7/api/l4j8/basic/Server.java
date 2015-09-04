@@ -8,7 +8,7 @@ public enum Server
     private final String server;
     private final boolean limit;
 
-    Server(final String endpoint, boolean limit)
+    Server(final String endpoint, final boolean limit)
     {
         this.server = endpoint;
         this.limit = limit;
@@ -16,12 +16,12 @@ public enum Server
 
     public String getURL()
     {
-        return server;
+        return this.server;
     }
 
     public boolean hasLimit()
     {
-        return limit;
+        return this.limit;
     }
 
     public String toReadable()
