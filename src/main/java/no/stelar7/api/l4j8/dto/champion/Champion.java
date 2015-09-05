@@ -4,39 +4,39 @@ import no.stelar7.api.l4j8.basic.APIObject;
 
 public class Champion extends APIObject
 {
-    boolean active;
-    boolean botEnabled;
-    boolean botMmEnabled;
-    boolean freeToPlay;
-    boolean rankedPlayEnabled;
-    int     id;
+    Boolean active;
+    Boolean botEnabled;
+    Boolean botMmEnabled;
+    Boolean freeToPlay;
+    Boolean rankedPlayEnabled;
+    Integer id;
 
-    public int getId()
+    public Integer getId()
     {
         return this.id;
     }
 
-    public boolean isActive()
+    public Boolean isActive()
     {
         return this.active;
     }
 
-    public boolean isBotEnabled()
+    public Boolean isBotEnabled()
     {
         return this.botEnabled;
     }
 
-    public boolean isBotMmEnabled()
+    public Boolean isBotMmEnabled()
     {
         return this.botMmEnabled;
     }
 
-    public boolean isFreeToPlay()
+    public Boolean isFreeToPlay()
     {
         return this.freeToPlay;
     }
 
-    public boolean isRankedPlayEnabled()
+    public Boolean isRankedPlayEnabled()
     {
         return this.rankedPlayEnabled;
     }

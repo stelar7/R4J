@@ -5,15 +5,15 @@ import no.stelar7.api.l4j8.basic.APIObject;
 public class Rune extends APIObject
 {
 
-    private int runeId;
-    private int runeSlotId;
+    private Integer runeId;
+    private Integer runeSlotId;
 
-    public int getRuneId()
+    public Integer getRuneId()
     {
         return this.runeId;
     }
 
-    public int getRuneSlotId()
+    public Integer getRuneSlotId()
     {
         return this.runeSlotId;
     }

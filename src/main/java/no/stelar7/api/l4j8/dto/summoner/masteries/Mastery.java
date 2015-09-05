@@ -4,15 +4,15 @@ import no.stelar7.api.l4j8.basic.APIObject;
 
 public class Mastery extends APIObject
 {
-    private int id;
-    private int rank;
+    private Integer id;
+    private Integer rank;
 
-    public int getId()
+    public Integer getId()
     {
         return this.id;
     }
 
-    public int getRank()
+    public Integer getRank()
     {
         return this.rank;
     }

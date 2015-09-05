@@ -11,9 +11,9 @@ import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
-import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.tests.SecretFile;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ChampionByIdTest
@@ -24,12 +24,12 @@ public class ChampionByIdTest
     @Before
     public void init()
     {
-        builder.withAPIKey(SecretFile.API_KEY);
-        builder.withServer(Server.EUW);
-        builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
+        this.builder.withAPIKey(SecretFile.API_KEY);
+        this.builder.withServer(Server.EUW);
+        this.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
     }
 
-    public void parseResult(Pair<ResponseType, Object> result)
+    public void parseResult(final Pair<ResponseType, Object> result)
     {
         switch (result.getKey())
         {
@@ -57,32 +57,32 @@ public class ChampionByIdTest
     }
 
     @Test
-    public void testSingle()
+    public void testMany()
     {
-        System.err.println("TESTING SINGLE");
-        builder.withURLData("{id}", "266");
-        Pair<ResponseType, Object> summonerCall = builder.build();
-        parseResult(summonerCall);
+        System.err.println("TESTING MANY");
+        this.builder.withURLData("{id}", "");
+        final Pair<ResponseType, Object> summonerCall = this.builder.build();
+        this.parseResult(summonerCall);
     }
 
     @Test
     public void testManyWithParam()
     {
         System.err.println("TESTING MANY WITH PARAMS");
-        
-        builder.withURLData("{id}", "");
-        builder.withURLParameter("freeToPlay", "true");
-        
-        Pair<ResponseType, Object> summonerCall = builder.build();
-        parseResult(summonerCall);
+
+        this.builder.withURLData("{id}", "");
+        this.builder.withURLParameter("freeToPlay", "true");
+
+        final Pair<ResponseType, Object> summonerCall = this.builder.build();
+        this.parseResult(summonerCall);
     }
 
     @Test
-    public void testMany()
+    public void testSingle()
     {
-        System.err.println("TESTING MANY");
-        builder.withURLData("{id}", "");
-        Pair<ResponseType, Object> summonerCall = builder.build();
-        parseResult(summonerCall);
+        System.err.println("TESTING SINGLE");
+        this.builder.withURLData("{id}", "266");
+        final Pair<ResponseType, Object> summonerCall = this.builder.build();
+        this.parseResult(summonerCall);
     }
 }

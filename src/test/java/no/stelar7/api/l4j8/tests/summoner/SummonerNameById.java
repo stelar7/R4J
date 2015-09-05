@@ -11,9 +11,9 @@ import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
-import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.tests.SecretFile;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SummonerNameById
@@ -24,12 +24,12 @@ public class SummonerNameById
     @Before
     public void init()
     {
-        builder.withAPIKey(SecretFile.API_KEY);
-        builder.withServer(Server.EUW);
-        builder.withEndpoint(URLEndpoint.SUMMONER_NAMES_BY_ID);
+        this.builder.withAPIKey(SecretFile.API_KEY);
+        this.builder.withServer(Server.EUW);
+        this.builder.withEndpoint(URLEndpoint.SUMMONER_NAMES_BY_ID);
     }
 
-    public void parseResult(Pair<ResponseType, Object> result)
+    public void parseResult(final Pair<ResponseType, Object> result)
     {
         switch (result.getKey())
         {
@@ -57,23 +57,23 @@ public class SummonerNameById
     }
 
     @Test
-    public void testSingle()
-    {
-        System.err.println("TESTING SINGLE");
-        builder.withURLData("{summonerId}", "19613950");
-        Pair<ResponseType, Object> summonerCall = builder.build();
-        parseResult(summonerCall);
-    }
-
-    @Test
     public void testMany()
     {
         System.err.println("TESTING MANY");
-        builder.withURLData("{summonerId}", "19613950");
-        builder.withURLData("{summonerId}", "22291359");
-        builder.withURLData("{summonerId}", "33540589");
+        this.builder.withURLData("{summonerId}", "19613950");
+        this.builder.withURLData("{summonerId}", "22291359");
+        this.builder.withURLData("{summonerId}", "33540589");
 
-        Pair<ResponseType, Object> summonerCall = builder.build();
-        parseResult(summonerCall);
+        final Pair<ResponseType, Object> summonerCall = this.builder.build();
+        this.parseResult(summonerCall);
+    }
+
+    @Test
+    public void testSingle()
+    {
+        System.err.println("TESTING SINGLE");
+        this.builder.withURLData("{summonerId}", "19613950");
+        final Pair<ResponseType, Object> summonerCall = this.builder.build();
+        this.parseResult(summonerCall);
     }
 }

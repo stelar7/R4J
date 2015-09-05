@@ -8,12 +8,12 @@ import no.stelar7.api.l4j8.basic.APIObject;
 public class RunePage extends APIObject
 {
 
-    private boolean    current;
-    private long       id;
+    private Boolean    current;
+    private Long       id;
     private List<Rune> slots;
     private String     name;
 
-    public long getId()
+    public Long getId()
     {
         return this.id;
     }
@@ -28,7 +28,7 @@ public class RunePage extends APIObject
         return Collections.unmodifiableList(this.slots);
     }
 
-    public boolean isCurrent()
+    public Boolean isCurrent()
     {
         return this.current;
     }

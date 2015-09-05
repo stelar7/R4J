@@ -1,19 +1,23 @@
 package no.stelar7.api.l4j8.dto.matchlist;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+
 import no.stelar7.api.l4j8.basic.APIObject;
 
 public class MatchReference extends APIObject
 {
-    long   champion;
+    Long   champion;
     String lane;
-    long   matchId;
+    Long   matchId;
     String platformId;
     String queue;
     String role;
     String season;
-    long   timestamp;
+    Long   timestamp;
 
-    public long getChampion()
+    public Long getChampion()
     {
         return this.champion;
     }
@@ -23,7 +27,7 @@ public class MatchReference extends APIObject
         return this.lane;
     }
 
-    public long getMatchId()
+    public Long getMatchId()
     {
         return this.matchId;
     }
@@ -38,6 +42,11 @@ public class MatchReference extends APIObject
         return this.queue;
     }
 
+    public ZonedDateTime getTimestampAsDate()
+    {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.timestamp), ZoneOffset.UTC);
+    }
+
     public String getRole()
     {
         return this.role;
@@ -48,7 +57,7 @@ public class MatchReference extends APIObject
         return this.season;
     }
 
-    public long getTimestamp()
+    public Long getTimestamp()
     {
         return this.timestamp;
     }

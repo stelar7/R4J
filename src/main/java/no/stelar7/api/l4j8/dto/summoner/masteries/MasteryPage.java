@@ -7,12 +7,12 @@ import no.stelar7.api.l4j8.basic.APIObject;
 
 public class MasteryPage extends APIObject
 {
-    private boolean       current;
-    private long          id;
+    private Boolean       current;
+    private Long          id;
     private List<Mastery> masteries;
     private String        name;
 
-    public long getId()
+    public Long getId()
     {
         return this.id;
     }
@@ -27,7 +27,7 @@ public class MasteryPage extends APIObject
         return this.name;
     }
 
-    public boolean isCurrent()
+    public Boolean isCurrent()
     {
         return this.current;
     }
