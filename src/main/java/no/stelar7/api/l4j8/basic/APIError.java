@@ -12,6 +12,7 @@ public class APIError extends APIObject
     }
 
     APIErrorType error;
+    Integer      code;
 
     public APIError(final Exception e)
     {
@@ -21,6 +22,7 @@ public class APIError extends APIObject
 
     public APIError(final int responseCode)
     {
+        this.code = responseCode;
         switch (responseCode)
         {
             case 400:
@@ -35,7 +37,7 @@ public class APIError extends APIObject
     @Override
     public String toString()
     {
-        return "APIError [error=" + this.error + "]";
+        return "APIError [code=" + code + ", error=" + this.error + "]";
     }
 
 }

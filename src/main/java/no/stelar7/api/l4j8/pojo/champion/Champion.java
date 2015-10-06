@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.dto.champion;
+package no.stelar7.api.l4j8.pojo.champion;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 
@@ -8,8 +8,8 @@ public class Champion extends APIObject
     Boolean botEnabled;
     Boolean botMmEnabled;
     Boolean freeToPlay;
-    Boolean rankedPlayEnabled;
     Integer id;
+    Boolean rankedPlayEnabled;
 
     public Integer getId()
     {

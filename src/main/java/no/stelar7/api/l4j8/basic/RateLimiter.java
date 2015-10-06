@@ -10,8 +10,8 @@ public class RateLimiter extends TimerTask
 {
 
     private final Semaphore s;
-    private final long      time;
-    private final int       count;
+    private final Long      time;
+    private final Integer   count;
     Timer                   t = new Timer(true);
 
     public RateLimiter()

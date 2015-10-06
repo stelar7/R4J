@@ -9,12 +9,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import no.stelar7.api.l4j8.dto.champion.Champion;
-import no.stelar7.api.l4j8.dto.matchlist.MatchReference;
-import no.stelar7.api.l4j8.dto.summoner.Summoner;
-import no.stelar7.api.l4j8.dto.summoner.masteries.MasteryPage;
-import no.stelar7.api.l4j8.dto.summoner.names.StringMap;
-import no.stelar7.api.l4j8.dto.summoner.runes.RunePage;
+import no.stelar7.api.l4j8.pojo.champion.Champion;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
+import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
+import no.stelar7.api.l4j8.pojo.summoner.names.StringMap;
+import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 
 public class APIObject
 {
@@ -99,6 +100,12 @@ public class APIObject
         if (returnType.equals(MatchReference.class))
         {
             final List<Object> matches = new ArrayList<>();
+
+            if (node.get("totalGames").asLong() == 0)
+            {
+                return matches;
+            }
+
             node.get("matches").forEach(n -> {
                 try
                 {
@@ -112,6 +119,12 @@ public class APIObject
             return matches;
         }
 
-        return null;
+        if (returnType.equals(CurrentGameInfo.class))
+        {
+            final Object info = mapper.readValue(node.toString(), returnType);
+            return info;
+        }
+
+        return mapper.readValue(node.toString(), returnType);
     }
 }

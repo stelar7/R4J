@@ -1,11 +1,12 @@
 package no.stelar7.api.l4j8.basic;
 
-import no.stelar7.api.l4j8.dto.champion.Champion;
-import no.stelar7.api.l4j8.dto.matchlist.MatchReference;
-import no.stelar7.api.l4j8.dto.summoner.Summoner;
-import no.stelar7.api.l4j8.dto.summoner.masteries.MasteryPage;
-import no.stelar7.api.l4j8.dto.summoner.names.StringMap;
-import no.stelar7.api.l4j8.dto.summoner.runes.RunePage;
+import no.stelar7.api.l4j8.pojo.champion.Champion;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
+import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
+import no.stelar7.api.l4j8.pojo.summoner.names.StringMap;
+import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 
 public enum URLEndpoint
 {
@@ -14,8 +15,9 @@ public enum URLEndpoint
     SUMMONER_MASTERIES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/masteries", "v1.4", MasteryPage.class),
     SUMMONER_RUNES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/runes", "v1.4", RunePage.class),
     SUMMONER_NAMES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", StringMap.class),
-    CHAMPION_BY_ID("/api/lol/{region}/{version}/champion/{id}", "v1.2", Champion.class),
-    MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchReference.class),;
+    CHAMPION_BY_ID("/api/lol/{region}/{version}/champion/{championId}", "v1.2", Champion.class),
+    MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchReference.class),
+    CURRENTGAME("/observer-mode/rest/consumer/getSpectatorGameInfo/{platformId}/{summonerId}", "", CurrentGameInfo.class),;
 
     String value;
     String version;

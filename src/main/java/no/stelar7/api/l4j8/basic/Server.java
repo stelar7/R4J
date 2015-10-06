@@ -6,7 +6,7 @@ public enum Server
     EUW("euw.api.pvp.net", true);
 
     private final String server;
-    private final boolean limit;
+    private final Boolean limit;
 
     Server(final String endpoint, final boolean limit)
     {

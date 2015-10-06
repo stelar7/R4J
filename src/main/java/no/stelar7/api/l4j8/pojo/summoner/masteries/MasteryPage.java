@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.dto.summoner.masteries;
+package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,21 +12,41 @@ public class MasteryPage extends APIObject
     private List<Mastery> masteries;
     private String        name;
 
+    /**
+     * The mastery page ID
+     *
+     * @return Long
+     */
     public Long getId()
     {
         return this.id;
     }
 
+    /**
+     * Collection of masteries associated with the mastery page
+     *
+     * @return {@code List<Mastery>}
+     */
     public List<Mastery> getMasteries()
     {
         return Collections.unmodifiableList(this.masteries);
     }
 
+    /**
+     * The mastery page name
+     *
+     * @return String
+     */
     public String getName()
     {
         return this.name;
     }
 
+    /**
+     * Indicates if the mastery page is the current mastery page
+     *
+     * @return Boolean
+     */
     public Boolean isCurrent()
     {
         return this.current;

@@ -24,6 +24,7 @@ public class SummonerNameById
     @Before
     public void init()
     {
+        System.err.println("TESTING SUMMONER NAME BY ID");
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
         this.builder.withEndpoint(URLEndpoint.SUMMONER_NAMES_BY_ID);

@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.dto.summoner;
+package no.stelar7.api.l4j8.pojo.summoner;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -8,11 +8,11 @@ import no.stelar7.api.l4j8.basic.APIObject;
 
 public class Summoner extends APIObject
 {
-    private long   id;
-    private String name;
-    private int    profileIconId;
-    private Long   revisionDate;
-    private int    summonerLevel;
+    private Long    id;
+    private String  name;
+    private Integer profileIconId;
+    private Long    revisionDate;
+    private Integer summonerLevel;
 
     /**
      * The Summoners ID * @return Long
@@ -31,7 +31,7 @@ public class Summoner extends APIObject
     }
 
     /**
-     * The Summoners profile icon ID * @return Integer
+     * ID of the summoner icon associated with the summoner * @return Integer
      */
     public Integer getProfileIconId()
     {
@@ -39,7 +39,7 @@ public class Summoner extends APIObject
     }
 
     /**
-     * A Long representing the last time the summoner did one of the following: 1. logged in. 2. logged out. 3. changed profile picture. 4. started a match 5. propably more, but i cant remember them at this point
+     * Date summoner was last modified specified as epoch milliseconds. The following events will update this timestamp: profile icon change, playing the tutorial or advanced tutorial, finishing a game, summoner name change
      *
      * * @return Long
      */
@@ -49,7 +49,7 @@ public class Summoner extends APIObject
     }
 
     /**
-     * A ZonedDateTime representing the last time the summoner did one of the following: 1. logged in. 2. logged out. 3. changed profile picture. 4. started a match 5. propably more, but i cant remember them at this point
+     * A ZonedDateTime of {@code getRevisionDate()}
      *
      * * @return ZonedDateTime
      */
@@ -59,7 +59,7 @@ public class Summoner extends APIObject
     }
 
     /**
-     * The Summoners level * @return Integer
+     * Summoner level associated with the summoner * @return Integer
      */
     public Integer getSummonerLevel()
     {

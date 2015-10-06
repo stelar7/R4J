@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.dto.matchlist;
+package no.stelar7.api.l4j8.pojo.matchlist;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -8,14 +8,15 @@ import no.stelar7.api.l4j8.basic.APIObject;
 
 public class MatchReference extends APIObject
 {
-    Long   champion;
-    String lane;
-    Long   matchId;
-    String platformId;
-    String queue;
-    String role;
-    String season;
-    Long   timestamp;
+    private Long   champion;
+    private String lane;
+    private Long   matchId;
+    private String platformId;
+    private String queue;
+    private String region;
+    private String role;
+    private String season;
+    private Long   timestamp;
 
     public Long getChampion()
     {
@@ -42,9 +43,9 @@ public class MatchReference extends APIObject
         return this.queue;
     }
 
-    public ZonedDateTime getTimestampAsDate()
+    public String getRegion()
     {
-        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.timestamp), ZoneOffset.UTC);
+        return this.region;
     }
 
     public String getRole()
@@ -60,6 +61,11 @@ public class MatchReference extends APIObject
     public Long getTimestamp()
     {
         return this.timestamp;
+    }
+
+    public ZonedDateTime getTimestampAsDate()
+    {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.timestamp), ZoneOffset.UTC);
     }
 
     @Override

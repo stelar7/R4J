@@ -25,6 +25,7 @@ public class MatchListTest
     @Before
     public void init()
     {
+        System.err.println("TESTING MATCH LIST");
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
         this.builder.withEndpoint(URLEndpoint.MATCHLIST);
@@ -62,18 +63,18 @@ public class MatchListTest
     {
         System.err.println("TESTING MANY");
 
-        this.builder.withURLData("{summonerId}", "19613950");
+        this.builder.withURLData("{summonerId}", "22291359");
 
         final Pair<ResponseType, Object> summonerCall = this.builder.build();
         this.parseResult(summonerCall);
     }
 
     @Test
-    public void testManyWithParam()
+    public void testWithParam()
     {
         System.err.println("TESTING MANY WITH PARAMS");
 
-        this.builder.withURLData("{summonerId}", "19613950");
+        this.builder.withURLData("{summonerId}", "22291359");
 
         this.builder.withURLParameter("championIds", "266");
         this.builder.withURLParameter("rankedQueues", Constants.RankedQueue.RANKED_SOLO_5X5);

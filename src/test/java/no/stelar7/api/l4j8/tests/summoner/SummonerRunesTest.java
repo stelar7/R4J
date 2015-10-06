@@ -24,6 +24,7 @@ public class SummonerRunesTest
     @Before
     public void init()
     {
+        System.err.println("TESTING SUMMONER RUNES");
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
         this.builder.withEndpoint(URLEndpoint.SUMMONER_RUNES_BY_ID);

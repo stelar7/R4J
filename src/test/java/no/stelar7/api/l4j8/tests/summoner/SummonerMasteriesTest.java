@@ -24,6 +24,7 @@ public class SummonerMasteriesTest
     @Before
     public void init()
     {
+        System.err.println("TESTING SUMMONER MASTERIES");
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
         this.builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);

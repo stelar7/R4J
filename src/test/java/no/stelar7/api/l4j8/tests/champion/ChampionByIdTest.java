@@ -24,6 +24,7 @@ public class ChampionByIdTest
     @Before
     public void init()
     {
+        System.err.println("TESTING CHAMPION BY ID");
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
         this.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
@@ -60,7 +61,7 @@ public class ChampionByIdTest
     public void testMany()
     {
         System.err.println("TESTING MANY");
-        this.builder.withURLData("{id}", "");
+        this.builder.withURLData("{championId}", "");
         final Pair<ResponseType, Object> summonerCall = this.builder.build();
         this.parseResult(summonerCall);
     }
@@ -70,7 +71,7 @@ public class ChampionByIdTest
     {
         System.err.println("TESTING MANY WITH PARAMS");
 
-        this.builder.withURLData("{id}", "");
+        this.builder.withURLData("{championId}", "");
         this.builder.withURLParameter("freeToPlay", "true");
 
         final Pair<ResponseType, Object> summonerCall = this.builder.build();
@@ -81,7 +82,7 @@ public class ChampionByIdTest
     public void testSingle()
     {
         System.err.println("TESTING SINGLE");
-        this.builder.withURLData("{id}", "266");
+        this.builder.withURLData("{championId}", "266");
         final Pair<ResponseType, Object> summonerCall = this.builder.build();
         this.parseResult(summonerCall);
     }
