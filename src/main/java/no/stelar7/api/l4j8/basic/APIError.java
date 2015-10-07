@@ -11,8 +11,8 @@ public class APIError extends APIObject
         SERVER_ERROR;
     }
 
-    APIErrorType error;
-    Integer      code;
+    private APIErrorType error;
+    private Integer      code;
 
     public APIError(final Exception e)
     {

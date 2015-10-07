@@ -19,9 +19,9 @@ public enum URLEndpoint
     MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchReference.class),
     CURRENTGAME("/observer-mode/rest/consumer/getSpectatorGameInfo/{platformId}/{summonerId}", "", CurrentGameInfo.class),;
 
-    String value;
-    String version;
-    Class<?> type;
+    private String value;
+    private String version;
+    private Class<?> type;
 
     private URLEndpoint(final String value, final String version, final Class<?> type)
     {
@@ -30,7 +30,7 @@ public enum URLEndpoint
         this.type = type;
     }
 
-    public Object getType()
+    public Class<?> getType()
     {
         return this.type;
     }

@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.basic;
 
+import java.util.stream.Stream;
+
 public enum Platform
 {
     NA1,
@@ -11,5 +13,10 @@ public enum Platform
     TR1,
     RU,
     EUW1,
-    KR
+    KR;
+
+    public static Platform getFromCode(String code)
+    {
+        return Stream.of(values()).filter(t -> t.name().equals(code)).findFirst().get();
+    }
 }

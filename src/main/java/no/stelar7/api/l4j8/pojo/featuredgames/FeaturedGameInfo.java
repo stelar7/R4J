@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.pojo.currentgame;
+package no.stelar7.api.l4j8.pojo.featuredgames;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -11,22 +11,21 @@ import no.stelar7.api.l4j8.basic.constants.GameMode;
 import no.stelar7.api.l4j8.basic.constants.GameQueueType;
 import no.stelar7.api.l4j8.basic.constants.GameType;
 import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
-import no.stelar7.api.l4j8.pojo.shared.Observer;
+import no.stelar7.api.l4j8.pojo.shared.*;
 
-public class CurrentGameInfo
+public class FeaturedGameInfo
 {
-    private List<BannedChampion>         bannedChampions;
-    private Long                         gameId;
-    private Long                         gameLength;
-    private String                       gameMode;
-    private Long                         gameQueueConfigId;
-    private Long                         gameStartTime;
-    private String                       gameType;
-    private Long                         mapId;
-    private Observer                     observers;
-    private List<CurrentGameParticipant> participants;
-    private String                       platformId;
+    private List<BannedChampion>          bannedChampions;
+    private Long                          gameId;
+    private Long                          gameLength;
+    private String                        gameMode;
+    private Long                          gameQueueConfigId;
+    private Long                          gameStartTime;
+    private String                        gameType;
+    private Long                          mapId;
+    private Observer                      observers;
+    private List<FeaturedGameParticipant> participants;
+    private String                        platformId;
 
     /**
      * Banned champion information
@@ -163,7 +162,7 @@ public class CurrentGameInfo
      *
      * @return {@code List<CurrentGameParticipant>}
      */
-    public List<CurrentGameParticipant> getParticipants()
+    public List<FeaturedGameParticipant> getParticipants()
     {
         return Collections.unmodifiableList(this.participants);
     }

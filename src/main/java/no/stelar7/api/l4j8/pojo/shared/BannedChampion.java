@@ -1,6 +1,7 @@
-package no.stelar7.api.l4j8.pojo.currentgame;
+package no.stelar7.api.l4j8.pojo.shared;
 
 import no.stelar7.api.l4j8.basic.APIObject;
+import no.stelar7.api.l4j8.basic.constants.Team;
 
 public class BannedChampion extends APIObject
 {
@@ -36,6 +37,16 @@ public class BannedChampion extends APIObject
     public Long getTeamId()
     {
         return this.teamId;
+    }
+
+    /**
+     * a Team representing the team that banned the champion
+     *
+     * @return Team
+     */
+    public Team getTeam()
+    {
+        return Team.getFromCode(this.teamId);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.pojo.currentgame;
+package no.stelar7.api.l4j8.pojo.shared;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 

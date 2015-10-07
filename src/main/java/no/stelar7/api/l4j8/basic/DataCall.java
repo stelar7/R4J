@@ -98,7 +98,7 @@ public class DataCall
                 }
                 con.disconnect();
 
-                final Object dtoobj = ((APIObject) this.dc.endpoint.type.newInstance()).createFromString(this.dc.endpoint.type, data.toString());
+                final Object dtoobj = ((APIObject) this.dc.endpoint.getType().newInstance()).createFromString(this.dc.endpoint.getType(), data.toString());
 
                 if ((dtoobj instanceof Map) && (((Map<?, ?>) dtoobj).values().size() == 1))
                 {

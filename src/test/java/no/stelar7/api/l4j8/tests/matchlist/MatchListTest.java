@@ -8,12 +8,13 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.Constants;
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.constants.RankedQueue;
+import no.stelar7.api.l4j8.basic.constants.Season;
 import no.stelar7.api.l4j8.tests.SecretFile;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -77,8 +78,8 @@ public class MatchListTest
         this.builder.withURLData("{summonerId}", "22291359");
 
         this.builder.withURLParameter("championIds", "266");
-        this.builder.withURLParameter("rankedQueues", Constants.RankedQueue.RANKED_SOLO_5X5);
-        this.builder.withURLParameter("seasons", Constants.Season.SEASON_2015);
+        this.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5X5.getCode());
+        this.builder.withURLParameter("seasons", Season.SEASON_2015.getCode());
 
         final Pair<ResponseType, Object> summonerCall = this.builder.build();
         this.parseResult(summonerCall);
