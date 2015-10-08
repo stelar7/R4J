@@ -2,7 +2,7 @@ package no.stelar7.api.l4j8.pojo.summoner.runes;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 
-public class RuneSlot extends APIObject
+public class RuneSlot implements APIObject
 {
 
     private Integer runeId;

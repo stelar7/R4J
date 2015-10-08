@@ -6,14 +6,16 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
 import no.stelar7.api.l4j8.basic.constants.GameMode;
 import no.stelar7.api.l4j8.basic.constants.GameQueueType;
 import no.stelar7.api.l4j8.basic.constants.GameType;
 import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.pojo.shared.*;
+import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
+import no.stelar7.api.l4j8.pojo.shared.Observer;
 
-public class FeaturedGameInfo
+public class FeaturedGameInfo implements APIObject
 {
     private List<BannedChampion>          bannedChampions;
     private Long                          gameId;
@@ -201,5 +203,11 @@ public class FeaturedGameInfo
     public ZonedDateTime getRevisionDateAsDate()
     {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTime), ZoneOffset.UTC);
+    }
+
+    public static Class<?> createFromString(String json) throws Exception
+    {
+        // TODO
+        return APIObject.createFromString(json);
     }
 }

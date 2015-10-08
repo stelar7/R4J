@@ -2,7 +2,7 @@ package no.stelar7.api.l4j8.pojo.currentgame;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 
-public class Rune extends APIObject
+public class Rune implements APIObject
 {
     private Integer count;
     private Long    runeId;

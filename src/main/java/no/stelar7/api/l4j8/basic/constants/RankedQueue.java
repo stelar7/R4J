@@ -4,9 +4,9 @@ import java.util.stream.Stream;
 
 public enum RankedQueue
 {
-    RANKED_SOLO_5X5,
-    RANKED_TEAM_5X5,
-    RANKED_TEAM_3X3;
+    RANKED_SOLO_5x5,
+    RANKED_TEAM_5x5,
+    RANKED_TEAM_3x3;
 
     public static RankedQueue getFromCode(String code)
     {

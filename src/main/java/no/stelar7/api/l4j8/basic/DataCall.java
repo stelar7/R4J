@@ -10,9 +10,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
+
+import com.google.common.util.concurrent.RateLimiter;
 
 import javafx.util.Pair;
 
@@ -27,13 +28,9 @@ public class DataCall
 
         public Pair<ResponseType, Object> build()
         {
-            if (!this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
+            if (this.dc.server.hasLimit() || !this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
             {
-                final Optional<Exception> error = DataCall.limiter.get(this.dc.server).acquire();
-                if (error.isPresent())
-                {
-                    return new Pair<>(ResponseType.USER_ERROR, new APIError(error.get()));
-                }
+                DataCall.limiter.get(this.dc.server).acquire();
             }
 
             final String url = this.getURL();
@@ -98,7 +95,7 @@ public class DataCall
                 }
                 con.disconnect();
 
-                final Object dtoobj = ((APIObject) this.dc.endpoint.getType().newInstance()).createFromString(this.dc.endpoint.getType(), data.toString());
+                final Object dtoobj = this.dc.endpoint.getType().getMethod("createFromString", String.class).invoke(this.dc.endpoint.getType().newInstance(), data.toString());
 
                 if ((dtoobj instanceof Map) && (((Map<?, ?>) dtoobj).values().size() == 1))
                 {
@@ -218,7 +215,7 @@ public class DataCall
     private static final Map<Server, RateLimiter> limiter       = new HashMap<Server, RateLimiter>()
     {
         {
-            Arrays.stream(Server.values()).filter(s -> s.hasLimit()).forEach(o -> this.put(o, new RateLimiter()));
+            Arrays.stream(Server.values()).filter(s -> s.hasLimit()).forEach(s -> this.put(s, RateLimiter.create(7.0 / 10.0)));
         }
     };
     private static final String                   HTTP          = "http://";

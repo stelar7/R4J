@@ -3,6 +3,12 @@ package no.stelar7.api.l4j8.pojo.matchlist;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
@@ -12,7 +18,7 @@ import no.stelar7.api.l4j8.basic.constants.RankedQueue;
 import no.stelar7.api.l4j8.basic.constants.Role;
 import no.stelar7.api.l4j8.basic.constants.Season;
 
-public class MatchReference extends APIObject
+public class MatchReference implements APIObject
 {
     private Long   champion;
     private String lane;
@@ -183,5 +189,32 @@ public class MatchReference extends APIObject
     public String toString()
     {
         return "MatchReference [champion=" + this.champion + ", lane=" + this.lane + ", matchId=" + this.matchId + ", platformId=" + this.platformId + ", queue=" + this.queue + ", role=" + this.role + ", season=" + this.season + ", timestamp=" + this.timestamp + "]";
+    }
+
+    public static List<MatchReference> createFromString(String json) throws Exception
+    {
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        final JsonNode node = mapper.readTree(json);
+        final List<MatchReference> matches = new ArrayList<>();
+
+        if (node.get("totalGames").asLong() == 0)
+        {
+            return matches;
+        }
+
+        node.get("matches").forEach(n -> {
+            try
+            {
+                final MatchReference match = mapper.readValue(n.toString(), MatchReference.class);
+                matches.add(match);
+            } catch (final Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+        return matches;
     }
 }

@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.basic;
 
-public class APIError extends APIObject
+public class APIError extends RuntimeException
 {
 
     enum APIErrorType

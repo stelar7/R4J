@@ -6,6 +6,11 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
 import no.stelar7.api.l4j8.basic.constants.GameMode;
 import no.stelar7.api.l4j8.basic.constants.GameQueueType;
@@ -14,7 +19,8 @@ import no.stelar7.api.l4j8.basic.constants.Map;
 import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 import no.stelar7.api.l4j8.pojo.shared.Observer;
 
-public class CurrentGameInfo
+public class CurrentGameInfo implements APIObject
+
 {
     private List<BannedChampion>         bannedChampions;
     private Long                         gameId;
@@ -202,5 +208,16 @@ public class CurrentGameInfo
     public ZonedDateTime getRevisionDateAsDate()
     {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTime), ZoneOffset.UTC);
+    }
+
+    public static CurrentGameInfo createFromString(String json) throws Exception
+    {
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        final JsonNode node = mapper.readTree(json);
+        final CurrentGameInfo info = mapper.readValue(node.toString(), CurrentGameInfo.class);
+        return info;
     }
 }

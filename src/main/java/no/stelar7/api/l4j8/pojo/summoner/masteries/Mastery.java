@@ -2,7 +2,7 @@ package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 
-public class Mastery extends APIObject
+public class Mastery implements APIObject
 {
     private Integer id;
     private Integer rank;

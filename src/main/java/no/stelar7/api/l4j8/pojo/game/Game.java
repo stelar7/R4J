@@ -5,13 +5,14 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.GameMode;
 import no.stelar7.api.l4j8.basic.constants.GameSubType;
 import no.stelar7.api.l4j8.basic.constants.GameType;
 import no.stelar7.api.l4j8.basic.constants.Map;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
-public class Game
+public class Game implements APIObject
 {
     private Integer      championId;
     private Long         createDate;
@@ -220,7 +221,7 @@ public class Game
     }
 
     /**
-     * Team ID associated with game. 
+     * Team ID associated with game.
      * 
      * @return Integer
      */
@@ -228,7 +229,7 @@ public class Game
     {
         return teamId;
     }
-    
+
     /**
      * a Team representing the team associated with game.
      *
@@ -239,10 +240,15 @@ public class Game
         return Team.getFromCode(this.teamId);
     }
 
-
     @Override
     public String toString()
     {
         return "Game [championId=" + championId + ", createDate=" + createDate + ", fellowPlayers=" + fellowPlayers + ", gameId=" + gameId + ", gameMode=" + gameMode + ", gameType=" + gameType + ", invalid=" + invalid + ", ipEarned=" + ipEarned + ", level=" + level + ", mapId=" + mapId + ", spell1=" + spell1 + ", spell2=" + spell2 + ", stats=" + stats + ", subType=" + subType + ", teamId=" + teamId + "]";
+    }
+
+    public static Class<?> createFromString(String json) throws Exception
+    {
+        //TODO
+        return APIObject.createFromString(json);
     }
 }

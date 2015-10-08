@@ -21,16 +21,16 @@ public enum URLEndpoint
 
     private String value;
     private String version;
-    private Class<?> type;
+    private Class<? extends APIObject> type;
 
-    private URLEndpoint(final String value, final String version, final Class<?> type)
+    private URLEndpoint(final String value, final String version, final Class<? extends APIObject> type)
     {
         this.value = value;
         this.version = version;
         this.type = type;
     }
 
-    public Class<?> getType()
+    public Class<? extends APIObject> getType()
     {
         return this.type;
     }

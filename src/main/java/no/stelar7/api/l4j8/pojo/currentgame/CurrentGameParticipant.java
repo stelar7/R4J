@@ -6,7 +6,7 @@ import java.util.List;
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
-public class CurrentGameParticipant extends APIObject
+public class CurrentGameParticipant implements APIObject
 {
     private Boolean       bot;
     private Long          championId;

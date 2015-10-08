@@ -78,8 +78,9 @@ public class MatchListTest
         this.builder.withURLData("{summonerId}", "22291359");
 
         this.builder.withURLParameter("championIds", "266");
-        this.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5X5.getCode());
+        this.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5x5.getCode());
         this.builder.withURLParameter("seasons", Season.SEASON_2015.getCode());
+        this.builder.withVerbose(true);
 
         final Pair<ResponseType, Object> summonerCall = this.builder.build();
         this.parseResult(summonerCall);

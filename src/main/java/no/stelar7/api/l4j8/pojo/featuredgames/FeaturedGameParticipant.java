@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.featuredgames;
 
+import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
-public class FeaturedGameParticipant
+public class FeaturedGameParticipant implements APIObject
 {
     private Boolean bot;
     private Long    championId;
