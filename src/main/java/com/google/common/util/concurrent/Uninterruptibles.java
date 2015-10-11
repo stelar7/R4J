@@ -16,15 +16,18 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public final class Uninterruptibles
 {
-
-    private Uninterruptibles()
-    {}
 
     public static void awaitUninterruptibly(final CountDownLatch latch)
     {
@@ -296,4 +299,7 @@ public final class Uninterruptibles
     {
         return Uninterruptibles.tryAcquireUninterruptibly(semaphore, 1, timeout, unit);
     }
+
+    private Uninterruptibles()
+    {}
 }

@@ -11,34 +11,24 @@ public class Player implements APIObject
 
     /**
      * Champion id associated with player.
-     * 
+     *
      * @return Integer
      */
     public Integer getChampionId()
     {
-        return championId;
+        return this.championId;
     }
 
     /**
      * Summoner id associated with player.
-     * 
+     *
      * @return Long
      */
     public Long getSummonerId()
     {
-        return summonerId;
+        return this.summonerId;
     }
 
-    /**
-     * Team id associated with player.
-     * 
-     * @return Integer
-     */
-    public Integer getTeamId()
-    {
-        return teamId;
-    }
-    
     /**
      * a Team representing the team associated with player.
      *
@@ -49,10 +39,19 @@ public class Player implements APIObject
         return Team.getFromCode(this.teamId);
     }
 
+    /**
+     * Team id associated with player.
+     *
+     * @return Integer
+     */
+    public Integer getTeamId()
+    {
+        return this.teamId;
+    }
 
     @Override
     public String toString()
     {
-        return "Player [championId=" + championId + ", summonerId=" + summonerId + ", teamId=" + teamId + "]";
+        return "Player [championId=" + this.championId + ", summonerId=" + this.summonerId + ", teamId=" + this.teamId + "]";
     }
 }

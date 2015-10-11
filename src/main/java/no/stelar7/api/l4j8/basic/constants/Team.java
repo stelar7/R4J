@@ -8,20 +8,20 @@ public enum Team
     BLUE(100),
     PURPLE(200);
 
+    public static Team getFromCode(final Number teamId)
+    {
+        return Stream.of(Team.values()).filter(t -> t.code == teamId).findFirst().get();
+    }
+
     Integer code;
 
-    Team(int code)
+    Team(final int code)
     {
         this.code = code;
     }
 
     public Integer getCode()
     {
-        return code;
-    }
-
-    public static Team getFromCode(Number teamId)
-    {
-        return Stream.of(values()).filter(t -> t.code == teamId).findFirst().get();
+        return this.code;
     }
 }

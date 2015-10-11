@@ -6,19 +6,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 
 public class MasteryPage implements APIObject
 {
+    public static Map<Object, List<Object>> createFromString(final String json) throws Exception
+    {
+
+        final JsonNode node = APIObject.getDefaultMapper().readTree(json);
+        final Map<Object, List<Object>> data = new HashMap<>();
+        node.fields().forEachRemaining(m -> {
+            final List<Object> pages = new ArrayList<>();
+
+            m.getValue().get("pages").iterator().forEachRemaining(n -> {
+                try
+                {
+                    final Object page = APIObject.getDefaultMapper().readValue(n.toString(), RunePage.class);
+                    pages.add(page);
+                } catch (final Exception e)
+                {
+                    e.printStackTrace();
+                }
+            });
+
+            data.put(m.getKey(), pages);
+        });
+        return data;
+    }
+
     private Boolean       current;
     private Long          id;
     private List<Mastery> masteries;
-    private String        name;
+
+    private String name;
 
     /**
      * The mastery page ID
@@ -64,33 +87,6 @@ public class MasteryPage implements APIObject
     public String toString()
     {
         return "MasteryPage [current=" + this.current + ", id=" + this.id + ", masteries=" + this.masteries + ", name=" + this.name + "]";
-    }
-
-    public static Map<Object, List<Object>> createFromString(final String json) throws Exception
-    {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
-        final JsonNode node = mapper.readTree(json);
-        final Map<Object, List<Object>> data = new HashMap<>();
-        node.fields().forEachRemaining(m -> {
-            final List<Object> pages = new ArrayList<>();
-
-            m.getValue().get("pages").iterator().forEachRemaining(n -> {
-                try
-                {
-                    final Object page = mapper.readValue(n.toString(), RunePage.class);
-                    pages.add(page);
-                } catch (final Exception e)
-                {
-                    e.printStackTrace();
-                }
-            });
-
-            data.put(m.getKey(), pages);
-        });
-        return data;
     }
 
 }

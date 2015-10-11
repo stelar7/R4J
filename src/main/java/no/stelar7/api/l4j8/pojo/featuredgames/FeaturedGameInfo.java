@@ -17,6 +17,12 @@ import no.stelar7.api.l4j8.pojo.shared.Observer;
 
 public class FeaturedGameInfo implements APIObject
 {
+    public static Class<?> createFromString(final String json) throws Exception
+    {
+        // TODO
+        return APIObject.createFromString(json);
+    }
+
     private List<BannedChampion>          bannedChampions;
     private Long                          gameId;
     private Long                          gameLength;
@@ -27,7 +33,8 @@ public class FeaturedGameInfo implements APIObject
     private Long                          mapId;
     private Observer                      observers;
     private List<FeaturedGameParticipant> participants;
-    private String                        platformId;
+
+    private String platformId;
 
     /**
      * Banned champion information
@@ -130,16 +137,6 @@ public class FeaturedGameInfo implements APIObject
     }
 
     /**
-     * The ID of the map
-     *
-     * @return Long
-     */
-    public Long getMapId()
-    {
-        return this.mapId;
-    }
-
-    /**
      * a Map representing the Map.
      *
      * @return Map
@@ -147,6 +144,16 @@ public class FeaturedGameInfo implements APIObject
     public Map getMapAsMap()
     {
         return Map.getFromCode(this.mapId);
+    }
+
+    /**
+     * The ID of the map
+     *
+     * @return Long
+     */
+    public Long getMapId()
+    {
+        return this.mapId;
     }
 
     /**
@@ -169,10 +176,14 @@ public class FeaturedGameInfo implements APIObject
         return Collections.unmodifiableList(this.participants);
     }
 
-    @Override
-    public String toString()
+    /**
+     * the platformId represented as a Platform
+     *
+     * @return Platform
+     */
+    public Platform getPlatform()
     {
-        return "FeaturedGameInfo [bannedChampions=" + bannedChampions + ", gameId=" + gameId + ", gameLength=" + gameLength + ", gameMode=" + gameMode + ", gameQueueConfigId=" + gameQueueConfigId + ", gameStartTime=" + gameStartTime + ", gameType=" + gameType + ", mapId=" + mapId + ", observers=" + observers + ", participants=" + participants + ", platformId=" + platformId + "]";
+        return Platform.getFromCode(this.platformId);
     }
 
     /**
@@ -186,16 +197,6 @@ public class FeaturedGameInfo implements APIObject
     }
 
     /**
-     * the platformId represented as a Platform
-     * 
-     * @return Platform
-     */
-    public Platform getPlatform()
-    {
-        return Platform.getFromCode(this.platformId);
-    }
-
-    /**
      * A ZonedDateTime of {@code getGameStartTime()}
      *
      * * @return ZonedDateTime
@@ -205,9 +206,9 @@ public class FeaturedGameInfo implements APIObject
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTime), ZoneOffset.UTC);
     }
 
-    public static Class<?> createFromString(String json) throws Exception
+    @Override
+    public String toString()
     {
-        // TODO
-        return APIObject.createFromString(json);
+        return "FeaturedGameInfo [bannedChampions=" + this.bannedChampions + ", gameId=" + this.gameId + ", gameLength=" + this.gameLength + ", gameMode=" + this.gameMode + ", gameQueueConfigId=" + this.gameQueueConfigId + ", gameStartTime=" + this.gameStartTime + ", gameType=" + this.gameType + ", mapId=" + this.mapId + ", observers=" + this.observers + ", participants=" + this.participants + ", platformId=" + this.platformId + "]";
     }
 }

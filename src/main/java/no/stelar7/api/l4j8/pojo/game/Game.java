@@ -14,6 +14,12 @@ import no.stelar7.api.l4j8.basic.constants.Team;
 
 public class Game implements APIObject
 {
+    public static Class<?> createFromString(final String json) throws Exception
+    {
+        // TODO
+        return APIObject.createFromString(json);
+    }
+
     private Integer      championId;
     private Long         createDate;
     private List<Player> fellowPlayers;
@@ -28,16 +34,27 @@ public class Game implements APIObject
     private Integer      spell2;
     private RawStats     stats;
     private String       subType;
-    private Integer      teamId;
+
+    private Integer teamId;
 
     /**
      * Champion ID associated with game.
-     * 
+     *
      * @return Integer
      */
     public Integer getChampionId()
     {
-        return championId;
+        return this.championId;
+    }
+
+    /**
+     * Date that end game data was recorded, specified as epoch milliseconds.
+     *
+     * @return Long
+     */
+    public Long getCreateDate()
+    {
+        return this.createDate;
     }
 
     /**
@@ -51,43 +68,33 @@ public class Game implements APIObject
     }
 
     /**
-     * Date that end game data was recorded, specified as epoch milliseconds.
-     * 
-     * @return Long
-     */
-    public Long getCreateDate()
-    {
-        return createDate;
-    }
-
-    /**
      * Other players associated with the game.
-     * 
+     *
      * @return {@code List<Player>}
      */
     public List<Player> getFellowPlayers()
     {
-        return fellowPlayers;
+        return this.fellowPlayers;
     }
 
     /**
      * Game ID.
-     * 
+     *
      * @return Long
      */
     public Long getGameId()
     {
-        return gameId;
+        return this.gameId;
     }
 
     /**
      * Game mode.
-     * 
+     *
      * @return String
      */
     public String getGameMode()
     {
-        return gameMode;
+        return this.gameMode;
     }
 
     /**
@@ -102,12 +109,12 @@ public class Game implements APIObject
 
     /**
      * Game type
-     * 
+     *
      * @return String
      */
     public String getGameType()
     {
-        return gameType;
+        return this.gameType;
     }
 
     /**
@@ -122,42 +129,32 @@ public class Game implements APIObject
 
     /**
      * Invalid flag
-     * 
+     *
      * @return Boolean
      */
     public Boolean getInvalid()
     {
-        return invalid;
+        return this.invalid;
     }
 
     /**
      * IP Earned
-     * 
+     *
      * @return Integer
      */
     public Integer getIpEarned()
     {
-        return ipEarned;
+        return this.ipEarned;
     }
 
     /**
      * Level.
-     * 
+     *
      * @return Integer
      */
     public Integer getLevel()
     {
-        return level;
-    }
-
-    /**
-     * Map ID.
-     * 
-     * @return Integer.
-     */
-    public Integer getMapId()
-    {
-        return mapId;
+        return this.level;
     }
 
     /**
@@ -171,43 +168,53 @@ public class Game implements APIObject
     }
 
     /**
+     * Map ID.
+     *
+     * @return Integer.
+     */
+    public Integer getMapId()
+    {
+        return this.mapId;
+    }
+
+    /**
      * ID of first summoner spell.
-     * 
+     *
      * @return Integer
      */
     public Integer getSpell1()
     {
-        return spell1;
+        return this.spell1;
     }
 
     /**
      * ID of second summoner spell.
-     * 
+     *
      * @return Integer
      */
     public Integer getSpell2()
     {
-        return spell2;
+        return this.spell2;
     }
 
     /**
      * Statistics associated with the game for this summoner.
-     * 
+     *
      * @return
      */
     public RawStats getStats()
     {
-        return stats;
+        return this.stats;
     }
 
     /**
      * Game sub-type.
-     * 
+     *
      * @return String
      */
     public String getSubType()
     {
-        return subType;
+        return this.subType;
     }
 
     /**
@@ -221,16 +228,6 @@ public class Game implements APIObject
     }
 
     /**
-     * Team ID associated with game.
-     * 
-     * @return Integer
-     */
-    public Integer getTeamId()
-    {
-        return teamId;
-    }
-
-    /**
      * a Team representing the team associated with game.
      *
      * @return Team
@@ -240,15 +237,19 @@ public class Game implements APIObject
         return Team.getFromCode(this.teamId);
     }
 
+    /**
+     * Team ID associated with game.
+     *
+     * @return Integer
+     */
+    public Integer getTeamId()
+    {
+        return this.teamId;
+    }
+
     @Override
     public String toString()
     {
-        return "Game [championId=" + championId + ", createDate=" + createDate + ", fellowPlayers=" + fellowPlayers + ", gameId=" + gameId + ", gameMode=" + gameMode + ", gameType=" + gameType + ", invalid=" + invalid + ", ipEarned=" + ipEarned + ", level=" + level + ", mapId=" + mapId + ", spell1=" + spell1 + ", spell2=" + spell2 + ", stats=" + stats + ", subType=" + subType + ", teamId=" + teamId + "]";
-    }
-
-    public static Class<?> createFromString(String json) throws Exception
-    {
-        //TODO
-        return APIObject.createFromString(json);
+        return "Game [championId=" + this.championId + ", createDate=" + this.createDate + ", fellowPlayers=" + this.fellowPlayers + ", gameId=" + this.gameId + ", gameMode=" + this.gameMode + ", gameType=" + this.gameType + ", invalid=" + this.invalid + ", ipEarned=" + this.ipEarned + ", level=" + this.level + ", mapId=" + this.mapId + ", spell1=" + this.spell1 + ", spell2=" + this.spell2 + ", stats=" + this.stats + ", subType=" + this.subType + ", teamId=" + this.teamId + "]";
     }
 }

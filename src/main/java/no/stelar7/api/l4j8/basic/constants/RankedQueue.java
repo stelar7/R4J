@@ -8,9 +8,9 @@ public enum RankedQueue
     RANKED_TEAM_5x5,
     RANKED_TEAM_3x3;
 
-    public static RankedQueue getFromCode(String code)
+    public static RankedQueue getFromCode(final String code)
     {
-        return Stream.of(values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(RankedQueue.values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
 
     public String getCode()

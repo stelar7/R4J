@@ -16,7 +16,8 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MICROSECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.util.concurrent.TimeUnit;
 
@@ -55,15 +56,6 @@ public abstract class RateLimiter
         abstract void sleepMicrosUninterruptibly(final long micros);
     }
 
-    private final SleepingStopwatch stopwatch;
-
-    private volatile Object         mutexDoNotUseDirectly;
-
-    RateLimiter(final SleepingStopwatch stopwatch)
-    {
-        this.stopwatch = stopwatch;
-    }
-
     private static int checkPermits(final int permits)
     {
         return permits;
@@ -79,6 +71,15 @@ public abstract class RateLimiter
         final RateLimiter rateLimiter = new SmoothBursty(stopwatch, 1.0);
         rateLimiter.setRate(permitsPerSecond);
         return rateLimiter;
+    }
+
+    private final SleepingStopwatch stopwatch;
+
+    private volatile Object mutexDoNotUseDirectly;
+
+    RateLimiter(final SleepingStopwatch stopwatch)
+    {
+        this.stopwatch = stopwatch;
     }
 
     public double acquire()

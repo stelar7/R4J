@@ -15,8 +15,8 @@ public enum Platform
     EUW1,
     KR;
 
-    public static Platform getFromCode(String code)
+    public static Platform getFromCode(final String code)
     {
-        return Stream.of(values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(Platform.values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
 }

@@ -6,9 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
@@ -20,6 +18,29 @@ import no.stelar7.api.l4j8.basic.constants.Season;
 
 public class MatchReference implements APIObject
 {
+    public static List<MatchReference> createFromString(final String json) throws Exception
+    {
+        final JsonNode node = APIObject.getDefaultMapper().readTree(json);
+        final List<MatchReference> matches = new ArrayList<>();
+
+        if (node.get("totalGames").asLong() == 0)
+        {
+            return matches;
+        }
+
+        node.get("matches").forEach(n -> {
+            try
+            {
+                final MatchReference match = APIObject.getDefaultMapper().readValue(n.toString(), MatchReference.class);
+                matches.add(match);
+            } catch (final Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+        return matches;
+    }
+
     private Long   champion;
     private String lane;
     private Long   matchId;
@@ -28,11 +49,12 @@ public class MatchReference implements APIObject
     private String region;
     private String role;
     private String season;
-    private Long   timestamp;
+
+    private Long timestamp;
 
     /**
      * Champion ID associated with game.
-     * 
+     *
      * @return Long
      */
     public Long getChampion()
@@ -41,8 +63,18 @@ public class MatchReference implements APIObject
     }
 
     /**
+     * the region represented as a Server
+     *
+     * @return Server
+     */
+    public Server getFromCode()
+    {
+        return Server.getFromCode(this.region);
+    }
+
+    /**
      * Lane associated with game
-     * 
+     *
      * @return String
      */
     public String getLane()
@@ -52,7 +84,7 @@ public class MatchReference implements APIObject
 
     /**
      * the lane represented as a Lane
-     * 
+     *
      * @return Lane
      */
     public Lane getLaneAsLane()
@@ -62,7 +94,7 @@ public class MatchReference implements APIObject
 
     /**
      * Match ID.
-     * 
+     *
      * @return Long
      */
     public Long getMatchId()
@@ -71,18 +103,8 @@ public class MatchReference implements APIObject
     }
 
     /**
-     * Platform ID.
-     * 
-     * @return String
-     */
-    public String getPlatformId()
-    {
-        return this.platformId;
-    }
-
-    /**
      * the platformId represented as a Platform
-     * 
+     *
      * @return Platform
      */
     public Platform getPlatform()
@@ -91,8 +113,18 @@ public class MatchReference implements APIObject
     }
 
     /**
+     * Platform ID.
+     *
+     * @return String
+     */
+    public String getPlatformId()
+    {
+        return this.platformId;
+    }
+
+    /**
      * Queue.
-     * 
+     *
      * @return String
      */
     public String getQueue()
@@ -102,7 +134,7 @@ public class MatchReference implements APIObject
 
     /**
      * the queue represented as a RankedQueue
-     * 
+     *
      * @return RankedQueue
      */
     public RankedQueue getQueueAsRankedQueue()
@@ -112,7 +144,7 @@ public class MatchReference implements APIObject
 
     /**
      * Region
-     * 
+     *
      * @return String
      */
     public String getRegion()
@@ -121,18 +153,8 @@ public class MatchReference implements APIObject
     }
 
     /**
-     * the region represented as a Server
-     * 
-     * @return Server
-     */
-    public Server getFromCode()
-    {
-        return Server.getFromCode(this.region);
-    }
-
-    /**
      * Role
-     * 
+     *
      * @return String
      */
     public String getRole()
@@ -142,7 +164,7 @@ public class MatchReference implements APIObject
 
     /**
      * the role represented as a Role
-     * 
+     *
      * @return Role
      */
     public Role getRoleAsRole()
@@ -152,7 +174,7 @@ public class MatchReference implements APIObject
 
     /**
      * Season
-     * 
+     *
      * @return String
      */
     public String getSeason()
@@ -162,7 +184,7 @@ public class MatchReference implements APIObject
 
     /**
      * the season represented as a Season
-     * 
+     *
      * @return Season
      */
     public Season getSeasonAsSeason()
@@ -172,7 +194,7 @@ public class MatchReference implements APIObject
 
     /**
      * Timestamp
-     * 
+     *
      * @return Long
      */
     public Long getTimestamp()
@@ -189,32 +211,5 @@ public class MatchReference implements APIObject
     public String toString()
     {
         return "MatchReference [champion=" + this.champion + ", lane=" + this.lane + ", matchId=" + this.matchId + ", platformId=" + this.platformId + ", queue=" + this.queue + ", role=" + this.role + ", season=" + this.season + ", timestamp=" + this.timestamp + "]";
-    }
-
-    public static List<MatchReference> createFromString(String json) throws Exception
-    {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
-        final JsonNode node = mapper.readTree(json);
-        final List<MatchReference> matches = new ArrayList<>();
-
-        if (node.get("totalGames").asLong() == 0)
-        {
-            return matches;
-        }
-
-        node.get("matches").forEach(n -> {
-            try
-            {
-                final MatchReference match = mapper.readValue(n.toString(), MatchReference.class);
-                matches.add(match);
-            } catch (final Exception e)
-            {
-                e.printStackTrace();
-            }
-        });
-        return matches;
     }
 }

@@ -12,21 +12,21 @@ public enum Season
     SEASON_2014("SEASON2014"),
     SEASON_2015("SEASON2015");
 
+    public static Season getFromCode(final String code)
+    {
+        return Stream.of(Season.values()).filter(t -> t.code.equals(code)).findFirst().get();
+    }
+
     String code;
 
-    Season(String code)
+    Season(final String code)
     {
         this.code = code;
     }
 
-    public static Season getFromCode(String code)
-    {
-        return Stream.of(values()).filter(t -> t.code.equals(code)).findFirst().get();
-    }
-
     public String getCode()
     {
-        return code;
+        return this.code;
     }
 
 }

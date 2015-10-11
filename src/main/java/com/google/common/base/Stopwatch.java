@@ -16,29 +16,18 @@
 
 package com.google.common.base;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.DAYS;
+import static java.util.concurrent.TimeUnit.HOURS;
+import static java.util.concurrent.TimeUnit.MICROSECONDS;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.util.concurrent.TimeUnit;
 
 public final class Stopwatch
 {
-    private final Ticker ticker;
-    private boolean      isRunning;
-    private long         elapsedNanos;
-    private long         startTick;
-
-    @Deprecated
-    Stopwatch()
-    {
-        this(Ticker.systemTicker());
-    }
-
-    @Deprecated
-    Stopwatch(final Ticker ticker)
-    {
-        this.ticker = Preconditions.checkNotNull(ticker, "ticker");
-    }
-
     private static String abbreviate(final TimeUnit unit)
     {
         switch (unit)
@@ -109,6 +98,26 @@ public final class Stopwatch
     public static Stopwatch createUnstarted(final Ticker ticker)
     {
         return new Stopwatch(ticker);
+    }
+
+    private final Ticker ticker;
+
+    private boolean isRunning;
+
+    private long elapsedNanos;
+
+    private long startTick;
+
+    @Deprecated
+    Stopwatch()
+    {
+        this(Ticker.systemTicker());
+    }
+
+    @Deprecated
+    Stopwatch(final Ticker ticker)
+    {
+        this.ticker = Preconditions.checkNotNull(ticker, "ticker");
     }
 
     public long elapsed(final TimeUnit desiredUnit)

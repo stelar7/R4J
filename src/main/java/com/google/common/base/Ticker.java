@@ -19,21 +19,21 @@ package com.google.common.base;
 public abstract class Ticker
 {
     private static final Ticker SYSTEM_TICKER = new Ticker()
-                                              {
-                                                  @Override
-                                                  public long read()
-                                                  {
-                                                      return System.nanoTime();
-                                                  }
-                                              };
-
-    protected Ticker()
-    {}
+    {
+        @Override
+        public long read()
+        {
+            return System.nanoTime();
+        }
+    };
 
     public static Ticker systemTicker()
     {
         return Ticker.SYSTEM_TICKER;
     }
+
+    protected Ticker()
+    {}
 
     public abstract long read();
 }

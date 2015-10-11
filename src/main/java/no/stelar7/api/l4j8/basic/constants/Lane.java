@@ -29,8 +29,8 @@ public enum Lane
      */
     BOTTOM;
 
-    public static Lane getFromCode(String code)
+    public static Lane getFromCode(final String code)
     {
-        return Stream.of(values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(Lane.values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
 }

@@ -7,7 +7,13 @@ public enum Server
     GLOBAL("global.api.pvp.net", false),
     EUW("euw.api.pvp.net", true);
 
+    public static Server getFromCode(final String code)
+    {
+        return Stream.of(Server.values()).filter(t -> t.name().equals(code)).findFirst().get();
+    }
+
     private final String server;
+
     private final Boolean limit;
 
     Server(final String endpoint, final boolean limit)
@@ -29,11 +35,6 @@ public enum Server
     public String toReadable()
     {
         return this.name().toLowerCase();
-    }
-
-    public static Server getFromCode(String code)
-    {
-        return Stream.of(values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
 
 }

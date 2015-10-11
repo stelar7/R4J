@@ -6,9 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
@@ -22,6 +20,13 @@ import no.stelar7.api.l4j8.pojo.shared.Observer;
 public class CurrentGameInfo implements APIObject
 
 {
+    public static CurrentGameInfo createFromString(final String json) throws Exception
+    {
+        final JsonNode node = APIObject.getDefaultMapper().readTree(json);
+        final CurrentGameInfo info = APIObject.getDefaultMapper().readValue(node.toString(), CurrentGameInfo.class);
+        return info;
+    }
+
     private List<BannedChampion>         bannedChampions;
     private Long                         gameId;
     private Long                         gameLength;
@@ -32,7 +37,8 @@ public class CurrentGameInfo implements APIObject
     private Long                         mapId;
     private Observer                     observers;
     private List<CurrentGameParticipant> participants;
-    private String                       platformId;
+
+    private String platformId;
 
     /**
      * Banned champion information
@@ -135,16 +141,6 @@ public class CurrentGameInfo implements APIObject
     }
 
     /**
-     * The ID of the map
-     *
-     * @return Long
-     */
-    public Long getMapId()
-    {
-        return this.mapId;
-    }
-
-    /**
      * a Map representing the Map.
      *
      * @return Map
@@ -152,6 +148,16 @@ public class CurrentGameInfo implements APIObject
     public Map getMapAsMap()
     {
         return Map.getFromCode(this.mapId);
+    }
+
+    /**
+     * The ID of the map
+     *
+     * @return Long
+     */
+    public Long getMapId()
+    {
+        return this.mapId;
     }
 
     /**
@@ -174,10 +180,14 @@ public class CurrentGameInfo implements APIObject
         return Collections.unmodifiableList(this.participants);
     }
 
-    @Override
-    public String toString()
+    /**
+     * the platformId represented as a Platform
+     *
+     * @return Platform
+     */
+    public Platform getPlatform()
     {
-        return "FeaturedGameInfo [bannedChampions=" + bannedChampions + ", gameId=" + gameId + ", gameLength=" + gameLength + ", gameMode=" + gameMode + ", gameQueueConfigId=" + gameQueueConfigId + ", gameStartTime=" + gameStartTime + ", gameType=" + gameType + ", mapId=" + mapId + ", observers=" + observers + ", participants=" + participants + ", platformId=" + platformId + "]";
+        return Platform.getFromCode(this.platformId);
     }
 
     /**
@@ -191,16 +201,6 @@ public class CurrentGameInfo implements APIObject
     }
 
     /**
-     * the platformId represented as a Platform
-     * 
-     * @return Platform
-     */
-    public Platform getPlatform()
-    {
-        return Platform.getFromCode(this.platformId);
-    }
-
-    /**
      * A ZonedDateTime of {@code getGameStartTime()}
      *
      * * @return ZonedDateTime
@@ -210,14 +210,9 @@ public class CurrentGameInfo implements APIObject
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTime), ZoneOffset.UTC);
     }
 
-    public static CurrentGameInfo createFromString(String json) throws Exception
+    @Override
+    public String toString()
     {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
-        final JsonNode node = mapper.readTree(json);
-        final CurrentGameInfo info = mapper.readValue(node.toString(), CurrentGameInfo.class);
-        return info;
+        return "FeaturedGameInfo [bannedChampions=" + this.bannedChampions + ", gameId=" + this.gameId + ", gameLength=" + this.gameLength + ", gameMode=" + this.gameMode + ", gameQueueConfigId=" + this.gameQueueConfigId + ", gameStartTime=" + this.gameStartTime + ", gameType=" + this.gameType + ", mapId=" + this.mapId + ", observers=" + this.observers + ", participants=" + this.participants + ", platformId=" + this.platformId + "]";
     }
 }

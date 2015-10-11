@@ -10,7 +10,7 @@ public class RuneSlot implements APIObject
 
     /**
      * Rune ID associated with the rune slot. For static information correlating to rune IDs, please refer to the LoL Static Data API.
-     * 
+     *
      * @return Integer
      */
     public Integer getRuneId()
@@ -20,7 +20,7 @@ public class RuneSlot implements APIObject
 
     /**
      * The Rune slot ID.
-     * 
+     *
      * @return Integer
      */
     public Integer getRuneSlotId()

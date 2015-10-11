@@ -26,8 +26,8 @@ public enum Role
      */
     DUO_SUPPORT;
 
-    public static Role getFromCode(String code)
+    public static Role getFromCode(final String code)
     {
-        return Stream.of(values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(Role.values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
 }

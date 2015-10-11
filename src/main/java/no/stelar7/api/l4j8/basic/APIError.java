@@ -37,7 +37,7 @@ public class APIError extends RuntimeException
     @Override
     public String toString()
     {
-        return "APIError [code=" + code + ", error=" + this.error + "]";
+        return "APIError [code=" + this.code + ", error=" + this.error + "]";
     }
 
 }

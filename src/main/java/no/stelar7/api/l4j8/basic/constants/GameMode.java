@@ -37,8 +37,8 @@ public enum GameMode
      */
     KINGPORO;
 
-    public static GameMode getFromCode(String gameMode)
+    public static GameMode getFromCode(final String gameMode)
     {
-        return Stream.of(values()).filter(t -> t.name().equals(gameMode)).findFirst().get();
+        return Stream.of(GameMode.values()).filter(t -> t.name().equals(gameMode)).findFirst().get();
     }
 }

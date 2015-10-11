@@ -42,21 +42,21 @@ public enum Map
      */
     BUTCHERS_BRIDGE(14);
 
+    public static Map getFromCode(final Number mapId)
+    {
+        return Stream.of(Map.values()).filter(t -> t.code == mapId).findFirst().get();
+    }
+
     Integer code;
 
-    Map(int code)
+    Map(final int code)
     {
         this.code = code;
     }
 
     Integer getCode()
     {
-        return code;
-    }
-
-    public static Map getFromCode(Number mapId)
-    {
-        return Stream.of(values()).filter(t -> t.code == mapId).findFirst().get();
+        return this.code;
     }
 
 }

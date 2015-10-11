@@ -30,16 +30,6 @@ public class BannedChampion implements APIObject
     }
 
     /**
-     * The ID of the team that banned the champion
-     *
-     * @return Long
-     */
-    public Long getTeamId()
-    {
-        return this.teamId;
-    }
-
-    /**
      * a Team representing the team that banned the champion
      *
      * @return Team
@@ -47,6 +37,16 @@ public class BannedChampion implements APIObject
     public Team getTeam()
     {
         return Team.getFromCode(this.teamId);
+    }
+
+    /**
+     * The ID of the team that banned the champion
+     *
+     * @return Long
+     */
+    public Long getTeamId()
+    {
+        return this.teamId;
     }
 
     @Override

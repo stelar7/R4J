@@ -17,8 +17,8 @@ public enum GameType
      */
     MATCHED_GAME;
 
-    public static GameType getFromCode(String gameType)
+    public static GameType getFromCode(final String gameType)
     {
-        return Stream.of(values()).filter(t -> t.name().equals(gameType)).findFirst().get();
+        return Stream.of(GameType.values()).filter(t -> t.name().equals(gameType)).findFirst().get();
     }
 }

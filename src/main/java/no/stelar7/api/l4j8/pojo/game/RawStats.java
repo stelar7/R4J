@@ -88,63 +88,81 @@ public class RawStats implements APIObject
     private Boolean win;
 
     /**
+     * a {@code Map<String, String>} of all the fields in this class
+     */
+    public Map<String, String> getAllStats()
+    {
+        final Map<String, String> map = new HashMap<>();
+        Stream.of(this.getClass().getFields()).forEach(f -> {
+            try
+            {
+                map.put(f.getName(), f.get(this).toString());
+            } catch (final Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+        return map;
+    }
+
+    /**
      * Amount of assists
-     * 
+     *
      * @return Integer
      */
     public Integer getAssists()
     {
-        return assists;
+        return this.assists;
     }
 
     /**
      * Number of enemy inhibitors killed.
-     * 
+     *
      * @return Integer
      */
     public Integer getBarracksKilled()
     {
-        return barracksKilled;
+        return this.barracksKilled;
     }
 
     /**
      * Amount of champions killed
-     * 
+     *
      * @return Integer
      */
     public Integer getChampionsKilled()
     {
-        return championsKilled;
+        return this.championsKilled;
     }
 
     /**
      * Amount of points. (Dominion only)
-     * 
+     *
      * @return Integer
      */
     public Integer getCombatPlayerScore()
     {
-        return combatPlayerScore;
+        return this.combatPlayerScore;
     }
 
     /**
      * Amount of consumables purchased
-     * 
+     *
      * @return Integer
      */
     public Integer getConsumablesPurchased()
     {
-        return consumablesPurchased;
+        return this.consumablesPurchased;
     }
 
     /**
      * amount of
-     * 
+     *
      * @return Integer
      */
     public Integer getDamageDealtPlayer()
     {
-        return damageDealtPlayer;
+        return this.damageDealtPlayer;
     }
 
     /**
@@ -152,7 +170,7 @@ public class RawStats implements APIObject
      */
     public Integer getDoubleKills()
     {
-        return doubleKills;
+        return this.doubleKills;
     }
 
     /**
@@ -160,7 +178,7 @@ public class RawStats implements APIObject
      */
     public Integer getFirstBlood()
     {
-        return firstBlood;
+        return this.firstBlood;
     }
 
     /**
@@ -168,7 +186,7 @@ public class RawStats implements APIObject
      */
     public Integer getGold()
     {
-        return gold;
+        return this.gold;
     }
 
     /**
@@ -176,7 +194,7 @@ public class RawStats implements APIObject
      */
     public Integer getGoldEarned()
     {
-        return goldEarned;
+        return this.goldEarned;
     }
 
     /**
@@ -184,7 +202,7 @@ public class RawStats implements APIObject
      */
     public Integer getGoldSpent()
     {
-        return goldSpent;
+        return this.goldSpent;
     }
 
     /**
@@ -192,7 +210,7 @@ public class RawStats implements APIObject
      */
     public Integer getItem0()
     {
-        return item0;
+        return this.item0;
     }
 
     /**
@@ -200,7 +218,7 @@ public class RawStats implements APIObject
      */
     public Integer getItem1()
     {
-        return item1;
+        return this.item1;
     }
 
     /**
@@ -208,7 +226,7 @@ public class RawStats implements APIObject
      */
     public Integer getItem2()
     {
-        return item2;
+        return this.item2;
     }
 
     /**
@@ -216,7 +234,7 @@ public class RawStats implements APIObject
      */
     public Integer getItem3()
     {
-        return item3;
+        return this.item3;
     }
 
     /**
@@ -224,7 +242,7 @@ public class RawStats implements APIObject
      */
     public Integer getItem4()
     {
-        return item4;
+        return this.item4;
     }
 
     /**
@@ -232,7 +250,7 @@ public class RawStats implements APIObject
      */
     public Integer getItem5()
     {
-        return item5;
+        return this.item5;
     }
 
     /**
@@ -240,7 +258,7 @@ public class RawStats implements APIObject
      */
     public Integer getItem6()
     {
-        return item6;
+        return this.item6;
     }
 
     /**
@@ -248,7 +266,7 @@ public class RawStats implements APIObject
      */
     public Integer getItemsPurchased()
     {
-        return itemsPurchased;
+        return this.itemsPurchased;
     }
 
     /**
@@ -256,7 +274,7 @@ public class RawStats implements APIObject
      */
     public Integer getKillingSprees()
     {
-        return killingSprees;
+        return this.killingSprees;
     }
 
     /**
@@ -264,7 +282,7 @@ public class RawStats implements APIObject
      */
     public Integer getLargestCriticalStrike()
     {
-        return largestCriticalStrike;
+        return this.largestCriticalStrike;
     }
 
     /**
@@ -272,7 +290,7 @@ public class RawStats implements APIObject
      */
     public Integer getLargestKillingSpree()
     {
-        return largestKillingSpree;
+        return this.largestKillingSpree;
     }
 
     /**
@@ -280,7 +298,7 @@ public class RawStats implements APIObject
      */
     public Integer getLargestMultiKill()
     {
-        return largestMultiKill;
+        return this.largestMultiKill;
     }
 
     /**
@@ -288,7 +306,7 @@ public class RawStats implements APIObject
      */
     public Integer getLegendaryItemsCreated()
     {
-        return legendaryItemsCreated;
+        return this.legendaryItemsCreated;
     }
 
     /**
@@ -296,7 +314,7 @@ public class RawStats implements APIObject
      */
     public Integer getLevel()
     {
-        return level;
+        return this.level;
     }
 
     /**
@@ -305,7 +323,7 @@ public class RawStats implements APIObject
 
     public Integer getMagicDamageDealtPlayer()
     {
-        return magicDamageDealtPlayer;
+        return this.magicDamageDealtPlayer;
     }
 
     /**
@@ -314,7 +332,7 @@ public class RawStats implements APIObject
 
     public Integer getMagicDamageDealtToChampions()
     {
-        return magicDamageDealtToChampions;
+        return this.magicDamageDealtToChampions;
     }
 
     /**
@@ -323,7 +341,7 @@ public class RawStats implements APIObject
 
     public Integer getMagicDamageTaken()
     {
-        return magicDamageTaken;
+        return this.magicDamageTaken;
     }
 
     /**
@@ -332,7 +350,7 @@ public class RawStats implements APIObject
 
     public Integer getMinionsDenied()
     {
-        return minionsDenied;
+        return this.minionsDenied;
     }
 
     /**
@@ -341,7 +359,7 @@ public class RawStats implements APIObject
 
     public Integer getMinionsKilled()
     {
-        return minionsKilled;
+        return this.minionsKilled;
     }
 
     /**
@@ -350,7 +368,7 @@ public class RawStats implements APIObject
 
     public Integer getNeutralMinionsKilled()
     {
-        return neutralMinionsKilled;
+        return this.neutralMinionsKilled;
     }
 
     /**
@@ -359,7 +377,7 @@ public class RawStats implements APIObject
 
     public Integer getNeutralMinionsKilledEnemyJungle()
     {
-        return neutralMinionsKilledEnemyJungle;
+        return this.neutralMinionsKilledEnemyJungle;
     }
 
     /**
@@ -368,7 +386,7 @@ public class RawStats implements APIObject
 
     public Integer getNeutralMinionsKilledYourJungle()
     {
-        return neutralMinionsKilledYourJungle;
+        return this.neutralMinionsKilledYourJungle;
     }
 
     /**
@@ -377,7 +395,7 @@ public class RawStats implements APIObject
 
     public Boolean getNexusKilled()
     {
-        return nexusKilled;
+        return this.nexusKilled;
     }
 
     /**
@@ -386,7 +404,7 @@ public class RawStats implements APIObject
 
     public Integer getNodeCapture()
     {
-        return nodeCapture;
+        return this.nodeCapture;
     }
 
     /**
@@ -395,7 +413,7 @@ public class RawStats implements APIObject
 
     public Integer getNodeCaptureAssist()
     {
-        return nodeCaptureAssist;
+        return this.nodeCaptureAssist;
     }
 
     /**
@@ -404,7 +422,7 @@ public class RawStats implements APIObject
 
     public Integer getNodeNeutralize()
     {
-        return nodeNeutralize;
+        return this.nodeNeutralize;
     }
 
     /**
@@ -413,7 +431,7 @@ public class RawStats implements APIObject
 
     public Integer getNodeNeutralizeAssist()
     {
-        return nodeNeutralizeAssist;
+        return this.nodeNeutralizeAssist;
     }
 
     /**
@@ -422,7 +440,7 @@ public class RawStats implements APIObject
 
     public Integer getNumDeaths()
     {
-        return numDeaths;
+        return this.numDeaths;
     }
 
     /**
@@ -431,7 +449,7 @@ public class RawStats implements APIObject
 
     public Integer getNumItemsBought()
     {
-        return numItemsBought;
+        return this.numItemsBought;
     }
 
     /**
@@ -440,7 +458,7 @@ public class RawStats implements APIObject
 
     public Integer getObjectivePlayerScore()
     {
-        return objectivePlayerScore;
+        return this.objectivePlayerScore;
     }
 
     /**
@@ -449,7 +467,7 @@ public class RawStats implements APIObject
 
     public Integer getPentaKills()
     {
-        return pentaKills;
+        return this.pentaKills;
     }
 
     /**
@@ -458,7 +476,7 @@ public class RawStats implements APIObject
 
     public Integer getPhysicalDamageDealtPlayer()
     {
-        return physicalDamageDealtPlayer;
+        return this.physicalDamageDealtPlayer;
     }
 
     /**
@@ -467,7 +485,7 @@ public class RawStats implements APIObject
 
     public Integer getPhysicalDamageDealtToChampions()
     {
-        return physicalDamageDealtToChampions;
+        return this.physicalDamageDealtToChampions;
     }
 
     /**
@@ -476,7 +494,7 @@ public class RawStats implements APIObject
 
     public Integer getPhysicalDamageTaken()
     {
-        return physicalDamageTaken;
+        return this.physicalDamageTaken;
     }
 
     /**
@@ -485,7 +503,7 @@ public class RawStats implements APIObject
 
     public Integer getPlayerPosition()
     {
-        return playerPosition;
+        return this.playerPosition;
     }
 
     /**
@@ -494,7 +512,7 @@ public class RawStats implements APIObject
 
     public Integer getPlayerRole()
     {
-        return playerRole;
+        return this.playerRole;
     }
 
     /**
@@ -503,7 +521,7 @@ public class RawStats implements APIObject
 
     public Integer getQuadraKills()
     {
-        return quadraKills;
+        return this.quadraKills;
     }
 
     /**
@@ -512,7 +530,7 @@ public class RawStats implements APIObject
 
     public Integer getSightWardsBought()
     {
-        return sightWardsBought;
+        return this.sightWardsBought;
     }
 
     /**
@@ -521,7 +539,7 @@ public class RawStats implements APIObject
 
     public Integer getSpell1Cast()
     {
-        return spell1Cast;
+        return this.spell1Cast;
     }
 
     /**
@@ -530,7 +548,7 @@ public class RawStats implements APIObject
 
     public Integer getSpell2Cast()
     {
-        return spell2Cast;
+        return this.spell2Cast;
     }
 
     /**
@@ -539,7 +557,7 @@ public class RawStats implements APIObject
 
     public Integer getSpell3Cast()
     {
-        return spell3Cast;
+        return this.spell3Cast;
     }
 
     /**
@@ -548,7 +566,7 @@ public class RawStats implements APIObject
 
     public Integer getSpell4Cast()
     {
-        return spell4Cast;
+        return this.spell4Cast;
     }
 
     /**
@@ -557,7 +575,7 @@ public class RawStats implements APIObject
 
     public Integer getSummonSpell1Cast()
     {
-        return summonSpell1Cast;
+        return this.summonSpell1Cast;
     }
 
     /**
@@ -566,7 +584,7 @@ public class RawStats implements APIObject
 
     public Integer getSummonSpell2Cast()
     {
-        return summonSpell2Cast;
+        return this.summonSpell2Cast;
     }
 
     /**
@@ -575,7 +593,7 @@ public class RawStats implements APIObject
 
     public Integer getSuperMonsterKilled()
     {
-        return superMonsterKilled;
+        return this.superMonsterKilled;
     }
 
     /**
@@ -584,7 +602,7 @@ public class RawStats implements APIObject
 
     public Integer getTeam()
     {
-        return team;
+        return this.team;
     }
 
     /**
@@ -592,7 +610,7 @@ public class RawStats implements APIObject
      */
     public Integer getTeamObjective()
     {
-        return teamObjective;
+        return this.teamObjective;
     }
 
     /**
@@ -600,7 +618,7 @@ public class RawStats implements APIObject
      */
     public Integer getTimePlayed()
     {
-        return timePlayed;
+        return this.timePlayed;
     }
 
     /**
@@ -608,7 +626,7 @@ public class RawStats implements APIObject
      */
     public Integer getTotalDamageDealt()
     {
-        return totalDamageDealt;
+        return this.totalDamageDealt;
     }
 
     /**
@@ -616,7 +634,7 @@ public class RawStats implements APIObject
      */
     public Integer getTotalDamageDealtToChampions()
     {
-        return totalDamageDealtToChampions;
+        return this.totalDamageDealtToChampions;
     }
 
     /**
@@ -624,7 +642,7 @@ public class RawStats implements APIObject
      */
     public Integer getTotalDamageTaken()
     {
-        return totalDamageTaken;
+        return this.totalDamageTaken;
     }
 
     /**
@@ -632,7 +650,7 @@ public class RawStats implements APIObject
      */
     public Integer getTotalHeal()
     {
-        return totalHeal;
+        return this.totalHeal;
     }
 
     /**
@@ -640,7 +658,7 @@ public class RawStats implements APIObject
      */
     public Integer getTotalPlayerScore()
     {
-        return totalPlayerScore;
+        return this.totalPlayerScore;
     }
 
     /**
@@ -648,7 +666,7 @@ public class RawStats implements APIObject
      */
     public Integer getTotalScoreRank()
     {
-        return totalScoreRank;
+        return this.totalScoreRank;
     }
 
     /**
@@ -656,7 +674,7 @@ public class RawStats implements APIObject
      */
     public Integer getTotalTimeCrowdControlDealt()
     {
-        return totalTimeCrowdControlDealt;
+        return this.totalTimeCrowdControlDealt;
     }
 
     /**
@@ -664,7 +682,7 @@ public class RawStats implements APIObject
      */
     public Integer getTotalUnitsHealed()
     {
-        return totalUnitsHealed;
+        return this.totalUnitsHealed;
     }
 
     /**
@@ -672,7 +690,7 @@ public class RawStats implements APIObject
      */
     public Integer getTripleKills()
     {
-        return tripleKills;
+        return this.tripleKills;
     }
 
     /**
@@ -680,7 +698,7 @@ public class RawStats implements APIObject
      */
     public Integer getTrueDamageDealtPlayer()
     {
-        return trueDamageDealtPlayer;
+        return this.trueDamageDealtPlayer;
     }
 
     /**
@@ -688,7 +706,7 @@ public class RawStats implements APIObject
      */
     public Integer getTrueDamageDealtToChampions()
     {
-        return trueDamageDealtToChampions;
+        return this.trueDamageDealtToChampions;
     }
 
     /**
@@ -696,7 +714,7 @@ public class RawStats implements APIObject
      */
     public Integer getTrueDamageTaken()
     {
-        return trueDamageTaken;
+        return this.trueDamageTaken;
     }
 
     /**
@@ -704,7 +722,7 @@ public class RawStats implements APIObject
      */
     public Integer getTurretsKilled()
     {
-        return turretsKilled;
+        return this.turretsKilled;
     }
 
     /**
@@ -712,7 +730,7 @@ public class RawStats implements APIObject
      */
     public Integer getUnrealKills()
     {
-        return unrealKills;
+        return this.unrealKills;
     }
 
     /**
@@ -721,7 +739,7 @@ public class RawStats implements APIObject
 
     public Integer getVictoryPointTotal()
     {
-        return victoryPointTotal;
+        return this.victoryPointTotal;
     }
 
     /**
@@ -729,7 +747,7 @@ public class RawStats implements APIObject
      */
     public Integer getVisionWardsBought()
     {
-        return visionWardsBought;
+        return this.visionWardsBought;
     }
 
     /**
@@ -737,7 +755,7 @@ public class RawStats implements APIObject
      */
     public Integer getWardKilled()
     {
-        return wardKilled;
+        return this.wardKilled;
     }
 
     /**
@@ -745,7 +763,7 @@ public class RawStats implements APIObject
      */
     public Integer getWardPlaced()
     {
-        return wardPlaced;
+        return this.wardPlaced;
     }
 
     /**
@@ -753,31 +771,14 @@ public class RawStats implements APIObject
      */
     public Boolean getWin()
     {
-        return win;
-    }
-
-    /**
-     * a {@code Map<String, String>} of all the fields in this class
-     */
-    public Map<String, String> getAllStats()
-    {
-        Map<String, String> map = new HashMap<>();
-        Stream.of(this.getClass().getFields()).forEach(f -> {
-            try
-            {
-                map.put(f.getName(), f.get(this).toString());
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        });
-        return map;
+        return this.win;
     }
 
     @Override
     public String toString()
     {
-        return "RawStats [assists=" + assists + ", barracksKilled=" + barracksKilled + ", championsKilled=" + championsKilled + ", combatPlayerScore=" + combatPlayerScore + ", consumablesPurchased=" + consumablesPurchased + ", damageDealtPlayer=" + damageDealtPlayer + ", doubleKills=" + doubleKills + ", firstBlood=" + firstBlood + ", gold=" + gold + ", goldEarned=" + goldEarned + ", goldSpent=" + goldSpent + ", item0=" + item0 + ", item1=" + item1 + ", item2=" + item2 + ", item3=" + item3 + ", item4=" + item4 + ", item5=" + item5 + ", item6=" + item6 + ", itemsPurchased=" + itemsPurchased + ", killingSprees=" + killingSprees + ", largestCriticalStrike=" + largestCriticalStrike + ", largestKillingSpree=" + largestKillingSpree + ", largestMultiKill=" + largestMultiKill + ", legendaryItemsCreated=" + legendaryItemsCreated + ", level=" + level + ", magicDamageDealtPlayer=" + magicDamageDealtPlayer + ", magicDamageDealtToChampions=" + magicDamageDealtToChampions + ", magicDamageTaken=" + magicDamageTaken + ", minionsDenied=" + minionsDenied + ", minionsKilled=" + minionsKilled + ", neutralMinionsKilled=" + neutralMinionsKilled + ", neutralMinionsKilledEnemyJungle=" + neutralMinionsKilledEnemyJungle + ", neutralMinionsKilledYourJungle=" + neutralMinionsKilledYourJungle + ", nexusKilled=" + nexusKilled + ", nodeCapture=" + nodeCapture + ", nodeCaptureAssist=" + nodeCaptureAssist + ", nodeNeutralize=" + nodeNeutralize + ", nodeNeutralizeAssist=" + nodeNeutralizeAssist + ", numDeaths=" + numDeaths + ", numItemsBought=" + numItemsBought + ", objectivePlayerScore="
-                + objectivePlayerScore + ", pentaKills=" + pentaKills + ", physicalDamageDealtPlayer=" + physicalDamageDealtPlayer + ", physicalDamageDealtToChampions=" + physicalDamageDealtToChampions + ", physicalDamageTaken=" + physicalDamageTaken + ", playerPosition=" + playerPosition + ", playerRole=" + playerRole + ", quadraKills=" + quadraKills + ", sightWardsBought=" + sightWardsBought + ", spell1Cast=" + spell1Cast + ", spell2Cast=" + spell2Cast + ", spell3Cast=" + spell3Cast + ", spell4Cast=" + spell4Cast + ", summonSpell1Cast=" + summonSpell1Cast + ", summonSpell2Cast=" + summonSpell2Cast + ", superMonsterKilled=" + superMonsterKilled + ", team=" + team + ", teamObjective=" + teamObjective + ", timePlayed=" + timePlayed + ", totalDamageDealt=" + totalDamageDealt + ", totalDamageDealtToChampions=" + totalDamageDealtToChampions + ", totalDamageTaken=" + totalDamageTaken + ", totalHeal=" + totalHeal + ", totalPlayerScore=" + totalPlayerScore + ", totalScoreRank=" + totalScoreRank + ", totalTimeCrowdControlDealt=" + totalTimeCrowdControlDealt + ", totalUnitsHealed=" + totalUnitsHealed + ", tripleKills=" + tripleKills + ", trueDamageDealtPlayer=" + trueDamageDealtPlayer + ", trueDamageDealtToChampions=" + trueDamageDealtToChampions + ", trueDamageTaken=" + trueDamageTaken + ", turretsKilled=" + turretsKilled + ", unrealKills=" + unrealKills + ", victoryPointTotal=" + victoryPointTotal + ", visionWardsBought=" + visionWardsBought + ", wardKilled=" + wardKilled + ", wardPlaced=" + wardPlaced + ", win=" + win + "]";
+        return "RawStats [assists=" + this.assists + ", barracksKilled=" + this.barracksKilled + ", championsKilled=" + this.championsKilled + ", combatPlayerScore=" + this.combatPlayerScore + ", consumablesPurchased=" + this.consumablesPurchased + ", damageDealtPlayer=" + this.damageDealtPlayer + ", doubleKills=" + this.doubleKills + ", firstBlood=" + this.firstBlood + ", gold=" + this.gold + ", goldEarned=" + this.goldEarned + ", goldSpent=" + this.goldSpent + ", item0=" + this.item0 + ", item1=" + this.item1 + ", item2=" + this.item2 + ", item3=" + this.item3 + ", item4=" + this.item4 + ", item5=" + this.item5 + ", item6=" + this.item6 + ", itemsPurchased=" + this.itemsPurchased + ", killingSprees=" + this.killingSprees + ", largestCriticalStrike=" + this.largestCriticalStrike + ", largestKillingSpree=" + this.largestKillingSpree + ", largestMultiKill=" + this.largestMultiKill + ", legendaryItemsCreated=" + this.legendaryItemsCreated + ", level=" + this.level + ", magicDamageDealtPlayer=" + this.magicDamageDealtPlayer + ", magicDamageDealtToChampions=" + this.magicDamageDealtToChampions + ", magicDamageTaken=" + this.magicDamageTaken + ", minionsDenied=" + this.minionsDenied + ", minionsKilled=" + this.minionsKilled + ", neutralMinionsKilled=" + this.neutralMinionsKilled + ", neutralMinionsKilledEnemyJungle=" + this.neutralMinionsKilledEnemyJungle + ", neutralMinionsKilledYourJungle=" + this.neutralMinionsKilledYourJungle + ", nexusKilled=" + this.nexusKilled + ", nodeCapture=" + this.nodeCapture + ", nodeCaptureAssist=" + this.nodeCaptureAssist + ", nodeNeutralize="
+                + this.nodeNeutralize + ", nodeNeutralizeAssist=" + this.nodeNeutralizeAssist + ", numDeaths=" + this.numDeaths + ", numItemsBought=" + this.numItemsBought + ", objectivePlayerScore=" + this.objectivePlayerScore + ", pentaKills=" + this.pentaKills + ", physicalDamageDealtPlayer=" + this.physicalDamageDealtPlayer + ", physicalDamageDealtToChampions=" + this.physicalDamageDealtToChampions + ", physicalDamageTaken=" + this.physicalDamageTaken + ", playerPosition=" + this.playerPosition + ", playerRole=" + this.playerRole + ", quadraKills=" + this.quadraKills + ", sightWardsBought=" + this.sightWardsBought + ", spell1Cast=" + this.spell1Cast + ", spell2Cast=" + this.spell2Cast + ", spell3Cast=" + this.spell3Cast + ", spell4Cast=" + this.spell4Cast + ", summonSpell1Cast=" + this.summonSpell1Cast + ", summonSpell2Cast=" + this.summonSpell2Cast + ", superMonsterKilled=" + this.superMonsterKilled + ", team=" + this.team + ", teamObjective=" + this.teamObjective + ", timePlayed=" + this.timePlayed + ", totalDamageDealt=" + this.totalDamageDealt + ", totalDamageDealtToChampions=" + this.totalDamageDealtToChampions + ", totalDamageTaken=" + this.totalDamageTaken + ", totalHeal=" + this.totalHeal + ", totalPlayerScore=" + this.totalPlayerScore + ", totalScoreRank=" + this.totalScoreRank + ", totalTimeCrowdControlDealt=" + this.totalTimeCrowdControlDealt + ", totalUnitsHealed=" + this.totalUnitsHealed + ", tripleKills=" + this.tripleKills + ", trueDamageDealtPlayer=" + this.trueDamageDealtPlayer + ", trueDamageDealtToChampions=" + this.trueDamageDealtToChampions
+                + ", trueDamageTaken=" + this.trueDamageTaken + ", turretsKilled=" + this.turretsKilled + ", unrealKills=" + this.unrealKills + ", victoryPointTotal=" + this.victoryPointTotal + ", visionWardsBought=" + this.visionWardsBought + ", wardKilled=" + this.wardKilled + ", wardPlaced=" + this.wardPlaced + ", win=" + this.win + "]";
     }
 }

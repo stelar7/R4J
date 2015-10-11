@@ -110,16 +110,6 @@ public class CurrentGameParticipant implements APIObject
     }
 
     /**
-     * The team ID of this participant, indicating the participant's team
-     *
-     * @return Long
-     */
-    public Long getTeamId()
-    {
-        return this.teamId;
-    }
-    
-    /**
      * a Team representing the team of the participant
      *
      * @return Team
@@ -129,6 +119,15 @@ public class CurrentGameParticipant implements APIObject
         return Team.getFromCode(this.teamId);
     }
 
+    /**
+     * The team ID of this participant, indicating the participant's team
+     *
+     * @return Long
+     */
+    public Long getTeamId()
+    {
+        return this.teamId;
+    }
 
     @Override
     public String toString()
