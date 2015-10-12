@@ -63,13 +63,13 @@ public class RunePage implements APIObject
     }
 
     /**
-     * Collection of rune slots associated with the rune page.
+     * Collection of rune slots associated with the rune page, if there are no pages, it returns an empty list
      *
      * @return {@code List<RuneSlot>}
      */
     public List<RuneSlot> getSlots()
     {
-        return Collections.unmodifiableList(this.slots);
+        return (this.slots == null) ? Collections.EMPTY_LIST : Collections.unmodifiableList(this.slots);
     }
 
     /**

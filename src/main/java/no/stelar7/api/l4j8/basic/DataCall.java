@@ -8,7 +8,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
@@ -28,7 +27,7 @@ public class DataCall
 
         public Pair<ResponseType, Object> build()
         {
-            if (this.dc.server.hasLimit() || !this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
+            if (this.dc.server.isLimited() || !this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
             {
                 DataCall.limiter.get(this.dc.server).acquire();
             }
@@ -96,16 +95,6 @@ public class DataCall
                 con.disconnect();
 
                 final Object dtoobj = this.dc.endpoint.getType().getMethod("createFromString", String.class).invoke(this.dc.endpoint.getType().newInstance(), data.toString());
-
-                if ((dtoobj instanceof Map) && (((Map<?, ?>) dtoobj).values().size() == 1))
-                {
-                    return new Pair<>(ResponseType.OK, ((Map<?, ?>) dtoobj).values().stream().findFirst().get());
-                }
-
-                if ((dtoobj instanceof List) && (((List<?>) dtoobj).size() == 1))
-                {
-                    return new Pair<>(ResponseType.OK, ((List<?>) dtoobj).stream().findFirst().get());
-                }
 
                 return new Pair<>(ResponseType.OK, dtoobj);
             } catch (final Exception e)
@@ -215,7 +204,7 @@ public class DataCall
     private static final Map<Server, RateLimiter> limiter       = new HashMap<Server, RateLimiter>()
     {
         {
-            Arrays.stream(Server.values()).filter(s -> s.hasLimit()).forEach(s -> this.put(s, RateLimiter.create(7.0 / 10.0)));
+            Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(7.0 / 10.0)));
         }
     };
     private static final String                   HTTP          = "http://";

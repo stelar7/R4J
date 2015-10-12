@@ -9,7 +9,6 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import no.stelar7.api.l4j8.basic.APIObject;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 
 public class MasteryPage implements APIObject
 {
@@ -24,7 +23,7 @@ public class MasteryPage implements APIObject
             m.getValue().get("pages").iterator().forEachRemaining(n -> {
                 try
                 {
-                    final Object page = APIObject.getDefaultMapper().readValue(n.toString(), RunePage.class);
+                    final Object page = APIObject.getDefaultMapper().readValue(n.toString(), MasteryPage.class);
                     pages.add(page);
                 } catch (final Exception e)
                 {
@@ -54,13 +53,13 @@ public class MasteryPage implements APIObject
     }
 
     /**
-     * Collection of masteries associated with the mastery page
+     * Collection of masteries associated with the mastery page, if there are no masteries, it returns an empty list
      *
      * @return {@code List<Mastery>}
      */
     public List<Mastery> getMasteries()
     {
-        return Collections.unmodifiableList(this.masteries);
+        return (this.masteries == null) ? Collections.EMPTY_LIST : Collections.unmodifiableList(this.masteries);
     }
 
     /**
