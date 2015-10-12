@@ -39,7 +39,9 @@ public class Summoner implements APIObject
     private Integer summonerLevel;
 
     /**
-     * The Summoners ID * @return Long
+     * The Summoners ID
+     * 
+     * @return Long
      */
     public Long getId()
     {
@@ -47,7 +49,9 @@ public class Summoner implements APIObject
     }
 
     /**
-     * The Summoners name * @return String
+     * The Summoners name
+     * 
+     * @return String
      */
     public String getName()
     {
@@ -55,7 +59,9 @@ public class Summoner implements APIObject
     }
 
     /**
-     * ID of the summoner icon associated with the summoner * @return Integer
+     * ID of the summoner icon associated with the summoner
+     * 
+     * @return Integer
      */
     public Integer getProfileIconId()
     {

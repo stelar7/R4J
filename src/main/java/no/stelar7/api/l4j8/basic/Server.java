@@ -14,12 +14,12 @@ public enum Server
 
     private final String server;
 
-    private final Boolean limit;
+    private final Boolean limited;
 
-    Server(final String endpoint, final boolean limit)
+    Server(final String endpoint, final boolean limited)
     {
         this.server = endpoint;
-        this.limit = limit;
+        this.limited = limited;
     }
 
     public String getURL()
@@ -27,9 +27,9 @@ public enum Server
         return this.server;
     }
 
-    public boolean hasLimit()
+    public boolean isLimited()
     {
-        return this.limit;
+        return this.limited;
     }
 
     public String toReadable()

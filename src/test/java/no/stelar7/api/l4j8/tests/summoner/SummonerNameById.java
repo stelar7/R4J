@@ -1,7 +1,11 @@
 package no.stelar7.api.l4j8.tests.summoner;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -30,51 +34,28 @@ public class SummonerNameById
         this.builder.withEndpoint(URLEndpoint.SUMMONER_NAMES_BY_ID);
     }
 
-    public void parseResult(final Pair<ResponseType, Object> result)
-    {
-        switch (result.getKey())
-        {
-            case OK:
-            {
-                if (result.getValue() instanceof Map)
-                {
-                    ((Map<?, ?>) result.getValue()).keySet().forEach(k -> {
-                        System.out.println(k);
-                        System.out.println("\t" + ((Map<?, ?>) result.getValue()).get(k));
-                    });
-                } else
-                {
-                    System.out.println(result.getValue());
-                }
-                break;
-            }
-            default:
-            {
-                System.out.println(result.getKey());
-                System.out.println(result.getValue());
-                break;
-            }
-        }
-    }
-
     @Test
-    public void testMany()
+    public void doTest()
     {
-        System.err.println("TESTING MANY");
-        this.builder.withURLData("{summonerId}", "19613950");
-        this.builder.withURLData("{summonerId}", "22291359");
-        this.builder.withURLData("{summonerId}", "33540589");
+        // Generate list of String IDs
+        List<String> keys = Arrays.asList("19613950", "22291359", "33540589");
 
-        final Pair<ResponseType, Object> summonerCall = this.builder.build();
-        this.parseResult(summonerCall);
+        // Add them as a parameter to the URL
+        keys.forEach((String k) -> this.builder.withURLData("{summonerId}", k));
+
+        // Get the response
+        final Pair<ResponseType, Object> dataCall = this.builder.build();
+
+        System.out.println(dataCall.getValue());
+        // Map it to the correct return value
+        Map<String, String> data = (Map<String, String>) dataCall.getValue();
+
+        // Make sure all the data is returned as expected
+        data.forEach(doAssertions);
     }
 
-    @Test
-    public void testSingle()
-    {
-        System.err.println("TESTING SINGLE");
-        this.builder.withURLData("{summonerId}", "19613950");
-        final Pair<ResponseType, Object> summonerCall = this.builder.build();
-        this.parseResult(summonerCall);
-    }
+    private BiConsumer<String, String> doAssertions = (String key, String value) -> {
+        Assert.assertNotNull("No returned value for id ", value);
+    };
+
 }
