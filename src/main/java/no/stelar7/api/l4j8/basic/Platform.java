@@ -15,6 +15,13 @@ public enum Platform
     EUW1,
     KR;
 
+    /**
+     * Returns a Platform from the provided code
+     * 
+     * @param code
+     *            the lookup key
+     * @return Platform
+     */
     public static Platform getFromCode(final String code)
     {
         return Stream.of(Platform.values()).filter(t -> t.name().equals(code)).findFirst().get();

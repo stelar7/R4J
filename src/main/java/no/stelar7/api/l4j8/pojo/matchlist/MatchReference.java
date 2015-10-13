@@ -42,15 +42,14 @@ public class MatchReference implements APIObject
     }
 
     private Long   champion;
-    private String lane;
     private Long   matchId;
+    private Long   timestamp;
+    private String lane;
     private String platformId;
     private String queue;
     private String region;
     private String role;
     private String season;
-
-    private Long timestamp;
 
     /**
      * Champion ID associated with game.
@@ -67,7 +66,7 @@ public class MatchReference implements APIObject
      *
      * @return Server
      */
-    public Server getFromCode()
+    public Server getRegionAsServer()
     {
         return Server.getFromCode(this.region);
     }

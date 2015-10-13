@@ -24,6 +24,11 @@ public enum Season
         this.code = code;
     }
 
+    /**
+     * The code used to map strings to objects
+     * 
+     * @return String
+     */
     public String getCode()
     {
         return this.code;

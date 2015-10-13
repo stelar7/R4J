@@ -116,7 +116,7 @@ public class DataCall
 
             sb.append(this.dc.server.getURL()).append(this.dc.endpoint.getValue());
 
-            this.withURLData("{region}", this.dc.server.toReadable());
+            this.withURLData("{region}", this.dc.server.asURLFormat());
             this.withURLData("{version}", this.dc.endpoint.getVersion());
 
             this.dc.urlData.forEach((k, v) -> {

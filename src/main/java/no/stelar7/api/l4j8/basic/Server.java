@@ -22,19 +22,44 @@ public enum Server
         this.limited = limited;
     }
 
+    /**
+     * The URL base for calling the API on that server
+     * 
+     * @return String
+     */
     public String getURL()
     {
         return this.server;
     }
 
-    public boolean isLimited()
+    /**
+     * Whether or not this "server" has a rate-limit
+     * 
+     * @return Boolean
+     */
+    public Boolean isLimited()
     {
         return this.limited;
     }
 
-    public String toReadable()
+    /**
+     * The "server" as the URL expects it (euw, br, na, etc...)
+     * 
+     * @return String
+     */
+    public String asURLFormat()
     {
         return this.name().toLowerCase();
+    }
+
+    /**
+     * The code used to map strings to objects
+     * 
+     * @return String
+     */
+    public String getCode()
+    {
+        return this.name();
     }
 
 }
