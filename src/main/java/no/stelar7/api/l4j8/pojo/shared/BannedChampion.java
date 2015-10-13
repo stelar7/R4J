@@ -52,7 +52,7 @@ public class BannedChampion implements APIObject
     @Override
     public String toString()
     {
-        return "BannedChampion [\n\tchampionId=" + this.championId + ", \n\tpickTurn=" + this.pickTurn + ", \n\tteamId=" + this.teamId + "]";
+        return "BannedChampion [championId=" + this.championId + ", pickTurn=" + this.pickTurn + ", teamId=" + this.teamId + "]";
     }
 
 }

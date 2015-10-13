@@ -46,7 +46,6 @@ public class SummonerNameById
         // Get the response
         final Pair<ResponseType, Object> dataCall = this.builder.build();
 
-        System.out.println(dataCall.getValue());
         // Map it to the correct return value
         Map<String, String> data = (Map<String, String>) dataCall.getValue();
 

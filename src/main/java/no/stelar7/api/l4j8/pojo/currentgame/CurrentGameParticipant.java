@@ -132,7 +132,7 @@ public class CurrentGameParticipant implements APIObject
     @Override
     public String toString()
     {
-        return "CurrentGameParticipant [\n\tbot=" + this.bot + ", \n\tchampionId=" + this.championId + ", \n\tmasteries=" + this.masteries + ", \n\tprofileIconId=" + this.profileIconId + ", \n\trunes=" + this.runes + ", \n\tspell1Id=" + this.spell1Id + ", \n\tspell2Id=" + this.spell2Id + ", \n\tsummonerId=" + this.summonerId + ", \n\tsummonerName=" + this.summonerName + ", \n\tteamId=" + this.teamId + "]";
+        return "CurrentGameParticipant [bot=" + this.bot + ", championId=" + this.championId + ", masteries=" + this.masteries + ", profileIconId=" + this.profileIconId + ", runes=" + this.runes + ", spell1Id=" + this.spell1Id + ", spell2Id=" + this.spell2Id + ", summonerId=" + this.summonerId + ", summonerName=" + this.summonerName + ", teamId=" + this.teamId + "]";
     }
 
 }

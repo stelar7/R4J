@@ -26,4 +26,14 @@ public enum Platform
     {
         return Stream.of(Platform.values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
+
+    /**
+     * The code used to map strings to objects
+     * 
+     * @return String
+     */
+    public String getCode()
+    {
+        return this.name();
+    }
 }

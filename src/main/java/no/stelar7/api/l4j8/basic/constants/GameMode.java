@@ -37,8 +37,25 @@ public enum GameMode
      */
     KINGPORO;
 
+    /**
+     * Returns a GameMode from the provided code
+     * 
+     * @param code
+     *            the lookup key
+     * @return GameMode
+     */
     public static GameMode getFromCode(final String gameMode)
     {
         return Stream.of(GameMode.values()).filter(t -> t.name().equals(gameMode)).findFirst().get();
+    }
+    
+    /**
+     * The code used to map strings to objects
+     * 
+     * @return String
+     */
+    public String getCode()
+    {
+        return this.name();
     }
 }

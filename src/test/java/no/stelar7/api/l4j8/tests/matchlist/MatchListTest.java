@@ -47,6 +47,7 @@ public class MatchListTest
 
         List<MatchReference> matches = (List<MatchReference>) dataCall.getValue();
 
+        // I played 47 ranked solo games as leona in 2014
         Assert.assertEquals("Unexpected amount of games returned", matches.size(), 47);
 
         matches.forEach(doAssertions);

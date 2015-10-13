@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.basic;
 
 import no.stelar7.api.l4j8.pojo.champion.Champion;
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGameInfo;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
@@ -17,7 +18,8 @@ public enum URLEndpoint
     SUMMONER_NAMES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", StringMap.class),
     CHAMPION_BY_ID("/api/lol/{region}/{version}/champion/{championId}", "v1.2", Champion.class),
     MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchReference.class),
-    CURRENTGAME("/observer-mode/rest/consumer/getSpectatorGameInfo/{platformId}/{summonerId}", "", CurrentGameInfo.class),;
+    CURRENTGAME("/observer-mode/rest/consumer/getSpectatorGameInfo/{platformId}/{summonerId}", "", CurrentGameInfo.class),
+    FEATUREDGAME("/observer-mode/rest/featured", "", FeaturedGameInfo.class);
 
     private String value;
     private String version;

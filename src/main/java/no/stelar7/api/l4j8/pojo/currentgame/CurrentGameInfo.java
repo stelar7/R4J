@@ -47,7 +47,7 @@ public class CurrentGameInfo implements APIObject
      */
     public List<BannedChampion> getBannedChampions()
     {
-        return Collections.unmodifiableList(this.bannedChampions);
+        return this.bannedChampions == null ? Collections.EMPTY_LIST : Collections.unmodifiableList(this.bannedChampions);
     }
 
     /**
@@ -177,7 +177,7 @@ public class CurrentGameInfo implements APIObject
      */
     public List<CurrentGameParticipant> getParticipants()
     {
-        return Collections.unmodifiableList(this.participants);
+        return this.participants == null ? Collections.EMPTY_LIST : Collections.unmodifiableList(this.participants);
     }
 
     /**
@@ -205,7 +205,7 @@ public class CurrentGameInfo implements APIObject
      *
      * * @return ZonedDateTime
      */
-    public ZonedDateTime getRevisionDateAsDate()
+    public ZonedDateTime getGameStartTimeAsDate()
     {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTime), ZoneOffset.UTC);
     }

@@ -33,6 +33,12 @@ public class FeaturedGameParticipant implements APIObject
         return this.championId;
     }
 
+    @Override
+    public String toString()
+    {
+        return "FeaturedGameParticipant [bot=" + bot + ", championId=" + championId + ", profileIconId=" + profileIconId + ", spell1Id=" + spell1Id + ", spell2Id=" + spell2Id + ", summonerName=" + summonerName + ", teamId=" + teamId + "]";
+    }
+
     /**
      * The ID of the profile icon used by this participant
      *

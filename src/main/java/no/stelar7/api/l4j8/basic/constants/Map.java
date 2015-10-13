@@ -8,53 +8,53 @@ public enum Map
     /**
      * Summoner's Rift Original Summer Variant
      */
-    SUMMONERS_RIFT_SUMMER_OLD(1),
+    SUMMONERS_RIFT_SUMMER_OLD(1L),
     /**
      * Summoner's Rift Original Autumn Variant
      */
-    SUMMONERS_RIFT_AUTUMN_OLD(2),
+    SUMMONERS_RIFT_AUTUMN_OLD(2L),
     /**
      * The Proving Grounds Tutorial Map
      */
-    PROVING_GROUNDS(3),
+    PROVING_GROUNDS(3L),
     /**
      * Twisted Treeline Original Version
      */
-    TWISTED_TREELINE_OLD(4),
+    TWISTED_TREELINE_OLD(4L),
     /**
      * The Crystal Scar Dominion Map
      */
-    DOMINION(8),
+    DOMINION(8L),
     /**
      * Twisted Treeline Current Version
      */
-    TWISTED_TREELINE(10),
+    TWISTED_TREELINE(10L),
     /**
      * Summoner's Rift Current Version
      */
-    SUMMONERS_RIFT(11),
+    SUMMONERS_RIFT(11L),
     /**
      * Howling Abyss ARAM Map
      */
-    HOWLING_ABYSS(12),
+    HOWLING_ABYSS(12L),
     /**
      * Butcher's Bridge ARAM Map
      */
-    BUTCHERS_BRIDGE(14);
+    BUTCHERS_BRIDGE(14L);
 
     public static Map getFromCode(final Number mapId)
     {
         return Stream.of(Map.values()).filter(t -> t.code == mapId).findFirst().get();
     }
 
-    Integer code;
+    Long code;
 
-    Map(final int code)
+    Map(final Long code)
     {
         this.code = code;
     }
 
-    Integer getCode()
+    public Long getCode()
     {
         return this.code;
     }

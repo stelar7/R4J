@@ -15,9 +15,10 @@ import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
-import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.Utils;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -42,7 +43,7 @@ public class SummonerByNameTest
         List<String> keys = Arrays.asList("stelar7", "henriko950", "vibbsen");
 
         // Add them as a parameter to the URL
-        keys.forEach((String k) -> this.builder.withURLData("{summonerName}", k));
+        keys.forEach((String k) -> this.builder.withURLData("{summonerName}", Utils.prepareForURL(k)));
 
         // Get the response
         final Pair<ResponseType, Object> dataCall = this.builder.build();

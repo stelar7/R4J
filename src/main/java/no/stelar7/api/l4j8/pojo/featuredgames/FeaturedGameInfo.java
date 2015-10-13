@@ -3,8 +3,11 @@ package no.stelar7.api.l4j8.pojo.featuredgames;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
@@ -17,10 +20,22 @@ import no.stelar7.api.l4j8.pojo.shared.Observer;
 
 public class FeaturedGameInfo implements APIObject
 {
-    public static Class<?> createFromString(final String json) throws Exception
+    public static List<FeaturedGameInfo> createFromString(final String json) throws Exception
     {
-        // TODO
-        return APIObject.createFromString(json);
+        final JsonNode node = APIObject.getDefaultMapper().readTree(json).get("gameList");
+        List<FeaturedGameInfo> games = new ArrayList<>();
+
+        node.forEach(game -> {
+            try
+            {
+                games.add(APIObject.getDefaultMapper().readValue(game.toString(), FeaturedGameInfo.class));
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+        return games;
     }
 
     private List<BannedChampion>          bannedChampions;
