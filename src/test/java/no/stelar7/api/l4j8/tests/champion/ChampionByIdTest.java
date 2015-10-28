@@ -1,7 +1,8 @@
 package no.stelar7.api.l4j8.tests.champion;
 
-import java.util.Map;
+import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.pojo.champion.Champion;
 import no.stelar7.api.l4j8.tests.SecretFile;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -30,60 +32,35 @@ public class ChampionByIdTest
         this.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
     }
 
-    public void parseResult(final Pair<ResponseType, Object> result)
-    {
-        switch (result.getKey())
-        {
-            case OK:
-            {
-                if (result.getValue() instanceof Map)
-                {
-                    ((Map<?, ?>) result.getValue()).keySet().forEach(k -> {
-                        System.out.println(k);
-                        System.out.println("\t" + ((Map<?, ?>) result.getValue()).get(k));
-                    });
-                } else
-                {
-                    System.out.println(result.getValue());
-                }
-                break;
-            }
-            default:
-            {
-                System.out.println(result.getKey());
-                System.out.println(result.getValue());
-                break;
-            }
-        }
-    }
-
     @Test
     public void testMany()
     {
-        System.err.println("TESTING MANY");
         this.builder.withURLData("{championId}", "");
-        final Pair<ResponseType, Object> summonerCall = this.builder.build();
-        this.parseResult(summonerCall);
+        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        List<Champion> champs = (List<Champion>) dataCall.getValue();
+
+        Assert.assertTrue("Less than 100 champions?", champs.size() > 100);
     }
 
     @Test
     public void testManyWithParam()
     {
-        System.err.println("TESTING MANY WITH PARAMS");
-
         this.builder.withURLData("{championId}", "");
         this.builder.withURLParameter("freeToPlay", "true");
+        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        List<Champion> champs = (List<Champion>) dataCall.getValue();
 
-        final Pair<ResponseType, Object> summonerCall = this.builder.build();
-        this.parseResult(summonerCall);
+        champs.forEach(c -> Assert.assertTrue("Free to play is false?!", c.isFreeToPlay()));
     }
 
     @Test
     public void testSingle()
     {
-        System.err.println("TESTING SINGLE");
         this.builder.withURLData("{championId}", "266");
-        final Pair<ResponseType, Object> summonerCall = this.builder.build();
-        this.parseResult(summonerCall);
+        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        List<Champion> champs = (List<Champion>) dataCall.getValue();
+
+        Assert.assertTrue("More than 1 champion with id 266?", champs.size() == 1);
+        Assert.assertTrue("Champion id is not 266?", champs.get(0).getId().equals(266));
     }
 }
