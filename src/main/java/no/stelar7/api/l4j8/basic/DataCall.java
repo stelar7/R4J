@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -28,17 +29,24 @@ public class DataCall
 
         private final BiFunction<String, String, String> merge = ((o, n) -> o + "," + n);
 
+        public DataCallBuilder asVerbose(final boolean verbose)
+        {
+            this.dc.verbose = verbose;
+            return this;
+        }
+
         public Pair<ResponseType, Object> build()
         {
-            if (this.dc.server.isLimited() || !this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
-            {
-                DataCall.limiter.get(this.dc.server).acquire();
-            }
-
-            final String url = this.getURL();
 
             try
             {
+
+                if (this.dc.server.isLimited() || !this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
+                {
+                    DataCall.limiter.get(this.dc.server).acquire();
+                }
+
+                final String url = this.getURL();
                 final HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 
                 con.setUseCaches(false);
@@ -58,52 +66,72 @@ public class DataCall
                     });
                 }
 
-                if (con.getResponseCode() != 200)
+                final int response = con.getResponseCode();
+
+                if (response == 200)
                 {
-                    if ((con.getResponseCode() == -1) || (con.getResponseCode() == 404))
+                    final StringBuilder data = new StringBuilder();
+
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
                     {
-                        return new Pair<>(ResponseType.USER_ERROR, new APIError(con.getResponseCode()));
+                        br.lines().forEach(s -> data.append(s));
                     }
 
-                    if (con.getResponseCode() == 429)
-                    {
-                        if (this.dc.retry)
-                        {
-                            final String limitType = con.getHeaderField("X-Rate-Limit-Type");
-                            if ((limitType != null) && (limitType.equals(DataCall.LIMIT_USER) || limitType.equals(DataCall.LIMIT_SERVICE)))
-                            {
-                                final String timeoutString = con.getHeaderField("Retry-After");
-                                final long timeout = timeoutString == null ? this.dc.retryTime : Integer.parseInt(timeoutString);
-                                TimeUnit.SECONDS.sleep(timeout);
-                                con.disconnect();
-                                return this.build();
-                            }
+                    con.disconnect();
 
-                            TimeUnit.SECONDS.sleep(this.dc.retryTime);
+                    final Class<? extends APIObject> returnType = this.dc.endpoint.getType();
+                    final Method creator = returnType.getMethod("createFromString", String.class);
+
+                    final Object dtoobj = creator.invoke(returnType.newInstance(), data.toString());
+
+                    return new Pair<>(ResponseType.OK, dtoobj);
+                }
+
+                if (response == 429)
+                {
+                    if (this.dc.retry)
+                    {
+                        final String limitType = con.getHeaderField("X-Rate-Limit-Type");
+
+                        if ((limitType != null) && (limitType.equals(DataCall.LIMIT_USER) || limitType.equals(DataCall.LIMIT_SERVICE)))
+                        {
+                            final String timeoutString = con.getHeaderField("Retry-After");
+
+                            final long timeout = timeoutString == null ? this.dc.retryTime : Integer.parseInt(timeoutString);
+
+                            TimeUnit.SECONDS.sleep(timeout);
+
                             con.disconnect();
+
                             return this.build();
                         }
-                    } else
-                    {
+
+                        TimeUnit.SECONDS.sleep(this.dc.retryTime);
+
                         con.disconnect();
-                        return new Pair<>(con.getResponseCode() < 499 ? ResponseType.USER_ERROR : ResponseType.SERVER_ERROR, new APIError(con.getResponseCode()));
+
+                        return this.build();
                     }
                 }
+                return new Pair<>(ResponseType.ERROR, response);
 
-                final StringBuilder data = new StringBuilder();
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
-                {
-                    br.lines().forEach(s -> data.append(s));
-                }
-                con.disconnect();
-
-                final Object dtoobj = this.dc.endpoint.getType().getMethod("createFromString", String.class).invoke(this.dc.endpoint.getType().newInstance(), data.toString());
-
-                return new Pair<>(ResponseType.OK, dtoobj);
-            } catch (final IOException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | InstantiationException | InterruptedException e)
+            } catch (IOException | IllegalAccessException | InterruptedException | InstantiationException | InvocationTargetException | NoSuchMethodException e)
             {
-                return new Pair<>(ResponseType.LIBRARY_ERROR, new APIError(e));
+                e.printStackTrace();
+                return new Pair<>(ResponseType.ERROR, e.getMessage());
             }
+        }
+
+        public DataCallBuilder clearURLData()
+        {
+            this.dc.urlData.clear();
+            return this;
+        }
+
+        public DataCallBuilder clearURLParameter()
+        {
+            this.dc.urlParams.clear();
+            return this;
         }
 
         public String getURL()
@@ -188,48 +216,44 @@ public class DataCall
             }
             return this;
         }
-
-        public DataCallBuilder withVerbose(final boolean verbose)
-        {
-            this.dc.verbose = verbose;
-            return this;
-        }
     }
 
     public enum ResponseType
     {
         OK,
-        USER_ERROR,
-        LIBRARY_ERROR,
-        SERVER_ERROR;
+        ERROR;
     }
 
-    private static final Map<Server, RateLimiter> limiter       = new HashMap<Server, RateLimiter>()
+    private static final Map<Server, RateLimiter> limiter = new HashMap<Server, RateLimiter>()
     {
         {
             Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(7.0 / 10.0)));
         }
     };
-    private static final String                   HTTP          = "http://";
-    private static final String                   HTTPS         = "https://";
-    private static final String                   LIMIT_USER    = "service";
-    private static final String                   LIMIT_SERVICE = "user";
+
+    private static final String HTTP = "http://";
+
+    private static final String HTTPS         = "https://";
+    private static final String LIMIT_USER    = "service";
+    private static final String LIMIT_SERVICE = "user";
 
     public static DataCallBuilder builder()
     {
         return new DataCallBuilder();
     }
 
-    private final Map<String, String> urlData = new HashMap<>();
+    private String key;
 
+    private final Map<String, String> urlData   = new HashMap<>();
     private final Map<String, String> urlParams = new HashMap<>();
-    private boolean                   retry     = true;
-    private int                       retryTime = 5;
-    private boolean                   verbose   = false;
+
+    private boolean retry   = true;
+    private boolean verbose = false;
+
+    private int retryTime = 5;
 
     private Server server;
 
     private URLEndpoint endpoint;
 
-    private String key;
 }
