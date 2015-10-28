@@ -23,13 +23,13 @@ public class FeaturedGameInfo implements APIObject
     public static List<FeaturedGameInfo> createFromString(final String json) throws Exception
     {
         final JsonNode node = APIObject.getDefaultMapper().readTree(json).get("gameList");
-        List<FeaturedGameInfo> games = new ArrayList<>();
+        final List<FeaturedGameInfo> games = new ArrayList<>();
 
         node.forEach(game -> {
             try
             {
                 games.add(APIObject.getDefaultMapper().readValue(game.toString(), FeaturedGameInfo.class));
-            } catch (Exception e)
+            } catch (final Exception e)
             {
                 e.printStackTrace();
             }

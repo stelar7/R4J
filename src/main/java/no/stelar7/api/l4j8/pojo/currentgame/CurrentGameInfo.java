@@ -121,6 +121,16 @@ public class CurrentGameInfo implements APIObject
     }
 
     /**
+     * A ZonedDateTime of {@code getGameStartTime()}
+     *
+     * * @return ZonedDateTime
+     */
+    public ZonedDateTime getGameStartTimeAsDate()
+    {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTime), ZoneOffset.UTC);
+    }
+
+    /**
      * The game type
      *
      * @return String
@@ -198,16 +208,6 @@ public class CurrentGameInfo implements APIObject
     public String getPlatformId()
     {
         return this.platformId;
-    }
-
-    /**
-     * A ZonedDateTime of {@code getGameStartTime()}
-     *
-     * * @return ZonedDateTime
-     */
-    public ZonedDateTime getGameStartTimeAsDate()
-    {
-        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTime), ZoneOffset.UTC);
     }
 
     @Override

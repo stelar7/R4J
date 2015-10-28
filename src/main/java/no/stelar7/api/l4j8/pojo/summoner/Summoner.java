@@ -40,7 +40,7 @@ public class Summoner implements APIObject
 
     /**
      * The Summoners ID
-     * 
+     *
      * @return Long
      */
     public Long getId()
@@ -50,7 +50,7 @@ public class Summoner implements APIObject
 
     /**
      * The Summoners name
-     * 
+     *
      * @return String
      */
     public String getName()
@@ -60,7 +60,7 @@ public class Summoner implements APIObject
 
     /**
      * ID of the summoner icon associated with the summoner
-     * 
+     *
      * @return Integer
      */
     public Integer getProfileIconId()

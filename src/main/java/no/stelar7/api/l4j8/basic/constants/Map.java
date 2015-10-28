@@ -44,7 +44,7 @@ public enum Map
 
     public static Map getFromCode(final Number mapId)
     {
-        return Stream.of(Map.values()).filter(t -> t.code == mapId).findFirst().get();
+        return Stream.of(Map.values()).filter(t -> t.code.equals(mapId)).findFirst().get();
     }
 
     Long code;

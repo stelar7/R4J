@@ -17,7 +17,7 @@ public enum Platform
 
     /**
      * Returns a Platform from the provided code
-     * 
+     *
      * @param code
      *            the lookup key
      * @return Platform
@@ -29,7 +29,7 @@ public enum Platform
 
     /**
      * The code used to map strings to objects
-     * 
+     *
      * @return String
      */
     public String getCode()

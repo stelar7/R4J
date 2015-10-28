@@ -62,16 +62,6 @@ public class MatchReference implements APIObject
     }
 
     /**
-     * the region represented as a Server
-     *
-     * @return Server
-     */
-    public Server getRegionAsServer()
-    {
-        return Server.getFromCode(this.region);
-    }
-
-    /**
      * Lane associated with game
      *
      * @return String
@@ -149,6 +139,16 @@ public class MatchReference implements APIObject
     public String getRegion()
     {
         return this.region;
+    }
+
+    /**
+     * the region represented as a Server
+     *
+     * @return Server
+     */
+    public Server getRegionAsServer()
+    {
+        return Server.getFromCode(this.region);
     }
 
     /**

@@ -28,7 +28,7 @@ public enum Role
 
     /**
      * Returns a Role from the provided code
-     * 
+     *
      * @param code
      *            the lookup key
      * @return Role
@@ -37,10 +37,10 @@ public enum Role
     {
         return Stream.of(Role.values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
-    
+
     /**
      * The code used to map strings to objects
-     * 
+     *
      * @return String
      */
     public String getCode()

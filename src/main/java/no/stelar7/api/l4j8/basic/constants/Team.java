@@ -10,7 +10,7 @@ public enum Team
 
     public static Team getFromCode(final Number teamId)
     {
-        return Stream.of(Team.values()).filter(t -> t.code == teamId).findFirst().get();
+        return Stream.of(Team.values()).filter(t -> t.code.equals(teamId)).findFirst().get();
     }
 
     Integer code;

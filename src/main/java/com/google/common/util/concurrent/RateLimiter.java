@@ -56,11 +56,6 @@ public abstract class RateLimiter
         abstract void sleepMicrosUninterruptibly(final long micros);
     }
 
-    private static int checkPermits(final int permits)
-    {
-        return permits;
-    }
-
     public static RateLimiter create(final double permitsPerSecond)
     {
         return RateLimiter.create(SleepingStopwatch.createFromSystemTimer(), permitsPerSecond);
@@ -132,7 +127,6 @@ public abstract class RateLimiter
 
     final long reserve(final int permits)
     {
-        RateLimiter.checkPermits(permits);
         synchronized (this.mutex())
         {
             return this.reserveAndGetWaitLength(permits, this.stopwatch.readMicros());
@@ -166,15 +160,9 @@ public abstract class RateLimiter
         return this.tryAcquire(1, 0, MICROSECONDS);
     }
 
-    public boolean tryAcquire(final int permits)
-    {
-        return this.tryAcquire(permits, 0, MICROSECONDS);
-    }
-
     public boolean tryAcquire(final int permits, final long timeout, final TimeUnit unit)
     {
         final long timeoutMicros = Math.max(unit.toMicros(timeout), 0);
-        RateLimiter.checkPermits(permits);
         long microsToWait;
         synchronized (this.mutex())
         {
@@ -189,10 +177,5 @@ public abstract class RateLimiter
         }
         this.stopwatch.sleepMicrosUninterruptibly(microsToWait);
         return true;
-    }
-
-    public boolean tryAcquire(final long timeout, final TimeUnit unit)
-    {
-        return this.tryAcquire(1, timeout, unit);
     }
 }

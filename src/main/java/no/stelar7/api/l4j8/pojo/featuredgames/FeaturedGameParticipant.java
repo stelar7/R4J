@@ -33,12 +33,6 @@ public class FeaturedGameParticipant implements APIObject
         return this.championId;
     }
 
-    @Override
-    public String toString()
-    {
-        return "FeaturedGameParticipant [bot=" + bot + ", championId=" + championId + ", profileIconId=" + profileIconId + ", spell1Id=" + spell1Id + ", spell2Id=" + spell2Id + ", summonerName=" + summonerName + ", teamId=" + teamId + "]";
-    }
-
     /**
      * The ID of the profile icon used by this participant
      *
@@ -97,6 +91,12 @@ public class FeaturedGameParticipant implements APIObject
     public Long getTeamId()
     {
         return this.teamId;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "FeaturedGameParticipant [bot=" + this.bot + ", championId=" + this.championId + ", profileIconId=" + this.profileIconId + ", spell1Id=" + this.spell1Id + ", spell2Id=" + this.spell2Id + ", summonerName=" + this.summonerName + ", teamId=" + this.teamId + "]";
     }
 
 }

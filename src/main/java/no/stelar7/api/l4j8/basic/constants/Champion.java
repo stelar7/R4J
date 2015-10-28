@@ -132,19 +132,19 @@ public enum Champion
 
     Long id;
 
+    Champion(final Long id)
+    {
+        this.id = id;
+    }
+
     /**
      * Returns the champion id associated with the summoner
-     * 
+     *
      * @return Long
      */
     public Long getId()
     {
-        return id;
-    }
-
-    Champion(Long id)
-    {
-        this.id = id;
+        return this.id;
     }
 
 }

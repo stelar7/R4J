@@ -40,8 +40,7 @@ abstract class SmoothRateLimiter extends RateLimiter
                 this.storedPermits = this.maxPermits;
             } else
             {
-                this.storedPermits = (oldMaxPermits == 0.0) ? 0.0 // initial state
-                        : (this.storedPermits * this.maxPermits) / oldMaxPermits;
+                this.storedPermits = (oldMaxPermits == 0.0) ? 0.0 : (this.storedPermits * this.maxPermits) / oldMaxPermits;
             }
         }
 

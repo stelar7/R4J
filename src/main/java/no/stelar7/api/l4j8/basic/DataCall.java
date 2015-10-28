@@ -1,11 +1,14 @@
 package no.stelar7.api.l4j8.basic;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -88,7 +91,7 @@ public class DataCall
                 }
 
                 final StringBuilder data = new StringBuilder();
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream())))
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
                 {
                     br.lines().forEach(s -> data.append(s));
                 }
@@ -97,7 +100,7 @@ public class DataCall
                 final Object dtoobj = this.dc.endpoint.getType().getMethod("createFromString", String.class).invoke(this.dc.endpoint.getType().newInstance(), data.toString());
 
                 return new Pair<>(ResponseType.OK, dtoobj);
-            } catch (final Exception e)
+            } catch (final IOException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | InstantiationException | InterruptedException e)
             {
                 return new Pair<>(ResponseType.LIBRARY_ERROR, new APIError(e));
             }

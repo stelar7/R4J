@@ -143,7 +143,7 @@ public enum GameQueueType
 
     public static GameQueueType getFromCode(final Number gameQueueConfigId)
     {
-        return Stream.of(GameQueueType.values()).filter(t -> t.code == gameQueueConfigId).findFirst().get();
+        return Stream.of(GameQueueType.values()).filter(t -> t.code.equals(gameQueueConfigId)).findFirst().get();
     }
 
     Long code;

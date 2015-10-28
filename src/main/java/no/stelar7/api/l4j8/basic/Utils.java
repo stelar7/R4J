@@ -10,11 +10,11 @@ public class Utils
     {
         try
         {
-            String stripped = data.replace(" ", "");
-            String lowercase = stripped.toLowerCase(Locale.ENGLISH);
-            String encoded = URLEncoder.encode(lowercase, "UTF-8");
+            final String stripped = data.replace(" ", "");
+            final String lowercase = stripped.toLowerCase(Locale.ENGLISH);
+            final String encoded = URLEncoder.encode(lowercase, "UTF-8");
             return encoded;
-        } catch (UnsupportedEncodingException e)
+        } catch (final UnsupportedEncodingException e)
         {
             e.printStackTrace();
             return null;

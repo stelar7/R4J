@@ -26,7 +26,7 @@ public enum Season
 
     /**
      * The code used to map strings to objects
-     * 
+     *
      * @return String
      */
     public String getCode()

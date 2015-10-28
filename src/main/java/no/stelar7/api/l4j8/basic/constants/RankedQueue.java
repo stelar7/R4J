@@ -10,7 +10,7 @@ public enum RankedQueue
 
     /**
      * Returns a RankedQueue from the provided code
-     * 
+     *
      * @param code
      *            the lookup key
      * @return RankedQueue
@@ -20,10 +20,9 @@ public enum RankedQueue
         return Stream.of(RankedQueue.values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
 
-    
     /**
      * The code used to map strings to objects
-     * 
+     *
      * @return String
      */
     public String getCode()

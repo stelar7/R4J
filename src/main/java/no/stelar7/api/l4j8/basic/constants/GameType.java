@@ -19,7 +19,7 @@ public enum GameType
 
     /**
      * Returns a GameType from the provided code
-     * 
+     *
      * @param code
      *            the lookup key
      * @return GameType
@@ -31,7 +31,7 @@ public enum GameType
 
     /**
      * The code used to map strings to objects
-     * 
+     *
      * @return String
      */
     public String getCode()
