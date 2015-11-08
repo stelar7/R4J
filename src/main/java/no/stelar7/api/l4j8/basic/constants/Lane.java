@@ -22,7 +22,7 @@ public enum Lane
     /**
      * The bottom lane
      */
-    BOT("BOT", "BORROM", "BOT_LANE");
+    BOT("BOT", "BOTTOM", "BOT_LANE");
 
     /**
      * Returns a Lane from the provided code

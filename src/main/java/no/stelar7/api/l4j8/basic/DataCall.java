@@ -41,6 +41,14 @@ public class DataCall
             try
             {
 
+                if (this.dc.useCache)
+                {
+                    if (DataCall.cache.containsKey(this.getURL()))
+                    {
+                        return new Pair<>(ResponseType.OK, DataCall.cache.get(this.getURL()));
+                    }
+                }
+
                 if (this.dc.server.isLimited() || !this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
                 {
                     DataCall.limiter.get(this.dc.server).acquire();
@@ -83,6 +91,11 @@ public class DataCall
                     final Method creator = returnType.getMethod("createFromString", String.class);
 
                     final Object dtoobj = creator.invoke(returnType.newInstance(), data.toString());
+
+                    if (this.dc.useCache)
+                    {
+                        DataCall.cache.put(this.getURL(), dtoobj);
+                    }
 
                     return new Pair<>(ResponseType.OK, dtoobj);
                 }
@@ -136,31 +149,35 @@ public class DataCall
 
         public String getURL()
         {
-            final StringBuilder sb = new StringBuilder();
+            if (urlBuilder.length() != 0)
+            {
+                return urlBuilder.toString();
+            }
+
             if (!this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
             {
-                sb.append(DataCall.HTTPS);
+                urlBuilder.append(DataCall.HTTPS);
             } else
             {
                 this.dc.server = Server.GLOBAL;
             }
 
-            sb.append(this.dc.server.getURL()).append(this.dc.endpoint.getValue());
+            urlBuilder.append(this.dc.server.getURL()).append(this.dc.endpoint.getValue());
 
             this.withURLData("{region}", this.dc.server.asURLFormat());
             this.withURLData("{version}", this.dc.endpoint.getVersion());
 
             this.dc.urlData.forEach((k, v) -> {
-                String temp = sb.toString();
+                String temp = urlBuilder.toString();
                 temp = temp.toString().replace(k, v);
-                sb.setLength(0);
-                sb.append(temp);
+                urlBuilder.setLength(0);
+                urlBuilder.append(temp);
             });
 
-            sb.append("?api_key=").append(this.dc.key);
-            this.dc.urlParams.forEach((k, v) -> sb.append("&").append(k).append("=").append(v));
+            urlBuilder.append("?api_key=").append(this.dc.key);
+            this.dc.urlParams.forEach((k, v) -> urlBuilder.append("&").append(k).append("=").append(v));
 
-            return sb.toString();
+            return urlBuilder.toString();
         }
 
         public DataCallBuilder withAPIKey(final String key)
@@ -216,6 +233,15 @@ public class DataCall
             }
             return this;
         }
+
+        public DataCallBuilder useCache(final boolean flag)
+        {
+            this.dc.useCache = flag;
+            return this;
+        }
+
+        final StringBuilder urlBuilder = new StringBuilder();
+
     }
 
     public enum ResponseType
@@ -247,13 +273,19 @@ public class DataCall
     private final Map<String, String> urlData   = new HashMap<>();
     private final Map<String, String> urlParams = new HashMap<>();
 
-    private boolean retry   = true;
-    private boolean verbose = false;
+    private boolean retry    = true;
+    private boolean verbose  = false;
+    public boolean  useCache = true;
 
     private int retryTime = 5;
 
     private Server server;
 
     private URLEndpoint endpoint;
+
+    /**
+     * URL , Object
+     */
+    private static final Map<String, Object> cache = new HashMap<String, Object>();
 
 }
