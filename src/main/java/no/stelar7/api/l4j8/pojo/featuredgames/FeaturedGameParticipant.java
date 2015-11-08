@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.featuredgames;
 
 import no.stelar7.api.l4j8.basic.APIObject;
+import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
 public class FeaturedGameParticipant implements APIObject
@@ -18,7 +19,7 @@ public class FeaturedGameParticipant implements APIObject
      *
      * @return Boolean
      */
-    public Boolean getBot()
+    public Boolean isBot()
     {
         return this.bot;
     }
@@ -33,6 +34,16 @@ public class FeaturedGameParticipant implements APIObject
         return this.championId;
     }
 
+    /**
+     * The champion as a Champion
+     * 
+     * @return Champion
+     */
+    public Champion getChampion()
+    {
+        return Champion.getFromId(championId);
+    }
+    
     /**
      * The ID of the profile icon used by this participant
      *

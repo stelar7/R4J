@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import no.stelar7.api.l4j8.basic.APIObject;
+import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
 public class CurrentGameParticipant implements APIObject
@@ -24,9 +25,19 @@ public class CurrentGameParticipant implements APIObject
      *
      * @return Boolean
      */
-    public Boolean getBot()
+    public Boolean isBot()
     {
         return this.bot;
+    }
+    
+    /**
+     * The champion as a Champion
+     * 
+     * @return Champion
+     */
+    public Champion getChampion()
+    {
+        return Champion.getFromId(championId);
     }
 
     /**

@@ -86,7 +86,7 @@ public class FeaturedGameInfo implements APIObject
      *
      * @return String
      */
-    public String getGameMode()
+    public String getGameModeId()
     {
         return this.gameMode;
     }
@@ -96,7 +96,7 @@ public class FeaturedGameInfo implements APIObject
      *
      * @return GameMode
      */
-    public GameMode getGameModeAsGameMode()
+    public GameMode getGameMode()
     {
         return GameMode.getFromCode(this.gameMode);
     }
@@ -116,7 +116,7 @@ public class FeaturedGameInfo implements APIObject
      *
      * @return GameQueueType
      */
-    public GameQueueType getGameQueueTypeAsGameQueueType()
+    public GameQueueType getGameQueueType()
     {
         return GameQueueType.getFromCode(this.gameQueueConfigId);
     }
@@ -136,7 +136,7 @@ public class FeaturedGameInfo implements APIObject
      *
      * @return String
      */
-    public String getGameType()
+    public String getGameTypeId()
     {
         return this.gameType;
     }
@@ -146,7 +146,7 @@ public class FeaturedGameInfo implements APIObject
      *
      * @return GameType
      */
-    public GameType getGameTypeAsGameType()
+    public GameType getGameType()
     {
         return GameType.getFromCode(this.gameType);
     }
@@ -156,7 +156,7 @@ public class FeaturedGameInfo implements APIObject
      *
      * @return Map
      */
-    public Map getMapAsMap()
+    public Map getMap()
     {
         return Map.getFromCode(this.mapId);
     }

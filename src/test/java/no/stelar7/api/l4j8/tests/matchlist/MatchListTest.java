@@ -65,19 +65,19 @@ public class MatchListTest
         Assert.assertNotNull("season is null", match.getSeason());
 
         Assert.assertNotNull("TIMESTAMP is null", match.getTimestampAsDate());
-        Assert.assertNotNull("LANE is null", match.getLaneAsLane());
-        Assert.assertNotNull("QUEUE is null", match.getQueueAsRankedQueue());
-        Assert.assertNotNull("ROLE is null", match.getRoleAsRole());
-        Assert.assertNotNull("SEASON is null", match.getSeasonAsSeason());
-        Assert.assertNotNull("REGION is null", match.getRegionAsServer());
-
+        Assert.assertNotNull("LANE is null", match.getLane());
+        Assert.assertNotNull("QUEUE is null", match.getQueue());
+        Assert.assertNotNull("ROLE is null", match.getRole());
+        Assert.assertNotNull("SEASON is null", match.getSeason());
+        Assert.assertNotNull("REGION is null", match.getRegion());
+        
         Assert.assertEquals("Unexpected Champion Id", Champion.LEONA.getId(), match.getChampion());
         Assert.assertEquals("Unexpected Queue", RankedQueue.RANKED_SOLO_5x5.getCode(), match.getQueue());
         Assert.assertEquals("Timestamp doesnt match TIMESTAMP", match.getTimestamp(), (Long) match.getTimestampAsDate().toInstant().toEpochMilli());
-        Assert.assertEquals("lane doesnt match LANE", match.getLane(), match.getLaneAsLane().getCode());
-        Assert.assertEquals("queue doesnt match QUEUE", match.getQueue(), match.getQueueAsRankedQueue().getCode());
-        Assert.assertEquals("role doesnt match ROLE", match.getRole(), match.getRoleAsRole().getCode());
-        Assert.assertEquals("season doesnt match SEASON", match.getSeason(), match.getSeasonAsSeason().getCode());
-        Assert.assertEquals("region doesnt match REGION", match.getRegion(), match.getRegionAsServer().getCode());
+        Assert.assertEquals("lane doesnt match LANE", match.getLaneId(), match.getLane().getCode());
+        Assert.assertEquals("queue doesnt match QUEUE", match.getQueueId(), match.getQueue().getCode());
+        Assert.assertEquals("role doesnt match ROLE", match.getRole(), match.getRole().getCode());
+        Assert.assertEquals("season doesnt match SEASON", match.getSeason(), match.getSeason().getCode());
+        Assert.assertEquals("region doesnt match REGION", match.getRegion(), match.getRegion().getCode());
     };
 }

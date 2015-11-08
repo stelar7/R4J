@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.stream.Stream;
+
 public enum Champion
 {
     AATROX(266L),
@@ -135,6 +137,11 @@ public enum Champion
     Champion(final Long id)
     {
         this.id = id;
+    }
+
+    public static Champion getFromId(Long id)
+    {
+        return Stream.of(Champion.values()).filter(t -> t.id.equals(id)).findFirst().get();
     }
 
     /**

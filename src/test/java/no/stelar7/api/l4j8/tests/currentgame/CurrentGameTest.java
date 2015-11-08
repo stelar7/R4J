@@ -77,17 +77,17 @@ public class CurrentGameTest
         Assert.assertNotNull("observers is null", currentGame.getObservers());
         Assert.assertNotNull("participantsis null", currentGame.getParticipants());
 
-        Assert.assertNotNull("GAMEMODE is null", currentGame.getGameModeAsGameMode());
-        Assert.assertNotNull("GAMEQUEUETYPE is null", currentGame.getGameQueueTypeAsGameQueueType());
-        Assert.assertNotNull("GAMETYPE is null", currentGame.getGameTypeAsGameType());
+        Assert.assertNotNull("GAMEMODE is null", currentGame.getGameMode());
+        Assert.assertNotNull("GAMEQUEUETYPE is null", currentGame.getGameQueueType());
+        Assert.assertNotNull("GAMETYPE is null", currentGame.getGameType());
         Assert.assertNotNull("PLATFORM is null", currentGame.getPlatform());
         Assert.assertNotNull("GAMESTARTTIME is null", currentGame.getGameStartTimeAsDate());
 
         Assert.assertEquals("Timestamp doesnt match TIMESTAMP", currentGame.getGameStartTime(), (Long) currentGame.getGameStartTimeAsDate().toInstant().toEpochMilli());
-        Assert.assertEquals("lane doesnt match LANE", currentGame.getGameMode(), currentGame.getGameModeAsGameMode().getCode());
-        Assert.assertEquals("queue doesnt match QUEUE", currentGame.getGameQueueConfigId(), currentGame.getGameQueueTypeAsGameQueueType().getCode());
-        Assert.assertEquals("role doesnt match ROLE", currentGame.getGameType(), currentGame.getGameTypeAsGameType().getCode());
-        Assert.assertEquals("season doesnt match SEASON", currentGame.getMapId(), currentGame.getMapAsMap().getCode());
+        Assert.assertEquals("lane doesnt match LANE", currentGame.getGameModeId(), currentGame.getGameMode().getCode());
+        Assert.assertEquals("queue doesnt match QUEUE", currentGame.getGameQueueConfigId(), currentGame.getGameQueueType().getCode());
+        Assert.assertEquals("role doesnt match ROLE", currentGame.getGameTypeId(), currentGame.getGameType().getCode());
+        Assert.assertEquals("season doesnt match SEASON", currentGame.getMapId(), currentGame.getMap().getCode());
         Assert.assertEquals("region doesnt match REGION", currentGame.getPlatformId(), currentGame.getPlatform().getCode());
 
     }

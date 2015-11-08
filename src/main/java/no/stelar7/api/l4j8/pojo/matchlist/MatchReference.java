@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
 import no.stelar7.api.l4j8.basic.Server;
+import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Lane;
 import no.stelar7.api.l4j8.basic.constants.RankedQueue;
 import no.stelar7.api.l4j8.basic.constants.Role;
@@ -56,17 +57,27 @@ public class MatchReference implements APIObject
      *
      * @return Long
      */
-    public Long getChampion()
+    public Long getChampionId()
     {
         return this.champion;
     }
 
     /**
+     * The played champion as a Champion
+     * 
+     * @return Champion
+     */
+    public Champion getChampion()
+    {
+        return Champion.getFromId(champion);
+    }
+    
+    /**
      * Lane associated with game
      *
      * @return String
      */
-    public String getLane()
+    public String getLaneId()
     {
         return this.lane;
     }
@@ -76,7 +87,7 @@ public class MatchReference implements APIObject
      *
      * @return Lane
      */
-    public Lane getLaneAsLane()
+    public Lane getLane()
     {
         return Lane.getFromCode(this.lane);
     }
@@ -116,7 +127,7 @@ public class MatchReference implements APIObject
      *
      * @return String
      */
-    public String getQueue()
+    public String getQueueId()
     {
         return this.queue;
     }
@@ -126,7 +137,7 @@ public class MatchReference implements APIObject
      *
      * @return RankedQueue
      */
-    public RankedQueue getQueueAsRankedQueue()
+    public RankedQueue getQueue()
     {
         return RankedQueue.getFromCode(this.queue);
     }
@@ -136,7 +147,7 @@ public class MatchReference implements APIObject
      *
      * @return String
      */
-    public String getRegion()
+    public String getRegionId()
     {
         return this.region;
     }
@@ -146,7 +157,7 @@ public class MatchReference implements APIObject
      *
      * @return Server
      */
-    public Server getRegionAsServer()
+    public Server getRegion()
     {
         return Server.getFromCode(this.region);
     }
@@ -156,7 +167,7 @@ public class MatchReference implements APIObject
      *
      * @return String
      */
-    public String getRole()
+    public String getRoleId()
     {
         return this.role;
     }
@@ -166,7 +177,7 @@ public class MatchReference implements APIObject
      *
      * @return Role
      */
-    public Role getRoleAsRole()
+    public Role getRole()
     {
         return Role.getFromCode(this.role);
     }
@@ -176,7 +187,7 @@ public class MatchReference implements APIObject
      *
      * @return String
      */
-    public String getSeason()
+    public String getSeasonId()
     {
         return this.season;
     }
@@ -186,7 +197,7 @@ public class MatchReference implements APIObject
      *
      * @return Season
      */
-    public Season getSeasonAsSeason()
+    public Season getSeason()
     {
         return Season.getFromCode(this.season);
     }
