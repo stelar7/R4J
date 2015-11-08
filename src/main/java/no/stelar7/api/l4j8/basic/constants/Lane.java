@@ -5,29 +5,24 @@ import java.util.stream.Stream;
 public enum Lane
 {
     /**
-     * Short for MIDDLE
-     */
-    MID,
-    /**
      * The middle lane
      */
-    MIDDLE,
+    MID("MID", "MIDDLE", "MID_LANE"),
+
     /**
      * the top lane
      */
-    TOP,
+    TOP("TOP", "TOP_LANE"),
+
     /**
      * the jungle
      */
     JUNGLE,
+
     /**
-     * short for BOTTOM
+     * The bottom lane
      */
-    BOT,
-    /**
-     * the bottom lane
-     */
-    BOTTOM;
+    BOT("BOT", "BORROM", "BOT_LANE");
 
     /**
      * Returns a Lane from the provided code
@@ -36,9 +31,17 @@ public enum Lane
      *            the lookup key
      * @return Lane
      */
+
+    String[] keys;
+
+    Lane(String... keys)
+    {
+        this.keys = keys;
+    }
+
     public static Lane getFromCode(final String code)
     {
-        return Stream.of(Lane.values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst().get();
     }
 
     /**
@@ -46,8 +49,8 @@ public enum Lane
      *
      * @return String
      */
-    public String getCode()
+    public String[] getCodes()
     {
-        return this.name();
+        return keys;
     }
 }

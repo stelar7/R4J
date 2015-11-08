@@ -88,7 +88,9 @@ public class RawStats implements APIObject
     private Boolean win;
 
     /**
-     * a {@code Map<String, String>} of all the fields in this class
+     * a {@code Map<String, String>} of all the fields in this class.
+     *
+     * @return the all stats
      */
     public Map<String, String> getAllStats()
     {
@@ -106,9 +108,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * Amount of assists
+     * Gets the assists.
      *
-     * @return Integer
+     * @return the assists
      */
     public Integer getAssists()
     {
@@ -116,9 +118,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * Number of enemy inhibitors killed.
+     * Gets the barracks killed.
      *
-     * @return Integer
+     * @return the barracks killed
      */
     public Integer getBarracksKilled()
     {
@@ -126,9 +128,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * Amount of champions killed
+     * Gets the champions killed.
      *
-     * @return Integer
+     * @return the champions killed
      */
     public Integer getChampionsKilled()
     {
@@ -136,9 +138,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * Amount of points. (Dominion only)
+     * Gets the combat player score.
      *
-     * @return Integer
+     * @return the combat player score
      */
     public Integer getCombatPlayerScore()
     {
@@ -146,9 +148,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * Amount of consumables purchased
+     * Gets the consumables purchased.
      *
-     * @return Integer
+     * @return the consumables purchased
      */
     public Integer getConsumablesPurchased()
     {
@@ -156,9 +158,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * amount of
+     * Gets the damage dealt player.
      *
-     * @return Integer
+     * @return the damage dealt player
      */
     public Integer getDamageDealtPlayer()
     {
@@ -166,7 +168,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the double kills.
+     *
+     * @return the double kills
      */
     public Integer getDoubleKills()
     {
@@ -174,7 +178,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the first blood.
+     *
+     * @return the first blood
      */
     public Integer getFirstBlood()
     {
@@ -182,7 +188,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the gold.
+     *
+     * @return the gold
      */
     public Integer getGold()
     {
@@ -190,7 +198,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the gold earned.
+     *
+     * @return the gold earned
      */
     public Integer getGoldEarned()
     {
@@ -198,7 +208,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the gold spent.
+     *
+     * @return the gold spent
      */
     public Integer getGoldSpent()
     {
@@ -206,7 +218,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the item0.
+     *
+     * @return the item0
      */
     public Integer getItem0()
     {
@@ -214,7 +228,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the item1.
+     *
+     * @return the item1
      */
     public Integer getItem1()
     {
@@ -222,7 +238,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the item2.
+     *
+     * @return the item2
      */
     public Integer getItem2()
     {
@@ -230,7 +248,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the item3.
+     *
+     * @return the item3
      */
     public Integer getItem3()
     {
@@ -238,7 +258,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the item4.
+     *
+     * @return the item4
      */
     public Integer getItem4()
     {
@@ -246,7 +268,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the item5.
+     *
+     * @return the item5
      */
     public Integer getItem5()
     {
@@ -254,7 +278,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the item6.
+     *
+     * @return the item6
      */
     public Integer getItem6()
     {
@@ -262,7 +288,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the items purchased.
+     *
+     * @return the items purchased
      */
     public Integer getItemsPurchased()
     {
@@ -270,7 +298,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the killing sprees.
+     *
+     * @return the killing sprees
      */
     public Integer getKillingSprees()
     {
@@ -278,7 +308,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the largest critical strike.
+     *
+     * @return the largest critical strike
      */
     public Integer getLargestCriticalStrike()
     {
@@ -286,7 +318,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the largest killing spree.
+     *
+     * @return the largest killing spree
      */
     public Integer getLargestKillingSpree()
     {
@@ -294,7 +328,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the largest multi kill.
+     *
+     * @return the largest multi kill
      */
     public Integer getLargestMultiKill()
     {
@@ -302,7 +338,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the legendary items created.
+     *
+     * @return the legendary items created
      */
     public Integer getLegendaryItemsCreated()
     {
@@ -310,7 +348,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the level.
+     *
+     * @return the level
      */
     public Integer getLevel()
     {
@@ -318,295 +358,329 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the magic damage dealt player.
+     *
+     * @return the magic damage dealt player
      */
-
     public Integer getMagicDamageDealtPlayer()
     {
         return this.magicDamageDealtPlayer;
     }
 
     /**
-     * @return Integer
+     * Gets the magic damage dealt to champions.
+     *
+     * @return the magic damage dealt to champions
      */
-
     public Integer getMagicDamageDealtToChampions()
     {
         return this.magicDamageDealtToChampions;
     }
 
     /**
-     * @return Integer
+     * Gets the magic damage taken.
+     *
+     * @return the magic damage taken
      */
-
     public Integer getMagicDamageTaken()
     {
         return this.magicDamageTaken;
     }
 
     /**
-     * @return Integer
+     * Gets the minions denied.
+     *
+     * @return the minions denied
      */
-
     public Integer getMinionsDenied()
     {
         return this.minionsDenied;
     }
 
     /**
-     * @return Integer
+     * Gets the minions killed.
+     *
+     * @return the minions killed
      */
-
     public Integer getMinionsKilled()
     {
         return this.minionsKilled;
     }
 
     /**
-     * @return Integer
+     * Gets the neutral minions killed.
+     *
+     * @return the neutral minions killed
      */
-
     public Integer getNeutralMinionsKilled()
     {
         return this.neutralMinionsKilled;
     }
 
     /**
-     * @return Integer
+     * Gets the neutral minions killed enemy jungle.
+     *
+     * @return the neutral minions killed enemy jungle
      */
-
     public Integer getNeutralMinionsKilledEnemyJungle()
     {
         return this.neutralMinionsKilledEnemyJungle;
     }
 
     /**
-     * @return Integer
+     * Gets the neutral minions killed your jungle.
+     *
+     * @return the neutral minions killed your jungle
      */
-
     public Integer getNeutralMinionsKilledYourJungle()
     {
         return this.neutralMinionsKilledYourJungle;
     }
 
     /**
-     * @return Integer
+     * Checks if is nexus killed.
+     *
+     * @return the boolean
      */
-
-    public Boolean getNexusKilled()
+    public Boolean isNexusKilled()
     {
         return this.nexusKilled;
     }
 
     /**
-     * @return Integer
+     * Gets the node capture.
+     *
+     * @return the node capture
      */
-
     public Integer getNodeCapture()
     {
         return this.nodeCapture;
     }
 
     /**
-     * @return Integer
+     * Gets the node capture assist.
+     *
+     * @return the node capture assist
      */
-
     public Integer getNodeCaptureAssist()
     {
         return this.nodeCaptureAssist;
     }
 
     /**
-     * @return Integer
+     * Gets the node neutralize.
+     *
+     * @return the node neutralize
      */
-
     public Integer getNodeNeutralize()
     {
         return this.nodeNeutralize;
     }
 
     /**
-     * @return Integer
+     * Gets the node neutralize assist.
+     *
+     * @return the node neutralize assist
      */
-
     public Integer getNodeNeutralizeAssist()
     {
         return this.nodeNeutralizeAssist;
     }
 
     /**
-     * @return Integer
+     * Gets the num deaths.
+     *
+     * @return the num deaths
      */
-
     public Integer getNumDeaths()
     {
         return this.numDeaths;
     }
 
     /**
-     * @return Integer
+     * Gets the num items bought.
+     *
+     * @return the num items bought
      */
-
     public Integer getNumItemsBought()
     {
         return this.numItemsBought;
     }
 
     /**
-     * @return Integer
+     * Gets the objective player score.
+     *
+     * @return the objective player score
      */
-
     public Integer getObjectivePlayerScore()
     {
         return this.objectivePlayerScore;
     }
 
     /**
-     * @return Integer
+     * Gets the penta kills.
+     *
+     * @return the penta kills
      */
-
     public Integer getPentaKills()
     {
         return this.pentaKills;
     }
 
     /**
-     * @return Integer
+     * Gets the physical damage dealt player.
+     *
+     * @return the physical damage dealt player
      */
-
     public Integer getPhysicalDamageDealtPlayer()
     {
         return this.physicalDamageDealtPlayer;
     }
 
     /**
-     * @return Integer
+     * Gets the physical damage dealt to champions.
+     *
+     * @return the physical damage dealt to champions
      */
-
     public Integer getPhysicalDamageDealtToChampions()
     {
         return this.physicalDamageDealtToChampions;
     }
 
     /**
-     * @return Integer
+     * Gets the physical damage taken.
+     *
+     * @return the physical damage taken
      */
-
     public Integer getPhysicalDamageTaken()
     {
         return this.physicalDamageTaken;
     }
 
     /**
-     * @return Integer
+     * Gets the player position.
+     *
+     * @return the player position
      */
-
     public Integer getPlayerPosition()
     {
         return this.playerPosition;
     }
 
     /**
-     * @return Integer
+     * Gets the player role.
+     *
+     * @return the player role
      */
-
     public Integer getPlayerRole()
     {
         return this.playerRole;
     }
 
     /**
-     * @return Integer
+     * Gets the quadra kills.
+     *
+     * @return the quadra kills
      */
-
     public Integer getQuadraKills()
     {
         return this.quadraKills;
     }
 
     /**
-     * @return Integer
+     * Gets the sight wards bought.
+     *
+     * @return the sight wards bought
      */
-
     public Integer getSightWardsBought()
     {
         return this.sightWardsBought;
     }
 
     /**
-     * @return Integer
+     * Gets the spell1 cast.
+     *
+     * @return the spell1 cast
      */
-
     public Integer getSpell1Cast()
     {
         return this.spell1Cast;
     }
 
     /**
-     * @return Integer
+     * Gets the spell2 cast.
+     *
+     * @return the spell2 cast
      */
-
     public Integer getSpell2Cast()
     {
         return this.spell2Cast;
     }
 
     /**
-     * @return Integer
+     * Gets the spell3 cast.
+     *
+     * @return the spell3 cast
      */
-
     public Integer getSpell3Cast()
     {
         return this.spell3Cast;
     }
 
     /**
-     * @return Integer
+     * Gets the spell4 cast.
+     *
+     * @return the spell4 cast
      */
-
     public Integer getSpell4Cast()
     {
         return this.spell4Cast;
     }
 
     /**
-     * @return Integer
+     * Gets the summon spell1 cast.
+     *
+     * @return the summon spell1 cast
      */
-
     public Integer getSummonSpell1Cast()
     {
         return this.summonSpell1Cast;
     }
 
     /**
-     * @return Integer
+     * Gets the summon spell2 cast.
+     *
+     * @return the summon spell2 cast
      */
-
     public Integer getSummonSpell2Cast()
     {
         return this.summonSpell2Cast;
     }
 
     /**
-     * @return Integer
+     * Gets the super monster killed.
+     *
+     * @return the super monster killed
      */
-
     public Integer getSuperMonsterKilled()
     {
         return this.superMonsterKilled;
     }
 
     /**
-     * @return Integer
+     * Gets the team.
+     *
+     * @return the team
      */
-
     public Integer getTeam()
     {
         return this.team;
     }
 
     /**
-     * @return Integer
+     * Gets the team objective.
+     *
+     * @return the team objective
      */
     public Integer getTeamObjective()
     {
@@ -614,7 +688,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the time played.
+     *
+     * @return the time played
      */
     public Integer getTimePlayed()
     {
@@ -622,7 +698,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the total damage dealt.
+     *
+     * @return the total damage dealt
      */
     public Integer getTotalDamageDealt()
     {
@@ -630,7 +708,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the total damage dealt to champions.
+     *
+     * @return the total damage dealt to champions
      */
     public Integer getTotalDamageDealtToChampions()
     {
@@ -638,7 +718,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the total damage taken.
+     *
+     * @return the total damage taken
      */
     public Integer getTotalDamageTaken()
     {
@@ -646,7 +728,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the total heal.
+     *
+     * @return the total heal
      */
     public Integer getTotalHeal()
     {
@@ -654,7 +738,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the total player score.
+     *
+     * @return the total player score
      */
     public Integer getTotalPlayerScore()
     {
@@ -662,7 +748,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the total score rank.
+     *
+     * @return the total score rank
      */
     public Integer getTotalScoreRank()
     {
@@ -670,7 +758,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the total time crowd control dealt.
+     *
+     * @return the total time crowd control dealt
      */
     public Integer getTotalTimeCrowdControlDealt()
     {
@@ -678,7 +768,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the total units healed.
+     *
+     * @return the total units healed
      */
     public Integer getTotalUnitsHealed()
     {
@@ -686,7 +778,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the triple kills.
+     *
+     * @return the triple kills
      */
     public Integer getTripleKills()
     {
@@ -694,7 +788,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the true damage dealt player.
+     *
+     * @return the true damage dealt player
      */
     public Integer getTrueDamageDealtPlayer()
     {
@@ -702,7 +798,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the true damage dealt to champions.
+     *
+     * @return the true damage dealt to champions
      */
     public Integer getTrueDamageDealtToChampions()
     {
@@ -710,7 +808,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the true damage taken.
+     *
+     * @return the true damage taken
      */
     public Integer getTrueDamageTaken()
     {
@@ -718,7 +818,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the turrets killed.
+     *
+     * @return the turrets killed
      */
     public Integer getTurretsKilled()
     {
@@ -726,7 +828,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the unreal kills.
+     *
+     * @return the unreal kills
      */
     public Integer getUnrealKills()
     {
@@ -734,16 +838,19 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the victory point total.
+     *
+     * @return the victory point total
      */
-
     public Integer getVictoryPointTotal()
     {
         return this.victoryPointTotal;
     }
 
     /**
-     * @return Integer
+     * Gets the vision wards bought.
+     *
+     * @return the vision wards bought
      */
     public Integer getVisionWardsBought()
     {
@@ -751,7 +858,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the ward killed.
+     *
+     * @return the ward killed
      */
     public Integer getWardKilled()
     {
@@ -759,7 +868,9 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Gets the ward placed.
+     *
+     * @return the ward placed
      */
     public Integer getWardPlaced()
     {
@@ -767,13 +878,18 @@ public class RawStats implements APIObject
     }
 
     /**
-     * @return Integer
+     * Checks if is win.
+     *
+     * @return the boolean
      */
-    public Boolean getWin()
+    public Boolean isWin()
     {
         return this.win;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {

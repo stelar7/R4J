@@ -141,7 +141,7 @@ public enum GameQueueType
      */
     BILGEWATER_5x5(313L);
 
-    public static GameQueueType getFromCode(final Number gameQueueConfigId)
+    public static GameQueueType getFromCode(final Long gameQueueConfigId)
     {
         return Stream.of(GameQueueType.values()).filter(t -> t.code.equals(gameQueueConfigId)).findFirst().get();
     }
@@ -156,5 +156,10 @@ public enum GameQueueType
     public Long getCode()
     {
         return this.code;
+    }
+
+    public static GameQueueType getFromCode(String queueType)
+    {
+        return Stream.of(GameQueueType.values()).filter(t -> t.name().equalsIgnoreCase(queueType)).findFirst().get();
     }
 }
