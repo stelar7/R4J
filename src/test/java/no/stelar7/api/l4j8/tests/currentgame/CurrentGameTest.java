@@ -52,13 +52,16 @@ public class CurrentGameTest
         FeaturedGameInfo game = ((List<FeaturedGameInfo>) featuredbuilder.build().getValue()).get(0);
 
         // get a summoner from that game
-        String name = Utils.prepareForURL(game.getParticipants().get(0).getSummonerName());
+        String name = game.getParticipants().get(0).getSummonerName();
+        
+        String parsedName = Utils.prepareForURL(name);
+        idbuilder.withURLData("{summonerName}", parsedName);
 
-        idbuilder.withURLData("{summonerName}", name);
-        Map<String, Summoner> datamap = ((Map<String, Summoner>) idbuilder.build().getValue());
+        Object data = idbuilder.build().getValue();
+        Map<String, Summoner> datamap = ((Map<String, Summoner>) data);
 
         // get the summoners id
-        Long id = datamap.get(name).getId();
+        Long id = datamap.get(parsedName).getId();
 
         this.currentbuilder.withURLData("{summonerId}", id.toString());
         this.currentbuilder.withURLData("{platformId}", game.getPlatform().getCode());

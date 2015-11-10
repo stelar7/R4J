@@ -40,7 +40,7 @@ public class SummonerByNameTest
     public void doTest()
     {
         // Generate list of summoner IDs
-        List<String> keys = Arrays.asList("stelar7", "henriko950", "vibbsen");
+        List<String> keys = Arrays.asList("stelar7", "henriko950", "vibbsen", "Tàylor Swíft");
 
         // Add them as a parameter to the URL
         keys.forEach((String k) -> this.builder.withURLData("{summonerName}", Utils.prepareForURL(k)));
@@ -50,7 +50,7 @@ public class SummonerByNameTest
 
         // Map it to the correct return value
         Map<String, Summoner> data = (Map<String, Summoner>) dataCall.getValue();
-
+        
         // Make sure all the data is returned as expected
         data.forEach(doAssertions);
     }

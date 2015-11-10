@@ -3,12 +3,10 @@ package no.stelar7.api.l4j8.basic;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -212,25 +210,13 @@ public class DataCall
 
         public DataCallBuilder withURLData(final String key, final String value)
         {
-            try
-            {
-                this.dc.urlData.merge(key, URLEncoder.encode(value, "UTF-8"), this.merge);
-            } catch (final UnsupportedEncodingException e)
-            {
-                e.printStackTrace();
-            }
+            this.dc.urlData.merge(key, value, this.merge);
             return this;
         }
 
         public DataCallBuilder withURLParameter(final String key, final String value)
         {
-            try
-            {
-                this.dc.urlParams.merge(key, URLEncoder.encode(value, "UTF-8"), this.merge);
-            } catch (final UnsupportedEncodingException e)
-            {
-                e.printStackTrace();
-            }
+            this.dc.urlParams.merge(key, value, this.merge);
             return this;
         }
 
@@ -253,7 +239,7 @@ public class DataCall
     private static final Map<Server, RateLimiter> limiter = new HashMap<Server, RateLimiter>()
     {
         {
-            Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(500.0 / (60.0 * 10.0)))); 
+            Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(500.0 / (60.0 * 10.0))));
         }
     };
 
