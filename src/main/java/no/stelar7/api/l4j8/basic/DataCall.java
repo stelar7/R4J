@@ -253,7 +253,7 @@ public class DataCall
     private static final Map<Server, RateLimiter> limiter = new HashMap<Server, RateLimiter>()
     {
         {
-            Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(7.0 / 10.0)));
+            Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(500.0 / (60.0 * 10.0)))); 
         }
     };
 
