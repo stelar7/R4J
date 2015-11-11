@@ -47,7 +47,7 @@ public class DataCall
                     }
                 }
 
-
+                if (this.dc.server.isLimited() || !this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
                 {
                     DataCall.limiter.get(this.dc.server).acquire();
                 }
