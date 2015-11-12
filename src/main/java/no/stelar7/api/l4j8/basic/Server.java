@@ -5,8 +5,18 @@ import java.util.stream.Stream;
 
 public enum Server
 {
-    GLOBAL("global.api.pvp.net", false),
-    EUW("euw.api.pvp.net", true);
+    BR("br.api.pvp.net", true),
+    EUNE("eune.api.pvp.net", true),
+    EUW("euw.api.pvp.net", true),
+    KR("kr.api.pvp.net", true),
+    LAN("lan.api.pvp.net", true),
+    LAS("las.api.pvp.net", true),
+    NA("na.api.pvp.net", true),
+    OCE("oce.api.pvp.net", true),
+    TR("tr.api.pvp.net", true),
+    RU("ru.api.pvp.net", true),
+    PBE("pbe.api.pvp.net", true),
+    GLOBAL("global.api.pvp.net", false);
 
     public static Server getFromCode(final String code)
     {
