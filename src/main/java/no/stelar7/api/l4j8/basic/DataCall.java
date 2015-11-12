@@ -36,9 +36,13 @@ public class DataCall
         public Pair<ResponseType, Object> build()
         {
 
+            if (!this.dc.endpoint.isAvalibleFrom(this.dc.server))
+            {
+                return new Pair<>(ResponseType.ERROR, this.dc.endpoint.toString() + " not avalible from " + this.dc.server.asURLFormat());
+            }
+
             try
             {
-
                 if (this.dc.useCache)
                 {
                     if (DataCall.cache.containsKey(this.getURL()))

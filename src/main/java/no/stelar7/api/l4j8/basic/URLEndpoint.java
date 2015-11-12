@@ -74,4 +74,43 @@ public enum URLEndpoint
     {
         return this.version;
     }
+
+    /**
+     * TODO: add lol-staus-v1.0
+     * Checks if the endpoint is avalible from the server
+     * 
+     * @param server
+     *            the server to check
+     * @return true if it is avalible
+     */
+    public boolean isAvalibleFrom(Server server)
+    {
+        if (server == Server.PBE)
+        {
+            switch (this)
+            {
+                case CURRENTGAME:
+                case FEATUREDGAME:
+                case STATIC_CHAMPION:
+                case STATIC_CHAMPION_BY_ID:
+                case STATIC_ITEM:
+                case STATIC_ITEM_BY_ID:
+                case STATIC_LANGUAGE_STRINGS:
+                case STATIC_LANGUAGES:
+                case STATIC_MAP:
+                case STATIC_MASTERY:
+                case STATIC_MASTERY_BY_ID:
+                case STATIC_REALM:
+                case STATIC_RUNE:
+                case STATIC_RUNE_BY_ID:
+                case STATIC_SUMMONER_SPELL:
+                case STATIC_SUMMONER_SPELL_BY_ID:
+                case STATIC_SUMMONER_VERSIONS:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        return true;
+    }
 }
