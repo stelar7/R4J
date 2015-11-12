@@ -2,7 +2,9 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 import java.util.Map;
 
-public class ChampionList
+import no.stelar7.api.l4j8.basic.APIObject;
+
+public class ChampionList implements APIObject
 {
     Map<String, Champion> data;
     String                format;

@@ -2,7 +2,9 @@ package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 
 import java.util.Map;
 
-public class SummonerSpellList
+import no.stelar7.api.l4j8.basic.APIObject;
+
+public class SummonerSpellList implements APIObject
 {
     Map<String, SummonerSpell> data;
     String                     type;

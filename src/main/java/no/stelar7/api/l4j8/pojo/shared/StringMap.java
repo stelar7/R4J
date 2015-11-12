@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.pojo.summoner.names;
+package no.stelar7.api.l4j8.pojo.shared;
 
 import java.util.HashMap;
 import java.util.Map;

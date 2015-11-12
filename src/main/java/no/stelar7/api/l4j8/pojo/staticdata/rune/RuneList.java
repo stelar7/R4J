@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.rune;
 
 import java.util.Map;
 
+import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.BasicData;
 
-public class RuneList
+public class RuneList implements APIObject
 {
     BasicData         basic;
     Map<String, Rune> data;

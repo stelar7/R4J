@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 import java.util.List;
 
+import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-public class Champion
+public class Champion implements APIObject
 {
     List<String>        allytips;
     String              blurb;

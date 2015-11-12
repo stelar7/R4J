@@ -3,9 +3,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.item;
 import java.util.List;
 import java.util.Map;
 
+import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.BasicData;
 
-public class ItemList
+public class ItemList implements APIObject
 {
     BasicData         basic;
     Map<String, Item> data;

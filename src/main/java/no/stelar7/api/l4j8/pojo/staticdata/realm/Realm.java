@@ -2,7 +2,9 @@ package no.stelar7.api.l4j8.pojo.staticdata.realm;
 
 import java.util.Map;
 
-public class Realm
+import no.stelar7.api.l4j8.basic.APIObject;
+
+public class Realm implements APIObject
 {
     String              cdn;
     String              css;

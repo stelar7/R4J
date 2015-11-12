@@ -2,11 +2,12 @@ package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 
 import java.util.List;
 
+import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.LevelTip;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.SpellVars;
 
-public class SummonerSpell
+public class SummonerSpell implements APIObject
 {
     List<Double>       cooldown;
     String             cooldownBurn;
