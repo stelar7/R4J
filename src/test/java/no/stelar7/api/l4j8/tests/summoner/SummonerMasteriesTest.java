@@ -7,35 +7,28 @@ import java.util.function.BiConsumer;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.DataCall;
-import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.Mastery;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
 import no.stelar7.api.l4j8.tests.SecretFile;
+import no.stelar7.api.l4j8.tests.TestBase;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SummonerMasteriesTest
+public class SummonerMasteriesTest extends TestBase
 {
-
-    DataCallBuilder builder = DataCall.builder();
-
     @Before
     public void init()
     {
-        System.err.println("TESTING SUMMONER MASTERIES");
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
         this.builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
     }
-
+    
+    
     @Test
     public void doTest()
     {

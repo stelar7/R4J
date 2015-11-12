@@ -4,29 +4,22 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.DataCall;
-import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.pojo.champion.Champion;
 import no.stelar7.api.l4j8.tests.SecretFile;
+import no.stelar7.api.l4j8.tests.TestBase;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ChampionByIdTest
+public class ChampionByIdTest extends TestBase
 {
-
-    DataCallBuilder builder = DataCall.builder();
-
+    
     @Before
     public void init()
     {
-        System.err.println("TESTING CHAMPION BY ID");
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
         this.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);

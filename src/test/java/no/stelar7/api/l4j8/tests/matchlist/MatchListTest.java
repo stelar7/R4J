@@ -6,37 +6,28 @@ import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.DataCall;
-import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.RankedQueue;
 import no.stelar7.api.l4j8.basic.constants.Season;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
 import no.stelar7.api.l4j8.tests.SecretFile;
+import no.stelar7.api.l4j8.tests.TestBase;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class MatchListTest
+public class MatchListTest extends TestBase
 {
-
-    DataCallBuilder builder = DataCall.builder();
-
     @Before
     public void init()
     {
-        System.err.println("TESTING MATCH LIST");
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
         this.builder.withEndpoint(URLEndpoint.MATCHLIST);
     }
-
     @Test
     public void doTest()
     {

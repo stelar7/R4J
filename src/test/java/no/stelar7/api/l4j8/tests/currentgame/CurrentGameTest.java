@@ -30,7 +30,6 @@ public class CurrentGameTest
     @Before
     public void init()
     {
-        System.err.println("TESTING CURRENT GAME");
         this.currentbuilder.withAPIKey(SecretFile.API_KEY);
         this.featuredbuilder.withAPIKey(SecretFile.API_KEY);
         this.idbuilder.withAPIKey(SecretFile.API_KEY);
@@ -41,7 +40,7 @@ public class CurrentGameTest
 
         this.currentbuilder.withEndpoint(URLEndpoint.CURRENTGAME);
         this.featuredbuilder.withEndpoint(URLEndpoint.FEATUREDGAME);
-        this.idbuilder.withEndpoint(URLEndpoint.SUMMONERS_BY_NAME);
+        this.idbuilder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
 
     }
 
