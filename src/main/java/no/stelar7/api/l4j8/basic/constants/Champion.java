@@ -145,7 +145,7 @@ public enum Champion
     }
 
     /**
-     * Returns the champion id associated with the summoner
+     * Returns the id associated with this champion
      *
      * @return Long
      */
