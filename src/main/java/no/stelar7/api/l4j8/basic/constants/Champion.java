@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 public enum Champion
 {
+    ALL(0L),
     AATROX(266L),
     AHRI(103L),
     AKALI(84L),
