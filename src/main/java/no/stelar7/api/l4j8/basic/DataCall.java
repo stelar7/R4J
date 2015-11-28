@@ -23,7 +23,7 @@ public class DataCall
 
     public static class DataCallBuilder
     {
-        private final DataCall dc = new DataCall();
+        private final DataCall                           dc    = new DataCall();
 
         private final BiFunction<String, String, String> merge = ((o, n) -> o + "," + n);
 
@@ -51,7 +51,10 @@ public class DataCall
                     }
                 }
 
-                if (this.dc.server.isLimited() || !this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
+                boolean isServerRatelimited = this.dc.server.isLimited();
+                boolean isToRatelimitedURL = !this.dc.endpoint.getValue().startsWith(DataCall.HTTP);
+
+                if (isServerRatelimited && isToRatelimitedURL)
                 {
                     DataCall.limiter.get(this.dc.server).acquire();
                 }
@@ -166,7 +169,7 @@ public class DataCall
 
             urlBuilder.append(this.dc.server.getURL()).append(this.dc.endpoint.getValue());
 
-            this.withURLData("{region}", this.dc.server.asURLFormat());
+            this.withURLData("{region}", this.dc.region.asURLFormat());
             this.withURLData("{version}", this.dc.endpoint.getVersion());
 
             this.dc.urlData.forEach((k, v) -> {
@@ -212,6 +215,12 @@ public class DataCall
             return this;
         }
 
+        public DataCallBuilder withRegion(final Server region)
+        {
+            this.dc.region = region;
+            return this;
+        }
+
         public DataCallBuilder withURLData(final String key, final String value)
         {
             this.dc.urlData.merge(key, value, this.merge);
@@ -240,42 +249,43 @@ public class DataCall
         ERROR;
     }
 
-    private static final Map<Server, RateLimiter> limiter = new HashMap<Server, RateLimiter>()
-    {
-        {
-            Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(500.0 / (60.0 * 10.0))));
-        }
-    };
+    private static final Map<Server, RateLimiter> limiter       = new HashMap<Server, RateLimiter>()
+                                                                {
+                                                                    {
+                                                                        Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(500.0 / (60.0 * 10.0))));
+                                                                    }
+                                                                };
 
-    private static final String HTTP = "http://";
+    private static final String                   HTTP          = "http://";
 
-    private static final String HTTPS         = "https://";
-    private static final String LIMIT_USER    = "service";
-    private static final String LIMIT_SERVICE = "user";
+    private static final String                   HTTPS         = "https://";
+    private static final String                   LIMIT_USER    = "service";
+    private static final String                   LIMIT_SERVICE = "user";
 
     public static DataCallBuilder builder()
     {
         return new DataCallBuilder();
     }
 
-    private String key;
+    private String                           key;
 
-    private final Map<String, String> urlData   = new HashMap<>();
-    private final Map<String, String> urlParams = new HashMap<>();
+    private final Map<String, String>        urlData   = new HashMap<>();
+    private final Map<String, String>        urlParams = new HashMap<>();
 
-    private boolean retry    = true;
-    private boolean verbose  = false;
-    public boolean  useCache = true;
+    private boolean                          retry     = true;
+    private boolean                          verbose   = false;
+    public boolean                           useCache  = true;
 
-    private int retryTime = 5;
+    private int                              retryTime = 5;
 
-    private Server server;
+    private Server                           server;
+    private Server                           region;
 
-    private URLEndpoint endpoint;
+    private URLEndpoint                      endpoint;
 
     /**
      * URL , Object
      */
-    private static final Map<String, Object> cache = new HashMap<String, Object>();
+    private static final Map<String, Object> cache     = new HashMap<String, Object>();
 
 }

@@ -18,4 +18,5 @@ public class Item extends BasicData implements APIObject
     {
         return effect;
     }
+
 }

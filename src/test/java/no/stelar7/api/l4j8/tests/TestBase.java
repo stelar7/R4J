@@ -18,6 +18,7 @@ public class TestBase
     {
         this.builder.withAPIKey(SecretFile.API_KEY);
         this.builder.withServer(Server.EUW);
+        this.builder.withRegion(Server.EUW);
     }
 
 }

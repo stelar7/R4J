@@ -8,6 +8,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.BasicData;
 
 public class ItemList implements APIObject
 {
+
     BasicData         basic;
     Map<String, Item> data;
     List<Group>       groups;
