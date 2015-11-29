@@ -9,33 +9,29 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
+import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.RankedQueue;
 import no.stelar7.api.l4j8.basic.constants.Season;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
-import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.tests.TestBase;
 
 public class MatchListTest extends TestBase
 {
     @Before
-    public void init()
+    public void initBeforeTest()
     {
-        this.builder.withAPIKey(SecretFile.API_KEY);
-        this.builder.withServer(Server.EUW);
-        this.builder.withEndpoint(URLEndpoint.MATCHLIST);
+        TestBase.builder.withEndpoint(URLEndpoint.MATCHLIST);
     }
     @Test
     public void doTest()
     {
-        this.builder.withURLData("{summonerId}", "22291359");
-        this.builder.withURLParameter("championIds", String.valueOf(Champion.LEONA.getId()));
-        this.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5x5.getCode());
-        this.builder.withURLParameter("seasons", Season.SEASON_2014.getCode());
-        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        TestBase.builder.withURLData("{summonerId}", "22291359");
+        TestBase.builder.withURLParameter("championIds", String.valueOf(Champion.LEONA.getId()));
+        TestBase.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5x5.getCode());
+        TestBase.builder.withURLParameter("seasons", Season.SEASON_2014.getCode());
+        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
 
         List<MatchReference> matches = (List<MatchReference>) dataCall.getValue();
 

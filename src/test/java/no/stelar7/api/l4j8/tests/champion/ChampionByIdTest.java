@@ -7,29 +7,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
+import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.champion.Champion;
-import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.tests.TestBase;
 
 public class ChampionByIdTest extends TestBase
 {
     
     @Before
-    public void init()
+    public void initForTest()
     {
-        this.builder.withAPIKey(SecretFile.API_KEY);
-        this.builder.withServer(Server.EUW);
-        this.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
+        init();
+        TestBase.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
     }
 
     @Test
     public void testMany()
     {
-        this.builder.withURLData("{championId}", "");
-        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        TestBase.builder.withURLData("{championId}", "");
+        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
         List<Champion> champs = (List<Champion>) dataCall.getValue();
 
         Assert.assertTrue("Less than 100 champions?", champs.size() > 100);
@@ -38,9 +35,10 @@ public class ChampionByIdTest extends TestBase
     @Test
     public void testManyWithParam()
     {
-        this.builder.withURLData("{championId}", "");
-        this.builder.withURLParameter("freeToPlay", "true");
-        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        TestBase.builder.withURLData("{championId}", "");
+        TestBase.builder.withURLParameter("freeToPlay", "true");
+        
+        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
         List<Champion> champs = (List<Champion>) dataCall.getValue();
 
         champs.forEach(c -> Assert.assertTrue("Free to play is false?!", c.isFreeToPlay()));
@@ -49,8 +47,8 @@ public class ChampionByIdTest extends TestBase
     @Test
     public void testSingle()
     {
-        this.builder.withURLData("{championId}", "266");
-        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        TestBase.builder.withURLData("{championId}", "266");
+        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
         List<Champion> champs = (List<Champion>) dataCall.getValue();
 
         Assert.assertTrue("More than 1 champion with id 266?", champs.size() == 1);

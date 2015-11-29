@@ -20,11 +20,11 @@ public class SummonerNameById extends TestBase
 {
 
     @Before
-    public void init()
+    public void initBeforeTest()
     {
-        this.builder.withAPIKey(SecretFile.API_KEY);
-        this.builder.withServer(Server.EUW);
-        this.builder.withEndpoint(URLEndpoint.SUMMONER_NAME_BY_ID);
+        TestBase.builder.withAPIKey(SecretFile.API_KEY);
+        TestBase.builder.withServer(Server.EUW);
+        TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_NAME_BY_ID);
     }
     
     
@@ -35,10 +35,10 @@ public class SummonerNameById extends TestBase
         List<String> keys = Arrays.asList("19613950", "22291359", "33540589");
 
         // Add them as a parameter to the URL
-        keys.forEach((String k) -> this.builder.withURLData("{summonerId}", k));
+        keys.forEach((String k) -> TestBase.builder.withURLData("{summonerId}", k));
 
         // Get the response
-        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
 
         // Map it to the correct return value
         Map<String, String> data = (Map<String, String>) dataCall.getValue();

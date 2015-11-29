@@ -22,11 +22,11 @@ public class SummonerByNameTest extends TestBase
 {
 
     @Before
-    public void init()
+    public void initBeforeTest()
     {
-        this.builder.withAPIKey(SecretFile.API_KEY);
-        this.builder.withServer(Server.EUW);
-        this.builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
+        TestBase.builder.withAPIKey(SecretFile.API_KEY);
+        TestBase.builder.withServer(Server.EUW);
+        TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
     }
     
     @Test
@@ -36,10 +36,10 @@ public class SummonerByNameTest extends TestBase
         List<String> keys = Arrays.asList("stelar7", "henriko950", "vibbsen", "Tàylor Swíft");
 
         // Add them as a parameter to the URL
-        keys.forEach((String k) -> this.builder.withURLData("{summonerName}", Utils.prepareForURL(k)));
+        keys.forEach((String k) -> TestBase.builder.withURLData("{summonerName}", Utils.prepareForURL(k)));
 
         // Get the response
-        final Pair<ResponseType, Object> dataCall = this.builder.build();
+        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
 
         // Map it to the correct return value
         Map<String, Summoner> data = (Map<String, Summoner>) dataCall.getValue();

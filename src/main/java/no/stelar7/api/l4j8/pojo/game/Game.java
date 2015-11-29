@@ -15,12 +15,6 @@ import no.stelar7.api.l4j8.basic.constants.Team;
 
 public class Game implements APIObject
 {
-    public static Class<?> createFromString(final String json) throws Exception
-    {
-        // TODO
-        return APIObject.createFromString(json);
-    }
-
     private Long         championId;
     private Long         createDate;
     private List<Player> fellowPlayers;

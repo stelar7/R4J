@@ -3,7 +3,6 @@ package no.stelar7.api.l4j8.basic;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -41,25 +40,57 @@ public class DataCall
                 return new Pair<>(ResponseType.ERROR, this.dc.endpoint.toString() + " not avalible from " + this.dc.server.asURLFormat());
             }
 
+            if (this.dc.useCache)
+            {
+                if (DataCall.cache.containsKey(this.getURL()))
+                {
+                    return new Pair<>(ResponseType.OK, DataCall.cache.get(this.getURL()));
+                }
+            }
+
+            boolean isServerRatelimited = this.dc.server.isLimited();
+            boolean isToRatelimitedURL = !this.dc.endpoint.getValue().startsWith(DataCall.HTTP);
+
+            if (isServerRatelimited && isToRatelimitedURL)
+            {
+                DataCall.limiter.get(this.dc.server).acquire();
+            }
+
+            final String url = this.getURL();
+            Pair<Integer, Pair<String, Integer>> response = getResponse(url);
+
+            if (response == null)
+            {
+                return build();
+            }
+
+            if (response.getKey() == 200)
+            {
+                try
+                {
+                    Method executor = this.dc.endpoint.getType().getDeclaredMethod("createFromString", String.class);
+                    Object dtoobj = executor.invoke(this.dc.endpoint.getType(), response.getValue().getKey());
+
+                    if (this.dc.useCache)
+                    {
+                        DataCall.cache.put(this.getURL(), dtoobj);
+                    }
+
+                    return new Pair<>(ResponseType.OK, dtoobj);
+
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+            return new Pair<>(ResponseType.ERROR, response);
+        }
+
+        private Pair<Integer, Pair<String, Integer>> getResponse(String url)
+        {
             try
             {
-                if (this.dc.useCache)
-                {
-                    if (DataCall.cache.containsKey(this.getURL()))
-                    {
-                        return new Pair<>(ResponseType.OK, DataCall.cache.get(this.getURL()));
-                    }
-                }
-
-                boolean isServerRatelimited = this.dc.server.isLimited();
-                boolean isToRatelimitedURL = !this.dc.endpoint.getValue().startsWith(DataCall.HTTP);
-
-                if (isServerRatelimited && isToRatelimitedURL)
-                {
-                    DataCall.limiter.get(this.dc.server).acquire();
-                }
-
-                final String url = this.getURL();
                 final HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 
                 con.setUseCaches(false);
@@ -79,65 +110,38 @@ public class DataCall
                     });
                 }
 
-                final int response = con.getResponseCode();
+                final StringBuilder data = new StringBuilder();
 
-                if (response == 200)
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
                 {
-                    final StringBuilder data = new StringBuilder();
-
-                    try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
-                    {
-                        br.lines().forEach(s -> data.append(s));
-                    }
-
-                    con.disconnect();
-
-                    final Class<? extends APIObject> returnType = this.dc.endpoint.getType();
-                    final Method creator = returnType.getMethod("createFromString", String.class);
-
-                    final Object dtoobj = creator.invoke(returnType.newInstance(), data.toString());
-
-                    if (this.dc.useCache)
-                    {
-                        DataCall.cache.put(this.getURL(), dtoobj);
-                    }
-
-                    return new Pair<>(ResponseType.OK, dtoobj);
+                    br.lines().forEach(s -> data.append(s));
                 }
 
-                if (response == 429)
+                String limitType = con.getHeaderField("X-Rate-Limit-Type");
+                int timeout = 0;
+
+                if ((limitType != null) && (limitType.equals(DataCall.LIMIT_USER) || limitType.equals(DataCall.LIMIT_SERVICE)))
                 {
-                    if (this.dc.retry)
-                    {
-                        final String limitType = con.getHeaderField("X-Rate-Limit-Type");
+                    final String timeoutString = con.getHeaderField("Retry-After");
 
-                        if ((limitType != null) && (limitType.equals(DataCall.LIMIT_USER) || limitType.equals(DataCall.LIMIT_SERVICE)))
-                        {
-                            final String timeoutString = con.getHeaderField("Retry-After");
-
-                            final long timeout = timeoutString == null ? this.dc.retryTime : Integer.parseInt(timeoutString);
-
-                            TimeUnit.SECONDS.sleep(timeout);
-
-                            con.disconnect();
-
-                            return this.build();
-                        }
-
-                        TimeUnit.SECONDS.sleep(this.dc.retryTime);
-
-                        con.disconnect();
-
-                        return this.build();
-                    }
+                    timeout = timeoutString == null ? this.dc.retryTime : Integer.parseInt(timeoutString);
                 }
-                return new Pair<>(ResponseType.ERROR, response);
 
-            } catch (IOException | IllegalAccessException | InterruptedException | InstantiationException | InvocationTargetException | NoSuchMethodException e)
+                con.disconnect();
+
+                if (this.dc.retry && con.getResponseCode() == 429)
+                {
+                    TimeUnit.SECONDS.sleep(timeout);
+                    return null;
+                }
+
+                return new Pair<Integer, Pair<String, Integer>>(con.getResponseCode(), new Pair<String, Integer>(data.toString(), timeout));
+            } catch (IOException | InterruptedException e)
             {
                 e.printStackTrace();
-                return new Pair<>(ResponseType.ERROR, e.getMessage());
             }
+
+            return null;
         }
 
         public DataCallBuilder clearURLData()

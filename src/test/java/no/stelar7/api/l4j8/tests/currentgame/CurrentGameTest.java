@@ -37,6 +37,10 @@ public class CurrentGameTest
         this.currentbuilder.withServer(Server.EUW);
         this.featuredbuilder.withServer(Server.EUW);
         this.idbuilder.withServer(Server.EUW);
+        
+        this.currentbuilder.withRegion(Server.EUW);
+        this.featuredbuilder.withRegion(Server.EUW);
+        this.idbuilder.withRegion(Server.EUW);
 
         this.currentbuilder.withEndpoint(URLEndpoint.CURRENTGAME);
         this.featuredbuilder.withEndpoint(URLEndpoint.FEATUREDGAME);

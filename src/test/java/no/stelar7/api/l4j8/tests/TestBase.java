@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
@@ -11,14 +11,16 @@ import no.stelar7.api.l4j8.basic.Server;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestBase
 {
-    protected DataCallBuilder builder = DataCall.builder();
+    protected static DataCallBuilder builder = DataCall.builder();
 
-    @Before
-    public void init()
+    @BeforeClass
+    public static void init()
     {
-        this.builder.withAPIKey(SecretFile.API_KEY);
-        this.builder.withServer(Server.EUW);
-        this.builder.withRegion(Server.EUW);
+        builder = DataCall.builder();
+        builder.asVerbose(true);
+        builder.withAPIKey(SecretFile.API_KEY);
+        builder.withServer(Server.EUW);
+        builder.withRegion(Server.EUW);
     }
 
 }
