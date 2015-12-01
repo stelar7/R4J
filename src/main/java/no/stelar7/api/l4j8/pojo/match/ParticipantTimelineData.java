@@ -8,6 +8,65 @@ public class ParticipantTimelineData
     private Double twentyToThirty;
     private Double zeroToTen;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final ParticipantTimelineData other = (ParticipantTimelineData) obj;
+        if (this.tenToTwenty == null)
+        {
+            if (other.tenToTwenty != null)
+            {
+                return false;
+            }
+        } else if (!this.tenToTwenty.equals(other.tenToTwenty))
+        {
+            return false;
+        }
+        if (this.thirtyToEnd == null)
+        {
+            if (other.thirtyToEnd != null)
+            {
+                return false;
+            }
+        } else if (!this.thirtyToEnd.equals(other.thirtyToEnd))
+        {
+            return false;
+        }
+        if (this.twentyToThirty == null)
+        {
+            if (other.twentyToThirty != null)
+            {
+                return false;
+            }
+        } else if (!this.twentyToThirty.equals(other.twentyToThirty))
+        {
+            return false;
+        }
+        if (this.zeroToTen == null)
+        {
+            if (other.zeroToTen != null)
+            {
+                return false;
+            }
+        } else if (!this.zeroToTen.equals(other.zeroToTen))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the ten to twenty.
      *
@@ -15,7 +74,7 @@ public class ParticipantTimelineData
      */
     public Double getTenToTwenty()
     {
-        return tenToTwenty;
+        return this.tenToTwenty;
     }
 
     /**
@@ -25,7 +84,7 @@ public class ParticipantTimelineData
      */
     public Double getThirtyToEnd()
     {
-        return thirtyToEnd;
+        return this.thirtyToEnd;
     }
 
     /**
@@ -35,7 +94,7 @@ public class ParticipantTimelineData
      */
     public Double getTwentyToThirty()
     {
-        return twentyToThirty;
+        return this.twentyToThirty;
     }
 
     /**
@@ -45,6 +104,18 @@ public class ParticipantTimelineData
      */
     public Double getZeroToTen()
     {
-        return zeroToTen;
+        return this.zeroToTen;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.tenToTwenty == null) ? 0 : this.tenToTwenty.hashCode());
+        result = (prime * result) + ((this.thirtyToEnd == null) ? 0 : this.thirtyToEnd.hashCode());
+        result = (prime * result) + ((this.twentyToThirty == null) ? 0 : this.twentyToThirty.hashCode());
+        result = (prime * result) + ((this.zeroToTen == null) ? 0 : this.zeroToTen.hashCode());
+        return result;
     }
 }

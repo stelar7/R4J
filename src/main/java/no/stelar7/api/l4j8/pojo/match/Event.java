@@ -36,6 +36,245 @@ public class Event
     private Integer       victimId;
     private String        wardType;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Event other = (Event) obj;
+        if (this.ascendedType == null)
+        {
+            if (other.ascendedType != null)
+            {
+                return false;
+            }
+        } else if (!this.ascendedType.equals(other.ascendedType))
+        {
+            return false;
+        }
+        if (this.assistingParticipantIds == null)
+        {
+            if (other.assistingParticipantIds != null)
+            {
+                return false;
+            }
+        } else if (!this.assistingParticipantIds.equals(other.assistingParticipantIds))
+        {
+            return false;
+        }
+        if (this.buildingType == null)
+        {
+            if (other.buildingType != null)
+            {
+                return false;
+            }
+        } else if (!this.buildingType.equals(other.buildingType))
+        {
+            return false;
+        }
+        if (this.creatorId == null)
+        {
+            if (other.creatorId != null)
+            {
+                return false;
+            }
+        } else if (!this.creatorId.equals(other.creatorId))
+        {
+            return false;
+        }
+        if (this.eventType == null)
+        {
+            if (other.eventType != null)
+            {
+                return false;
+            }
+        } else if (!this.eventType.equals(other.eventType))
+        {
+            return false;
+        }
+        if (this.itemAfter == null)
+        {
+            if (other.itemAfter != null)
+            {
+                return false;
+            }
+        } else if (!this.itemAfter.equals(other.itemAfter))
+        {
+            return false;
+        }
+        if (this.itemBefore == null)
+        {
+            if (other.itemBefore != null)
+            {
+                return false;
+            }
+        } else if (!this.itemBefore.equals(other.itemBefore))
+        {
+            return false;
+        }
+        if (this.itemId == null)
+        {
+            if (other.itemId != null)
+            {
+                return false;
+            }
+        } else if (!this.itemId.equals(other.itemId))
+        {
+            return false;
+        }
+        if (this.killerId == null)
+        {
+            if (other.killerId != null)
+            {
+                return false;
+            }
+        } else if (!this.killerId.equals(other.killerId))
+        {
+            return false;
+        }
+        if (this.laneType == null)
+        {
+            if (other.laneType != null)
+            {
+                return false;
+            }
+        } else if (!this.laneType.equals(other.laneType))
+        {
+            return false;
+        }
+        if (this.levelUpType == null)
+        {
+            if (other.levelUpType != null)
+            {
+                return false;
+            }
+        } else if (!this.levelUpType.equals(other.levelUpType))
+        {
+            return false;
+        }
+        if (this.monsterType == null)
+        {
+            if (other.monsterType != null)
+            {
+                return false;
+            }
+        } else if (!this.monsterType.equals(other.monsterType))
+        {
+            return false;
+        }
+        if (this.participantId == null)
+        {
+            if (other.participantId != null)
+            {
+                return false;
+            }
+        } else if (!this.participantId.equals(other.participantId))
+        {
+            return false;
+        }
+        if (this.pointCaptured == null)
+        {
+            if (other.pointCaptured != null)
+            {
+                return false;
+            }
+        } else if (!this.pointCaptured.equals(other.pointCaptured))
+        {
+            return false;
+        }
+        if (this.position == null)
+        {
+            if (other.position != null)
+            {
+                return false;
+            }
+        } else if (!this.position.equals(other.position))
+        {
+            return false;
+        }
+        if (this.skillSlot == null)
+        {
+            if (other.skillSlot != null)
+            {
+                return false;
+            }
+        } else if (!this.skillSlot.equals(other.skillSlot))
+        {
+            return false;
+        }
+        if (this.teamId == null)
+        {
+            if (other.teamId != null)
+            {
+                return false;
+            }
+        } else if (!this.teamId.equals(other.teamId))
+        {
+            return false;
+        }
+        if (this.timestamp == null)
+        {
+            if (other.timestamp != null)
+            {
+                return false;
+            }
+        } else if (!this.timestamp.equals(other.timestamp))
+        {
+            return false;
+        }
+        if (this.towerType == null)
+        {
+            if (other.towerType != null)
+            {
+                return false;
+            }
+        } else if (!this.towerType.equals(other.towerType))
+        {
+            return false;
+        }
+        if (this.victimId == null)
+        {
+            if (other.victimId != null)
+            {
+                return false;
+            }
+        } else if (!this.victimId.equals(other.victimId))
+        {
+            return false;
+        }
+        if (this.wardType == null)
+        {
+            if (other.wardType != null)
+            {
+                return false;
+            }
+        } else if (!this.wardType.equals(other.wardType))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * The ascended type of the event as AscencionType
+     *
+     * @return AscencionType
+     */
+    public AscencionType getAscendedType()
+    {
+        return AscencionType.getFromCode(this.ascendedType);
+    }
+
     /**
      * The ascended type of the event. Only present if relevant. Note that CLEAR_ASCENDED refers to when a participants kills the ascended player. (Legal values: CHAMPION_ASCENDED, CLEAR_ASCENDED, MINION_ASCENDED)
      *
@@ -43,17 +282,7 @@ public class Event
      */
     public String getAscendedTypeId()
     {
-        return ascendedType;
-    }
-
-    /**
-     * The ascended type of the event as AscencionType
-     * 
-     * @return AscencionType
-     */
-    public AscencionType getAscendedType()
-    {
-        return AscencionType.getFromCode(ascendedType);
+        return this.ascendedType;
     }
 
     /**
@@ -63,7 +292,17 @@ public class Event
      */
     public List<Integer> getAssistingParticipantIds()
     {
-        return assistingParticipantIds;
+        return this.assistingParticipantIds;
+    }
+
+    /**
+     * The building type as a BuildingType
+     *
+     * @return BuildingType
+     */
+    public BuildingType getBuildingType()
+    {
+        return BuildingType.getFromCode(this.buildingType);
     }
 
     /**
@@ -73,17 +312,7 @@ public class Event
      */
     public String getBuildingTypeId()
     {
-        return buildingType;
-    }
-
-    /**
-     * The building type as a BuildingType
-     * 
-     * @return BuildingType
-     */
-    public BuildingType getBuildingType()
-    {
-        return BuildingType.getFromCode(buildingType);
+        return this.buildingType;
     }
 
     /**
@@ -93,7 +322,17 @@ public class Event
      */
     public Integer getCreatorId()
     {
-        return creatorId;
+        return this.creatorId;
+    }
+
+    /**
+     * The event type as EventType
+     *
+     * @return Event
+     */
+    public EventType getEventType()
+    {
+        return EventType.getFromCode(this.eventType);
     }
 
     /**
@@ -103,17 +342,7 @@ public class Event
      */
     public String getEventTypeId()
     {
-        return eventType;
-    }
-
-    /**
-     * The event type as EventType
-     * 
-     * @return Event
-     */
-    public EventType getEventType()
-    {
-        return EventType.getFromCode(eventType);
+        return this.eventType;
     }
 
     /**
@@ -123,7 +352,7 @@ public class Event
      */
     public Integer getItemAfter()
     {
-        return itemAfter;
+        return this.itemAfter;
     }
 
     /**
@@ -133,7 +362,7 @@ public class Event
      */
     public Integer getItemBefore()
     {
-        return itemBefore;
+        return this.itemBefore;
     }
 
     /**
@@ -143,7 +372,7 @@ public class Event
      */
     public Integer getItemId()
     {
-        return itemId;
+        return this.itemId;
     }
 
     /**
@@ -153,7 +382,17 @@ public class Event
      */
     public Integer getKillerId()
     {
-        return killerId;
+        return this.killerId;
+    }
+
+    /**
+     * The lane inferred from the type
+     *
+     * @return Lane
+     */
+    public Lane getLane()
+    {
+        return Lane.getFromCode(this.laneType);
     }
 
     /**
@@ -163,38 +402,38 @@ public class Event
      */
     public String getLaneType()
     {
-        return laneType;
+        return this.laneType;
     }
 
     /**
-     * The lane inferred from the type
-     * 
-     * @return Lane
+     * The LevelUpType inferred from the id
+     *
+     * @return LevelUpType
      */
-    public Lane getLane()
+    public LevelUpType getLevelUpType()
     {
-        return Lane.getFromCode(laneType);
+        return LevelUpType.getFromCode(this.levelUpType);
     }
 
     /**
      * The level up type of the event. Only present if relevant. (Legal values: EVOLVE, NORMAL)
      *
-     * 
+     *
      * @return String
      */
     public String getLevelUpTypeId()
     {
-        return levelUpType;
+        return this.levelUpType;
     }
 
     /**
-     * The LevelUpType inferred from the id
-     * 
-     * @return LevelUpType
+     * The MonsterType inferred from the id
+     *
+     * @return MonsterType
      */
-    public LevelUpType getLevelUpType()
+    public MonsterType getMonsterType()
     {
-        return LevelUpType.getFromCode(levelUpType);
+        return MonsterType.getFromCode(this.monsterType);
     }
 
     /**
@@ -204,17 +443,7 @@ public class Event
      */
     public String getMonsterTypeId()
     {
-        return monsterType;
-    }
-
-    /**
-     * The MonsterType inferred from the id
-     * 
-     * @return MonsterType
-     */
-    public MonsterType getMonsterType()
-    {
-        return MonsterType.getFromCode(monsterType);
+        return this.monsterType;
     }
 
     /**
@@ -224,7 +453,17 @@ public class Event
      */
     public Integer getParticipantId()
     {
-        return participantId;
+        return this.participantId;
+    }
+
+    /**
+     * The point captured inferred from the id
+     *
+     * @return Point
+     */
+    public Point getPointCaptured()
+    {
+        return Point.getFromCode(this.pointCaptured);
     }
 
     /**
@@ -234,17 +473,7 @@ public class Event
      */
     public String getPointCapturedId()
     {
-        return pointCaptured;
-    }
-
-    /**
-     * The point captured inferred from the id
-     * 
-     * @return Point
-     */
-    public Point getPointCaptured()
-    {
-        return Point.getFromCode(pointCaptured);
+        return this.pointCaptured;
     }
 
     /**
@@ -254,7 +483,7 @@ public class Event
      */
     public Position getPosition()
     {
-        return position;
+        return this.position;
     }
 
     /**
@@ -264,7 +493,7 @@ public class Event
      */
     public Integer getSkillSlot()
     {
-        return skillSlot;
+        return this.skillSlot;
     }
 
     /**
@@ -274,7 +503,7 @@ public class Event
      */
     public Integer getTeamId()
     {
-        return teamId;
+        return this.teamId;
     }
 
     /**
@@ -284,7 +513,17 @@ public class Event
      */
     public Long getTimestamp()
     {
-        return timestamp;
+        return this.timestamp;
+    }
+
+    /**
+     * The tower type inferred from the id
+     *
+     * @return TowerType
+     */
+    public TowerType getTowerType()
+    {
+        return TowerType.getFromCode(this.towerType);
     }
 
     /**
@@ -294,17 +533,7 @@ public class Event
      */
     public String getTowerTypeId()
     {
-        return towerType;
-    }
-
-    /**
-     * The tower type inferred from the id
-     * 
-     * @return TowerType
-     */
-    public TowerType getTowerType()
-    {
-        return TowerType.getFromCode(towerType);
+        return this.towerType;
     }
 
     /**
@@ -314,7 +543,17 @@ public class Event
      */
     public Integer getVictimId()
     {
-        return victimId;
+        return this.victimId;
+    }
+
+    /**
+     * The ward type inferred from the id
+     *
+     * @return WardType
+     */
+    public WardType getWardType()
+    {
+        return WardType.getFromCode(this.wardType);
     }
 
     /**
@@ -324,16 +563,35 @@ public class Event
      */
     public String getWardTypeId()
     {
-        return wardType;
+        return this.wardType;
     }
 
-    /**
-     * The ward type inferred from the id
-     * 
-     * @return WardType
-     */
-    public WardType getWardType()
+    @Override
+    public int hashCode()
     {
-        return WardType.getFromCode(wardType);
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.ascendedType == null) ? 0 : this.ascendedType.hashCode());
+        result = (prime * result) + ((this.assistingParticipantIds == null) ? 0 : this.assistingParticipantIds.hashCode());
+        result = (prime * result) + ((this.buildingType == null) ? 0 : this.buildingType.hashCode());
+        result = (prime * result) + ((this.creatorId == null) ? 0 : this.creatorId.hashCode());
+        result = (prime * result) + ((this.eventType == null) ? 0 : this.eventType.hashCode());
+        result = (prime * result) + ((this.itemAfter == null) ? 0 : this.itemAfter.hashCode());
+        result = (prime * result) + ((this.itemBefore == null) ? 0 : this.itemBefore.hashCode());
+        result = (prime * result) + ((this.itemId == null) ? 0 : this.itemId.hashCode());
+        result = (prime * result) + ((this.killerId == null) ? 0 : this.killerId.hashCode());
+        result = (prime * result) + ((this.laneType == null) ? 0 : this.laneType.hashCode());
+        result = (prime * result) + ((this.levelUpType == null) ? 0 : this.levelUpType.hashCode());
+        result = (prime * result) + ((this.monsterType == null) ? 0 : this.monsterType.hashCode());
+        result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());
+        result = (prime * result) + ((this.pointCaptured == null) ? 0 : this.pointCaptured.hashCode());
+        result = (prime * result) + ((this.position == null) ? 0 : this.position.hashCode());
+        result = (prime * result) + ((this.skillSlot == null) ? 0 : this.skillSlot.hashCode());
+        result = (prime * result) + ((this.teamId == null) ? 0 : this.teamId.hashCode());
+        result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
+        result = (prime * result) + ((this.towerType == null) ? 0 : this.towerType.hashCode());
+        result = (prime * result) + ((this.victimId == null) ? 0 : this.victimId.hashCode());
+        result = (prime * result) + ((this.wardType == null) ? 0 : this.wardType.hashCode());
+        return result;
     }
 }

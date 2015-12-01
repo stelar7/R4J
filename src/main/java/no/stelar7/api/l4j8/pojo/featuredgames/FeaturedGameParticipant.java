@@ -14,14 +14,103 @@ public class FeaturedGameParticipant implements APIObject
     private String  summonerName;
     private Long    teamId;
 
-    /**
-     * Flag indicating whether or not this participant is a bot
-     *
-     * @return Boolean
-     */
-    public Boolean isBot()
+    @Override
+    public boolean equals(final Object obj)
     {
-        return this.bot;
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final FeaturedGameParticipant other = (FeaturedGameParticipant) obj;
+        if (this.bot == null)
+        {
+            if (other.bot != null)
+            {
+                return false;
+            }
+        } else if (!this.bot.equals(other.bot))
+        {
+            return false;
+        }
+        if (this.championId == null)
+        {
+            if (other.championId != null)
+            {
+                return false;
+            }
+        } else if (!this.championId.equals(other.championId))
+        {
+            return false;
+        }
+        if (this.profileIconId == null)
+        {
+            if (other.profileIconId != null)
+            {
+                return false;
+            }
+        } else if (!this.profileIconId.equals(other.profileIconId))
+        {
+            return false;
+        }
+        if (this.spell1Id == null)
+        {
+            if (other.spell1Id != null)
+            {
+                return false;
+            }
+        } else if (!this.spell1Id.equals(other.spell1Id))
+        {
+            return false;
+        }
+        if (this.spell2Id == null)
+        {
+            if (other.spell2Id != null)
+            {
+                return false;
+            }
+        } else if (!this.spell2Id.equals(other.spell2Id))
+        {
+            return false;
+        }
+        if (this.summonerName == null)
+        {
+            if (other.summonerName != null)
+            {
+                return false;
+            }
+        } else if (!this.summonerName.equals(other.summonerName))
+        {
+            return false;
+        }
+        if (this.teamId == null)
+        {
+            if (other.teamId != null)
+            {
+                return false;
+            }
+        } else if (!this.teamId.equals(other.teamId))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * The champion as a Champion
+     *
+     * @return Champion
+     */
+    public Champion getChampion()
+    {
+        return Champion.getFromId(this.championId);
     }
 
     /**
@@ -34,16 +123,6 @@ public class FeaturedGameParticipant implements APIObject
         return this.championId;
     }
 
-    /**
-     * The champion as a Champion
-     * 
-     * @return Champion
-     */
-    public Champion getChampion()
-    {
-        return Champion.getFromId(championId);
-    }
-    
     /**
      * The ID of the profile icon used by this participant
      *
@@ -102,6 +181,31 @@ public class FeaturedGameParticipant implements APIObject
     public Long getTeamId()
     {
         return this.teamId;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.bot == null) ? 0 : this.bot.hashCode());
+        result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
+        result = (prime * result) + ((this.profileIconId == null) ? 0 : this.profileIconId.hashCode());
+        result = (prime * result) + ((this.spell1Id == null) ? 0 : this.spell1Id.hashCode());
+        result = (prime * result) + ((this.spell2Id == null) ? 0 : this.spell2Id.hashCode());
+        result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
+        result = (prime * result) + ((this.teamId == null) ? 0 : this.teamId.hashCode());
+        return result;
+    }
+
+    /**
+     * Flag indicating whether or not this participant is a bot
+     *
+     * @return Boolean
+     */
+    public Boolean isBot()
+    {
+        return this.bot;
     }
 
     @Override

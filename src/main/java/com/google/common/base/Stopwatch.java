@@ -102,11 +102,11 @@ public final class Stopwatch
 
     private final Ticker ticker;
 
-    private boolean isRunning;
+    private boolean      isRunning;
 
-    private long elapsedNanos;
+    private long         elapsedNanos;
 
-    private long startTick;
+    private long         startTick;
 
     @Deprecated
     Stopwatch()

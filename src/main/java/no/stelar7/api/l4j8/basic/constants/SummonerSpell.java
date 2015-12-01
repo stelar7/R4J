@@ -65,13 +65,6 @@ public enum SummonerSpell
      */
     GARRISON(17L);
 
-    Long id;
-
-    SummonerSpell(Long id)
-    {
-        this.id = id;
-    }
-
     /**
      * Returns an SummonerSpell from the provided code
      *
@@ -82,6 +75,13 @@ public enum SummonerSpell
     public static SummonerSpell getFromCode(final Long type)
     {
         return Stream.of(SummonerSpell.values()).filter(t -> t.name().equals(type)).findFirst().get();
+    }
+
+    Long id;
+
+    SummonerSpell(final Long id)
+    {
+        this.id = id;
     }
 
 }

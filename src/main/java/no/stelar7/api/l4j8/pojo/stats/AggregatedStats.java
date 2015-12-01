@@ -59,6 +59,585 @@ public class AggregatedStats
     private Integer totalTurretsKilled;
     private Integer totalUnrealKills;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final AggregatedStats other = (AggregatedStats) obj;
+        if (this.averageAssists == null)
+        {
+            if (other.averageAssists != null)
+            {
+                return false;
+            }
+        } else if (!this.averageAssists.equals(other.averageAssists))
+        {
+            return false;
+        }
+        if (this.averageChampionsKilled == null)
+        {
+            if (other.averageChampionsKilled != null)
+            {
+                return false;
+            }
+        } else if (!this.averageChampionsKilled.equals(other.averageChampionsKilled))
+        {
+            return false;
+        }
+        if (this.averageCombatPlayerScore == null)
+        {
+            if (other.averageCombatPlayerScore != null)
+            {
+                return false;
+            }
+        } else if (!this.averageCombatPlayerScore.equals(other.averageCombatPlayerScore))
+        {
+            return false;
+        }
+        if (this.averageNodeCapture == null)
+        {
+            if (other.averageNodeCapture != null)
+            {
+                return false;
+            }
+        } else if (!this.averageNodeCapture.equals(other.averageNodeCapture))
+        {
+            return false;
+        }
+        if (this.averageNodeCaptureAssist == null)
+        {
+            if (other.averageNodeCaptureAssist != null)
+            {
+                return false;
+            }
+        } else if (!this.averageNodeCaptureAssist.equals(other.averageNodeCaptureAssist))
+        {
+            return false;
+        }
+        if (this.averageNodeNeutralize == null)
+        {
+            if (other.averageNodeNeutralize != null)
+            {
+                return false;
+            }
+        } else if (!this.averageNodeNeutralize.equals(other.averageNodeNeutralize))
+        {
+            return false;
+        }
+        if (this.averageNodeNeutralizeAssist == null)
+        {
+            if (other.averageNodeNeutralizeAssist != null)
+            {
+                return false;
+            }
+        } else if (!this.averageNodeNeutralizeAssist.equals(other.averageNodeNeutralizeAssist))
+        {
+            return false;
+        }
+        if (this.averageNumDeaths == null)
+        {
+            if (other.averageNumDeaths != null)
+            {
+                return false;
+            }
+        } else if (!this.averageNumDeaths.equals(other.averageNumDeaths))
+        {
+            return false;
+        }
+        if (this.averageObjectivePlayerScore == null)
+        {
+            if (other.averageObjectivePlayerScore != null)
+            {
+                return false;
+            }
+        } else if (!this.averageObjectivePlayerScore.equals(other.averageObjectivePlayerScore))
+        {
+            return false;
+        }
+        if (this.averageTeamObjective == null)
+        {
+            if (other.averageTeamObjective != null)
+            {
+                return false;
+            }
+        } else if (!this.averageTeamObjective.equals(other.averageTeamObjective))
+        {
+            return false;
+        }
+        if (this.averageTotalPlayerScore == null)
+        {
+            if (other.averageTotalPlayerScore != null)
+            {
+                return false;
+            }
+        } else if (!this.averageTotalPlayerScore.equals(other.averageTotalPlayerScore))
+        {
+            return false;
+        }
+        if (this.botGamesPlayed == null)
+        {
+            if (other.botGamesPlayed != null)
+            {
+                return false;
+            }
+        } else if (!this.botGamesPlayed.equals(other.botGamesPlayed))
+        {
+            return false;
+        }
+        if (this.killingSpree == null)
+        {
+            if (other.killingSpree != null)
+            {
+                return false;
+            }
+        } else if (!this.killingSpree.equals(other.killingSpree))
+        {
+            return false;
+        }
+        if (this.maxAssists == null)
+        {
+            if (other.maxAssists != null)
+            {
+                return false;
+            }
+        } else if (!this.maxAssists.equals(other.maxAssists))
+        {
+            return false;
+        }
+        if (this.maxChampionsKilled == null)
+        {
+            if (other.maxChampionsKilled != null)
+            {
+                return false;
+            }
+        } else if (!this.maxChampionsKilled.equals(other.maxChampionsKilled))
+        {
+            return false;
+        }
+        if (this.maxCombatPlayerScore == null)
+        {
+            if (other.maxCombatPlayerScore != null)
+            {
+                return false;
+            }
+        } else if (!this.maxCombatPlayerScore.equals(other.maxCombatPlayerScore))
+        {
+            return false;
+        }
+        if (this.maxLargestCriticalStrike == null)
+        {
+            if (other.maxLargestCriticalStrike != null)
+            {
+                return false;
+            }
+        } else if (!this.maxLargestCriticalStrike.equals(other.maxLargestCriticalStrike))
+        {
+            return false;
+        }
+        if (this.maxLargestKillingSpree == null)
+        {
+            if (other.maxLargestKillingSpree != null)
+            {
+                return false;
+            }
+        } else if (!this.maxLargestKillingSpree.equals(other.maxLargestKillingSpree))
+        {
+            return false;
+        }
+        if (this.maxNodeCapture == null)
+        {
+            if (other.maxNodeCapture != null)
+            {
+                return false;
+            }
+        } else if (!this.maxNodeCapture.equals(other.maxNodeCapture))
+        {
+            return false;
+        }
+        if (this.maxNodeCaptureAssist == null)
+        {
+            if (other.maxNodeCaptureAssist != null)
+            {
+                return false;
+            }
+        } else if (!this.maxNodeCaptureAssist.equals(other.maxNodeCaptureAssist))
+        {
+            return false;
+        }
+        if (this.maxNodeNeutralize == null)
+        {
+            if (other.maxNodeNeutralize != null)
+            {
+                return false;
+            }
+        } else if (!this.maxNodeNeutralize.equals(other.maxNodeNeutralize))
+        {
+            return false;
+        }
+        if (this.maxNodeNeutralizeAssist == null)
+        {
+            if (other.maxNodeNeutralizeAssist != null)
+            {
+                return false;
+            }
+        } else if (!this.maxNodeNeutralizeAssist.equals(other.maxNodeNeutralizeAssist))
+        {
+            return false;
+        }
+        if (this.maxNumDeaths == null)
+        {
+            if (other.maxNumDeaths != null)
+            {
+                return false;
+            }
+        } else if (!this.maxNumDeaths.equals(other.maxNumDeaths))
+        {
+            return false;
+        }
+        if (this.maxObjectivePlayerScore == null)
+        {
+            if (other.maxObjectivePlayerScore != null)
+            {
+                return false;
+            }
+        } else if (!this.maxObjectivePlayerScore.equals(other.maxObjectivePlayerScore))
+        {
+            return false;
+        }
+        if (this.maxTeamObjective == null)
+        {
+            if (other.maxTeamObjective != null)
+            {
+                return false;
+            }
+        } else if (!this.maxTeamObjective.equals(other.maxTeamObjective))
+        {
+            return false;
+        }
+        if (this.maxTimePlayed == null)
+        {
+            if (other.maxTimePlayed != null)
+            {
+                return false;
+            }
+        } else if (!this.maxTimePlayed.equals(other.maxTimePlayed))
+        {
+            return false;
+        }
+        if (this.maxTimeSpentLiving == null)
+        {
+            if (other.maxTimeSpentLiving != null)
+            {
+                return false;
+            }
+        } else if (!this.maxTimeSpentLiving.equals(other.maxTimeSpentLiving))
+        {
+            return false;
+        }
+        if (this.maxTotalPlayerScore == null)
+        {
+            if (other.maxTotalPlayerScore != null)
+            {
+                return false;
+            }
+        } else if (!this.maxTotalPlayerScore.equals(other.maxTotalPlayerScore))
+        {
+            return false;
+        }
+        if (this.mostChampionKillsPerSession == null)
+        {
+            if (other.mostChampionKillsPerSession != null)
+            {
+                return false;
+            }
+        } else if (!this.mostChampionKillsPerSession.equals(other.mostChampionKillsPerSession))
+        {
+            return false;
+        }
+        if (this.mostSpellsCast == null)
+        {
+            if (other.mostSpellsCast != null)
+            {
+                return false;
+            }
+        } else if (!this.mostSpellsCast.equals(other.mostSpellsCast))
+        {
+            return false;
+        }
+        if (this.normalGamesPlayed == null)
+        {
+            if (other.normalGamesPlayed != null)
+            {
+                return false;
+            }
+        } else if (!this.normalGamesPlayed.equals(other.normalGamesPlayed))
+        {
+            return false;
+        }
+        if (this.rankedPremadeGamesPlayed == null)
+        {
+            if (other.rankedPremadeGamesPlayed != null)
+            {
+                return false;
+            }
+        } else if (!this.rankedPremadeGamesPlayed.equals(other.rankedPremadeGamesPlayed))
+        {
+            return false;
+        }
+        if (this.rankedSoloGamesPlayed == null)
+        {
+            if (other.rankedSoloGamesPlayed != null)
+            {
+                return false;
+            }
+        } else if (!this.rankedSoloGamesPlayed.equals(other.rankedSoloGamesPlayed))
+        {
+            return false;
+        }
+        if (this.totalAssists == null)
+        {
+            if (other.totalAssists != null)
+            {
+                return false;
+            }
+        } else if (!this.totalAssists.equals(other.totalAssists))
+        {
+            return false;
+        }
+        if (this.totalChampionKills == null)
+        {
+            if (other.totalChampionKills != null)
+            {
+                return false;
+            }
+        } else if (!this.totalChampionKills.equals(other.totalChampionKills))
+        {
+            return false;
+        }
+        if (this.totalDamageDealt == null)
+        {
+            if (other.totalDamageDealt != null)
+            {
+                return false;
+            }
+        } else if (!this.totalDamageDealt.equals(other.totalDamageDealt))
+        {
+            return false;
+        }
+        if (this.totalDamageTaken == null)
+        {
+            if (other.totalDamageTaken != null)
+            {
+                return false;
+            }
+        } else if (!this.totalDamageTaken.equals(other.totalDamageTaken))
+        {
+            return false;
+        }
+        if (this.totalDeathsPerSession == null)
+        {
+            if (other.totalDeathsPerSession != null)
+            {
+                return false;
+            }
+        } else if (!this.totalDeathsPerSession.equals(other.totalDeathsPerSession))
+        {
+            return false;
+        }
+        if (this.totalDoubleKills == null)
+        {
+            if (other.totalDoubleKills != null)
+            {
+                return false;
+            }
+        } else if (!this.totalDoubleKills.equals(other.totalDoubleKills))
+        {
+            return false;
+        }
+        if (this.totalFirstBlood == null)
+        {
+            if (other.totalFirstBlood != null)
+            {
+                return false;
+            }
+        } else if (!this.totalFirstBlood.equals(other.totalFirstBlood))
+        {
+            return false;
+        }
+        if (this.totalGoldEarned == null)
+        {
+            if (other.totalGoldEarned != null)
+            {
+                return false;
+            }
+        } else if (!this.totalGoldEarned.equals(other.totalGoldEarned))
+        {
+            return false;
+        }
+        if (this.totalHeal == null)
+        {
+            if (other.totalHeal != null)
+            {
+                return false;
+            }
+        } else if (!this.totalHeal.equals(other.totalHeal))
+        {
+            return false;
+        }
+        if (this.totalMagicDamageDealt == null)
+        {
+            if (other.totalMagicDamageDealt != null)
+            {
+                return false;
+            }
+        } else if (!this.totalMagicDamageDealt.equals(other.totalMagicDamageDealt))
+        {
+            return false;
+        }
+        if (this.totalMinionKills == null)
+        {
+            if (other.totalMinionKills != null)
+            {
+                return false;
+            }
+        } else if (!this.totalMinionKills.equals(other.totalMinionKills))
+        {
+            return false;
+        }
+        if (this.totalNeutralMinionsKilled == null)
+        {
+            if (other.totalNeutralMinionsKilled != null)
+            {
+                return false;
+            }
+        } else if (!this.totalNeutralMinionsKilled.equals(other.totalNeutralMinionsKilled))
+        {
+            return false;
+        }
+        if (this.totalNodeCapture == null)
+        {
+            if (other.totalNodeCapture != null)
+            {
+                return false;
+            }
+        } else if (!this.totalNodeCapture.equals(other.totalNodeCapture))
+        {
+            return false;
+        }
+        if (this.totalNodeNeutralize == null)
+        {
+            if (other.totalNodeNeutralize != null)
+            {
+                return false;
+            }
+        } else if (!this.totalNodeNeutralize.equals(other.totalNodeNeutralize))
+        {
+            return false;
+        }
+        if (this.totalPentaKills == null)
+        {
+            if (other.totalPentaKills != null)
+            {
+                return false;
+            }
+        } else if (!this.totalPentaKills.equals(other.totalPentaKills))
+        {
+            return false;
+        }
+        if (this.totalPhysicalDamageDealt == null)
+        {
+            if (other.totalPhysicalDamageDealt != null)
+            {
+                return false;
+            }
+        } else if (!this.totalPhysicalDamageDealt.equals(other.totalPhysicalDamageDealt))
+        {
+            return false;
+        }
+        if (this.totalQuadraKills == null)
+        {
+            if (other.totalQuadraKills != null)
+            {
+                return false;
+            }
+        } else if (!this.totalQuadraKills.equals(other.totalQuadraKills))
+        {
+            return false;
+        }
+        if (this.totalSessionsLost == null)
+        {
+            if (other.totalSessionsLost != null)
+            {
+                return false;
+            }
+        } else if (!this.totalSessionsLost.equals(other.totalSessionsLost))
+        {
+            return false;
+        }
+        if (this.totalSessionsPlayed == null)
+        {
+            if (other.totalSessionsPlayed != null)
+            {
+                return false;
+            }
+        } else if (!this.totalSessionsPlayed.equals(other.totalSessionsPlayed))
+        {
+            return false;
+        }
+        if (this.totalSessionsWon == null)
+        {
+            if (other.totalSessionsWon != null)
+            {
+                return false;
+            }
+        } else if (!this.totalSessionsWon.equals(other.totalSessionsWon))
+        {
+            return false;
+        }
+        if (this.totalTripleKills == null)
+        {
+            if (other.totalTripleKills != null)
+            {
+                return false;
+            }
+        } else if (!this.totalTripleKills.equals(other.totalTripleKills))
+        {
+            return false;
+        }
+        if (this.totalTurretsKilled == null)
+        {
+            if (other.totalTurretsKilled != null)
+            {
+                return false;
+            }
+        } else if (!this.totalTurretsKilled.equals(other.totalTurretsKilled))
+        {
+            return false;
+        }
+        if (this.totalUnrealKills == null)
+        {
+            if (other.totalUnrealKills != null)
+            {
+                return false;
+            }
+        } else if (!this.totalUnrealKills.equals(other.totalUnrealKills))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the average assists. (Dominion only.)
      *
@@ -66,7 +645,7 @@ public class AggregatedStats
      */
     public Integer getAverageAssists()
     {
-        return averageAssists;
+        return this.averageAssists;
     }
 
     /**
@@ -76,7 +655,7 @@ public class AggregatedStats
      */
     public Integer getAverageChampionsKilled()
     {
-        return averageChampionsKilled;
+        return this.averageChampionsKilled;
     }
 
     /**
@@ -86,7 +665,7 @@ public class AggregatedStats
      */
     public Integer getAverageCombatPlayerScore()
     {
-        return averageCombatPlayerScore;
+        return this.averageCombatPlayerScore;
     }
 
     /**
@@ -96,7 +675,7 @@ public class AggregatedStats
      */
     public Integer getAverageNodeCapture()
     {
-        return averageNodeCapture;
+        return this.averageNodeCapture;
     }
 
     /**
@@ -106,7 +685,7 @@ public class AggregatedStats
      */
     public Integer getAverageNodeCaptureAssist()
     {
-        return averageNodeCaptureAssist;
+        return this.averageNodeCaptureAssist;
     }
 
     /**
@@ -116,7 +695,7 @@ public class AggregatedStats
      */
     public Integer getAverageNodeNeutralize()
     {
-        return averageNodeNeutralize;
+        return this.averageNodeNeutralize;
     }
 
     /**
@@ -126,7 +705,7 @@ public class AggregatedStats
      */
     public Integer getAverageNodeNeutralizeAssist()
     {
-        return averageNodeNeutralizeAssist;
+        return this.averageNodeNeutralizeAssist;
     }
 
     /**
@@ -136,7 +715,7 @@ public class AggregatedStats
      */
     public Integer getAverageNumDeaths()
     {
-        return averageNumDeaths;
+        return this.averageNumDeaths;
     }
 
     /**
@@ -146,7 +725,7 @@ public class AggregatedStats
      */
     public Integer getAverageObjectivePlayerScore()
     {
-        return averageObjectivePlayerScore;
+        return this.averageObjectivePlayerScore;
     }
 
     /**
@@ -156,7 +735,7 @@ public class AggregatedStats
      */
     public Integer getAverageTeamObjective()
     {
-        return averageTeamObjective;
+        return this.averageTeamObjective;
     }
 
     /**
@@ -166,7 +745,7 @@ public class AggregatedStats
      */
     public Integer getAverageTotalPlayerScore()
     {
-        return averageTotalPlayerScore;
+        return this.averageTotalPlayerScore;
     }
 
     /**
@@ -176,7 +755,7 @@ public class AggregatedStats
      */
     public Integer getBotGamesPlayed()
     {
-        return botGamesPlayed;
+        return this.botGamesPlayed;
     }
 
     /**
@@ -186,7 +765,7 @@ public class AggregatedStats
      */
     public Integer getKillingSpree()
     {
-        return killingSpree;
+        return this.killingSpree;
     }
 
     /**
@@ -196,7 +775,7 @@ public class AggregatedStats
      */
     public Integer getMaxAssists()
     {
-        return maxAssists;
+        return this.maxAssists;
     }
 
     /**
@@ -206,7 +785,7 @@ public class AggregatedStats
      */
     public Integer getMaxChampionsKilled()
     {
-        return maxChampionsKilled;
+        return this.maxChampionsKilled;
     }
 
     /**
@@ -216,7 +795,7 @@ public class AggregatedStats
      */
     public Integer getMaxCombatPlayerScore()
     {
-        return maxCombatPlayerScore;
+        return this.maxCombatPlayerScore;
     }
 
     /**
@@ -226,7 +805,7 @@ public class AggregatedStats
      */
     public Integer getMaxLargestCriticalStrike()
     {
-        return maxLargestCriticalStrike;
+        return this.maxLargestCriticalStrike;
     }
 
     /**
@@ -236,7 +815,7 @@ public class AggregatedStats
      */
     public Integer getMaxLargestKillingSpree()
     {
-        return maxLargestKillingSpree;
+        return this.maxLargestKillingSpree;
     }
 
     /**
@@ -246,7 +825,7 @@ public class AggregatedStats
      */
     public Integer getMaxNodeCapture()
     {
-        return maxNodeCapture;
+        return this.maxNodeCapture;
     }
 
     /**
@@ -256,7 +835,7 @@ public class AggregatedStats
      */
     public Integer getMaxNodeCaptureAssist()
     {
-        return maxNodeCaptureAssist;
+        return this.maxNodeCaptureAssist;
     }
 
     /**
@@ -266,7 +845,7 @@ public class AggregatedStats
      */
     public Integer getMaxNodeNeutralize()
     {
-        return maxNodeNeutralize;
+        return this.maxNodeNeutralize;
     }
 
     /**
@@ -276,7 +855,7 @@ public class AggregatedStats
      */
     public Integer getMaxNodeNeutralizeAssist()
     {
-        return maxNodeNeutralizeAssist;
+        return this.maxNodeNeutralizeAssist;
     }
 
     /**
@@ -286,7 +865,7 @@ public class AggregatedStats
      */
     public Integer getMaxNumDeaths()
     {
-        return maxNumDeaths;
+        return this.maxNumDeaths;
     }
 
     /**
@@ -296,7 +875,7 @@ public class AggregatedStats
      */
     public Integer getMaxObjectivePlayerScore()
     {
-        return maxObjectivePlayerScore;
+        return this.maxObjectivePlayerScore;
     }
 
     /**
@@ -306,7 +885,7 @@ public class AggregatedStats
      */
     public Integer getMaxTeamObjective()
     {
-        return maxTeamObjective;
+        return this.maxTeamObjective;
     }
 
     /**
@@ -316,7 +895,7 @@ public class AggregatedStats
      */
     public Integer getMaxTimePlayed()
     {
-        return maxTimePlayed;
+        return this.maxTimePlayed;
     }
 
     /**
@@ -326,7 +905,7 @@ public class AggregatedStats
      */
     public Integer getMaxTimeSpentLiving()
     {
-        return maxTimeSpentLiving;
+        return this.maxTimeSpentLiving;
     }
 
     /**
@@ -336,7 +915,7 @@ public class AggregatedStats
      */
     public Integer getMaxTotalPlayerScore()
     {
-        return maxTotalPlayerScore;
+        return this.maxTotalPlayerScore;
     }
 
     /**
@@ -346,7 +925,7 @@ public class AggregatedStats
      */
     public Integer getMostChampionKillsPerSession()
     {
-        return mostChampionKillsPerSession;
+        return this.mostChampionKillsPerSession;
     }
 
     /**
@@ -356,7 +935,7 @@ public class AggregatedStats
      */
     public Integer getMostSpellsCast()
     {
-        return mostSpellsCast;
+        return this.mostSpellsCast;
     }
 
     /**
@@ -366,7 +945,7 @@ public class AggregatedStats
      */
     public Integer getNormalGamesPlayed()
     {
-        return normalGamesPlayed;
+        return this.normalGamesPlayed;
     }
 
     /**
@@ -376,7 +955,7 @@ public class AggregatedStats
      */
     public Integer getRankedPremadeGamesPlayed()
     {
-        return rankedPremadeGamesPlayed;
+        return this.rankedPremadeGamesPlayed;
     }
 
     /**
@@ -386,7 +965,7 @@ public class AggregatedStats
      */
     public Integer getRankedSoloGamesPlayed()
     {
-        return rankedSoloGamesPlayed;
+        return this.rankedSoloGamesPlayed;
     }
 
     /**
@@ -396,7 +975,7 @@ public class AggregatedStats
      */
     public Integer getTotalAssists()
     {
-        return totalAssists;
+        return this.totalAssists;
     }
 
     /**
@@ -406,7 +985,7 @@ public class AggregatedStats
      */
     public Integer getTotalChampionKills()
     {
-        return totalChampionKills;
+        return this.totalChampionKills;
     }
 
     /**
@@ -416,7 +995,7 @@ public class AggregatedStats
      */
     public Integer getTotalDamageDealt()
     {
-        return totalDamageDealt;
+        return this.totalDamageDealt;
     }
 
     /**
@@ -426,17 +1005,17 @@ public class AggregatedStats
      */
     public Integer getTotalDamageTaken()
     {
-        return totalDamageTaken;
+        return this.totalDamageTaken;
     }
 
     /**
      * Gets the total deaths per session. (Only returned for ranked statistics.)
-     * 
+     *
      * @return the total deaths per session
      */
     public Integer getTotalDeathsPerSession()
     {
-        return totalDeathsPerSession;
+        return this.totalDeathsPerSession;
     }
 
     /**
@@ -446,7 +1025,7 @@ public class AggregatedStats
      */
     public Integer getTotalDoubleKills()
     {
-        return totalDoubleKills;
+        return this.totalDoubleKills;
     }
 
     /**
@@ -456,7 +1035,7 @@ public class AggregatedStats
      */
     public Integer getTotalFirstBlood()
     {
-        return totalFirstBlood;
+        return this.totalFirstBlood;
     }
 
     /**
@@ -466,7 +1045,7 @@ public class AggregatedStats
      */
     public Integer getTotalGoldEarned()
     {
-        return totalGoldEarned;
+        return this.totalGoldEarned;
     }
 
     /**
@@ -476,7 +1055,7 @@ public class AggregatedStats
      */
     public Integer getTotalHeal()
     {
-        return totalHeal;
+        return this.totalHeal;
     }
 
     /**
@@ -486,7 +1065,7 @@ public class AggregatedStats
      */
     public Integer getTotalMagicDamageDealt()
     {
-        return totalMagicDamageDealt;
+        return this.totalMagicDamageDealt;
     }
 
     /**
@@ -496,7 +1075,7 @@ public class AggregatedStats
      */
     public Integer getTotalMinionKills()
     {
-        return totalMinionKills;
+        return this.totalMinionKills;
     }
 
     /**
@@ -506,7 +1085,7 @@ public class AggregatedStats
      */
     public Integer getTotalNeutralMinionsKilled()
     {
-        return totalNeutralMinionsKilled;
+        return this.totalNeutralMinionsKilled;
     }
 
     /**
@@ -516,7 +1095,7 @@ public class AggregatedStats
      */
     public Integer getTotalNodeCapture()
     {
-        return totalNodeCapture;
+        return this.totalNodeCapture;
     }
 
     /**
@@ -526,7 +1105,7 @@ public class AggregatedStats
      */
     public Integer getTotalNodeNeutralize()
     {
-        return totalNodeNeutralize;
+        return this.totalNodeNeutralize;
     }
 
     /**
@@ -536,7 +1115,7 @@ public class AggregatedStats
      */
     public Integer getTotalPentaKills()
     {
-        return totalPentaKills;
+        return this.totalPentaKills;
     }
 
     /**
@@ -546,7 +1125,7 @@ public class AggregatedStats
      */
     public Integer getTotalPhysicalDamageDealt()
     {
-        return totalPhysicalDamageDealt;
+        return this.totalPhysicalDamageDealt;
     }
 
     /**
@@ -556,7 +1135,7 @@ public class AggregatedStats
      */
     public Integer getTotalQuadraKills()
     {
-        return totalQuadraKills;
+        return this.totalQuadraKills;
     }
 
     /**
@@ -566,7 +1145,7 @@ public class AggregatedStats
      */
     public Integer getTotalSessionsLost()
     {
-        return totalSessionsLost;
+        return this.totalSessionsLost;
     }
 
     /**
@@ -576,7 +1155,7 @@ public class AggregatedStats
      */
     public Integer getTotalSessionsPlayed()
     {
-        return totalSessionsPlayed;
+        return this.totalSessionsPlayed;
     }
 
     /**
@@ -586,7 +1165,7 @@ public class AggregatedStats
      */
     public Integer getTotalSessionsWon()
     {
-        return totalSessionsWon;
+        return this.totalSessionsWon;
     }
 
     /**
@@ -596,7 +1175,7 @@ public class AggregatedStats
      */
     public Integer getTotalTripleKills()
     {
-        return totalTripleKills;
+        return this.totalTripleKills;
     }
 
     /**
@@ -606,7 +1185,7 @@ public class AggregatedStats
      */
     public Integer getTotalTurretsKilled()
     {
-        return totalTurretsKilled;
+        return this.totalTurretsKilled;
     }
 
     /**
@@ -616,7 +1195,71 @@ public class AggregatedStats
      */
     public Integer getTotalUnrealKills()
     {
-        return totalUnrealKills;
+        return this.totalUnrealKills;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.averageAssists == null) ? 0 : this.averageAssists.hashCode());
+        result = (prime * result) + ((this.averageChampionsKilled == null) ? 0 : this.averageChampionsKilled.hashCode());
+        result = (prime * result) + ((this.averageCombatPlayerScore == null) ? 0 : this.averageCombatPlayerScore.hashCode());
+        result = (prime * result) + ((this.averageNodeCapture == null) ? 0 : this.averageNodeCapture.hashCode());
+        result = (prime * result) + ((this.averageNodeCaptureAssist == null) ? 0 : this.averageNodeCaptureAssist.hashCode());
+        result = (prime * result) + ((this.averageNodeNeutralize == null) ? 0 : this.averageNodeNeutralize.hashCode());
+        result = (prime * result) + ((this.averageNodeNeutralizeAssist == null) ? 0 : this.averageNodeNeutralizeAssist.hashCode());
+        result = (prime * result) + ((this.averageNumDeaths == null) ? 0 : this.averageNumDeaths.hashCode());
+        result = (prime * result) + ((this.averageObjectivePlayerScore == null) ? 0 : this.averageObjectivePlayerScore.hashCode());
+        result = (prime * result) + ((this.averageTeamObjective == null) ? 0 : this.averageTeamObjective.hashCode());
+        result = (prime * result) + ((this.averageTotalPlayerScore == null) ? 0 : this.averageTotalPlayerScore.hashCode());
+        result = (prime * result) + ((this.botGamesPlayed == null) ? 0 : this.botGamesPlayed.hashCode());
+        result = (prime * result) + ((this.killingSpree == null) ? 0 : this.killingSpree.hashCode());
+        result = (prime * result) + ((this.maxAssists == null) ? 0 : this.maxAssists.hashCode());
+        result = (prime * result) + ((this.maxChampionsKilled == null) ? 0 : this.maxChampionsKilled.hashCode());
+        result = (prime * result) + ((this.maxCombatPlayerScore == null) ? 0 : this.maxCombatPlayerScore.hashCode());
+        result = (prime * result) + ((this.maxLargestCriticalStrike == null) ? 0 : this.maxLargestCriticalStrike.hashCode());
+        result = (prime * result) + ((this.maxLargestKillingSpree == null) ? 0 : this.maxLargestKillingSpree.hashCode());
+        result = (prime * result) + ((this.maxNodeCapture == null) ? 0 : this.maxNodeCapture.hashCode());
+        result = (prime * result) + ((this.maxNodeCaptureAssist == null) ? 0 : this.maxNodeCaptureAssist.hashCode());
+        result = (prime * result) + ((this.maxNodeNeutralize == null) ? 0 : this.maxNodeNeutralize.hashCode());
+        result = (prime * result) + ((this.maxNodeNeutralizeAssist == null) ? 0 : this.maxNodeNeutralizeAssist.hashCode());
+        result = (prime * result) + ((this.maxNumDeaths == null) ? 0 : this.maxNumDeaths.hashCode());
+        result = (prime * result) + ((this.maxObjectivePlayerScore == null) ? 0 : this.maxObjectivePlayerScore.hashCode());
+        result = (prime * result) + ((this.maxTeamObjective == null) ? 0 : this.maxTeamObjective.hashCode());
+        result = (prime * result) + ((this.maxTimePlayed == null) ? 0 : this.maxTimePlayed.hashCode());
+        result = (prime * result) + ((this.maxTimeSpentLiving == null) ? 0 : this.maxTimeSpentLiving.hashCode());
+        result = (prime * result) + ((this.maxTotalPlayerScore == null) ? 0 : this.maxTotalPlayerScore.hashCode());
+        result = (prime * result) + ((this.mostChampionKillsPerSession == null) ? 0 : this.mostChampionKillsPerSession.hashCode());
+        result = (prime * result) + ((this.mostSpellsCast == null) ? 0 : this.mostSpellsCast.hashCode());
+        result = (prime * result) + ((this.normalGamesPlayed == null) ? 0 : this.normalGamesPlayed.hashCode());
+        result = (prime * result) + ((this.rankedPremadeGamesPlayed == null) ? 0 : this.rankedPremadeGamesPlayed.hashCode());
+        result = (prime * result) + ((this.rankedSoloGamesPlayed == null) ? 0 : this.rankedSoloGamesPlayed.hashCode());
+        result = (prime * result) + ((this.totalAssists == null) ? 0 : this.totalAssists.hashCode());
+        result = (prime * result) + ((this.totalChampionKills == null) ? 0 : this.totalChampionKills.hashCode());
+        result = (prime * result) + ((this.totalDamageDealt == null) ? 0 : this.totalDamageDealt.hashCode());
+        result = (prime * result) + ((this.totalDamageTaken == null) ? 0 : this.totalDamageTaken.hashCode());
+        result = (prime * result) + ((this.totalDeathsPerSession == null) ? 0 : this.totalDeathsPerSession.hashCode());
+        result = (prime * result) + ((this.totalDoubleKills == null) ? 0 : this.totalDoubleKills.hashCode());
+        result = (prime * result) + ((this.totalFirstBlood == null) ? 0 : this.totalFirstBlood.hashCode());
+        result = (prime * result) + ((this.totalGoldEarned == null) ? 0 : this.totalGoldEarned.hashCode());
+        result = (prime * result) + ((this.totalHeal == null) ? 0 : this.totalHeal.hashCode());
+        result = (prime * result) + ((this.totalMagicDamageDealt == null) ? 0 : this.totalMagicDamageDealt.hashCode());
+        result = (prime * result) + ((this.totalMinionKills == null) ? 0 : this.totalMinionKills.hashCode());
+        result = (prime * result) + ((this.totalNeutralMinionsKilled == null) ? 0 : this.totalNeutralMinionsKilled.hashCode());
+        result = (prime * result) + ((this.totalNodeCapture == null) ? 0 : this.totalNodeCapture.hashCode());
+        result = (prime * result) + ((this.totalNodeNeutralize == null) ? 0 : this.totalNodeNeutralize.hashCode());
+        result = (prime * result) + ((this.totalPentaKills == null) ? 0 : this.totalPentaKills.hashCode());
+        result = (prime * result) + ((this.totalPhysicalDamageDealt == null) ? 0 : this.totalPhysicalDamageDealt.hashCode());
+        result = (prime * result) + ((this.totalQuadraKills == null) ? 0 : this.totalQuadraKills.hashCode());
+        result = (prime * result) + ((this.totalSessionsLost == null) ? 0 : this.totalSessionsLost.hashCode());
+        result = (prime * result) + ((this.totalSessionsPlayed == null) ? 0 : this.totalSessionsPlayed.hashCode());
+        result = (prime * result) + ((this.totalSessionsWon == null) ? 0 : this.totalSessionsWon.hashCode());
+        result = (prime * result) + ((this.totalTripleKills == null) ? 0 : this.totalTripleKills.hashCode());
+        result = (prime * result) + ((this.totalTurretsKilled == null) ? 0 : this.totalTurretsKilled.hashCode());
+        result = (prime * result) + ((this.totalUnrealKills == null) ? 0 : this.totalUnrealKills.hashCode());
+        return result;
     }
 
 }

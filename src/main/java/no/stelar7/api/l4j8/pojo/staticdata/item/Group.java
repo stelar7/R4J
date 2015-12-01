@@ -5,14 +5,43 @@ public class Group
     String MaxGroupOwnable;
     String key;
 
-    /**
-     * Gets the max group ownable.
-     *
-     * @return the max group ownable
-     */
-    public String getMaxGroupOwnable()
+    @Override
+    public boolean equals(final Object obj)
     {
-        return MaxGroupOwnable;
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Group other = (Group) obj;
+        if (this.MaxGroupOwnable == null)
+        {
+            if (other.MaxGroupOwnable != null)
+            {
+                return false;
+            }
+        } else if (!this.MaxGroupOwnable.equals(other.MaxGroupOwnable))
+        {
+            return false;
+        }
+        if (this.key == null)
+        {
+            if (other.key != null)
+            {
+                return false;
+            }
+        } else if (!this.key.equals(other.key))
+        {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -22,6 +51,26 @@ public class Group
      */
     public String getKey()
     {
-        return key;
+        return this.key;
+    }
+
+    /**
+     * Gets the max group ownable.
+     *
+     * @return the max group ownable
+     */
+    public String getMaxGroupOwnable()
+    {
+        return this.MaxGroupOwnable;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.MaxGroupOwnable == null) ? 0 : this.MaxGroupOwnable.hashCode());
+        result = (prime * result) + ((this.key == null) ? 0 : this.key.hashCode());
+        return result;
     }
 }

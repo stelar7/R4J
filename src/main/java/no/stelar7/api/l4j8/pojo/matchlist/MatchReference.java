@@ -52,6 +52,125 @@ public class MatchReference implements APIObject
     private String role;
     private String season;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final MatchReference other = (MatchReference) obj;
+        if (this.champion == null)
+        {
+            if (other.champion != null)
+            {
+                return false;
+            }
+        } else if (!this.champion.equals(other.champion))
+        {
+            return false;
+        }
+        if (this.lane == null)
+        {
+            if (other.lane != null)
+            {
+                return false;
+            }
+        } else if (!this.lane.equals(other.lane))
+        {
+            return false;
+        }
+        if (this.matchId == null)
+        {
+            if (other.matchId != null)
+            {
+                return false;
+            }
+        } else if (!this.matchId.equals(other.matchId))
+        {
+            return false;
+        }
+        if (this.platformId == null)
+        {
+            if (other.platformId != null)
+            {
+                return false;
+            }
+        } else if (!this.platformId.equals(other.platformId))
+        {
+            return false;
+        }
+        if (this.queue == null)
+        {
+            if (other.queue != null)
+            {
+                return false;
+            }
+        } else if (!this.queue.equals(other.queue))
+        {
+            return false;
+        }
+        if (this.region == null)
+        {
+            if (other.region != null)
+            {
+                return false;
+            }
+        } else if (!this.region.equals(other.region))
+        {
+            return false;
+        }
+        if (this.role == null)
+        {
+            if (other.role != null)
+            {
+                return false;
+            }
+        } else if (!this.role.equals(other.role))
+        {
+            return false;
+        }
+        if (this.season == null)
+        {
+            if (other.season != null)
+            {
+                return false;
+            }
+        } else if (!this.season.equals(other.season))
+        {
+            return false;
+        }
+        if (this.timestamp == null)
+        {
+            if (other.timestamp != null)
+            {
+                return false;
+            }
+        } else if (!this.timestamp.equals(other.timestamp))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * The played champion as a Champion
+     *
+     * @return Champion
+     */
+    public Champion getChampion()
+    {
+        return Champion.getFromId(this.champion);
+    }
+
     /**
      * Champion ID associated with game.
      *
@@ -63,15 +182,15 @@ public class MatchReference implements APIObject
     }
 
     /**
-     * The played champion as a Champion
-     * 
-     * @return Champion
+     * the lane represented as a Lane
+     *
+     * @return Lane
      */
-    public Champion getChampion()
+    public Lane getLane()
     {
-        return Champion.getFromId(champion);
+        return Lane.getFromCode(this.lane);
     }
-    
+
     /**
      * Lane associated with game
      *
@@ -80,16 +199,6 @@ public class MatchReference implements APIObject
     public String getLaneId()
     {
         return this.lane;
-    }
-
-    /**
-     * the lane represented as a Lane
-     *
-     * @return Lane
-     */
-    public Lane getLane()
-    {
-        return Lane.getFromCode(this.lane);
     }
 
     /**
@@ -123,16 +232,6 @@ public class MatchReference implements APIObject
     }
 
     /**
-     * Queue.
-     *
-     * @return String
-     */
-    public String getQueueId()
-    {
-        return this.queue;
-    }
-
-    /**
      * the queue represented as a RankedQueue
      *
      * @return RankedQueue
@@ -143,13 +242,13 @@ public class MatchReference implements APIObject
     }
 
     /**
-     * Region
+     * Queue.
      *
      * @return String
      */
-    public String getRegionId()
+    public String getQueueId()
     {
-        return this.region;
+        return this.queue;
     }
 
     /**
@@ -163,13 +262,13 @@ public class MatchReference implements APIObject
     }
 
     /**
-     * Role
+     * Region
      *
      * @return String
      */
-    public String getRoleId()
+    public String getRegionId()
     {
-        return this.role;
+        return this.region;
     }
 
     /**
@@ -183,13 +282,13 @@ public class MatchReference implements APIObject
     }
 
     /**
-     * Season
+     * Role
      *
      * @return String
      */
-    public String getSeasonId()
+    public String getRoleId()
     {
-        return this.season;
+        return this.role;
     }
 
     /**
@@ -200,6 +299,16 @@ public class MatchReference implements APIObject
     public Season getSeason()
     {
         return Season.getFromCode(this.season);
+    }
+
+    /**
+     * Season
+     *
+     * @return String
+     */
+    public String getSeasonId()
+    {
+        return this.season;
     }
 
     /**
@@ -215,6 +324,23 @@ public class MatchReference implements APIObject
     public ZonedDateTime getTimestampAsDate()
     {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.timestamp), ZoneOffset.UTC);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.champion == null) ? 0 : this.champion.hashCode());
+        result = (prime * result) + ((this.lane == null) ? 0 : this.lane.hashCode());
+        result = (prime * result) + ((this.matchId == null) ? 0 : this.matchId.hashCode());
+        result = (prime * result) + ((this.platformId == null) ? 0 : this.platformId.hashCode());
+        result = (prime * result) + ((this.queue == null) ? 0 : this.queue.hashCode());
+        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
+        result = (prime * result) + ((this.role == null) ? 0 : this.role.hashCode());
+        result = (prime * result) + ((this.season == null) ? 0 : this.season.hashCode());
+        result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
+        return result;
     }
 
     @Override

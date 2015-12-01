@@ -9,6 +9,55 @@ public class Frame
     private Map<String, ParticipantFrame> participantFrames;
     private Long                          timestamp;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Frame other = (Frame) obj;
+        if (this.events == null)
+        {
+            if (other.events != null)
+            {
+                return false;
+            }
+        } else if (!this.events.equals(other.events))
+        {
+            return false;
+        }
+        if (this.participantFrames == null)
+        {
+            if (other.participantFrames != null)
+            {
+                return false;
+            }
+        } else if (!this.participantFrames.equals(other.participantFrames))
+        {
+            return false;
+        }
+        if (this.timestamp == null)
+        {
+            if (other.timestamp != null)
+            {
+                return false;
+            }
+        } else if (!this.timestamp.equals(other.timestamp))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * List of events for this frame.
      *
@@ -16,7 +65,7 @@ public class Frame
      */
     public List<Event> getEvents()
     {
-        return events;
+        return this.events;
     }
 
     /**
@@ -26,7 +75,7 @@ public class Frame
      */
     public Map<String, ParticipantFrame> getParticipantFrames()
     {
-        return participantFrames;
+        return this.participantFrames;
     }
 
     /**
@@ -36,6 +85,17 @@ public class Frame
      */
     public Long getTimestamp()
     {
-        return timestamp;
+        return this.timestamp;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.events == null) ? 0 : this.events.hashCode());
+        result = (prime * result) + ((this.participantFrames == null) ? 0 : this.participantFrames.hashCode());
+        result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
+        return result;
     }
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public interface APIObject
 {
-    static Class<?> createFromString(final String json, Class<?> target)
+    static Class<?> createFromString(final String json, final Class<?> target)
     {
         System.err.println("NOT A VALID TARGET FOR createFromString?");
         return null;

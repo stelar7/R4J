@@ -7,6 +7,45 @@ public class Mastery implements APIObject
     private Integer id;
     private Integer rank;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Mastery other = (Mastery) obj;
+        if (this.id == null)
+        {
+            if (other.id != null)
+            {
+                return false;
+            }
+        } else if (!this.id.equals(other.id))
+        {
+            return false;
+        }
+        if (this.rank == null)
+        {
+            if (other.rank != null)
+            {
+                return false;
+            }
+        } else if (!this.rank.equals(other.rank))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * The mastery ID. For static information correlating to masteries, please refer to the LoL Static Data API.
      *
@@ -25,6 +64,16 @@ public class Mastery implements APIObject
     public Integer getRank()
     {
         return this.rank;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+        result = (prime * result) + ((this.rank == null) ? 0 : this.rank.hashCode());
+        return result;
     }
 
     @Override

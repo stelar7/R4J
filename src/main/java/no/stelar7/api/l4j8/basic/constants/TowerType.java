@@ -4,8 +4,13 @@ import java.util.stream.Stream;
 
 public enum TowerType
 {
-    BASE_TURRET, FOUNTAIN_TURRET, INNER_TURRET, NEXUS_TURRET, OUTER_TURRET, UNDEFINED_TURRET; 
-    
+    BASE_TURRET,
+    FOUNTAIN_TURRET,
+    INNER_TURRET,
+    NEXUS_TURRET,
+    OUTER_TURRET,
+    UNDEFINED_TURRET;
+
     /**
      * Returns an TowerType from the provided code
      *

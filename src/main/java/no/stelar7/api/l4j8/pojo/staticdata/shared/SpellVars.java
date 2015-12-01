@@ -5,10 +5,79 @@ import java.util.List;
 public class SpellVars
 {
     List<Double> coeff;
-    String dyn;
-    String key;
-    String link;
+    String       dyn;
+    String       key;
+    String       link;
     String       ranksWith;
+
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final SpellVars other = (SpellVars) obj;
+        if (this.coeff == null)
+        {
+            if (other.coeff != null)
+            {
+                return false;
+            }
+        } else if (!this.coeff.equals(other.coeff))
+        {
+            return false;
+        }
+        if (this.dyn == null)
+        {
+            if (other.dyn != null)
+            {
+                return false;
+            }
+        } else if (!this.dyn.equals(other.dyn))
+        {
+            return false;
+        }
+        if (this.key == null)
+        {
+            if (other.key != null)
+            {
+                return false;
+            }
+        } else if (!this.key.equals(other.key))
+        {
+            return false;
+        }
+        if (this.link == null)
+        {
+            if (other.link != null)
+            {
+                return false;
+            }
+        } else if (!this.link.equals(other.link))
+        {
+            return false;
+        }
+        if (this.ranksWith == null)
+        {
+            if (other.ranksWith != null)
+            {
+                return false;
+            }
+        } else if (!this.ranksWith.equals(other.ranksWith))
+        {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Gets the coeff.
@@ -17,7 +86,7 @@ public class SpellVars
      */
     public List<Double> getCoeff()
     {
-        return coeff;
+        return this.coeff;
     }
 
     /**
@@ -27,7 +96,7 @@ public class SpellVars
      */
     public String getDyn()
     {
-        return dyn;
+        return this.dyn;
     }
 
     /**
@@ -37,7 +106,7 @@ public class SpellVars
      */
     public String getKey()
     {
-        return key;
+        return this.key;
     }
 
     /**
@@ -47,7 +116,7 @@ public class SpellVars
      */
     public String getLink()
     {
-        return link;
+        return this.link;
     }
 
     /**
@@ -57,7 +126,20 @@ public class SpellVars
      */
     public String getRanksWith()
     {
-        return ranksWith;
+        return this.ranksWith;
     }
-    
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.coeff == null) ? 0 : this.coeff.hashCode());
+        result = (prime * result) + ((this.dyn == null) ? 0 : this.dyn.hashCode());
+        result = (prime * result) + ((this.key == null) ? 0 : this.key.hashCode());
+        result = (prime * result) + ((this.link == null) ? 0 : this.link.hashCode());
+        result = (prime * result) + ((this.ranksWith == null) ? 0 : this.ranksWith.hashCode());
+        return result;
+    }
+
 }

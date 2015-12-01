@@ -16,6 +16,85 @@ public class ItemList implements APIObject
     String            type;
     String            version;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final ItemList other = (ItemList) obj;
+        if (this.basic == null)
+        {
+            if (other.basic != null)
+            {
+                return false;
+            }
+        } else if (!this.basic.equals(other.basic))
+        {
+            return false;
+        }
+        if (this.data == null)
+        {
+            if (other.data != null)
+            {
+                return false;
+            }
+        } else if (!this.data.equals(other.data))
+        {
+            return false;
+        }
+        if (this.groups == null)
+        {
+            if (other.groups != null)
+            {
+                return false;
+            }
+        } else if (!this.groups.equals(other.groups))
+        {
+            return false;
+        }
+        if (this.tree == null)
+        {
+            if (other.tree != null)
+            {
+                return false;
+            }
+        } else if (!this.tree.equals(other.tree))
+        {
+            return false;
+        }
+        if (this.type == null)
+        {
+            if (other.type != null)
+            {
+                return false;
+            }
+        } else if (!this.type.equals(other.type))
+        {
+            return false;
+        }
+        if (this.version == null)
+        {
+            if (other.version != null)
+            {
+                return false;
+            }
+        } else if (!this.version.equals(other.version))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the basic.
      *
@@ -23,7 +102,7 @@ public class ItemList implements APIObject
      */
     public BasicData getBasic()
     {
-        return basic;
+        return this.basic;
     }
 
     /**
@@ -33,7 +112,7 @@ public class ItemList implements APIObject
      */
     public Map<String, Item> getData()
     {
-        return data;
+        return this.data;
     }
 
     /**
@@ -43,7 +122,7 @@ public class ItemList implements APIObject
      */
     public List<Group> getGroups()
     {
-        return groups;
+        return this.groups;
     }
 
     /**
@@ -53,7 +132,7 @@ public class ItemList implements APIObject
      */
     public List<ItemTree> getTree()
     {
-        return tree;
+        return this.tree;
     }
 
     /**
@@ -63,7 +142,7 @@ public class ItemList implements APIObject
      */
     public String getType()
     {
-        return type;
+        return this.type;
     }
 
     /**
@@ -73,6 +152,20 @@ public class ItemList implements APIObject
      */
     public String getVersion()
     {
-        return version;
+        return this.version;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.basic == null) ? 0 : this.basic.hashCode());
+        result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
+        result = (prime * result) + ((this.groups == null) ? 0 : this.groups.hashCode());
+        result = (prime * result) + ((this.tree == null) ? 0 : this.tree.hashCode());
+        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+        result = (prime * result) + ((this.version == null) ? 0 : this.version.hashCode());
+        return result;
     }
 }

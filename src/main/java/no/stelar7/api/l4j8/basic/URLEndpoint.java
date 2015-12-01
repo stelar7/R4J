@@ -49,8 +49,8 @@ public enum URLEndpoint
     STATIC_SUMMONER_SPELL_BY_ID("/api/lol/static-data/{region}/{version}/summoner-spell/{id}", "v1.2", SummonerSpell.class),
     STATIC_SUMMONER_VERSIONS("/api/lol/static-data/{region}/{version}/versions", "v1.2", StringList.class);
 
-    private String value;
-    private String version;
+    private String                     value;
+    private String                     version;
     private Class<? extends APIObject> type;
 
     private URLEndpoint(final String value, final String version, final Class<? extends APIObject> type)
@@ -76,14 +76,13 @@ public enum URLEndpoint
     }
 
     /**
-     * TODO: add lol-staus-v1.0
-     * Checks if the endpoint is avalible from the server
-     * 
+     * TODO: add lol-staus-v1.0 Checks if the endpoint is avalible from the server
+     *
      * @param server
      *            the server to check
      * @return true if it is avalible
      */
-    public boolean isAvalibleFrom(Server server)
+    public boolean isAvalibleFrom(final Server server)
     {
         if (server == Server.PBE)
         {

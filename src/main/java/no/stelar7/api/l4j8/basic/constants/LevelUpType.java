@@ -6,7 +6,7 @@ public enum LevelUpType
 {
     EVOLVE,
     NORMAL;
-    
+
     /**
      * Returns an LevelUpType from the provided code
      *

@@ -12,6 +12,95 @@ public class Message
     private String            updated_at;
     private List<Translation> translations;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Message other = (Message) obj;
+        if (this.author == null)
+        {
+            if (other.author != null)
+            {
+                return false;
+            }
+        } else if (!this.author.equals(other.author))
+        {
+            return false;
+        }
+        if (this.content == null)
+        {
+            if (other.content != null)
+            {
+                return false;
+            }
+        } else if (!this.content.equals(other.content))
+        {
+            return false;
+        }
+        if (this.created_at == null)
+        {
+            if (other.created_at != null)
+            {
+                return false;
+            }
+        } else if (!this.created_at.equals(other.created_at))
+        {
+            return false;
+        }
+        if (this.id == null)
+        {
+            if (other.id != null)
+            {
+                return false;
+            }
+        } else if (!this.id.equals(other.id))
+        {
+            return false;
+        }
+        if (this.severity == null)
+        {
+            if (other.severity != null)
+            {
+                return false;
+            }
+        } else if (!this.severity.equals(other.severity))
+        {
+            return false;
+        }
+        if (this.translations == null)
+        {
+            if (other.translations != null)
+            {
+                return false;
+            }
+        } else if (!this.translations.equals(other.translations))
+        {
+            return false;
+        }
+        if (this.updated_at == null)
+        {
+            if (other.updated_at != null)
+            {
+                return false;
+            }
+        } else if (!this.updated_at.equals(other.updated_at))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the author.
      *
@@ -19,7 +108,7 @@ public class Message
      */
     public String getAuthor()
     {
-        return author;
+        return this.author;
     }
 
     /**
@@ -29,7 +118,7 @@ public class Message
      */
     public String getContent()
     {
-        return content;
+        return this.content;
     }
 
     /**
@@ -39,7 +128,7 @@ public class Message
      */
     public String getCreated_at()
     {
-        return created_at;
+        return this.created_at;
     }
 
     /**
@@ -49,7 +138,7 @@ public class Message
      */
     public Long getId()
     {
-        return id;
+        return this.id;
     }
 
     /**
@@ -59,17 +148,7 @@ public class Message
      */
     public String getSeverity()
     {
-        return severity;
-    }
-
-    /**
-     * Gets the updated_at.
-     *
-     * @return the updated_at
-     */
-    public String getUpdated_at()
-    {
-        return updated_at;
+        return this.severity;
     }
 
     /**
@@ -79,7 +158,32 @@ public class Message
      */
     public List<Translation> getTranslations()
     {
-        return translations;
+        return this.translations;
+    }
+
+    /**
+     * Gets the updated_at.
+     *
+     * @return the updated_at
+     */
+    public String getUpdated_at()
+    {
+        return this.updated_at;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.author == null) ? 0 : this.author.hashCode());
+        result = (prime * result) + ((this.content == null) ? 0 : this.content.hashCode());
+        result = (prime * result) + ((this.created_at == null) ? 0 : this.created_at.hashCode());
+        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+        result = (prime * result) + ((this.severity == null) ? 0 : this.severity.hashCode());
+        result = (prime * result) + ((this.translations == null) ? 0 : this.translations.hashCode());
+        result = (prime * result) + ((this.updated_at == null) ? 0 : this.updated_at.hashCode());
+        return result;
     }
 
 }

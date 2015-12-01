@@ -34,6 +34,295 @@ public class ParticipantTimeline
     private String                  lane;
     private String                  role;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final ParticipantTimeline other = (ParticipantTimeline) obj;
+        if (this.ancientGolemAssistsPerMinCounts == null)
+        {
+            if (other.ancientGolemAssistsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.ancientGolemAssistsPerMinCounts.equals(other.ancientGolemAssistsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.ancientGolemKillsPerMinCounts == null)
+        {
+            if (other.ancientGolemKillsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.ancientGolemKillsPerMinCounts.equals(other.ancientGolemKillsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.assistedLaneDeathsPerMinDeltas == null)
+        {
+            if (other.assistedLaneDeathsPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.assistedLaneDeathsPerMinDeltas.equals(other.assistedLaneDeathsPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.assistedLaneKillsPerMinDeltas == null)
+        {
+            if (other.assistedLaneKillsPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.assistedLaneKillsPerMinDeltas.equals(other.assistedLaneKillsPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.baronAssistsPerMinCounts == null)
+        {
+            if (other.baronAssistsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.baronAssistsPerMinCounts.equals(other.baronAssistsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.baronKillsPerMinCounts == null)
+        {
+            if (other.baronKillsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.baronKillsPerMinCounts.equals(other.baronKillsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.creepsPerMinDeltas == null)
+        {
+            if (other.creepsPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.creepsPerMinDeltas.equals(other.creepsPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.csDiffPerMinDeltas == null)
+        {
+            if (other.csDiffPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.csDiffPerMinDeltas.equals(other.csDiffPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.damageTakenDiffPerMinDeltas == null)
+        {
+            if (other.damageTakenDiffPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.damageTakenDiffPerMinDeltas.equals(other.damageTakenDiffPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.damageTakenPerMinDeltas == null)
+        {
+            if (other.damageTakenPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.damageTakenPerMinDeltas.equals(other.damageTakenPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.dragonAssistsPerMinCounts == null)
+        {
+            if (other.dragonAssistsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.dragonAssistsPerMinCounts.equals(other.dragonAssistsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.dragonKillsPerMinCounts == null)
+        {
+            if (other.dragonKillsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.dragonKillsPerMinCounts.equals(other.dragonKillsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.elderLizardAssistsPerMinCounts == null)
+        {
+            if (other.elderLizardAssistsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.elderLizardAssistsPerMinCounts.equals(other.elderLizardAssistsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.elderLizardKillsPerMinCounts == null)
+        {
+            if (other.elderLizardKillsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.elderLizardKillsPerMinCounts.equals(other.elderLizardKillsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.goldPerMinDeltas == null)
+        {
+            if (other.goldPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.goldPerMinDeltas.equals(other.goldPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.inhibitorAssistsPerMinCounts == null)
+        {
+            if (other.inhibitorAssistsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.inhibitorAssistsPerMinCounts.equals(other.inhibitorAssistsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.inhibitorKillsPerMinCounts == null)
+        {
+            if (other.inhibitorKillsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.inhibitorKillsPerMinCounts.equals(other.inhibitorKillsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.lane == null)
+        {
+            if (other.lane != null)
+            {
+                return false;
+            }
+        } else if (!this.lane.equals(other.lane))
+        {
+            return false;
+        }
+        if (this.role == null)
+        {
+            if (other.role != null)
+            {
+                return false;
+            }
+        } else if (!this.role.equals(other.role))
+        {
+            return false;
+        }
+        if (this.towerAssistsPerMinCounts == null)
+        {
+            if (other.towerAssistsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.towerAssistsPerMinCounts.equals(other.towerAssistsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.towerKillsPerMinCounts == null)
+        {
+            if (other.towerKillsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.towerKillsPerMinCounts.equals(other.towerKillsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.towerKillsPerMinDeltas == null)
+        {
+            if (other.towerKillsPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.towerKillsPerMinDeltas.equals(other.towerKillsPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.vilemawAssistsPerMinCounts == null)
+        {
+            if (other.vilemawAssistsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.vilemawAssistsPerMinCounts.equals(other.vilemawAssistsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.vilemawKillsPerMinCounts == null)
+        {
+            if (other.vilemawKillsPerMinCounts != null)
+            {
+                return false;
+            }
+        } else if (!this.vilemawKillsPerMinCounts.equals(other.vilemawKillsPerMinCounts))
+        {
+            return false;
+        }
+        if (this.wardsPerMinDeltas == null)
+        {
+            if (other.wardsPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.wardsPerMinDeltas.equals(other.wardsPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.xpDiffPerMinDeltas == null)
+        {
+            if (other.xpDiffPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.xpDiffPerMinDeltas.equals(other.xpDiffPerMinDeltas))
+        {
+            return false;
+        }
+        if (this.xpPerMinDeltas == null)
+        {
+            if (other.xpPerMinDeltas != null)
+            {
+                return false;
+            }
+        } else if (!this.xpPerMinDeltas.equals(other.xpPerMinDeltas))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the ancient golem assists per min counts.
      *
@@ -41,7 +330,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getAncientGolemAssistsPerMinCounts()
     {
-        return ancientGolemAssistsPerMinCounts;
+        return this.ancientGolemAssistsPerMinCounts;
     }
 
     /**
@@ -51,7 +340,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getAncientGolemKillsPerMinCounts()
     {
-        return ancientGolemKillsPerMinCounts;
+        return this.ancientGolemKillsPerMinCounts;
     }
 
     /**
@@ -61,7 +350,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getAssistedLaneDeathsPerMinDeltas()
     {
-        return assistedLaneDeathsPerMinDeltas;
+        return this.assistedLaneDeathsPerMinDeltas;
     }
 
     /**
@@ -71,7 +360,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getAssistedLaneKillsPerMinDeltas()
     {
-        return assistedLaneKillsPerMinDeltas;
+        return this.assistedLaneKillsPerMinDeltas;
     }
 
     /**
@@ -81,7 +370,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getBaronAssistsPerMinCounts()
     {
-        return baronAssistsPerMinCounts;
+        return this.baronAssistsPerMinCounts;
     }
 
     /**
@@ -91,7 +380,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getBaronKillsPerMinCounts()
     {
-        return baronKillsPerMinCounts;
+        return this.baronKillsPerMinCounts;
     }
 
     /**
@@ -101,7 +390,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getCreepsPerMinDeltas()
     {
-        return creepsPerMinDeltas;
+        return this.creepsPerMinDeltas;
     }
 
     /**
@@ -111,7 +400,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getCsDiffPerMinDeltas()
     {
-        return csDiffPerMinDeltas;
+        return this.csDiffPerMinDeltas;
     }
 
     /**
@@ -121,7 +410,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getDamageTakenDiffPerMinDeltas()
     {
-        return damageTakenDiffPerMinDeltas;
+        return this.damageTakenDiffPerMinDeltas;
     }
 
     /**
@@ -131,7 +420,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getDamageTakenPerMinDeltas()
     {
-        return damageTakenPerMinDeltas;
+        return this.damageTakenPerMinDeltas;
     }
 
     /**
@@ -141,7 +430,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getDragonAssistsPerMinCounts()
     {
-        return dragonAssistsPerMinCounts;
+        return this.dragonAssistsPerMinCounts;
     }
 
     /**
@@ -151,7 +440,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getDragonKillsPerMinCounts()
     {
-        return dragonKillsPerMinCounts;
+        return this.dragonKillsPerMinCounts;
     }
 
     /**
@@ -161,7 +450,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getElderLizardAssistsPerMinCounts()
     {
-        return elderLizardAssistsPerMinCounts;
+        return this.elderLizardAssistsPerMinCounts;
     }
 
     /**
@@ -171,7 +460,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getElderLizardKillsPerMinCounts()
     {
-        return elderLizardKillsPerMinCounts;
+        return this.elderLizardKillsPerMinCounts;
     }
 
     /**
@@ -181,7 +470,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getGoldPerMinDeltas()
     {
-        return goldPerMinDeltas;
+        return this.goldPerMinDeltas;
     }
 
     /**
@@ -191,7 +480,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getInhibitorAssistsPerMinCounts()
     {
-        return inhibitorAssistsPerMinCounts;
+        return this.inhibitorAssistsPerMinCounts;
     }
 
     /**
@@ -201,17 +490,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getInhibitorKillsPerMinCounts()
     {
-        return inhibitorKillsPerMinCounts;
-    }
-
-    /**
-     * Gets the lane.
-     *
-     * @return the lane
-     */
-    public String getLaneId()
-    {
-        return lane;
+        return this.inhibitorKillsPerMinCounts;
     }
 
     /**
@@ -221,17 +500,17 @@ public class ParticipantTimeline
      */
     public Lane getLane()
     {
-        return Lane.getFromCode(lane);
+        return Lane.getFromCode(this.lane);
     }
 
     /**
-     * Gets the role.
+     * Gets the lane.
      *
-     * @return the role
+     * @return the lane
      */
-    public String getRoleId()
+    public String getLaneId()
     {
-        return role;
+        return this.lane;
     }
 
     /**
@@ -241,7 +520,17 @@ public class ParticipantTimeline
      */
     public Role getRole()
     {
-        return Role.getFromCode(role);
+        return Role.getFromCode(this.role);
+    }
+
+    /**
+     * Gets the role.
+     *
+     * @return the role
+     */
+    public String getRoleId()
+    {
+        return this.role;
     }
 
     /**
@@ -251,7 +540,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getTowerAssistsPerMinCounts()
     {
-        return towerAssistsPerMinCounts;
+        return this.towerAssistsPerMinCounts;
     }
 
     /**
@@ -261,7 +550,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getTowerKillsPerMinCounts()
     {
-        return towerKillsPerMinCounts;
+        return this.towerKillsPerMinCounts;
     }
 
     /**
@@ -271,7 +560,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getTowerKillsPerMinDeltas()
     {
-        return towerKillsPerMinDeltas;
+        return this.towerKillsPerMinDeltas;
     }
 
     /**
@@ -281,7 +570,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getVilemawAssistsPerMinCounts()
     {
-        return vilemawAssistsPerMinCounts;
+        return this.vilemawAssistsPerMinCounts;
     }
 
     /**
@@ -291,7 +580,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getVilemawKillsPerMinCounts()
     {
-        return vilemawKillsPerMinCounts;
+        return this.vilemawKillsPerMinCounts;
     }
 
     /**
@@ -301,7 +590,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getWardsPerMinDeltas()
     {
-        return wardsPerMinDeltas;
+        return this.wardsPerMinDeltas;
     }
 
     /**
@@ -311,7 +600,7 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getXpDiffPerMinDeltas()
     {
-        return xpDiffPerMinDeltas;
+        return this.xpDiffPerMinDeltas;
     }
 
     /**
@@ -321,7 +610,42 @@ public class ParticipantTimeline
      */
     public ParticipantTimelineData getXpPerMinDeltas()
     {
-        return xpPerMinDeltas;
+        return this.xpPerMinDeltas;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.ancientGolemAssistsPerMinCounts == null) ? 0 : this.ancientGolemAssistsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.ancientGolemKillsPerMinCounts == null) ? 0 : this.ancientGolemKillsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.assistedLaneDeathsPerMinDeltas == null) ? 0 : this.assistedLaneDeathsPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.assistedLaneKillsPerMinDeltas == null) ? 0 : this.assistedLaneKillsPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.baronAssistsPerMinCounts == null) ? 0 : this.baronAssistsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.baronKillsPerMinCounts == null) ? 0 : this.baronKillsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.creepsPerMinDeltas == null) ? 0 : this.creepsPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.csDiffPerMinDeltas == null) ? 0 : this.csDiffPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.damageTakenDiffPerMinDeltas == null) ? 0 : this.damageTakenDiffPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.damageTakenPerMinDeltas == null) ? 0 : this.damageTakenPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.dragonAssistsPerMinCounts == null) ? 0 : this.dragonAssistsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.dragonKillsPerMinCounts == null) ? 0 : this.dragonKillsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.elderLizardAssistsPerMinCounts == null) ? 0 : this.elderLizardAssistsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.elderLizardKillsPerMinCounts == null) ? 0 : this.elderLizardKillsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.goldPerMinDeltas == null) ? 0 : this.goldPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.inhibitorAssistsPerMinCounts == null) ? 0 : this.inhibitorAssistsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.inhibitorKillsPerMinCounts == null) ? 0 : this.inhibitorKillsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.lane == null) ? 0 : this.lane.hashCode());
+        result = (prime * result) + ((this.role == null) ? 0 : this.role.hashCode());
+        result = (prime * result) + ((this.towerAssistsPerMinCounts == null) ? 0 : this.towerAssistsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.towerKillsPerMinCounts == null) ? 0 : this.towerKillsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.towerKillsPerMinDeltas == null) ? 0 : this.towerKillsPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.vilemawAssistsPerMinCounts == null) ? 0 : this.vilemawAssistsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.vilemawKillsPerMinCounts == null) ? 0 : this.vilemawKillsPerMinCounts.hashCode());
+        result = (prime * result) + ((this.wardsPerMinDeltas == null) ? 0 : this.wardsPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.xpDiffPerMinDeltas == null) ? 0 : this.xpDiffPerMinDeltas.hashCode());
+        result = (prime * result) + ((this.xpPerMinDeltas == null) ? 0 : this.xpPerMinDeltas.hashCode());
+        return result;
     }
 
 }

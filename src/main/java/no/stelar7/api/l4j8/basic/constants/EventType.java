@@ -17,7 +17,7 @@ public enum EventType
     SKILL_LEVEL_UP,
     WARD_KILL,
     WARD_PLACED;
-    
+
     /**
      * Returns an EventType from the provided code
      *

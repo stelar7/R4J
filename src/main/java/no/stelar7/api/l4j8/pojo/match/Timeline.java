@@ -7,6 +7,45 @@ public class Timeline
     private Long        frameInterval;
     private List<Frame> frames;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Timeline other = (Timeline) obj;
+        if (this.frameInterval == null)
+        {
+            if (other.frameInterval != null)
+            {
+                return false;
+            }
+        } else if (!this.frameInterval.equals(other.frameInterval))
+        {
+            return false;
+        }
+        if (this.frames == null)
+        {
+            if (other.frames != null)
+            {
+                return false;
+            }
+        } else if (!this.frames.equals(other.frames))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the frame interval.
      *
@@ -14,7 +53,7 @@ public class Timeline
      */
     public Long getFrameInterval()
     {
-        return frameInterval;
+        return this.frameInterval;
     }
 
     /**
@@ -24,7 +63,17 @@ public class Timeline
      */
     public List<Frame> getFrames()
     {
-        return frames;
+        return this.frames;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.frameInterval == null) ? 0 : this.frameInterval.hashCode());
+        result = (prime * result) + ((this.frames == null) ? 0 : this.frames.hashCode());
+        return result;
     }
 
 }

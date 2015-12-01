@@ -13,6 +13,55 @@ public class RankedStats implements APIObject
     private Long                modifyDate;
     private Long                summonerId;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final RankedStats other = (RankedStats) obj;
+        if (this.champions == null)
+        {
+            if (other.champions != null)
+            {
+                return false;
+            }
+        } else if (!this.champions.equals(other.champions))
+        {
+            return false;
+        }
+        if (this.modifyDate == null)
+        {
+            if (other.modifyDate != null)
+            {
+                return false;
+            }
+        } else if (!this.modifyDate.equals(other.modifyDate))
+        {
+            return false;
+        }
+        if (this.summonerId == null)
+        {
+            if (other.summonerId != null)
+            {
+                return false;
+            }
+        } else if (!this.summonerId.equals(other.summonerId))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Collection of aggregated stats summarized by champion.
      *
@@ -20,7 +69,7 @@ public class RankedStats implements APIObject
      */
     public List<ChampionStats> getChampions()
     {
-        return champions;
+        return this.champions;
     }
 
     /**
@@ -30,7 +79,7 @@ public class RankedStats implements APIObject
      */
     public Long getModifyDate()
     {
-        return modifyDate;
+        return this.modifyDate;
     }
 
     /**
@@ -50,7 +99,18 @@ public class RankedStats implements APIObject
      */
     public Long getSummonerId()
     {
-        return summonerId;
+        return this.summonerId;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.champions == null) ? 0 : this.champions.hashCode());
+        result = (prime * result) + ((this.modifyDate == null) ? 0 : this.modifyDate.hashCode());
+        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
+        return result;
     }
 
 }

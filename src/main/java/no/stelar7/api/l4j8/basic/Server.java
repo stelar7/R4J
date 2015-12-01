@@ -23,7 +23,7 @@ public enum Server
         return Stream.of(Server.values()).filter(t -> t.name().equals(code)).findFirst().get();
     }
 
-    private final String server;
+    private final String  server;
 
     private final Boolean limited;
 

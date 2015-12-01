@@ -15,6 +15,75 @@ public class League implements APIObject
     private String            queue;
     private String            tier;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final League other = (League) obj;
+        if (this.entries == null)
+        {
+            if (other.entries != null)
+            {
+                return false;
+            }
+        } else if (!this.entries.equals(other.entries))
+        {
+            return false;
+        }
+        if (this.name == null)
+        {
+            if (other.name != null)
+            {
+                return false;
+            }
+        } else if (!this.name.equals(other.name))
+        {
+            return false;
+        }
+        if (this.participantId == null)
+        {
+            if (other.participantId != null)
+            {
+                return false;
+            }
+        } else if (!this.participantId.equals(other.participantId))
+        {
+            return false;
+        }
+        if (this.queue == null)
+        {
+            if (other.queue != null)
+            {
+                return false;
+            }
+        } else if (!this.queue.equals(other.queue))
+        {
+            return false;
+        }
+        if (this.tier == null)
+        {
+            if (other.tier != null)
+            {
+                return false;
+            }
+        } else if (!this.tier.equals(other.tier))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * The requested league entries.
      *
@@ -22,7 +91,7 @@ public class League implements APIObject
      */
     public List<LeagueEntry> getEntries()
     {
-        return entries;
+        return this.entries;
     }
 
     /**
@@ -32,7 +101,7 @@ public class League implements APIObject
      */
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
     /**
@@ -42,17 +111,7 @@ public class League implements APIObject
      */
     public String getParticipantId()
     {
-        return participantId;
-    }
-
-    /**
-     * The league's queue type. (Legal values: RANKED_SOLO_5x5, RANKED_TEAM_3x3, RANKED_TEAM_5x5)
-     *
-     * @return the queue
-     */
-    public String getQueueString()
-    {
-        return queue;
+        return this.participantId;
     }
 
     /**
@@ -62,17 +121,17 @@ public class League implements APIObject
      */
     public RankedQueue getQueue()
     {
-        return RankedQueue.getFromCode(queue);
+        return RankedQueue.getFromCode(this.queue);
     }
 
     /**
-     * The league's tier. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE)
+     * The league's queue type. (Legal values: RANKED_SOLO_5x5, RANKED_TEAM_3x3, RANKED_TEAM_5x5)
      *
-     * @return the tier
+     * @return the queue
      */
-    public String getTierString()
+    public String getQueueString()
     {
-        return tier;
+        return this.queue;
     }
 
     /**
@@ -82,6 +141,29 @@ public class League implements APIObject
      */
     public Tier getTier()
     {
-        return Tier.getFromCode(tier);
+        return Tier.getFromCode(this.tier);
+    }
+
+    /**
+     * The league's tier. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE)
+     *
+     * @return the tier
+     */
+    public String getTierString()
+    {
+        return this.tier;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.entries == null) ? 0 : this.entries.hashCode());
+        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+        result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());
+        result = (prime * result) + ((this.queue == null) ? 0 : this.queue.hashCode());
+        result = (prime * result) + ((this.tier == null) ? 0 : this.tier.hashCode());
+        return result;
     }
 }

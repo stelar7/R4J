@@ -22,9 +22,9 @@ public class DataCall
 
     public static class DataCallBuilder
     {
-        private final DataCall                           dc    = new DataCall();
-
-        private final BiFunction<String, String, String> merge = ((o, n) -> o + "," + n);
+        private final DataCall                           dc         = new DataCall();
+        private final BiFunction<String, String, String> merge      = ((o, n) -> o + "," + n);
+        final StringBuilder                              urlBuilder = new StringBuilder();
 
         public DataCallBuilder asVerbose(final boolean verbose)
         {
@@ -40,54 +40,56 @@ public class DataCall
                 return new Pair<>(ResponseType.ERROR, this.dc.endpoint.toString() + " not avalible from " + this.dc.server.asURLFormat());
             }
 
-            if (this.dc.useCache)
-            {
-                if (DataCall.cache.containsKey(this.getURL()))
-                {
-                    return new Pair<>(ResponseType.OK, DataCall.cache.get(this.getURL()));
-                }
-            }
-
-            boolean isServerRatelimited = this.dc.server.isLimited();
-            boolean isToRatelimitedURL = !this.dc.endpoint.getValue().startsWith(DataCall.HTTP);
+            final boolean isServerRatelimited = this.dc.server.isLimited();
+            final boolean isToRatelimitedURL = !this.dc.endpoint.getValue().startsWith(DataCall.HTTP);
 
             if (isServerRatelimited && isToRatelimitedURL)
             {
-                DataCall.limiter.get(this.dc.server).acquire();
+                DataCall.limiter.computeIfAbsent(this.dc.server, (final Server s) -> RateLimiter.create((double) DataCall.LIMITER_PERMITS_PER_10_MINUTES / (double) DataCall.LIMITER_10_MINUTES)).acquire();
             }
 
             final String url = this.getURL();
-            Pair<Integer, Pair<String, Integer>> response = getResponse(url);
+            final Pair<Integer, Pair<String, Integer>> response = this.getResponse(url);
 
-            if (response == null)
+            try
             {
-                return build();
-            }
-
-            if (response.getKey() == 200)
-            {
-                try
+                if (response.getKey() == 200)
                 {
-                    Method executor = this.dc.endpoint.getType().getDeclaredMethod("createFromString", String.class);
-                    Object dtoobj = executor.invoke(this.dc.endpoint.getType(), response.getValue().getKey());
-
-                    if (this.dc.useCache)
-                    {
-                        DataCall.cache.put(this.getURL(), dtoobj);
-                    }
+                    final Method executor = this.dc.endpoint.getType().getDeclaredMethod("createFromString", String.class);
+                    final Object dtoobj = executor.invoke(this.dc.endpoint.getType(), response.getValue().getKey());
 
                     return new Pair<>(ResponseType.OK, dtoobj);
-
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
                 }
+
+                if (response.getKey() == 429)
+                {
+                    if (this.dc.retry)
+                    {
+                        TimeUnit.SECONDS.sleep(response.getValue().getValue());
+                        return this.build();
+                    }
+                }
+            } catch (final Exception e)
+            {
+                e.printStackTrace();
             }
 
             return new Pair<>(ResponseType.ERROR, response);
         }
 
-        private Pair<Integer, Pair<String, Integer>> getResponse(String url)
+        public DataCallBuilder clearURLData()
+        {
+            this.dc.urlData.clear();
+            return this;
+        }
+
+        public DataCallBuilder clearURLParameter()
+        {
+            this.dc.urlParams.clear();
+            return this;
+        }
+
+        private Pair<Integer, Pair<String, Integer>> getResponse(final String url) throws RuntimeException
         {
             try
             {
@@ -117,7 +119,7 @@ public class DataCall
                     br.lines().forEach(s -> data.append(s));
                 }
 
-                String limitType = con.getHeaderField("X-Rate-Limit-Type");
+                final String limitType = con.getHeaderField("X-Rate-Limit-Type");
                 int timeout = 0;
 
                 if ((limitType != null) && (limitType.equals(DataCall.LIMIT_USER) || limitType.equals(DataCall.LIMIT_SERVICE)))
@@ -129,64 +131,52 @@ public class DataCall
 
                 con.disconnect();
 
-                if (this.dc.retry && con.getResponseCode() == 429)
-                {
-                    TimeUnit.SECONDS.sleep(timeout);
-                    return null;
-                }
-
                 return new Pair<Integer, Pair<String, Integer>>(con.getResponseCode(), new Pair<String, Integer>(data.toString(), timeout));
-            } catch (IOException | InterruptedException e)
+            } catch (final IOException e)
             {
                 e.printStackTrace();
             }
 
-            return null;
-        }
-
-        public DataCallBuilder clearURLData()
-        {
-            this.dc.urlData.clear();
-            return this;
-        }
-
-        public DataCallBuilder clearURLParameter()
-        {
-            this.dc.urlParams.clear();
-            return this;
+            throw new RuntimeException("Reached end of getResponse, without a valid response!!");
         }
 
         public String getURL()
         {
-            if (urlBuilder.length() != 0)
+            if (this.urlBuilder.length() != 0)
             {
-                return urlBuilder.toString();
+                return this.urlBuilder.toString();
             }
 
             if (!this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
             {
-                urlBuilder.append(DataCall.HTTPS);
+                this.urlBuilder.append(DataCall.HTTPS);
             } else
             {
                 this.dc.server = Server.GLOBAL;
             }
 
-            urlBuilder.append(this.dc.server.getURL()).append(this.dc.endpoint.getValue());
+            this.urlBuilder.append(this.dc.server.getURL()).append(this.dc.endpoint.getValue());
 
             this.withURLData("{region}", this.dc.region.asURLFormat());
             this.withURLData("{version}", this.dc.endpoint.getVersion());
 
             this.dc.urlData.forEach((k, v) -> {
-                String temp = urlBuilder.toString();
+                String temp = this.urlBuilder.toString();
                 temp = temp.toString().replace(k, v);
-                urlBuilder.setLength(0);
-                urlBuilder.append(temp);
+                this.urlBuilder.setLength(0);
+                this.urlBuilder.append(temp);
             });
 
-            urlBuilder.append("?api_key=").append(this.dc.key);
-            this.dc.urlParams.forEach((k, v) -> urlBuilder.append("&").append(k).append("=").append(v));
+            this.urlBuilder.append("?api_key=").append(this.dc.key);
+            this.dc.urlParams.forEach((k, v) -> this.urlBuilder.append("&").append(k).append("=").append(v));
 
-            return urlBuilder.toString();
+            return this.urlBuilder.toString();
+        }
+
+        public DataCallBuilder useCache(final boolean flag)
+        {
+            this.dc.useCache = flag;
+            return this;
         }
 
         public DataCallBuilder withAPIKey(final String key)
@@ -198,6 +188,12 @@ public class DataCall
         public DataCallBuilder withEndpoint(final URLEndpoint endpoint)
         {
             this.dc.endpoint = endpoint;
+            return this;
+        }
+
+        public DataCallBuilder withRegion(final Server region)
+        {
+            this.dc.region = region;
             return this;
         }
 
@@ -219,12 +215,6 @@ public class DataCall
             return this;
         }
 
-        public DataCallBuilder withRegion(final Server region)
-        {
-            this.dc.region = region;
-            return this;
-        }
-
         public DataCallBuilder withURLData(final String key, final String value)
         {
             this.dc.urlData.merge(key, value, this.merge);
@@ -237,14 +227,6 @@ public class DataCall
             return this;
         }
 
-        public DataCallBuilder useCache(final boolean flag)
-        {
-            this.dc.useCache = flag;
-            return this;
-        }
-
-        final StringBuilder urlBuilder = new StringBuilder();
-
     }
 
     public enum ResponseType
@@ -253,43 +235,42 @@ public class DataCall
         ERROR;
     }
 
-    private static final Map<Server, RateLimiter> limiter       = new HashMap<Server, RateLimiter>()
-                                                                {
-                                                                    {
-                                                                        Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> this.put(s, RateLimiter.create(500.0 / (60.0 * 10.0))));
-                                                                    }
-                                                                };
+    private static final Map<Server, RateLimiter> limiter                        = new HashMap<Server, RateLimiter>();
 
-    private static final String                   HTTP          = "http://";
+    private static final String                   HTTP                           = "http://";
 
-    private static final String                   HTTPS         = "https://";
-    private static final String                   LIMIT_USER    = "service";
-    private static final String                   LIMIT_SERVICE = "user";
+    private static final String                   HTTPS                          = "https://";
+
+    private static final String                   LIMIT_USER                     = "service";
+    private static final String                   LIMIT_SERVICE                  = "user";
+    private static final Integer                  LIMITER_PERMITS_PER_10_MINUTES = 500;
+    private static final Integer                  LIMITER_10_MINUTES             = 600;
 
     public static DataCallBuilder builder()
     {
         return new DataCallBuilder();
     }
 
-    private String                           key;
+    public static void setRateLimit(final int permits, final int seconds)
+    {
+        final double permitsPerSecond = (double) permits / (double) seconds;
+        Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
+    }
 
-    private final Map<String, String>        urlData   = new HashMap<>();
-    private final Map<String, String>        urlParams = new HashMap<>();
+    private String                    key;
+    private final Map<String, String> urlData   = new HashMap<>();
 
-    private boolean                          retry     = true;
-    private boolean                          verbose   = false;
-    public boolean                           useCache  = true;
+    private final Map<String, String> urlParams = new HashMap<>();
+    private boolean                   retry     = true;
+    private boolean                   verbose   = false;
 
-    private int                              retryTime = 5;
+    public boolean                    useCache  = true;
 
-    private Server                           server;
-    private Server                           region;
+    private int                       retryTime = 5;
+    private Server                    server;
 
-    private URLEndpoint                      endpoint;
+    private Server                    region;
 
-    /**
-     * URL , Object
-     */
-    private static final Map<String, Object> cache     = new HashMap<String, Object>();
+    private URLEndpoint               endpoint;
 
 }

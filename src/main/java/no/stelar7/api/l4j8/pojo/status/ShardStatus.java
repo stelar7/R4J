@@ -11,6 +11,85 @@ public class ShardStatus
     private List<Service> services;
     private String        slug;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final ShardStatus other = (ShardStatus) obj;
+        if (this.hostname == null)
+        {
+            if (other.hostname != null)
+            {
+                return false;
+            }
+        } else if (!this.hostname.equals(other.hostname))
+        {
+            return false;
+        }
+        if (this.locales == null)
+        {
+            if (other.locales != null)
+            {
+                return false;
+            }
+        } else if (!this.locales.equals(other.locales))
+        {
+            return false;
+        }
+        if (this.name == null)
+        {
+            if (other.name != null)
+            {
+                return false;
+            }
+        } else if (!this.name.equals(other.name))
+        {
+            return false;
+        }
+        if (this.region_tag == null)
+        {
+            if (other.region_tag != null)
+            {
+                return false;
+            }
+        } else if (!this.region_tag.equals(other.region_tag))
+        {
+            return false;
+        }
+        if (this.services == null)
+        {
+            if (other.services != null)
+            {
+                return false;
+            }
+        } else if (!this.services.equals(other.services))
+        {
+            return false;
+        }
+        if (this.slug == null)
+        {
+            if (other.slug != null)
+            {
+                return false;
+            }
+        } else if (!this.slug.equals(other.slug))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the hostname.
      *
@@ -18,7 +97,7 @@ public class ShardStatus
      */
     public String getHostname()
     {
-        return hostname;
+        return this.hostname;
     }
 
     /**
@@ -28,7 +107,7 @@ public class ShardStatus
      */
     public List<String> getLocales()
     {
-        return locales;
+        return this.locales;
     }
 
     /**
@@ -38,7 +117,7 @@ public class ShardStatus
      */
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
     /**
@@ -48,7 +127,7 @@ public class ShardStatus
      */
     public String getRegion_tag()
     {
-        return region_tag;
+        return this.region_tag;
     }
 
     /**
@@ -58,7 +137,7 @@ public class ShardStatus
      */
     public List<Service> getServices()
     {
-        return services;
+        return this.services;
     }
 
     /**
@@ -68,7 +147,21 @@ public class ShardStatus
      */
     public String getSlug()
     {
-        return slug;
+        return this.slug;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.hostname == null) ? 0 : this.hostname.hashCode());
+        result = (prime * result) + ((this.locales == null) ? 0 : this.locales.hashCode());
+        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+        result = (prime * result) + ((this.region_tag == null) ? 0 : this.region_tag.hashCode());
+        result = (prime * result) + ((this.services == null) ? 0 : this.services.hashCode());
+        result = (prime * result) + ((this.slug == null) ? 0 : this.slug.hashCode());
+        return result;
     }
 
 }

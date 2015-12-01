@@ -30,6 +30,235 @@ public class ChampionSpell
     String             tooltip;
     List<SpellVars>    vars;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final ChampionSpell other = (ChampionSpell) obj;
+        if (this.altimages == null)
+        {
+            if (other.altimages != null)
+            {
+                return false;
+            }
+        } else if (!this.altimages.equals(other.altimages))
+        {
+            return false;
+        }
+        if (this.cooldown == null)
+        {
+            if (other.cooldown != null)
+            {
+                return false;
+            }
+        } else if (!this.cooldown.equals(other.cooldown))
+        {
+            return false;
+        }
+        if (this.cooldownBurn == null)
+        {
+            if (other.cooldownBurn != null)
+            {
+                return false;
+            }
+        } else if (!this.cooldownBurn.equals(other.cooldownBurn))
+        {
+            return false;
+        }
+        if (this.cost == null)
+        {
+            if (other.cost != null)
+            {
+                return false;
+            }
+        } else if (!this.cost.equals(other.cost))
+        {
+            return false;
+        }
+        if (this.costBurn == null)
+        {
+            if (other.costBurn != null)
+            {
+                return false;
+            }
+        } else if (!this.costBurn.equals(other.costBurn))
+        {
+            return false;
+        }
+        if (this.costType == null)
+        {
+            if (other.costType != null)
+            {
+                return false;
+            }
+        } else if (!this.costType.equals(other.costType))
+        {
+            return false;
+        }
+        if (this.description == null)
+        {
+            if (other.description != null)
+            {
+                return false;
+            }
+        } else if (!this.description.equals(other.description))
+        {
+            return false;
+        }
+        if (this.effect == null)
+        {
+            if (other.effect != null)
+            {
+                return false;
+            }
+        } else if (!this.effect.equals(other.effect))
+        {
+            return false;
+        }
+        if (this.effectBurn == null)
+        {
+            if (other.effectBurn != null)
+            {
+                return false;
+            }
+        } else if (!this.effectBurn.equals(other.effectBurn))
+        {
+            return false;
+        }
+        if (this.image == null)
+        {
+            if (other.image != null)
+            {
+                return false;
+            }
+        } else if (!this.image.equals(other.image))
+        {
+            return false;
+        }
+        if (this.key == null)
+        {
+            if (other.key != null)
+            {
+                return false;
+            }
+        } else if (!this.key.equals(other.key))
+        {
+            return false;
+        }
+        if (this.leveltip == null)
+        {
+            if (other.leveltip != null)
+            {
+                return false;
+            }
+        } else if (!this.leveltip.equals(other.leveltip))
+        {
+            return false;
+        }
+        if (this.maxrank == null)
+        {
+            if (other.maxrank != null)
+            {
+                return false;
+            }
+        } else if (!this.maxrank.equals(other.maxrank))
+        {
+            return false;
+        }
+        if (this.name == null)
+        {
+            if (other.name != null)
+            {
+                return false;
+            }
+        } else if (!this.name.equals(other.name))
+        {
+            return false;
+        }
+        if (this.range == null)
+        {
+            if (other.range != null)
+            {
+                return false;
+            }
+        } else if (!this.range.equals(other.range))
+        {
+            return false;
+        }
+        if (this.rangeBurn == null)
+        {
+            if (other.rangeBurn != null)
+            {
+                return false;
+            }
+        } else if (!this.rangeBurn.equals(other.rangeBurn))
+        {
+            return false;
+        }
+        if (this.resource == null)
+        {
+            if (other.resource != null)
+            {
+                return false;
+            }
+        } else if (!this.resource.equals(other.resource))
+        {
+            return false;
+        }
+        if (this.sanitizedDescription == null)
+        {
+            if (other.sanitizedDescription != null)
+            {
+                return false;
+            }
+        } else if (!this.sanitizedDescription.equals(other.sanitizedDescription))
+        {
+            return false;
+        }
+        if (this.sanitizedTooltip == null)
+        {
+            if (other.sanitizedTooltip != null)
+            {
+                return false;
+            }
+        } else if (!this.sanitizedTooltip.equals(other.sanitizedTooltip))
+        {
+            return false;
+        }
+        if (this.tooltip == null)
+        {
+            if (other.tooltip != null)
+            {
+                return false;
+            }
+        } else if (!this.tooltip.equals(other.tooltip))
+        {
+            return false;
+        }
+        if (this.vars == null)
+        {
+            if (other.vars != null)
+            {
+                return false;
+            }
+        } else if (!this.vars.equals(other.vars))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the altimages.
      *
@@ -37,7 +266,7 @@ public class ChampionSpell
      */
     public List<Image> getAltimages()
     {
-        return altimages;
+        return this.altimages;
     }
 
     /**
@@ -47,7 +276,7 @@ public class ChampionSpell
      */
     public List<Double> getCooldown()
     {
-        return cooldown;
+        return this.cooldown;
     }
 
     /**
@@ -57,7 +286,7 @@ public class ChampionSpell
      */
     public String getCooldownBurn()
     {
-        return cooldownBurn;
+        return this.cooldownBurn;
     }
 
     /**
@@ -67,7 +296,7 @@ public class ChampionSpell
      */
     public List<Integer> getCost()
     {
-        return cost;
+        return this.cost;
     }
 
     /**
@@ -77,7 +306,7 @@ public class ChampionSpell
      */
     public String getCostBurn()
     {
-        return costBurn;
+        return this.costBurn;
     }
 
     /**
@@ -87,7 +316,7 @@ public class ChampionSpell
      */
     public String getCostType()
     {
-        return costType;
+        return this.costType;
     }
 
     /**
@@ -97,7 +326,7 @@ public class ChampionSpell
      */
     public String getDescription()
     {
-        return description;
+        return this.description;
     }
 
     /**
@@ -107,7 +336,7 @@ public class ChampionSpell
      */
     public List<List<Double>> getEffect()
     {
-        return effect;
+        return this.effect;
     }
 
     /**
@@ -117,7 +346,7 @@ public class ChampionSpell
      */
     public List<String> getEffectBurn()
     {
-        return effectBurn;
+        return this.effectBurn;
     }
 
     /**
@@ -127,7 +356,7 @@ public class ChampionSpell
      */
     public Image getImage()
     {
-        return image;
+        return this.image;
     }
 
     /**
@@ -137,7 +366,7 @@ public class ChampionSpell
      */
     public String getKey()
     {
-        return key;
+        return this.key;
     }
 
     /**
@@ -147,7 +376,7 @@ public class ChampionSpell
      */
     public LevelTip getLeveltip()
     {
-        return leveltip;
+        return this.leveltip;
     }
 
     /**
@@ -157,7 +386,7 @@ public class ChampionSpell
      */
     public Integer getMaxrank()
     {
-        return maxrank;
+        return this.maxrank;
     }
 
     /**
@@ -167,7 +396,7 @@ public class ChampionSpell
      */
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
     /**
@@ -177,7 +406,7 @@ public class ChampionSpell
      */
     public List<Integer> getRange()
     {
-        return range;
+        return this.range;
     }
 
     /**
@@ -187,7 +416,7 @@ public class ChampionSpell
      */
     public String getRangeBurn()
     {
-        return rangeBurn;
+        return this.rangeBurn;
     }
 
     /**
@@ -197,7 +426,7 @@ public class ChampionSpell
      */
     public String getResource()
     {
-        return resource;
+        return this.resource;
     }
 
     /**
@@ -207,7 +436,7 @@ public class ChampionSpell
      */
     public String getSanitizedDescription()
     {
-        return sanitizedDescription;
+        return this.sanitizedDescription;
     }
 
     /**
@@ -217,7 +446,7 @@ public class ChampionSpell
      */
     public String getSanitizedTooltip()
     {
-        return sanitizedTooltip;
+        return this.sanitizedTooltip;
     }
 
     /**
@@ -227,7 +456,7 @@ public class ChampionSpell
      */
     public String getTooltip()
     {
-        return tooltip;
+        return this.tooltip;
     }
 
     /**
@@ -237,7 +466,36 @@ public class ChampionSpell
      */
     public List<SpellVars> getVars()
     {
-        return vars;
+        return this.vars;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.altimages == null) ? 0 : this.altimages.hashCode());
+        result = (prime * result) + ((this.cooldown == null) ? 0 : this.cooldown.hashCode());
+        result = (prime * result) + ((this.cooldownBurn == null) ? 0 : this.cooldownBurn.hashCode());
+        result = (prime * result) + ((this.cost == null) ? 0 : this.cost.hashCode());
+        result = (prime * result) + ((this.costBurn == null) ? 0 : this.costBurn.hashCode());
+        result = (prime * result) + ((this.costType == null) ? 0 : this.costType.hashCode());
+        result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
+        result = (prime * result) + ((this.effect == null) ? 0 : this.effect.hashCode());
+        result = (prime * result) + ((this.effectBurn == null) ? 0 : this.effectBurn.hashCode());
+        result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());
+        result = (prime * result) + ((this.key == null) ? 0 : this.key.hashCode());
+        result = (prime * result) + ((this.leveltip == null) ? 0 : this.leveltip.hashCode());
+        result = (prime * result) + ((this.maxrank == null) ? 0 : this.maxrank.hashCode());
+        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+        result = (prime * result) + ((this.range == null) ? 0 : this.range.hashCode());
+        result = (prime * result) + ((this.rangeBurn == null) ? 0 : this.rangeBurn.hashCode());
+        result = (prime * result) + ((this.resource == null) ? 0 : this.resource.hashCode());
+        result = (prime * result) + ((this.sanitizedDescription == null) ? 0 : this.sanitizedDescription.hashCode());
+        result = (prime * result) + ((this.sanitizedTooltip == null) ? 0 : this.sanitizedTooltip.hashCode());
+        result = (prime * result) + ((this.tooltip == null) ? 0 : this.tooltip.hashCode());
+        result = (prime * result) + ((this.vars == null) ? 0 : this.vars.hashCode());
+        return result;
     }
 
 }

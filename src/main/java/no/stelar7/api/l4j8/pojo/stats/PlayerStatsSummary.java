@@ -8,6 +8,75 @@ public class PlayerStatsSummary
     private String          playerStatSummaryType;
     private Integer         wins;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final PlayerStatsSummary other = (PlayerStatsSummary) obj;
+        if (this.aggregatedStats == null)
+        {
+            if (other.aggregatedStats != null)
+            {
+                return false;
+            }
+        } else if (!this.aggregatedStats.equals(other.aggregatedStats))
+        {
+            return false;
+        }
+        if (this.losses == null)
+        {
+            if (other.losses != null)
+            {
+                return false;
+            }
+        } else if (!this.losses.equals(other.losses))
+        {
+            return false;
+        }
+        if (this.modifyDate == null)
+        {
+            if (other.modifyDate != null)
+            {
+                return false;
+            }
+        } else if (!this.modifyDate.equals(other.modifyDate))
+        {
+            return false;
+        }
+        if (this.playerStatSummaryType == null)
+        {
+            if (other.playerStatSummaryType != null)
+            {
+                return false;
+            }
+        } else if (!this.playerStatSummaryType.equals(other.playerStatSummaryType))
+        {
+            return false;
+        }
+        if (this.wins == null)
+        {
+            if (other.wins != null)
+            {
+                return false;
+            }
+        } else if (!this.wins.equals(other.wins))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Aggregated stats.
      *
@@ -15,7 +84,7 @@ public class PlayerStatsSummary
      */
     public AggregatedStats getAggregatedStats()
     {
-        return aggregatedStats;
+        return this.aggregatedStats;
     }
 
     /**
@@ -25,7 +94,7 @@ public class PlayerStatsSummary
      */
     public Integer getLosses()
     {
-        return losses;
+        return this.losses;
     }
 
     /**
@@ -35,7 +104,7 @@ public class PlayerStatsSummary
      */
     public Long getModifyDate()
     {
-        return modifyDate;
+        return this.modifyDate;
     }
 
     /**
@@ -45,7 +114,7 @@ public class PlayerStatsSummary
      */
     public String getPlayerStatSummaryType()
     {
-        return playerStatSummaryType;
+        return this.playerStatSummaryType;
     }
 
     /**
@@ -55,6 +124,19 @@ public class PlayerStatsSummary
      */
     public Integer getWins()
     {
-        return wins;
+        return this.wins;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.aggregatedStats == null) ? 0 : this.aggregatedStats.hashCode());
+        result = (prime * result) + ((this.losses == null) ? 0 : this.losses.hashCode());
+        result = (prime * result) + ((this.modifyDate == null) ? 0 : this.modifyDate.hashCode());
+        result = (prime * result) + ((this.playerStatSummaryType == null) ? 0 : this.playerStatSummaryType.hashCode());
+        result = (prime * result) + ((this.wins == null) ? 0 : this.wins.hashCode());
+        return result;
     }
 }

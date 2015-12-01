@@ -11,6 +11,65 @@ public class MapDetails
     String     mapName;
     List<Long> unpurchasableItemList;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final MapDetails other = (MapDetails) obj;
+        if (this.image == null)
+        {
+            if (other.image != null)
+            {
+                return false;
+            }
+        } else if (!this.image.equals(other.image))
+        {
+            return false;
+        }
+        if (this.mapId == null)
+        {
+            if (other.mapId != null)
+            {
+                return false;
+            }
+        } else if (!this.mapId.equals(other.mapId))
+        {
+            return false;
+        }
+        if (this.mapName == null)
+        {
+            if (other.mapName != null)
+            {
+                return false;
+            }
+        } else if (!this.mapName.equals(other.mapName))
+        {
+            return false;
+        }
+        if (this.unpurchasableItemList == null)
+        {
+            if (other.unpurchasableItemList != null)
+            {
+                return false;
+            }
+        } else if (!this.unpurchasableItemList.equals(other.unpurchasableItemList))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the image.
      *
@@ -18,7 +77,7 @@ public class MapDetails
      */
     public Image getImage()
     {
-        return image;
+        return this.image;
     }
 
     /**
@@ -28,7 +87,7 @@ public class MapDetails
      */
     public Long getMapId()
     {
-        return mapId;
+        return this.mapId;
     }
 
     /**
@@ -38,7 +97,7 @@ public class MapDetails
      */
     public String getMapName()
     {
-        return mapName;
+        return this.mapName;
     }
 
     /**
@@ -48,6 +107,18 @@ public class MapDetails
      */
     public List<Long> getUnpurchasableItemList()
     {
-        return unpurchasableItemList;
+        return this.unpurchasableItemList;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());
+        result = (prime * result) + ((this.mapId == null) ? 0 : this.mapId.hashCode());
+        result = (prime * result) + ((this.mapName == null) ? 0 : this.mapName.hashCode());
+        result = (prime * result) + ((this.unpurchasableItemList == null) ? 0 : this.unpurchasableItemList.hashCode());
+        return result;
     }
 }

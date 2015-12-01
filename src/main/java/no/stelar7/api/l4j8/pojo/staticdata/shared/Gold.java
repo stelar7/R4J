@@ -7,6 +7,65 @@ public class Gold
     Integer sell;
     Integer total;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Gold other = (Gold) obj;
+        if (this.base == null)
+        {
+            if (other.base != null)
+            {
+                return false;
+            }
+        } else if (!this.base.equals(other.base))
+        {
+            return false;
+        }
+        if (this.purchasable == null)
+        {
+            if (other.purchasable != null)
+            {
+                return false;
+            }
+        } else if (!this.purchasable.equals(other.purchasable))
+        {
+            return false;
+        }
+        if (this.sell == null)
+        {
+            if (other.sell != null)
+            {
+                return false;
+            }
+        } else if (!this.sell.equals(other.sell))
+        {
+            return false;
+        }
+        if (this.total == null)
+        {
+            if (other.total != null)
+            {
+                return false;
+            }
+        } else if (!this.total.equals(other.total))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the base.
      *
@@ -14,7 +73,7 @@ public class Gold
      */
     public Integer getBase()
     {
-        return base;
+        return this.base;
     }
 
     /**
@@ -24,7 +83,7 @@ public class Gold
      */
     public Boolean getPurchasable()
     {
-        return purchasable;
+        return this.purchasable;
     }
 
     /**
@@ -34,7 +93,7 @@ public class Gold
      */
     public Integer getSell()
     {
-        return sell;
+        return this.sell;
     }
 
     /**
@@ -44,6 +103,18 @@ public class Gold
      */
     public Integer getTotal()
     {
-        return total;
+        return this.total;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.base == null) ? 0 : this.base.hashCode());
+        result = (prime * result) + ((this.purchasable == null) ? 0 : this.purchasable.hashCode());
+        result = (prime * result) + ((this.sell == null) ? 0 : this.sell.hashCode());
+        result = (prime * result) + ((this.total == null) ? 0 : this.total.hashCode());
+        return result;
     }
 }

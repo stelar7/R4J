@@ -24,6 +24,11 @@ public enum Lane
      */
     BOT("BOT", "BOTTOM", "BOT_LANE");
 
+    public static Lane getFromCode(final String code)
+    {
+        return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst().get();
+    }
+
     /**
      * Returns a Lane from the provided code
      *
@@ -34,14 +39,9 @@ public enum Lane
 
     String[] keys;
 
-    Lane(String... keys)
+    Lane(final String... keys)
     {
         this.keys = keys;
-    }
-
-    public static Lane getFromCode(final String code)
-    {
-        return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst().get();
     }
 
     /**
@@ -51,6 +51,6 @@ public enum Lane
      */
     public String[] getCodes()
     {
-        return keys;
+        return this.keys;
     }
 }

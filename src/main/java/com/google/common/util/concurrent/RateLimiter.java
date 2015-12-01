@@ -70,7 +70,7 @@ public abstract class RateLimiter
 
     private final SleepingStopwatch stopwatch;
 
-    private volatile Object mutexDoNotUseDirectly;
+    private volatile Object         mutexDoNotUseDirectly;
 
     RateLimiter(final SleepingStopwatch stopwatch)
     {

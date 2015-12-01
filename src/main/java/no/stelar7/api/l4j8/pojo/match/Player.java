@@ -7,6 +7,65 @@ public class Player
     private Long    summonerId;
     private String  summonerName;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Player other = (Player) obj;
+        if (this.matchHistoryUri == null)
+        {
+            if (other.matchHistoryUri != null)
+            {
+                return false;
+            }
+        } else if (!this.matchHistoryUri.equals(other.matchHistoryUri))
+        {
+            return false;
+        }
+        if (this.profileIcon == null)
+        {
+            if (other.profileIcon != null)
+            {
+                return false;
+            }
+        } else if (!this.profileIcon.equals(other.profileIcon))
+        {
+            return false;
+        }
+        if (this.summonerId == null)
+        {
+            if (other.summonerId != null)
+            {
+                return false;
+            }
+        } else if (!this.summonerId.equals(other.summonerId))
+        {
+            return false;
+        }
+        if (this.summonerName == null)
+        {
+            if (other.summonerName != null)
+            {
+                return false;
+            }
+        } else if (!this.summonerName.equals(other.summonerName))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the match history uri.
      *
@@ -14,7 +73,7 @@ public class Player
      */
     public String getMatchHistoryUri()
     {
-        return matchHistoryUri;
+        return this.matchHistoryUri;
     }
 
     /**
@@ -24,7 +83,7 @@ public class Player
      */
     public Integer getProfileIcon()
     {
-        return profileIcon;
+        return this.profileIcon;
     }
 
     /**
@@ -34,7 +93,7 @@ public class Player
      */
     public Long getSummonerId()
     {
-        return summonerId;
+        return this.summonerId;
     }
 
     /**
@@ -44,7 +103,19 @@ public class Player
      */
     public String getSummonerName()
     {
-        return summonerName;
+        return this.summonerName;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.matchHistoryUri == null) ? 0 : this.matchHistoryUri.hashCode());
+        result = (prime * result) + ((this.profileIcon == null) ? 0 : this.profileIcon.hashCode());
+        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
+        result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
+        return result;
     }
 
 }

@@ -133,16 +133,16 @@ public enum Champion
     ZILEAN(26L),
     ZYRA(143L),;
 
+    public static Champion getFromId(final Long id)
+    {
+        return Stream.of(Champion.values()).filter(t -> t.id.equals(id)).findFirst().get();
+    }
+
     Long id;
 
     Champion(final Long id)
     {
         this.id = id;
-    }
-
-    public static Champion getFromId(Long id)
-    {
-        return Stream.of(Champion.values()).filter(t -> t.id.equals(id)).findFirst().get();
     }
 
     /**

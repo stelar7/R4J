@@ -10,6 +10,95 @@ public class Image
     Integer x;
     Integer y;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Image other = (Image) obj;
+        if (this.full == null)
+        {
+            if (other.full != null)
+            {
+                return false;
+            }
+        } else if (!this.full.equals(other.full))
+        {
+            return false;
+        }
+        if (this.group == null)
+        {
+            if (other.group != null)
+            {
+                return false;
+            }
+        } else if (!this.group.equals(other.group))
+        {
+            return false;
+        }
+        if (this.h == null)
+        {
+            if (other.h != null)
+            {
+                return false;
+            }
+        } else if (!this.h.equals(other.h))
+        {
+            return false;
+        }
+        if (this.sprite == null)
+        {
+            if (other.sprite != null)
+            {
+                return false;
+            }
+        } else if (!this.sprite.equals(other.sprite))
+        {
+            return false;
+        }
+        if (this.w == null)
+        {
+            if (other.w != null)
+            {
+                return false;
+            }
+        } else if (!this.w.equals(other.w))
+        {
+            return false;
+        }
+        if (this.x == null)
+        {
+            if (other.x != null)
+            {
+                return false;
+            }
+        } else if (!this.x.equals(other.x))
+        {
+            return false;
+        }
+        if (this.y == null)
+        {
+            if (other.y != null)
+            {
+                return false;
+            }
+        } else if (!this.y.equals(other.y))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the full.
      *
@@ -17,7 +106,7 @@ public class Image
      */
     public String getFull()
     {
-        return full;
+        return this.full;
     }
 
     /**
@@ -27,7 +116,7 @@ public class Image
      */
     public String getGroup()
     {
-        return group;
+        return this.group;
     }
 
     /**
@@ -37,7 +126,7 @@ public class Image
      */
     public Integer getH()
     {
-        return h;
+        return this.h;
     }
 
     /**
@@ -47,7 +136,7 @@ public class Image
      */
     public String getSprite()
     {
-        return sprite;
+        return this.sprite;
     }
 
     /**
@@ -57,7 +146,7 @@ public class Image
      */
     public Integer getW()
     {
-        return w;
+        return this.w;
     }
 
     /**
@@ -67,7 +156,7 @@ public class Image
      */
     public Integer getX()
     {
-        return x;
+        return this.x;
     }
 
     /**
@@ -77,6 +166,21 @@ public class Image
      */
     public Integer getY()
     {
-        return y;
+        return this.y;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.full == null) ? 0 : this.full.hashCode());
+        result = (prime * result) + ((this.group == null) ? 0 : this.group.hashCode());
+        result = (prime * result) + ((this.h == null) ? 0 : this.h.hashCode());
+        result = (prime * result) + ((this.sprite == null) ? 0 : this.sprite.hashCode());
+        result = (prime * result) + ((this.w == null) ? 0 : this.w.hashCode());
+        result = (prime * result) + ((this.x == null) ? 0 : this.x.hashCode());
+        result = (prime * result) + ((this.y == null) ? 0 : this.y.hashCode());
+        return result;
     }
 }

@@ -12,6 +12,95 @@ public class Recommended
     String      title;
     String      type;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Recommended other = (Recommended) obj;
+        if (this.blocks == null)
+        {
+            if (other.blocks != null)
+            {
+                return false;
+            }
+        } else if (!this.blocks.equals(other.blocks))
+        {
+            return false;
+        }
+        if (this.champion == null)
+        {
+            if (other.champion != null)
+            {
+                return false;
+            }
+        } else if (!this.champion.equals(other.champion))
+        {
+            return false;
+        }
+        if (this.map == null)
+        {
+            if (other.map != null)
+            {
+                return false;
+            }
+        } else if (!this.map.equals(other.map))
+        {
+            return false;
+        }
+        if (this.mode == null)
+        {
+            if (other.mode != null)
+            {
+                return false;
+            }
+        } else if (!this.mode.equals(other.mode))
+        {
+            return false;
+        }
+        if (this.priority == null)
+        {
+            if (other.priority != null)
+            {
+                return false;
+            }
+        } else if (!this.priority.equals(other.priority))
+        {
+            return false;
+        }
+        if (this.title == null)
+        {
+            if (other.title != null)
+            {
+                return false;
+            }
+        } else if (!this.title.equals(other.title))
+        {
+            return false;
+        }
+        if (this.type == null)
+        {
+            if (other.type != null)
+            {
+                return false;
+            }
+        } else if (!this.type.equals(other.type))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the blocks.
      *
@@ -19,7 +108,7 @@ public class Recommended
      */
     public List<Block> getBlocks()
     {
-        return blocks;
+        return this.blocks;
     }
 
     /**
@@ -29,7 +118,7 @@ public class Recommended
      */
     public String getChampion()
     {
-        return champion;
+        return this.champion;
     }
 
     /**
@@ -39,7 +128,7 @@ public class Recommended
      */
     public String getMap()
     {
-        return map;
+        return this.map;
     }
 
     /**
@@ -49,7 +138,7 @@ public class Recommended
      */
     public String getMode()
     {
-        return mode;
+        return this.mode;
     }
 
     /**
@@ -59,7 +148,7 @@ public class Recommended
      */
     public Boolean getPriority()
     {
-        return priority;
+        return this.priority;
     }
 
     /**
@@ -69,7 +158,7 @@ public class Recommended
      */
     public String getTitle()
     {
-        return title;
+        return this.title;
     }
 
     /**
@@ -79,6 +168,21 @@ public class Recommended
      */
     public String getType()
     {
-        return type;
+        return this.type;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.blocks == null) ? 0 : this.blocks.hashCode());
+        result = (prime * result) + ((this.champion == null) ? 0 : this.champion.hashCode());
+        result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
+        result = (prime * result) + ((this.mode == null) ? 0 : this.mode.hashCode());
+        result = (prime * result) + ((this.priority == null) ? 0 : this.priority.hashCode());
+        result = (prime * result) + ((this.title == null) ? 0 : this.title.hashCode());
+        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+        return result;
     }
 }
