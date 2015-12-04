@@ -9,12 +9,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.Mastery;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.tests.TestBase;
 
@@ -39,18 +38,15 @@ public class SummonerMasteriesTest extends TestBase
         keys.forEach((String k) -> TestBase.builder.withURLData("{summonerId}", k));
 
         // Get the response
-        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
-
-        // Map it to the correct return value
-        Map<String, List<MasteryPage>> data = (Map<String, List<MasteryPage>>) dataCall.getValue();
+        Map<String, MasteryPages> data = (Map<String, MasteryPages>) TestBase.builder.build();
 
         // Make sure all the data is returned as expected
         data.forEach(doAssertions);
     }
 
-    private BiConsumer<String, List<MasteryPage>> doAssertions = (String key, List<MasteryPage> value) -> {
+    private BiConsumer<String, MasteryPages> doAssertions = (String key, MasteryPages value) -> {
 
-        value.forEach((MasteryPage page) -> {
+        value.getPages().forEach((MasteryPage page) -> {
             Assert.assertNotNull("Mastery Page does not have an id", page.getId());
             Assert.assertNotNull("Mastery Page does not have a name", page.getName());
             Assert.assertNotNull("Mastery Page does not contain any masteries", page.getMasteries());
@@ -65,6 +61,6 @@ public class SummonerMasteriesTest extends TestBase
             });
         });
 
-        Assert.assertTrue("There is not exactly ONE \"current\" page", value.stream().filter((MasteryPage page) -> page.isCurrent()).count() == 1);
+        Assert.assertTrue("There is not exactly ONE \"current\" page", value.getPages().stream().filter((MasteryPage page) -> page.isCurrent()).count() == 1);
     };
 }

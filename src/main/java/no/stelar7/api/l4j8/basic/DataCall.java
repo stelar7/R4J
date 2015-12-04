@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 
 import com.google.common.util.concurrent.RateLimiter;
+import com.google.gson.Gson;
 
 import javafx.util.Pair;
 
@@ -32,12 +33,12 @@ public class DataCall
             return this;
         }
 
-        public Pair<ResponseType, Object> build()
+        public Object build()
         {
 
             if (!this.dc.endpoint.isAvalibleFrom(this.dc.server))
             {
-                return new Pair<>(ResponseType.ERROR, this.dc.endpoint.toString() + " not avalible from " + this.dc.server.asURLFormat());
+                throw new RuntimeException(this.dc.endpoint.toString() + " not avalible from " + this.dc.server.asURLFormat());
             }
 
             final boolean isServerRatelimited = this.dc.server.isLimited();
@@ -55,10 +56,16 @@ public class DataCall
             {
                 if (response.getKey() == 200)
                 {
-                    final Method executor = this.dc.endpoint.getType().getDeclaredMethod("createFromString", String.class);
-                    final Object dtoobj = executor.invoke(this.dc.endpoint.getType(), response.getValue().getKey());
-
-                    return new Pair<>(ResponseType.OK, dtoobj);
+                    Object type = this.dc.endpoint.getType();
+                    Object dtoobj;
+                    if (type instanceof Class<?>)
+                    {
+                        dtoobj = new Gson().fromJson(response.getValue().getKey(), (Class<?>) this.dc.endpoint.getType());
+                    } else
+                    {
+                        dtoobj = new Gson().fromJson(response.getValue().getKey(), (Type) this.dc.endpoint.getType());
+                    }
+                    return dtoobj;
                 }
 
                 if (response.getKey() == 429)
@@ -74,7 +81,7 @@ public class DataCall
                 e.printStackTrace();
             }
 
-            return new Pair<>(ResponseType.ERROR, response);
+            throw new RuntimeException(response.getValue().getKey());
         }
 
         public DataCallBuilder clearURLData()

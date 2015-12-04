@@ -9,11 +9,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
+import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RuneSlot;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.tests.TestBase;
@@ -39,18 +38,15 @@ public class SummonerRunesTest extends TestBase
         keys.forEach((String k) -> TestBase.builder.withURLData("{summonerId}", k));
 
         // Get the response
-        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
-
-        // Map it to the correct return value
-        Map<String, List<RunePage>> data = (Map<String, List<RunePage>>) dataCall.getValue();
+        Map<String, RunePages> dataCall = (Map<String, RunePages>) TestBase.builder.build();
 
         // Make sure all the data is returned as expected
-        data.forEach(doAssertions);
+        dataCall.forEach(doAssertions);
     }
 
-    private BiConsumer<String, List<RunePage>> doAssertions = (String key, List<RunePage> value) -> {
+    private BiConsumer<String, RunePages> doAssertions = (String key, RunePages value) -> {
 
-        value.forEach((RunePage page) -> {
+        value.getPages().forEach((RunePage page) -> {
             Assert.assertNotNull("Rune Page does not have an id", page.getId());
             Assert.assertNotNull("Rune Page does not have a name", page.getName());
             Assert.assertNotNull("Rune Page does not contain any slots", page.getSlots());
@@ -65,6 +61,6 @@ public class SummonerRunesTest extends TestBase
             });
         });
 
-        Assert.assertTrue("There is not exactly ONE \"current\" page", value.stream().filter((RunePage page) -> page.isCurrent()).count() == 1);
+        Assert.assertTrue("There is not exactly ONE \"current\" page", value.getPages().stream().filter((RunePage page) -> page.isCurrent()).count() == 1);
     };
 }

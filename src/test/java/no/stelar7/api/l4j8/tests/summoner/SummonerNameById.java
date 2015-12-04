@@ -9,10 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.tests.TestBase;
 
@@ -38,10 +36,7 @@ public class SummonerNameById extends TestBase
         keys.forEach((String k) -> TestBase.builder.withURLData("{summonerId}", k));
 
         // Get the response
-        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
-
-        // Map it to the correct return value
-        Map<String, String> data = (Map<String, String>) dataCall.getValue();
+        Map<String, String> data = (Map<String, String>) TestBase.builder.build();
 
         // Make sure all the data is returned as expected
         data.forEach(doAssertions);

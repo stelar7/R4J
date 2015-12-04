@@ -1,6 +1,5 @@
 package no.stelar7.api.l4j8.tests.currentgame;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -16,6 +15,7 @@ import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGameInfo;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 
@@ -52,7 +52,7 @@ public class CurrentGameTest
     public void doTest()
     {
         // Get a game in progess
-        FeaturedGameInfo game = ((List<FeaturedGameInfo>) featuredbuilder.build().getValue()).get(0);
+        FeaturedGameInfo game = ((FeaturedGames) featuredbuilder.build()).getGameList().get(0);
 
         // get a summoner from that game
         String name = game.getParticipants().get(0).getSummonerName();
@@ -60,7 +60,7 @@ public class CurrentGameTest
         String parsedName = Utils.prepareForURL(name);
         idbuilder.withURLData("{summonerName}", parsedName);
 
-        Object data = idbuilder.build().getValue();
+        Object data = idbuilder.build();
         Map<String, Summoner> datamap = ((Map<String, Summoner>) data);
 
         // get the summoners id
@@ -70,7 +70,7 @@ public class CurrentGameTest
         this.currentbuilder.withURLData("{platformId}", game.getPlatform().getCode());
 
         // our ongoing game
-        CurrentGameInfo currentGame = (CurrentGameInfo) currentbuilder.build().getValue();
+        CurrentGameInfo currentGame = (CurrentGameInfo) currentbuilder.build();
 
         Assert.assertNotNull("bannedchampion is null", currentGame.getBannedChampions());
         Assert.assertNotNull("gameid is null", currentGame.getGameId());

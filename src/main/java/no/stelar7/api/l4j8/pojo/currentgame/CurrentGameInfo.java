@@ -6,8 +6,6 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
 import no.stelar7.api.l4j8.basic.constants.GameMode;
@@ -20,12 +18,6 @@ import no.stelar7.api.l4j8.pojo.shared.Observer;
 public class CurrentGameInfo implements APIObject
 
 {
-    public static CurrentGameInfo createFromString(final String json) throws Exception
-    {
-        final JsonNode node = APIObject.getDefaultMapper().readTree(json);
-        final CurrentGameInfo info = APIObject.getDefaultMapper().readValue(node.toString(), CurrentGameInfo.class);
-        return info;
-    }
 
     private List<BannedChampion>         bannedChampions;
     private Long                         gameId;

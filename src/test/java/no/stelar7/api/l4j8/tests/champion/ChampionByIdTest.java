@@ -6,28 +6,31 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.champion.Champion;
+import no.stelar7.api.l4j8.pojo.champion.ChampionList;
 import no.stelar7.api.l4j8.tests.TestBase;
 
 public class ChampionByIdTest extends TestBase
 {
-    
+
     @Before
     public void initForTest()
     {
         init();
-        TestBase.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
+        TestBase.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID_MULTIPLE);
+    }
+
+    private List<Champion> objectToList(ChampionList cl)
+    {
+        return cl.getChampions();
     }
 
     @Test
     public void testMany()
     {
         TestBase.builder.withURLData("{championId}", "");
-        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
-        List<Champion> champs = (List<Champion>) dataCall.getValue();
+        List<Champion> champs = objectToList((ChampionList) TestBase.builder.build());
 
         Assert.assertTrue("Less than 100 champions?", champs.size() > 100);
     }
@@ -37,9 +40,7 @@ public class ChampionByIdTest extends TestBase
     {
         TestBase.builder.withURLData("{championId}", "");
         TestBase.builder.withURLParameter("freeToPlay", "true");
-        
-        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
-        List<Champion> champs = (List<Champion>) dataCall.getValue();
+        List<Champion> champs = objectToList((ChampionList) TestBase.builder.build());
 
         champs.forEach(c -> Assert.assertTrue("Free to play is false?!", c.isFreeToPlay()));
     }
@@ -48,10 +49,9 @@ public class ChampionByIdTest extends TestBase
     public void testSingle()
     {
         TestBase.builder.withURLData("{championId}", "266");
-        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
-        List<Champion> champs = (List<Champion>) dataCall.getValue();
+        TestBase.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID_SINGLE);
+        Champion champs = ((Champion) TestBase.builder.build());
 
-        Assert.assertTrue("More than 1 champion with id 266?", champs.size() == 1);
-        Assert.assertTrue("Champion id is not 266?", champs.get(0).getId().equals(266));
+        Assert.assertTrue("Champion id is not 266?", champs.getId().equals(266));
     }
 }

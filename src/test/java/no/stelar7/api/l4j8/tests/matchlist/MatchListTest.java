@@ -8,12 +8,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.RankedQueue;
 import no.stelar7.api.l4j8.basic.constants.Season;
+import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
 import no.stelar7.api.l4j8.tests.TestBase;
 
@@ -24,6 +23,7 @@ public class MatchListTest extends TestBase
     {
         TestBase.builder.withEndpoint(URLEndpoint.MATCHLIST);
     }
+
     @Test
     public void doTest()
     {
@@ -31,9 +31,8 @@ public class MatchListTest extends TestBase
         TestBase.builder.withURLParameter("championIds", String.valueOf(Champion.LEONA.getId()));
         TestBase.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5x5.getCode());
         TestBase.builder.withURLParameter("seasons", Season.SEASON_2014.getCode());
-        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
 
-        List<MatchReference> matches = (List<MatchReference>) dataCall.getValue();
+        List<MatchReference> matches = ((MatchList) TestBase.builder.build()).getMatches();
 
         // I played 47 ranked solo games as leona in 2014
         Assert.assertEquals("Unexpected amount of games returned", matches.size(), 47);

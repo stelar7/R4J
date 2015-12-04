@@ -3,10 +3,6 @@ package no.stelar7.api.l4j8.pojo.matchlist;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.databind.JsonNode;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
@@ -19,29 +15,6 @@ import no.stelar7.api.l4j8.basic.constants.Season;
 
 public class MatchReference implements APIObject
 {
-    public static List<MatchReference> createFromString(final String json) throws Exception
-    {
-        final JsonNode node = APIObject.getDefaultMapper().readTree(json);
-        final List<MatchReference> matches = new ArrayList<>();
-
-        if (node.get("totalGames").asLong() == 0)
-        {
-            return matches;
-        }
-
-        node.get("matches").forEach(n -> {
-            try
-            {
-                final MatchReference match = APIObject.getDefaultMapper().readValue(n.toString(), MatchReference.class);
-                matches.add(match);
-            } catch (final Exception e)
-            {
-                e.printStackTrace();
-            }
-        });
-        return matches;
-    }
-
     private Long   champion;
     private Long   matchId;
     private Long   timestamp;

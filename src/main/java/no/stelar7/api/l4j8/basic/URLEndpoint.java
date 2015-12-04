@@ -1,11 +1,13 @@
 package no.stelar7.api.l4j8.basic;
 
-import no.stelar7.api.l4j8.pojo.champion.Champion;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gson.reflect.TypeToken;
+
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
-import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGameInfo;
-import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
-import no.stelar7.api.l4j8.pojo.shared.StringList;
-import no.stelar7.api.l4j8.pojo.shared.StringMap;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.ChampionList;
 import no.stelar7.api.l4j8.pojo.staticdata.item.Item;
 import no.stelar7.api.l4j8.pojo.staticdata.item.ItemList;
@@ -19,26 +21,33 @@ import no.stelar7.api.l4j8.pojo.staticdata.rune.RuneList;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.SummonerSpell;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.SummonerSpellList;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
+import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
 
 public enum URLEndpoint
 {
-    SUMMONER_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}", "v1.4", Summoner.class),
-    SUMMONER_BY_NAME("/api/lol/{region}/{version}/summoner/by-name/{summonerName}", "v1.4", Summoner.class),
-    SUMMONER_MASTERIES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/masteries", "v1.4", MasteryPage.class),
-    SUMMONER_RUNES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/runes", "v1.4", RunePage.class),
-    SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", StringMap.class),
-    CHAMPION_BY_ID("/api/lol/{region}/{version}/champion/{championId}", "v1.2", Champion.class),
-    MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchReference.class),
+    SUMMONER_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}", "v1.4", new TypeToken<Map<String, Summoner>>()
+    {}.getType()),
+    SUMMONER_BY_NAME("/api/lol/{region}/{version}/summoner/by-name/{summonerName}", "v1.4", new TypeToken<Map<String, Summoner>>()
+    {}.getType()),
+    SUMMONER_MASTERIES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/masteries", "v1.4", new TypeToken<Map<String, MasteryPages>>()
+    {}.getType()),
+    SUMMONER_RUNES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/runes", "v1.4", new TypeToken<Map<String, RunePages>>()
+    {}.getType()),
+    SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", new TypeToken<Map<String, String>>()
+    {}.getType()),
+    CHAMPION_BY_ID_MULTIPLE("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
+    CHAMPION_BY_ID_SINGLE("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.Champion.class),
+    MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchList.class),
     CURRENTGAME("/observer-mode/rest/consumer/getSpectatorGameInfo/{platformId}/{summonerId}", "", CurrentGameInfo.class),
-    FEATUREDGAME("/observer-mode/rest/featured", "", FeaturedGameInfo.class),
+    FEATUREDGAME("/observer-mode/rest/featured", "", FeaturedGames.class),
     STATIC_CHAMPION("/api/lol/static-data/{region}/{version}/champion", "v1.2", ChampionList.class),
     STATIC_CHAMPION_BY_ID("/api/lol/static-data/{region}/{version}/champion/{id}", "v1.2", no.stelar7.api.l4j8.pojo.staticdata.champion.Champion.class),
     STATIC_ITEM("/api/lol/static-data/{region}/{version}/item", "v1.2", ItemList.class),
     STATIC_ITEM_BY_ID("/api/lol/static-data/{region}/{version}/item/{id}", "v1.2", Item.class),
     STATIC_LANGUAGE_STRINGS("/api/lol/static-data/{region}/{version}/language-strings", "v1.2", LanguageStrings.class),
-    STATIC_LANGUAGES("/api/lol/static-data/{region}/{version}/languages", "v1.2", StringList.class),
+    STATIC_LANGUAGES("/api/lol/static-data/{region}/{version}/languages", "v1.2", new TypeToken<List<String>>()
+    {}.getType()),
     STATIC_MAP("/api/lol/static-data/{region}/{version}/map", "v1.2", MapData.class),
     STATIC_MASTERY("/api/lol/static-data/{region}/{version}/mastery", "v1.2", MasteryList.class),
     STATIC_MASTERY_BY_ID("/api/lol/static-data/{region}/{version}/mastery", "v1.2", Mastery.class),
@@ -47,20 +56,21 @@ public enum URLEndpoint
     STATIC_RUNE_BY_ID("/api/lol/static-data/{region}/{version}/rune/{id}", "v1.2", Rune.class),
     STATIC_SUMMONER_SPELL("/api/lol/static-data/{region}/{version}/summoner-spell", "v1.2", SummonerSpellList.class),
     STATIC_SUMMONER_SPELL_BY_ID("/api/lol/static-data/{region}/{version}/summoner-spell/{id}", "v1.2", SummonerSpell.class),
-    STATIC_SUMMONER_VERSIONS("/api/lol/static-data/{region}/{version}/versions", "v1.2", StringList.class);
+    STATIC_SUMMONER_VERSIONS("/api/lol/static-data/{region}/{version}/versions", "v1.2", new TypeToken<List<String>>()
+    {}.getType());
 
-    private String                     value;
-    private String                     version;
-    private Class<? extends APIObject> type;
+    private String value;
+    private String version;
+    private Object type;
 
-    private URLEndpoint(final String value, final String version, final Class<? extends APIObject> type)
+    private URLEndpoint(final String value, final String version, final Object type)
     {
         this.value = value;
         this.version = version;
         this.type = type;
     }
 
-    public Class<? extends APIObject> getType()
+    public Object getType()
     {
         return this.type;
     }

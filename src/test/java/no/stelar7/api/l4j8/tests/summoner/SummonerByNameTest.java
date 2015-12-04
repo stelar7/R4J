@@ -9,8 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.util.Pair;
-import no.stelar7.api.l4j8.basic.DataCall.ResponseType;
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.basic.Utils;
@@ -28,7 +26,7 @@ public class SummonerByNameTest extends TestBase
         TestBase.builder.withServer(Server.EUW);
         TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
     }
-    
+
     @Test
     public void doTest()
     {
@@ -39,11 +37,8 @@ public class SummonerByNameTest extends TestBase
         keys.forEach((String k) -> TestBase.builder.withURLData("{summonerName}", Utils.prepareForURL(k)));
 
         // Get the response
-        final Pair<ResponseType, Object> dataCall = TestBase.builder.build();
+        Map<String, Summoner> data = (Map<String, Summoner>) TestBase.builder.build();
 
-        // Map it to the correct return value
-        Map<String, Summoner> data = (Map<String, Summoner>) dataCall.getValue();
-        
         // Make sure all the data is returned as expected
         data.forEach(doAssertions);
     }

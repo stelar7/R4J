@@ -1,8 +1,7 @@
-current-game
-featured-games
+Write tests for the following:
+
 game
 league
-lol-static-data
 lol-status
 match
 stats
