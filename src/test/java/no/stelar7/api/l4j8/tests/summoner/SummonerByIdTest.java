@@ -40,7 +40,6 @@ public class SummonerByIdTest extends TestBase
         // Get the response
         final Map<String, Summoner> data = (Map<String, Summoner>) TestBase.builder.build();
 
-        System.out.println(data.get("19613950").toString());
         // Make sure all the data is returned as expected
         data.forEach(this.doAssertions);
     }

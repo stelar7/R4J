@@ -36,8 +36,8 @@ public enum URLEndpoint
     {}.getType()),
     SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", new TypeToken<Map<String, String>>()
     {}.getType()),
-    CHAMPION_BY_ID_MULTIPLE("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
-    CHAMPION_BY_ID_SINGLE("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.Champion.class),
+    CHAMPIONS("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
+    CHAMPION_BY_ID("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.Champion.class),
     MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchList.class),
     CURRENTGAME("/observer-mode/rest/consumer/getSpectatorGameInfo/{platformId}/{summonerId}", "", CurrentGameInfo.class),
     FEATUREDGAME("/observer-mode/rest/featured", "", FeaturedGames.class),
@@ -56,7 +56,7 @@ public enum URLEndpoint
     STATIC_RUNE_BY_ID("/api/lol/static-data/{region}/{version}/rune/{id}", "v1.2", Rune.class),
     STATIC_SUMMONER_SPELL("/api/lol/static-data/{region}/{version}/summoner-spell", "v1.2", SummonerSpellList.class),
     STATIC_SUMMONER_SPELL_BY_ID("/api/lol/static-data/{region}/{version}/summoner-spell/{id}", "v1.2", SummonerSpell.class),
-    STATIC_SUMMONER_VERSIONS("/api/lol/static-data/{region}/{version}/versions", "v1.2", new TypeToken<List<String>>()
+    STATIC_VERSIONS("/api/lol/static-data/{region}/{version}/versions", "v1.2", new TypeToken<List<String>>()
     {}.getType());
 
     private String value;
@@ -114,7 +114,7 @@ public enum URLEndpoint
                 case STATIC_RUNE_BY_ID:
                 case STATIC_SUMMONER_SPELL:
                 case STATIC_SUMMONER_SPELL_BY_ID:
-                case STATIC_SUMMONER_VERSIONS:
+                case STATIC_VERSIONS:
                     return true;
                 default:
                     return false;
