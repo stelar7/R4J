@@ -16,11 +16,11 @@ public class TestBase
     @BeforeClass
     public static void init()
     {
-        builder = DataCall.builder();
-        builder.asVerbose(true);
-        builder.withAPIKey(SecretFile.API_KEY);
-        builder.withServer(Server.EUW);
-        builder.withRegion(Server.EUW);
+        TestBase.builder = DataCall.builder();
+        TestBase.builder.asVerbose(true);
+        TestBase.builder.withAPIKey(SecretFile.API_KEY);
+        TestBase.builder.withServer(Server.EUW);
+        TestBase.builder.withRegion(Server.EUW);
     }
 
 }

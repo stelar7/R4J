@@ -18,29 +18,7 @@ import no.stelar7.api.l4j8.tests.TestBase;
 
 public class MatchListTest extends TestBase
 {
-    @Before
-    public void initBeforeTest()
-    {
-        TestBase.builder.withEndpoint(URLEndpoint.MATCHLIST);
-    }
-
-    @Test
-    public void doTest()
-    {
-        TestBase.builder.withURLData("{summonerId}", "22291359");
-        TestBase.builder.withURLParameter("championIds", String.valueOf(Champion.LEONA.getId()));
-        TestBase.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5x5.getCode());
-        TestBase.builder.withURLParameter("seasons", Season.SEASON_2014.getCode());
-
-        List<MatchReference> matches = ((MatchList) TestBase.builder.build()).getMatches();
-
-        // I played 47 ranked solo games as leona in 2014
-        Assert.assertEquals("Unexpected amount of games returned", matches.size(), 47);
-
-        matches.forEach(doAssertions);
-    }
-
-    private Consumer<MatchReference> doAssertions = (MatchReference match) -> {
+    private final Consumer<MatchReference> doAssertions = (final MatchReference match) -> {
         Assert.assertNotNull("champion is null", match.getChampion());
         Assert.assertNotNull("matchId is null", match.getMatchId());
         Assert.assertNotNull("timestamp is null", match.getTimestamp());
@@ -67,4 +45,26 @@ public class MatchListTest extends TestBase
         Assert.assertEquals("season doesnt match SEASON", match.getSeasonId(), match.getSeason().getCode());
         Assert.assertEquals("region doesnt match REGION", match.getRegionId(), match.getRegion().getCode());
     };
+
+    @Test
+    public void doTest()
+    {
+        TestBase.builder.withURLData("{summonerId}", "22291359");
+        TestBase.builder.withURLParameter("championIds", String.valueOf(Champion.LEONA.getId()));
+        TestBase.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5x5.getCode());
+        TestBase.builder.withURLParameter("seasons", Season.SEASON_2014.getCode());
+
+        final List<MatchReference> matches = ((MatchList) TestBase.builder.build()).getMatches();
+
+        // I played 47 ranked solo games as leona in 2014
+        Assert.assertEquals("Unexpected amount of games returned", matches.size(), 47);
+
+        matches.forEach(this.doAssertions);
+    }
+
+    @Before
+    public void initBeforeTest()
+    {
+        TestBase.builder.withEndpoint(URLEndpoint.MATCHLIST);
+    }
 }

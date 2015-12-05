@@ -56,7 +56,7 @@ public class DataCall
             {
                 if (response.getKey() == 200)
                 {
-                    Object type = this.dc.endpoint.getType();
+                    final Object type = this.dc.endpoint.getType();
                     Object dtoobj;
                     if (type instanceof Class<?>)
                     {

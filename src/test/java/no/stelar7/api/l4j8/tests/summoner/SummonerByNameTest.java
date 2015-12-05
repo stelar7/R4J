@@ -19,31 +19,7 @@ import no.stelar7.api.l4j8.tests.TestBase;
 public class SummonerByNameTest extends TestBase
 {
 
-    @Before
-    public void initBeforeTest()
-    {
-        TestBase.builder.withAPIKey(SecretFile.API_KEY);
-        TestBase.builder.withServer(Server.EUW);
-        TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
-    }
-
-    @Test
-    public void doTest()
-    {
-        // Generate list of summoner IDs
-        List<String> keys = Arrays.asList("stelar7", "henriko950", "vibbsen", "Tàylor Swíft");
-
-        // Add them as a parameter to the URL
-        keys.forEach((String k) -> TestBase.builder.withURLData("{summonerName}", Utils.prepareForURL(k)));
-
-        // Get the response
-        Map<String, Summoner> data = (Map<String, Summoner>) TestBase.builder.build();
-
-        // Make sure all the data is returned as expected
-        data.forEach(doAssertions);
-    }
-
-    private BiConsumer<String, Summoner> doAssertions = (String key, Summoner value) -> {
+    private final BiConsumer<String, Summoner> doAssertions = (final String key, final Summoner value) -> {
         Assert.assertNotNull("Summoner name is NULL", value.getName());
         Assert.assertNotEquals("Summoner id is NULL", value.getId(), (Long) 0L);
         Assert.assertNotEquals("Summoner profile icon is NULL", value.getProfileIconId(), (Integer) 0);
@@ -52,4 +28,28 @@ public class SummonerByNameTest extends TestBase
         Assert.assertNotNull("Summoner revison date DATE is NULL", value.getRevisionDateAsDate());
         Assert.assertEquals("Summoner revison date and DATE do not match", value.getRevisionDate(), (Long) value.getRevisionDateAsDate().toInstant().toEpochMilli());
     };
+
+    @Test
+    public void doTest()
+    {
+        // Generate list of summoner IDs
+        final List<String> keys = Arrays.asList("stelar7", "henriko950", "vibbsen", "Tàylor Swíft");
+
+        // Add them as a parameter to the URL
+        keys.forEach((final String k) -> TestBase.builder.withURLData("{summonerName}", Utils.prepareForURL(k)));
+
+        // Get the response
+        final Map<String, Summoner> data = (Map<String, Summoner>) TestBase.builder.build();
+
+        // Make sure all the data is returned as expected
+        data.forEach(this.doAssertions);
+    }
+
+    @Before
+    public void initBeforeTest()
+    {
+        TestBase.builder.withAPIKey(SecretFile.API_KEY);
+        TestBase.builder.withServer(Server.EUW);
+        TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
+    }
 }

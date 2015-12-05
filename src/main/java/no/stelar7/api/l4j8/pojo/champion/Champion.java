@@ -1,15 +1,14 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
-public class Champion 
+public class Champion
 {
 
     Boolean active;
     Boolean botEnabled;
     Boolean botMmEnabled;
     Boolean freeToPlay;
-    Integer id;
-
     Boolean rankedPlayEnabled;
+    Integer id;
 
     @Override
     public boolean equals(final Object obj)

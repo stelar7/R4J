@@ -19,40 +19,15 @@ import no.stelar7.api.l4j8.tests.TestBase;
 
 public class SummonerMasteriesTest extends TestBase
 {
-    @Before
-    public void initBeforeTest()
-    {
-        TestBase.builder.withAPIKey(SecretFile.API_KEY);
-        TestBase.builder.withServer(Server.EUW);
-        TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
-    }
-    
-    
-    @Test
-    public void doTest()
-    {
-        // Generate list of summoner IDs
-        List<String> keys = Arrays.asList("19613950", "22291359", "33540589");
+    private final BiConsumer<String, MasteryPages> doAssertions = (final String key, final MasteryPages value) -> {
 
-        // Add them as a parameter to the URL
-        keys.forEach((String k) -> TestBase.builder.withURLData("{summonerId}", k));
-
-        // Get the response
-        Map<String, MasteryPages> data = (Map<String, MasteryPages>) TestBase.builder.build();
-
-        // Make sure all the data is returned as expected
-        data.forEach(doAssertions);
-    }
-
-    private BiConsumer<String, MasteryPages> doAssertions = (String key, MasteryPages value) -> {
-
-        value.getPages().forEach((MasteryPage page) -> {
+        value.getPages().forEach((final MasteryPage page) -> {
             Assert.assertNotNull("Mastery Page does not have an id", page.getId());
             Assert.assertNotNull("Mastery Page does not have a name", page.getName());
             Assert.assertNotNull("Mastery Page does not contain any masteries", page.getMasteries());
             Assert.assertNotNull("Unable to determine current Mastery page", page.isCurrent());
 
-            page.getMasteries().forEach((Mastery mastery) -> {
+            page.getMasteries().forEach((final Mastery mastery) -> {
                 Assert.assertNotNull("Mastery does not have an id", mastery.getId());
                 Assert.assertNotNull("Mastery does not have a rank", mastery.getRank());
 
@@ -61,6 +36,30 @@ public class SummonerMasteriesTest extends TestBase
             });
         });
 
-        Assert.assertTrue("There is not exactly ONE \"current\" page", value.getPages().stream().filter((MasteryPage page) -> page.isCurrent()).count() == 1);
+        Assert.assertTrue("There is not exactly ONE \"current\" page", value.getPages().stream().filter((final MasteryPage page) -> page.isCurrent()).count() == 1);
     };
+
+    @Test
+    public void doTest()
+    {
+        // Generate list of summoner IDs
+        final List<String> keys = Arrays.asList("19613950", "22291359", "33540589");
+
+        // Add them as a parameter to the URL
+        keys.forEach((final String k) -> TestBase.builder.withURLData("{summonerId}", k));
+
+        // Get the response
+        final Map<String, MasteryPages> data = (Map<String, MasteryPages>) TestBase.builder.build();
+
+        // Make sure all the data is returned as expected
+        data.forEach(this.doAssertions);
+    }
+
+    @Before
+    public void initBeforeTest()
+    {
+        TestBase.builder.withAPIKey(SecretFile.API_KEY);
+        TestBase.builder.withServer(Server.EUW);
+        TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
+    }
 }

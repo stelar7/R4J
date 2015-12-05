@@ -18,32 +18,7 @@ import no.stelar7.api.l4j8.tests.TestBase;
 public class SummonerByIdTest extends TestBase
 {
 
-    @Before
-    public void initBeforeClass()
-    {
-        TestBase.builder.withAPIKey(SecretFile.API_KEY);
-        TestBase.builder.withServer(Server.EUW);
-        TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_BY_ID);
-    }
-
-    @Test
-    public void doTest()
-    {
-        // Generate list of summoner IDs
-        List<String> keys = Arrays.asList("19613950", "22291359", "33540589");
-
-        // Add them as a parameter to the URL
-        keys.forEach((String k) -> TestBase.builder.withURLData("{summonerId}", k));
-
-        // Get the response
-        Map<String, Summoner> data = (Map<String, Summoner>) TestBase.builder.build();
-
-        System.out.println(data.get("19613950").toString());
-        // Make sure all the data is returned as expected
-        data.forEach(doAssertions);
-    }
-
-    private BiConsumer<String, Summoner> doAssertions = (String key, Summoner value) -> {
+    private final BiConsumer<String, Summoner> doAssertions = (final String key, final Summoner value) -> {
         Assert.assertEquals("Summoner id does not match!?", key, String.valueOf(value.getId()));
         Assert.assertNotNull("Summoner name is NULL", value.getName());
         Assert.assertNotEquals("Summoner profile icon is NULL", value.getProfileIconId(), (Integer) 0);
@@ -52,4 +27,29 @@ public class SummonerByIdTest extends TestBase
         Assert.assertNotNull("Summoner revison date DATE is NULL", value.getRevisionDateAsDate());
         Assert.assertEquals("Summoner revison date and DATE do not match", value.getRevisionDate(), (Long) value.getRevisionDateAsDate().toInstant().toEpochMilli());
     };
+
+    @Test
+    public void doTest()
+    {
+        // Generate list of summoner IDs
+        final List<String> keys = Arrays.asList("19613950", "22291359", "33540589");
+
+        // Add them as a parameter to the URL
+        keys.forEach((final String k) -> TestBase.builder.withURLData("{summonerId}", k));
+
+        // Get the response
+        final Map<String, Summoner> data = (Map<String, Summoner>) TestBase.builder.build();
+
+        System.out.println(data.get("19613950").toString());
+        // Make sure all the data is returned as expected
+        data.forEach(this.doAssertions);
+    }
+
+    @Before
+    public void initBeforeClass()
+    {
+        TestBase.builder.withAPIKey(SecretFile.API_KEY);
+        TestBase.builder.withServer(Server.EUW);
+        TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_BY_ID);
+    }
 }

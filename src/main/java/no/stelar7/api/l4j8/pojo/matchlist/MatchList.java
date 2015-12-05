@@ -9,6 +9,65 @@ public class MatchList
     Integer              totalGames;
     List<MatchReference> matches;
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final MatchList other = (MatchList) obj;
+        if (this.endIndex == null)
+        {
+            if (other.endIndex != null)
+            {
+                return false;
+            }
+        } else if (!this.endIndex.equals(other.endIndex))
+        {
+            return false;
+        }
+        if (this.matches == null)
+        {
+            if (other.matches != null)
+            {
+                return false;
+            }
+        } else if (!this.matches.equals(other.matches))
+        {
+            return false;
+        }
+        if (this.startIndex == null)
+        {
+            if (other.startIndex != null)
+            {
+                return false;
+            }
+        } else if (!this.startIndex.equals(other.startIndex))
+        {
+            return false;
+        }
+        if (this.totalGames == null)
+        {
+            if (other.totalGames != null)
+            {
+                return false;
+            }
+        } else if (!this.totalGames.equals(other.totalGames))
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Gets the end index.
      *
@@ -16,27 +75,7 @@ public class MatchList
      */
     public Integer getEndIndex()
     {
-        return endIndex;
-    }
-
-    /**
-     * Gets the start index.
-     *
-     * @return the start index
-     */
-    public Integer getStartIndex()
-    {
-        return startIndex;
-    }
-
-    /**
-     * Gets the total games.
-     *
-     * @return the total games
-     */
-    public Integer getTotalGames()
-    {
-        return totalGames;
+        return this.endIndex;
     }
 
     /**
@@ -46,7 +85,27 @@ public class MatchList
      */
     public List<MatchReference> getMatches()
     {
-        return matches;
+        return this.matches;
+    }
+
+    /**
+     * Gets the start index.
+     *
+     * @return the start index
+     */
+    public Integer getStartIndex()
+    {
+        return this.startIndex;
+    }
+
+    /**
+     * Gets the total games.
+     *
+     * @return the total games
+     */
+    public Integer getTotalGames()
+    {
+        return this.totalGames;
     }
 
     @Override
@@ -54,54 +113,17 @@ public class MatchList
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((endIndex == null) ? 0 : endIndex.hashCode());
-        result = prime * result + ((matches == null) ? 0 : matches.hashCode());
-        result = prime * result + ((startIndex == null) ? 0 : startIndex.hashCode());
-        result = prime * result + ((totalGames == null) ? 0 : totalGames.hashCode());
+        result = (prime * result) + ((this.endIndex == null) ? 0 : this.endIndex.hashCode());
+        result = (prime * result) + ((this.matches == null) ? 0 : this.matches.hashCode());
+        result = (prime * result) + ((this.startIndex == null) ? 0 : this.startIndex.hashCode());
+        result = (prime * result) + ((this.totalGames == null) ? 0 : this.totalGames.hashCode());
         return result;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        MatchList other = (MatchList) obj;
-        if (endIndex == null)
-        {
-            if (other.endIndex != null)
-                return false;
-        } else if (!endIndex.equals(other.endIndex))
-            return false;
-        if (matches == null)
-        {
-            if (other.matches != null)
-                return false;
-        } else if (!matches.equals(other.matches))
-            return false;
-        if (startIndex == null)
-        {
-            if (other.startIndex != null)
-                return false;
-        } else if (!startIndex.equals(other.startIndex))
-            return false;
-        if (totalGames == null)
-        {
-            if (other.totalGames != null)
-                return false;
-        } else if (!totalGames.equals(other.totalGames))
-            return false;
-        return true;
     }
 
     @Override
     public String toString()
     {
-        return "MatchList [endIndex=" + endIndex + ", startIndex=" + startIndex + ", totalGames=" + totalGames + ", matches=" + matches + "]";
+        return "MatchList [endIndex=" + this.endIndex + ", startIndex=" + this.startIndex + ", totalGames=" + this.totalGames + ", matches=" + this.matches + "]";
     }
 
 }
