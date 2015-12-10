@@ -8,6 +8,7 @@
   * match
   * stats
   * team
+ 
 ---
 * Add Tournament API
 * Add E-sports API
