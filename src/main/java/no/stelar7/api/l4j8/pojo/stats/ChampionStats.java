@@ -1,10 +1,12 @@
 package no.stelar7.api.l4j8.pojo.stats;
 
+import java.util.Optional;
+
 import no.stelar7.api.l4j8.basic.constants.Champion;
 
 public class ChampionStats
 {
-    private Long            id;
+    private Integer            id;
     private AggregatedStats stats;
 
     @Override
@@ -51,7 +53,7 @@ public class ChampionStats
      *
      * @return the champion
      */
-    public Champion getChampion()
+    public Optional<Champion> getChampion()
     {
         return Champion.getFromId(this.id);
     }
@@ -61,7 +63,7 @@ public class ChampionStats
      *
      * @return the id
      */
-    public Long getId()
+    public Integer getId()
     {
         return this.id;
     }

@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum BuildingType
@@ -15,9 +16,9 @@ public enum BuildingType
      *            the lookup key
      * @return BuildingType
      */
-    public static BuildingType getFromCode(final String type)
+    public static Optional<BuildingType> getFromCode(final String type)
     {
-        return Stream.of(BuildingType.values()).filter(t -> t.name().equals(type)).findFirst().get();
+        return Stream.of(BuildingType.values()).filter(t -> t.name().equals(type)).findFirst();
     }
 
     /**

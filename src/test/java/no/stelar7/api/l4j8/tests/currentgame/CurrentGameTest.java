@@ -46,7 +46,7 @@ public class CurrentGameTest
         final Long id = datamap.get(parsedName).getId();
 
         this.currentbuilder.withURLData("{summonerId}", id.toString());
-        this.currentbuilder.withURLData("{platformId}", game.getPlatform().getCode());
+        this.currentbuilder.withURLData("{platformId}", game.getPlatform().get().getCode());
 
         // our ongoing game
         final CurrentGameInfo currentGame = (CurrentGameInfo) this.currentbuilder.build();
@@ -69,11 +69,11 @@ public class CurrentGameTest
         Assert.assertNotNull("GAMESTARTTIME is null", currentGame.getGameStartTimeAsDate());
 
         Assert.assertEquals("Timestamp doesnt match TIMESTAMP", currentGame.getGameStartTime(), (Long) currentGame.getGameStartTimeAsDate().toInstant().toEpochMilli());
-        Assert.assertEquals("lane doesnt match LANE", currentGame.getGameModeId(), currentGame.getGameMode().getCode());
-        Assert.assertEquals("queue doesnt match QUEUE", currentGame.getGameQueueConfigId(), currentGame.getGameQueueType().getCode());
-        Assert.assertEquals("role doesnt match ROLE", currentGame.getGameTypeId(), currentGame.getGameType().getCode());
-        Assert.assertEquals("season doesnt match SEASON", currentGame.getMapId(), currentGame.getMap().getCode());
-        Assert.assertEquals("region doesnt match REGION", currentGame.getPlatformId(), currentGame.getPlatform().getCode());
+        Assert.assertEquals("lane doesnt match LANE", currentGame.getGameModeId(), currentGame.getGameMode().get().getCode());
+        Assert.assertEquals("queue doesnt match QUEUE", currentGame.getGameQueueConfigId(), currentGame.getGameQueueType().get().getCode());
+        Assert.assertEquals("role doesnt match ROLE", currentGame.getGameTypeId(), currentGame.getGameType().get().getCode());
+        Assert.assertEquals("season doesnt match SEASON", currentGame.getMapId(), currentGame.getMap().get().getCode());
+        Assert.assertEquals("region doesnt match REGION", currentGame.getPlatformId(), currentGame.getPlatform().get().getCode());
 
     }
 

@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum GameMode
@@ -44,9 +45,9 @@ public enum GameMode
      *            the lookup key
      * @return GameMode
      */
-    public static GameMode getFromCode(final String gameMode)
+    public static Optional<GameMode> getFromCode(final String gameMode)
     {
-        return Stream.of(GameMode.values()).filter(t -> t.name().equals(gameMode)).findFirst().get();
+        return Stream.of(GameMode.values()).filter(t -> t.name().equals(gameMode)).findFirst();
     }
 
     /**

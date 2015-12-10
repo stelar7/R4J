@@ -1,12 +1,14 @@
 package no.stelar7.api.l4j8.pojo.game;
 
+import java.util.Optional;
+
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
 public class Player implements APIObject
 {
-    private Long    championId;
+    private Integer    championId;
     private Long    summonerId;
     private Integer teamId;
 
@@ -64,7 +66,7 @@ public class Player implements APIObject
      *
      * @return Champion
      */
-    public Champion getChampion()
+    public Optional<Champion> getChampion()
     {
         return Champion.getFromId(this.championId);
     }
@@ -74,7 +76,7 @@ public class Player implements APIObject
      *
      * @return Integer
      */
-    public Long getChampionId()
+    public Integer getChampionId()
     {
         return this.championId;
     }
@@ -94,7 +96,7 @@ public class Player implements APIObject
      *
      * @return Team
      */
-    public Team getTeam()
+    public Optional<Team> getTeam()
     {
         return Team.getFromCode(this.teamId);
     }

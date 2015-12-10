@@ -36,14 +36,14 @@ public class MatchListTest extends TestBase
         Assert.assertNotNull("SEASON is null", match.getSeason());
         Assert.assertNotNull("REGION is null", match.getRegion());
 
-        Assert.assertEquals("Unexpected Champion Id", Champion.LEONA, match.getChampion());
-        Assert.assertEquals("Unexpected Queue", RankedQueue.RANKED_SOLO_5x5, match.getQueue());
+        Assert.assertEquals("Unexpected Champion Id", Champion.LEONA, match.getChampion().get());
+        Assert.assertEquals("Unexpected Queue", RankedQueue.RANKED_SOLO_5x5, match.getQueue().get());
         Assert.assertEquals("Timestamp doesnt match TIMESTAMP", match.getTimestamp(), (Long) match.getTimestampAsDate().toInstant().toEpochMilli());
-        Assert.assertTrue("lane doesnt match LANE", Stream.of(match.getLane().getCodes()).anyMatch(s -> s.equalsIgnoreCase(match.getLaneId())));
-        Assert.assertEquals("queue doesnt match QUEUE", match.getQueueId(), match.getQueue().getCode());
-        Assert.assertEquals("role doesnt match ROLE", match.getRoleId(), match.getRole().getCode());
-        Assert.assertEquals("season doesnt match SEASON", match.getSeasonId(), match.getSeason().getCode());
-        Assert.assertEquals("region doesnt match REGION", match.getRegionId(), match.getRegion().getCode());
+        Assert.assertTrue("lane doesnt match LANE", Stream.of(match.getLane().get().getCodes()).anyMatch(s -> s.equalsIgnoreCase(match.getLaneId())));
+        Assert.assertEquals("queue doesnt match QUEUE", match.getQueueId(), match.getQueue().get().getCode());
+        Assert.assertEquals("role doesnt match ROLE", match.getRoleId(), match.getRole().get().getCode());
+        Assert.assertEquals("season doesnt match SEASON", match.getSeasonId(), match.getSeason().get().getCode());
+        Assert.assertEquals("region doesnt match REGION", match.getRegionId(), match.getRegion().get().getCode());
     };
 
     @Test

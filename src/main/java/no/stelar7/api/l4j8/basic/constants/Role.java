@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum Role
@@ -33,9 +34,9 @@ public enum Role
      *            the lookup key
      * @return Role
      */
-    public static Role getFromCode(final String code)
+    public static Optional<Role> getFromCode(final String code)
     {
-        return Stream.of(Role.values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(Role.values()).filter(t -> t.name().equals(code)).findFirst();
     }
 
     /**

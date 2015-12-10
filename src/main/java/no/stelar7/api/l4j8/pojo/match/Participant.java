@@ -1,8 +1,10 @@
 package no.stelar7.api.l4j8.pojo.match;
 
 import java.util.List;
+import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.constants.SummonerSpell;
+import no.stelar7.api.l4j8.basic.constants.Team;
 import no.stelar7.api.l4j8.basic.constants.Tier;
 
 public class Participant
@@ -202,7 +204,7 @@ public class Participant
      *
      * @return SummonerSpell
      */
-    public SummonerSpell getSpell1()
+    public Optional<SummonerSpell> getSpell1()
     {
         return SummonerSpell.getFromCode(this.spell1Id);
     }
@@ -222,7 +224,7 @@ public class Participant
      *
      * @return SummonerSpell
      */
-    public SummonerSpell getSpell2()
+    public Optional<SummonerSpell> getSpell2()
     {
         return SummonerSpell.getFromCode(this.spell2Id);
     }
@@ -252,9 +254,9 @@ public class Participant
      *
      * @return Team
      */
-    public no.stelar7.api.l4j8.basic.constants.Team getTeam()
+    public Optional<Team> getTeam()
     {
-        return no.stelar7.api.l4j8.basic.constants.Team.getFromCode(this.teamId);
+        return Team.getFromCode(this.teamId);
     }
 
     /**

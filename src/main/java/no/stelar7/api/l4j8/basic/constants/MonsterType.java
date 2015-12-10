@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum MonsterType
@@ -18,9 +19,9 @@ public enum MonsterType
      *            the lookup key
      * @return MonsterType
      */
-    public static MonsterType getFromCode(final String type)
+    public static Optional<MonsterType> getFromCode(final String type)
     {
-        return Stream.of(MonsterType.values()).filter(t -> t.name().equals(type)).findFirst().get();
+        return Stream.of(MonsterType.values()).filter(t -> t.name().equals(type)).findFirst();
     }
 
     /**

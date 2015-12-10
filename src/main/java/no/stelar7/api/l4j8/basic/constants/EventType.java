@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum EventType
@@ -25,9 +26,9 @@ public enum EventType
      *            the lookup key
      * @return EventType
      */
-    public static EventType getFromCode(final String type)
+    public static Optional<EventType> getFromCode(final String type)
     {
-        return Stream.of(EventType.values()).filter(t -> t.name().equals(type)).findFirst().get();
+        return Stream.of(EventType.values()).filter(t -> t.name().equals(type)).findFirst();
     }
 
     /**

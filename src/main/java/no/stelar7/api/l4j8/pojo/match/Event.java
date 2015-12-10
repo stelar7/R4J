@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.match;
 
 import java.util.List;
+import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.constants.AscencionType;
 import no.stelar7.api.l4j8.basic.constants.BuildingType;
@@ -270,7 +271,7 @@ public class Event
      *
      * @return AscencionType
      */
-    public AscencionType getAscendedType()
+    public Optional<AscencionType> getAscendedType()
     {
         return AscencionType.getFromCode(this.ascendedType);
     }
@@ -300,7 +301,7 @@ public class Event
      *
      * @return BuildingType
      */
-    public BuildingType getBuildingType()
+    public Optional<BuildingType> getBuildingType()
     {
         return BuildingType.getFromCode(this.buildingType);
     }
@@ -330,7 +331,7 @@ public class Event
      *
      * @return Event
      */
-    public EventType getEventType()
+    public Optional<EventType> getEventType()
     {
         return EventType.getFromCode(this.eventType);
     }
@@ -390,7 +391,7 @@ public class Event
      *
      * @return Lane
      */
-    public Lane getLane()
+    public Optional<Lane> getLane()
     {
         return Lane.getFromCode(this.laneType);
     }
@@ -410,7 +411,7 @@ public class Event
      *
      * @return LevelUpType
      */
-    public LevelUpType getLevelUpType()
+    public Optional<LevelUpType> getLevelUpType()
     {
         return LevelUpType.getFromCode(this.levelUpType);
     }
@@ -431,7 +432,7 @@ public class Event
      *
      * @return MonsterType
      */
-    public MonsterType getMonsterType()
+    public Optional<MonsterType> getMonsterType()
     {
         return MonsterType.getFromCode(this.monsterType);
     }
@@ -461,7 +462,7 @@ public class Event
      *
      * @return Point
      */
-    public Point getPointCaptured()
+    public Optional<Point> getPointCaptured()
     {
         return Point.getFromCode(this.pointCaptured);
     }
@@ -521,7 +522,7 @@ public class Event
      *
      * @return TowerType
      */
-    public TowerType getTowerType()
+    public Optional<TowerType> getTowerType()
     {
         return TowerType.getFromCode(this.towerType);
     }
@@ -551,7 +552,7 @@ public class Event
      *
      * @return WardType
      */
-    public WardType getWardType()
+    public Optional<WardType> getWardType()
     {
         return WardType.getFromCode(this.wardType);
     }

@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.league;
 
 import java.util.List;
+import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.RankedQueue;
@@ -119,7 +120,7 @@ public class League implements APIObject
      *
      * @return the queue
      */
-    public RankedQueue getQueue()
+    public Optional<RankedQueue> getQueue()
     {
         return RankedQueue.getFromCode(this.queue);
     }

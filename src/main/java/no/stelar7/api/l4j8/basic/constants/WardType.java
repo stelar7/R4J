@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum WardType
@@ -18,9 +19,9 @@ public enum WardType
      *            the lookup key
      * @return WardType
      */
-    public static WardType getFromCode(final String type)
+    public static Optional<WardType> getFromCode(final String type)
     {
-        return Stream.of(WardType.values()).filter(t -> t.name().equals(type)).findFirst().get();
+        return Stream.of(WardType.values()).filter(t -> t.name().equals(type)).findFirst();
     }
 
     /**

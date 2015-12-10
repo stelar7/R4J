@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.basic;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum Server
@@ -18,9 +19,9 @@ public enum Server
     PBE("pbe.api.pvp.net", true),
     GLOBAL("global.api.pvp.net", false);
 
-    public static Server getFromCode(final String code)
+    public static Optional<Server> getFromCode(final String code)
     {
-        return Stream.of(Server.values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(Server.values()).filter(t -> t.name().equals(code)).findFirst();
     }
 
     private final String  server;

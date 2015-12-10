@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum Platform
@@ -23,9 +24,9 @@ public enum Platform
      *            the lookup key
      * @return Platform
      */
-    public static Platform getFromCode(final String code)
+    public static Optional<Platform> getFromCode(final String code)
     {
-        return Stream.of(Platform.values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(Platform.values()).filter(t -> t.name().equals(code)).findFirst();
     }
 
     /**

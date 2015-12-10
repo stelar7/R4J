@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum Season
@@ -14,9 +15,9 @@ public enum Season
     SEASON_2015("SEASON2015"),
     SEASON_2016("SEASON2016");
 
-    public static Season getFromCode(final String code)
+    public static Optional<Season> getFromCode(final String code)
     {
-        return Stream.of(Season.values()).filter(t -> t.code.equals(code)).findFirst().get();
+        return Stream.of(Season.values()).filter(t -> t.code.equals(code)).findFirst();
     }
 
     String code;

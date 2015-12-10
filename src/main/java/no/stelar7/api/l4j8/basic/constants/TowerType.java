@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum TowerType
@@ -18,9 +19,9 @@ public enum TowerType
      *            the lookup key
      * @return TowerType
      */
-    public static TowerType getFromCode(final String type)
+    public static Optional<TowerType> getFromCode(final String type)
     {
-        return Stream.of(TowerType.values()).filter(t -> t.name().equals(type)).findFirst().get();
+        return Stream.of(TowerType.values()).filter(t -> t.name().equals(type)).findFirst();
     }
 
     /**

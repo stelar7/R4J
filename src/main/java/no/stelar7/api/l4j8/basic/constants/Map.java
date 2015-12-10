@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum Map
@@ -8,53 +9,53 @@ public enum Map
     /**
      * Summoner's Rift Original Summer Variant
      */
-    SUMMONERS_RIFT_SUMMER_OLD(1L),
+    SUMMONERS_RIFT_SUMMER_OLD(1),
     /**
      * Summoner's Rift Original Autumn Variant
      */
-    SUMMONERS_RIFT_AUTUMN_OLD(2L),
+    SUMMONERS_RIFT_AUTUMN_OLD(2),
     /**
      * The Proving Grounds Tutorial Map
      */
-    PROVING_GROUNDS(3L),
+    PROVING_GROUNDS(3),
     /**
      * Twisted Treeline Original Version
      */
-    TWISTED_TREELINE_OLD(4L),
+    TWISTED_TREELINE_OLD(4),
     /**
      * The Crystal Scar Dominion Map
      */
-    DOMINION(8L),
+    DOMINION(8),
     /**
      * Twisted Treeline Current Version
      */
-    TWISTED_TREELINE(10L),
+    TWISTED_TREELINE(10),
     /**
      * Summoner's Rift Current Version
      */
-    SUMMONERS_RIFT(11L),
+    SUMMONERS_RIFT(11),
     /**
      * Howling Abyss ARAM Map
      */
-    HOWLING_ABYSS(12L),
+    HOWLING_ABYSS(12),
     /**
      * Butcher's Bridge ARAM Map
      */
-    BUTCHERS_BRIDGE(14L);
+    BUTCHERS_BRIDGE(14);
 
-    public static Map getFromCode(final Number mapId)
+    public static Optional<Map> getFromCode(final Integer mapId)
     {
-        return Stream.of(Map.values()).filter(t -> t.code.equals(mapId)).findFirst().get();
+        return Stream.of(Map.values()).filter(t -> t.code.equals(mapId)).findFirst();
     }
 
-    Long code;
+    Integer code;
 
-    Map(final Long code)
+    Map(final Integer code)
     {
         this.code = code;
     }
 
-    public Long getCode()
+    public Integer getCode()
     {
         return this.code;
     }

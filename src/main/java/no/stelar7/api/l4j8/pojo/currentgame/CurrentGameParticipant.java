@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.pojo.currentgame;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Champion;
@@ -10,7 +11,7 @@ import no.stelar7.api.l4j8.basic.constants.Team;
 public class CurrentGameParticipant implements APIObject
 {
     private Boolean       bot;
-    private Long          championId;
+    private Integer          championId;
     private List<Mastery> masteries;
     private Long          profileIconId;
     private List<Rune>    runes;
@@ -144,7 +145,7 @@ public class CurrentGameParticipant implements APIObject
      *
      * @return Champion
      */
-    public Champion getChampion()
+    public Optional<Champion> getChampion()
     {
         return Champion.getFromId(this.championId);
     }
@@ -154,7 +155,7 @@ public class CurrentGameParticipant implements APIObject
      *
      * @return Long
      */
-    public Long getChampionId()
+    public Integer getChampionId()
     {
         return this.championId;
     }
@@ -234,7 +235,7 @@ public class CurrentGameParticipant implements APIObject
      *
      * @return Team
      */
-    public Team getTeam()
+    public Optional<Team> getTeam()
     {
         return Team.getFromCode(this.teamId);
     }

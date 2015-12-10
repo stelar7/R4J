@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.pojo.featuredgames;
 
+import java.util.Optional;
+
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Team;
@@ -7,7 +9,7 @@ import no.stelar7.api.l4j8.basic.constants.Team;
 public class FeaturedGameParticipant implements APIObject
 {
     private Boolean bot;
-    private Long    championId;
+    private Integer    championId;
     private Long    profileIconId;
     private Long    spell1Id;
     private Long    spell2Id;
@@ -108,7 +110,7 @@ public class FeaturedGameParticipant implements APIObject
      *
      * @return Champion
      */
-    public Champion getChampion()
+    public Optional<Champion> getChampion()
     {
         return Champion.getFromId(this.championId);
     }
@@ -118,7 +120,7 @@ public class FeaturedGameParticipant implements APIObject
      *
      * @return Long
      */
-    public Long getChampionId()
+    public Integer getChampionId()
     {
         return this.championId;
     }
@@ -168,7 +170,7 @@ public class FeaturedGameParticipant implements APIObject
      *
      * @return Team
      */
-    public Team getTeam()
+    public Optional<Team> getTeam()
     {
         return Team.getFromCode(this.teamId);
     }

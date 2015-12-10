@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum RankedQueue
@@ -15,9 +16,9 @@ public enum RankedQueue
      *            the lookup key
      * @return RankedQueue
      */
-    public static RankedQueue getFromCode(final String code)
+    public static Optional<RankedQueue> getFromCode(final String code)
     {
-        return Stream.of(RankedQueue.values()).filter(t -> t.name().equals(code)).findFirst().get();
+        return Stream.of(RankedQueue.values()).filter(t -> t.name().equals(code)).findFirst();
     }
 
     /**

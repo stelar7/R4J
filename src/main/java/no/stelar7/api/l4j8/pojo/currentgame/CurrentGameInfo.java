@@ -5,6 +5,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
@@ -23,10 +24,10 @@ public class CurrentGameInfo implements APIObject
     private Long                         gameId;
     private Long                         gameLength;
     private String                       gameMode;
-    private Long                         gameQueueConfigId;
+    private Integer                      gameQueueConfigId;
     private Long                         gameStartTime;
     private String                       gameType;
-    private Long                         mapId;
+    private Integer                      mapId;
     private Observer                     observers;
     private List<CurrentGameParticipant> participants;
 
@@ -196,7 +197,7 @@ public class CurrentGameInfo implements APIObject
      *
      * @return GameMode
      */
-    public GameMode getGameMode()
+    public Optional<GameMode> getGameMode()
     {
         return GameMode.getFromCode(this.gameMode);
     }
@@ -216,7 +217,7 @@ public class CurrentGameInfo implements APIObject
      *
      * @return Long
      */
-    public Long getGameQueueConfigId()
+    public Integer getGameQueueConfigId()
     {
         return this.gameQueueConfigId;
     }
@@ -226,7 +227,7 @@ public class CurrentGameInfo implements APIObject
      *
      * @return GameQueueType
      */
-    public GameQueueType getGameQueueType()
+    public Optional<GameQueueType> getGameQueueType()
     {
         return GameQueueType.getFromCode(this.gameQueueConfigId);
     }
@@ -256,7 +257,7 @@ public class CurrentGameInfo implements APIObject
      *
      * @return GameType
      */
-    public GameType getGameType()
+    public Optional<GameType> getGameType()
     {
         return GameType.getFromCode(this.gameType);
     }
@@ -276,7 +277,7 @@ public class CurrentGameInfo implements APIObject
      *
      * @return Map
      */
-    public Map getMap()
+    public Optional<Map> getMap()
     {
         return Map.getFromCode(this.mapId);
     }
@@ -286,7 +287,7 @@ public class CurrentGameInfo implements APIObject
      *
      * @return Long
      */
-    public Long getMapId()
+    public Integer getMapId()
     {
         return this.mapId;
     }
@@ -316,7 +317,7 @@ public class CurrentGameInfo implements APIObject
      *
      * @return Platform
      */
-    public Platform getPlatform()
+    public Optional<Platform> getPlatform()
     {
         return Platform.getFromCode(this.platformId);
     }

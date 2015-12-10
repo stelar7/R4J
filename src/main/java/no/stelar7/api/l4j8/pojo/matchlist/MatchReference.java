@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.pojo.matchlist;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
@@ -15,7 +16,7 @@ import no.stelar7.api.l4j8.basic.constants.Season;
 
 public class MatchReference implements APIObject
 {
-    private Long   champion;
+    private Integer   champion;
     private Long   matchId;
     private Long   timestamp;
     private String lane;
@@ -139,7 +140,7 @@ public class MatchReference implements APIObject
      *
      * @return Champion
      */
-    public Champion getChampion()
+    public Optional<Champion> getChampion()
     {
         return Champion.getFromId(this.champion);
     }
@@ -149,7 +150,7 @@ public class MatchReference implements APIObject
      *
      * @return Long
      */
-    public Long getChampionId()
+    public Integer getChampionId()
     {
         return this.champion;
     }
@@ -159,7 +160,7 @@ public class MatchReference implements APIObject
      *
      * @return Lane
      */
-    public Lane getLane()
+    public Optional<Lane> getLane()
     {
         return Lane.getFromCode(this.lane);
     }
@@ -189,7 +190,7 @@ public class MatchReference implements APIObject
      *
      * @return Platform
      */
-    public Platform getPlatform()
+    public Optional<Platform> getPlatform()
     {
         return Platform.getFromCode(this.platformId);
     }
@@ -209,7 +210,7 @@ public class MatchReference implements APIObject
      *
      * @return RankedQueue
      */
-    public RankedQueue getQueue()
+    public Optional<RankedQueue> getQueue()
     {
         return RankedQueue.getFromCode(this.queue);
     }
@@ -229,7 +230,7 @@ public class MatchReference implements APIObject
      *
      * @return Server
      */
-    public Server getRegion()
+    public Optional<Server> getRegion()
     {
         return Server.getFromCode(this.region);
     }
@@ -249,7 +250,7 @@ public class MatchReference implements APIObject
      *
      * @return Role
      */
-    public Role getRole()
+    public Optional<Role> getRole()
     {
         return Role.getFromCode(this.role);
     }
@@ -269,7 +270,7 @@ public class MatchReference implements APIObject
      *
      * @return Season
      */
-    public Season getSeason()
+    public Optional<Season> getSeason()
     {
         return Season.getFromCode(this.season);
     }

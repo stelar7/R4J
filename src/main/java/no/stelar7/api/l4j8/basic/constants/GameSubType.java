@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum GameSubType
@@ -97,8 +98,8 @@ public enum GameSubType
      */
     BILGEWATER,;
 
-    public static GameSubType getFromCode(final String subType)
+    public static Optional<GameSubType> getFromCode(final String subType)
     {
-        return Stream.of(GameSubType.values()).filter(t -> t.name().equals(subType)).findFirst().get();
+        return Stream.of(GameSubType.values()).filter(t -> t.name().equals(subType)).findFirst();
     }
 }

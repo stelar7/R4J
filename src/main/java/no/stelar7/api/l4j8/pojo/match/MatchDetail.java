@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.Platform;
@@ -206,7 +207,7 @@ public class MatchDetail implements APIObject
      *
      * @return GameQueueType
      */
-    public GameQueueType getGameQueueType()
+    public Optional<GameQueueType> getGameQueueType()
     {
         return GameQueueType.getFromCode(this.queueType);
     }
@@ -216,7 +217,7 @@ public class MatchDetail implements APIObject
      *
      * @return Map
      */
-    public Map getMap()
+    public Optional<Map> getMap()
     {
         return Map.getFromCode(this.mapId);
     }
@@ -276,7 +277,7 @@ public class MatchDetail implements APIObject
      *
      * @return GameMode
      */
-    public GameMode getMatchMode()
+    public Optional<GameMode> getMatchMode()
     {
         return GameMode.getFromCode(this.matchMode);
     }
@@ -296,7 +297,7 @@ public class MatchDetail implements APIObject
      *
      * @return GameType
      */
-    public GameType getMatchType()
+    public Optional<GameType> getMatchType()
     {
         return GameType.getFromCode(this.matchType);
     }
@@ -346,7 +347,7 @@ public class MatchDetail implements APIObject
      *
      * @return
      */
-    public Platform getPlatform()
+    public Optional<Platform> getPlatform()
     {
         return Platform.getFromCode(this.platformId);
     }
@@ -376,7 +377,7 @@ public class MatchDetail implements APIObject
      *
      * @return Server
      */
-    public Server getRegion()
+    public Optional<Server> getRegion()
     {
         return Server.getFromCode(this.region);
     }
@@ -396,7 +397,7 @@ public class MatchDetail implements APIObject
      *
      * @return Season
      */
-    public Season getSeason()
+    public Optional<Season> getSeason()
     {
         return Season.getFromCode(this.season);
     }

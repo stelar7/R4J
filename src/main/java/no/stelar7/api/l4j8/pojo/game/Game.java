@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Champion;
@@ -15,7 +16,7 @@ import no.stelar7.api.l4j8.basic.constants.Team;
 
 public class Game implements APIObject
 {
-    private Long         championId;
+    private Integer         championId;
     private Long         createDate;
     private List<Player> fellowPlayers;
     private Long         gameId;
@@ -206,7 +207,7 @@ public class Game implements APIObject
      *
      * @return Champion
      */
-    public Champion getChampion()
+    public Optional<Champion> getChampion()
     {
         return Champion.getFromId(this.championId);
     }
@@ -216,7 +217,7 @@ public class Game implements APIObject
      *
      * @return Integer
      */
-    public Long getChampionId()
+    public Integer getChampionId()
     {
         return this.championId;
     }
@@ -266,7 +267,7 @@ public class Game implements APIObject
      *
      * @return GameMode
      */
-    public GameMode getGameMode()
+    public Optional<GameMode> getGameMode()
     {
         return GameMode.getFromCode(this.gameMode);
     }
@@ -286,7 +287,7 @@ public class Game implements APIObject
      *
      * @return GameType
      */
-    public GameType getGameType()
+    public Optional<GameType> getGameType()
     {
         return GameType.getFromCode(this.gameType);
     }
@@ -326,7 +327,7 @@ public class Game implements APIObject
      *
      * @return Map
      */
-    public Map getMap()
+    public Optional<Map> getMap()
     {
         return Map.getFromCode(this.mapId);
     }
@@ -376,7 +377,7 @@ public class Game implements APIObject
      *
      * @return GameSubType
      */
-    public GameSubType getSubType()
+    public Optional<GameSubType> getSubType()
     {
         return GameSubType.getFromCode(this.subType);
     }
@@ -396,7 +397,7 @@ public class Game implements APIObject
      *
      * @return Team
      */
-    public Team getTeam()
+    public Optional<Team> getTeam()
     {
         return Team.getFromCode(this.teamId);
     }

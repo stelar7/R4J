@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.pojo.match;
 
+import java.util.Optional;
+
 import no.stelar7.api.l4j8.basic.constants.Lane;
 import no.stelar7.api.l4j8.basic.constants.Role;
 
@@ -498,7 +500,7 @@ public class ParticipantTimeline
      *
      * @return the lane
      */
-    public Lane getLane()
+    public Optional<Lane> getLane()
     {
         return Lane.getFromCode(this.lane);
     }
@@ -518,7 +520,7 @@ public class ParticipantTimeline
      *
      * @return the role
      */
-    public Role getRole()
+    public Optional<Role> getRole()
     {
         return Role.getFromCode(this.role);
     }

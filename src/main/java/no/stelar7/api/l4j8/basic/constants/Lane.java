@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum Lane
@@ -24,9 +25,9 @@ public enum Lane
      */
     BOT("BOT", "BOTTOM", "BOT_LANE");
 
-    public static Lane getFromCode(final String code)
+    public static Optional<Lane> getFromCode(final String code)
     {
-        return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst().get();
+        return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }
 
     /**

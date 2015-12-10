@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum AscencionType
@@ -15,9 +16,9 @@ public enum AscencionType
      *            the lookup key
      * @return AscentionType
      */
-    public static AscencionType getFromCode(final String type)
+    public static Optional<AscencionType> getFromCode(final String type)
     {
-        return Stream.of(AscencionType.values()).filter(t -> t.name().equals(type)).findFirst().get();
+        return Stream.of(AscencionType.values()).filter(t -> t.name().equals(type)).findFirst();
     }
 
     /**
