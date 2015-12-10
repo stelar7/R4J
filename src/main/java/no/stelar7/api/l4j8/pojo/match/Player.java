@@ -118,4 +118,10 @@ public class Player
         return result;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Player [matchHistoryUri=" + matchHistoryUri + ", profileIcon=" + profileIcon + ", summonerId=" + summonerId + ", summonerName=" + summonerName + "]";
+    }
+
 }

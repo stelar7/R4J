@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.match.MatchDetail;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.ChampionList;
 import no.stelar7.api.l4j8.pojo.staticdata.item.Item;
@@ -23,6 +24,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.SummonerSpellList;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
+import no.stelar7.api.l4j8.pojo.tournament.LobbyEventWrapper;
 
 public enum URLEndpoint
 {
@@ -57,7 +59,15 @@ public enum URLEndpoint
     STATIC_SUMMONER_SPELL("/api/lol/static-data/{region}/{version}/summoner-spell", "v1.2", SummonerSpellList.class),
     STATIC_SUMMONER_SPELL_BY_ID("/api/lol/static-data/{region}/{version}/summoner-spell/{id}", "v1.2", SummonerSpell.class),
     STATIC_VERSIONS("/api/lol/static-data/{region}/{version}/versions", "v1.2", new TypeToken<List<String>>()
-    {}.getType());
+    {}.getType()),
+    TOURNAMENT_PROVIDER("/tournament/public/{version}/provider", "v1", Integer.class),
+    TOURNAMENT_REGISTRATION("/tournament/public/{version}/tournament", "v1", Integer.class),
+    TOURNAMENT_CODE("/tournament/public/{version}/code/{tournamentCode}", "v1", new TypeToken<List<String>>()
+    {}.getType()),
+    TOURNAMENT_LOBBY("/tournament/public/{version}/lobby/events/by-code/{tournamentCode}", "v1", LobbyEventWrapper.class),
+    TOURNAMENT_MATCH("/api/lol/{region}/{version}/match/by-tournament/{tournamentCode}/ids", "v2.2", new TypeToken<List<Long>>()
+    {}.getType()),
+    TOURNAMENT_MATCH_BY_ID("/api/lol/{region}/{version}/match/for-tournament/{matchId}", "v2.2", MatchDetail.class);
 
     private String value;
     private String version;

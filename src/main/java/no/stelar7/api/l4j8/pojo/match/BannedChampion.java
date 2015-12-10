@@ -74,4 +74,10 @@ public class BannedChampion
         result = (prime * result) + ((this.pickTurn == null) ? 0 : this.pickTurn.hashCode());
         return result;
     }
+
+    @Override
+    public String toString()
+    {
+        return "BannedChampion [championId=" + championId + ", pickTurn=" + pickTurn + "]";
+    }
 }

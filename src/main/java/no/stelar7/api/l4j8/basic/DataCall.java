@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.basic;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.gson.Gson;
@@ -109,14 +111,30 @@ public class DataCall
                 con.setRequestProperty("Expires", "0");
                 con.setRequestProperty("Pragma", "no-cache");
                 con.setRequestProperty("Connection", "keep-alive");
-                con.connect();
+                this.dc.urlHeaders.forEach((k, v) -> con.setRequestProperty(k, v));
+
+                con.setRequestMethod(this.dc.requestMethod);
+
+                if (!this.dc.postData.isEmpty())
+                {
+                    con.setDoOutput(true);
+                    DataOutputStream writer = new DataOutputStream(con.getOutputStream());
+                    writer.writeBytes(this.dc.postData);
+                    writer.flush();
+                    writer.close();
+                } else
+                {
+                    con.connect();
+                }
 
                 if (this.dc.verbose)
                 {
+                    System.out.println();
                     System.out.println(url);
                     con.getHeaderFields().forEach((key, value) -> {
                         System.out.println(key + ":\t" + value);
                     });
+                    System.out.println();
                 }
 
                 final StringBuilder data = new StringBuilder();
@@ -174,16 +192,23 @@ public class DataCall
                 this.urlBuilder.append(temp);
             });
 
-            this.urlBuilder.append("?api_key=").append(this.dc.key);
-            this.dc.urlParams.forEach((k, v) -> this.urlBuilder.append("&").append(k).append("=").append(v));
+            boolean usesKey = !this.dc.key.isEmpty();
+
+            if (usesKey)
+            {
+                this.urlBuilder.append("?api_key=").append(this.dc.key);
+                this.dc.urlParams.forEach((k, v) -> this.urlBuilder.append("&").append(k).append("=").append(v));
+            } else
+            {
+                String firstKey = this.dc.urlParams.keySet().stream().limit(1).collect(Collectors.joining());
+                if (!firstKey.isEmpty())
+                {
+                    this.urlBuilder.append("?").append(firstKey).append("=").append(this.dc.urlParams.get(firstKey));
+                    this.dc.urlParams.keySet().stream().skip(1).forEach(k -> this.urlBuilder.append("&").append(k).append("=").append(this.dc.urlParams.get(k)));
+                }
+            }
 
             return this.urlBuilder.toString();
-        }
-
-        public DataCallBuilder useCache(final boolean flag)
-        {
-            this.dc.useCache = flag;
-            return this;
         }
 
         public DataCallBuilder withAPIKey(final String key)
@@ -234,6 +259,24 @@ public class DataCall
             return this;
         }
 
+        public DataCallBuilder withPostData(final String data)
+        {
+            this.dc.postData = data;
+            return this;
+        }
+
+        public DataCallBuilder withRequestMethod(String data)
+        {
+            this.dc.requestMethod = data;
+            return this;
+        }
+
+        public DataCallBuilder withHeader(String key, String value)
+        {
+            this.dc.urlHeaders.merge(key, value, this.merge);
+            return this;
+        }
+
     }
 
     public enum ResponseType
@@ -264,18 +307,20 @@ public class DataCall
         Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
     }
 
-    private String                    key;
-    private final Map<String, String> urlData   = new HashMap<>();
+    private String                    key           = "";
+    private String                    postData      = "";
+    private String                    requestMethod = "GET";
 
-    private final Map<String, String> urlParams = new HashMap<>();
-    private boolean                   retry     = true;
-    private boolean                   verbose   = false;
+    private final Map<String, String> urlData       = new HashMap<>();
+    private final Map<String, String> urlParams     = new HashMap<>();
+    private final Map<String, String> urlHeaders    = new HashMap<>();
 
-    public boolean                    useCache  = true;
+    private boolean                   retry         = true;
+    private boolean                   verbose       = false;
 
-    private int                       retryTime = 5;
+    private int                       retryTime     = 5;
+
     private Server                    server;
-
     private Server                    region;
 
     private URLEndpoint               endpoint;

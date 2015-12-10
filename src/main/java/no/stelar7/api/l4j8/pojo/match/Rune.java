@@ -74,4 +74,10 @@ public class Rune
         return result;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Rune [rank=" + rank + ", runeId=" + runeId + "]";
+    }
+
 }

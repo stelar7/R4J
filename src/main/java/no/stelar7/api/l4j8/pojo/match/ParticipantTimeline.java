@@ -650,4 +650,10 @@ public class ParticipantTimeline
         return result;
     }
 
+    @Override
+    public String toString()
+    {
+        return "ParticipantTimeline [ancientGolemAssistsPerMinCounts=" + ancientGolemAssistsPerMinCounts + ", ancientGolemKillsPerMinCounts=" + ancientGolemKillsPerMinCounts + ", assistedLaneDeathsPerMinDeltas=" + assistedLaneDeathsPerMinDeltas + ", assistedLaneKillsPerMinDeltas=" + assistedLaneKillsPerMinDeltas + ", baronAssistsPerMinCounts=" + baronAssistsPerMinCounts + ", baronKillsPerMinCounts=" + baronKillsPerMinCounts + ", creepsPerMinDeltas=" + creepsPerMinDeltas + ", csDiffPerMinDeltas=" + csDiffPerMinDeltas + ", damageTakenDiffPerMinDeltas=" + damageTakenDiffPerMinDeltas + ", damageTakenPerMinDeltas=" + damageTakenPerMinDeltas + ", dragonAssistsPerMinCounts=" + dragonAssistsPerMinCounts + ", dragonKillsPerMinCounts=" + dragonKillsPerMinCounts + ", elderLizardAssistsPerMinCounts=" + elderLizardAssistsPerMinCounts + ", elderLizardKillsPerMinCounts=" + elderLizardKillsPerMinCounts + ", goldPerMinDeltas=" + goldPerMinDeltas + ", inhibitorAssistsPerMinCounts=" + inhibitorAssistsPerMinCounts + ", inhibitorKillsPerMinCounts=" + inhibitorKillsPerMinCounts + ", towerAssistsPerMinCounts=" + towerAssistsPerMinCounts + ", towerKillsPerMinCounts=" + towerKillsPerMinCounts + ", towerKillsPerMinDeltas=" + towerKillsPerMinDeltas + ", vilemawAssistsPerMinCounts=" + vilemawAssistsPerMinCounts + ", vilemawKillsPerMinCounts=" + vilemawKillsPerMinCounts + ", wardsPerMinDeltas=" + wardsPerMinDeltas + ", xpDiffPerMinDeltas=" + xpDiffPerMinDeltas + ", xpPerMinDeltas=" + xpPerMinDeltas + ", lane=" + lane + ", role=" + role + "]";
+    }
+
 }

@@ -73,4 +73,10 @@ public class ParticipantIdentity
         result = (prime * result) + ((this.player == null) ? 0 : this.player.hashCode());
         return result;
     }
+
+    @Override
+    public String toString()
+    {
+        return "ParticipantIdentity [participantId=" + participantId + ", player=" + player + "]";
+    }
 }

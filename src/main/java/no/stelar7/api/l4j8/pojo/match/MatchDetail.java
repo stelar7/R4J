@@ -454,4 +454,10 @@ public class MatchDetail implements APIObject
         result = (prime * result) + ((this.timeline == null) ? 0 : this.timeline.hashCode());
         return result;
     }
+
+    @Override
+    public String toString()
+    {
+        return "MatchDetail [mapId=" + mapId + ", matchCreation=" + matchCreation + ", matchDuration=" + matchDuration + ", matchId=" + matchId + ", matchMode=" + matchMode + ", matchType=" + matchType + ", matchVersion=" + matchVersion + ", participantIdentities=" + participantIdentities + ", participants=" + participants + ", platformId=" + platformId + ", queueType=" + queueType + ", region=" + region + ", season=" + season + ", teams=" + teams + ", timeline=" + timeline + "]";
+    }
 }

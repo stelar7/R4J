@@ -74,4 +74,10 @@ public class Mastery
         return result;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Mastery [masteryId=" + masteryId + ", rank=" + rank + "]";
+    }
+
 }

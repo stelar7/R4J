@@ -8,6 +8,6 @@
   * match
   * stats
   * team
-* Add Tournament API
+* Add Tournament API (This is pretty much done.. waiting for a response about some stuff from riot)
 * Add E-sports API
 * Write a tutorial of sorts

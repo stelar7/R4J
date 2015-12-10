@@ -297,4 +297,10 @@ public class Participant
         return result;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Participant [championId=" + championId + ", highestAchievedSeasonTier=" + highestAchievedSeasonTier + ", masteries=" + masteries + ", participantId=" + participantId + ", runes=" + runes + ", spell1Id=" + spell1Id + ", spell2Id=" + spell2Id + ", stats=" + stats + ", teamId=" + teamId + ", timeline=" + timeline + "]";
+    }
+
 }

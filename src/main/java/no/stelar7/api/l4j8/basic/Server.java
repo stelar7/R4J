@@ -10,6 +10,7 @@ public enum Server
     EUNE("eune.api.pvp.net", true),
     EUW("euw.api.pvp.net", true),
     KR("kr.api.pvp.net", true),
+    JP("jp.api.pvp.net", true),
     LAN("lan.api.pvp.net", true),
     LAS("las.api.pvp.net", true),
     NA("na.api.pvp.net", true),

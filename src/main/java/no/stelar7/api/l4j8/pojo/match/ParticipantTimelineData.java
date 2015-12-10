@@ -118,4 +118,10 @@ public class ParticipantTimelineData
         result = (prime * result) + ((this.zeroToTen == null) ? 0 : this.zeroToTen.hashCode());
         return result;
     }
+
+    @Override
+    public String toString()
+    {
+        return "ParticipantTimelineData [tenToTwenty=" + tenToTwenty + ", thirtyToEnd=" + thirtyToEnd + ", twentyToThirty=" + twentyToThirty + ", zeroToTen=" + zeroToTen + "]";
+    }
 }
