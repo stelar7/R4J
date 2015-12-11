@@ -25,6 +25,7 @@ import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
 import no.stelar7.api.l4j8.pojo.tournament.LobbyEventWrapper;
+import no.stelar7.api.l4j8.pojo.tournament.TournamentCode;
 
 public enum URLEndpoint
 {
@@ -60,10 +61,11 @@ public enum URLEndpoint
     STATIC_SUMMONER_SPELL_BY_ID("/api/lol/static-data/{region}/{version}/summoner-spell/{id}", "v1.2", SummonerSpell.class),
     STATIC_VERSIONS("/api/lol/static-data/{region}/{version}/versions", "v1.2", new TypeToken<List<String>>()
     {}.getType()),
-    TOURNAMENT_PROVIDER("/tournament/public/{version}/provider", "v1", Integer.class),
-    TOURNAMENT_REGISTRATION("/tournament/public/{version}/tournament", "v1", Integer.class),
-    TOURNAMENT_CODE("/tournament/public/{version}/code/{tournamentCode}", "v1", new TypeToken<List<String>>()
+    TOURNAMENT_PROVIDER("/tournament/public/{version}/provider", "v1", Long.class),
+    TOURNAMENT_REGISTRATION("/tournament/public/{version}/tournament", "v1", Long.class),
+    TOURNAMENT_CODE_CODES("/tournament/public/{version}/code/{tournamentCode}", "v1", new TypeToken<List<String>>()
     {}.getType()),
+    TOURNAMENT_CODE("/tournament/public/{version}/code/{tournamentCode}", "v1", TournamentCode.class),
     TOURNAMENT_LOBBY("/tournament/public/{version}/lobby/events/by-code/{tournamentCode}", "v1", LobbyEventWrapper.class),
     TOURNAMENT_MATCH("/api/lol/{region}/{version}/match/by-tournament/{tournamentCode}/ids", "v2.2", new TypeToken<List<Long>>()
     {}.getType()),

@@ -2,27 +2,27 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 public class TournamentRegistrationParameters
 {
-    String  name;
-    Integer providerId;
+    String name;
+    Long   providerId;
 
     public String getName()
     {
         return name;
     }
 
-    public Integer getProviderId()
+    public Long getProviderId()
     {
         return providerId;
     }
 
-    public TournamentRegistrationParameters(String name, Integer providerId)
+    public TournamentRegistrationParameters(String name, long providerId2)
     {
         super();
         this.name = name;
-        this.providerId = providerId;
+        this.providerId = providerId2;
     }
 
-    public TournamentRegistrationParameters(Integer providerId)
+    public TournamentRegistrationParameters(Long providerId)
     {
         super();
         this.providerId = providerId;
@@ -33,7 +33,7 @@ public class TournamentRegistrationParameters
         this.name = name;
     }
 
-    public void setProviderId(Integer providerId)
+    public void setProviderId(Long providerId)
     {
         this.providerId = providerId;
     }

@@ -56,7 +56,7 @@ public class DataCall
 
             try
             {
-                if (response.getKey() == 200)
+                if (response.getKey() == 200 || response.getKey() == 204)
                 {
                     final Object type = this.dc.endpoint.getType();
                     Object dtoobj;
@@ -100,20 +100,36 @@ public class DataCall
 
         private Pair<Integer, Pair<String, Integer>> getResponse(final String url) throws RuntimeException
         {
+            final StringBuilder data = new StringBuilder();
+
             try
             {
                 final HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 
                 con.setUseCaches(false);
                 con.setDefaultUseCaches(false);
-                con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36");
+                con.setRequestProperty("User-Agent", "L4J8");
+                con.setRequestProperty("Accept-Charset", "ISO-8859-1,utf-8");
+                con.setRequestProperty("Accept-Language", "en-US");
                 con.setRequestProperty("Cache-Control", "no-store,max-age=0,no-cache");
                 con.setRequestProperty("Expires", "0");
                 con.setRequestProperty("Pragma", "no-cache");
                 con.setRequestProperty("Connection", "keep-alive");
+                con.setRequestProperty("Content-Type", "application/json");
                 this.dc.urlHeaders.forEach((k, v) -> con.setRequestProperty(k, v));
 
                 con.setRequestMethod(this.dc.requestMethod);
+
+                if (this.dc.verbose)
+                {
+                    System.out.format("%1$-20s: %2$-40s%n", "URL", url);
+                    System.out.format("%1$-20s: %2$-40s%n", "Request Method", con.getRequestMethod());
+                    System.out.format("%1$-20s: %2$-40s%n", "POST", this.dc.postData);
+                    System.out.println();
+                    System.out.format("%1$-20s: %2$-40s%n", "Request Headers", "");
+                    con.getRequestProperties().forEach((key, value) -> System.out.format("\t%1$-20s: %2$-40s%n", key, value));
+                    System.out.println();
+                }
 
                 if (!this.dc.postData.isEmpty())
                 {
@@ -129,15 +145,10 @@ public class DataCall
 
                 if (this.dc.verbose)
                 {
-                    System.out.println();
-                    System.out.println(url);
-                    con.getHeaderFields().forEach((key, value) -> {
-                        System.out.println(key + ":\t" + value);
-                    });
+                    System.out.format("%1$-20s: %2$-40s%n", "Response Headers", "");
+                    con.getHeaderFields().forEach((key, value) -> System.out.format("\t%1$-20s: %2$-40s%n", key, value));
                     System.out.println();
                 }
-
-                final StringBuilder data = new StringBuilder();
 
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
                 {
@@ -162,7 +173,7 @@ public class DataCall
                 e.printStackTrace();
             }
 
-            throw new RuntimeException("Reached end of getResponse, without a valid response!!");
+            throw new RuntimeException("Reached end of getResponse, without a valid response!!\n");
         }
 
         public String getURL()
@@ -182,7 +193,7 @@ public class DataCall
 
             this.urlBuilder.append(this.dc.server.getURL()).append(this.dc.endpoint.getValue());
 
-            this.withURLData("{region}", this.dc.region.asURLFormat());
+            this.withURLData("{region}", this.dc.region == null ? this.dc.server.asURLFormat() : this.dc.region.asURLFormat());
             this.withURLData("{version}", this.dc.endpoint.getVersion());
 
             this.dc.urlData.forEach((k, v) -> {

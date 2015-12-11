@@ -5,7 +5,7 @@ import java.util.Set;
 public class TournamentCode
 {
     String    code;
-    Integer   id;
+    Long      id;
     String    lobbyName;
     String    map;
     String    metaData;
@@ -29,7 +29,7 @@ public class TournamentCode
         return code;
     }
 
-    public Integer getId()
+    public Long getId()
     {
         return id;
     }

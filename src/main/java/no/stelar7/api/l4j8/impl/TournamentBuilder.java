@@ -28,42 +28,57 @@ public class TournamentBuilder
     /**
      * Returns a ProviderId used to link the tournaments to your callback url
      */
-    public int registerAsProvider(ProviderRegistrationParameters params)
+    public long registerAsProvider(ProviderRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withPostData(new Gson().toJson(params)).withRequestMethod("POST").asVerbose(true);
-        builder = builder.withRegion(Server.EUW).withServer(Server.EUW).withEndpoint(URLEndpoint.TOURNAMENT_PROVIDER);
-        Integer providerId = (Integer) builder.build();
+        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withRequestMethod("POST");
+        builder = builder.withPostData(new Gson().toJson(params));
+        builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_PROVIDER);
+        builder = builder.withServer(Server.GLOBAL);
+        builder = builder.asVerbose(true);
 
+        Long providerId = (Long) builder.build();
         return providerId;
     }
 
     /**
      * Returns a TournamentId used to refer to this tournament later on
      */
-    public int registerTournament(TournamentRegistrationParameters params)
+    public long registerTournament(TournamentRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withPostData(new Gson().toJson(params)).withRequestMethod("POST").asVerbose(true);
-        builder = builder.withRegion(Server.EUW).withServer(Server.EUW).withEndpoint(URLEndpoint.TOURNAMENT_REGISTRATION);
-        Integer tournamentId = (Integer) builder.build();
+        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withRequestMethod("POST");
+        builder = builder.withPostData(new Gson().toJson(params));
+        builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_REGISTRATION);
+        builder = builder.withServer(Server.GLOBAL);
+        builder = builder.asVerbose(true);
 
+        Long tournamentId = (Long) builder.build();
         return tournamentId;
     }
 
     /**
      * Generates a list of tournamentCodes to use for adding players to games ONE CODE PER GAME!!
      */
-    public List<String> generateTournamentCodes(TournamentCodeParameters params, int tournamentId, int count)
+    public List<String> generateTournamentCodes(TournamentCodeParameters params, long tournamentId, int count)
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withPostData(new Gson().toJson(params)).withRequestMethod("POST").withURLData("{tournamentCode}", "").asVerbose(true);
-        builder = builder.withRegion(Server.EUW).withServer(Server.EUW).withEndpoint(URLEndpoint.TOURNAMENT_CODE);
-        List<String> tournamentCodes = (List<String>) builder.build();
+        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withRequestMethod("POST");
+        builder = builder.withPostData(new Gson().toJson(params));
+        builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
+        builder = builder.withURLData("{tournamentCode}", "");
+        builder = builder.withURLParameter("tournamentId", String.valueOf(tournamentId));
+        builder = builder.withURLParameter("count", String.valueOf(count));
+        builder = builder.withServer(Server.GLOBAL);
+        builder = builder.asVerbose(true);
 
+        List<String> tournamentCodes = (List<String>) builder.build();
         return tournamentCodes;
     }
 
@@ -74,8 +89,14 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withPostData(new Gson().toJson(params)).withRequestMethod("PUT").withURLData("{tournamentCode}", String.valueOf(tournamentCode)).asVerbose(true);
-        builder = builder.withRegion(Server.EUW).withServer(Server.EUW).withEndpoint(URLEndpoint.TOURNAMENT_CODE);
+        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withRequestMethod("PUT");
+        builder = builder.withPostData(new Gson().toJson(params));
+        builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
+        builder = builder.withURLData("{tournamentCode}", tournamentCode);
+        builder = builder.withServer(Server.GLOBAL);
+        builder = builder.asVerbose(true);
+
         builder.build();
     }
 
@@ -86,10 +107,13 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withURLData("{tournamentCode}", tournamentCode).asVerbose(true);
-        builder = builder.withRegion(Server.EUW).withServer(Server.EUW).withEndpoint(URLEndpoint.TOURNAMENT_CODE);
-        TournamentCode code = (TournamentCode) builder.build();
+        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE);
+        builder = builder.withURLData("{tournamentCode}", tournamentCode);
+        builder = builder.withServer(Server.GLOBAL);
+        builder = builder.asVerbose(true);
 
+        TournamentCode code = (TournamentCode) builder.build();
         return code;
     }
 
@@ -100,25 +124,34 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withURLData("{tournamentCode}", tournamentCode).asVerbose(true);
-        builder = builder.withRegion(Server.EUW).withServer(Server.EUW).withEndpoint(URLEndpoint.TOURNAMENT_LOBBY);
-        LobbyEventWrapper code = (LobbyEventWrapper) builder.build();
+        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_LOBBY);
+        builder = builder.withURLData("{tournamentCode}", tournamentCode);
+        builder = builder.withServer(Server.GLOBAL);
+        builder = builder.asVerbose(true);
 
+        LobbyEventWrapper code = (LobbyEventWrapper) builder.build();
         return code;
     }
 
     /**
-     *  @deprecated  Use Match.getMatchInfo instead because this doesnt return the timeline
+     * @deprecated Use Match.getMatchInfo instead because this doesnt return the timeline
      */
     @Deprecated
     public MatchDetail getMatchInfo(String tournamentCode, Long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withURLData("{matchId}", String.valueOf(matchId)).withURLParameter("tournamentCode", tournamentCode).withURLParameter("includeTimeline", "true").withAPIKey(API_KEY).asVerbose(true);
-        builder = builder.withRegion(Server.EUW).withServer(Server.EUW).withEndpoint(URLEndpoint.TOURNAMENT_MATCH_BY_ID);
-        MatchDetail code = (MatchDetail) builder.build();
+        builder = builder.withAPIKey(API_KEY);
+        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH_BY_ID);
+        builder = builder.withURLData("{matchId}", String.valueOf(matchId));
+        builder = builder.withURLParameter("tournamentCode", tournamentCode);
+        builder = builder.withURLParameter("includeTimeline", "true");
+        builder = builder.withServer(Server.GLOBAL);
+        builder = builder.asVerbose(true);
 
+        MatchDetail code = (MatchDetail) builder.build();
         return code;
     }
 
@@ -129,10 +162,14 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withURLData("{tournamentCode}", tournamentCode).withAPIKey(API_KEY).asVerbose(true);
-        builder = builder.withRegion(Server.EUW).withServer(Server.EUW).withEndpoint(URLEndpoint.TOURNAMENT_MATCH);
-        List<Long> code = (List<Long>) builder.build();
+        builder = builder.withAPIKey(API_KEY);
+        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH);
+        builder = builder.withURLData("{tournamentCode}", tournamentCode);
+        builder = builder.withServer(Server.EUW);
+        builder = builder.asVerbose(true);
 
+        List<Long> code = (List<Long>) builder.build();
         return code;
     }
 
