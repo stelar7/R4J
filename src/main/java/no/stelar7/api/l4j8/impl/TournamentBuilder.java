@@ -26,7 +26,7 @@ public class TournamentBuilder
     }
 
     /**
-     * Returns a ProviderId used to link the tournaments to your callback url
+     * Returns a ProviderId used to link the tournaments to your callback url. The id will always be the same for a given URL and Server. I.E. Passing http://website.com and EUW will ALWAYS return the same code.
      */
     public long registerAsProvider(ProviderRegistrationParameters params)
     {
@@ -62,7 +62,7 @@ public class TournamentBuilder
     }
 
     /**
-     * Generates a list of tournamentCodes to use for adding players to games ONE CODE PER GAME!!
+     * Generates a list of tournamentCodes to use for adding players to games. You should only use a code one time.
      */
     public List<String> generateTournamentCodes(TournamentCodeParameters params, long tournamentId, int count)
     {
