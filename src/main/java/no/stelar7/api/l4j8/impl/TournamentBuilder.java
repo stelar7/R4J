@@ -135,9 +135,8 @@ public class TournamentBuilder
     }
 
     /**
-     * @deprecated Use Match.getMatchInfo instead because this doesnt return the timeline
+     * Get details about a match from this tournament, differs from Match.getMatchInfo because this returns participants
      */
-    @Deprecated
     public MatchDetail getMatchInfo(String tournamentCode, Long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder();

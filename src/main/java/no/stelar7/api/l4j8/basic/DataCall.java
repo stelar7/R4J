@@ -11,14 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.gson.Gson;
-
-import javafx.util.Pair;
 
 public class DataCall
 {
@@ -48,33 +46,33 @@ public class DataCall
 
             if (isServerRatelimited && isToRatelimitedURL)
             {
-                DataCall.limiter.computeIfAbsent(this.dc.server, (final Server s) -> RateLimiter.create((double) DataCall.LIMITER_PERMITS_PER_10_MINUTES / (double) DataCall.LIMITER_10_MINUTES)).acquire();
+                DataCall.limiter.computeIfAbsent(this.dc.server, (final Server s) -> RateLimiter.create(DataCall.LIMITER_PERMITS_PER_10_MINUTES / DataCall.LIMITER_10_MINUTES)).acquire();
             }
 
             final String url = this.getURL();
-            final Pair<Integer, Pair<String, Integer>> response = this.getResponse(url);
+            final Triplet<Integer, String, Integer> response = this.getResponse(url);
 
             try
             {
-                if (response.getKey() == 200 || response.getKey() == 204)
+                if (response.getA() == 200 || response.getA() == 204)
                 {
                     final Object type = this.dc.endpoint.getType();
                     Object dtoobj;
                     if (type instanceof Class<?>)
                     {
-                        dtoobj = new Gson().fromJson(response.getValue().getKey(), (Class<?>) this.dc.endpoint.getType());
+                        dtoobj = new Gson().fromJson(response.getB(), (Class<?>) this.dc.endpoint.getType());
                     } else
                     {
-                        dtoobj = new Gson().fromJson(response.getValue().getKey(), (Type) this.dc.endpoint.getType());
+                        dtoobj = new Gson().fromJson(response.getB(), (Type) this.dc.endpoint.getType());
                     }
                     return dtoobj;
                 }
 
-                if (response.getKey() == 429)
+                if (response.getA() == 429)
                 {
                     if (this.dc.retry)
                     {
-                        TimeUnit.SECONDS.sleep(response.getValue().getValue());
+                        TimeUnit.SECONDS.sleep(response.getC());
                         return this.build();
                     }
                 }
@@ -83,7 +81,7 @@ public class DataCall
                 e.printStackTrace();
             }
 
-            throw new RuntimeException(response.getValue().getKey());
+            throw new RuntimeException(response.getB());
         }
 
         public DataCallBuilder clearURLData()
@@ -98,7 +96,7 @@ public class DataCall
             return this;
         }
 
-        private Pair<Integer, Pair<String, Integer>> getResponse(final String url) throws RuntimeException
+        private Triplet<Integer, String, Integer> getResponse(final String url) throws RuntimeException
         {
             final StringBuilder data = new StringBuilder();
 
@@ -138,10 +136,9 @@ public class DataCall
                     writer.writeBytes(this.dc.postData);
                     writer.flush();
                     writer.close();
-                } else
-                {
-                    con.connect();
                 }
+
+                con.connect();
 
                 if (this.dc.verbose)
                 {
@@ -167,7 +164,7 @@ public class DataCall
 
                 con.disconnect();
 
-                return new Pair<Integer, Pair<String, Integer>>(con.getResponseCode(), new Pair<String, Integer>(data.toString(), timeout));
+                return new Triplet<Integer, String, Integer>(con.getResponseCode(), data.toString(), timeout);
             } catch (final IOException e)
             {
                 e.printStackTrace();
@@ -203,20 +200,11 @@ public class DataCall
                 this.urlBuilder.append(temp);
             });
 
-            boolean usesKey = !this.dc.key.isEmpty();
-
-            if (usesKey)
+            Optional<String> firstKey = this.dc.urlParams.keySet().stream().findFirst();
+            if (firstKey.isPresent())
             {
-                this.urlBuilder.append("?api_key=").append(this.dc.key);
-                this.dc.urlParams.forEach((k, v) -> this.urlBuilder.append("&").append(k).append("=").append(v));
-            } else
-            {
-                String firstKey = this.dc.urlParams.keySet().stream().limit(1).collect(Collectors.joining());
-                if (!firstKey.isEmpty())
-                {
-                    this.urlBuilder.append("?").append(firstKey).append("=").append(this.dc.urlParams.get(firstKey));
-                    this.dc.urlParams.keySet().stream().skip(1).forEach(k -> this.urlBuilder.append("&").append(k).append("=").append(this.dc.urlParams.get(k)));
-                }
+                this.urlBuilder.append("?").append(firstKey.get()).append("=").append(this.dc.urlParams.get(firstKey.get()));
+                this.dc.urlParams.keySet().stream().skip(1).forEach(k -> this.urlBuilder.append("&").append(k).append("=").append(this.dc.urlParams.get(k)));
             }
 
             return this.urlBuilder.toString();
@@ -224,7 +212,7 @@ public class DataCall
 
         public DataCallBuilder withAPIKey(final String key)
         {
-            this.dc.key = key;
+            this.dc.urlParams.put("api_key", key);
             return this;
         }
 
@@ -304,8 +292,8 @@ public class DataCall
 
     private static final String                   LIMIT_USER                     = "service";
     private static final String                   LIMIT_SERVICE                  = "user";
-    private static final Integer                  LIMITER_PERMITS_PER_10_MINUTES = 500;
-    private static final Integer                  LIMITER_10_MINUTES             = 600;
+    private static final Double                   LIMITER_PERMITS_PER_10_MINUTES = 500.0;
+    private static final Double                   LIMITER_10_MINUTES             = 600.0;
 
     public static DataCallBuilder builder()
     {
@@ -318,7 +306,6 @@ public class DataCall
         Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
     }
 
-    private String                    key           = "";
     private String                    postData      = "";
     private String                    requestMethod = "GET";
 
@@ -335,5 +322,34 @@ public class DataCall
     private Server                    region;
 
     private URLEndpoint               endpoint;
+
+    static class Triplet<T, U, V>
+    {
+        T a;
+        U b;
+        V c;
+
+        Triplet(T a, U b, V c)
+        {
+            this.a = a;
+            this.b = b;
+            this.c = c;
+        }
+
+        T getA()
+        {
+            return a;
+        }
+
+        U getB()
+        {
+            return b;
+        }
+
+        V getC()
+        {
+            return c;
+        }
+    }
 
 }

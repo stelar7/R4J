@@ -2,8 +2,6 @@ package no.stelar7.api.l4j8.tests.tournament;
 
 import java.util.List;
 
-import org.junit.Test;
-
 import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.constants.TournamentMapType;
 import no.stelar7.api.l4j8.basic.constants.TournamentPickType;
@@ -23,7 +21,7 @@ public class TournamentTest
 
     TournamentBuilder builder = new TournamentBuilder(SecretFile.TOURNAMENT_API_KEY);
 
-    @Test
+//    @Test
     public void testAllRegistrations()
     {
         ProviderRegistrationParameters params = new ProviderRegistrationParameters(Server.EUW, "http://stelar7.no/loltest/provider.php");
@@ -65,7 +63,6 @@ public class TournamentTest
     }
 
     // @Test
-    @SuppressWarnings("deprecation")
     public void testPostGameData()
     {
         String code = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
@@ -76,7 +73,7 @@ public class TournamentTest
         System.out.println(matchDetail);
     }
 
-     @Test
+//    @Test
     public void testTournamentRegistration()
     {
         int providerId = 199;
@@ -85,7 +82,7 @@ public class TournamentTest
         System.out.println(id);
     }
 
-     @Test
+//    @Test
     public void testTournamentProviderRegistration()
     {
         ProviderRegistrationParameters params = new ProviderRegistrationParameters(Server.EUW, "http://stelar7.no/loltest/provider.php");
@@ -93,7 +90,7 @@ public class TournamentTest
         System.out.println(id);
     }
 
-     @Test
+//    @Test
     public void testTournamentCodeGeneration()
     {
         int tournamentId = 3107;
@@ -109,7 +106,7 @@ public class TournamentTest
 
     }
 
-     @Test
+//    @Test
     public void testTournamentCodeUpdate()
     {
         String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
@@ -117,7 +114,7 @@ public class TournamentTest
         builder.updateTournament(params, tournamentCode);
     }
 
-     @Test
+//    @Test
     public void testTournamentCodeGet()
     {
         String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
@@ -125,7 +122,7 @@ public class TournamentTest
         System.out.println(id);
     }
 
-     @Test
+//    @Test
     public void testTournamentLobbyEvents()
     {
         String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
@@ -133,7 +130,7 @@ public class TournamentTest
         eventWrapper.getEventList().forEach(System.out::println);
     }
 
-     @Test
+//    @Test
     public void testTournamentMatchIds()
     {
         String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
@@ -141,8 +138,7 @@ public class TournamentTest
         eventWrapper.forEach(System.out::println);
     }
 
-     @Test
-    @SuppressWarnings("deprecation")
+//    @Test
     public void testTournamentMatchDetails()
     {
         String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
