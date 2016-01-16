@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 
@@ -309,9 +310,9 @@ public class DataCall
     private String                    postData      = "";
     private String                    requestMethod = "GET";
 
-    private final Map<String, String> urlData       = new HashMap<>();
-    private final Map<String, String> urlParams     = new HashMap<>();
-    private final Map<String, String> urlHeaders    = new HashMap<>();
+    private final Map<String, String> urlData       = new TreeMap<>();
+    private final Map<String, String> urlParams     = new TreeMap<>();
+    private final Map<String, String> urlHeaders    = new TreeMap<>();
 
     private boolean                   retry         = true;
     private boolean                   verbose       = false;
