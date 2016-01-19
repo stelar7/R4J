@@ -140,7 +140,15 @@ public enum GameQueueType
     /**
      * Black Market Brawlers games
      */
-    BILGEWATER_5x5(313);
+    BILGEWATER_5x5(313),
+    /**
+     * Normal 5v5 Draft Pick games (Dynamic Queue)
+     */
+    TEAM_BUILDER_DRAFT_UNRANKED_5x5(400),
+    /**
+     * Ranked 5v5 Draft Pick games (Dynamic Queue)
+     */
+    TEAM_BUILDER_DRAFT_RANKED_5x5(410);
 
     public static Optional<GameQueueType> getFromCode(final Integer gameQueueConfigId)
     {
