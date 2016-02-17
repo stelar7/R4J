@@ -6,7 +6,7 @@ import org.junit.runners.MethodSorters;
 
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.Server;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestBase
@@ -18,7 +18,7 @@ public class TestBase
     {
         TestBase.builder = DataCall.builder();
         TestBase.builder.asVerbose(true);
-        TestBase.builder.withAPIKey(SecretFile.API_KEY);
+        TestBase.builder.withAPICredentials(SecretFile.CREDS);
         TestBase.builder.withServer(Server.EUW);
         TestBase.builder.withRegion(Server.EUW);
     }

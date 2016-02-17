@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import no.stelar7.api.l4j8.basic.APICredentials;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.constants.api.APIType;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.match.MatchDetail;
 import no.stelar7.api.l4j8.pojo.tournament.LobbyEventWrapper;
 import no.stelar7.api.l4j8.pojo.tournament.ProviderRegistrationParameters;
@@ -18,11 +20,11 @@ import no.stelar7.api.l4j8.pojo.tournament.TournamentRegistrationParameters;
 public class TournamentBuilder
 {
 
-    String API_KEY;
+    APICredentials creds;
 
     public TournamentBuilder(String API_KEY)
     {
-        this.API_KEY = API_KEY;
+        this.creds = new APICredentials(APIType.TOURNAMENT, API_KEY);
     }
 
     /**
@@ -32,7 +34,7 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withHeader("X-Riot-Token", creds.getTournament());
         builder = builder.withRequestMethod("POST");
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_PROVIDER);
@@ -50,7 +52,7 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withHeader("X-Riot-Token", creds.getTournament());
         builder = builder.withRequestMethod("POST");
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_REGISTRATION);
@@ -68,7 +70,7 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withHeader("X-Riot-Token", creds.getTournament());
         builder = builder.withRequestMethod("POST");
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
@@ -89,7 +91,7 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withHeader("X-Riot-Token", creds.getTournament());
         builder = builder.withRequestMethod("PUT");
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
@@ -107,7 +109,7 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withHeader("X-Riot-Token", creds.getTournament());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE);
         builder = builder.withURLData("{tournamentCode}", tournamentCode);
         builder = builder.withServer(Server.GLOBAL);
@@ -124,7 +126,7 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withHeader("X-Riot-Token", creds.getTournament());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_LOBBY);
         builder = builder.withURLData("{tournamentCode}", tournamentCode);
         builder = builder.withServer(Server.GLOBAL);
@@ -141,8 +143,8 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withAPIKey(API_KEY);
-        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withAPICredentials(creds);
+        builder = builder.withHeader("X-Riot-Token", creds.getTournament());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH_BY_ID);
         builder = builder.withURLData("{matchId}", String.valueOf(matchId));
         builder = builder.withURLParameter("tournamentCode", tournamentCode);
@@ -161,8 +163,8 @@ public class TournamentBuilder
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withAPIKey(API_KEY);
-        builder = builder.withHeader("X-Riot-Token", API_KEY);
+        builder = builder.withAPICredentials(creds);
+        builder = builder.withHeader("X-Riot-Token", creds.getTournament());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH);
         builder = builder.withURLData("{tournamentCode}", tournamentCode);
         builder = builder.withServer(Server.EUW);

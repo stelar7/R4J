@@ -9,9 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
-import no.stelar7.api.l4j8.tests.SecretFile;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.tests.TestBase;
 
 public class SummonerNameById extends TestBase
@@ -40,7 +39,6 @@ public class SummonerNameById extends TestBase
     @Before
     public void initBeforeTest()
     {
-        TestBase.builder.withAPIKey(SecretFile.API_KEY);
         TestBase.builder.withServer(Server.EUW);
         TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_NAME_BY_ID);
     }

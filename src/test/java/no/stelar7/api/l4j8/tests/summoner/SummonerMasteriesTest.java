@@ -9,12 +9,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.Mastery;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
-import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.tests.TestBase;
 
 public class SummonerMasteriesTest extends TestBase
@@ -58,7 +57,6 @@ public class SummonerMasteriesTest extends TestBase
     @Before
     public void initBeforeTest()
     {
-        TestBase.builder.withAPIKey(SecretFile.API_KEY);
         TestBase.builder.withServer(Server.EUW);
         TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
     }

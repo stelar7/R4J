@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.basic;
+package no.stelar7.api.l4j8.basic.constants.api;
 
 import java.util.Locale;
 import java.util.Optional;

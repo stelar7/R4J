@@ -6,9 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
-import no.stelar7.api.l4j8.tests.SecretFile;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.tests.TestBase;
 
 public class StaticVersionTest extends TestBase
@@ -25,7 +24,6 @@ public class StaticVersionTest extends TestBase
     @Before
     public void initBeforeClass()
     {
-        TestBase.builder.withAPIKey(SecretFile.API_KEY);
         TestBase.builder.withServer(Server.GLOBAL);
         TestBase.builder.withEndpoint(URLEndpoint.STATIC_VERSIONS);
     }

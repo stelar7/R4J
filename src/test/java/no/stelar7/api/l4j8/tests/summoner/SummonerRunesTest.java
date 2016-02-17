@@ -9,12 +9,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RuneSlot;
-import no.stelar7.api.l4j8.tests.SecretFile;
 import no.stelar7.api.l4j8.tests.TestBase;
 
 public class SummonerRunesTest extends TestBase
@@ -59,7 +58,6 @@ public class SummonerRunesTest extends TestBase
     @Before
     public void initBeforeTest()
     {
-        TestBase.builder.withAPIKey(SecretFile.API_KEY);
         TestBase.builder.withServer(Server.EUW);
         TestBase.builder.withEndpoint(URLEndpoint.SUMMONER_RUNES_BY_ID);
     }

@@ -8,10 +8,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.RankedQueue;
 import no.stelar7.api.l4j8.basic.constants.Season;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
 import no.stelar7.api.l4j8.tests.TestBase;

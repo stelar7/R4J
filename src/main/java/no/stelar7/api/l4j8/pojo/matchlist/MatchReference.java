@@ -6,13 +6,13 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import no.stelar7.api.l4j8.basic.APIObject;
-import no.stelar7.api.l4j8.basic.Platform;
-import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Lane;
 import no.stelar7.api.l4j8.basic.constants.RankedQueue;
 import no.stelar7.api.l4j8.basic.constants.Role;
 import no.stelar7.api.l4j8.basic.constants.Season;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
 
 public class MatchReference implements APIObject
 {

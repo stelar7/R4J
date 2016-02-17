@@ -10,9 +10,9 @@ import org.junit.runners.MethodSorters;
 
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.Server;
-import no.stelar7.api.l4j8.basic.URLEndpoint;
 import no.stelar7.api.l4j8.basic.Utils;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
@@ -80,9 +80,9 @@ public class CurrentGameTest
     @Before
     public void init()
     {
-        this.currentbuilder.withAPIKey(SecretFile.API_KEY);
-        this.featuredbuilder.withAPIKey(SecretFile.API_KEY);
-        this.idbuilder.withAPIKey(SecretFile.API_KEY);
+        this.currentbuilder.withAPICredentials(SecretFile.CREDS);
+        this.featuredbuilder.withAPICredentials(SecretFile.CREDS);
+        this.idbuilder.withAPICredentials(SecretFile.CREDS);
 
         this.currentbuilder.withServer(Server.EUW);
         this.featuredbuilder.withServer(Server.EUW);

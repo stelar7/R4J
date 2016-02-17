@@ -2,10 +2,10 @@ package no.stelar7.api.l4j8.tests.tournament;
 
 import java.util.List;
 
-import no.stelar7.api.l4j8.basic.Server;
 import no.stelar7.api.l4j8.basic.constants.TournamentMapType;
 import no.stelar7.api.l4j8.basic.constants.TournamentPickType;
 import no.stelar7.api.l4j8.basic.constants.TournamentSpectatorType;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
 import no.stelar7.api.l4j8.impl.TournamentBuilder;
 import no.stelar7.api.l4j8.pojo.match.MatchDetail;
 import no.stelar7.api.l4j8.pojo.tournament.LobbyEventWrapper;
@@ -19,7 +19,7 @@ import no.stelar7.api.l4j8.tests.SecretFile;
 public class TournamentTest
 {
 
-    TournamentBuilder builder = new TournamentBuilder(SecretFile.TOURNAMENT_API_KEY);
+    TournamentBuilder builder = new TournamentBuilder(SecretFile.TOURNAMENT_KEY);
 
 //    @Test
     public void testAllRegistrations()

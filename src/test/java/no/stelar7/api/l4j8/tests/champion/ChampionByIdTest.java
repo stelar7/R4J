@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import no.stelar7.api.l4j8.basic.URLEndpoint;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.champion.Champion;
 import no.stelar7.api.l4j8.pojo.champion.ChampionList;
 import no.stelar7.api.l4j8.tests.TestBase;

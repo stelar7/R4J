@@ -19,6 +19,9 @@ import java.util.function.BiFunction;
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.gson.Gson;
 
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+
 public class DataCall
 {
 
@@ -201,6 +204,8 @@ public class DataCall
                 this.urlBuilder.append(temp);
             });
 
+            this.dc.urlParams.put("api_key", this.dc.creds.API_KEY);
+            
             Optional<String> firstKey = this.dc.urlParams.keySet().stream().findFirst();
             if (firstKey.isPresent())
             {
@@ -211,9 +216,9 @@ public class DataCall
             return this.urlBuilder.toString();
         }
 
-        public DataCallBuilder withAPIKey(final String key)
+        public DataCallBuilder withAPICredentials(final APICredentials creds)
         {
-            this.dc.urlParams.put("api_key", key);
+            this.dc.creds = creds;
             return this;
         }
 
@@ -323,6 +328,8 @@ public class DataCall
     private Server                    region;
 
     private URLEndpoint               endpoint;
+
+    private APICredentials            creds;
 
     static class Triplet<T, U, V>
     {
