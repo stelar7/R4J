@@ -2,9 +2,7 @@ package no.stelar7.api.l4j8.pojo.champion;
 
 import java.util.List;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class ChampionList implements APIObject
+public class ChampionList
 {
     List<Champion> champions;
 

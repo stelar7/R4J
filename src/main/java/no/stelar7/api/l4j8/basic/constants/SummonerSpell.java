@@ -78,16 +78,6 @@ public enum SummonerSpell
         return Stream.of(SummonerSpell.values()).filter(t -> t.name().equals(type)).findFirst();
     }
 
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Integer getId()
-    {
-        return id;
-    }
-
     Integer id;
 
     /**
@@ -99,6 +89,16 @@ public enum SummonerSpell
     SummonerSpell(final Integer id)
     {
         this.id = id;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Integer getId()
+    {
+        return this.id;
     }
 
 }

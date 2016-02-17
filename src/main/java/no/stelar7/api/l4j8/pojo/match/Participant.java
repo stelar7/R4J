@@ -300,7 +300,7 @@ public class Participant
     @Override
     public String toString()
     {
-        return "Participant [championId=" + championId + ", highestAchievedSeasonTier=" + highestAchievedSeasonTier + ", masteries=" + masteries + ", participantId=" + participantId + ", runes=" + runes + ", spell1Id=" + spell1Id + ", spell2Id=" + spell2Id + ", stats=" + stats + ", teamId=" + teamId + ", timeline=" + timeline + "]";
+        return "Participant [championId=" + this.championId + ", highestAchievedSeasonTier=" + this.highestAchievedSeasonTier + ", masteries=" + this.masteries + ", participantId=" + this.participantId + ", runes=" + this.runes + ", spell1Id=" + this.spell1Id + ", spell2Id=" + this.spell2Id + ", stats=" + this.stats + ", teamId=" + this.teamId + ", timeline=" + this.timeline + "]";
     }
 
 }

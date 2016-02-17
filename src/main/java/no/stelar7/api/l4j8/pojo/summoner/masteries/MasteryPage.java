@@ -3,9 +3,7 @@ package no.stelar7.api.l4j8.pojo.summoner.masteries;
 import java.util.Collections;
 import java.util.List;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class MasteryPage implements APIObject
+public class MasteryPage
 {
 
     private Boolean       current;

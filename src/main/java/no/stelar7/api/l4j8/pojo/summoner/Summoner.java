@@ -4,9 +4,7 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class Summoner implements APIObject
+public class Summoner
 {
     private Long    id;
     private String  name;

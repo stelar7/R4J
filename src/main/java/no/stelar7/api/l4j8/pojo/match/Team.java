@@ -447,7 +447,7 @@ public class Team
     @Override
     public String toString()
     {
-        return "Team [bans=" + bans + ", baronKills=" + baronKills + ", dominionVictoryScore=" + dominionVictoryScore + ", dragonKills=" + dragonKills + ", firstBaron=" + firstBaron + ", firstBlood=" + firstBlood + ", firstDragon=" + firstDragon + ", firstInhibitor=" + firstInhibitor + ", firstTower=" + firstTower + ", inhibitorKills=" + inhibitorKills + ", teamId=" + teamId + ", towerKills=" + towerKills + ", vilemawKills=" + vilemawKills + ", winner=" + winner + ", firstRiftHerald=" + firstRiftHerald + ", riftHeraldKills=" + riftHeraldKills + "]";
+        return "Team [bans=" + this.bans + ", baronKills=" + this.baronKills + ", dominionVictoryScore=" + this.dominionVictoryScore + ", dragonKills=" + this.dragonKills + ", firstBaron=" + this.firstBaron + ", firstBlood=" + this.firstBlood + ", firstDragon=" + this.firstDragon + ", firstInhibitor=" + this.firstInhibitor + ", firstTower=" + this.firstTower + ", inhibitorKills=" + this.inhibitorKills + ", teamId=" + this.teamId + ", towerKills=" + this.towerKills + ", vilemawKills=" + this.vilemawKills + ", winner=" + this.winner + ", firstRiftHerald=" + this.firstRiftHerald + ", riftHeraldKills=" + this.riftHeraldKills + "]";
     }
 
 }

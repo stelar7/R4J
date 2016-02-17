@@ -122,6 +122,6 @@ public class ParticipantTimelineData
     @Override
     public String toString()
     {
-        return "ParticipantTimelineData [tenToTwenty=" + tenToTwenty + ", thirtyToEnd=" + thirtyToEnd + ", twentyToThirty=" + twentyToThirty + ", zeroToTen=" + zeroToTen + "]";
+        return "ParticipantTimelineData [tenToTwenty=" + this.tenToTwenty + ", thirtyToEnd=" + this.thirtyToEnd + ", twentyToThirty=" + this.twentyToThirty + ", zeroToTen=" + this.zeroToTen + "]";
     }
 }

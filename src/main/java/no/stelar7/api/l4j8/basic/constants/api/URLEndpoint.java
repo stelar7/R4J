@@ -30,27 +30,33 @@ import no.stelar7.api.l4j8.pojo.tournament.TournamentCode;
 
 public enum URLEndpoint
 {
-    SUMMONER_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}","v1.4",new TypeToken<Map<String,Summoner>>(){}.getType()),
-    SUMMONER_BY_NAME("/api/lol/{region}/{version}/summoner/by-name/{summonerName}","v1.4",new TypeToken<Map<String,Summoner>>(){}.getType()),
-    SUMMONER_MASTERIES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/masteries","v1.4",new TypeToken<Map<String,MasteryPages>>(){}.getType()),
-    SUMMONER_RUNES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/runes","v1.4",new TypeToken<Map<String,RunePages>>(){}.getType()),
-    SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name","v1.4",new TypeToken<Map<String,String>>(){}.getType()),
-    
+    SUMMONER_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}", "v1.4", new TypeToken<Map<String, Summoner>>()
+    {}.getType()),
+    SUMMONER_BY_NAME("/api/lol/{region}/{version}/summoner/by-name/{summonerName}", "v1.4", new TypeToken<Map<String, Summoner>>()
+    {}.getType()),
+    SUMMONER_MASTERIES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/masteries", "v1.4", new TypeToken<Map<String, MasteryPages>>()
+    {}.getType()),
+    SUMMONER_RUNES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/runes", "v1.4", new TypeToken<Map<String, RunePages>>()
+    {}.getType()),
+    SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", new TypeToken<Map<String, String>>()
+    {}.getType()),
+
     CHAMPIONS("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
     CHAMPION_BY_ID("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.Champion.class),
-    
+
     MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchList.class),
-    
+
     CURRENTGAME("/observer-mode/rest/consumer/getSpectatorGameInfo/{platformId}/{summonerId}", "", CurrentGameInfo.class),
-    
+
     FEATUREDGAME("/observer-mode/rest/featured", "", FeaturedGames.class),
-    
+
     STATIC_CHAMPION("/api/lol/static-data/{region}/{version}/champion", "v1.2", ChampionList.class),
     STATIC_CHAMPION_BY_ID("/api/lol/static-data/{region}/{version}/champion/{id}", "v1.2", no.stelar7.api.l4j8.pojo.staticdata.champion.Champion.class),
     STATIC_ITEM("/api/lol/static-data/{region}/{version}/item", "v1.2", ItemList.class),
     STATIC_ITEM_BY_ID("/api/lol/static-data/{region}/{version}/item/{id}", "v1.2", Item.class),
     STATIC_LANGUAGE_STRINGS("/api/lol/static-data/{region}/{version}/language-strings", "v1.2", LanguageStrings.class),
-    STATIC_LANGUAGES("/api/lol/static-data/{region}/{version}/languages","v1.2",new TypeToken<List<String>>(){}.getType()),
+    STATIC_LANGUAGES("/api/lol/static-data/{region}/{version}/languages", "v1.2", new TypeToken<List<String>>()
+    {}.getType()),
     STATIC_MAP("/api/lol/static-data/{region}/{version}/map", "v1.2", MapData.class),
     STATIC_MASTERY("/api/lol/static-data/{region}/{version}/mastery", "v1.2", MasteryList.class),
     STATIC_MASTERY_BY_ID("/api/lol/static-data/{region}/{version}/mastery", "v1.2", Mastery.class),
@@ -59,20 +65,25 @@ public enum URLEndpoint
     STATIC_RUNE_BY_ID("/api/lol/static-data/{region}/{version}/rune/{id}", "v1.2", Rune.class),
     STATIC_SUMMONER_SPELL("/api/lol/static-data/{region}/{version}/summoner-spell", "v1.2", SummonerSpellList.class),
     STATIC_SUMMONER_SPELL_BY_ID("/api/lol/static-data/{region}/{version}/summoner-spell/{id}", "v1.2", SummonerSpell.class),
-    STATIC_VERSIONS("/api/lol/static-data/{region}/{version}/versions","v1.2",new TypeToken<List<String>>(){}.getType()),
-    
+    STATIC_VERSIONS("/api/lol/static-data/{region}/{version}/versions", "v1.2", new TypeToken<List<String>>()
+    {}.getType()),
+
     TOURNAMENT_PROVIDER("/tournament/public/{version}/provider", "v1", Long.class),
     TOURNAMENT_REGISTRATION("/tournament/public/{version}/tournament", "v1", Long.class),
-    TOURNAMENT_CODE_CODES("/tournament/public/{version}/code/{tournamentCode}","v1",new TypeToken<List<String>>(){}.getType()),
+    TOURNAMENT_CODE_CODES("/tournament/public/{version}/code/{tournamentCode}", "v1", new TypeToken<List<String>>()
+    {}.getType()),
     TOURNAMENT_CODE("/tournament/public/{version}/code/{tournamentCode}", "v1", TournamentCode.class),
     TOURNAMENT_LOBBY("/tournament/public/{version}/lobby/events/by-code/{tournamentCode}", "v1", LobbyEventWrapper.class),
-    TOURNAMENT_MATCH("/api/lol/{region}/{version}/match/by-tournament/{tournamentCode}/ids","v2.2",new TypeToken<List<Long>>(){}.getType()),
+    TOURNAMENT_MATCH("/api/lol/{region}/{version}/match/by-tournament/{tournamentCode}/ids", "v2.2", new TypeToken<List<Long>>()
+    {}.getType()),
     TOURNAMENT_MATCH_BY_ID("/api/lol/{region}/{version}/match/for-tournament/{matchId}", "v2.2", MatchDetail.class),
 
     CHAMPIONMASTERY_BY_ID("/championmastery/location/{platformId}/player/{summonerId}/champion/{championId}", "", ChampionMastery.class),
-    CHAMPIONMASTERY("/championmastery/location/{platformId}/player/{summonerId}/champions", "", new TypeToken<List<ChampionMastery>>(){}.getType()),
+    CHAMPIONMASTERY("/championmastery/location/{platformId}/player/{summonerId}/champions", "", new TypeToken<List<ChampionMastery>>()
+    {}.getType()),
     CHAMPIONMASTERY_SCORE("/championmastery/location/{platformId}/player/{summonerId}/score", "", Integer.class),
-    CHAMPIONMASTERY_TOP("/championmastery/location/{platformId}/player/{summonerId}/topchampions", "", new TypeToken<List<ChampionMastery>>(){}.getType());
+    CHAMPIONMASTERY_TOP("/championmastery/location/{platformId}/player/{summonerId}/topchampions", "", new TypeToken<List<ChampionMastery>>()
+    {}.getType());
 
     private String value;
     private String version;

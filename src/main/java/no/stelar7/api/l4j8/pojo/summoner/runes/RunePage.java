@@ -3,9 +3,7 @@ package no.stelar7.api.l4j8.pojo.summoner.runes;
 import java.util.Collections;
 import java.util.List;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class RunePage implements APIObject
+public class RunePage
 {
 
     private Boolean        current;

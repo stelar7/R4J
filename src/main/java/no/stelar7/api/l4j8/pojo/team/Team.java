@@ -5,9 +5,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class Team implements APIObject
+public class Team
 {
     private Long                      createDate;
     private String                    fullId;

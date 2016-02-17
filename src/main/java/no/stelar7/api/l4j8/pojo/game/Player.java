@@ -2,13 +2,12 @@ package no.stelar7.api.l4j8.pojo.game;
 
 import java.util.Optional;
 
-import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
-public class Player implements APIObject
+public class Player
 {
-    private Integer    championId;
+    private Integer championId;
     private Long    summonerId;
     private Integer teamId;
 

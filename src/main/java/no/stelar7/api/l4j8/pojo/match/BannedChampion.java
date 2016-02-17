@@ -78,6 +78,6 @@ public class BannedChampion
     @Override
     public String toString()
     {
-        return "BannedChampion [championId=" + championId + ", pickTurn=" + pickTurn + "]";
+        return "BannedChampion [championId=" + this.championId + ", pickTurn=" + this.pickTurn + "]";
     }
 }

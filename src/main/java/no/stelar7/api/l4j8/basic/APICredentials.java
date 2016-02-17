@@ -12,13 +12,18 @@ public class APICredentials
      *
      * @param api
      *            the api key
-     * @param tournament
-     *            the tournament key
      */
-    public APICredentials(String api, String tournament)
+    public APICredentials(final APIType type, final String key)
     {
-        API_KEY = api;
-        TOURNAMENT_KEY = tournament;
+        switch (type)
+        {
+            case NORMAL:
+                this.API_KEY = key;
+                break;
+            case TOURNAMENT:
+                this.TOURNAMENT_KEY = key;
+                break;
+        }
     }
 
     /**
@@ -26,18 +31,13 @@ public class APICredentials
      *
      * @param api
      *            the api key
+     * @param tournament
+     *            the tournament key
      */
-    public APICredentials(APIType type, String key)
+    public APICredentials(final String api, final String tournament)
     {
-        switch (type)
-        {
-            case NORMAL:
-                API_KEY = key;
-                break;
-            case TOURNAMENT:
-                TOURNAMENT_KEY = key;
-                break;
-        }
+        this.API_KEY = api;
+        this.TOURNAMENT_KEY = tournament;
     }
 
     /**
@@ -47,11 +47,11 @@ public class APICredentials
      */
     public String getAPI()
     {
-        if (API_KEY == null)
+        if (this.API_KEY == null)
         {
             throw new RuntimeException("API key not set!");
         }
-        return API_KEY;
+        return this.API_KEY;
     }
 
     /**
@@ -61,11 +61,11 @@ public class APICredentials
      */
     public String getTournament()
     {
-        if (TOURNAMENT_KEY == null)
+        if (this.TOURNAMENT_KEY == null)
         {
             throw new RuntimeException("TOURNAMENT key not set!");
         }
-        return TOURNAMENT_KEY;
+        return this.TOURNAMENT_KEY;
     }
 
 }

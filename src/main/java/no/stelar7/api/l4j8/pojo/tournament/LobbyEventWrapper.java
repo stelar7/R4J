@@ -6,15 +6,38 @@ public class LobbyEventWrapper
 {
     List<LobbyEvent> eventList;
 
-    public List<LobbyEvent> getEventList()
+    @Override
+    public boolean equals(final Object obj)
     {
-        return eventList;
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final LobbyEventWrapper other = (LobbyEventWrapper) obj;
+        if (this.eventList == null)
+        {
+            if (other.eventList != null)
+            {
+                return false;
+            }
+        } else if (!this.eventList.equals(other.eventList))
+        {
+            return false;
+        }
+        return true;
     }
 
-    @Override
-    public String toString()
+    public List<LobbyEvent> getEventList()
     {
-        return "LobbyEventWrapper [eventList=" + eventList + "]";
+        return this.eventList;
     }
 
     @Override
@@ -22,26 +45,13 @@ public class LobbyEventWrapper
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((eventList == null) ? 0 : eventList.hashCode());
+        result = (prime * result) + ((this.eventList == null) ? 0 : this.eventList.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public String toString()
     {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        LobbyEventWrapper other = (LobbyEventWrapper) obj;
-        if (eventList == null)
-        {
-            if (other.eventList != null)
-                return false;
-        } else if (!eventList.equals(other.eventList))
-            return false;
-        return true;
+        return "LobbyEventWrapper [eventList=" + this.eventList + "]";
     }
 }

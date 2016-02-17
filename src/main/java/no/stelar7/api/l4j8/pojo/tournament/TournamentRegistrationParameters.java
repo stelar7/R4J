@@ -5,37 +5,66 @@ public class TournamentRegistrationParameters
     String name;
     Long   providerId;
 
-    public String getName()
+    public TournamentRegistrationParameters(final Long providerId)
     {
-        return name;
+        super();
+        this.providerId = providerId;
     }
 
-    public Long getProviderId()
-    {
-        return providerId;
-    }
-
-    public TournamentRegistrationParameters(String name, long providerId2)
+    public TournamentRegistrationParameters(final String name, final long providerId2)
     {
         super();
         this.name = name;
         this.providerId = providerId2;
     }
 
-    public TournamentRegistrationParameters(Long providerId)
+    @Override
+    public boolean equals(final Object obj)
     {
-        super();
-        this.providerId = providerId;
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final TournamentRegistrationParameters other = (TournamentRegistrationParameters) obj;
+        if (this.name == null)
+        {
+            if (other.name != null)
+            {
+                return false;
+            }
+        } else if (!this.name.equals(other.name))
+        {
+            return false;
+        }
+        if (this.providerId == null)
+        {
+            if (other.providerId != null)
+            {
+                return false;
+            }
+        } else if (!this.providerId.equals(other.providerId))
+        {
+            return false;
+        }
+        return true;
     }
 
-    public void setName(String name)
+    public String getName()
     {
-        this.name = name;
+        return this.name;
     }
 
-    public void setProviderId(Long providerId)
+    public Long getProviderId()
     {
-        this.providerId = providerId;
+        return this.providerId;
     }
 
     @Override
@@ -43,39 +72,24 @@ public class TournamentRegistrationParameters
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((providerId == null) ? 0 : providerId.hashCode());
+        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
+        result = (prime * result) + ((this.providerId == null) ? 0 : this.providerId.hashCode());
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj)
+    public void setName(final String name)
     {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TournamentRegistrationParameters other = (TournamentRegistrationParameters) obj;
-        if (name == null)
-        {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (providerId == null)
-        {
-            if (other.providerId != null)
-                return false;
-        } else if (!providerId.equals(other.providerId))
-            return false;
-        return true;
+        this.name = name;
+    }
+
+    public void setProviderId(final Long providerId)
+    {
+        this.providerId = providerId;
     }
 
     @Override
     public String toString()
     {
-        return "TournamentRegistrationParameters [name=" + name + ", providerId=" + providerId + "]";
+        return "TournamentRegistrationParameters [name=" + this.name + ", providerId=" + this.providerId + "]";
     }
 }

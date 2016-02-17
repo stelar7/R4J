@@ -11,27 +11,7 @@ public class TournamentCodeUpdateParameters
     TournamentPickType      pickType;
     TournamentSpectatorType spectatorType;
 
-    public String getAllowedParticipants()
-    {
-        return allowedParticipants;
-    }
-
-    public TournamentMapType getMapType()
-    {
-        return mapType;
-    }
-
-    public TournamentPickType getPickType()
-    {
-        return pickType;
-    }
-
-    public TournamentSpectatorType getSpectatorType()
-    {
-        return spectatorType;
-    }
-
-    public TournamentCodeUpdateParameters(String string, TournamentMapType summonersRift, TournamentPickType tournamentDraft, TournamentSpectatorType all)
+    public TournamentCodeUpdateParameters(final String string, final TournamentMapType summonersRift, final TournamentPickType tournamentDraft, final TournamentSpectatorType all)
     {
         super();
         this.allowedParticipants = string;
@@ -41,29 +21,82 @@ public class TournamentCodeUpdateParameters
     }
 
     @Override
-    public String toString()
+    public boolean equals(final Object obj)
     {
-        return "TournamentCodeUpdateParameters [allowedParticipants=" + allowedParticipants + ", mapType=" + mapType + ", pickType=" + pickType + ", spectatorType=" + spectatorType + "]";
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final TournamentCodeUpdateParameters other = (TournamentCodeUpdateParameters) obj;
+        if (this.allowedParticipants == null)
+        {
+            if (other.allowedParticipants != null)
+            {
+                return false;
+            }
+        } else if (!this.allowedParticipants.equals(other.allowedParticipants))
+        {
+            return false;
+        }
+        if (this.mapType == null)
+        {
+            if (other.mapType != null)
+            {
+                return false;
+            }
+        } else if (!this.mapType.equals(other.mapType))
+        {
+            return false;
+        }
+        if (this.pickType == null)
+        {
+            if (other.pickType != null)
+            {
+                return false;
+            }
+        } else if (!this.pickType.equals(other.pickType))
+        {
+            return false;
+        }
+        if (this.spectatorType == null)
+        {
+            if (other.spectatorType != null)
+            {
+                return false;
+            }
+        } else if (!this.spectatorType.equals(other.spectatorType))
+        {
+            return false;
+        }
+        return true;
     }
 
-    public void setAllowedParticipants(String allowedParticipants)
+    public String getAllowedParticipants()
     {
-        this.allowedParticipants = allowedParticipants;
+        return this.allowedParticipants;
     }
 
-    public void setMapType(TournamentMapType mapType)
+    public TournamentMapType getMapType()
     {
-        this.mapType = mapType;
+        return this.mapType;
     }
 
-    public void setPickType(TournamentPickType pickType)
+    public TournamentPickType getPickType()
     {
-        this.pickType = pickType;
+        return this.pickType;
     }
 
-    public void setSpectatorType(TournamentSpectatorType spectatorType)
+    public TournamentSpectatorType getSpectatorType()
     {
-        this.spectatorType = spectatorType;
+        return this.spectatorType;
     }
 
     @Override
@@ -71,47 +104,36 @@ public class TournamentCodeUpdateParameters
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((allowedParticipants == null) ? 0 : allowedParticipants.hashCode());
-        result = prime * result + ((mapType == null) ? 0 : mapType.hashCode());
-        result = prime * result + ((pickType == null) ? 0 : pickType.hashCode());
-        result = prime * result + ((spectatorType == null) ? 0 : spectatorType.hashCode());
+        result = (prime * result) + ((this.allowedParticipants == null) ? 0 : this.allowedParticipants.hashCode());
+        result = (prime * result) + ((this.mapType == null) ? 0 : this.mapType.hashCode());
+        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
+        result = (prime * result) + ((this.spectatorType == null) ? 0 : this.spectatorType.hashCode());
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj)
+    public void setAllowedParticipants(final String allowedParticipants)
     {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TournamentCodeUpdateParameters other = (TournamentCodeUpdateParameters) obj;
-        if (allowedParticipants == null)
-        {
-            if (other.allowedParticipants != null)
-                return false;
-        } else if (!allowedParticipants.equals(other.allowedParticipants))
-            return false;
-        if (mapType == null)
-        {
-            if (other.mapType != null)
-                return false;
-        } else if (!mapType.equals(other.mapType))
-            return false;
-        if (pickType == null)
-        {
-            if (other.pickType != null)
-                return false;
-        } else if (!pickType.equals(other.pickType))
-            return false;
-        if (spectatorType == null)
-        {
-            if (other.spectatorType != null)
-                return false;
-        } else if (!spectatorType.equals(other.spectatorType))
-            return false;
-        return true;
+        this.allowedParticipants = allowedParticipants;
+    }
+
+    public void setMapType(final TournamentMapType mapType)
+    {
+        this.mapType = mapType;
+    }
+
+    public void setPickType(final TournamentPickType pickType)
+    {
+        this.pickType = pickType;
+    }
+
+    public void setSpectatorType(final TournamentSpectatorType spectatorType)
+    {
+        this.spectatorType = spectatorType;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "TournamentCodeUpdateParameters [allowedParticipants=" + this.allowedParticipants + ", mapType=" + this.mapType + ", pickType=" + this.pickType + ", spectatorType=" + this.spectatorType + "]";
     }
 }

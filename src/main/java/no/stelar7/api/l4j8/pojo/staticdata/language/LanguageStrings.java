@@ -2,9 +2,7 @@ package no.stelar7.api.l4j8.pojo.staticdata.language;
 
 import java.util.Map;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class LanguageStrings implements APIObject
+public class LanguageStrings
 {
     Map<String, String> data;
     String              type;

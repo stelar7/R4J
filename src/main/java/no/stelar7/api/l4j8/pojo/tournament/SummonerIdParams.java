@@ -7,28 +7,57 @@ public class SummonerIdParams
 {
     Set<Number> participants;
 
-    public SummonerIdParams(Set<Long> set)
-    {
-        this.participants = new HashSet<Number>();
-        for (Number id : set)
-        {
-            participants.add(id);
-        }
-    }
-
     public SummonerIdParams()
     {
         this.participants = new HashSet<>();
     }
 
-    public Set<Number> getParticipants()
+    public SummonerIdParams(final Set<Long> set)
     {
-        return participants;
+        this.participants = new HashSet<Number>();
+        for (final Number id : set)
+        {
+            this.participants.add(id);
+        }
     }
 
-    public void addParticipant(Number id)
+    public void addParticipant(final Number id)
     {
-        participants.add(id);
+        this.participants.add(id);
+    }
+
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final SummonerIdParams other = (SummonerIdParams) obj;
+        if (this.participants == null)
+        {
+            if (other.participants != null)
+            {
+                return false;
+            }
+        } else if (!this.participants.equals(other.participants))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public Set<Number> getParticipants()
+    {
+        return this.participants;
     }
 
     @Override
@@ -36,26 +65,7 @@ public class SummonerIdParams
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((participants == null) ? 0 : participants.hashCode());
+        result = (prime * result) + ((this.participants == null) ? 0 : this.participants.hashCode());
         return result;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        SummonerIdParams other = (SummonerIdParams) obj;
-        if (participants == null)
-        {
-            if (other.participants != null)
-                return false;
-        } else if (!participants.equals(other.participants))
-            return false;
-        return true;
     }
 }

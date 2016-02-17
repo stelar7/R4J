@@ -17,86 +17,111 @@ public class ChampionMastery
     Long    playerId;
 
     @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((championId == null) ? 0 : championId.hashCode());
-        result = prime * result + ((championLevel == null) ? 0 : championLevel.hashCode());
-        result = prime * result + ((championPoints == null) ? 0 : championPoints.hashCode());
-        result = prime * result + ((championPointsSinceLastLevel == null) ? 0 : championPointsSinceLastLevel.hashCode());
-        result = prime * result + ((championPointsUntilNextLevel == null) ? 0 : championPointsUntilNextLevel.hashCode());
-        result = prime * result + ((chestGranted == null) ? 0 : chestGranted.hashCode());
-        result = prime * result + ((highestGrade == null) ? 0 : highestGrade.hashCode());
-        result = prime * result + ((lastPlayTime == null) ? 0 : lastPlayTime.hashCode());
-        result = prime * result + ((playerId == null) ? 0 : playerId.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (this == obj)
+        {
             return true;
+        }
         if (obj == null)
+        {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass())
+        {
             return false;
-        ChampionMastery other = (ChampionMastery) obj;
-        if (championId == null)
+        }
+        final ChampionMastery other = (ChampionMastery) obj;
+        if (this.championId == null)
         {
             if (other.championId != null)
+            {
                 return false;
-        } else if (!championId.equals(other.championId))
+            }
+        } else if (!this.championId.equals(other.championId))
+        {
             return false;
-        if (championLevel == null)
+        }
+        if (this.championLevel == null)
         {
             if (other.championLevel != null)
+            {
                 return false;
-        } else if (!championLevel.equals(other.championLevel))
+            }
+        } else if (!this.championLevel.equals(other.championLevel))
+        {
             return false;
-        if (championPoints == null)
+        }
+        if (this.championPoints == null)
         {
             if (other.championPoints != null)
+            {
                 return false;
-        } else if (!championPoints.equals(other.championPoints))
+            }
+        } else if (!this.championPoints.equals(other.championPoints))
+        {
             return false;
-        if (championPointsSinceLastLevel == null)
+        }
+        if (this.championPointsSinceLastLevel == null)
         {
             if (other.championPointsSinceLastLevel != null)
+            {
                 return false;
-        } else if (!championPointsSinceLastLevel.equals(other.championPointsSinceLastLevel))
+            }
+        } else if (!this.championPointsSinceLastLevel.equals(other.championPointsSinceLastLevel))
+        {
             return false;
-        if (championPointsUntilNextLevel == null)
+        }
+        if (this.championPointsUntilNextLevel == null)
         {
             if (other.championPointsUntilNextLevel != null)
+            {
                 return false;
-        } else if (!championPointsUntilNextLevel.equals(other.championPointsUntilNextLevel))
+            }
+        } else if (!this.championPointsUntilNextLevel.equals(other.championPointsUntilNextLevel))
+        {
             return false;
-        if (chestGranted == null)
+        }
+        if (this.chestGranted == null)
         {
             if (other.chestGranted != null)
+            {
                 return false;
-        } else if (!chestGranted.equals(other.chestGranted))
+            }
+        } else if (!this.chestGranted.equals(other.chestGranted))
+        {
             return false;
-        if (highestGrade == null)
+        }
+        if (this.highestGrade == null)
         {
             if (other.highestGrade != null)
+            {
                 return false;
-        } else if (!highestGrade.equals(other.highestGrade))
+            }
+        } else if (!this.highestGrade.equals(other.highestGrade))
+        {
             return false;
-        if (lastPlayTime == null)
+        }
+        if (this.lastPlayTime == null)
         {
             if (other.lastPlayTime != null)
+            {
                 return false;
-        } else if (!lastPlayTime.equals(other.lastPlayTime))
+            }
+        } else if (!this.lastPlayTime.equals(other.lastPlayTime))
+        {
             return false;
-        if (playerId == null)
+        }
+        if (this.playerId == null)
         {
             if (other.playerId != null)
+            {
                 return false;
-        } else if (!playerId.equals(other.playerId))
+            }
+        } else if (!this.playerId.equals(other.playerId))
+        {
             return false;
+        }
         return true;
     }
 
@@ -107,7 +132,7 @@ public class ChampionMastery
      */
     public Long getChampionId()
     {
-        return championId;
+        return this.championId;
     }
 
     /**
@@ -117,7 +142,7 @@ public class ChampionMastery
      */
     public Integer getChampionLevel()
     {
-        return championLevel;
+        return this.championLevel;
     }
 
     /**
@@ -127,7 +152,7 @@ public class ChampionMastery
      */
     public Integer getChampionPoints()
     {
-        return championPoints;
+        return this.championPoints;
     }
 
     /**
@@ -137,7 +162,7 @@ public class ChampionMastery
      */
     public Long getChampionPointsSinceLastLevel()
     {
-        return championPointsSinceLastLevel;
+        return this.championPointsSinceLastLevel;
     }
 
     /**
@@ -147,7 +172,7 @@ public class ChampionMastery
      */
     public Long getChampionPointsUntilNextLevel()
     {
-        return championPointsUntilNextLevel;
+        return this.championPointsUntilNextLevel;
     }
 
     /**
@@ -157,7 +182,7 @@ public class ChampionMastery
      */
     public Boolean getChestGranted()
     {
-        return chestGranted;
+        return this.chestGranted;
     }
 
     /**
@@ -167,7 +192,7 @@ public class ChampionMastery
      */
     public String getHighestGrade()
     {
-        return highestGrade;
+        return this.highestGrade;
     }
 
     /**
@@ -177,7 +202,7 @@ public class ChampionMastery
      */
     public Long getLastPlayTime()
     {
-        return lastPlayTime;
+        return this.lastPlayTime;
     }
 
     /**
@@ -197,18 +222,35 @@ public class ChampionMastery
      */
     public Long getPlayerId()
     {
-        return playerId;
+        return this.playerId;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
+        result = (prime * result) + ((this.championLevel == null) ? 0 : this.championLevel.hashCode());
+        result = (prime * result) + ((this.championPoints == null) ? 0 : this.championPoints.hashCode());
+        result = (prime * result) + ((this.championPointsSinceLastLevel == null) ? 0 : this.championPointsSinceLastLevel.hashCode());
+        result = (prime * result) + ((this.championPointsUntilNextLevel == null) ? 0 : this.championPointsUntilNextLevel.hashCode());
+        result = (prime * result) + ((this.chestGranted == null) ? 0 : this.chestGranted.hashCode());
+        result = (prime * result) + ((this.highestGrade == null) ? 0 : this.highestGrade.hashCode());
+        result = (prime * result) + ((this.lastPlayTime == null) ? 0 : this.lastPlayTime.hashCode());
+        result = (prime * result) + ((this.playerId == null) ? 0 : this.playerId.hashCode());
+        return result;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-        return "ChampionMastery [championId=" + championId + ", championLevel=" + championLevel + ", championPoints=" + championPoints + ", championPointsSinceLastLevel=" + championPointsSinceLastLevel + ", championPointsUntilNextLevel=" + championPointsUntilNextLevel + ", chestGranted=" + chestGranted + ", highestGrade=" + highestGrade + ", lastPlayTime=" + lastPlayTime + ", playerId=" + playerId + "]";
+        return "ChampionMastery [championId=" + this.championId + ", championLevel=" + this.championLevel + ", championPoints=" + this.championPoints + ", championPointsSinceLastLevel=" + this.championPointsSinceLastLevel + ", championPointsUntilNextLevel=" + this.championPointsUntilNextLevel + ", chestGranted=" + this.chestGranted + ", highestGrade=" + this.highestGrade + ", lastPlayTime=" + this.lastPlayTime + ", playerId=" + this.playerId + "]";
     }
 
 }

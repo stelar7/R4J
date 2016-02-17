@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.GameMode;
 import no.stelar7.api.l4j8.basic.constants.GameQueueType;
 import no.stelar7.api.l4j8.basic.constants.GameType;
@@ -16,16 +15,16 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 import no.stelar7.api.l4j8.pojo.shared.Observer;
 
-public class FeaturedGameInfo implements APIObject
+public class FeaturedGameInfo
 {
     private List<BannedChampion>          bannedChampions;
     private Long                          gameId;
     private Long                          gameLength;
     private String                        gameMode;
-    private Integer                          gameQueueConfigId;
+    private Integer                       gameQueueConfigId;
     private Long                          gameStartTime;
     private String                        gameType;
-    private Integer                          mapId;
+    private Integer                       mapId;
     private Observer                      observers;
     private List<FeaturedGameParticipant> participants;
 

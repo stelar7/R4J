@@ -16,65 +16,188 @@ public class TournamentCallback
     String                           gameMode;
     String                           region;
 
-    public Long getStartTime()
+    @Override
+    public boolean equals(final Object obj)
     {
-        return startTime;
-    }
-
-    public List<TournamentCallbackSummoner> getWinningTeam()
-    {
-        return winningTeam;
-    }
-
-    public List<TournamentCallbackSummoner> getLosingTeam()
-    {
-        return losingTeam;
-    }
-
-    public String getShortCode()
-    {
-        return shortCode;
-    }
-
-    public String getMetaData()
-    {
-        return metaData;
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final TournamentCallback other = (TournamentCallback) obj;
+        if (this.gameId == null)
+        {
+            if (other.gameId != null)
+            {
+                return false;
+            }
+        } else if (!this.gameId.equals(other.gameId))
+        {
+            return false;
+        }
+        if (this.gameMap == null)
+        {
+            if (other.gameMap != null)
+            {
+                return false;
+            }
+        } else if (!this.gameMap.equals(other.gameMap))
+        {
+            return false;
+        }
+        if (this.gameMode == null)
+        {
+            if (other.gameMode != null)
+            {
+                return false;
+            }
+        } else if (!this.gameMode.equals(other.gameMode))
+        {
+            return false;
+        }
+        if (this.gameName == null)
+        {
+            if (other.gameName != null)
+            {
+                return false;
+            }
+        } else if (!this.gameName.equals(other.gameName))
+        {
+            return false;
+        }
+        if (this.gameType == null)
+        {
+            if (other.gameType != null)
+            {
+                return false;
+            }
+        } else if (!this.gameType.equals(other.gameType))
+        {
+            return false;
+        }
+        if (this.losingTeam == null)
+        {
+            if (other.losingTeam != null)
+            {
+                return false;
+            }
+        } else if (!this.losingTeam.equals(other.losingTeam))
+        {
+            return false;
+        }
+        if (this.metaData == null)
+        {
+            if (other.metaData != null)
+            {
+                return false;
+            }
+        } else if (!this.metaData.equals(other.metaData))
+        {
+            return false;
+        }
+        if (this.region == null)
+        {
+            if (other.region != null)
+            {
+                return false;
+            }
+        } else if (!this.region.equals(other.region))
+        {
+            return false;
+        }
+        if (this.shortCode == null)
+        {
+            if (other.shortCode != null)
+            {
+                return false;
+            }
+        } else if (!this.shortCode.equals(other.shortCode))
+        {
+            return false;
+        }
+        if (this.startTime == null)
+        {
+            if (other.startTime != null)
+            {
+                return false;
+            }
+        } else if (!this.startTime.equals(other.startTime))
+        {
+            return false;
+        }
+        if (this.winningTeam == null)
+        {
+            if (other.winningTeam != null)
+            {
+                return false;
+            }
+        } else if (!this.winningTeam.equals(other.winningTeam))
+        {
+            return false;
+        }
+        return true;
     }
 
     public Long getGameId()
     {
-        return gameId;
-    }
-
-    public String getGameName()
-    {
-        return gameName;
-    }
-
-    public String getGameType()
-    {
-        return gameType;
+        return this.gameId;
     }
 
     public Integer getGameMap()
     {
-        return gameMap;
+        return this.gameMap;
     }
 
     public String getGameMode()
     {
-        return gameMode;
+        return this.gameMode;
+    }
+
+    public String getGameName()
+    {
+        return this.gameName;
+    }
+
+    public String getGameType()
+    {
+        return this.gameType;
+    }
+
+    public List<TournamentCallbackSummoner> getLosingTeam()
+    {
+        return this.losingTeam;
+    }
+
+    public String getMetaData()
+    {
+        return this.metaData;
     }
 
     public String getRegion()
     {
-        return region;
+        return this.region;
     }
 
-    @Override
-    public String toString()
+    public String getShortCode()
     {
-        return "TournamentCallback [startTime=" + startTime + ", winningTeam=" + winningTeam + ", losingTeam=" + losingTeam + ", shortCode=" + shortCode + ", metaData=" + metaData + ", gameId=" + gameId + ", gameName=" + gameName + ", gameType=" + gameType + ", gameMap=" + gameMap + ", gameMode=" + gameMode + ", region=" + region + "]";
+        return this.shortCode;
+    }
+
+    public Long getStartTime()
+    {
+        return this.startTime;
+    }
+
+    public List<TournamentCallbackSummoner> getWinningTeam()
+    {
+        return this.winningTeam;
     }
 
     @Override
@@ -82,96 +205,23 @@ public class TournamentCallback
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((gameId == null) ? 0 : gameId.hashCode());
-        result = prime * result + ((gameMap == null) ? 0 : gameMap.hashCode());
-        result = prime * result + ((gameMode == null) ? 0 : gameMode.hashCode());
-        result = prime * result + ((gameName == null) ? 0 : gameName.hashCode());
-        result = prime * result + ((gameType == null) ? 0 : gameType.hashCode());
-        result = prime * result + ((losingTeam == null) ? 0 : losingTeam.hashCode());
-        result = prime * result + ((metaData == null) ? 0 : metaData.hashCode());
-        result = prime * result + ((region == null) ? 0 : region.hashCode());
-        result = prime * result + ((shortCode == null) ? 0 : shortCode.hashCode());
-        result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
-        result = prime * result + ((winningTeam == null) ? 0 : winningTeam.hashCode());
+        result = (prime * result) + ((this.gameId == null) ? 0 : this.gameId.hashCode());
+        result = (prime * result) + ((this.gameMap == null) ? 0 : this.gameMap.hashCode());
+        result = (prime * result) + ((this.gameMode == null) ? 0 : this.gameMode.hashCode());
+        result = (prime * result) + ((this.gameName == null) ? 0 : this.gameName.hashCode());
+        result = (prime * result) + ((this.gameType == null) ? 0 : this.gameType.hashCode());
+        result = (prime * result) + ((this.losingTeam == null) ? 0 : this.losingTeam.hashCode());
+        result = (prime * result) + ((this.metaData == null) ? 0 : this.metaData.hashCode());
+        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
+        result = (prime * result) + ((this.shortCode == null) ? 0 : this.shortCode.hashCode());
+        result = (prime * result) + ((this.startTime == null) ? 0 : this.startTime.hashCode());
+        result = (prime * result) + ((this.winningTeam == null) ? 0 : this.winningTeam.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public String toString()
     {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TournamentCallback other = (TournamentCallback) obj;
-        if (gameId == null)
-        {
-            if (other.gameId != null)
-                return false;
-        } else if (!gameId.equals(other.gameId))
-            return false;
-        if (gameMap == null)
-        {
-            if (other.gameMap != null)
-                return false;
-        } else if (!gameMap.equals(other.gameMap))
-            return false;
-        if (gameMode == null)
-        {
-            if (other.gameMode != null)
-                return false;
-        } else if (!gameMode.equals(other.gameMode))
-            return false;
-        if (gameName == null)
-        {
-            if (other.gameName != null)
-                return false;
-        } else if (!gameName.equals(other.gameName))
-            return false;
-        if (gameType == null)
-        {
-            if (other.gameType != null)
-                return false;
-        } else if (!gameType.equals(other.gameType))
-            return false;
-        if (losingTeam == null)
-        {
-            if (other.losingTeam != null)
-                return false;
-        } else if (!losingTeam.equals(other.losingTeam))
-            return false;
-        if (metaData == null)
-        {
-            if (other.metaData != null)
-                return false;
-        } else if (!metaData.equals(other.metaData))
-            return false;
-        if (region == null)
-        {
-            if (other.region != null)
-                return false;
-        } else if (!region.equals(other.region))
-            return false;
-        if (shortCode == null)
-        {
-            if (other.shortCode != null)
-                return false;
-        } else if (!shortCode.equals(other.shortCode))
-            return false;
-        if (startTime == null)
-        {
-            if (other.startTime != null)
-                return false;
-        } else if (!startTime.equals(other.startTime))
-            return false;
-        if (winningTeam == null)
-        {
-            if (other.winningTeam != null)
-                return false;
-        } else if (!winningTeam.equals(other.winningTeam))
-            return false;
-        return true;
+        return "TournamentCallback [startTime=" + this.startTime + ", winningTeam=" + this.winningTeam + ", losingTeam=" + this.losingTeam + ", shortCode=" + this.shortCode + ", metaData=" + this.metaData + ", gameId=" + this.gameId + ", gameName=" + this.gameName + ", gameType=" + this.gameType + ", gameMap=" + this.gameMap + ", gameMode=" + this.gameMode + ", region=" + this.region + "]";
     }
 }

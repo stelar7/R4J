@@ -5,9 +5,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class RankedStats implements APIObject
+public class RankedStats
 {
     private List<ChampionStats> champions;
     private Long                modifyDate;

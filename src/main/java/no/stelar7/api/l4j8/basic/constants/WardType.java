@@ -12,7 +12,6 @@ public enum WardType
     VISION_WARD,
     YELLOW_TRINKET,
     YELLOW_TRINKET_UPGRADE;
-    
 
     /**
      * Returns an WardType from the provided code

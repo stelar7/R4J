@@ -6,19 +6,52 @@ public class TournamentCallbackSummoner
     Long   summonerId;
 
     @Override
-    public String toString()
+    public boolean equals(final Object obj)
     {
-        return "TournamentCallbackSummoner [summonerName=" + summonerName + ", summonerId=" + summonerId + "]";
-    }
-
-    public String getSummonerName()
-    {
-        return summonerName;
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final TournamentCallbackSummoner other = (TournamentCallbackSummoner) obj;
+        if (this.summonerId == null)
+        {
+            if (other.summonerId != null)
+            {
+                return false;
+            }
+        } else if (!this.summonerId.equals(other.summonerId))
+        {
+            return false;
+        }
+        if (this.summonerName == null)
+        {
+            if (other.summonerName != null)
+            {
+                return false;
+            }
+        } else if (!this.summonerName.equals(other.summonerName))
+        {
+            return false;
+        }
+        return true;
     }
 
     public Long getSummonerId()
     {
-        return summonerId;
+        return this.summonerId;
+    }
+
+    public String getSummonerName()
+    {
+        return this.summonerName;
     }
 
     @Override
@@ -26,33 +59,14 @@ public class TournamentCallbackSummoner
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((summonerId == null) ? 0 : summonerId.hashCode());
-        result = prime * result + ((summonerName == null) ? 0 : summonerName.hashCode());
+        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
+        result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public String toString()
     {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TournamentCallbackSummoner other = (TournamentCallbackSummoner) obj;
-        if (summonerId == null)
-        {
-            if (other.summonerId != null)
-                return false;
-        } else if (!summonerId.equals(other.summonerId))
-            return false;
-        if (summonerName == null)
-        {
-            if (other.summonerName != null)
-                return false;
-        } else if (!summonerName.equals(other.summonerName))
-            return false;
-        return true;
+        return "TournamentCallbackSummoner [summonerName=" + this.summonerName + ", summonerId=" + this.summonerId + "]";
     }
 }

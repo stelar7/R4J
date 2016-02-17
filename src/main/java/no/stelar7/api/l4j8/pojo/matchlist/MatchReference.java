@@ -5,7 +5,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
-import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Lane;
 import no.stelar7.api.l4j8.basic.constants.RankedQueue;
@@ -14,17 +13,17 @@ import no.stelar7.api.l4j8.basic.constants.Season;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.api.Server;
 
-public class MatchReference implements APIObject
+public class MatchReference
 {
-    private Integer   champion;
-    private Long   matchId;
-    private Long   timestamp;
-    private String lane;
-    private String platformId;
-    private String queue;
-    private String region;
-    private String role;
-    private String season;
+    private Integer champion;
+    private Long    matchId;
+    private Long    timestamp;
+    private String  lane;
+    private String  platformId;
+    private String  queue;
+    private String  region;
+    private String  role;
+    private String  season;
 
     @Override
     public boolean equals(final Object obj)

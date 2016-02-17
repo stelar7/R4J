@@ -6,7 +6,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.GameMode;
 import no.stelar7.api.l4j8.basic.constants.GameQueueType;
 import no.stelar7.api.l4j8.basic.constants.GameType;
@@ -15,7 +14,7 @@ import no.stelar7.api.l4j8.basic.constants.Season;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.api.Server;
 
-public class MatchDetail implements APIObject
+public class MatchDetail
 {
     private Integer                   mapId;
     private Long                      matchCreation;
@@ -458,6 +457,6 @@ public class MatchDetail implements APIObject
     @Override
     public String toString()
     {
-        return "MatchDetail [mapId=" + mapId + ", matchCreation=" + matchCreation + ", matchDuration=" + matchDuration + ", matchId=" + matchId + ", matchMode=" + matchMode + ", matchType=" + matchType + ", matchVersion=" + matchVersion + ", participantIdentities=" + participantIdentities + ", participants=" + participants + ", platformId=" + platformId + ", queueType=" + queueType + ", region=" + region + ", season=" + season + ", teams=" + teams + ", timeline=" + timeline + "]";
+        return "MatchDetail [mapId=" + this.mapId + ", matchCreation=" + this.matchCreation + ", matchDuration=" + this.matchDuration + ", matchId=" + this.matchId + ", matchMode=" + this.matchMode + ", matchType=" + this.matchType + ", matchVersion=" + this.matchVersion + ", participantIdentities=" + this.participantIdentities + ", participants=" + this.participants + ", platformId=" + this.platformId + ", queueType=" + this.queueType + ", region=" + this.region + ", season=" + this.season + ", teams=" + this.teams + ", timeline=" + this.timeline + "]";
     }
 }

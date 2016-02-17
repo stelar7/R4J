@@ -4,14 +4,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
-public class CurrentGameParticipant implements APIObject
+public class CurrentGameParticipant
 {
     private Boolean       bot;
-    private Integer          championId;
+    private Integer       championId;
     private List<Mastery> masteries;
     private Long          profileIconId;
     private List<Rune>    runes;

@@ -7,42 +7,59 @@ public class ProviderRegistrationParameters
     Server region;
     String url;
 
-    public Server getRegion()
-    {
-        return region;
-    }
-
-    public String getCallbackUrl()
-    {
-        return url;
-    }
-
-    public ProviderRegistrationParameters(Server region, String callbackUrl)
+    public ProviderRegistrationParameters(final Server region, final String callbackUrl)
     {
         super();
         this.region = region;
         this.url = callbackUrl;
     }
 
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final ProviderRegistrationParameters other = (ProviderRegistrationParameters) obj;
+        if (this.region != other.region)
+        {
+            return false;
+        }
+        if (this.url == null)
+        {
+            if (other.url != null)
+            {
+                return false;
+            }
+        } else if (!this.url.equals(other.url))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public String getCallbackUrl()
+    {
+        return this.url;
+    }
+
+    public Server getRegion()
+    {
+        return this.region;
+    }
+
     public String getUrl()
     {
-        return url;
-    }
-
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
-
-    public void setRegion(Server region)
-    {
-        this.region = region;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "ProviderRegistrationParameters [region=" + region + ", url=" + url + "]";
+        return this.url;
     }
 
     @Override
@@ -50,30 +67,25 @@ public class ProviderRegistrationParameters
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((region == null) ? 0 : region.hashCode());
-        result = prime * result + ((url == null) ? 0 : url.hashCode());
+        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
+        result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj)
+    public void setRegion(final Server region)
     {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ProviderRegistrationParameters other = (ProviderRegistrationParameters) obj;
-        if (region != other.region)
-            return false;
-        if (url == null)
-        {
-            if (other.url != null)
-                return false;
-        } else if (!url.equals(other.url))
-            return false;
-        return true;
+        this.region = region;
+    }
+
+    public void setUrl(final String url)
+    {
+        this.url = url;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ProviderRegistrationParameters [region=" + this.region + ", url=" + this.url + "]";
     }
 
 }

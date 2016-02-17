@@ -2,13 +2,12 @@ package no.stelar7.api.l4j8.pojo.shared;
 
 import java.util.Optional;
 
-import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.Team;
 
-public class BannedChampion implements APIObject
+public class BannedChampion
 {
-    private Integer    championId;
+    private Integer championId;
     private Integer pickTurn;
     private Long    teamId;
 

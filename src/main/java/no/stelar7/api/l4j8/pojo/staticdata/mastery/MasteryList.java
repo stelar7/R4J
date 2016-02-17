@@ -2,9 +2,7 @@ package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
 import java.util.Map;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class MasteryList implements APIObject
+public class MasteryList
 {
     Map<String, Mastery> data;
     MasteryTree          tree;

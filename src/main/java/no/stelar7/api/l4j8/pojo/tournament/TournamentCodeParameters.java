@@ -16,42 +16,12 @@ public class TournamentCodeParameters
     TournamentSpectatorType spectatorType;
     Integer                 teamSize;
 
-    public SummonerIdParams getAllowedSummonerIds()
-    {
-        return allowedSummonerIds;
-    }
-
-    public TournamentMapType getMapType()
-    {
-        return mapType;
-    }
-
-    public String getMetadata()
-    {
-        return metadata;
-    }
-
-    public TournamentPickType getPickType()
-    {
-        return pickType;
-    }
-
-    public TournamentSpectatorType getSpectatorType()
-    {
-        return spectatorType;
-    }
-
-    public Integer getTeamSize()
-    {
-        return teamSize;
-    }
-
     public TournamentCodeParameters()
     {
 
     }
 
-    public TournamentCodeParameters(TournamentCodeUpdateParameters updateParams, String metadata, Integer teamSize)
+    public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final Integer teamSize)
     {
         this.allowedSummonerIds = new SummonerIdParams(Pattern.compile(",").splitAsStream(updateParams.allowedParticipants).map(Long::parseLong).collect(Collectors.toSet()));
         this.mapType = updateParams.mapType;
@@ -61,40 +31,113 @@ public class TournamentCodeParameters
         this.teamSize = teamSize;
     }
 
-    public void setAllowedSummonerIds(SummonerIdParams allowedSummonerIds)
-    {
-        this.allowedSummonerIds = allowedSummonerIds;
-    }
-
-    public void setMapType(TournamentMapType mapType)
-    {
-        this.mapType = mapType;
-    }
-
-    public void setMetadata(String metadata)
-    {
-        this.metadata = metadata;
-    }
-
-    public void setPickType(TournamentPickType pickType)
-    {
-        this.pickType = pickType;
-    }
-
-    public void setSpectatorType(TournamentSpectatorType spectatorType)
-    {
-        this.spectatorType = spectatorType;
-    }
-
-    public void setTeamSize(Integer teamSize)
-    {
-        this.teamSize = teamSize;
-    }
-
     @Override
-    public String toString()
+    public boolean equals(final Object obj)
     {
-        return "TournamentCodeParameters [allowedSummonerIds=" + allowedSummonerIds + ", mapType=" + mapType + ", metadata=" + metadata + ", pickType=" + pickType + ", spectatorType=" + spectatorType + ", teamSize=" + teamSize + "]";
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final TournamentCodeParameters other = (TournamentCodeParameters) obj;
+        if (this.allowedSummonerIds == null)
+        {
+            if (other.allowedSummonerIds != null)
+            {
+                return false;
+            }
+        } else if (!this.allowedSummonerIds.equals(other.allowedSummonerIds))
+        {
+            return false;
+        }
+        if (this.mapType == null)
+        {
+            if (other.mapType != null)
+            {
+                return false;
+            }
+        } else if (!this.mapType.equals(other.mapType))
+        {
+            return false;
+        }
+        if (this.metadata == null)
+        {
+            if (other.metadata != null)
+            {
+                return false;
+            }
+        } else if (!this.metadata.equals(other.metadata))
+        {
+            return false;
+        }
+        if (this.pickType == null)
+        {
+            if (other.pickType != null)
+            {
+                return false;
+            }
+        } else if (!this.pickType.equals(other.pickType))
+        {
+            return false;
+        }
+        if (this.spectatorType == null)
+        {
+            if (other.spectatorType != null)
+            {
+                return false;
+            }
+        } else if (!this.spectatorType.equals(other.spectatorType))
+        {
+            return false;
+        }
+        if (this.teamSize == null)
+        {
+            if (other.teamSize != null)
+            {
+                return false;
+            }
+        } else if (!this.teamSize.equals(other.teamSize))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public SummonerIdParams getAllowedSummonerIds()
+    {
+        return this.allowedSummonerIds;
+    }
+
+    public TournamentMapType getMapType()
+    {
+        return this.mapType;
+    }
+
+    public String getMetadata()
+    {
+        return this.metadata;
+    }
+
+    public TournamentPickType getPickType()
+    {
+        return this.pickType;
+    }
+
+    public TournamentSpectatorType getSpectatorType()
+    {
+        return this.spectatorType;
+    }
+
+    public Integer getTeamSize()
+    {
+        return this.teamSize;
     }
 
     @Override
@@ -102,62 +145,49 @@ public class TournamentCodeParameters
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((allowedSummonerIds == null) ? 0 : allowedSummonerIds.hashCode());
-        result = prime * result + ((mapType == null) ? 0 : mapType.hashCode());
-        result = prime * result + ((metadata == null) ? 0 : metadata.hashCode());
-        result = prime * result + ((pickType == null) ? 0 : pickType.hashCode());
-        result = prime * result + ((spectatorType == null) ? 0 : spectatorType.hashCode());
-        result = prime * result + ((teamSize == null) ? 0 : teamSize.hashCode());
+        result = (prime * result) + ((this.allowedSummonerIds == null) ? 0 : this.allowedSummonerIds.hashCode());
+        result = (prime * result) + ((this.mapType == null) ? 0 : this.mapType.hashCode());
+        result = (prime * result) + ((this.metadata == null) ? 0 : this.metadata.hashCode());
+        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
+        result = (prime * result) + ((this.spectatorType == null) ? 0 : this.spectatorType.hashCode());
+        result = (prime * result) + ((this.teamSize == null) ? 0 : this.teamSize.hashCode());
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj)
+    public void setAllowedSummonerIds(final SummonerIdParams allowedSummonerIds)
     {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TournamentCodeParameters other = (TournamentCodeParameters) obj;
-        if (allowedSummonerIds == null)
-        {
-            if (other.allowedSummonerIds != null)
-                return false;
-        } else if (!allowedSummonerIds.equals(other.allowedSummonerIds))
-            return false;
-        if (mapType == null)
-        {
-            if (other.mapType != null)
-                return false;
-        } else if (!mapType.equals(other.mapType))
-            return false;
-        if (metadata == null)
-        {
-            if (other.metadata != null)
-                return false;
-        } else if (!metadata.equals(other.metadata))
-            return false;
-        if (pickType == null)
-        {
-            if (other.pickType != null)
-                return false;
-        } else if (!pickType.equals(other.pickType))
-            return false;
-        if (spectatorType == null)
-        {
-            if (other.spectatorType != null)
-                return false;
-        } else if (!spectatorType.equals(other.spectatorType))
-            return false;
-        if (teamSize == null)
-        {
-            if (other.teamSize != null)
-                return false;
-        } else if (!teamSize.equals(other.teamSize))
-            return false;
-        return true;
+        this.allowedSummonerIds = allowedSummonerIds;
+    }
+
+    public void setMapType(final TournamentMapType mapType)
+    {
+        this.mapType = mapType;
+    }
+
+    public void setMetadata(final String metadata)
+    {
+        this.metadata = metadata;
+    }
+
+    public void setPickType(final TournamentPickType pickType)
+    {
+        this.pickType = pickType;
+    }
+
+    public void setSpectatorType(final TournamentSpectatorType spectatorType)
+    {
+        this.spectatorType = spectatorType;
+    }
+
+    public void setTeamSize(final Integer teamSize)
+    {
+        this.teamSize = teamSize;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "TournamentCodeParameters [allowedSummonerIds=" + this.allowedSummonerIds + ", mapType=" + this.mapType + ", metadata=" + this.metadata + ", pickType=" + this.pickType + ", spectatorType=" + this.spectatorType + ", teamSize=" + this.teamSize + "]";
     }
 
 }

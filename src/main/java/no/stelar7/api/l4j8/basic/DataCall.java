@@ -58,7 +58,7 @@ public class DataCall
 
             try
             {
-                if (response.getA() == 200 || response.getA() == 204)
+                if ((response.getA() == 200) || (response.getA() == 204))
                 {
                     final Object type = this.dc.endpoint.getType();
                     Object dtoobj;
@@ -136,7 +136,7 @@ public class DataCall
                 if (!this.dc.postData.isEmpty())
                 {
                     con.setDoOutput(true);
-                    DataOutputStream writer = new DataOutputStream(con.getOutputStream());
+                    final DataOutputStream writer = new DataOutputStream(con.getOutputStream());
                     writer.writeBytes(this.dc.postData);
                     writer.flush();
                     writer.close();
@@ -205,8 +205,8 @@ public class DataCall
             });
 
             this.dc.urlParams.put("api_key", this.dc.creds.API_KEY);
-            
-            Optional<String> firstKey = this.dc.urlParams.keySet().stream().findFirst();
+
+            final Optional<String> firstKey = this.dc.urlParams.keySet().stream().findFirst();
             if (firstKey.isPresent())
             {
                 this.urlBuilder.append("?").append(firstKey.get()).append("=").append(this.dc.urlParams.get(firstKey.get()));
@@ -228,9 +228,27 @@ public class DataCall
             return this;
         }
 
+        public DataCallBuilder withHeader(final String key, final String value)
+        {
+            this.dc.urlHeaders.merge(key, value, this.merge);
+            return this;
+        }
+
+        public DataCallBuilder withPostData(final String data)
+        {
+            this.dc.postData = data;
+            return this;
+        }
+
         public DataCallBuilder withRegion(final Server region)
         {
             this.dc.region = region;
+            return this;
+        }
+
+        public DataCallBuilder withRequestMethod(final String data)
+        {
+            this.dc.requestMethod = data;
             return this;
         }
 
@@ -264,24 +282,6 @@ public class DataCall
             return this;
         }
 
-        public DataCallBuilder withPostData(final String data)
-        {
-            this.dc.postData = data;
-            return this;
-        }
-
-        public DataCallBuilder withRequestMethod(String data)
-        {
-            this.dc.requestMethod = data;
-            return this;
-        }
-
-        public DataCallBuilder withHeader(String key, String value)
-        {
-            this.dc.urlHeaders.merge(key, value, this.merge);
-            return this;
-        }
-
     }
 
     public enum ResponseType
@@ -290,15 +290,56 @@ public class DataCall
         ERROR;
     }
 
+    static class Triplet<T, U, V>
+    {
+        T a;
+        U b;
+        V c;
+
+        Triplet(final T a, final U b, final V c)
+        {
+            this.a = a;
+            this.b = b;
+            this.c = c;
+        }
+
+        /**
+         * Response code
+         *
+         */
+        T getA()
+        {
+            return this.a;
+        }
+
+        /**
+         * Response data
+         *
+         */
+        U getB()
+        {
+            return this.b;
+        }
+
+        /**
+         * Retry timeout
+         *
+         */
+        V getC()
+        {
+            return this.c;
+        }
+    }
+
     private static final Map<Server, RateLimiter> limiter                        = new HashMap<Server, RateLimiter>();
 
     private static final String                   HTTP                           = "http://";
 
     private static final String                   HTTPS                          = "https://";
-
     private static final String                   LIMIT_USER                     = "service";
     private static final String                   LIMIT_SERVICE                  = "user";
     private static final Double                   LIMITER_PERMITS_PER_10_MINUTES = 500.0;
+
     private static final Double                   LIMITER_10_MINUTES             = 600.0;
 
     public static DataCallBuilder builder()
@@ -313,51 +354,23 @@ public class DataCall
     }
 
     private String                    postData      = "";
-    private String                    requestMethod = "GET";
 
+    private String                    requestMethod = "GET";
     private final Map<String, String> urlData       = new TreeMap<>();
     private final Map<String, String> urlParams     = new TreeMap<>();
-    private final Map<String, String> urlHeaders    = new TreeMap<>();
 
+    private final Map<String, String> urlHeaders    = new TreeMap<>();
     private boolean                   retry         = true;
+
     private boolean                   verbose       = false;
 
     private int                       retryTime     = 5;
-
     private Server                    server;
+
     private Server                    region;
 
     private URLEndpoint               endpoint;
 
     private APICredentials            creds;
-
-    static class Triplet<T, U, V>
-    {
-        T a;
-        U b;
-        V c;
-
-        Triplet(T a, U b, V c)
-        {
-            this.a = a;
-            this.b = b;
-            this.c = c;
-        }
-
-        T getA()
-        {
-            return a;
-        }
-
-        U getB()
-        {
-            return b;
-        }
-
-        V getC()
-        {
-            return c;
-        }
-    }
 
 }

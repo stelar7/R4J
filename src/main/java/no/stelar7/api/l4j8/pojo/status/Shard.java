@@ -2,9 +2,7 @@ package no.stelar7.api.l4j8.pojo.status;
 
 import java.util.List;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class Shard implements APIObject
+public class Shard
 {
     private String       hostname;
     private List<String> locales;

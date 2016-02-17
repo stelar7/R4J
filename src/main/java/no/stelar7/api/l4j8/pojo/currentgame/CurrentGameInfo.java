@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import no.stelar7.api.l4j8.basic.APIObject;
 import no.stelar7.api.l4j8.basic.constants.GameMode;
 import no.stelar7.api.l4j8.basic.constants.GameQueueType;
 import no.stelar7.api.l4j8.basic.constants.GameType;
@@ -16,7 +15,7 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 import no.stelar7.api.l4j8.pojo.shared.Observer;
 
-public class CurrentGameInfo implements APIObject
+public class CurrentGameInfo
 
 {
 

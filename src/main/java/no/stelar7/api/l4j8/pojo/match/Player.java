@@ -121,7 +121,7 @@ public class Player
     @Override
     public String toString()
     {
-        return "Player [matchHistoryUri=" + matchHistoryUri + ", profileIcon=" + profileIcon + ", summonerId=" + summonerId + ", summonerName=" + summonerName + "]";
+        return "Player [matchHistoryUri=" + this.matchHistoryUri + ", profileIcon=" + this.profileIcon + ", summonerId=" + this.summonerId + ", summonerName=" + this.summonerName + "]";
     }
 
 }

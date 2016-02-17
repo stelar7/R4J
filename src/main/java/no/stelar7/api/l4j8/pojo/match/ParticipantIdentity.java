@@ -77,6 +77,6 @@ public class ParticipantIdentity
     @Override
     public String toString()
     {
-        return "ParticipantIdentity [participantId=" + participantId + ", player=" + player + "]";
+        return "ParticipantIdentity [participantId=" + this.participantId + ", player=" + this.player + "]";
     }
 }

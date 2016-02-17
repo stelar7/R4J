@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import no.stelar7.api.l4j8.basic.APIObject;
-
-public class RawStats implements APIObject
+public class RawStats
 {
     private Integer assists;
     private Integer barracksKilled;
