@@ -76,6 +76,10 @@ public class DataCall
                 {
                     if (this.dc.retry)
                     {
+                        if (this.dc.verbose)
+                        {
+                            System.out.println("HIT 429, WAITING " + response.getC() + " SECONDS THEN TRYING AGAIN");
+                        }
                         TimeUnit.SECONDS.sleep(response.getC());
                         return this.build();
                     }
