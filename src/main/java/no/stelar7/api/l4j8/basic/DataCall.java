@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 
@@ -90,6 +91,11 @@ public class DataCall
             }
 
             throw new RuntimeException(response.getB());
+        }
+
+        public CompletableFuture<Object> buildAsync()
+        {
+            return CompletableFuture.supplyAsync(() -> build());
         }
 
         public DataCallBuilder clearURLData()

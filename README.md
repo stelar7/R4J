@@ -2,11 +2,18 @@
 
 ## TODO:
 * Write tests for the following: 
-  * game
-  * league
-  * lol-status
-  * match
-  * stats
-  * team
-* Add E-sports API
-* Write a tutorial of sorts
+	* game
+  	* league
+  	* lol-status
+  	* match
+  	* stats
+	* team
+
+* Add E-sports API (When/if its available, or [this](https://gist.github.com/levi/e7e5e808ac0119e154ce))
+
+* Write a usage guide:
+	* How to get a summoner
+	* How to get a match
+	* And more
+	
+	
