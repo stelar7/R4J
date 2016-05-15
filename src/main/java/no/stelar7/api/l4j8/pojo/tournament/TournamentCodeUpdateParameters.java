@@ -9,13 +9,13 @@ public class TournamentCodeUpdateParameters
     TournamentPickType      pickType;
     TournamentSpectatorType spectatorType;
 
-    public TournamentCodeUpdateParameters(final String string, final TournamentMapType summonersRift, final TournamentPickType tournamentDraft, final TournamentSpectatorType all)
+    public TournamentCodeUpdateParameters(final String allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)
     {
         super();
-        this.allowedParticipants = string;
-        this.mapType = summonersRift;
-        this.pickType = tournamentDraft;
-        this.spectatorType = all;
+        this.allowedParticipants = allowedParticipants;
+        this.mapType = map;
+        this.pickType = pickType;
+        this.spectatorType = specType;
     }
 
     @Override
