@@ -12,7 +12,7 @@ import no.stelar7.api.l4j8.tests.*;
 public class TournamentTest
 {
 
-    TournamentBuilder builder = new TournamentBuilder(SecretFile.TOURNAMENT_KEY);
+    TournamentBuilder builder = new TournamentBuilder(SecretFile.TOURNAMENT_API_KEY);
 
     // @Test
     public void testAllRegistrations()
