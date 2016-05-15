@@ -1,11 +1,9 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import no.stelar7.api.l4j8.basic.constants.SummonerSpell;
+import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.Team;
-import no.stelar7.api.l4j8.basic.constants.Tier;
 
 public class Participant
 {

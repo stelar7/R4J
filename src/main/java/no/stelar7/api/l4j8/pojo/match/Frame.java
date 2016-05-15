@@ -1,7 +1,6 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Frame
 {

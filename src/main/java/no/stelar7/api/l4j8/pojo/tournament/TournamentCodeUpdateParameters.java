@@ -1,8 +1,6 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import no.stelar7.api.l4j8.basic.constants.TournamentMapType;
-import no.stelar7.api.l4j8.basic.constants.TournamentPickType;
-import no.stelar7.api.l4j8.basic.constants.TournamentSpectatorType;
+import no.stelar7.api.l4j8.basic.constants.*;
 
 public class TournamentCodeUpdateParameters
 {

@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.map;
 
-import java.util.Map;
+import java.util.*;
 
 public class MapData
 {

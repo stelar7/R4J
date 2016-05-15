@@ -16,7 +16,7 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
 abstract class SmoothRateLimiter extends RateLimiter
 {

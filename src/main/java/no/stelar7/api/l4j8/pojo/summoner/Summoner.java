@@ -1,8 +1,6 @@
 package no.stelar7.api.l4j8.pojo.summoner;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 public class Summoner
 {

@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.map;
 
-import java.util.List;
+import java.util.*;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 
 public class MapDetails
 {

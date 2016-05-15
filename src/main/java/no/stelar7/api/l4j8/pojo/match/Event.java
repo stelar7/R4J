@@ -1,17 +1,8 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import no.stelar7.api.l4j8.basic.constants.AscencionType;
-import no.stelar7.api.l4j8.basic.constants.BuildingType;
-import no.stelar7.api.l4j8.basic.constants.EventType;
-import no.stelar7.api.l4j8.basic.constants.Lane;
-import no.stelar7.api.l4j8.basic.constants.LevelUpType;
-import no.stelar7.api.l4j8.basic.constants.MonsterType;
-import no.stelar7.api.l4j8.basic.constants.Point;
-import no.stelar7.api.l4j8.basic.constants.TowerType;
-import no.stelar7.api.l4j8.basic.constants.WardType;
+import no.stelar7.api.l4j8.basic.constants.*;
 
 public class Event
 {

@@ -1,9 +1,7 @@
 package no.stelar7.api.l4j8.pojo.team;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
 public class Team
 {

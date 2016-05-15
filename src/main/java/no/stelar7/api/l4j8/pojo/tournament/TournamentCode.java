@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.Set;
+import java.util.*;
 
 public class TournamentCode
 {

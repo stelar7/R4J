@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.basic;
 
-import no.stelar7.api.l4j8.basic.constants.api.APIType;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 
 public class APICredentials
 {

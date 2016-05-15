@@ -1,7 +1,6 @@
 package no.stelar7.api.l4j8.pojo.summoner.runes;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class RunePage
 {

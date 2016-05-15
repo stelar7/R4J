@@ -1,8 +1,7 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.stream.*;
 
 public class RawStats
 {

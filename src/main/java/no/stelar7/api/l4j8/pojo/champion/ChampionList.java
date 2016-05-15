@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
-import java.util.List;
+import java.util.*;
 
 public class ChampionList
 {

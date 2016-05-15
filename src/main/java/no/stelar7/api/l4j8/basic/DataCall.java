@@ -1,27 +1,17 @@
 package no.stelar7.api.l4j8.basic;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.function.BiFunction;
+import java.io.*;
+import java.lang.reflect.*;
+import java.net.*;
+import java.nio.charset.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
 
-import com.google.common.util.concurrent.RateLimiter;
-import com.google.gson.Gson;
+import com.google.common.util.concurrent.*;
+import com.google.gson.*;
 
-import no.stelar7.api.l4j8.basic.constants.api.Server;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 
 public class DataCall
 {
@@ -95,7 +85,7 @@ public class DataCall
 
         public CompletableFuture<Object> buildAsync()
         {
-            return CompletableFuture.supplyAsync(() -> build());
+            return CompletableFuture.supplyAsync(() -> this.build());
         }
 
         public DataCallBuilder clearURLData()

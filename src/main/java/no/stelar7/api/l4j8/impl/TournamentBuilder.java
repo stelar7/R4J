@@ -1,21 +1,14 @@
 package no.stelar7.api.l4j8.impl;
 
-import java.util.List;
+import java.util.*;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 
-import no.stelar7.api.l4j8.basic.APICredentials;
-import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.constants.api.APIType;
-import no.stelar7.api.l4j8.basic.constants.api.Server;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
-import no.stelar7.api.l4j8.pojo.match.MatchDetail;
-import no.stelar7.api.l4j8.pojo.tournament.LobbyEventWrapper;
-import no.stelar7.api.l4j8.pojo.tournament.ProviderRegistrationParameters;
-import no.stelar7.api.l4j8.pojo.tournament.TournamentCode;
-import no.stelar7.api.l4j8.pojo.tournament.TournamentCodeParameters;
-import no.stelar7.api.l4j8.pojo.tournament.TournamentCodeUpdateParameters;
-import no.stelar7.api.l4j8.pojo.tournament.TournamentRegistrationParameters;
+import no.stelar7.api.l4j8.basic.*;
+import no.stelar7.api.l4j8.basic.DataCall.*;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.tournament.*;
 
 public class TournamentBuilder
 {

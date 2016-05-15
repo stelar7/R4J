@@ -139,7 +139,8 @@ public final class Preconditions
 
     public static void checkPositionIndexes(final int start, final int end, final int size)
     {
-        // Carefully optimized for execution by hotspot (explanatory comment above)
+        // Carefully optimized for execution by hotspot (explanatory comment
+        // above)
         if ((start < 0) || (end < start) || (end > size))
         {
             throw new IndexOutOfBoundsException(Preconditions.badPositionIndexes(start, end, size));

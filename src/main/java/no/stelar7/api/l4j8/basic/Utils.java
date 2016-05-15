@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.basic;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Locale;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 public class Utils
 {

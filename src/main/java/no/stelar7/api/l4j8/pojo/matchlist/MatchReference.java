@@ -1,17 +1,10 @@
 package no.stelar7.api.l4j8.pojo.matchlist;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.Optional;
+import java.time.*;
+import java.util.*;
 
-import no.stelar7.api.l4j8.basic.constants.Champion;
-import no.stelar7.api.l4j8.basic.constants.Lane;
-import no.stelar7.api.l4j8.basic.constants.RankedQueue;
-import no.stelar7.api.l4j8.basic.constants.Role;
-import no.stelar7.api.l4j8.basic.constants.Season;
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 
 public class MatchReference
 {

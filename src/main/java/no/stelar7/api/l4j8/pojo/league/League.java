@@ -1,10 +1,8 @@
 package no.stelar7.api.l4j8.pojo.league;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import no.stelar7.api.l4j8.basic.constants.RankedQueue;
-import no.stelar7.api.l4j8.basic.constants.Tier;
+import no.stelar7.api.l4j8.basic.constants.*;
 
 public class League
 {

@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 
-import java.util.Map;
+import java.util.*;
 
 public class SummonerSpellList
 {

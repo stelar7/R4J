@@ -1,17 +1,10 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.time.*;
+import java.util.*;
 
-import no.stelar7.api.l4j8.basic.constants.Champion;
-import no.stelar7.api.l4j8.basic.constants.GameMode;
-import no.stelar7.api.l4j8.basic.constants.GameSubType;
-import no.stelar7.api.l4j8.basic.constants.GameType;
+import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.basic.constants.Team;
 
 public class Game
 {

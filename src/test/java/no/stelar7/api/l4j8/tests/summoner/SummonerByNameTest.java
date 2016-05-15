@@ -1,19 +1,14 @@
 package no.stelar7.api.l4j8.tests.summoner;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.*;
+import java.util.function.*;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
-import no.stelar7.api.l4j8.basic.Utils;
-import no.stelar7.api.l4j8.basic.constants.api.Server;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
-import no.stelar7.api.l4j8.pojo.summoner.Summoner;
-import no.stelar7.api.l4j8.tests.TestBase;
+import no.stelar7.api.l4j8.basic.*;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.summoner.*;
+import no.stelar7.api.l4j8.tests.*;
 
 public class SummonerByNameTest extends TestBase
 {

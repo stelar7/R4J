@@ -1,27 +1,46 @@
 package no.stelar7.api.l4j8.tests.championmastery;
 
-import java.util.List;
+import java.util.*;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
 
-import no.stelar7.api.l4j8.basic.DataCall;
-import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.constants.Champion;
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.basic.constants.api.Server;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
-import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
-import no.stelar7.api.l4j8.tests.SecretFile;
+import no.stelar7.api.l4j8.basic.*;
+import no.stelar7.api.l4j8.basic.DataCall.*;
+import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.championmastery.*;
+import no.stelar7.api.l4j8.tests.*;
 
 public class ChampionMasteryTest
 {
 
     @Test
+    public void testMultiple()
+    {
+        // Generate data for call
+        final DataCallBuilder builder = DataCall.builder();
+        builder.asVerbose(true);
+        builder.withAPICredentials(SecretFile.CREDS);
+        builder.withServer(Server.EUW);
+        builder.withRegion(Server.EUW);
+        builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY);
+        builder.withURLData("{platformId}", Platform.EUW1.getCode());
+        builder.withURLData("{summonerId}", "19613950");
+
+        // Get the response
+        final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
+
+        data.forEach(inner -> {
+            // Make sure all the data is returned as expected
+            Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L);
+        });
+    }
+
+    @Test
     public void testSingle()
     {
         // Generate data for call
-        DataCallBuilder builder = DataCall.builder();
+        final DataCallBuilder builder = DataCall.builder();
         builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY_BY_ID);
         builder.asVerbose(true);
         builder.withAPICredentials(SecretFile.CREDS);
@@ -48,32 +67,10 @@ public class ChampionMasteryTest
     }
 
     @Test
-    public void testMultiple()
-    {
-        // Generate data for call
-        DataCallBuilder builder = DataCall.builder();
-        builder.asVerbose(true);
-        builder.withAPICredentials(SecretFile.CREDS);
-        builder.withServer(Server.EUW);
-        builder.withRegion(Server.EUW);
-        builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY);
-        builder.withURLData("{platformId}", Platform.EUW1.getCode());
-        builder.withURLData("{summonerId}", "19613950");
-
-        // Get the response
-        final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
-
-        data.forEach(inner -> {
-            // Make sure all the data is returned as expected
-            Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L);
-        });
-    }
-
-    @Test
     public void testTop()
     {
         // Generate data for call
-        DataCallBuilder builder = DataCall.builder();
+        final DataCallBuilder builder = DataCall.builder();
         builder.asVerbose(true);
         builder.withAPICredentials(SecretFile.CREDS);
         builder.withServer(Server.EUW);

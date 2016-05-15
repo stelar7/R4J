@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 public enum Tier
 {

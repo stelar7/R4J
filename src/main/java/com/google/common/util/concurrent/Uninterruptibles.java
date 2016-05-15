@@ -16,15 +16,9 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 public final class Uninterruptibles
 {
@@ -171,7 +165,8 @@ public final class Uninterruptibles
             {
                 try
                 {
-                    // TimeUnit.timedJoin() treats negative timeouts just like zero.
+                    // TimeUnit.timedJoin() treats negative timeouts just like
+                    // zero.
                     NANOSECONDS.timedJoin(toJoin, remainingNanos);
                     return;
                 } catch (final InterruptedException e)

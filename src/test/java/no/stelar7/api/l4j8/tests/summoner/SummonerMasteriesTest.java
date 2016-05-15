@@ -1,20 +1,13 @@
 package no.stelar7.api.l4j8.tests.summoner;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.*;
+import java.util.function.*;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
-import no.stelar7.api.l4j8.basic.constants.api.Server;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.Mastery;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
-import no.stelar7.api.l4j8.tests.TestBase;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
+import no.stelar7.api.l4j8.tests.*;
 
 public class SummonerMasteriesTest extends TestBase
 {
@@ -22,7 +15,8 @@ public class SummonerMasteriesTest extends TestBase
 
         value.getPages().forEach((final MasteryPage page) -> {
             Assert.assertNotNull("Mastery Page does not have an id", page.getId());
-            // Assert.assertNotNull("Mastery Page does not have a name", page.getName()); Names can be empty, so ignore this...
+            // Assert.assertNotNull("Mastery Page does not have a name",
+            // page.getName()); Names can be empty, so ignore this...
             Assert.assertNotNull("Mastery Page does not contain any masteries", page.getMasteries());
             Assert.assertNotNull("Unable to determine current Mastery page", page.isCurrent());
 

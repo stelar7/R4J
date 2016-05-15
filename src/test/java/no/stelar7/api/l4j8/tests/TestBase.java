@@ -1,12 +1,11 @@
 package no.stelar7.api.l4j8.tests;
 
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.runners.MethodSorters;
+import org.junit.*;
+import org.junit.runners.*;
 
-import no.stelar7.api.l4j8.basic.DataCall;
-import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.*;
+import no.stelar7.api.l4j8.basic.DataCall.*;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestBase

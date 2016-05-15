@@ -1,20 +1,15 @@
 package no.stelar7.api.l4j8.tests.matchlist;
 
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
-import no.stelar7.api.l4j8.basic.constants.Champion;
-import no.stelar7.api.l4j8.basic.constants.RankedQueue;
-import no.stelar7.api.l4j8.basic.constants.Season;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
-import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
-import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
-import no.stelar7.api.l4j8.tests.TestBase;
+import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.matchlist.*;
+import no.stelar7.api.l4j8.tests.*;
 
 public class MatchListTest extends TestBase
 {

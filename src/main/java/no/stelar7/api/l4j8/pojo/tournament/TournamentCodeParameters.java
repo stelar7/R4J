@@ -1,11 +1,9 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.regex.*;
+import java.util.stream.*;
 
-import no.stelar7.api.l4j8.basic.constants.TournamentMapType;
-import no.stelar7.api.l4j8.basic.constants.TournamentPickType;
-import no.stelar7.api.l4j8.basic.constants.TournamentSpectatorType;
+import no.stelar7.api.l4j8.basic.constants.*;
 
 public class TournamentCodeParameters
 {

@@ -16,13 +16,12 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.MICROSECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
-import com.google.common.base.Stopwatch;
-import com.google.common.util.concurrent.SmoothRateLimiter.SmoothBursty;
+import com.google.common.base.*;
+import com.google.common.util.concurrent.SmoothRateLimiter.*;
 
 public abstract class RateLimiter
 {

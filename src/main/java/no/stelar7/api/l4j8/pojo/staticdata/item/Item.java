@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-import java.util.Map;
+import java.util.*;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.BasicData;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 
 public class Item extends BasicData
 {

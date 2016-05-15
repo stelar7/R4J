@@ -1,20 +1,13 @@
 package no.stelar7.api.l4j8.tests.summoner;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.*;
+import java.util.function.*;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
-import no.stelar7.api.l4j8.basic.constants.api.Server;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RuneSlot;
-import no.stelar7.api.l4j8.tests.TestBase;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.summoner.runes.*;
+import no.stelar7.api.l4j8.tests.*;
 
 public class SummonerRunesTest extends TestBase
 {

@@ -1,9 +1,8 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import java.util.Optional;
+import java.util.*;
 
-import no.stelar7.api.l4j8.basic.constants.Champion;
-import no.stelar7.api.l4j8.basic.constants.Team;
+import no.stelar7.api.l4j8.basic.constants.*;
 
 public class Player
 {

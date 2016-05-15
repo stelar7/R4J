@@ -1,18 +1,12 @@
 package no.stelar7.api.l4j8.pojo.currentgame;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.time.*;
+import java.util.*;
 
-import no.stelar7.api.l4j8.basic.constants.GameMode;
-import no.stelar7.api.l4j8.basic.constants.GameQueueType;
-import no.stelar7.api.l4j8.basic.constants.GameType;
+import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.shared.*;
 import no.stelar7.api.l4j8.pojo.shared.Observer;
 
 public class CurrentGameInfo

@@ -1,32 +1,28 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.reflect.*;
 
-import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
-import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
-import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
-import no.stelar7.api.l4j8.pojo.match.MatchDetail;
-import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.ChampionList;
-import no.stelar7.api.l4j8.pojo.staticdata.item.Item;
-import no.stelar7.api.l4j8.pojo.staticdata.item.ItemList;
-import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
-import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
+import no.stelar7.api.l4j8.pojo.championmastery.*;
+import no.stelar7.api.l4j8.pojo.currentgame.*;
+import no.stelar7.api.l4j8.pojo.featuredgames.*;
+import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.matchlist.*;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
+import no.stelar7.api.l4j8.pojo.staticdata.item.*;
+import no.stelar7.api.l4j8.pojo.staticdata.language.*;
+import no.stelar7.api.l4j8.pojo.staticdata.map.*;
+import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.Mastery;
-import no.stelar7.api.l4j8.pojo.staticdata.mastery.MasteryList;
-import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
+import no.stelar7.api.l4j8.pojo.staticdata.realm.*;
+import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.Rune;
-import no.stelar7.api.l4j8.pojo.staticdata.rune.RuneList;
-import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.SummonerSpell;
-import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.SummonerSpellList;
-import no.stelar7.api.l4j8.pojo.summoner.Summoner;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
-import no.stelar7.api.l4j8.pojo.tournament.LobbyEventWrapper;
-import no.stelar7.api.l4j8.pojo.tournament.TournamentCode;
+import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
+import no.stelar7.api.l4j8.pojo.summoner.*;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
+import no.stelar7.api.l4j8.pojo.summoner.runes.*;
+import no.stelar7.api.l4j8.pojo.tournament.*;
 
 public enum URLEndpoint
 {
