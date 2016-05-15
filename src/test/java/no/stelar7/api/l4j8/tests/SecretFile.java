@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.tests;
 
+import no.stelar7.api.l4j8.basic.*;
+
 public class SecretFile
 {
     public static final String API_KEY            = "FAKE KEY";
