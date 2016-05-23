@@ -5,7 +5,7 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 public class APICredentials
 {
     String API_KEY;
-    String TOURNAMENT_KEY;
+    String TOURNAMENT_API_KEY;
 
     /**
      * Instantiates new API credentials.
@@ -21,7 +21,7 @@ public class APICredentials
                 this.API_KEY = key;
                 break;
             case TOURNAMENT:
-                this.TOURNAMENT_KEY = key;
+                this.TOURNAMENT_API_KEY = key;
                 break;
         }
     }
@@ -37,7 +37,7 @@ public class APICredentials
     public APICredentials(final String api, final String tournament)
     {
         this.API_KEY = api;
-        this.TOURNAMENT_KEY = tournament;
+        this.TOURNAMENT_API_KEY = tournament;
     }
 
     /**
@@ -61,11 +61,11 @@ public class APICredentials
      */
     public String getTournament()
     {
-        if (this.TOURNAMENT_KEY == null)
+        if (this.TOURNAMENT_API_KEY == null)
         {
             throw new RuntimeException("TOURNAMENT key not set!");
         }
-        return this.TOURNAMENT_KEY;
+        return this.TOURNAMENT_API_KEY;
     }
 
 }
