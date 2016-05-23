@@ -62,12 +62,27 @@ public class DataCall
                         dtoobj = new Gson().fromJson(response.getB(), (Type) this.dc.endpoint.getType());
                     }
 
-                    if (dtoobj instanceof Summoner)
+                    if (dtoobj instanceof Map)
                     {
-                        Field field = Summoner.class.getDeclaredField("region");
-                        field.setAccessible(true);
-                        field.set(dtoobj, this.dc.region);
+
+                        Map<?, ?> map = (Map<?, ?>) dtoobj;
+                        if (map.get(map.keySet().iterator().next()) instanceof Summoner)
+                        {
+                            map.values().forEach(value -> {
+                                try
+                                {
+                                    Field field = Summoner.class.getDeclaredField("server");
+                                    field.setAccessible(true);
+                                    field.set(value, this.dc.region);
+                                } catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            });
+                        }
                     }
+
                     return dtoobj;
                 }
 

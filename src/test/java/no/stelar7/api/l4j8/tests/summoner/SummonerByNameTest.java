@@ -21,6 +21,7 @@ public class SummonerByNameTest extends TestBase
         Assert.assertNotEquals("Summoner level is NULL", value.getSummonerLevel(), (Integer) 0);
         Assert.assertNotNull("Summoner revison date DATE is NULL", value.getRevisionDateAsDate());
         Assert.assertEquals("Summoner revison date and DATE do not match", value.getRevisionDate(), (Long) value.getRevisionDateAsDate().toInstant().toEpochMilli());
+        System.out.println(value);
     };
 
     @Test
