@@ -10,7 +10,7 @@ public class Summoner
     private String  name;
     private Integer profileIconId;
     private Long    revisionDate;
-    private Server  region;
+    private Server  server;
     private Integer summonerLevel;
 
     @Override
@@ -158,7 +158,7 @@ public class Summoner
     @Override
     public String toString()
     {
-        return "Summoner [id=" + this.id + ", region=" + this.region + ", name=" + this.name + ", profileIconId=" + this.profileIconId + ", revisionDate=" + this.revisionDate + ", summonerLevel=" + this.summonerLevel + "]";
+        return "Summoner [id=" + this.id + ", server=" + this.server + ", name=" + this.name + ", profileIconId=" + this.profileIconId + ", revisionDate=" + this.revisionDate + ", summonerLevel=" + this.summonerLevel + "]";
     }
 
     /**
@@ -168,6 +168,6 @@ public class Summoner
      */
     public Server getRegion()
     {
-        return region;
+        return server;
     }
 }
