@@ -2,13 +2,15 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 import java.time.*;
 
+import no.stelar7.api.l4j8.basic.constants.api.*;
+
 public class Summoner
 {
     private Long    id;
     private String  name;
     private Integer profileIconId;
     private Long    revisionDate;
-
+    private Server  region;
     private Integer summonerLevel;
 
     @Override
@@ -131,7 +133,9 @@ public class Summoner
     }
 
     /**
-     * Summoner level associated with the summoner * @return Integer
+     * Summoner level associated with the summoner
+     * 
+     * @return Integer
      */
     public Integer getSummonerLevel()
     {
@@ -155,5 +159,15 @@ public class Summoner
     public String toString()
     {
         return "Summoner [id=" + this.id + ", name=" + this.name + ", profileIconId=" + this.profileIconId + ", revisionDate=" + this.revisionDate + ", summonerLevel=" + this.summonerLevel + "]";
+    }
+
+    /**
+     * The summoners region
+     * 
+     * @return Server
+     */
+    public Server getRegion()
+    {
+        return region;
     }
 }

@@ -17,7 +17,7 @@ public class TournamentBuilder
 
     public TournamentBuilder(final String API_KEY)
     {
-        this.creds = new APICredentials(APIType.TOURNAMENT, API_KEY);
+        this.creds = new APICredentials(API_KEY, APIType.TOURNAMENT);
     }
 
     /**

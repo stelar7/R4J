@@ -13,7 +13,7 @@ public class APICredentials
      * @param api
      *            the api key
      */
-    public APICredentials(final APIType type, final String key)
+    public APICredentials(final String key, final APIType type)
     {
         switch (type)
         {
