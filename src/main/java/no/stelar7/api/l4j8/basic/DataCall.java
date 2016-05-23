@@ -174,11 +174,6 @@ public class DataCall
                     System.out.println();
                 }
 
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
-                {
-                    br.lines().forEach(s -> data.append(s));
-                }
-
                 final String limitType = con.getHeaderField("X-Rate-Limit-Type");
                 int timeout = 0;
 
@@ -187,6 +182,16 @@ public class DataCall
                     final String timeoutString = con.getHeaderField("Retry-After");
 
                     timeout = timeoutString == null ? this.dc.retryTime : Integer.parseInt(timeoutString);
+                }
+
+                if (con.getResponseCode() != 200)
+                {
+                    return new Triplet<Integer, String, Integer>(con.getResponseCode(), null, timeout);
+                }
+
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
+                {
+                    br.lines().forEach(s -> data.append(s));
                 }
 
                 con.disconnect();
