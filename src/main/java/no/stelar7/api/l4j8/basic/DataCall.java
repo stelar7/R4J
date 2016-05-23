@@ -12,6 +12,7 @@ import com.google.common.util.concurrent.*;
 import com.google.gson.*;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.summoner.*;
 
 public class DataCall
 {
@@ -59,6 +60,13 @@ public class DataCall
                     } else
                     {
                         dtoobj = new Gson().fromJson(response.getB(), (Type) this.dc.endpoint.getType());
+                    }
+
+                    if (dtoobj instanceof Summoner)
+                    {
+                        Field field = Summoner.class.getDeclaredField("region");
+                        field.setAccessible(true);
+                        field.set(dtoobj, this.dc.region);
                     }
                     return dtoobj;
                 }
