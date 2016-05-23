@@ -158,7 +158,7 @@ public class Summoner
     @Override
     public String toString()
     {
-        return "Summoner [id=" + this.id + ", name=" + this.name + ", profileIconId=" + this.profileIconId + ", revisionDate=" + this.revisionDate + ", summonerLevel=" + this.summonerLevel + "]";
+        return "Summoner [id=" + this.id + ", region=" + this.region + ", name=" + this.name + ", profileIconId=" + this.profileIconId + ", revisionDate=" + this.revisionDate + ", summonerLevel=" + this.summonerLevel + "]";
     }
 
     /**
