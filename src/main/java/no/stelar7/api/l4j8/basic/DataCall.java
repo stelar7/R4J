@@ -86,6 +86,11 @@ public class DataCall
                     return dtoobj;
                 }
 
+                if (response.getA() == 404)
+                {
+                    return Optional.empty();
+                }
+
                 if (response.getA() == 429)
                 {
                     if (this.dc.retry)
