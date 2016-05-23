@@ -32,8 +32,8 @@ public class L4J8
     public Optional<Summoner> getSummoner(String name, Server server)
     {
         builder.withAPICredentials(CREDS);
-        builder.withServer(Server.EUW);
-        builder.withRegion(Server.EUW);
+        builder.withServer(server);
+        builder.withRegion(server);
         builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
         builder.withURLData("{summonerName}", Utils.prepareForURL(name));
         Map<String, Summoner> data = (Map<String, Summoner>) builder.build();
