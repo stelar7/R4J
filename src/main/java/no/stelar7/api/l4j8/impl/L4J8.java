@@ -27,7 +27,6 @@ public class L4J8
         builder.withAPICredentials(CREDS);
         builder.withServer(server);
         builder.withRegion(server);
-        builder.asVerbose(true);
         builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
         names.forEach(name -> builder.withURLData("{summonerName}", Utils.prepareForURL(name)));
 
