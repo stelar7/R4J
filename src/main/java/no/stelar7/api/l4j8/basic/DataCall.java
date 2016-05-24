@@ -97,12 +97,26 @@ public class DataCall
                     {
                         if (this.dc.verbose)
                         {
-                            System.out.println("HIT 429, WAITING " + response.getC() + " SECONDS THEN TRYING AGAIN");
+                            System.out.println("HIT 429, WAITING " + response.getC() + " SECOND(S) THEN TRYING AGAIN");
                         }
                         TimeUnit.SECONDS.sleep(response.getC());
                         return this.build();
                     }
                 }
+
+                if (response.getA() == 500)
+                {
+                    if (this.dc.retry)
+                    {
+                        if (this.dc.verbose)
+                        {
+                            System.out.println("HIT 500, WAITING 1 SECOND(S) THEN TRYING AGAIN");
+                        }
+                        TimeUnit.SECONDS.sleep(1);
+                        return this.build();
+                    }
+                }
+
             } catch (final Exception e)
             {
                 e.printStackTrace();

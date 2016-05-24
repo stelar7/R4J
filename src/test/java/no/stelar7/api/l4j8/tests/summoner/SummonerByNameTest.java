@@ -41,6 +41,7 @@ public class SummonerByNameTest
         String[] values = { "stelar7", "henriko950", "vibbsen", "Tàylor Swíft" };
 
         api.getSummoner(Server.EUW, values).forEach(doAssertions);
+        api.getSummoner(Server.LAN, values).forEach(doAssertions);
 
     }
 

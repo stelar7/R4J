@@ -27,15 +27,25 @@ public class L4J8
         builder.withAPICredentials(CREDS);
         builder.withServer(server);
         builder.withRegion(server);
+        builder.asVerbose(true);
         builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
         names.forEach(name -> builder.withURLData("{summonerName}", Utils.prepareForURL(name)));
 
         // Get the query result
-        Map<String, Summoner> callResult = (Map<String, Summoner>) builder.build();
+        Object callResult = builder.build();
         Map<String, Optional<Summoner>> finalResult = new HashMap<>();
 
+        // Handle 404
+        if (callResult instanceof Optional && !((Optional<?>) callResult).isPresent())
+        {
+            names.forEach(name -> finalResult.putIfAbsent(name, Optional.empty()));
+            return finalResult;
+        }
+
+        Map<String, Summoner> castResult = (Map<String, Summoner>) callResult;
+
         // Map result to Optional<Summoner>, and add missing names
-        callResult.forEach((key, value) -> finalResult.put(key, Optional.of(value)));
+        castResult.forEach((key, value) -> finalResult.put(key, Optional.of(value)));
         names.forEach(name -> finalResult.putIfAbsent(name, Optional.empty()));
 
         return finalResult;
