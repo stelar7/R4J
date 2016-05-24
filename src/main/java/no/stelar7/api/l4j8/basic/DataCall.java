@@ -108,6 +108,9 @@ public class DataCall
                 e.printStackTrace();
             }
 
+            System.err.println("Response Code:" + response.getA());
+            System.err.println("Response Data:" + response.getB());
+            System.err.println("Rate-Limit:" + response.getC());
             throw new RuntimeException(response.getB());
         }
 

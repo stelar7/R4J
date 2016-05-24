@@ -10,34 +10,35 @@ import no.stelar7.api.l4j8.pojo.summoner.*;
 public class L4J8
 {
 
-    private final DataCallBuilder builder = DataCall.builder();
+    private final APICredentials CREDS;
 
-    private final APICredentials  CREDS;
-
-    public L4J8(String apiKey)
+    public L4J8(APICredentials cred)
     {
-        CREDS = new APICredentials(apiKey, APIType.NORMAL);
+        this.CREDS = cred;
     }
 
-    public L4J8(String apiKey, APIType type)
+    public Map<String, Optional<Summoner>> getSummoner(Server server, String... usernames)
     {
-        CREDS = new APICredentials(apiKey, type);
-    }
+        // Transform String[] into List<String>
+        List<String> names = Arrays.asList(usernames);
 
-    public L4J8(String apiKey, String tournamentKey)
-    {
-        CREDS = new APICredentials(apiKey, tournamentKey);
-    }
-
-    public Optional<Summoner> getSummoner(String name, Server server)
-    {
+        // Build the query
+        final DataCallBuilder builder = DataCall.builder();
         builder.withAPICredentials(CREDS);
         builder.withServer(server);
         builder.withRegion(server);
         builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
-        builder.withURLData("{summonerName}", Utils.prepareForURL(name));
-        Map<String, Summoner> data = (Map<String, Summoner>) builder.build();
-        return Optional.of(data.get(name));
+        names.forEach(name -> builder.withURLData("{summonerName}", Utils.prepareForURL(name)));
+
+        // Get the query result
+        Map<String, Summoner> callResult = (Map<String, Summoner>) builder.build();
+        Map<String, Optional<Summoner>> finalResult = new HashMap<>();
+
+        // Map result to Optional<Summoner>, and add missing names
+        callResult.forEach((key, value) -> finalResult.put(key, Optional.of(value)));
+        names.forEach(name -> finalResult.putIfAbsent(name, Optional.empty()));
+
+        return finalResult;
     }
 
 }
