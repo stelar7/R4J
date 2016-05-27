@@ -26,15 +26,15 @@ import no.stelar7.api.l4j8.pojo.tournament.*;
 
 public enum URLEndpoint
 {
-    SUMMONER_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}", "v1.4", new TypeToken<Map<String, Summoner>>()
+    SUMMONER_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}", "v1.4", new TypeToken<Map<Long, Summoner>>()
     {}.getType()),
     SUMMONER_BY_NAME("/api/lol/{region}/{version}/summoner/by-name/{summonerName}", "v1.4", new TypeToken<Map<String, Summoner>>()
     {}.getType()),
-    SUMMONER_MASTERIES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/masteries", "v1.4", new TypeToken<Map<String, MasteryPages>>()
+    SUMMONER_MASTERIES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/masteries", "v1.4", new TypeToken<Map<Long, MasteryPages>>()
     {}.getType()),
-    SUMMONER_RUNES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/runes", "v1.4", new TypeToken<Map<String, RunePages>>()
+    SUMMONER_RUNES_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/runes", "v1.4", new TypeToken<Map<Long, RunePages>>()
     {}.getType()),
-    SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", new TypeToken<Map<String, String>>()
+    SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", new TypeToken<Map<Long, String>>()
     {}.getType()),
 
     CHAMPIONS("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
