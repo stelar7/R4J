@@ -1,8 +1,14 @@
 package no.stelar7.api.l4j8.pojo.summoner;
 
 import java.time.*;
+import java.util.*;
 
+import no.stelar7.api.l4j8.basic.*;
+import no.stelar7.api.l4j8.basic.DataCall.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
+import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
 public class Summoner
 {
@@ -169,5 +175,55 @@ public class Summoner
     public Server getRegion()
     {
         return server;
+    }
+
+    public Optional<List<RunePage>> getRunePages()
+    {
+        // Build the query
+        final DataCallBuilder builder = DataCall.builder();
+        builder.withAPICredentials(L4J8.CREDS);
+        builder.withServer(server);
+        builder.withRegion(server);
+        builder.withEndpoint(URLEndpoint.SUMMONER_RUNES_BY_ID);
+        builder.withURLData("{summonerId}", String.valueOf(this.getId()));
+
+        // Get the query result
+        Object callResult = builder.build();
+
+        // Handle 404
+        if (callResult instanceof Optional && !((Optional<?>) callResult).isPresent())
+        {
+            return Optional.empty();
+        }
+
+        final Map<String, RunePages> dataCall = (Map<String, RunePages>) callResult;
+
+        // Map result to Optional<List<RunePage>>, and add missing names
+        return Optional.of(dataCall.get(String.valueOf(this.getId())).getPages());
+    }
+
+    public Optional<List<MasteryPage>> getMasteryPages()
+    {
+        // Build the query
+        final DataCallBuilder builder = DataCall.builder();
+        builder.withAPICredentials(L4J8.CREDS);
+        builder.withServer(server);
+        builder.withRegion(server);
+        builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
+        builder.withURLData("{summonerId}", String.valueOf(this.getId()));
+
+        // Get the query result
+        Object callResult = builder.build();
+
+        // Handle 404
+        if (callResult instanceof Optional && !((Optional<?>) callResult).isPresent())
+        {
+            return Optional.empty();
+        }
+
+        final Map<String, MasteryPages> dataCall = (Map<String, MasteryPages>) callResult;
+
+        // Map result to Optional<List<MasteryPage>>, and add missing names
+        return Optional.of(dataCall.get(String.valueOf(this.getId())).getPages());
     }
 }

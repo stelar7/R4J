@@ -8,6 +8,8 @@
   	* match
   	* stats
 	* team
+* make the tournament API work for every region
+	
 
 * Add E-sports API (When/if its available, or [this](https://gist.github.com/levi/e7e5e808ac0119e154ce))
 
