@@ -11,6 +11,7 @@ public class L4J8
 {
 
     public static APICredentials CREDS;
+    public static boolean        verbose = true;
 
     public L4J8(APICredentials cred)
     {

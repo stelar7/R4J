@@ -12,6 +12,7 @@ import com.google.common.util.concurrent.*;
 import com.google.gson.*;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.summoner.*;
 
 public class DataCall
@@ -412,7 +413,7 @@ public class DataCall
     private final Map<String, String> urlHeaders    = new TreeMap<>();
     private boolean                   retry         = true;
 
-    private boolean                   verbose       = false;
+    private boolean                   verbose       = L4J8.verbose;
 
     private int                       retryTime     = 5;
     private Server                    server;
