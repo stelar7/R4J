@@ -196,10 +196,10 @@ public class Summoner
             return Optional.empty();
         }
 
-        final Map<String, RunePages> dataCall = (Map<String, RunePages>) callResult;
+        final Map<Long, RunePages> dataCall = (Map<Long, RunePages>) callResult;
 
         // Map result to Optional<List<RunePage>>, and add missing names
-        return Optional.of(dataCall.get(String.valueOf(this.getId())).getPages());
+        return Optional.of(dataCall.get(this.getId()).getPages());
     }
 
     public Optional<List<MasteryPage>> getMasteryPages()
@@ -221,9 +221,9 @@ public class Summoner
             return Optional.empty();
         }
 
-        final Map<String, MasteryPages> dataCall = (Map<String, MasteryPages>) callResult;
+        final Map<Long, MasteryPages> dataCall = (Map<Long, MasteryPages>) callResult;
 
         // Map result to Optional<List<MasteryPage>>, and add missing names
-        return Optional.of(dataCall.get(String.valueOf(this.getId())).getPages());
+        return Optional.of(dataCall.get(this.getId()).getPages());
     }
 }
