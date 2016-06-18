@@ -16,7 +16,7 @@ public class SummonerByNameTest
     private final BiConsumer<String, Optional<Summoner>> doAssertions = (final String key, final Optional<Summoner> optional) -> {
         if (optional.isPresent())
         {
-            Summoner value = optional.get();
+            final Summoner value = optional.get();
             Assert.assertNotNull("Summoner name is NULL", value.getName());
             Assert.assertNotEquals("Summoner id is NULL", value.getId(), (Long) 0L);
             Assert.assertNotEquals("Summoner profile icon is NULL", value.getProfileIconId(), (Integer) 0);
@@ -35,13 +35,13 @@ public class SummonerByNameTest
     public void doTest()
     {
 
-        L4J8 api = new L4J8(SecretFile.CREDS);
+        final L4J8 api = new L4J8(SecretFile.CREDS);
 
         // Generate list of summoner IDs
-        String[] values = { "stelar7", "henriko950", "vibbsen", "Tàylor Swíft" };
+        final String[] values = { "stelar7", "henriko950", "vibbsen", "Tàylor Swíft" };
 
-        api.getSummoner(Server.EUW, values).forEach(doAssertions);
-        api.getSummoner(Server.LAN, values).forEach(doAssertions);
+        api.getSummoner(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummoner(Server.LAN, values).forEach(this.doAssertions);
 
     }
 

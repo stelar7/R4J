@@ -98,6 +98,31 @@ public class Summoner
         return this.id;
     }
 
+    public Optional<List<MasteryPage>> getMasteryPages()
+    {
+        // Build the query
+        final DataCallBuilder builder = DataCall.builder();
+        builder.withAPICredentials(L4J8.CREDS);
+        builder.withServer(this.server);
+        builder.withRegion(this.server);
+        builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
+        builder.withURLData("{summonerId}", String.valueOf(this.getId()));
+
+        // Get the query result
+        final Object callResult = builder.build();
+
+        // Handle 404
+        if ((callResult instanceof Optional) && !((Optional<?>) callResult).isPresent())
+        {
+            return Optional.empty();
+        }
+
+        final Map<Long, MasteryPages> dataCall = (Map<Long, MasteryPages>) callResult;
+
+        // Map result to Optional<List<MasteryPage>>, and add missing names
+        return Optional.of(dataCall.get(this.getId()).getPages());
+    }
+
     /**
      * The Summoners name
      *
@@ -116,6 +141,16 @@ public class Summoner
     public Integer getProfileIconId()
     {
         return this.profileIconId;
+    }
+
+    /**
+     * The summoners region
+     *
+     * @return Server
+     */
+    public Server getRegion()
+    {
+        return this.server;
     }
 
     /**
@@ -138,9 +173,34 @@ public class Summoner
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.revisionDate), ZoneOffset.UTC);
     }
 
+    public Optional<List<RunePage>> getRunePages()
+    {
+        // Build the query
+        final DataCallBuilder builder = DataCall.builder();
+        builder.withAPICredentials(L4J8.CREDS);
+        builder.withServer(this.server);
+        builder.withRegion(this.server);
+        builder.withEndpoint(URLEndpoint.SUMMONER_RUNES_BY_ID);
+        builder.withURLData("{summonerId}", String.valueOf(this.getId()));
+
+        // Get the query result
+        final Object callResult = builder.build();
+
+        // Handle 404
+        if ((callResult instanceof Optional) && !((Optional<?>) callResult).isPresent())
+        {
+            return Optional.empty();
+        }
+
+        final Map<Long, RunePages> dataCall = (Map<Long, RunePages>) callResult;
+
+        // Map result to Optional<List<RunePage>>, and add missing names
+        return Optional.of(dataCall.get(this.getId()).getPages());
+    }
+
     /**
      * Summoner level associated with the summoner
-     * 
+     *
      * @return Integer
      */
     public Integer getSummonerLevel()
@@ -165,65 +225,5 @@ public class Summoner
     public String toString()
     {
         return "Summoner [id=" + this.id + ", server=" + this.server + ", name=" + this.name + ", profileIconId=" + this.profileIconId + ", revisionDate=" + this.revisionDate + ", summonerLevel=" + this.summonerLevel + "]";
-    }
-
-    /**
-     * The summoners region
-     * 
-     * @return Server
-     */
-    public Server getRegion()
-    {
-        return server;
-    }
-
-    public Optional<List<RunePage>> getRunePages()
-    {
-        // Build the query
-        final DataCallBuilder builder = DataCall.builder();
-        builder.withAPICredentials(L4J8.CREDS);
-        builder.withServer(server);
-        builder.withRegion(server);
-        builder.withEndpoint(URLEndpoint.SUMMONER_RUNES_BY_ID);
-        builder.withURLData("{summonerId}", String.valueOf(this.getId()));
-
-        // Get the query result
-        Object callResult = builder.build();
-
-        // Handle 404
-        if (callResult instanceof Optional && !((Optional<?>) callResult).isPresent())
-        {
-            return Optional.empty();
-        }
-
-        final Map<Long, RunePages> dataCall = (Map<Long, RunePages>) callResult;
-
-        // Map result to Optional<List<RunePage>>, and add missing names
-        return Optional.of(dataCall.get(this.getId()).getPages());
-    }
-
-    public Optional<List<MasteryPage>> getMasteryPages()
-    {
-        // Build the query
-        final DataCallBuilder builder = DataCall.builder();
-        builder.withAPICredentials(L4J8.CREDS);
-        builder.withServer(server);
-        builder.withRegion(server);
-        builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
-        builder.withURLData("{summonerId}", String.valueOf(this.getId()));
-
-        // Get the query result
-        Object callResult = builder.build();
-
-        // Handle 404
-        if (callResult instanceof Optional && !((Optional<?>) callResult).isPresent())
-        {
-            return Optional.empty();
-        }
-
-        final Map<Long, MasteryPages> dataCall = (Map<Long, MasteryPages>) callResult;
-
-        // Map result to Optional<List<MasteryPage>>, and add missing names
-        return Optional.of(dataCall.get(this.getId()).getPages());
     }
 }

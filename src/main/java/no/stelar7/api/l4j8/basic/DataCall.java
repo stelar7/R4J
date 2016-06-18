@@ -47,35 +47,35 @@ public class DataCall
             }
 
             final String url = this.getURL();
-            final Triplet<Integer, String, Integer> response = this.getResponse(url);
+            final DataCallResponse<Integer, String, Integer> response = this.getResponse(url);
 
             try
             {
-                if ((response.getA() == 200) || (response.getA() == 204))
+                if ((response.getResponseCode() == 200) || (response.getResponseCode() == 204))
                 {
                     final Object type = this.dc.endpoint.getType();
                     Object dtoobj;
                     if (type instanceof Class<?>)
                     {
-                        dtoobj = new Gson().fromJson(response.getB(), (Class<?>) this.dc.endpoint.getType());
+                        dtoobj = new Gson().fromJson(response.getResponseData(), (Class<?>) this.dc.endpoint.getType());
                     } else
                     {
-                        dtoobj = new Gson().fromJson(response.getB(), (Type) this.dc.endpoint.getType());
+                        dtoobj = new Gson().fromJson(response.getResponseData(), (Type) this.dc.endpoint.getType());
                     }
 
                     if (dtoobj instanceof Map)
                     {
 
-                        Map<?, ?> map = (Map<?, ?>) dtoobj;
+                        final Map<?, ?> map = (Map<?, ?>) dtoobj;
                         if (map.get(map.keySet().iterator().next()) instanceof Summoner)
                         {
                             map.values().forEach(value -> {
                                 try
                                 {
-                                    Field field = Summoner.class.getDeclaredField("server");
+                                    final Field field = Summoner.class.getDeclaredField("server");
                                     field.setAccessible(true);
                                     field.set(value, this.dc.region);
-                                } catch (Exception e)
+                                } catch (final Exception e)
                                 {
                                     e.printStackTrace();
                                 }
@@ -87,25 +87,25 @@ public class DataCall
                     return dtoobj;
                 }
 
-                if (response.getA() == 404)
+                if (response.getResponseCode() == 404)
                 {
                     return Optional.empty();
                 }
 
-                if (response.getA() == 429)
+                if (response.getResponseCode() == 429)
                 {
                     if (this.dc.retry)
                     {
                         if (this.dc.verbose)
                         {
-                            System.out.println("HIT 429, WAITING " + response.getC() + " SECOND(S) THEN TRYING AGAIN");
+                            System.out.println("HIT 429, WAITING " + response.getRetryTimeout() + " SECOND(S) THEN TRYING AGAIN");
                         }
-                        TimeUnit.SECONDS.sleep(response.getC());
+                        TimeUnit.SECONDS.sleep(response.getRetryTimeout());
                         return this.build();
                     }
                 }
 
-                if (response.getA() == 500)
+                if (response.getResponseCode() == 500)
                 {
                     if (this.dc.retry)
                     {
@@ -123,10 +123,10 @@ public class DataCall
                 e.printStackTrace();
             }
 
-            System.err.println("Response Code:" + response.getA());
-            System.err.println("Response Data:" + response.getB());
-            System.err.println("Rate-Limit:" + response.getC());
-            throw new RuntimeException(response.getB());
+            System.err.println("Response Code:" + response.getResponseCode());
+            System.err.println("Response Data:" + response.getResponseData());
+            System.err.println("Rate-Limit:" + response.getRetryTimeout());
+            throw new RuntimeException(response.getResponseData());
         }
 
         public CompletableFuture<Object> buildAsync()
@@ -146,7 +146,7 @@ public class DataCall
             return this;
         }
 
-        private Triplet<Integer, String, Integer> getResponse(final String url) throws RuntimeException
+        private DataCallResponse<Integer, String, Integer> getResponse(final String url) throws RuntimeException
         {
             final StringBuilder data = new StringBuilder();
 
@@ -209,7 +209,7 @@ public class DataCall
 
                 if (con.getResponseCode() != 200)
                 {
-                    return new Triplet<Integer, String, Integer>(con.getResponseCode(), null, timeout);
+                    return new DataCallResponse<Integer, String, Integer>(con.getResponseCode(), null, timeout);
                 }
 
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
@@ -219,7 +219,7 @@ public class DataCall
 
                 con.disconnect();
 
-                return new Triplet<Integer, String, Integer>(con.getResponseCode(), data.toString(), timeout);
+                return new DataCallResponse<Integer, String, Integer>(con.getResponseCode(), data.toString(), timeout);
             } catch (final IOException e)
             {
                 e.printStackTrace();
@@ -335,62 +335,62 @@ public class DataCall
 
     }
 
-    public enum ResponseType
+    static class DataCallResponse<T, U, V>
     {
-        OK,
-        ERROR;
-    }
+        T responseCode;
+        U responseData;
+        V retryTimeout;
 
-    static class Triplet<T, U, V>
-    {
-        T a;
-        U b;
-        V c;
-
-        Triplet(final T a, final U b, final V c)
+        DataCallResponse(final T a, final U b, final V c)
         {
-            this.a = a;
-            this.b = b;
-            this.c = c;
+            this.responseCode = a;
+            this.responseData = b;
+            this.retryTimeout = c;
         }
 
         /**
          * Response code
          *
          */
-        T getA()
+        T getResponseCode()
         {
-            return this.a;
+            return this.responseCode;
         }
 
         /**
          * Response data
          *
          */
-        U getB()
+        U getResponseData()
         {
-            return this.b;
+            return this.responseData;
         }
 
         /**
          * Retry timeout
          *
          */
-        V getC()
+        V getRetryTimeout()
         {
-            return this.c;
+            return this.retryTimeout;
         }
+    }
+
+    public enum ResponseType
+    {
+        OK,
+        ERROR;
     }
 
     private static final Map<Server, RateLimiter> limiter                        = new HashMap<Server, RateLimiter>();
 
     private static final String                   HTTP                           = "http://";
-
     private static final String                   HTTPS                          = "https://";
-    private static final String                   LIMIT_USER                     = "service";
-    private static final String                   LIMIT_SERVICE                  = "user";
-    private static final Double                   LIMITER_PERMITS_PER_10_MINUTES = 500.0;
 
+    private static final String                   LIMIT_USER                     = "user";
+    private static final String                   LIMIT_SERVICE                  = "service";
+
+    private static final Double                   LIMITER_PERMITS_PER_10_MINUTES = 500.0;
     private static final Double                   LIMITER_10_MINUTES             = 600.0;
 
     public static DataCallBuilder builder()
@@ -398,30 +398,27 @@ public class DataCall
         return new DataCallBuilder();
     }
 
-    public static void setRateLimit(final int permits, final int seconds)
+    public static void setRateLimit(final double permits, final double seconds)
     {
-        final double permitsPerSecond = (double) permits / (double) seconds;
+        final double permitsPerSecond = permits / seconds;
         Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
     }
 
     private String                    postData      = "";
 
-    private String                    requestMethod = "GET";
     private final Map<String, String> urlData       = new TreeMap<>();
     private final Map<String, String> urlParams     = new TreeMap<>();
-
     private final Map<String, String> urlHeaders    = new TreeMap<>();
+
     private boolean                   retry         = true;
-
     private boolean                   verbose       = L4J8.verbose;
-
     private int                       retryTime     = 5;
-    private Server                    server;
+    private String                    requestMethod = "GET";
 
+    private Server                    server;
     private Server                    region;
 
     private URLEndpoint               endpoint;
-
     private APICredentials            creds;
 
 }

@@ -32,12 +32,12 @@ public class SummonerRunesTest
     @Test
     public void doTest()
     {
-        L4J8 api = new L4J8(SecretFile.CREDS);
+        final L4J8 api = new L4J8(SecretFile.CREDS);
 
         // Generate list of summoner IDs
-        String[] values = { "stelar7", "henriko950", "vibbsen" };
+        final String[] values = { "stelar7", "henriko950", "vibbsen" };
 
-        api.getSummoner(Server.EUW, values).forEach((a, b) -> b.get().getRunePages().get().forEach(doAssertions));
+        api.getSummoner(Server.EUW, values).forEach((a, b) -> b.get().getRunePages().get().forEach(this.doAssertions));
     }
 
 }

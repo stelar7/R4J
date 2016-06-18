@@ -10,7 +10,6 @@ public class ChampionMastery
     Long    championPointsSinceLastLevel;
     Long    championPointsUntilNextLevel;
     Boolean chestGranted;
-    String  highestGrade;
     Long    lastPlayTime;
     Long    playerId;
 
@@ -87,16 +86,6 @@ public class ChampionMastery
                 return false;
             }
         } else if (!this.chestGranted.equals(other.chestGranted))
-        {
-            return false;
-        }
-        if (this.highestGrade == null)
-        {
-            if (other.highestGrade != null)
-            {
-                return false;
-            }
-        } else if (!this.highestGrade.equals(other.highestGrade))
         {
             return false;
         }
@@ -184,16 +173,6 @@ public class ChampionMastery
     }
 
     /**
-     * The highest grade of this champion of current season.
-     *
-     * @return the highest grade
-     */
-    public String getHighestGrade()
-    {
-        return this.highestGrade;
-    }
-
-    /**
      * Last time this champion was played by this player - in Unix milliseconds time format.
      *
      * @return the last play time
@@ -234,7 +213,6 @@ public class ChampionMastery
         result = (prime * result) + ((this.championPointsSinceLastLevel == null) ? 0 : this.championPointsSinceLastLevel.hashCode());
         result = (prime * result) + ((this.championPointsUntilNextLevel == null) ? 0 : this.championPointsUntilNextLevel.hashCode());
         result = (prime * result) + ((this.chestGranted == null) ? 0 : this.chestGranted.hashCode());
-        result = (prime * result) + ((this.highestGrade == null) ? 0 : this.highestGrade.hashCode());
         result = (prime * result) + ((this.lastPlayTime == null) ? 0 : this.lastPlayTime.hashCode());
         result = (prime * result) + ((this.playerId == null) ? 0 : this.playerId.hashCode());
         return result;
@@ -248,7 +226,7 @@ public class ChampionMastery
     @Override
     public String toString()
     {
-        return "ChampionMastery [championId=" + this.championId + ", championLevel=" + this.championLevel + ", championPoints=" + this.championPoints + ", championPointsSinceLastLevel=" + this.championPointsSinceLastLevel + ", championPointsUntilNextLevel=" + this.championPointsUntilNextLevel + ", chestGranted=" + this.chestGranted + ", highestGrade=" + this.highestGrade + ", lastPlayTime=" + this.lastPlayTime + ", playerId=" + this.playerId + "]";
+        return "ChampionMastery [championId=" + this.championId + ", championLevel=" + this.championLevel + ", championPoints=" + this.championPoints + ", championPointsSinceLastLevel=" + this.championPointsSinceLastLevel + ", championPointsUntilNextLevel=" + this.championPointsUntilNextLevel + ", chestGranted=" + this.chestGranted + ", lastPlayTime=" + this.lastPlayTime + ", playerId=" + this.playerId + "]";
     }
 
 }
