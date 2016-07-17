@@ -89,5 +89,9 @@ public enum PlayerStatSummaryType
     /**
      * Black Market Brawlers games
      */
-    Bilgewater;
+    Bilgewater,
+    /**
+     * Nexus Siege games
+     */
+    Siege,;
 }

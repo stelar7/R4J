@@ -142,6 +142,14 @@ public enum GameQueueType
      */
     BILGEWATER_5x5(313),
     /**
+     * Nexux Siege games
+     */
+    SIEGE(315),
+    /**
+     * Definitely Not Dominion games
+     */
+    DEFINITELY_NOT_DOMINION_5x5(317),
+    /**
      * Normal 5v5 Draft Pick games (Dynamic Queue)
      */
     TEAM_BUILDER_DRAFT_UNRANKED_5x5(400),

@@ -43,7 +43,7 @@ public class DataCall
 
             if (isServerRatelimited && isToRatelimitedURL)
             {
-                DataCall.limiter.computeIfAbsent(this.dc.server, (final Server s) -> RateLimiter.create(DataCall.LIMITER_PERMITS_PER_10_MINUTES / DataCall.LIMITER_10_MINUTES)).acquire();
+                DataCall.limiter.computeIfAbsent(this.dc.server, (final Server s) -> RateLimiter.create(DataCall.DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DataCall.DEFAULT_LIMITER_10_MINUTES)).acquire();
             }
 
             final String url = this.getURL();
@@ -200,11 +200,30 @@ public class DataCall
                 final String limitType = con.getHeaderField("X-Rate-Limit-Type");
                 int timeout = 0;
 
-                if ((limitType != null) && (limitType.equals(DataCall.LIMIT_USER) || limitType.equals(DataCall.LIMIT_SERVICE)))
+                if (limitType != null)
                 {
-                    final String timeoutString = con.getHeaderField("Retry-After");
+                    if ((limitType.equals(DataCall.LIMIT_USER) || limitType.equals(DataCall.LIMIT_SERVICE)))
+                    {
+                        final String timeoutString = con.getHeaderField("Retry-After");
 
-                    timeout = timeoutString == null ? this.dc.retryTime : Integer.parseInt(timeoutString);
+                        timeout = timeoutString == null ? this.dc.retryTime : Integer.parseInt(timeoutString);
+                    } else
+                    {
+                        timeout = this.dc.retryTime;
+                    }
+                }
+                final String limitCount = con.getHeaderField("X-Rate-Limit-Count");
+
+                if (limitCount != null)
+                {
+                    String[] limits = limitCount.split(",");
+                    for (String limitPair : limits)
+                    {
+                        String[] limit = limitPair.split(":");
+                        Integer call = Integer.parseInt(limit[0]);
+                        Integer time = Integer.parseInt(limit[1]);
+                        calls.put(time, call);
+                    }
                 }
 
                 if (con.getResponseCode() != 200)
@@ -376,10 +395,14 @@ public class DataCall
         }
     }
 
-    public enum ResponseType
+    public static int getCallsInTimePeriod(int period)
     {
-        OK,
-        ERROR;
+        return calls.get(period);
+    }
+
+    public static Map<Integer, Integer> getCalls()
+    {
+        return calls;
     }
 
     private static final Map<Server, RateLimiter> limiter                        = new HashMap<Server, RateLimiter>();
@@ -390,8 +413,8 @@ public class DataCall
     private static final String                   LIMIT_USER                     = "user";
     private static final String                   LIMIT_SERVICE                  = "service";
 
-    private static final Double                   LIMITER_PERMITS_PER_10_MINUTES = 500.0;
-    private static final Double                   LIMITER_10_MINUTES             = 600.0;
+    private static final Double                   DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
+    private static final Double                   DEFAULT_LIMITER_10_MINUTES             = 600.0;
 
     public static DataCallBuilder builder()
     {
@@ -404,21 +427,23 @@ public class DataCall
         Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
     }
 
-    private String                    postData      = "";
+    private String                       postData      = "";
 
-    private final Map<String, String> urlData       = new TreeMap<>();
-    private final Map<String, String> urlParams     = new TreeMap<>();
-    private final Map<String, String> urlHeaders    = new TreeMap<>();
+    private final Map<String, String>    urlData       = new TreeMap<>();
+    private final Map<String, String>    urlParams     = new TreeMap<>();
+    private final Map<String, String>    urlHeaders    = new TreeMap<>();
 
-    private boolean                   retry         = true;
-    private boolean                   verbose       = L4J8.verbose;
-    private int                       retryTime     = 5;
-    private String                    requestMethod = "GET";
+    private boolean                      retry         = true;
+    private boolean                      verbose       = L4J8.verbose;
+    private int                          retryTime     = 5;
+    private String                       requestMethod = "GET";
 
-    private Server                    server;
-    private Server                    region;
+    private Server                       server;
+    private Server                       region;
 
-    private URLEndpoint               endpoint;
-    private APICredentials            creds;
+    private URLEndpoint                  endpoint;
+    private APICredentials               creds;
+
+    private static Map<Integer, Integer> calls         = new HashMap<>();
 
 }

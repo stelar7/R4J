@@ -36,7 +36,11 @@ public enum GameMode
     /**
      * King Poro games
      */
-    KINGPORO;
+    KINGPORO,
+    /**
+     * Nexus Siege games
+     */
+    SIEGE,;
 
     /**
      * Returns a GameMode from the provided code

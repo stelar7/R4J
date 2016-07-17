@@ -96,7 +96,11 @@ public enum GameSubType
     /**
      * Black Market Brawlers games
      */
-    BILGEWATER,;
+    BILGEWATER,
+    /**
+     * Nexus Siege games
+     */
+    SIEGE,;
 
     public static Optional<GameSubType> getFromCode(final String subType)
     {
