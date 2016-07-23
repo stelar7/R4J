@@ -44,7 +44,7 @@ public class TournamentBuilder
     /**
      * A list of all matches played with this tournament code...
      */
-    public List<Long> getMatchIds(final String tournamentCode)
+    public List<Long> getMatchIds(final String tournamentCode, Server server)
     {
         DataCallBuilder builder = new DataCallBuilder();
 
@@ -52,7 +52,7 @@ public class TournamentBuilder
         builder = builder.withHeader("X-Riot-Token", this.creds.getTournament());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH);
         builder = builder.withURLData("{tournamentCode}", tournamentCode);
-        builder = builder.withServer(Server.EUW);
+        builder = builder.withServer(server); // TODO should this be GLOBAL..?
         builder = builder.asVerbose(true);
 
         final List<Long> code = (List<Long>) builder.build();

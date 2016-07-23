@@ -24,12 +24,23 @@ public class DataCall
         private final BiFunction<String, String, String> merge      = ((o, n) -> o + "," + n);
         final StringBuilder                              urlBuilder = new StringBuilder();
 
-        public DataCallBuilder asVerbose(final boolean verbose)
+        /**
+         * Print out as much data as possible about this call
+         * 
+         * @param flag
+         * @return this
+         */
+        public DataCallBuilder asVerbose(final boolean flag)
         {
-            this.dc.verbose = verbose;
+            this.dc.verbose = flag;
             return this;
         }
 
+        /**
+         * Puts together all the data, and then returns an object representing the JSON from the call
+         * 
+         * @return an object generated from the requested JSON
+         */
         public Object build()
         {
 
@@ -47,7 +58,7 @@ public class DataCall
             }
 
             final String url = this.getURL();
-            final DataCallResponse<Integer, String, Integer> response = this.getResponse(url);
+            final DataCallResponse response = this.getResponse(url);
 
             try
             {
@@ -129,24 +140,47 @@ public class DataCall
             throw new RuntimeException(response.getResponseData());
         }
 
+        /**
+         * Builds this call in an async way
+         * 
+         * @return a call that will complete in the future
+         */
         public CompletableFuture<Object> buildAsync()
         {
             return CompletableFuture.supplyAsync(() -> this.build());
         }
 
+        /**
+         * Clears all the set data from the URL
+         * 
+         * @return
+         */
         public DataCallBuilder clearURLData()
         {
             this.dc.urlData.clear();
             return this;
         }
 
+        /**
+         * Clears all the set parameters on the URL
+         * 
+         * @return this
+         */
         public DataCallBuilder clearURLParameter()
         {
             this.dc.urlParams.clear();
             return this;
         }
 
-        private DataCallResponse<Integer, String, Integer> getResponse(final String url) throws RuntimeException
+        /**
+         * Opens a connection to the URL, then reads the data into a Response.
+         * 
+         * @param url
+         *            the URL to call
+         * @return a DataCallResponse with the data from the call
+         * @throws RuntimeException
+         */
+        private DataCallResponse getResponse(final String url) throws RuntimeException
         {
             final StringBuilder data = new StringBuilder();
 
@@ -228,7 +262,7 @@ public class DataCall
 
                 if (con.getResponseCode() != 200)
                 {
-                    return new DataCallResponse<Integer, String, Integer>(con.getResponseCode(), null, timeout);
+                    return new DataCallResponse(con.getResponseCode(), null, timeout);
                 }
 
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
@@ -238,7 +272,7 @@ public class DataCall
 
                 con.disconnect();
 
-                return new DataCallResponse<Integer, String, Integer>(con.getResponseCode(), data.toString(), timeout);
+                return new DataCallResponse(con.getResponseCode(), data.toString(), timeout);
             } catch (final IOException e)
             {
                 e.printStackTrace();
@@ -247,6 +281,11 @@ public class DataCall
             throw new RuntimeException("Reached end of getResponse, without a valid response!!\n");
         }
 
+        /**
+         * Generates the URL to use for the call.
+         * 
+         * @return the URL to use for the call.
+         */
         public String getURL()
         {
             if (this.urlBuilder.length() != 0)
@@ -286,66 +325,149 @@ public class DataCall
             return this.urlBuilder.toString();
         }
 
+        /**
+         * Sets the APICredentials to use for this call
+         * 
+         * @param creds
+         *            the APICredentials to use for the call
+         * @return this
+         */
         public DataCallBuilder withAPICredentials(final APICredentials creds)
         {
             this.dc.creds = creds;
             return this;
         }
 
+        /**
+         * Sets the endpoint to make the call to
+         * 
+         * @param endpoint
+         *            the endpoint to make the call to
+         * @return this
+         */
         public DataCallBuilder withEndpoint(final URLEndpoint endpoint)
         {
             this.dc.endpoint = endpoint;
             return this;
         }
 
+        /**
+         * Sets the headers to use with the call
+         * 
+         * @param key
+         *            the header key
+         * @param value
+         *            the header value
+         * @return this
+         */
         public DataCallBuilder withHeader(final String key, final String value)
         {
             this.dc.urlHeaders.merge(key, value, this.merge);
             return this;
         }
 
+        /**
+         * Sets the data to send with the request if its a POST call
+         * 
+         * @param data
+         *            the data to send
+         * @return this
+         */
         public DataCallBuilder withPostData(final String data)
         {
             this.dc.postData = data;
             return this;
         }
 
+        /**
+         * The region to make this call to. This is part of the URL, "{region}"
+         * 
+         * @param region
+         *            the region to make the call to
+         * @return this
+         */
         public DataCallBuilder withRegion(final Server region)
         {
             this.dc.region = region;
             return this;
         }
 
-        public DataCallBuilder withRequestMethod(final String data)
+        /**
+         * The request-method on the call (usually GET or POST)
+         * 
+         * @param method
+         *            the request method
+         * @return this
+         */
+        public DataCallBuilder withRequestMethod(final String method)
         {
-            this.dc.requestMethod = data;
+            this.dc.requestMethod = method;
             return this;
         }
 
-        public DataCallBuilder withRetryOn429(final boolean retry)
+        /**
+         * The call should retry if it hits a 429 - Too Many Requests
+         * 
+         * @param flag
+         *            if it should retry
+         * @return this
+         */
+        public DataCallBuilder withRetryOn429(final boolean flag)
         {
-            this.dc.retry = retry;
+            this.dc.retry = flag;
             return this;
         }
 
+        /**
+         * The time to wait to retry, if the call fails
+         * 
+         * @param retryTime
+         *            the time to wait
+         * @return this
+         */
         public DataCallBuilder withRetryTime(final int retryTime)
         {
             this.dc.retryTime = retryTime;
             return this;
         }
 
+        /**
+         * Set the server to make this call to. (ie. EUW)
+         * 
+         * @param server
+         *            the server to make the call to
+         * @return this
+         */
         public DataCallBuilder withServer(final Server server)
         {
             this.dc.server = server;
             return this;
         }
 
+        /**
+         * Replaces placeholders in the URL (ie. {region})
+         * 
+         * @param key
+         *            The key to replace (ie. {region})
+         * @param value
+         *            The data to replace it with (ie. EUW)
+         * @return this
+         */
         public DataCallBuilder withURLData(final String key, final String value)
         {
             this.dc.urlData.merge(key, value, this.merge);
             return this;
         }
 
+        /**
+         * Adds parameters to the url (ie. ?api_key)
+         * 
+         * @param key
+         *            the parameter to add (ie. api_key)
+         * @param value
+         *            the value to add after the parameter (ie. 6fa459ea-ee8a-3ca4-894e-db77e160355e)
+         * @return this
+         */
         public DataCallBuilder withURLParameter(final String key, final String value)
         {
             this.dc.urlParams.merge(key, value, this.merge);
@@ -354,13 +476,13 @@ public class DataCall
 
     }
 
-    static class DataCallResponse<T, U, V>
+    static class DataCallResponse
     {
-        T responseCode;
-        U responseData;
-        V retryTimeout;
+        int    responseCode;
+        String responseData;
+        int    retryTimeout;
 
-        DataCallResponse(final T a, final U b, final V c)
+        DataCallResponse(final int a, final String b, final int c)
         {
             this.responseCode = a;
             this.responseData = b;
@@ -371,7 +493,7 @@ public class DataCall
          * Response code
          *
          */
-        T getResponseCode()
+        int getResponseCode()
         {
             return this.responseCode;
         }
@@ -380,7 +502,7 @@ public class DataCall
          * Response data
          *
          */
-        U getResponseData()
+        String getResponseData()
         {
             return this.responseData;
         }
@@ -389,7 +511,7 @@ public class DataCall
          * Retry timeout
          *
          */
-        V getRetryTimeout()
+        int getRetryTimeout()
         {
             return this.retryTimeout;
         }
@@ -405,13 +527,19 @@ public class DataCall
         return calls;
     }
 
-    private static final Map<Server, RateLimiter> limiter                        = new HashMap<Server, RateLimiter>();
+    private static final Map<Server, RateLimiter> limiter                                = new HashMap<Server, RateLimiter>()
+                                                                                         {
+                                                                                             {
+                                                                                                 final double permitsPerSecond = DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DEFAULT_LIMITER_10_MINUTES;
+                                                                                                 Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
+                                                                                             }
+                                                                                         };
 
-    private static final String                   HTTP                           = "http://";
-    private static final String                   HTTPS                          = "https://";
+    private static final String                   HTTP                                   = "http://";
+    private static final String                   HTTPS                                  = "https://";
 
-    private static final String                   LIMIT_USER                     = "user";
-    private static final String                   LIMIT_SERVICE                  = "service";
+    private static final String                   LIMIT_USER                             = "user";
+    private static final String                   LIMIT_SERVICE                          = "service";
 
     private static final Double                   DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
     private static final Double                   DEFAULT_LIMITER_10_MINUTES             = 600.0;
@@ -419,12 +547,6 @@ public class DataCall
     public static DataCallBuilder builder()
     {
         return new DataCallBuilder();
-    }
-
-    public static void setRateLimit(final double permits, final double seconds)
-    {
-        final double permitsPerSecond = permits / seconds;
-        Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
     }
 
     private String                       postData      = "";

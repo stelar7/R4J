@@ -27,7 +27,9 @@ public class L4J8
 
         if (ids.size() > 40)
         {
-            finalResult.putAll(this.getSummoner(server, ids.subList(39, ids.size()).toArray(new Long[40])));
+            // Recursively call this method, so it can be called with an arbitrary amount of userids
+            List<Long> subList = ids.subList(39, ids.size());
+            finalResult.putAll(this.getSummoner(server, subList.toArray(new Long[subList.size()])));
         }
 
         // Build the query

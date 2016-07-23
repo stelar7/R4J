@@ -59,7 +59,7 @@ public class TournamentTest
     public void testPostGameData()
     {
         final String code = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
-        final List<Long> tournamentCodeMatchIds = this.builder.getMatchIds(code);
+        final List<Long> tournamentCodeMatchIds = this.builder.getMatchIds(code, Server.EUW);
         tournamentCodeMatchIds.forEach(System.out::println);
 
         final MatchDetail matchDetail = this.builder.getMatchInfo(code, tournamentCodeMatchIds.get(0));
@@ -110,7 +110,7 @@ public class TournamentTest
     public void testTournamentMatchDetails()
     {
         final String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
-        final MatchDetail eventWrapper = this.builder.getMatchInfo(tournamentCode, this.builder.getMatchIds(tournamentCode).get(0));
+        final MatchDetail eventWrapper = this.builder.getMatchInfo(tournamentCode, this.builder.getMatchIds(tournamentCode, Server.EUW).get(0));
         System.out.println(eventWrapper);
     }
 
@@ -118,7 +118,7 @@ public class TournamentTest
     public void testTournamentMatchIds()
     {
         final String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
-        final List<Long> eventWrapper = this.builder.getMatchIds(tournamentCode);
+        final List<Long> eventWrapper = this.builder.getMatchIds(tournamentCode, Server.EUW);
         eventWrapper.forEach(System.out::println);
     }
 
