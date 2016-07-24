@@ -22,16 +22,15 @@ public class ChampionMasteryTest
         builder.withServer(Server.EUW);
         builder.withRegion(Server.EUW);
         builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY);
-        builder.withURLData("{platformId}", Platform.EUW1.getCode());
-        builder.withURLData("{summonerId}", "19613950");
+        builder.withURLData(Constants.PLATFORM_ID, Platform.EUW1.getCode());
+        builder.withURLData(Constants.SUMMONER_ID, "19613950");
 
         // Get the response
         final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
 
-        data.forEach(inner -> {
-            // Make sure all the data is returned as expected
-            Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L);
-        });
+        data.forEach(inner ->
+        // Make sure all the data is returned as expected
+        Assert.assertTrue("the summonerId changed?", inner.getPlayerId() == 19613950L));
     }
 
     @Test
@@ -44,9 +43,9 @@ public class ChampionMasteryTest
 
         builder.withServer(Server.EUW);
         builder.withRegion(Server.EUW);
-        builder.withURLData("{platformId}", Platform.EUW1.getCode());
-        builder.withURLData("{summonerId}", "19613950");
-        builder.withURLData("{championId}", String.valueOf(Champion.LEONA.getId()));
+        builder.withURLData(Constants.PLATFORM_ID, Platform.EUW1.getCode());
+        builder.withURLData(Constants.SUMMONER_ID, "19613950");
+        builder.withURLData(Constants.CHAMPION_ID, String.valueOf(Champion.LEONA.getId()));
 
         // Get the response
         final ChampionMastery data = (ChampionMastery) builder.build();
@@ -79,10 +78,9 @@ public class ChampionMasteryTest
         // Get the response
         final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
 
-        data.forEach(inner -> {
-            // Make sure all the data is returned as expected
-            Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L);
-        });
+        data.forEach(inner ->
+        // Make sure all the data is returned as expected
+        Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L));
 
     }
 

@@ -26,7 +26,7 @@ public class ChampionByIdTest extends TestBase
     @Test
     public void testMany()
     {
-        TestBase.builder.withURLData("{championId}", "");
+        TestBase.builder.withURLData(Constants.CHAMPION_ID, "");
         final List<Champion> champs = this.objectToList((ChampionList) TestBase.builder.build());
 
         Assert.assertTrue("Less than 100 champions?", champs.size() > 100);
@@ -35,7 +35,7 @@ public class ChampionByIdTest extends TestBase
     @Test
     public void testManyWithParam()
     {
-        TestBase.builder.withURLData("{championId}", "");
+        TestBase.builder.withURLData(Constants.CHAMPION_ID, "");
         TestBase.builder.withURLParameter("freeToPlay", "true");
         final List<Champion> champs = this.objectToList((ChampionList) TestBase.builder.build());
 
@@ -45,9 +45,9 @@ public class ChampionByIdTest extends TestBase
     @Test
     public void testSingle()
     {
-        TestBase.builder.withURLData("{championId}", "266");
+        TestBase.builder.withURLData(Constants.CHAMPION_ID, "266");
         TestBase.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
-        final Champion champs = ((Champion) TestBase.builder.build());
+        final Champion champs = (Champion) TestBase.builder.build();
 
         Assert.assertTrue("Champion id is not 266?", champs.getId().equals(266));
     }

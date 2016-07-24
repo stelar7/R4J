@@ -116,66 +116,71 @@ public class DataCall
             final String url = this.getURL();
             final DataCallResponse response = this.getResponse(url);
 
-            try
+            if ((response.getResponseCode() == 200) || (response.getResponseCode() == 204))
             {
-                if ((response.getResponseCode() == 200) || (response.getResponseCode() == 204))
+                final Object type = this.dc.endpoint.getType();
+                Object dtoobj;
+                if (type instanceof Class<?>)
                 {
-                    final Object type = this.dc.endpoint.getType();
-                    Object dtoobj;
-                    if (type instanceof Class<?>)
-                    {
-                        dtoobj = new Gson().fromJson(response.getResponseData(), (Class<?>) this.dc.endpoint.getType());
-                    } else
-                    {
-                        dtoobj = new Gson().fromJson(response.getResponseData(), (Type) this.dc.endpoint.getType());
-                    }
-
-                    if (dtoobj instanceof Map)
-                    {
-                        final Map<?, ?> map = (Map<?, ?>) dtoobj;
-                        map.values().stream().filter(value -> value instanceof Summoner).forEach(this::setServerOnSummoner);
-                    }
-
-                    return dtoobj;
+                    dtoobj = new Gson().fromJson(response.getResponseData(), (Class<?>) this.dc.endpoint.getType());
+                } else
+                {
+                    dtoobj = new Gson().fromJson(response.getResponseData(), (Type) this.dc.endpoint.getType());
                 }
 
-                if (response.getResponseCode() == 404)
+                if (dtoobj instanceof Map)
                 {
-                    return Optional.empty();
+                    final Map<?, ?> map = (Map<?, ?>) dtoobj;
+                    map.values().stream().filter(value -> value instanceof Summoner).forEach(this::setServerOnSummoner);
                 }
 
-                if (response.getResponseCode() == 429)
+                return dtoobj;
+            }
+
+            if (response.getResponseCode() == 404)
+            {
+                return Optional.empty();
+            }
+
+            if (response.getResponseCode() == 429)
+            {
+
+                if (this.dc.verbose)
                 {
+                    LOGGER.log(Level.INFO, "HIT 429, WAITING " + response.getRetryTimeout() + " SECOND(S) THEN TRYING AGAIN");
+                }
 
-                    if (this.dc.verbose)
-                    {
-                        LOGGER.log(Level.INFO, "HIT 429, WAITING " + response.getRetryTimeout() + " SECOND(S) THEN TRYING AGAIN");
-                    }
-
-                    if (this.dc.retry)
+                if (this.dc.retry)
+                {
+                    try
                     {
                         TimeUnit.SECONDS.sleep(response.getRetryTimeout());
                         return this.build();
+                    } catch (Exception e)
+                    {
+                        LOGGER.log(Level.WARNING, e.getMessage(), e);
                     }
                 }
+            }
 
-                if (response.getResponseCode() == 500)
+            if (response.getResponseCode() == 500)
+            {
+                if (this.dc.verbose)
                 {
-                    if (this.dc.verbose)
-                    {
-                        LOGGER.log(Level.INFO, "HIT 500 ERROR, WAITING 1 SECOND(S) THEN TRYING AGAIN");
-                    }
+                    LOGGER.log(Level.INFO, "HIT 500 ERROR, WAITING 1 SECOND(S) THEN TRYING AGAIN");
+                }
 
-                    if (this.dc.retry)
+                if (this.dc.retry)
+                {
+                    try
                     {
                         TimeUnit.SECONDS.sleep(1);
                         return this.build();
+                    } catch (Exception e)
+                    {
+                        LOGGER.log(Level.WARNING, e.getMessage(), e);
                     }
                 }
-
-            } catch (final Exception e)
-            {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
 
             LOGGER.log(Level.WARNING, "Response Code:" + response.getResponseCode());

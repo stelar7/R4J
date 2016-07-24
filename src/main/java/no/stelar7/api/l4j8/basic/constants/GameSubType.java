@@ -16,7 +16,7 @@ public enum GameSubType
     /**
      * Twisted Treeline unranked games
      */
-    NORMAL_3x3,
+    NORMAL_3X3,
     /**
      * Dominion/Crystal Scar games
      */
@@ -24,7 +24,7 @@ public enum GameSubType
     /**
      * ARAM / Howling Abyss games
      */
-    ARAM_UNRANKED_5x5,
+    ARAM_UNRANKED_5X5,
     /**
      * Summoner's Rift and Crystal Scar games played against Intro, Beginner, or Intermediate AI
      */
@@ -32,39 +32,39 @@ public enum GameSubType
     /**
      * Twisted Treeline games played against AI
      */
-    BOT_3x3,
+    BOT_3X3,
     /**
      * Summoner's Rift ranked solo queue games
      */
-    RANKED_SOLO_5x5,
+    RANKED_SOLO_5X5,
     /**
      * Twisted Treeline ranked team games
      */
-    RANKED_TEAM_3x3,
+    RANKED_TEAM_3X3,
     /**
      * Summoner's Rift ranked team games
      */
-    RANKED_TEAM_5x5,
+    RANKED_TEAM_5X5,
     /**
      * One for All games
      */
-    ONEFORALL_5x5,
+    ONEFORALL_5X5,
     /**
      * Snowdown Showdown 1x1 games
      */
-    FIRSTBLOOD_1x1,
+    FIRSTBLOOD_1X1,
     /**
      * Snowdown Showdown 2x2 games
      */
-    FIRSTBLOOD_2x2,
+    FIRSTBLOOD_2X2,
     /**
      * Summoner's Rift 6x6 Hexakill games
      */
-    SR_6x6,
+    SR_6X6,
     /**
      * Team Builder games
      */
-    CAP_5x5,
+    CAP_5X5,
     /**
      * Ultra Rapid Fire games
      */
@@ -104,6 +104,6 @@ public enum GameSubType
 
     public static Optional<GameSubType> getFromCode(final String subType)
     {
-        return Stream.of(GameSubType.values()).filter(t -> t.name().equals(subType)).findFirst();
+        return Stream.of(GameSubType.values()).filter(t -> t.name().equalsIgnoreCase(subType)).findFirst();
     }
 }

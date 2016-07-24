@@ -51,7 +51,7 @@ public enum GameMode
      */
     public static Optional<GameMode> getFromCode(final String gameMode)
     {
-        return Stream.of(GameMode.values()).filter(t -> t.name().equals(gameMode)).findFirst();
+        return Stream.of(GameMode.values()).filter(t -> t.name().equalsIgnoreCase(gameMode)).findFirst();
     }
 
     /**

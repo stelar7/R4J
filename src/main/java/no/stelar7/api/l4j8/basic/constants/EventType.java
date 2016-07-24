@@ -28,7 +28,7 @@ public enum EventType
      */
     public static Optional<EventType> getFromCode(final String type)
     {
-        return Stream.of(EventType.values()).filter(t -> t.name().equals(type)).findFirst();
+        return Stream.of(EventType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
 
     /**

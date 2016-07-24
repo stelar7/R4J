@@ -22,7 +22,7 @@ public enum WardType
      */
     public static Optional<WardType> getFromCode(final String type)
     {
-        return Stream.of(WardType.values()).filter(t -> t.name().equals(type)).findFirst();
+        return Stream.of(WardType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
 
     /**

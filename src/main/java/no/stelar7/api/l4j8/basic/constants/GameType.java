@@ -27,7 +27,7 @@ public enum GameType
      */
     public static Optional<GameType> getFromCode(final String gameType)
     {
-        return Stream.of(GameType.values()).filter(t -> t.name().equals(gameType)).findFirst();
+        return Stream.of(GameType.values()).filter(t -> t.name().equalsIgnoreCase(gameType)).findFirst();
     }
 
     /**

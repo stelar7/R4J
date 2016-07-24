@@ -25,9 +25,11 @@ public enum Lane
      */
     BOT("BOT", "BOTTOM", "BOT_LANE");
 
-    public static Optional<Lane> getFromCode(final String code)
+    String[] keys;
+
+    Lane(final String... keys)
     {
-        return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
+        this.keys = keys;
     }
 
     /**
@@ -37,12 +39,9 @@ public enum Lane
      *            the lookup key
      * @return Lane
      */
-
-    String[] keys;
-
-    Lane(final String... keys)
+    public static Optional<Lane> getFromCode(final String code)
     {
-        this.keys = keys;
+        return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }
 
     /**

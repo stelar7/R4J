@@ -13,7 +13,7 @@ public class SummonerIdParams
 
     public SummonerIdParams(final Set<Long> set)
     {
-        this.participants = new HashSet<Number>();
+        this.participants = new HashSet<>();
         for (final Number id : set)
         {
             this.participants.add(id);

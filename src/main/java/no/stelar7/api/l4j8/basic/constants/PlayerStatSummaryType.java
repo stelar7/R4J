@@ -5,59 +5,59 @@ public enum PlayerStatSummaryType
     /**
      * Summoner's Rift unranked games
      */
-    Unranked,
+    UNRANKED,
     /**
      * Twisted Treeline unranked games
      */
-    Unranked3x3,
+    UNRANKED3X3,
     /**
      * Dominion/Crystal Scar games
      */
-    OdinUnranked,
+    ODINUNRANKED,
     /**
      * ARAM / Howling Abyss games
      */
-    AramUnranked5x5,
+    ARAMUNRANKED5X5,
     /**
      * Summoner's Rift and Crystal Scar games played against AI
      */
-    CoopVsAI,
+    COOPVSAI,
     /**
      * Twisted Treeline games played against AI
      */
-    CoopVsAI3x3,
+    COOPVSAI3X3,
     /**
      * Summoner's Rift ranked solo queue games
      */
-    RankedSolo5x5,
+    RANKEDSOLO5X5,
     /**
      * Twisted Treeline ranked team games
      */
-    RankedTeam3x3,
+    RANKEDTEAM3X3,
     /**
      * Summoner's Rift ranked team games
      */
-    RankedTeam5x5,
+    RANKEDTEAM5X5,
     /**
      * One for All games
      */
-    OneForAll5x5,
+    ONEFORALL5X5,
     /**
      * Snowdown Showdown 1x1 games
      */
-    FirstBlood1x1,
+    FIRSTBLOOD1X1,
     /**
      * Snowdown Showdown 2x2 games
      */
-    FirstBlood2x2,
+    FIRSTBLOOD2X2,
     /**
      * Summoner's Rift 6x6 Hexakill games
      */
-    SummonersRift6x6,
+    SUMMONERSRIFT6X6,
     /**
      * Team Builder games
      */
-    CAP5x5,
+    CAP5X5,
     /**
      * Ultra Rapid Fire games
      */
@@ -65,33 +65,33 @@ public enum PlayerStatSummaryType
     /**
      * Ultra Rapid Fire games played against AI
      */
-    URFBots,
+    URFBOTS,
     /**
      * Summoner's Rift games played against Nightmare AI
      */
-    NightmareBot,
+    NIGHTMAREBOT,
     /**
      * Ascension games
      */
-    Ascension,
+    ASCENSION,
     /**
      * Twisted Treeline 6x6 Hexakill games
      */
-    Hexakill,
+    HEXAKILL,
     /**
      * King Poro games
      */
-    KingPoro,
+    KINGPORO,
     /**
      * Nemesis games
      */
-    CounterPick,
+    COUNTERPICK,
     /**
      * Black Market Brawlers games
      */
-    Bilgewater,
+    BILGEWATER,
     /**
      * Nexus Siege games
      */
-    Siege,;
+    SIEGE,;
 }

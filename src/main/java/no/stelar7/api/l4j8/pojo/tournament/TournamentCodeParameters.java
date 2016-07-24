@@ -16,7 +16,7 @@ public class TournamentCodeParameters
 
     public TournamentCodeParameters()
     {
-
+        // GSON needs an empty constructor to initialize.. i think..?
     }
 
     public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final Integer teamSize)

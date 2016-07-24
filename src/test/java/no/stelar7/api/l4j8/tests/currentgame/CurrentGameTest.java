@@ -8,14 +8,17 @@ import org.junit.runners.*;
 import no.stelar7.api.l4j8.basic.*;
 import no.stelar7.api.l4j8.basic.DataCall.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.currentgame.*;
 import no.stelar7.api.l4j8.pojo.featuredgames.*;
 import no.stelar7.api.l4j8.pojo.summoner.*;
+import no.stelar7.api.l4j8.tests.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CurrentGameTest
 {
 
+    L4J8            l4j8            = new L4J8(SecretFile.CREDS);
     DataCallBuilder featuredbuilder = DataCall.builder();
     DataCallBuilder currentbuilder  = DataCall.builder();
     DataCallBuilder idbuilder       = DataCall.builder();
@@ -33,7 +36,7 @@ public class CurrentGameTest
         this.idbuilder.withURLData("{summonerName}", parsedName);
 
         final Object data = this.idbuilder.build();
-        final Map<String, Summoner> datamap = ((Map<String, Summoner>) data);
+        final Map<String, Summoner> datamap = (Map<String, Summoner>) data;
 
         // get the summoners id
         final Long id = datamap.get(parsedName).getId();
@@ -43,6 +46,8 @@ public class CurrentGameTest
 
         // our ongoing game
         final CurrentGameInfo currentGame = (CurrentGameInfo) this.currentbuilder.build();
+
+        Assert.assertEquals("A CurrentGameParticipant is not equal to it self", currentGame.getParticipants().get(0), currentGame.getParticipants().get(0));
 
         Assert.assertNotNull("bannedchampion is null", currentGame.getBannedChampions());
         Assert.assertNotNull("gameid is null", currentGame.getGameId());

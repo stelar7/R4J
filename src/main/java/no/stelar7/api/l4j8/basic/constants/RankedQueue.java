@@ -5,9 +5,9 @@ import java.util.stream.*;
 
 public enum RankedQueue
 {
-    RANKED_SOLO_5x5,
-    RANKED_TEAM_5x5,
-    RANKED_TEAM_3x3;
+    RANKED_SOLO_5X5,
+    RANKED_TEAM_5X5,
+    RANKED_TEAM_3X3;
 
     /**
      * Returns a RankedQueue from the provided code
@@ -18,7 +18,7 @@ public enum RankedQueue
      */
     public static Optional<RankedQueue> getFromCode(final String code)
     {
-        return Stream.of(RankedQueue.values()).filter(t -> t.name().equals(code)).findFirst();
+        return Stream.of(RankedQueue.values()).filter(t -> t.name().equalsIgnoreCase(code)).findFirst();
     }
 
     /**

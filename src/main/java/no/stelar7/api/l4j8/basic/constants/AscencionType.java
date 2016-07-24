@@ -18,7 +18,7 @@ public enum AscencionType
      */
     public static Optional<AscencionType> getFromCode(final String type)
     {
-        return Stream.of(AscencionType.values()).filter(t -> t.name().equals(type)).findFirst();
+        return Stream.of(AscencionType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
 
     /**

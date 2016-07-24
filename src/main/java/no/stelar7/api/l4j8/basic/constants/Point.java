@@ -20,7 +20,7 @@ public enum Point
      */
     public static Optional<Point> getFromCode(final String type)
     {
-        return Stream.of(Point.values()).filter(t -> t.name().equals(type)).findFirst();
+        return Stream.of(Point.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
 
     /**

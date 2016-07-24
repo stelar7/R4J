@@ -11,9 +11,7 @@ import no.stelar7.api.l4j8.tests.*;
 public class SummonerNameById extends TestBase
 {
 
-    private final BiConsumer<String, String> doAssertions = (final String key, final String value) -> {
-        Assert.assertNotNull("No returned value for id ", value);
-    };
+    private final BiConsumer<String, String> doAssertions = (final String key, final String value) -> Assert.assertNotNull("No returned value for id ", value);
 
     @Test
     public void doTest()

@@ -36,7 +36,7 @@ public enum Role
      */
     public static Optional<Role> getFromCode(final String code)
     {
-        return Stream.of(Role.values()).filter(t -> t.name().equals(code)).findFirst();
+        return Stream.of(Role.values()).filter(t -> t.name().equalsIgnoreCase(code)).findFirst();
     }
 
     /**

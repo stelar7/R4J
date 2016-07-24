@@ -32,7 +32,7 @@ public class MatchListTest extends TestBase
         Assert.assertNotNull("REGION is null", match.getRegion());
 
         Assert.assertEquals("Unexpected Champion Id", Champion.LEONA, match.getChampion().get());
-        Assert.assertEquals("Unexpected Queue", RankedQueue.RANKED_SOLO_5x5, match.getQueue().get());
+        Assert.assertEquals("Unexpected Queue", RankedQueue.RANKED_SOLO_5X5, match.getQueue().get());
         Assert.assertEquals("Timestamp doesnt match TIMESTAMP", match.getTimestamp(), (Long) match.getTimestampAsDate().toInstant().toEpochMilli());
         Assert.assertTrue("lane doesnt match LANE", Stream.of(match.getLane().get().getCodes()).anyMatch(s -> s.equalsIgnoreCase(match.getLaneId())));
         Assert.assertEquals("queue doesnt match QUEUE", match.getQueueId(), match.getQueue().get().getCode());
@@ -46,7 +46,7 @@ public class MatchListTest extends TestBase
     {
         TestBase.builder.withURLData("{summonerId}", "22291359");
         TestBase.builder.withURLParameter("championIds", String.valueOf(Champion.LEONA.getId()));
-        TestBase.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5x5.getCode());
+        TestBase.builder.withURLParameter("rankedQueues", RankedQueue.RANKED_SOLO_5X5.getCode());
         TestBase.builder.withURLParameter("seasons", Season.SEASON_2014.getCode());
 
         final List<MatchReference> matches = ((MatchList) TestBase.builder.build()).getMatches();

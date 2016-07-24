@@ -21,7 +21,7 @@ public enum MonsterType
      */
     public static Optional<MonsterType> getFromCode(final String type)
     {
-        return Stream.of(MonsterType.values()).filter(t -> t.name().equals(type)).findFirst();
+        return Stream.of(MonsterType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
 
     /**

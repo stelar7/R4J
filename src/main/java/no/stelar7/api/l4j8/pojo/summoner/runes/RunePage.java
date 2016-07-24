@@ -97,7 +97,7 @@ public class RunePage
      */
     public List<RuneSlot> getSlots()
     {
-        return (this.slots == null) ? Collections.EMPTY_LIST : Collections.unmodifiableList(this.slots);
+        return (this.slots == null) ? Collections.emptyList() : Collections.unmodifiableList(this.slots);
     }
 
     @Override

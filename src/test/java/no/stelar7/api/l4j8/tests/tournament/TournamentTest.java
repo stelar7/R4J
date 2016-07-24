@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.tests.tournament;
 
 import java.util.*;
+import java.util.logging.*;
 
 import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
@@ -13,18 +14,19 @@ import no.stelar7.api.l4j8.tests.*;
 public class TournamentTest
 {
 
-    TournamentAPI builder = new L4J8(SecretFile.CREDS).getTournamentAPI();
+    TournamentAPI              builder = new L4J8(SecretFile.CREDS).getTournamentAPI();
+    public static final Logger LOGGER  = Logger.getGlobal();
 
     // @Test
     public void testAllRegistrations()
     {
         final ProviderRegistrationParameters params = new ProviderRegistrationParameters(Server.EUW, "http://stelar7.no/loltest/provider.php");
         final long providerId = this.builder.registerAsProvider(params);
-        System.out.println(providerId);
+        LOGGER.log(Level.INFO, String.valueOf(providerId));
 
         final TournamentRegistrationParameters trparams = new TournamentRegistrationParameters("THE BEST TOURNAMENT EVER", providerId);
         final long tournamentId = this.builder.registerTournament(trparams);
-        System.out.println(tournamentId);
+        LOGGER.log(Level.INFO, String.valueOf(tournamentId));
 
         final int teamSize = 5;
 
@@ -41,30 +43,29 @@ public class TournamentTest
 
         final List<String> codes = this.builder.generateTournamentCodes(tcparams, tournamentId, 1);
 
-        System.out.println(codes);
+        LOGGER.log(Level.INFO, String.valueOf(codes));
 
         final TournamentCodeUpdateParameters tcuparams = new TournamentCodeUpdateParameters("10,20,30,40,50,60,70,80,90,100", TournamentMapType.TWISTED_TREELINE, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
         this.builder.updateTournament(tcuparams, codes.get(0));
 
-        System.out.println(codes);
+        LOGGER.log(Level.INFO, String.valueOf(codes));
 
         final TournamentCode id = this.builder.getTournamentInfo(codes.get(0));
-        System.out.println(id);
+        LOGGER.log(Level.INFO, String.valueOf(id));
 
         final LobbyEventWrapper eventWrapper = this.builder.getTournamentLobbyInfo(codes.get(0));
-        eventWrapper.getEventList().forEach(System.out::println);
+        eventWrapper.getEventList().stream().map(String::valueOf).forEach(LOGGER::info);
 
     }
 
     // @Test
     public void testPostGameData()
     {
-        final String code = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
-        final List<Long> tournamentCodeMatchIds = this.builder.getMatchIds(code, Server.EUW);
-        tournamentCodeMatchIds.forEach(System.out::println);
+        final List<Long> tournamentCodeMatchIds = this.builder.getMatchIds(Constants.TEST_TOURNAMENT_CODE, Server.EUW);
+        tournamentCodeMatchIds.stream().map(String::valueOf).forEach(LOGGER::info);
 
-        final MatchDetail matchDetail = this.builder.getMatchInfo(code, tournamentCodeMatchIds.get(0));
-        System.out.println(matchDetail);
+        final MatchDetail matchDetail = this.builder.getMatchInfo(Constants.TEST_TOURNAMENT_CODE, tournamentCodeMatchIds.get(0));
+        LOGGER.log(Level.INFO, String.valueOf(matchDetail));
     }
 
     // @Test
@@ -79,48 +80,43 @@ public class TournamentTest
             throw new APIUnsupportedAction("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size)");
         }
         final List<String> codes = this.builder.generateTournamentCodes(params, tournamentId, 2);
-        System.out.println(codes);
+        LOGGER.log(Level.INFO, String.valueOf(codes));
 
     }
 
     // @Test
     public void testTournamentCodeGet()
     {
-        final String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
-        final TournamentCode id = this.builder.getTournamentInfo(tournamentCode);
-        System.out.println(id);
+        final TournamentCode id = this.builder.getTournamentInfo(Constants.TEST_TOURNAMENT_CODE);
+        LOGGER.log(Level.INFO, String.valueOf(id));
     }
 
     // @Test
     public void testTournamentCodeUpdate()
     {
-        final String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
         final TournamentCodeUpdateParameters params = new TournamentCodeUpdateParameters("19613950,22291359", TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
-        this.builder.updateTournament(params, tournamentCode);
+        this.builder.updateTournament(params, Constants.TEST_TOURNAMENT_CODE);
     }
 
     // @Test
     public void testTournamentLobbyEvents()
     {
-        final String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
-        final LobbyEventWrapper eventWrapper = this.builder.getTournamentLobbyInfo(tournamentCode);
-        eventWrapper.getEventList().forEach(System.out::println);
+        final LobbyEventWrapper eventWrapper = this.builder.getTournamentLobbyInfo(Constants.TEST_TOURNAMENT_CODE);
+        eventWrapper.getEventList().stream().map(lew -> lew.toString()).forEach(LOGGER::info);
     }
 
     // @Test
     public void testTournamentMatchDetails()
     {
-        final String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
-        final MatchDetail eventWrapper = this.builder.getMatchInfo(tournamentCode, this.builder.getMatchIds(tournamentCode, Server.EUW).get(0));
-        System.out.println(eventWrapper);
+        final MatchDetail eventWrapper = this.builder.getMatchInfo(Constants.TEST_TOURNAMENT_CODE, this.builder.getMatchIds(Constants.TEST_TOURNAMENT_CODE, Server.EUW).get(0));
+        LOGGER.log(Level.INFO, String.valueOf(eventWrapper));
     }
 
     // @Test
     public void testTournamentMatchIds()
     {
-        final String tournamentCode = "EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d";
-        final List<Long> eventWrapper = this.builder.getMatchIds(tournamentCode, Server.EUW);
-        eventWrapper.forEach(System.out::println);
+        final List<Long> eventWrapper = this.builder.getMatchIds(Constants.TEST_TOURNAMENT_CODE, Server.EUW);
+        eventWrapper.stream().map(String::valueOf).forEach(LOGGER::info);
     }
 
     // @Test
@@ -128,7 +124,7 @@ public class TournamentTest
     {
         final ProviderRegistrationParameters params = new ProviderRegistrationParameters(Server.EUW, "http://stelar7.no/loltest/provider.php");
         final Long id = this.builder.registerAsProvider(params);
-        System.out.println(id);
+        LOGGER.log(Level.INFO, String.valueOf(id));
     }
 
     // @Test
@@ -137,7 +133,7 @@ public class TournamentTest
         final int providerId = 199;
         final TournamentRegistrationParameters params = new TournamentRegistrationParameters("THE BEST TOURNAMENT EVER", providerId);
         final Long id = this.builder.registerTournament(params);
-        System.out.println(id);
+        LOGGER.log(Level.INFO, String.valueOf(id));
     }
 
 }

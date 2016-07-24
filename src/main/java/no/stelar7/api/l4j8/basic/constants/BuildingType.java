@@ -18,7 +18,7 @@ public enum BuildingType
      */
     public static Optional<BuildingType> getFromCode(final String type)
     {
-        return Stream.of(BuildingType.values()).filter(t -> t.name().equals(type)).findFirst();
+        return Stream.of(BuildingType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
 
     /**

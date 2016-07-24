@@ -22,7 +22,7 @@ public enum Tier
      */
     public static Tier getFromCode(final String type)
     {
-        return Stream.of(Tier.values()).filter(t -> t.name().equals(type)).findFirst().orElse(UNRANKED);
+        return Stream.of(Tier.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst().orElse(UNRANKED);
     }
 
     /**

@@ -21,7 +21,7 @@ public class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader(Constants.XRIOTTOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
+        builder = builder.withHeader(Constants.X_RIOT_TOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
         builder = builder.withRequestMethod("POST");
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
@@ -41,7 +41,7 @@ public class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader(Constants.XRIOTTOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
+        builder = builder.withHeader(Constants.X_RIOT_TOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH);
         builder = builder.withURLData(Constants.TOURNAMENT_CODE, tournamentCode);
         builder = builder.withServer(server);
@@ -57,7 +57,7 @@ public class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader(Constants.XRIOTTOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
+        builder = builder.withHeader(Constants.X_RIOT_TOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH_BY_ID);
         builder = builder.withURLData("{matchId}", String.valueOf(matchId));
         builder = builder.withURLParameter("tournamentCode", tournamentCode);
@@ -75,7 +75,7 @@ public class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader(Constants.XRIOTTOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
+        builder = builder.withHeader(Constants.X_RIOT_TOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE);
         builder = builder.withURLData(Constants.TOURNAMENT_CODE, tournamentCode);
         builder = builder.withServer(Server.GLOBAL);
@@ -91,7 +91,7 @@ public class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader(Constants.XRIOTTOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
+        builder = builder.withHeader(Constants.X_RIOT_TOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_LOBBY);
         builder = builder.withURLData(Constants.TOURNAMENT_CODE, tournamentCode);
         builder = builder.withServer(Server.GLOBAL);
@@ -107,7 +107,7 @@ public class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader(Constants.XRIOTTOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
+        builder = builder.withHeader(Constants.X_RIOT_TOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
         builder = builder.withRequestMethod("POST");
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_PROVIDER);
@@ -124,7 +124,7 @@ public class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader(Constants.XRIOTTOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
+        builder = builder.withHeader(Constants.X_RIOT_TOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
         builder = builder.withRequestMethod("POST");
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_REGISTRATION);
@@ -141,7 +141,7 @@ public class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder();
 
-        builder = builder.withHeader(Constants.XRIOTTOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
+        builder = builder.withHeader(Constants.X_RIOT_TOKEN, DataCallBuilder.defaultCredentials().getTournamentAPIKey());
         builder = builder.withRequestMethod("PUT");
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);

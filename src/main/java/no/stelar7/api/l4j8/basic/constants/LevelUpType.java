@@ -17,7 +17,7 @@ public enum LevelUpType
      */
     public static Optional<LevelUpType> getFromCode(final String type)
     {
-        return Stream.of(LevelUpType.values()).filter(t -> t.name().equals(type)).findFirst();
+        return Stream.of(LevelUpType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
 
     /**

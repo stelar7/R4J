@@ -21,7 +21,7 @@ public enum TowerType
      */
     public static Optional<TowerType> getFromCode(final String type)
     {
-        return Stream.of(TowerType.values()).filter(t -> t.name().equals(type)).findFirst();
+        return Stream.of(TowerType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
 
     /**

@@ -87,7 +87,7 @@ public class MasteryPage
      */
     public List<Mastery> getMasteries()
     {
-        return (this.masteries == null) ? Collections.EMPTY_LIST : Collections.unmodifiableList(this.masteries);
+        return (this.masteries == null) ? Collections.emptyList() : Collections.unmodifiableList(this.masteries);
     }
 
     /**

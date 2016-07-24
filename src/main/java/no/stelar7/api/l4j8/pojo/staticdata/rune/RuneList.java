@@ -8,8 +8,6 @@ public class RuneList
 {
     BasicData         basic;
     Map<String, Rune> data;
-    String            type;
-    String            version;
 
     @Override
     public boolean equals(final Object obj)
@@ -47,26 +45,7 @@ public class RuneList
         {
             return false;
         }
-        if (this.type == null)
-        {
-            if (other.type != null)
-            {
-                return false;
-            }
-        } else if (!this.type.equals(other.type))
-        {
-            return false;
-        }
-        if (this.version == null)
-        {
-            if (other.version != null)
-            {
-                return false;
-            }
-        } else if (!this.version.equals(other.version))
-        {
-            return false;
-        }
+
         return true;
     }
 
@@ -90,26 +69,6 @@ public class RuneList
         return this.data;
     }
 
-    /**
-     * Gets the type.
-     *
-     * @return the type
-     */
-    public String getType()
-    {
-        return this.type;
-    }
-
-    /**
-     * Gets the version.
-     *
-     * @return the version
-     */
-    public String getVersion()
-    {
-        return this.version;
-    }
-
     @Override
     public int hashCode()
     {
@@ -117,8 +76,7 @@ public class RuneList
         int result = 1;
         result = (prime * result) + ((this.basic == null) ? 0 : this.basic.hashCode());
         result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
-        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
-        result = (prime * result) + ((this.version == null) ? 0 : this.version.hashCode());
+        result = (prime * result) + super.hashCode();
         return result;
     }
 }
