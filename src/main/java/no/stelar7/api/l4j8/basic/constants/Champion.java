@@ -134,16 +134,16 @@ public enum Champion
     ZILEAN(26),
     ZYRA(143),;
 
-    public static Optional<Champion> getFromId(final Integer id)
-    {
-        return Stream.of(Champion.values()).filter(t -> t.id.equals(id)).findFirst();
-    }
-
     Integer id;
 
     Champion(final Integer id)
     {
         this.id = id;
+    }
+
+    public static Optional<Champion> getFromId(final Integer id)
+    {
+        return Stream.of(Champion.values()).filter(t -> t.id.equals(id)).findFirst();
     }
 
     /**

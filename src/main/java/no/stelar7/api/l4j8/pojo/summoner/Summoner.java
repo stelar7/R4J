@@ -6,7 +6,6 @@ import java.util.*;
 import no.stelar7.api.l4j8.basic.*;
 import no.stelar7.api.l4j8.basic.DataCall.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
 import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
@@ -102,7 +101,6 @@ public class Summoner
     {
         // Build the query
         final DataCallBuilder builder = DataCall.builder();
-        builder.withAPICredentials(L4J8.CREDS);
         builder.withServer(this.server);
         builder.withRegion(this.server);
         builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
@@ -177,7 +175,6 @@ public class Summoner
     {
         // Build the query
         final DataCallBuilder builder = DataCall.builder();
-        builder.withAPICredentials(L4J8.CREDS);
         builder.withServer(this.server);
         builder.withRegion(this.server);
         builder.withEndpoint(URLEndpoint.SUMMONER_RUNES_BY_ID);

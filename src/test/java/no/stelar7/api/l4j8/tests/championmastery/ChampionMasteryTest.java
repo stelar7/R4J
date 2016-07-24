@@ -9,7 +9,6 @@ import no.stelar7.api.l4j8.basic.DataCall.*;
 import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.championmastery.*;
-import no.stelar7.api.l4j8.tests.*;
 
 public class ChampionMasteryTest
 {
@@ -20,7 +19,6 @@ public class ChampionMasteryTest
         // Generate data for call
         final DataCallBuilder builder = DataCall.builder();
         builder.asVerbose(true);
-        builder.withAPICredentials(SecretFile.CREDS);
         builder.withServer(Server.EUW);
         builder.withRegion(Server.EUW);
         builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY);
@@ -43,7 +41,7 @@ public class ChampionMasteryTest
         final DataCallBuilder builder = DataCall.builder();
         builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY_BY_ID);
         builder.asVerbose(true);
-        builder.withAPICredentials(SecretFile.CREDS);
+
         builder.withServer(Server.EUW);
         builder.withRegion(Server.EUW);
         builder.withURLData("{platformId}", Platform.EUW1.getCode());
@@ -71,7 +69,6 @@ public class ChampionMasteryTest
         // Generate data for call
         final DataCallBuilder builder = DataCall.builder();
         builder.asVerbose(true);
-        builder.withAPICredentials(SecretFile.CREDS);
         builder.withServer(Server.EUW);
         builder.withRegion(Server.EUW);
         builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY_TOP);

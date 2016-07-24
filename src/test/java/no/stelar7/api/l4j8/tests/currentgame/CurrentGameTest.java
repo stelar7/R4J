@@ -11,7 +11,6 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.currentgame.*;
 import no.stelar7.api.l4j8.pojo.featuredgames.*;
 import no.stelar7.api.l4j8.pojo.summoner.*;
-import no.stelar7.api.l4j8.tests.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CurrentGameTest
@@ -74,10 +73,6 @@ public class CurrentGameTest
     @Before
     public void init()
     {
-        this.currentbuilder.withAPICredentials(SecretFile.CREDS);
-        this.featuredbuilder.withAPICredentials(SecretFile.CREDS);
-        this.idbuilder.withAPICredentials(SecretFile.CREDS);
-
         this.currentbuilder.withServer(Server.EUW);
         this.featuredbuilder.withServer(Server.EUW);
         this.idbuilder.withServer(Server.EUW);

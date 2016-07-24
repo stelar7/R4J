@@ -66,18 +66,6 @@ public enum SummonerSpell
      */
     GARRISON(17);
 
-    /**
-     * Returns an SummonerSpell from the provided code.
-     *
-     * @param type
-     *            the type
-     * @return SummonerSpell
-     */
-    public static Optional<SummonerSpell> getFromCode(final Long type)
-    {
-        return Stream.of(SummonerSpell.values()).filter(t -> t.name().equals(type)).findFirst();
-    }
-
     Integer id;
 
     /**
@@ -89,6 +77,18 @@ public enum SummonerSpell
     SummonerSpell(final Integer id)
     {
         this.id = id;
+    }
+
+    /**
+     * Returns an SummonerSpell from the provided code.
+     *
+     * @param type
+     *            the type
+     * @return SummonerSpell
+     */
+    public static Optional<SummonerSpell> getFromCode(final Integer type)
+    {
+        return Stream.of(SummonerSpell.values()).filter(t -> t.getId().equals(type)).findFirst();
     }
 
     /**

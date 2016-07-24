@@ -19,6 +19,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.realm.*;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.Rune;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
+import no.stelar7.api.l4j8.pojo.status.*;
 import no.stelar7.api.l4j8.pojo.summoner.*;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
 import no.stelar7.api.l4j8.pojo.summoner.runes.*;
@@ -79,7 +80,11 @@ public enum URLEndpoint
     {}.getType()),
     CHAMPIONMASTERY_SCORE("/championmastery/location/{platformId}/player/{summonerId}/score", "", Integer.class),
     CHAMPIONMASTERY_TOP("/championmastery/location/{platformId}/player/{summonerId}/topchampions", "", new TypeToken<List<ChampionMastery>>()
-    {}.getType());
+    {}.getType()),
+
+    STATUS("/shards", "", new TypeToken<List<Shard>>()
+    {}.getType()),
+    STATUS_BY_SHARD("/shards/{shard}", "", ShardStatus.class);
 
     private String value;
     private String version;
@@ -108,7 +113,7 @@ public enum URLEndpoint
     }
 
     /**
-     * TODO: add lol-staus-v1.0 Checks if the endpoint is avalible from the server
+     * Checks if the endpoint is avalible from the server
      *
      * @param server
      *            the server to check
@@ -137,6 +142,8 @@ public enum URLEndpoint
                 case STATIC_SUMMONER_SPELL:
                 case STATIC_SUMMONER_SPELL_BY_ID:
                 case STATIC_VERSIONS:
+                case STATUS:
+                case STATUS_BY_SHARD:
                     return true;
                 default:
                     return false;

@@ -12,8 +12,8 @@ public class Participant
     private List<Mastery>       masteries;
     private Integer             participantId;
     private List<Rune>          runes;
-    private Long                spell1Id;
-    private Long                spell2Id;
+    private Integer             spell1Id;
+    private Integer             spell2Id;
     private ParticipantStats    stats;
     private Integer             teamId;
     private ParticipantTimeline timeline;
@@ -212,7 +212,7 @@ public class Participant
      *
      * @return Long
      */
-    public Long getSpell1Id()
+    public Integer getSpell1Id()
     {
         return this.spell1Id;
     }
@@ -232,7 +232,7 @@ public class Participant
      *
      * @return Long
      */
-    public Long getSpell2Id()
+    public Integer getSpell2Id()
     {
         return this.spell2Id;
     }

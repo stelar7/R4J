@@ -7,17 +7,34 @@ import no.stelar7.api.l4j8.basic.DataCall.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.summoner.*;
 
+/**
+ * The base class for calling anything from this api wrapper
+ * 
+ *
+ */
 public class L4J8
 {
 
-    public static APICredentials CREDS;
-    public static boolean        verbose = true;
-
-    public L4J8(final APICredentials cred)
+    /**
+     * Constructor for the L4J8 class.
+     * 
+     * @param cred
+     *            the API credentials used for the API (your token)
+     */
+    public L4J8(final APICredentials creds)
     {
-        L4J8.CREDS = cred;
+        DataCallBuilder.defaultCredentials(creds);
     }
 
+    /**
+     * The response object contains the summoner objects mapped by their user id.
+     * 
+     * @param server
+     *            the region to execute against
+     * @param userids
+     *            list of summonerIds associated with summoners to retrieve.
+     * @return a map of the userId to an Optional Summoner
+     */
     public Map<Long, Optional<Summoner>> getSummoner(final Server server, final Long... userids)
     {
         final Map<Long, Optional<Summoner>> finalResult = new HashMap<>();
@@ -34,7 +51,6 @@ public class L4J8
 
         // Build the query
         final DataCallBuilder builder = DataCall.builder();
-        builder.withAPICredentials(L4J8.CREDS);
         builder.withServer(server);
         builder.withRegion(server);
         builder.withEndpoint(URLEndpoint.SUMMONER_BY_ID);
@@ -59,6 +75,15 @@ public class L4J8
         return finalResult;
     }
 
+    /**
+     * The response object contains the summoner objects mapped by their username.
+     * 
+     * @param server
+     *            the region to execute against
+     * @param usernames
+     *            list of summoner names or standardized summoner names associated with summoners to retrieve.
+     * @return a map of the userId to an Optional Summoner
+     */
     public Map<String, Optional<Summoner>> getSummoner(final Server server, final String... usernames)
     {
         final Map<String, Optional<Summoner>> finalResult = new HashMap<>();
@@ -68,12 +93,13 @@ public class L4J8
 
         if (names.size() > 40)
         {
-            finalResult.putAll(this.getSummoner(server, names.subList(39, names.size()).toArray(new String[40])));
+            // Recursively call this method, so it can be called with an arbitrary amount of userids
+            List<String> subList = names.subList(39, names.size());
+            finalResult.putAll(this.getSummoner(server, subList.toArray(new String[subList.size()])));
         }
 
         // Build the query
         final DataCallBuilder builder = DataCall.builder();
-        builder.withAPICredentials(L4J8.CREDS);
         builder.withServer(server);
         builder.withRegion(server);
         builder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
@@ -96,6 +122,11 @@ public class L4J8
         names.forEach(name -> finalResult.putIfAbsent(name, Optional.empty()));
 
         return finalResult;
+    }
+
+    public TournamentAPI getTournamentAPI()
+    {
+        return TournamentAPI.getInstance();
     }
 
 }

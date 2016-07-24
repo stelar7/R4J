@@ -4,6 +4,7 @@ import java.util.*;
 
 import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.tournament.*;
@@ -12,7 +13,7 @@ import no.stelar7.api.l4j8.tests.*;
 public class TournamentTest
 {
 
-    TournamentBuilder builder = new TournamentBuilder(SecretFile.TOURNAMENT_API_KEY);
+    TournamentAPI builder = new L4J8(SecretFile.CREDS).getTournamentAPI();
 
     // @Test
     public void testAllRegistrations()
@@ -35,7 +36,7 @@ public class TournamentTest
 
         if ((actucalSize != teamTimesTwo) || (teamSize < 1) || (teamSize > 10))
         {
-            throw new RuntimeException("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size) (" + teamTimesTwo + " != " + actucalSize);
+            throw new APIUnsupportedAction("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size) (" + teamTimesTwo + " != " + actucalSize);
         }
 
         final List<String> codes = this.builder.generateTournamentCodes(tcparams, tournamentId, 1);
@@ -75,7 +76,7 @@ public class TournamentTest
         final TournamentCodeParameters params = new TournamentCodeParameters(inner, "THIS IS METADATA YOOO", teamSize);
         if (params.getAllowedSummonerIds().getParticipants().size() != (teamSize * 2))
         {
-            throw new RuntimeException("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size)");
+            throw new APIUnsupportedAction("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size)");
         }
         final List<String> codes = this.builder.generateTournamentCodes(params, tournamentId, 2);
         System.out.println(codes);

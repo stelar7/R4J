@@ -1,28 +1,34 @@
 package no.stelar7.api.l4j8.basic;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.exceptions.*;
 
 public class APICredentials
 {
-    String API_KEY;
-    String TOURNAMENT_API_KEY;
+    String baseApiKey;
+    String tournamentApiKey;
 
     /**
-     * Instantiates new API credentials.
-     *
-     * @param api
-     *            the api key
+     * Instantiates the APICredentials
+     * 
+     * @param key
+     *            the key to use
+     * @param type
+     *            the type of key
      */
+
     public APICredentials(final String key, final APIType type)
     {
         switch (type)
         {
             case NORMAL:
-                this.API_KEY = key;
+                this.baseApiKey = key;
                 break;
             case TOURNAMENT:
-                this.TOURNAMENT_API_KEY = key;
+                this.tournamentApiKey = key;
                 break;
+            default:
+                throw new APIUnsupportedAction(String.format("%s is not a valid choice for APICredentials", type));
         }
     }
 
@@ -36,8 +42,8 @@ public class APICredentials
      */
     public APICredentials(final String api, final String tournament)
     {
-        this.API_KEY = api;
-        this.TOURNAMENT_API_KEY = tournament;
+        this.baseApiKey = api;
+        this.tournamentApiKey = tournament;
     }
 
     /**
@@ -45,13 +51,13 @@ public class APICredentials
      *
      * @return the key
      */
-    public String getAPI()
+    public String getBaseAPIKey()
     {
-        if (this.API_KEY == null)
+        if (this.baseApiKey == null)
         {
-            throw new RuntimeException("API key not set!");
+            throw new APIUnsupportedAction("API key not set!");
         }
-        return this.API_KEY;
+        return this.baseApiKey;
     }
 
     /**
@@ -59,13 +65,13 @@ public class APICredentials
      *
      * @return the key
      */
-    public String getTournament()
+    public String getTournamentAPIKey()
     {
-        if (this.TOURNAMENT_API_KEY == null)
+        if (this.tournamentApiKey == null)
         {
-            throw new RuntimeException("TOURNAMENT key not set!");
+            throw new APIUnsupportedAction("TOURNAMENT key not set!");
         }
-        return this.TOURNAMENT_API_KEY;
+        return this.tournamentApiKey;
     }
 
 }

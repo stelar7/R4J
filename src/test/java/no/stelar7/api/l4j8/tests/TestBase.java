@@ -17,7 +17,6 @@ public class TestBase
     {
         TestBase.builder = DataCall.builder();
         TestBase.builder.asVerbose(true);
-        TestBase.builder.withAPICredentials(SecretFile.CREDS);
         TestBase.builder.withServer(Server.EUW);
         TestBase.builder.withRegion(Server.EUW);
     }
