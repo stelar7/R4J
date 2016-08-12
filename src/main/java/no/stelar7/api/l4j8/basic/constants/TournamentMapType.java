@@ -22,16 +22,16 @@ public enum TournamentMapType
      */
     HOWLING_ABYSS(12);
 
+    public static Optional<Team> getFromCode(final Number teamId)
+    {
+        return Stream.of(Team.values()).filter(t -> t.code.equals(teamId)).findFirst();
+    }
+
     Integer code;
 
     TournamentMapType(final Integer code)
     {
         this.code = code;
-    }
-
-    public static Optional<Team> getFromCode(final Number teamId)
-    {
-        return Stream.of(Team.values()).filter(t -> t.code.equals(teamId)).findFirst();
     }
 
     public Integer getCode()

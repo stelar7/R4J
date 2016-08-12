@@ -108,7 +108,7 @@ public class CurrentGameParticipant extends FeaturedGameParticipant
     @Override
     public String toString()
     {
-        return "CurrentGameParticipant [masteries=" + masteries + ", runes=" + runes + ", summonerId=" + summonerId + ", getChampion()=" + getChampion() + ", getChampionId()=" + getChampionId() + ", getProfileIconId()=" + getProfileIconId() + ", getSpell1Id()=" + getSpell1Id() + ", getSpell2Id()=" + getSpell2Id() + ", getSummonerName()=" + getSummonerName() + ", getTeam()=" + getTeam() + ", getTeamId()=" + getTeamId() + ", isBot()=" + isBot() + "]";
+        return "CurrentGameParticipant [masteries=" + this.masteries + ", runes=" + this.runes + ", summonerId=" + this.summonerId + ", getChampion()=" + this.getChampion() + ", getChampionId()=" + this.getChampionId() + ", getProfileIconId()=" + this.getProfileIconId() + ", getSpell1Id()=" + this.getSpell1Id() + ", getSpell2Id()=" + this.getSpell2Id() + ", getSummonerName()=" + this.getSummonerName() + ", getTeam()=" + this.getTeam() + ", getTeamId()=" + this.getTeamId() + ", isBot()=" + this.isBot() + "]";
     }
 
 }

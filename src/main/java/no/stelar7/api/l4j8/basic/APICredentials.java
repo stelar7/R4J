@@ -10,7 +10,7 @@ public class APICredentials
 
     /**
      * Instantiates the APICredentials
-     * 
+     *
      * @param key
      *            the key to use
      * @param type

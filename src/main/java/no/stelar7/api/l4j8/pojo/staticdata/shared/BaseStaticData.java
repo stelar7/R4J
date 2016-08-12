@@ -6,37 +6,41 @@ public class BaseStaticData
     String version;
 
     @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        result = prime * result + ((version == null) ? 0 : version.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (this == obj)
+        {
             return true;
+        }
         if (obj == null)
+        {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass())
+        {
             return false;
-        BaseStaticData other = (BaseStaticData) obj;
-        if (type == null)
+        }
+        final BaseStaticData other = (BaseStaticData) obj;
+        if (this.type == null)
         {
             if (other.type != null)
+            {
                 return false;
-        } else if (!type.equals(other.type))
+            }
+        } else if (!this.type.equals(other.type))
+        {
             return false;
-        if (version == null)
+        }
+        if (this.version == null)
         {
             if (other.version != null)
+            {
                 return false;
-        } else if (!version.equals(other.version))
+            }
+        } else if (!this.version.equals(other.version))
+        {
             return false;
+        }
         return true;
     }
 
@@ -58,6 +62,16 @@ public class BaseStaticData
     public String getVersion()
     {
         return this.version;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+        result = (prime * result) + ((this.version == null) ? 0 : this.version.hashCode());
+        return result;
     }
 
 }

@@ -19,69 +19,27 @@ import no.stelar7.api.l4j8.pojo.summoner.*;
 public class DataCall
 {
 
-    private static final String                       HTTP                                   = "http://";
-    private static final String                       HTTPS                                  = "https://";
-
-    private static final String                       LIMIT_USER                             = "user";
-    private static final String                       LIMIT_SERVICE                          = "service";
-
-    private static final Double                       DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
-    private static final Double                       DEFAULT_LIMITER_10_MINUTES             = 600.0;
-
-    public static final Logger                        LOGGER                                 = Logger.getGlobal();
-
-    private static APICredentials                     creds;
-    private String                                    postData                               = "";
-
-    private final Map<String, String>                 urlData                                = new TreeMap<>();
-    private final Map<String, String>                 urlParams                              = new TreeMap<>();
-    private final Map<String, String>                 urlHeaders                             = new TreeMap<>();
-
-    private boolean                                   retry                                  = true;
-    private boolean                                   verbose                                = false;
-    private int                                       retryTime                              = 5;
-    private String                                    requestMethod                          = "GET";
-
-    private Server                                    server;
-    private Server                                    region;
-
-    private URLEndpoint                               endpoint;
-
-    private static Map<Integer, Integer>              calls                                  = new HashMap<>();
-
-    private static final EnumMap<Server, RateLimiter> limiter                                = new EnumMap<>(Server.class);
-
-    private DataCall()
-    {
-        final double permitsPerSecond = DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DEFAULT_LIMITER_10_MINUTES;
-        Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
-
-    }
-
-    public static DataCallBuilder builder()
-    {
-        return new DataCallBuilder();
-    }
-
-    public static int getCallsInTimePeriod(int period)
-    {
-        return calls.get(period);
-    }
-
-    public static Map<Integer, Integer> getCalls()
-    {
-        return calls;
-    }
-
     public static class DataCallBuilder
     {
+        public static APICredentials getCredentials()
+        {
+            return DataCall.creds;
+        }
+
+        public static void setCredentials(final APICredentials creds)
+        {
+            DataCall.creds = creds;
+        }
+
         private final DataCall                           dc         = new DataCall();
+
         private final BiFunction<String, String, String> merge      = (o, n) -> o + "," + n;
+
         final StringBuilder                              urlBuilder = new StringBuilder();
 
         /**
          * Print out as much data as possible about this call
-         * 
+         *
          * @param flag
          * @return this
          */
@@ -93,7 +51,7 @@ public class DataCall
 
         /**
          * Puts together all the data, and then returns an object representing the JSON from the call
-         * 
+         *
          * @return an object generated from the requested JSON
          * @throws APINoValidResponseException
          */
@@ -147,7 +105,7 @@ public class DataCall
 
                 if (this.dc.verbose)
                 {
-                    LOGGER.log(Level.INFO, "HIT 429, WAITING " + response.getRetryTimeout() + " SECOND(S) THEN TRYING AGAIN");
+                    DataCall.LOGGER.log(Level.INFO, "HIT 429, WAITING " + response.getRetryTimeout() + " SECOND(S) THEN TRYING AGAIN");
                 }
 
                 if (this.dc.retry)
@@ -156,9 +114,9 @@ public class DataCall
                     {
                         TimeUnit.SECONDS.sleep(response.getRetryTimeout());
                         return this.build();
-                    } catch (Exception e)
+                    } catch (final Exception e)
                     {
-                        LOGGER.log(Level.WARNING, e.getMessage(), e);
+                        DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
                     }
                 }
             }
@@ -167,7 +125,7 @@ public class DataCall
             {
                 if (this.dc.verbose)
                 {
-                    LOGGER.log(Level.INFO, "HIT 500 ERROR, WAITING 1 SECOND(S) THEN TRYING AGAIN");
+                    DataCall.LOGGER.log(Level.INFO, "HIT 500 ERROR, WAITING 1 SECOND(S) THEN TRYING AGAIN");
                 }
 
                 if (this.dc.retry)
@@ -176,35 +134,22 @@ public class DataCall
                     {
                         TimeUnit.SECONDS.sleep(1);
                         return this.build();
-                    } catch (Exception e)
+                    } catch (final Exception e)
                     {
-                        LOGGER.log(Level.WARNING, e.getMessage(), e);
+                        DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
                     }
                 }
             }
 
-            LOGGER.log(Level.WARNING, "Response Code:" + response.getResponseCode());
-            LOGGER.log(Level.WARNING, "Response Data:" + response.getResponseData());
-            LOGGER.log(Level.WARNING, "Rate-Limit:" + response.getRetryTimeout());
+            DataCall.LOGGER.log(Level.WARNING, "Response Code:" + response.getResponseCode());
+            DataCall.LOGGER.log(Level.WARNING, "Response Data:" + response.getResponseData());
+            DataCall.LOGGER.log(Level.WARNING, "Rate-Limit:" + response.getRetryTimeout());
             throw new APINoValidResponseException(response.getResponseData());
-        }
-
-        private void setServerOnSummoner(Object sum)
-        {
-            try
-            {
-                final Field field = Summoner.class.getDeclaredField("server");
-                field.setAccessible(true);
-                field.set(sum, this.dc.region);
-            } catch (final Exception e)
-            {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
-            }
         }
 
         /**
          * Builds this call in an async way
-         * 
+         *
          * @return a call that will complete in the future
          */
         public CompletableFuture<Object> buildAsync()
@@ -214,7 +159,7 @@ public class DataCall
 
         /**
          * Clears all the set data from the URL
-         * 
+         *
          * @return
          */
         public DataCallBuilder clearURLData()
@@ -225,7 +170,7 @@ public class DataCall
 
         /**
          * Clears all the set parameters on the URL
-         * 
+         *
          * @return this
          */
         public DataCallBuilder clearURLParameter()
@@ -236,7 +181,7 @@ public class DataCall
 
         /**
          * Opens a connection to the URL, then reads the data into a Response.
-         * 
+         *
          * @param url
          *            the URL to call
          * @return a DataCallResponse with the data from the call
@@ -265,11 +210,11 @@ public class DataCall
 
                 if (this.dc.verbose)
                 {
-                    LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url));
-                    LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod()));
-                    LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData));
-                    LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", ""));
-                    con.getRequestProperties().forEach((key, value) -> LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url));
+                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod()));
+                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData));
+                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", ""));
+                    con.getRequestProperties().forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
 
                 if (!this.dc.postData.isEmpty())
@@ -285,8 +230,8 @@ public class DataCall
 
                 if (this.dc.verbose)
                 {
-                    LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
-                    con.getHeaderFields().forEach((key, value) -> LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
+                    con.getHeaderFields().forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
 
                 final String limitType = con.getHeaderField("X-Rate-Limit-Type");
@@ -308,13 +253,13 @@ public class DataCall
 
                 if (limitCount != null)
                 {
-                    String[] limits = limitCount.split(",");
-                    for (String limitPair : limits)
+                    final String[] limits = limitCount.split(",");
+                    for (final String limitPair : limits)
                     {
-                        String[] limit = limitPair.split(":");
-                        Integer call = Integer.parseInt(limit[0]);
-                        Integer time = Integer.parseInt(limit[1]);
-                        calls.put(time, call);
+                        final String[] limit = limitPair.split(":");
+                        final Integer call = Integer.parseInt(limit[0]);
+                        final Integer time = Integer.parseInt(limit[1]);
+                        DataCall.calls.put(time, call);
                     }
                 }
 
@@ -333,7 +278,7 @@ public class DataCall
                 return new DataCallResponse(con.getResponseCode(), data.toString(), timeout);
             } catch (final IOException e)
             {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
+                DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
 
             throw new APINoValidResponseException("Reached end of getResponse, without a valid response!!\n");
@@ -341,7 +286,7 @@ public class DataCall
 
         /**
          * Generates the URL to use for the call.
-         * 
+         *
          * @return the URL to use for the call.
          */
         public String getURL()
@@ -383,9 +328,22 @@ public class DataCall
             return this.urlBuilder.toString();
         }
 
+        private void setServerOnSummoner(final Object sum)
+        {
+            try
+            {
+                final Field field = Summoner.class.getDeclaredField("server");
+                field.setAccessible(true);
+                field.set(sum, this.dc.region);
+            } catch (final Exception e)
+            {
+                DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
+            }
+        }
+
         /**
          * Sets the endpoint to make the call to
-         * 
+         *
          * @param endpoint
          *            the endpoint to make the call to
          * @return this
@@ -398,7 +356,7 @@ public class DataCall
 
         /**
          * Sets the headers to use with the call
-         * 
+         *
          * @param key
          *            the header key
          * @param value
@@ -413,7 +371,7 @@ public class DataCall
 
         /**
          * Sets the data to send with the request if its a POST call
-         * 
+         *
          * @param data
          *            the data to send
          * @return this
@@ -426,7 +384,7 @@ public class DataCall
 
         /**
          * The region to make this call to. This is part of the URL, "{region}"
-         * 
+         *
          * @param region
          *            the region to make the call to
          * @return this
@@ -439,7 +397,7 @@ public class DataCall
 
         /**
          * The request-method on the call (usually GET or POST)
-         * 
+         *
          * @param method
          *            the request method
          * @return this
@@ -452,7 +410,7 @@ public class DataCall
 
         /**
          * The call should retry if it hits a 429 - Too Many Requests
-         * 
+         *
          * @param flag
          *            if it should retry
          * @return this
@@ -465,7 +423,7 @@ public class DataCall
 
         /**
          * The time to wait to retry, if the call fails
-         * 
+         *
          * @param retryTime
          *            the time to wait
          * @return this
@@ -478,7 +436,7 @@ public class DataCall
 
         /**
          * Set the server to make this call to. (ie. EUW)
-         * 
+         *
          * @param server
          *            the server to make the call to
          * @return this
@@ -491,7 +449,7 @@ public class DataCall
 
         /**
          * Replaces placeholders in the URL (ie. {region})
-         * 
+         *
          * @param key
          *            The key to replace (ie. {region})
          * @param value
@@ -506,7 +464,7 @@ public class DataCall
 
         /**
          * Adds parameters to the url (ie. ?api_key)
-         * 
+         *
          * @param key
          *            the parameter to add (ie. api_key)
          * @param value
@@ -517,16 +475,6 @@ public class DataCall
         {
             this.dc.urlParams.merge(key, value, this.merge);
             return this;
-        }
-
-        public static void defaultCredentials(APICredentials creds)
-        {
-            DataCall.creds = creds;
-        }
-
-        public static APICredentials defaultCredentials()
-        {
-            return DataCall.creds;
         }
 
     }
@@ -570,6 +518,64 @@ public class DataCall
         {
             return this.retryTimeout;
         }
+    }
+
+    private static final String                       HTTP                                   = "http://";
+    private static final String                       HTTPS                                  = "https://";
+
+    private static final String                       LIMIT_USER                             = "user";
+    private static final String                       LIMIT_SERVICE                          = "service";
+
+    private static final Double                       DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
+
+    private static final Double                       DEFAULT_LIMITER_10_MINUTES             = 600.0;
+    public static final Logger                        LOGGER                                 = Logger.getGlobal();
+
+    private static APICredentials                     creds;
+    private static Map<Integer, Integer>              calls                                  = new HashMap<>();
+    private static final EnumMap<Server, RateLimiter> limiter                                = new EnumMap<>(Server.class);
+
+    public static DataCallBuilder builder()
+    {
+        return new DataCallBuilder();
+    }
+
+    public static Map<Integer, Integer> getCalls()
+    {
+        return DataCall.calls;
+    }
+
+    public static int getCallsInTimePeriod(final int period)
+    {
+        return DataCall.calls.get(period);
+    }
+
+    private String                    postData      = "";
+
+    private final Map<String, String> urlData       = new TreeMap<>();
+    private final Map<String, String> urlParams     = new TreeMap<>();
+
+    private final Map<String, String> urlHeaders    = new TreeMap<>();
+
+    private boolean                   retry         = true;
+
+    private boolean                   verbose       = false;
+
+    private int                       retryTime     = 5;
+
+    private String                    requestMethod = "GET";
+
+    private Server                    server;
+
+    private Server                    region;
+
+    private URLEndpoint               endpoint;
+
+    private DataCall()
+    {
+        final double permitsPerSecond = DataCall.DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DataCall.DEFAULT_LIMITER_10_MINUTES;
+        Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
+
     }
 
 }

@@ -22,8 +22,8 @@ public class ChampionMasteryTest
         builder.withServer(Server.EUW);
         builder.withRegion(Server.EUW);
         builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY);
-        builder.withURLData(Constants.PLATFORM_ID, Platform.EUW1.getCode());
-        builder.withURLData(Constants.SUMMONER_ID, "19613950");
+        builder.withURLData(Constants.PLATFORM_ID_PLACEHOLDER, Platform.EUW1.getCode());
+        builder.withURLData(Constants.SUMMONER_ID_PLACEHOLDER, "19613950");
 
         // Get the response
         final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
@@ -43,9 +43,9 @@ public class ChampionMasteryTest
 
         builder.withServer(Server.EUW);
         builder.withRegion(Server.EUW);
-        builder.withURLData(Constants.PLATFORM_ID, Platform.EUW1.getCode());
-        builder.withURLData(Constants.SUMMONER_ID, "19613950");
-        builder.withURLData(Constants.CHAMPION_ID, String.valueOf(Champion.LEONA.getId()));
+        builder.withURLData(Constants.PLATFORM_ID_PLACEHOLDER, Platform.EUW1.getCode());
+        builder.withURLData(Constants.SUMMONER_ID_PLACEHOLDER, "19613950");
+        builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(Champion.LEONA.getId()));
 
         // Get the response
         final ChampionMastery data = (ChampionMastery) builder.build();

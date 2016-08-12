@@ -15,16 +15,16 @@ public enum Season
     SEASON_2015("SEASON2015"),
     SEASON_2016("SEASON2016");
 
+    public static Optional<Season> getFromCode(final String code)
+    {
+        return Stream.of(Season.values()).filter(t -> t.code.equalsIgnoreCase(code)).findFirst();
+    }
+
     String code;
 
     Season(final String code)
     {
         this.code = code;
-    }
-
-    public static Optional<Season> getFromCode(final String code)
-    {
-        return Stream.of(Season.values()).filter(t -> t.code.equalsIgnoreCase(code)).findFirst();
     }
 
     /**

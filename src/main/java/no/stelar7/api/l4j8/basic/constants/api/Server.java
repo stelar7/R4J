@@ -19,18 +19,19 @@ public enum Server
     PBE("pbe.api.pvp.net", true),
     GLOBAL("global.api.pvp.net", false);
 
+    public static Optional<Server> getFromCode(final String code)
+    {
+        return Stream.of(Server.values()).filter(t -> t.name().equals(code)).findFirst();
+    }
+
     private final String  endpoint;
+
     private final Boolean limited;
 
     Server(final String endpoint, final boolean limited)
     {
         this.endpoint = endpoint;
         this.limited = limited;
-    }
-
-    public static Optional<Server> getFromCode(final String code)
-    {
-        return Stream.of(Server.values()).filter(t -> t.name().equals(code)).findFirst();
     }
 
     /**

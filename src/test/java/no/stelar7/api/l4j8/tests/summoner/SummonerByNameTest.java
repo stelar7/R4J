@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.tests.summoner;
 import java.util.*;
 import java.util.function.*;
 import java.util.logging.*;
+import java.util.stream.*;
 
 import org.junit.*;
 
@@ -27,10 +28,10 @@ public class SummonerByNameTest
                                                                               Assert.assertNotEquals("Summoner level is NULL", value.getSummonerLevel(), (Integer) 0);
                                                                               Assert.assertNotNull("Summoner revison date DATE is NULL", value.getRevisionDateAsDate());
                                                                               Assert.assertEquals("Summoner revison date and DATE do not match", value.getRevisionDate(), (Long) value.getRevisionDateAsDate().toInstant().toEpochMilli());
-                                                                              LOGGER.log(Level.INFO, String.valueOf(value));
+                                                                              SummonerByNameTest.LOGGER.log(Level.INFO, String.valueOf(value));
                                                                           } else
                                                                           {
-                                                                              LOGGER.log(Level.INFO, "Summoner " + key + " = " + optional);
+                                                                              SummonerByNameTest.LOGGER.log(Level.INFO, "Summoner " + key + " = " + optional);
                                                                           }
                                                                       };
 
@@ -41,10 +42,10 @@ public class SummonerByNameTest
         final L4J8 api = new L4J8(SecretFile.CREDS);
 
         // Generate list of summoner IDs
-        final String[] values = { "stelar7", "henriko950", "vibbsen", "Tàylor Swíft" };
+        final List<String> values = Stream.of(Constants.TEST_SUMMONER_NAMES).collect(Collectors.toList());
 
-        api.getSummoner(Server.EUW, values).forEach(this.doAssertions);
-        api.getSummoner(Server.LAN, values).forEach(this.doAssertions);
+        api.getSummonerByName(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerByName(Server.LAN, values).forEach(this.doAssertions);
 
     }
 

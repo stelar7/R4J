@@ -6,28 +6,8 @@ public class FeaturedGameParticipant extends BaseGameParticipant
 {
     private Boolean bot;
 
-    /**
-     * A flag indicating if this participant is a bot
-     *
-     * @return boolean
-     */
-    public Boolean isBot()
-    {
-        return bot;
-    }
-
     @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + super.hashCode();
-        result = prime * result + ((bot == null) ? 0 : bot.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (this == obj)
         {
@@ -37,26 +17,46 @@ public class FeaturedGameParticipant extends BaseGameParticipant
         {
             return false;
         }
-        if (getClass() != obj.getClass())
+        if (this.getClass() != obj.getClass())
         {
             return false;
         }
-        FeaturedGameParticipant other = (FeaturedGameParticipant) obj;
+        final FeaturedGameParticipant other = (FeaturedGameParticipant) obj;
         if (!super.equals(other))
         {
             return false;
         }
-        if (bot == null)
+        if (this.bot == null)
         {
             if (other.bot != null)
             {
                 return false;
             }
-        } else if (!bot.equals(other.bot))
+        } else if (!this.bot.equals(other.bot))
         {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + super.hashCode();
+        result = (prime * result) + ((this.bot == null) ? 0 : this.bot.hashCode());
+        return result;
+    }
+
+    /**
+     * A flag indicating if this participant is a bot
+     *
+     * @return boolean
+     */
+    public Boolean isBot()
+    {
+        return this.bot;
     }
 
 }

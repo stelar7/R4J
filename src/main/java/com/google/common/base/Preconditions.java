@@ -17,9 +17,6 @@ package com.google.common.base;
 public final class Preconditions
 {
 
-    private Preconditions()
-    {}
-
     private static String badElementIndex(final int index, final int size, final String desc)
     {
         if (index < 0)
@@ -177,7 +174,7 @@ public final class Preconditions
 
     static String format(final String templaten, final Object... args)
     {
-        String template = String.valueOf(templaten); // null -> "null"
+        final String template = String.valueOf(templaten); // null -> "null"
         final StringBuilder builder = new StringBuilder(template.length() + (16 * args.length));
         int templateStart = 0;
         int i = 0;
@@ -207,5 +204,8 @@ public final class Preconditions
 
         return builder.toString();
     }
+
+    private Preconditions()
+    {}
 
 }

@@ -44,7 +44,13 @@ public enum Map
      */
     BUTCHERS_BRIDGE(14, new Rectangle(-28, -19, 12849, 12858));
 
+    public static Optional<Map> getFromCode(final Integer mapId)
+    {
+        return Stream.of(Map.values()).filter(t -> t.code.equals(mapId)).findFirst();
+    }
+
     Integer   code;
+
     Rectangle bounds;
 
     Map(final Integer code, final Rectangle bounds)
@@ -53,14 +59,9 @@ public enum Map
         this.bounds = bounds;
     }
 
-    public static Optional<Map> getFromCode(final Integer mapId)
-    {
-        return Stream.of(Map.values()).filter(t -> t.code.equals(mapId)).findFirst();
-    }
-
     public Rectangle getBounds()
     {
-        return bounds;
+        return this.bounds;
     }
 
     public Integer getCode()

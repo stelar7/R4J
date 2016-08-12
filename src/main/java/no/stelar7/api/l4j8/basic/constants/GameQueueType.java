@@ -28,11 +28,13 @@ public enum GameQueueType
     /**
      * Ranked Premade 5v5 games
      */
-    @Deprecated RANKED_PREMADE_5X5(6),
+    @Deprecated
+    RANKED_PREMADE_5X5(6),
     /**
      * Ranked Premade 3v3 games
      */
-    @Deprecated RANKED_PREMADE_3X3(9),
+    @Deprecated
+    RANKED_PREMADE_3X3(9),
     /**
      * Ranked Team 3v3 games
      */
@@ -52,7 +54,8 @@ public enum GameQueueType
     /**
      * Historical Summoner's Rift Coop vs AI games
      */
-    @Deprecated BOT_5X5(7),
+    @Deprecated
+    BOT_5X5(7),
     /**
      * Dominion Coop vs AI games
      */
@@ -158,13 +161,6 @@ public enum GameQueueType
      */
     TEAM_BUILDER_DRAFT_RANKED_5X5(410);
 
-    Integer code;
-
-    GameQueueType(final Integer code)
-    {
-        this.code = code;
-    }
-
     public static Optional<GameQueueType> getFromCode(final Integer gameQueueConfigId)
     {
         return Stream.of(GameQueueType.values()).filter(t -> t.code.equals(gameQueueConfigId)).findFirst();
@@ -173,6 +169,13 @@ public enum GameQueueType
     public static Optional<GameQueueType> getFromCode(final String queueType)
     {
         return Stream.of(GameQueueType.values()).filter(t -> t.name().equalsIgnoreCase(queueType)).findFirst();
+    }
+
+    Integer code;
+
+    GameQueueType(final Integer code)
+    {
+        this.code = code;
     }
 
     public Integer getCode()

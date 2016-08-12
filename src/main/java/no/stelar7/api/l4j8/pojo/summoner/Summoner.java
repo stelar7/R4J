@@ -1,13 +1,8 @@
 package no.stelar7.api.l4j8.pojo.summoner;
 
 import java.time.*;
-import java.util.*;
 
-import no.stelar7.api.l4j8.basic.*;
-import no.stelar7.api.l4j8.basic.DataCall.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
-import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
 public class Summoner
 {
@@ -97,30 +92,6 @@ public class Summoner
         return this.id;
     }
 
-    public Optional<List<MasteryPage>> getMasteryPages()
-    {
-        // Build the query
-        final DataCallBuilder builder = DataCall.builder();
-        builder.withServer(this.server);
-        builder.withRegion(this.server);
-        builder.withEndpoint(URLEndpoint.SUMMONER_MASTERIES_BY_ID);
-        builder.withURLData("{summonerId}", String.valueOf(this.getId()));
-
-        // Get the query result
-        final Object callResult = builder.build();
-
-        // Handle 404
-        if ((callResult instanceof Optional) && !((Optional<?>) callResult).isPresent())
-        {
-            return Optional.empty();
-        }
-
-        final Map<Long, MasteryPages> dataCall = (Map<Long, MasteryPages>) callResult;
-
-        // Map result to Optional<List<MasteryPage>>, and add missing names
-        return Optional.of(dataCall.get(this.getId()).getPages());
-    }
-
     /**
      * The Summoners name
      *
@@ -171,30 +142,6 @@ public class Summoner
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.revisionDate), ZoneOffset.UTC);
     }
 
-    public Optional<List<RunePage>> getRunePages()
-    {
-        // Build the query
-        final DataCallBuilder builder = DataCall.builder();
-        builder.withServer(this.server);
-        builder.withRegion(this.server);
-        builder.withEndpoint(URLEndpoint.SUMMONER_RUNES_BY_ID);
-        builder.withURLData("{summonerId}", String.valueOf(this.getId()));
-
-        // Get the query result
-        final Object callResult = builder.build();
-
-        // Handle 404
-        if ((callResult instanceof Optional) && !((Optional<?>) callResult).isPresent())
-        {
-            return Optional.empty();
-        }
-
-        final Map<Long, RunePages> dataCall = (Map<Long, RunePages>) callResult;
-
-        // Map result to Optional<List<RunePage>>, and add missing names
-        return Optional.of(dataCall.get(this.getId()).getPages());
-    }
-
     /**
      * Summoner level associated with the summoner
      *
@@ -223,4 +170,5 @@ public class Summoner
     {
         return "Summoner [id=" + this.id + ", server=" + this.server + ", name=" + this.name + ", profileIconId=" + this.profileIconId + ", revisionDate=" + this.revisionDate + ", summonerLevel=" + this.summonerLevel + "]";
     }
+
 }

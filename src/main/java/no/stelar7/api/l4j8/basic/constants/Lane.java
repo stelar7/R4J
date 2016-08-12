@@ -25,13 +25,6 @@ public enum Lane
      */
     BOT("BOT", "BOTTOM", "BOT_LANE");
 
-    String[] keys;
-
-    Lane(final String... keys)
-    {
-        this.keys = keys;
-    }
-
     /**
      * Returns a Lane from the provided code
      *
@@ -42,6 +35,13 @@ public enum Lane
     public static Optional<Lane> getFromCode(final String code)
     {
         return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
+    }
+
+    String[] keys;
+
+    Lane(final String... keys)
+    {
+        this.keys = keys;
     }
 
     /**

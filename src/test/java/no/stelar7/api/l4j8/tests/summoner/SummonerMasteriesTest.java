@@ -1,6 +1,9 @@
 package no.stelar7.api.l4j8.tests.summoner;
 
+import java.util.*;
 import java.util.function.*;
+import java.util.logging.*;
+import java.util.stream.*;
 
 import org.junit.*;
 
@@ -11,23 +14,37 @@ import no.stelar7.api.l4j8.tests.*;
 
 public class SummonerMasteriesTest
 {
-    private final Consumer<MasteryPage> doAssertions = (final MasteryPage page) -> {
 
-        Assert.assertNotNull("Mastery Page does not have an id", page.getId());
-        // Assert.assertNotNull("Mastery Page does not have a name",
-        // page.getName()); Names can be empty, so ignore this...
-        Assert.assertNotNull("Mastery Page does not contain any masteries", page.getMasteries());
-        Assert.assertNotNull("Unable to determine current Mastery page", page.isCurrent());
+    public static final Logger                             LOGGER       = Logger.getGlobal();
 
-        page.getMasteries().forEach((final Mastery mastery) -> {
-            Assert.assertNotNull("Mastery does not have an id", mastery.getId());
-            Assert.assertNotNull("Mastery does not have a rank", mastery.getRank());
+    private final BiConsumer<Long, Optional<MasteryPages>> doAssertions = (final Long key, final Optional<MasteryPages> optional) -> {
+                                                                            if (optional.isPresent())
+                                                                            {
+                                                                                final MasteryPages pages = optional.get();
 
-            Assert.assertNotEquals("Mastery does not have a valid id", mastery.getId(), (Integer) 0);
-            Assert.assertNotEquals("Mastery does not have a valid rank", mastery.getRank(), (Integer) 0);
-        });
+                                                                                pages.getPages().forEach(page -> {
 
-    };
+                                                                                                                                                        Assert.assertNotNull("Mastery Page does not have an id", page.getId());
+                                                                                                                                                        // Assert.assertNotNull("Mastery Page does not have a name",
+                                                                                                                                                        // page.getName()); Names can be empty, so ignore this...
+                                                                                                                                                        Assert.assertNotNull("Mastery Page does not contain any masteries", page.getMasteries());
+                                                                                                                                                        Assert.assertNotNull("Unable to determine current Mastery page", page.isCurrent());
+
+                                                                                                                                                        page.getMasteries().forEach((final Mastery mastery) -> {
+                                                                                                                                                                                                                                Assert.assertNotNull("Mastery does not have an id", mastery.getId());
+                                                                                                                                                                                                                                Assert.assertNotNull("Mastery does not have a rank", mastery.getRank());
+
+                                                                                                                                                                                                                                Assert.assertNotEquals("Mastery does not have a valid id", mastery.getId(), (Integer) 0);
+                                                                                                                                                                                                                                Assert.assertNotEquals("Mastery does not have a valid rank", mastery.getRank(), (Integer) 0);
+                                                                                                                                                                                                                            });
+
+                                                                                                                                                    });
+                                                                                SummonerMasteriesTest.LOGGER.log(Level.INFO, "MasteryPages " + key + " = OK");
+                                                                            } else
+                                                                            {
+                                                                                SummonerMasteriesTest.LOGGER.log(Level.INFO, "MasteryPages " + key + " = BAD");
+                                                                            }
+                                                                        };
 
     @Test
     public void doTest()
@@ -35,9 +52,8 @@ public class SummonerMasteriesTest
         final L4J8 api = new L4J8(SecretFile.CREDS);
 
         // Generate list of summoner IDs
-        final String[] values = { "stelar7", "henriko950", "vibbsen" };
-
-        api.getSummoner(Server.EUW, values).forEach((a, b) -> b.get().getMasteryPages().get().forEach(this.doAssertions));
+        final List<Long> values = Stream.of(Constants.TEST_SUMMONER_IDS).collect(Collectors.toList());
+        api.getMasteries(Server.EUW, values).forEach(this.doAssertions);
     }
 
 }

@@ -736,7 +736,7 @@ public class ParticipantStats
                 map.put(f.getName(), f.get(this).toString());
             } catch (final Exception e)
             {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
+                ParticipantStats.LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
         });
         return map;

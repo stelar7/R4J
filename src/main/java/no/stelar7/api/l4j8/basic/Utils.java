@@ -8,8 +8,6 @@ import java.util.logging.*;
 public class Utils
 {
     public static final Logger LOGGER = Logger.getGlobal();
-    
-    private Utils() {}
 
     public static String prepareForURL(final String data)
     {
@@ -20,10 +18,12 @@ public class Utils
             return URLEncoder.encode(lowercase, "UTF-8");
         } catch (final UnsupportedEncodingException e)
         {
-            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            Utils.LOGGER.log(Level.WARNING, e.getMessage(), e);
         }
         return null;
     }
-    
-    
+
+    private Utils()
+    {}
+
 }

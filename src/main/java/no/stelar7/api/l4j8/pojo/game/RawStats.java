@@ -902,7 +902,7 @@ public class RawStats
                 map.put(f.getName(), f.get(this).toString());
             } catch (final Exception e)
             {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
+                RawStats.LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
         });
         return map;
@@ -1499,6 +1499,16 @@ public class RawStats
     }
 
     /**
+     * Gets total damage deals to buildings
+     *
+     * @return the boolean
+     */
+    public Integer getTotalDamageDealtToBuildings()
+    {
+        return this.totalDamageDealtToBuildings;
+    }
+
+    /**
      * Gets the total damage dealt to champions.
      *
      * @return the total damage dealt to champions
@@ -1785,15 +1795,5 @@ public class RawStats
         return "RawStats [assists=" + this.assists + ", barracksKilled=" + this.barracksKilled + ", championsKilled=" + this.championsKilled + ", combatPlayerScore=" + this.combatPlayerScore + ", consumablesPurchased=" + this.consumablesPurchased + ", damageDealtPlayer=" + this.damageDealtPlayer + ", doubleKills=" + this.doubleKills + ", firstBlood=" + this.firstBlood + ", gold=" + this.gold + ", goldEarned=" + this.goldEarned + ", goldSpent=" + this.goldSpent + ", item0=" + this.item0 + ", item1=" + this.item1 + ", item2=" + this.item2 + ", item3=" + this.item3 + ", item4=" + this.item4 + ", item5=" + this.item5 + ", item6=" + this.item6 + ", itemsPurchased=" + this.itemsPurchased + ", killingSprees=" + this.killingSprees + ", largestCriticalStrike=" + this.largestCriticalStrike + ", largestKillingSpree=" + this.largestKillingSpree + ", largestMultiKill=" + this.largestMultiKill + ", legendaryItemsCreated=" + this.legendaryItemsCreated + ", level=" + this.level + ", magicDamageDealtPlayer=" + this.magicDamageDealtPlayer + ", magicDamageDealtToChampions=" + this.magicDamageDealtToChampions + ", magicDamageTaken=" + this.magicDamageTaken + ", minionsDenied=" + this.minionsDenied + ", minionsKilled=" + this.minionsKilled + ", neutralMinionsKilled=" + this.neutralMinionsKilled + ", neutralMinionsKilledEnemyJungle=" + this.neutralMinionsKilledEnemyJungle + ", neutralMinionsKilledYourJungle=" + this.neutralMinionsKilledYourJungle + ", nexusKilled=" + this.nexusKilled + ", nodeCapture=" + this.nodeCapture + ", nodeCaptureAssist=" + this.nodeCaptureAssist + ", nodeNeutralize="
                 + this.nodeNeutralize + ", nodeNeutralizeAssist=" + this.nodeNeutralizeAssist + ", numDeaths=" + this.numDeaths + ", numItemsBought=" + this.numItemsBought + ", objectivePlayerScore=" + this.objectivePlayerScore + ", pentaKills=" + this.pentaKills + ", physicalDamageDealtPlayer=" + this.physicalDamageDealtPlayer + ", physicalDamageDealtToChampions=" + this.physicalDamageDealtToChampions + ", physicalDamageTaken=" + this.physicalDamageTaken + ", playerPosition=" + this.playerPosition + ", playerRole=" + this.playerRole + ", quadraKills=" + this.quadraKills + ", sightWardsBought=" + this.sightWardsBought + ", spell1Cast=" + this.spell1Cast + ", spell2Cast=" + this.spell2Cast + ", spell3Cast=" + this.spell3Cast + ", spell4Cast=" + this.spell4Cast + ", summonSpell1Cast=" + this.summonSpell1Cast + ", summonSpell2Cast=" + this.summonSpell2Cast + ", superMonsterKilled=" + this.superMonsterKilled + ", team=" + this.team + ", teamObjective=" + this.teamObjective + ", timePlayed=" + this.timePlayed + ", totalDamageDealt=" + this.totalDamageDealt + ", totalDamageDealtToChampions=" + this.totalDamageDealtToChampions + ", totalDamageTaken=" + this.totalDamageTaken + ", totalHeal=" + this.totalHeal + ", totalPlayerScore=" + this.totalPlayerScore + ", totalScoreRank=" + this.totalScoreRank + ", totalTimeCrowdControlDealt=" + this.totalTimeCrowdControlDealt + ", totalUnitsHealed=" + this.totalUnitsHealed + ", tripleKills=" + this.tripleKills + ", trueDamageDealtPlayer=" + this.trueDamageDealtPlayer + ", trueDamageDealtToChampions=" + this.trueDamageDealtToChampions
                 + ", trueDamageTaken=" + this.trueDamageTaken + ", turretsKilled=" + this.turretsKilled + ", unrealKills=" + this.unrealKills + ", victoryPointTotal=" + this.victoryPointTotal + ", visionWardsBought=" + this.visionWardsBought + ", wardKilled=" + this.wardKilled + ", wardPlaced=" + this.wardPlaced + ", win=" + this.win + "]";
-    }
-
-    /**
-     * Gets total damage deals to buildings
-     *
-     * @return the boolean
-     */
-    public Integer getTotalDamageDealtToBuildings()
-    {
-        return totalDamageDealtToBuildings;
     }
 }

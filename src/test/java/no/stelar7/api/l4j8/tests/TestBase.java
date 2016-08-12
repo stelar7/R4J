@@ -11,13 +11,7 @@ import no.stelar7.api.l4j8.impl.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestBase
 {
-    L4J8                             l4j8    = new L4J8(SecretFile.CREDS);
     protected static DataCallBuilder builder = DataCall.builder();
-
-    public TestBase()
-    {
-        // Empty public constructor
-    }
 
     @BeforeClass
     public static void init()
@@ -26,6 +20,13 @@ public class TestBase
         TestBase.builder.asVerbose(true);
         TestBase.builder.withServer(Server.EUW);
         TestBase.builder.withRegion(Server.EUW);
+    }
+
+    L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+
+    public TestBase()
+    {
+        // Empty public constructor
     }
 
 }
