@@ -44,6 +44,19 @@ public class SummonerByIdTest extends TestBase
         final List<Long> values = Stream.of(Constants.TEST_SUMMONER_IDS).collect(Collectors.toList());
 
         api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
+        api.getSummonerById(Server.EUW, values).forEach(this.doAssertions);
     }
 
 }

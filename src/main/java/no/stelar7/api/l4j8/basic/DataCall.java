@@ -97,7 +97,7 @@ public class DataCall
 
             if (response.getResponseCode() == 404)
             {
-                return Optional.empty();
+                throw new APIResponseException(APIHTTPErrorReason.ERROR404, response.getResponseData());
             }
 
             if (response.getResponseCode() == 429)
@@ -105,45 +105,26 @@ public class DataCall
 
                 if (this.dc.verbose)
                 {
-                    DataCall.LOGGER.log(Level.INFO, "HIT 429, WAITING " + response.getRetryTimeout() + " SECOND(S) THEN TRYING AGAIN");
+                    DataCall.LOGGER.log(Level.INFO, "HIT 429");
                 }
 
-                if (this.dc.retry)
-                {
-                    try
-                    {
-                        TimeUnit.SECONDS.sleep(response.getRetryTimeout());
-                        return this.build();
-                    } catch (final Exception e)
-                    {
-                        DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
-                    }
-                }
+                throw new APIResponseException(APIHTTPErrorReason.ERROR429, response.getResponseData());
+
             }
 
             if (response.getResponseCode() == 500)
             {
                 if (this.dc.verbose)
                 {
-                    DataCall.LOGGER.log(Level.INFO, "HIT 500 ERROR, WAITING 1 SECOND(S) THEN TRYING AGAIN");
+                    DataCall.LOGGER.log(Level.INFO, "HIT 500 ERROR");
                 }
 
-                if (this.dc.retry)
-                {
-                    try
-                    {
-                        TimeUnit.SECONDS.sleep(1);
-                        return this.build();
-                    } catch (final Exception e)
-                    {
-                        DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
-                    }
-                }
+                throw new APIResponseException(APIHTTPErrorReason.ERROR500, response.getResponseData());
+
             }
 
             DataCall.LOGGER.log(Level.WARNING, "Response Code:" + response.getResponseCode());
             DataCall.LOGGER.log(Level.WARNING, "Response Data:" + response.getResponseData());
-            DataCall.LOGGER.log(Level.WARNING, "Rate-Limit:" + response.getRetryTimeout());
             throw new APINoValidResponseException(response.getResponseData());
         }
 
@@ -234,21 +215,8 @@ public class DataCall
                     con.getHeaderFields().forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
 
-                final String limitType = con.getHeaderField("X-Rate-Limit-Type");
-                int timeout = 0;
+                final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
 
-                if (limitType != null)
-                {
-                    if (limitType.equals(DataCall.LIMIT_USER) || limitType.equals(DataCall.LIMIT_SERVICE))
-                    {
-                        final String timeoutString = con.getHeaderField("Retry-After");
-
-                        timeout = timeoutString == null ? this.dc.retryTime : Integer.parseInt(timeoutString);
-                    } else
-                    {
-                        timeout = this.dc.retryTime;
-                    }
-                }
                 final String limitCount = con.getHeaderField("X-Rate-Limit-Count");
 
                 if (limitCount != null)
@@ -265,7 +233,7 @@ public class DataCall
 
                 if (con.getResponseCode() != 200)
                 {
-                    return new DataCallResponse(con.getResponseCode(), null, timeout);
+                    return new DataCallResponse(con.getResponseCode(), limitType);
                 }
 
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
@@ -275,13 +243,13 @@ public class DataCall
 
                 con.disconnect();
 
-                return new DataCallResponse(con.getResponseCode(), data.toString(), timeout);
+                return new DataCallResponse(con.getResponseCode(), data.toString());
             } catch (final IOException e)
             {
                 DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
 
-            throw new APINoValidResponseException("Reached end of getResponse, without a valid response!!\n");
+            throw new APINoValidResponseException("Reached end of getResponse, without a valid response!!");
         }
 
         /**
@@ -409,32 +377,6 @@ public class DataCall
         }
 
         /**
-         * The call should retry if it hits a 429 - Too Many Requests
-         *
-         * @param flag
-         *            if it should retry
-         * @return this
-         */
-        public DataCallBuilder withRetryOn429(final boolean flag)
-        {
-            this.dc.retry = flag;
-            return this;
-        }
-
-        /**
-         * The time to wait to retry, if the call fails
-         *
-         * @param retryTime
-         *            the time to wait
-         * @return this
-         */
-        public DataCallBuilder withRetryTime(final int retryTime)
-        {
-            this.dc.retryTime = retryTime;
-            return this;
-        }
-
-        /**
          * Set the server to make this call to. (ie. EUW)
          *
          * @param server
@@ -483,13 +425,11 @@ public class DataCall
     {
         int    responseCode;
         String responseData;
-        int    retryTimeout;
 
-        DataCallResponse(final int a, final String b, final int c)
+        DataCallResponse(final int a, final String b)
         {
             this.responseCode = a;
             this.responseData = b;
-            this.retryTimeout = c;
         }
 
         /**
@@ -510,21 +450,10 @@ public class DataCall
             return this.responseData;
         }
 
-        /**
-         * Retry timeout
-         *
-         */
-        int getRetryTimeout()
-        {
-            return this.retryTimeout;
-        }
     }
 
     private static final String                       HTTP                                   = "http://";
     private static final String                       HTTPS                                  = "https://";
-
-    private static final String                       LIMIT_USER                             = "user";
-    private static final String                       LIMIT_SERVICE                          = "service";
 
     private static final Double                       DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
 
@@ -557,11 +486,7 @@ public class DataCall
 
     private final Map<String, String> urlHeaders    = new TreeMap<>();
 
-    private boolean                   retry         = true;
-
     private boolean                   verbose       = false;
-
-    private int                       retryTime     = 5;
 
     private String                    requestMethod = "GET";
 
