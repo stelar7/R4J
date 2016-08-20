@@ -5,8 +5,7 @@ import java.util.stream.Stream;
 
 public enum LevelUpType
 {
-    EVOLVE,
-    NORMAL;
+    EVOLVE, NORMAL;
 
     /**
      * Returns an LevelUpType from the provided code

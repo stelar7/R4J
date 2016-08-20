@@ -4,14 +4,7 @@ import java.util.stream.Stream;
 
 public enum Tier
 {
-    CHALLENGER,
-    MASTER,
-    DIAMOND,
-    PLATINUM,
-    GOLD,
-    SILVER,
-    BRONZE,
-    UNRANKED;
+    CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE, UNRANKED;
 
     /**
      * Returns an Tier from the provided code

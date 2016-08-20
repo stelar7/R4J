@@ -9,23 +9,19 @@ public enum Role
     /**
      * Duo queue?
      */
-    DUO,
-    /**
-     * Unknown?
-     */
-    NONE,
-    /**
-     * Solo queue?
-     */
-    SOLO,
-    /**
-     * Duo queue marksman
-     */
-    DUO_CARRY,
-    /**
-     * Duo queue support
-     */
-    DUO_SUPPORT;
+    DUO, /**
+ * Unknown?
+ */
+NONE, /**
+ * Solo queue?
+ */
+SOLO, /**
+ * Duo queue marksman
+ */
+DUO_CARRY, /**
+ * Duo queue support
+ */
+DUO_SUPPORT;
 
     /**
      * Returns a Role from the provided code

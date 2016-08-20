@@ -5,9 +5,7 @@ import java.util.stream.Stream;
 
 public enum AscencionType
 {
-    CHAMPION_ASCENDED,
-    CLEAR_ASCENDED,
-    MINION_ASCENDED;
+    CHAMPION_ASCENDED, CLEAR_ASCENDED, MINION_ASCENDED;
 
     /**
      * Returns an AscentionType from the provided code
