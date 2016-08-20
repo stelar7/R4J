@@ -1,27 +1,29 @@
 package no.stelar7.api.l4j8.tests.currentgame;
 
-import java.util.*;
-
+import no.stelar7.api.l4j8.basic.DataCall;
+import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
+import no.stelar7.api.l4j8.basic.Utils;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGameInfo;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
-import org.junit.runners.*;
+import org.junit.runners.MethodSorters;
 
-import no.stelar7.api.l4j8.basic.*;
-import no.stelar7.api.l4j8.basic.DataCall.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.currentgame.*;
-import no.stelar7.api.l4j8.pojo.featuredgames.*;
-import no.stelar7.api.l4j8.pojo.summoner.*;
-import no.stelar7.api.l4j8.tests.*;
+import java.util.Map;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CurrentGameTest
 {
 
-    L4J8            l4j8            = new L4J8(SecretFile.CREDS);
-    DataCallBuilder featuredbuilder = DataCall.builder();
-    DataCallBuilder currentbuilder  = DataCall.builder();
-    DataCallBuilder idbuilder       = DataCall.builder();
+    L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+    private final DataCallBuilder featuredbuilder = DataCall.builder();
+    private final DataCallBuilder currentbuilder = DataCall.builder();
+    private final DataCallBuilder idbuilder = DataCall.builder();
 
     @Test
     public void doTest()
@@ -42,7 +44,7 @@ public class CurrentGameTest
         final Long id = datamap.get(parsedName).getId();
 
         this.currentbuilder.withURLData("{summonerId}", id.toString());
-        this.currentbuilder.withURLData("{platformId}", game.getPlatform().get().getCode());
+        this.currentbuilder.withURLData("{platformId}", game.getPlatform().getCode());
 
         // our ongoing game
         final CurrentGameInfo currentGame = (CurrentGameInfo) this.currentbuilder.build();
@@ -67,11 +69,11 @@ public class CurrentGameTest
         Assert.assertNotNull("GAMESTARTTIME is null", currentGame.getGameStartTimeAsDate());
 
         Assert.assertEquals("Timestamp doesnt match TIMESTAMP", currentGame.getGameStartTime(), (Long) currentGame.getGameStartTimeAsDate().toInstant().toEpochMilli());
-        Assert.assertEquals("lane doesnt match LANE", currentGame.getGameModeId(), currentGame.getGameMode().get().getCode());
-        Assert.assertEquals("queue doesnt match QUEUE", currentGame.getGameQueueConfigId(), currentGame.getGameQueueType().get().getCode());
-        Assert.assertEquals("role doesnt match ROLE", currentGame.getGameTypeId(), currentGame.getGameType().get().getCode());
-        Assert.assertEquals("season doesnt match SEASON", currentGame.getMapId(), currentGame.getMap().get().getCode());
-        Assert.assertEquals("region doesnt match REGION", currentGame.getPlatformId(), currentGame.getPlatform().get().getCode());
+        Assert.assertEquals("lane doesnt match LANE", currentGame.getGameModeId(), currentGame.getGameMode().getCode());
+        Assert.assertEquals("queue doesnt match QUEUE", currentGame.getGameQueueConfigId(), currentGame.getGameQueueType().getCode());
+        Assert.assertEquals("role doesnt match ROLE", currentGame.getGameTypeId(), currentGame.getGameType().getCode());
+        Assert.assertEquals("season doesnt match SEASON", currentGame.getMapId(), currentGame.getMap().getCode());
+        Assert.assertEquals("region doesnt match REGION", currentGame.getPlatformId(), currentGame.getPlatform().getCode());
 
     }
 

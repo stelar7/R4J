@@ -1,12 +1,13 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-public class Frame
+class Frame
 {
-    private List<Event>                   events;
+    private List<Event> events;
     private Map<String, ParticipantFrame> participantFrames;
-    private Long                          timestamp;
+    private Long timestamp;
 
     @Override
     public boolean equals(final Object obj)

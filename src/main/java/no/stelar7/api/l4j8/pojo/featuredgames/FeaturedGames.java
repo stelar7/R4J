@@ -1,11 +1,11 @@
 package no.stelar7.api.l4j8.pojo.featuredgames;
 
-import java.util.*;
+import java.util.List;
 
 public class FeaturedGames
 {
-    Long                   clientRefreshInterval;
-    List<FeaturedGameInfo> gameList;
+    private Long clientRefreshInterval;
+    private List<FeaturedGameInfo> gameList;
 
     @Override
     public boolean equals(final Object obj)

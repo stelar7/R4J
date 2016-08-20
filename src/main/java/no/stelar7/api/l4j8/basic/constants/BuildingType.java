@@ -1,19 +1,17 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum BuildingType
 
 {
-    INHIBITOR_BUILDING,
-    TOWER_BUILDING;
+    INHIBITOR_BUILDING, TOWER_BUILDING;
 
     /**
      * Returns an BuildingType from the provided code
      *
-     * @param code
-     *            the lookup key
+     * @param type the lookup key
      * @return BuildingType
      */
     public static Optional<BuildingType> getFromCode(final String type)

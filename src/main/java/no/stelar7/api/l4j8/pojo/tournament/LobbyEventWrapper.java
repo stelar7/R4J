@@ -1,10 +1,10 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.*;
+import java.util.List;
 
 public class LobbyEventWrapper
 {
-    List<LobbyEvent> eventList;
+    private List<LobbyEvent> eventList;
 
     @Override
     public boolean equals(final Object obj)

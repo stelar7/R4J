@@ -1,54 +1,68 @@
 package no.stelar7.api.l4j8.tests.champion;
 
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.api.ChampionCallFlags;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.pojo.champion.Champion;
+import no.stelar7.api.l4j8.tests.SecretFile;
+import org.junit.Assert;
+import org.junit.Test;
 
-import org.junit.*;
+import java.util.List;
+import java.util.Optional;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.champion.*;
-import no.stelar7.api.l4j8.tests.*;
+import static no.stelar7.api.l4j8.basic.constants.Champion.LEONA;
 
-public class ChampionByIdTest extends TestBase
+public class ChampionByIdTest
 {
 
-    @Before
-    public void initForTest()
-    {
-        TestBase.init();
-        TestBase.builder.withEndpoint(URLEndpoint.CHAMPIONS);
-    }
-
-    private List<Champion> objectToList(final ChampionList cl)
-    {
-        return cl.getChampions();
-    }
+    private final L4J8 api = new L4J8(SecretFile.CREDS);
 
     @Test
     public void testMany()
     {
-        TestBase.builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, "");
-        final List<Champion> champs = this.objectToList((ChampionList) TestBase.builder.build());
 
-        Assert.assertTrue("Less than 100 champions?", champs.size() > 100);
+        Optional<List<Champion>> result = api.getChampionById(Server.EUW, null, null);
+        if (!result.isPresent())
+        {
+            Assert.assertTrue("No data returned from API", false);
+            return;
+        }
+
+        List<Champion> data = result.get();
+
+        Assert.assertTrue("Less than 100 champions?", data.size() > 100);
     }
 
     @Test
     public void testManyWithParam()
     {
-        TestBase.builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, "");
-        TestBase.builder.withURLParameter("freeToPlay", "true");
-        final List<Champion> champs = this.objectToList((ChampionList) TestBase.builder.build());
 
-        champs.forEach(c -> Assert.assertTrue("Free to play is false?!", c.isFreeToPlay()));
+        Optional<List<Champion>> result = api.getChampionById(Server.EUW, null, ChampionCallFlags.FREE_TO_PLAY);
+        if (!result.isPresent())
+        {
+            Assert.assertTrue("No data returned from API", false);
+            return;
+        }
+
+        List<Champion> data = result.get();
+        data.forEach(champion -> Assert.assertTrue("Champion is not free?", champion.isFreeToPlay()));
+
     }
 
     @Test
     public void testSingle()
     {
-        TestBase.builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, "266");
-        TestBase.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
-        final Champion champs = (Champion) TestBase.builder.build();
 
-        Assert.assertTrue("Champion id is not 266?", champs.getId().equals(266));
+        Optional<List<Champion>> result = api.getChampionById(Server.EUW, LEONA.getId(), null);
+        if (!result.isPresent())
+        {
+            Assert.assertTrue("No data returned from API", false);
+            return;
+        }
+
+        List<Champion> data = result.get();
+        data.forEach(champion -> Assert.assertTrue("Champion id missmatch?", champion.getId().equals(LEONA.getId())));
+
     }
 }

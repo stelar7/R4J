@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.pojo.staticdata.map;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BaseStaticData;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.Map;
 
 public class MapData extends BaseStaticData
 {
-    Map<String, MapDetails> data;
+    private Map<String, MapDetails> data;
 
     @Override
     public boolean equals(final Object obj)

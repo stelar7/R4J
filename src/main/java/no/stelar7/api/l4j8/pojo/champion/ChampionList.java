@@ -1,10 +1,10 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
-import java.util.*;
+import java.util.List;
 
 public class ChampionList
 {
-    List<Champion> champions;
+    private List<Champion> champions;
 
     @Override
     public boolean equals(final Object obj)

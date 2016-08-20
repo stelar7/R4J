@@ -1,22 +1,22 @@
 package no.stelar7.api.l4j8.pojo.matchlist;
 
-import java.time.*;
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+
+import java.time.*;
 
 public class MatchReference
 {
     private Integer champion;
-    private Long    matchId;
-    private Long    timestamp;
-    private String  lane;
-    private String  platformId;
-    private String  queue;
-    private String  region;
-    private String  role;
-    private String  season;
+    private Long matchId;
+    private Long timestamp;
+    private String lane;
+    private String platformId;
+    private String queue;
+    private String region;
+    private String role;
+    private String season;
 
     @Override
     public boolean equals(final Object obj)
@@ -132,9 +132,9 @@ public class MatchReference
      *
      * @return Champion
      */
-    public Optional<Champion> getChampion()
+    public Champion getChampion()
     {
-        return Champion.getFromId(this.champion);
+        return Champion.getFromId(this.champion).orElse(null);
     }
 
     /**
@@ -152,9 +152,9 @@ public class MatchReference
      *
      * @return Lane
      */
-    public Optional<Lane> getLane()
+    public Lane getLane()
     {
-        return Lane.getFromCode(this.lane);
+        return Lane.getFromCode(this.lane).orElse(null);
     }
 
     /**
@@ -182,9 +182,9 @@ public class MatchReference
      *
      * @return Platform
      */
-    public Optional<Platform> getPlatform()
+    public Platform getPlatform()
     {
-        return Platform.getFromCode(this.platformId);
+        return Platform.getFromCode(this.platformId).orElse(null);
     }
 
     /**
@@ -202,9 +202,9 @@ public class MatchReference
      *
      * @return RankedQueue
      */
-    public Optional<RankedQueue> getQueue()
+    public RankedQueue getQueue()
     {
-        return RankedQueue.getFromCode(this.queue);
+        return RankedQueue.getFromCode(this.queue).orElse(null);
     }
 
     /**
@@ -222,9 +222,9 @@ public class MatchReference
      *
      * @return Server
      */
-    public Optional<Server> getRegion()
+    public Server getRegion()
     {
-        return Server.getFromCode(this.region);
+        return Server.getFromCode(this.region).orElse(null);
     }
 
     /**
@@ -242,9 +242,9 @@ public class MatchReference
      *
      * @return Role
      */
-    public Optional<Role> getRole()
+    public Role getRole()
     {
-        return Role.getFromCode(this.role);
+        return Role.getFromCode(this.role).orElse(null);
     }
 
     /**
@@ -262,9 +262,9 @@ public class MatchReference
      *
      * @return Season
      */
-    public Optional<Season> getSeason()
+    public Season getSeason()
     {
-        return Season.getFromCode(this.season);
+        return Season.getFromCode(this.season).orElse(null);
     }
 
     /**

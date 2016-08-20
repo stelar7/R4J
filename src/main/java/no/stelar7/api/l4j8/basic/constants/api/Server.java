@@ -1,30 +1,19 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum Server
 {
-    BR("br.api.pvp.net", true),
-    EUNE("eune.api.pvp.net", true),
-    EUW("euw.api.pvp.net", true),
-    KR("kr.api.pvp.net", true),
-    JP("jp.api.pvp.net", true),
-    LAN("lan.api.pvp.net", true),
-    LAS("las.api.pvp.net", true),
-    NA("na.api.pvp.net", true),
-    OCE("oce.api.pvp.net", true),
-    TR("tr.api.pvp.net", true),
-    RU("ru.api.pvp.net", true),
-    PBE("pbe.api.pvp.net", true),
-    GLOBAL("global.api.pvp.net", false);
+    BR("br.api.pvp.net", true), EUNE("eune.api.pvp.net", true), EUW("euw.api.pvp.net", true), KR("kr.api.pvp.net", true), JP("jp.api.pvp.net", true), LAN("lan.api.pvp.net", true), LAS("las.api.pvp.net", true), NA("na.api.pvp.net", true), OCE("oce.api.pvp.net", true), TR("tr.api.pvp.net", true), RU("ru.api.pvp.net", true), PBE("pbe.api.pvp.net", true), GLOBAL("global.api.pvp.net", false);
 
     public static Optional<Server> getFromCode(final String code)
     {
         return Stream.of(Server.values()).filter(t -> t.name().equals(code)).findFirst();
     }
 
-    private final String  endpoint;
+    private final String endpoint;
 
     private final Boolean limited;
 

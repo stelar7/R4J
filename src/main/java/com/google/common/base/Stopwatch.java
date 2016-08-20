@@ -16,9 +16,9 @@
 
 package com.google.common.base;
 
-import static java.util.concurrent.TimeUnit.*;
+import java.util.concurrent.TimeUnit;
 
-import java.util.concurrent.*;
+import static java.util.concurrent.TimeUnit.*;
 
 public final class Stopwatch
 {
@@ -26,22 +26,22 @@ public final class Stopwatch
     {
         switch (unit)
         {
-            case NANOSECONDS:
-                return "ns";
-            case MICROSECONDS:
-                return "\u03bcs"; // μs
-            case MILLISECONDS:
-                return "ms";
-            case SECONDS:
-                return "s";
-            case MINUTES:
-                return "min";
-            case HOURS:
-                return "h";
-            case DAYS:
-                return "d";
-            default:
-                throw new AssertionError();
+        case NANOSECONDS:
+            return "ns";
+        case MICROSECONDS:
+            return "\u03bcs"; // μs
+        case MILLISECONDS:
+            return "ms";
+        case SECONDS:
+            return "s";
+        case MINUTES:
+            return "min";
+        case HOURS:
+            return "h";
+        case DAYS:
+            return "d";
+        default:
+            throw new AssertionError();
         }
     }
 
@@ -96,20 +96,18 @@ public final class Stopwatch
 
     private final Ticker ticker;
 
-    private boolean      isRunning;
+    private boolean isRunning;
 
-    private long         elapsedNanos;
+    private long elapsedNanos;
 
-    private long         startTick;
+    private long startTick;
 
-    @Deprecated
-    Stopwatch()
+    private Stopwatch()
     {
         this(Ticker.systemTicker());
     }
 
-    @Deprecated
-    Stopwatch(final Ticker ticker)
+    private Stopwatch(final Ticker ticker)
     {
         this.ticker = Preconditions.checkNotNull(ticker, "ticker");
     }
@@ -136,7 +134,7 @@ public final class Stopwatch
         return this;
     }
 
-    public Stopwatch start()
+    private Stopwatch start()
     {
         Preconditions.checkState(!this.isRunning, "This stopwatch is already running.");
         this.isRunning = true;

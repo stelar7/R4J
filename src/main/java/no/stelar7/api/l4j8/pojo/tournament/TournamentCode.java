@@ -1,22 +1,22 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.*;
+import java.util.Set;
 
 public class TournamentCode
 {
-    String    code;
-    Long      id;
-    String    lobbyName;
-    String    map;
-    String    metaData;
-    Set<Long> participants;
-    String    password;
-    String    pickType;
-    Integer   providerId;
-    String    region;
-    String    spectators;
-    Integer   teamSize;
-    Integer   tournamentId;
+    private String code;
+    private Long id;
+    private String lobbyName;
+    private String map;
+    private String metaData;
+    private Set<Long> participants;
+    private String password;
+    private String pickType;
+    private Integer providerId;
+    private String region;
+    private String spectators;
+    private Integer teamSize;
+    private Integer tournamentId;
 
     @Override
     public boolean equals(final Object obj)

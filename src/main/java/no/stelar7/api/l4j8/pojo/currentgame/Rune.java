@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.currentgame;
 
-public class Rune
+class Rune
 {
     private Integer count;
-    private Long    runeId;
+    private Long runeId;
 
     @Override
     public boolean equals(final Object obj)

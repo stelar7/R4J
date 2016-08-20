@@ -1,13 +1,14 @@
 package no.stelar7.api.l4j8.basic;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.logging.*;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Utils
 {
-    public static final Logger LOGGER = Logger.getGlobal();
+    private static final Logger LOGGER = Logger.getGlobal();
 
     public static String prepareForURL(final String data)
     {
@@ -24,6 +25,7 @@ public class Utils
     }
 
     private Utils()
-    {}
+    {
+    }
 
 }

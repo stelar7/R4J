@@ -2,11 +2,11 @@ package no.stelar7.api.l4j8.pojo.team;
 
 import java.time.*;
 
-public class TeamMemberInfo
+class TeamMemberInfo
 {
-    private Long   inviteDate;
-    private Long   joinDate;
-    private Long   playerId;
+    private Long inviteDate;
+    private Long joinDate;
+    private Long playerId;
     private String status;
 
     @Override
@@ -80,7 +80,7 @@ public class TeamMemberInfo
 
     /**
      * A ZonedDateTime of {@code getInviteDateAsDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getInviteDateAsDate()
@@ -100,7 +100,7 @@ public class TeamMemberInfo
 
     /**
      * A ZonedDateTime of {@code getInviteDateAsDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getJoinDateAsDate()

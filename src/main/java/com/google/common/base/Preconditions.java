@@ -14,7 +14,7 @@
 
 package com.google.common.base;
 
-public final class Preconditions
+final class Preconditions
 {
 
     private static String badElementIndex(final int index, final int size, final String desc)
@@ -88,7 +88,7 @@ public final class Preconditions
         return Preconditions.checkElementIndex(index, size, "index");
     }
 
-    public static int checkElementIndex(final int index, final int size, final String desc)
+    private static int checkElementIndex(final int index, final int size, final String desc)
     {
         if ((index < 0) || (index >= size))
         {
@@ -129,7 +129,7 @@ public final class Preconditions
         return Preconditions.checkPositionIndex(index, size, "index");
     }
 
-    public static int checkPositionIndex(final int index, final int size, final String desc)
+    private static int checkPositionIndex(final int index, final int size, final String desc)
     {
         if ((index < 0) || (index > size))
         {
@@ -172,7 +172,7 @@ public final class Preconditions
         }
     }
 
-    static String format(final String templaten, final Object... args)
+    private static String format(final String templaten, final Object... args)
     {
         final String template = String.valueOf(templaten); // null -> "null"
         final StringBuilder builder = new StringBuilder(template.length() + (16 * args.length));
@@ -206,6 +206,7 @@ public final class Preconditions
     }
 
     private Preconditions()
-    {}
+    {
+    }
 
 }

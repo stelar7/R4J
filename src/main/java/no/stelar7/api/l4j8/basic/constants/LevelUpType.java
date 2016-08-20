@@ -1,18 +1,16 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum LevelUpType
 {
-    EVOLVE,
-    NORMAL;
+    EVOLVE, NORMAL;
 
     /**
      * Returns an LevelUpType from the provided code
      *
-     * @param code
-     *            the lookup key
+     * @param type the lookup key
      * @return LevelUpType
      */
     public static Optional<LevelUpType> getFromCode(final String type)

@@ -1,32 +1,33 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
 
-public class Event
+import java.util.List;
+import java.util.Optional;
+
+class Event
 {
-    private String        ascendedType;
+    private String ascendedType;
     private List<Integer> assistingParticipantIds;
-    private String        buildingType;
-    private Integer       creatorId;
-    private String        eventType;
-    private Integer       itemAfter;
-    private Integer       itemBefore;
-    private Integer       itemId;
-    private Integer       killerId;
-    private String        laneType;
-    private String        levelUpType;
-    private String        monsterType;
-    private Integer       participantId;
-    private String        pointCaptured;
-    private Position      position;
-    private Integer       skillSlot;
-    private Integer       teamId;
-    private Long          timestamp;
-    private String        towerType;
-    private Integer       victimId;
-    private String        wardType;
+    private String buildingType;
+    private Integer creatorId;
+    private String eventType;
+    private Integer itemAfter;
+    private Integer itemBefore;
+    private Integer itemId;
+    private Integer killerId;
+    private String laneType;
+    private String levelUpType;
+    private String monsterType;
+    private Integer participantId;
+    private String pointCaptured;
+    private Position position;
+    private Integer skillSlot;
+    private Integer teamId;
+    private Long timestamp;
+    private String towerType;
+    private Integer victimId;
+    private String wardType;
 
     @Override
     public boolean equals(final Object obj)
@@ -409,7 +410,6 @@ public class Event
 
     /**
      * The level up type of the event. Only present if relevant. (Legal values: EVOLVE, NORMAL)
-     *
      *
      * @return String
      */

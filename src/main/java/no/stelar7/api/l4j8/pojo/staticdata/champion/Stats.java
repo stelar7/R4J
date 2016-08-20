@@ -2,26 +2,26 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 public class Stats
 {
-    Double armor;
-    Double armorperlevel;
-    Double attackdamage;
-    Double attackdamageperlevel;
-    Double attackrange;
-    Double attackspeedoffset;
-    Double attackspeedperlevel;
-    Double crit;
-    Double critperlevel;
-    Double hp;
-    Double hpperlevel;
-    Double hpregen;
-    Double hpregenperlevel;
-    Double movespeed;
-    Double mp;
-    Double mpperlevel;
-    Double mpregen;
-    Double mpregenperlevel;
-    Double spellblock;
-    Double spellblockperlevel;
+    private Double armor;
+    private Double armorperlevel;
+    private Double attackdamage;
+    private Double attackdamageperlevel;
+    private Double attackrange;
+    private Double attackspeedoffset;
+    private Double attackspeedperlevel;
+    private Double crit;
+    private Double critperlevel;
+    private Double hp;
+    private Double hpperlevel;
+    private Double hpregen;
+    private Double hpregenperlevel;
+    private Double movespeed;
+    private Double mp;
+    private Double mpperlevel;
+    private Double mpregen;
+    private Double mpregenperlevel;
+    private Double spellblock;
+    private Double spellblockperlevel;
 
     @Override
     public boolean equals(final Object obj)

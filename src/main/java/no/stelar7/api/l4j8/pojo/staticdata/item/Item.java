@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BasicData;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.Map;
 
 public class Item extends BasicData
 {
-    Map<String, String> effect;
+    private Map<String, String> effect;
 
     @Override
     public boolean equals(final Object obj)

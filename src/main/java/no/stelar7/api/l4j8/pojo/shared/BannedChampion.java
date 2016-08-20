@@ -1,14 +1,15 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.Champion;
+import no.stelar7.api.l4j8.basic.constants.Team;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import java.util.Optional;
 
 public class BannedChampion
 {
     private Integer championId;
     private Integer pickTurn;
-    private Long    teamId;
+    private Long teamId;
 
     @Override
     public boolean equals(final Object obj)

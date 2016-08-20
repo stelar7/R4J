@@ -1,13 +1,14 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.shared.BaseSpellData;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import no.stelar7.api.l4j8.pojo.shared.*;
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.List;
 
-public class ChampionSpell extends BaseSpellData
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+class ChampionSpell extends BaseSpellData
 {
-    List<Image> altimages;
+    private List<Image> altimages;
 
     @Override
     public boolean equals(final Object obj)

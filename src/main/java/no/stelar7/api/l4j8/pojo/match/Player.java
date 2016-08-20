@@ -2,10 +2,10 @@ package no.stelar7.api.l4j8.pojo.match;
 
 public class Player
 {
-    private String  matchHistoryUri;
+    private String matchHistoryUri;
     private Integer profileIcon;
-    private Long    summonerId;
-    private String  summonerName;
+    private Long summonerId;
+    private String summonerName;
 
     @Override
     public boolean equals(final Object obj)

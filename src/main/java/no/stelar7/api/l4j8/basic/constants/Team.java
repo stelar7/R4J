@@ -1,20 +1,19 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum Team
 {
 
-    BLUE(100),
-    PURPLE(200);
+    BLUE(100), PURPLE(200);
 
     public static Optional<Team> getFromCode(final Number teamId)
     {
         return Stream.of(Team.values()).filter(t -> t.code.equals(teamId)).findFirst();
     }
 
-    Integer code;
+    final Integer code;
 
     Team(final int code)
     {

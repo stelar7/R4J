@@ -4,14 +4,14 @@ import java.time.*;
 
 public class ChampionMastery
 {
-    Long    championId;
-    Integer championLevel;
-    Integer championPoints;
-    Long    championPointsSinceLastLevel;
-    Long    championPointsUntilNextLevel;
-    Boolean chestGranted;
-    Long    lastPlayTime;
-    Long    playerId;
+    private Long championId;
+    private Integer championLevel;
+    private Integer championPoints;
+    private Long championPointsSinceLastLevel;
+    private Long championPointsUntilNextLevel;
+    private Boolean chestGranted;
+    private Long lastPlayTime;
+    private Long playerId;
 
     @Override
     public boolean equals(final Object obj)
@@ -184,7 +184,7 @@ public class ChampionMastery
 
     /**
      * A ZonedDateTime of {@code getLastPlayTime()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getLastPlayTimeAsDate()

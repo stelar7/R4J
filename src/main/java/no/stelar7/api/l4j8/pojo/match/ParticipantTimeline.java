@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.Lane;
+import no.stelar7.api.l4j8.basic.constants.Role;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import java.util.Optional;
 
 public class ParticipantTimeline
 {
@@ -32,8 +33,8 @@ public class ParticipantTimeline
     private ParticipantTimelineData wardsPerMinDeltas;
     private ParticipantTimelineData xpDiffPerMinDeltas;
     private ParticipantTimelineData xpPerMinDeltas;
-    private String                  lane;
-    private String                  role;
+    private String lane;
+    private String role;
 
     @Override
     public boolean equals(final Object obj)
@@ -652,8 +653,7 @@ public class ParticipantTimeline
     @Override
     public String toString()
     {
-        return "ParticipantTimeline [ancientGolemAssistsPerMinCounts=" + this.ancientGolemAssistsPerMinCounts + ", ancientGolemKillsPerMinCounts=" + this.ancientGolemKillsPerMinCounts + ", assistedLaneDeathsPerMinDeltas=" + this.assistedLaneDeathsPerMinDeltas + ", assistedLaneKillsPerMinDeltas=" + this.assistedLaneKillsPerMinDeltas + ", baronAssistsPerMinCounts=" + this.baronAssistsPerMinCounts + ", baronKillsPerMinCounts=" + this.baronKillsPerMinCounts + ", creepsPerMinDeltas=" + this.creepsPerMinDeltas + ", csDiffPerMinDeltas=" + this.csDiffPerMinDeltas + ", damageTakenDiffPerMinDeltas=" + this.damageTakenDiffPerMinDeltas + ", damageTakenPerMinDeltas=" + this.damageTakenPerMinDeltas + ", dragonAssistsPerMinCounts=" + this.dragonAssistsPerMinCounts + ", dragonKillsPerMinCounts=" + this.dragonKillsPerMinCounts + ", elderLizardAssistsPerMinCounts=" + this.elderLizardAssistsPerMinCounts + ", elderLizardKillsPerMinCounts=" + this.elderLizardKillsPerMinCounts + ", goldPerMinDeltas=" + this.goldPerMinDeltas + ", inhibitorAssistsPerMinCounts=" + this.inhibitorAssistsPerMinCounts + ", inhibitorKillsPerMinCounts=" + this.inhibitorKillsPerMinCounts + ", towerAssistsPerMinCounts=" + this.towerAssistsPerMinCounts + ", towerKillsPerMinCounts=" + this.towerKillsPerMinCounts + ", towerKillsPerMinDeltas=" + this.towerKillsPerMinDeltas + ", vilemawAssistsPerMinCounts=" + this.vilemawAssistsPerMinCounts + ", vilemawKillsPerMinCounts=" + this.vilemawKillsPerMinCounts + ", wardsPerMinDeltas=" + this.wardsPerMinDeltas + ", xpDiffPerMinDeltas=" + this.xpDiffPerMinDeltas + ", xpPerMinDeltas="
-                + this.xpPerMinDeltas + ", lane=" + this.lane + ", role=" + this.role + "]";
+        return "ParticipantTimeline [ancientGolemAssistsPerMinCounts=" + this.ancientGolemAssistsPerMinCounts + ", ancientGolemKillsPerMinCounts=" + this.ancientGolemKillsPerMinCounts + ", assistedLaneDeathsPerMinDeltas=" + this.assistedLaneDeathsPerMinDeltas + ", assistedLaneKillsPerMinDeltas=" + this.assistedLaneKillsPerMinDeltas + ", baronAssistsPerMinCounts=" + this.baronAssistsPerMinCounts + ", baronKillsPerMinCounts=" + this.baronKillsPerMinCounts + ", creepsPerMinDeltas=" + this.creepsPerMinDeltas + ", csDiffPerMinDeltas=" + this.csDiffPerMinDeltas + ", damageTakenDiffPerMinDeltas=" + this.damageTakenDiffPerMinDeltas + ", damageTakenPerMinDeltas=" + this.damageTakenPerMinDeltas + ", dragonAssistsPerMinCounts=" + this.dragonAssistsPerMinCounts + ", dragonKillsPerMinCounts=" + this.dragonKillsPerMinCounts + ", elderLizardAssistsPerMinCounts=" + this.elderLizardAssistsPerMinCounts + ", elderLizardKillsPerMinCounts=" + this.elderLizardKillsPerMinCounts + ", goldPerMinDeltas=" + this.goldPerMinDeltas + ", inhibitorAssistsPerMinCounts=" + this.inhibitorAssistsPerMinCounts + ", inhibitorKillsPerMinCounts=" + this.inhibitorKillsPerMinCounts + ", towerAssistsPerMinCounts=" + this.towerAssistsPerMinCounts + ", towerKillsPerMinCounts=" + this.towerKillsPerMinCounts + ", towerKillsPerMinDeltas=" + this.towerKillsPerMinDeltas + ", vilemawAssistsPerMinCounts=" + this.vilemawAssistsPerMinCounts + ", vilemawKillsPerMinCounts=" + this.vilemawKillsPerMinCounts + ", wardsPerMinDeltas=" + this.wardsPerMinDeltas + ", xpDiffPerMinDeltas=" + this.xpDiffPerMinDeltas + ", xpPerMinDeltas=" + this.xpPerMinDeltas + ", lane=" + this.lane + ", role=" + this.role + "]";
     }
 
 }

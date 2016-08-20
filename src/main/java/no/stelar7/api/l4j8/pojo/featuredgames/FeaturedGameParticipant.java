@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.featuredgames;
 
-import no.stelar7.api.l4j8.pojo.shared.*;
+import no.stelar7.api.l4j8.pojo.shared.BaseGameParticipant;
 
 public class FeaturedGameParticipant extends BaseGameParticipant
 {
@@ -54,7 +54,7 @@ public class FeaturedGameParticipant extends BaseGameParticipant
      *
      * @return boolean
      */
-    public Boolean isBot()
+    protected Boolean isBot()
     {
         return this.bot;
     }

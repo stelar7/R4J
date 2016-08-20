@@ -1,14 +1,14 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.*;
+import java.util.Map;
 
 public class ChampionList
 {
-    Map<String, Champion> data;
-    String                format;
-    Map<String, String>   keys;
-    String                type;
-    String                version;
+    private Map<String, Champion> data;
+    private String format;
+    private Map<String, String> keys;
+    private String type;
+    private String version;
 
     @Override
     public boolean equals(final Object obj)

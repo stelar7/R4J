@@ -1,13 +1,12 @@
 package no.stelar7.api.l4j8.impl;
 
-import java.util.*;
-
-import com.google.gson.*;
-
-import no.stelar7.api.l4j8.basic.DataCall.*;
+import com.google.gson.Gson;
+import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.match.MatchDetail;
 import no.stelar7.api.l4j8.pojo.tournament.*;
+
+import java.util.List;
 
 public class TournamentAPI
 {

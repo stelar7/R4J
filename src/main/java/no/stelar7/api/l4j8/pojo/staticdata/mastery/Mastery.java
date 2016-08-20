@@ -1,19 +1,19 @@
 package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.List;
 
 public class Mastery
 {
-    List<String> description;
-    Integer      id;
-    Image        image;
-    String       masteryTree;
-    String       name;
-    String       prereq;
-    Integer      ranks;
-    List<String> sanitizedDescription;
+    private List<String> description;
+    private Integer id;
+    private Image image;
+    private String masteryTree;
+    private String name;
+    private String prereq;
+    private Integer ranks;
+    private List<String> sanitizedDescription;
 
     @Override
     public boolean equals(final Object obj)
@@ -146,7 +146,7 @@ public class Mastery
 
     /**
      * Gets the mastery tree.
-     *
+     * <p>
      * Legal values: Defense, Offense, Utility
      *
      * @return the mastery tree

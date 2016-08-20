@@ -1,23 +1,15 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 public enum Tier
 {
-    CHALLENGER,
-    MASTER,
-    DIAMOND,
-    PLATINUM,
-    GOLD,
-    SILVER,
-    BRONZE,
-    UNRANKED;
+    CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE, UNRANKED;
 
     /**
      * Returns an Tier from the provided code
      *
-     * @param code
-     *            the lookup key
+     * @param type the lookup key
      * @return Tier
      */
     public static Tier getFromCode(final String type)

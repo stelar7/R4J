@@ -1,21 +1,24 @@
 package no.stelar7.api.l4j8.tests.tournament;
 
-import java.util.*;
-import java.util.logging.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.exceptions.*;
-import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.basic.constants.api.Constants;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.exceptions.APIUnsupportedAction;
+import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.TournamentAPI;
+import no.stelar7.api.l4j8.pojo.match.MatchDetail;
 import no.stelar7.api.l4j8.pojo.tournament.*;
-import no.stelar7.api.l4j8.tests.*;
+import no.stelar7.api.l4j8.tests.SecretFile;
 
-public class TournamentTest
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+class TournamentTest
 {
 
-    public static final Logger LOGGER  = Logger.getGlobal();
-    TournamentAPI              builder = new L4J8(SecretFile.CREDS).getTournamentAPI();
+    private static final Logger LOGGER = Logger.getGlobal();
+    private final TournamentAPI builder = new L4J8(SecretFile.CREDS).getTournamentAPI();
 
     // @Test
     public void testAllRegistrations()
@@ -33,12 +36,19 @@ public class TournamentTest
         final TournamentCodeUpdateParameters tcinner = new TournamentCodeUpdateParameters("0,1,2,3,4,5,6,7,8,9", TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
         final TournamentCodeParameters tcparams = new TournamentCodeParameters(tcinner, "THIS IS METADATA YOOO", teamSize);
 
-        final int actucalSize = tcparams.getAllowedSummonerIds().getParticipants().size();
+        final int actualSize = tcparams.getAllowedSummonerIds().getParticipants().size();
         final int teamTimesTwo = teamSize * 2;
+        final int minTeamSize = 1;
+        final int maxTeamSize = 10;
 
-        if ((actucalSize != teamTimesTwo) || (teamSize < 1) || (teamSize > 10))
+        if ((actualSize != teamTimesTwo))
         {
-            throw new APIUnsupportedAction("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size) (" + teamTimesTwo + " != " + actucalSize);
+            throw new APIUnsupportedAction("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size) (" + teamTimesTwo + " != " + actualSize + ")");
+        }
+
+        if ((actualSize <= minTeamSize) || (actualSize >= maxTeamSize))
+        {
+            throw new APIUnsupportedAction("Cant create a match with less than 1 or more than 10 players (" + actualSize + ")");
         }
 
         final List<String> codes = this.builder.generateTournamentCodes(tcparams, tournamentId, 1);
@@ -102,7 +112,7 @@ public class TournamentTest
     public void testTournamentLobbyEvents()
     {
         final LobbyEventWrapper eventWrapper = this.builder.getTournamentLobbyInfo(Constants.TEST_TOURNAMENT_CODE);
-        eventWrapper.getEventList().stream().map(lew -> lew.toString()).forEach(TournamentTest.LOGGER::info);
+        eventWrapper.getEventList().stream().map(LobbyEvent::toString).forEach(TournamentTest.LOGGER::info);
     }
 
     // @Test

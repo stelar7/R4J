@@ -1,94 +1,97 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import java.util.*;
-import java.util.logging.*;
-import java.util.stream.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class RawStats
 {
 
-    public static final Logger LOGGER = Logger.getGlobal();
+    private static final Logger LOGGER = Logger.getGlobal();
 
-    private Integer            assists;
-    private Integer            barracksKilled;
-    private Integer            championsKilled;
-    private Integer            combatPlayerScore;
-    private Integer            consumablesPurchased;
-    private Integer            damageDealtPlayer;
-    private Integer            doubleKills;
-    private Integer            firstBlood;
-    private Integer            gold;
-    private Integer            goldEarned;
-    private Integer            goldSpent;
-    private Integer            item0;
-    private Integer            item1;
-    private Integer            item2;
-    private Integer            item3;
-    private Integer            item4;
-    private Integer            item5;
-    private Integer            item6;
-    private Integer            itemsPurchased;
-    private Integer            killingSprees;
-    private Integer            largestCriticalStrike;
-    private Integer            largestKillingSpree;
-    private Integer            largestMultiKill;
-    private Integer            legendaryItemsCreated;
-    private Integer            level;
-    private Integer            magicDamageDealtPlayer;
-    private Integer            magicDamageDealtToChampions;
-    private Integer            magicDamageTaken;
-    private Integer            minionsDenied;
-    private Integer            minionsKilled;
-    private Integer            neutralMinionsKilled;
-    private Integer            neutralMinionsKilledEnemyJungle;
-    private Integer            neutralMinionsKilledYourJungle;
-    private Boolean            nexusKilled;
-    private Integer            nodeCapture;
-    private Integer            nodeCaptureAssist;
-    private Integer            nodeNeutralize;
-    private Integer            nodeNeutralizeAssist;
-    private Integer            numDeaths;
-    private Integer            numItemsBought;
-    private Integer            objectivePlayerScore;
-    private Integer            pentaKills;
-    private Integer            physicalDamageDealtPlayer;
-    private Integer            physicalDamageDealtToChampions;
-    private Integer            physicalDamageTaken;
-    private Integer            playerPosition;
-    private Integer            playerRole;
-    private Integer            quadraKills;
-    private Integer            sightWardsBought;
-    private Integer            spell1Cast;
-    private Integer            spell2Cast;
-    private Integer            spell3Cast;
-    private Integer            spell4Cast;
-    private Integer            summonSpell1Cast;
-    private Integer            summonSpell2Cast;
-    private Integer            superMonsterKilled;
-    private Integer            team;
-    private Integer            teamObjective;
-    private Integer            timePlayed;
-    private Integer            totalDamageDealt;
-    private Integer            totalDamageDealtToBuildings;
-    private Integer            totalDamageDealtToChampions;
-    private Integer            totalDamageTaken;
-    private Integer            totalHeal;
-    private Integer            totalPlayerScore;
-    private Integer            totalScoreRank;
-    private Integer            totalTimeCrowdControlDealt;
-    private Integer            totalUnitsHealed;
-    private Integer            tripleKills;
-    private Integer            trueDamageDealtPlayer;
-    private Integer            trueDamageDealtToChampions;
-    private Integer            trueDamageTaken;
-    private Integer            turretsKilled;
-    private Integer            unrealKills;
-    private Integer            victoryPointTotal;
-    private Integer            visionWardsBought;
-    private Integer            wardKilled;
-    private Integer            wardPlaced;
-    private Boolean            win;
+    private Integer assists;
+    private Integer barracksKilled;
+    private Integer championsKilled;
+    private Integer combatPlayerScore;
+    private Integer consumablesPurchased;
+    private Integer damageDealtPlayer;
+    private Integer doubleKills;
+    private Integer firstBlood;
+    private Integer gold;
+    private Integer goldEarned;
+    private Integer goldSpent;
+    private Integer item0;
+    private Integer item1;
+    private Integer item2;
+    private Integer item3;
+    private Integer item4;
+    private Integer item5;
+    private Integer item6;
+    private Integer itemsPurchased;
+    private Integer killingSprees;
+    private Integer largestCriticalStrike;
+    private Integer largestKillingSpree;
+    private Integer largestMultiKill;
+    private Integer legendaryItemsCreated;
+    private Integer level;
+    private Integer magicDamageDealtPlayer;
+    private Integer magicDamageDealtToChampions;
+    private Integer magicDamageTaken;
+    private Integer minionsDenied;
+    private Integer minionsKilled;
+    private Integer neutralMinionsKilled;
+    private Integer neutralMinionsKilledEnemyJungle;
+    private Integer neutralMinionsKilledYourJungle;
+    private Boolean nexusKilled;
+    private Integer nodeCapture;
+    private Integer nodeCaptureAssist;
+    private Integer nodeNeutralize;
+    private Integer nodeNeutralizeAssist;
+    private Integer numDeaths;
+    private Integer numItemsBought;
+    private Integer objectivePlayerScore;
+    private Integer pentaKills;
+    private Integer physicalDamageDealtPlayer;
+    private Integer physicalDamageDealtToChampions;
+    private Integer physicalDamageTaken;
+    private Integer playerPosition;
+    private Integer playerRole;
+    private Integer quadraKills;
+    private Integer sightWardsBought;
+    private Integer spell1Cast;
+    private Integer spell2Cast;
+    private Integer spell3Cast;
+    private Integer spell4Cast;
+    private Integer summonSpell1Cast;
+    private Integer summonSpell2Cast;
+    private Integer superMonsterKilled;
+    private Integer team;
+    private Integer teamObjective;
+    private Integer timePlayed;
+    private Integer totalDamageDealt;
+    private Integer totalDamageDealtToBuildings;
+    private Integer totalDamageDealtToChampions;
+    private Integer totalDamageTaken;
+    private Integer totalHeal;
+    private Integer totalPlayerScore;
+    private Integer totalScoreRank;
+    private Integer totalTimeCrowdControlDealt;
+    private Integer totalUnitsHealed;
+    private Integer tripleKills;
+    private Integer trueDamageDealtPlayer;
+    private Integer trueDamageDealtToChampions;
+    private Integer trueDamageTaken;
+    private Integer turretsKilled;
+    private Integer unrealKills;
+    private Integer victoryPointTotal;
+    private Integer visionWardsBought;
+    private Integer wardKilled;
+    private Integer wardPlaced;
+    private Boolean win;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean equals(final Object obj)
     {
@@ -896,7 +899,8 @@ public class RawStats
     public Map<String, String> getAllStats()
     {
         final Map<String, String> map = new HashMap<>();
-        Stream.of(this.getClass().getFields()).forEach(f -> {
+        Stream.of(this.getClass().getFields()).forEach(f ->
+        {
             try
             {
                 map.put(f.getName(), f.get(this).toString());
@@ -1792,8 +1796,6 @@ public class RawStats
     @Override
     public String toString()
     {
-        return "RawStats [assists=" + this.assists + ", barracksKilled=" + this.barracksKilled + ", championsKilled=" + this.championsKilled + ", combatPlayerScore=" + this.combatPlayerScore + ", consumablesPurchased=" + this.consumablesPurchased + ", damageDealtPlayer=" + this.damageDealtPlayer + ", doubleKills=" + this.doubleKills + ", firstBlood=" + this.firstBlood + ", gold=" + this.gold + ", goldEarned=" + this.goldEarned + ", goldSpent=" + this.goldSpent + ", item0=" + this.item0 + ", item1=" + this.item1 + ", item2=" + this.item2 + ", item3=" + this.item3 + ", item4=" + this.item4 + ", item5=" + this.item5 + ", item6=" + this.item6 + ", itemsPurchased=" + this.itemsPurchased + ", killingSprees=" + this.killingSprees + ", largestCriticalStrike=" + this.largestCriticalStrike + ", largestKillingSpree=" + this.largestKillingSpree + ", largestMultiKill=" + this.largestMultiKill + ", legendaryItemsCreated=" + this.legendaryItemsCreated + ", level=" + this.level + ", magicDamageDealtPlayer=" + this.magicDamageDealtPlayer + ", magicDamageDealtToChampions=" + this.magicDamageDealtToChampions + ", magicDamageTaken=" + this.magicDamageTaken + ", minionsDenied=" + this.minionsDenied + ", minionsKilled=" + this.minionsKilled + ", neutralMinionsKilled=" + this.neutralMinionsKilled + ", neutralMinionsKilledEnemyJungle=" + this.neutralMinionsKilledEnemyJungle + ", neutralMinionsKilledYourJungle=" + this.neutralMinionsKilledYourJungle + ", nexusKilled=" + this.nexusKilled + ", nodeCapture=" + this.nodeCapture + ", nodeCaptureAssist=" + this.nodeCaptureAssist + ", nodeNeutralize="
-                + this.nodeNeutralize + ", nodeNeutralizeAssist=" + this.nodeNeutralizeAssist + ", numDeaths=" + this.numDeaths + ", numItemsBought=" + this.numItemsBought + ", objectivePlayerScore=" + this.objectivePlayerScore + ", pentaKills=" + this.pentaKills + ", physicalDamageDealtPlayer=" + this.physicalDamageDealtPlayer + ", physicalDamageDealtToChampions=" + this.physicalDamageDealtToChampions + ", physicalDamageTaken=" + this.physicalDamageTaken + ", playerPosition=" + this.playerPosition + ", playerRole=" + this.playerRole + ", quadraKills=" + this.quadraKills + ", sightWardsBought=" + this.sightWardsBought + ", spell1Cast=" + this.spell1Cast + ", spell2Cast=" + this.spell2Cast + ", spell3Cast=" + this.spell3Cast + ", spell4Cast=" + this.spell4Cast + ", summonSpell1Cast=" + this.summonSpell1Cast + ", summonSpell2Cast=" + this.summonSpell2Cast + ", superMonsterKilled=" + this.superMonsterKilled + ", team=" + this.team + ", teamObjective=" + this.teamObjective + ", timePlayed=" + this.timePlayed + ", totalDamageDealt=" + this.totalDamageDealt + ", totalDamageDealtToChampions=" + this.totalDamageDealtToChampions + ", totalDamageTaken=" + this.totalDamageTaken + ", totalHeal=" + this.totalHeal + ", totalPlayerScore=" + this.totalPlayerScore + ", totalScoreRank=" + this.totalScoreRank + ", totalTimeCrowdControlDealt=" + this.totalTimeCrowdControlDealt + ", totalUnitsHealed=" + this.totalUnitsHealed + ", tripleKills=" + this.tripleKills + ", trueDamageDealtPlayer=" + this.trueDamageDealtPlayer + ", trueDamageDealtToChampions=" + this.trueDamageDealtToChampions
-                + ", trueDamageTaken=" + this.trueDamageTaken + ", turretsKilled=" + this.turretsKilled + ", unrealKills=" + this.unrealKills + ", victoryPointTotal=" + this.victoryPointTotal + ", visionWardsBought=" + this.visionWardsBought + ", wardKilled=" + this.wardKilled + ", wardPlaced=" + this.wardPlaced + ", win=" + this.win + "]";
+        return "RawStats [assists=" + this.assists + ", barracksKilled=" + this.barracksKilled + ", championsKilled=" + this.championsKilled + ", combatPlayerScore=" + this.combatPlayerScore + ", consumablesPurchased=" + this.consumablesPurchased + ", damageDealtPlayer=" + this.damageDealtPlayer + ", doubleKills=" + this.doubleKills + ", firstBlood=" + this.firstBlood + ", gold=" + this.gold + ", goldEarned=" + this.goldEarned + ", goldSpent=" + this.goldSpent + ", item0=" + this.item0 + ", item1=" + this.item1 + ", item2=" + this.item2 + ", item3=" + this.item3 + ", item4=" + this.item4 + ", item5=" + this.item5 + ", item6=" + this.item6 + ", itemsPurchased=" + this.itemsPurchased + ", killingSprees=" + this.killingSprees + ", largestCriticalStrike=" + this.largestCriticalStrike + ", largestKillingSpree=" + this.largestKillingSpree + ", largestMultiKill=" + this.largestMultiKill + ", legendaryItemsCreated=" + this.legendaryItemsCreated + ", level=" + this.level + ", magicDamageDealtPlayer=" + this.magicDamageDealtPlayer + ", magicDamageDealtToChampions=" + this.magicDamageDealtToChampions + ", magicDamageTaken=" + this.magicDamageTaken + ", minionsDenied=" + this.minionsDenied + ", minionsKilled=" + this.minionsKilled + ", neutralMinionsKilled=" + this.neutralMinionsKilled + ", neutralMinionsKilledEnemyJungle=" + this.neutralMinionsKilledEnemyJungle + ", neutralMinionsKilledYourJungle=" + this.neutralMinionsKilledYourJungle + ", nexusKilled=" + this.nexusKilled + ", nodeCapture=" + this.nodeCapture + ", nodeCaptureAssist=" + this.nodeCaptureAssist + ", nodeNeutralize=" + this.nodeNeutralize + ", nodeNeutralizeAssist=" + this.nodeNeutralizeAssist + ", numDeaths=" + this.numDeaths + ", numItemsBought=" + this.numItemsBought + ", objectivePlayerScore=" + this.objectivePlayerScore + ", pentaKills=" + this.pentaKills + ", physicalDamageDealtPlayer=" + this.physicalDamageDealtPlayer + ", physicalDamageDealtToChampions=" + this.physicalDamageDealtToChampions + ", physicalDamageTaken=" + this.physicalDamageTaken + ", playerPosition=" + this.playerPosition + ", playerRole=" + this.playerRole + ", quadraKills=" + this.quadraKills + ", sightWardsBought=" + this.sightWardsBought + ", spell1Cast=" + this.spell1Cast + ", spell2Cast=" + this.spell2Cast + ", spell3Cast=" + this.spell3Cast + ", spell4Cast=" + this.spell4Cast + ", summonSpell1Cast=" + this.summonSpell1Cast + ", summonSpell2Cast=" + this.summonSpell2Cast + ", superMonsterKilled=" + this.superMonsterKilled + ", team=" + this.team + ", teamObjective=" + this.teamObjective + ", timePlayed=" + this.timePlayed + ", totalDamageDealt=" + this.totalDamageDealt + ", totalDamageDealtToChampions=" + this.totalDamageDealtToChampions + ", totalDamageTaken=" + this.totalDamageTaken + ", totalHeal=" + this.totalHeal + ", totalPlayerScore=" + this.totalPlayerScore + ", totalScoreRank=" + this.totalScoreRank + ", totalTimeCrowdControlDealt=" + this.totalTimeCrowdControlDealt + ", totalUnitsHealed=" + this.totalUnitsHealed + ", tripleKills=" + this.tripleKills + ", trueDamageDealtPlayer=" + this.trueDamageDealtPlayer + ", trueDamageDealtToChampions=" + this.trueDamageDealtToChampions + ", trueDamageTaken=" + this.trueDamageTaken + ", turretsKilled=" + this.turretsKilled + ", unrealKills=" + this.unrealKills + ", victoryPointTotal=" + this.victoryPointTotal + ", visionWardsBought=" + this.visionWardsBought + ", wardKilled=" + this.wardKilled + ", wardPlaced=" + this.wardPlaced + ", win=" + this.win + "]";
     }
 }

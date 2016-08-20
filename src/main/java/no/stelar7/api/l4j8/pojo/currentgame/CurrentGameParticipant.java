@@ -1,14 +1,16 @@
 package no.stelar7.api.l4j8.pojo.currentgame;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGameParticipant;
 
-import no.stelar7.api.l4j8.pojo.featuredgames.*;
+import java.util.Collections;
+import java.util.List;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class CurrentGameParticipant extends FeaturedGameParticipant
 {
     private List<Mastery> masteries;
-    private List<Rune>    runes;
-    private Long          summonerId;
+    private List<Rune> runes;
+    private Long summonerId;
 
     @Override
     public boolean equals(final Object obj)

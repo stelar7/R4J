@@ -1,29 +1,28 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import java.time.*;
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.Map;
 
-public class Game
+import java.time.*;
+import java.util.List;
+import java.util.Optional;
+
+class Game
 {
-    private Integer      championId;
-    private Long         createDate;
+    private Integer championId;
+    private Long createDate;
     private List<Player> fellowPlayers;
-    private Long         gameId;
-    private String       gameMode;
-    private String       gameType;
-    private Boolean      invalid;
-    private Integer      ipEarned;
-    private Integer      level;
-    private Integer      mapId;
-    private Integer      spell1;
-    private Integer      spell2;
-    private RawStats     stats;
-    private String       subType;
-
-    private Integer      teamId;
+    private Long gameId;
+    private String gameMode;
+    private String gameType;
+    private Boolean invalid;
+    private Integer ipEarned;
+    private Integer level;
+    private Integer mapId;
+    private Integer spell1;
+    private Integer spell2;
+    private RawStats stats;
+    private String subType;
+    private Integer teamId;
 
     @Override
     public boolean equals(final Object obj)
@@ -226,7 +225,7 @@ public class Game
 
     /**
      * A ZonedDateTime of {@code getCreateDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getCreateDateAsDate()
@@ -357,7 +356,7 @@ public class Game
     /**
      * Statistics associated with the game for this summoner.
      *
-     * @return
+     * @return RawStats
      */
     public RawStats getStats()
     {

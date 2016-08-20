@@ -1,27 +1,27 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import java.time.*;
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.currentgame.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameParticipant;
 
+import java.time.*;
+import java.util.Collections;
+import java.util.List;
+
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class BaseGameInfo
 {
-    private List<BannedChampion>         bannedChampions;
-    private Long                         gameId;
-    private Long                         gameLength;
-    private String                       gameMode;
-    private Integer                      gameQueueConfigId;
-    private Long                         gameStartTime;
-    private String                       gameType;
-    private Integer                      mapId;
-    private Observer                     observers;
+    private List<BannedChampion> bannedChampions;
+    private Long gameId;
+    private Long gameLength;
+    private String gameMode;
+    private Integer gameQueueConfigId;
+    private Long gameStartTime;
+    private String gameType;
+    private Integer mapId;
+    private Observer observers;
     private List<CurrentGameParticipant> participants;
-
-    private String                       platformId;
+    private String platformId;
 
     @Override
     public boolean equals(final Object obj)
@@ -187,9 +187,9 @@ public class BaseGameInfo
      *
      * @return GameMode
      */
-    public Optional<GameMode> getGameMode()
+    public GameMode getGameMode()
     {
-        return GameMode.getFromCode(this.gameMode);
+        return GameMode.getFromCode(this.gameMode).orElse(null);
     }
 
     /**
@@ -217,9 +217,9 @@ public class BaseGameInfo
      *
      * @return GameQueueType
      */
-    public Optional<GameQueueType> getGameQueueType()
+    public GameQueueType getGameQueueType()
     {
-        return GameQueueType.getFromCode(this.gameQueueConfigId);
+        return GameQueueType.getFromCode(this.gameQueueConfigId).orElse(null);
     }
 
     /**
@@ -234,7 +234,7 @@ public class BaseGameInfo
 
     /**
      * A ZonedDateTime of {@code getGameStartTime()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getGameStartTimeAsDate()
@@ -247,9 +247,9 @@ public class BaseGameInfo
      *
      * @return GameType
      */
-    public Optional<GameType> getGameType()
+    public GameType getGameType()
     {
-        return GameType.getFromCode(this.gameType);
+        return GameType.getFromCode(this.gameType).orElse(null);
     }
 
     /**
@@ -267,9 +267,9 @@ public class BaseGameInfo
      *
      * @return Map
      */
-    public Optional<Map> getMap()
+    public Map getMap()
     {
-        return Map.getFromCode(this.mapId);
+        return Map.getFromCode(this.mapId).orElse(null);
     }
 
     /**
@@ -307,9 +307,9 @@ public class BaseGameInfo
      *
      * @return Platform
      */
-    public Optional<Platform> getPlatform()
+    public Platform getPlatform()
     {
-        return Platform.getFromCode(this.platformId);
+        return Platform.getFromCode(this.platformId).orElse(null);
     }
 
     /**

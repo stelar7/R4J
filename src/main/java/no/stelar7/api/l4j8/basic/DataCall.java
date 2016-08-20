@@ -1,20 +1,22 @@
 package no.stelar7.api.l4j8.basic;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.net.*;
-import java.nio.charset.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.logging.*;
-
-import com.google.common.util.concurrent.*;
-import com.google.gson.*;
-
+import com.google.common.util.concurrent.RateLimiter;
+import com.google.gson.Gson;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
-import no.stelar7.api.l4j8.pojo.summoner.*;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DataCall
 {
@@ -31,16 +33,16 @@ public class DataCall
             DataCall.creds = creds;
         }
 
-        private final DataCall                           dc         = new DataCall();
+        private final DataCall dc = new DataCall();
 
-        private final BiFunction<String, String, String> merge      = (o, n) -> o + "," + n;
+        private final BiFunction<String, String, String> merge = (o, n) -> o + "," + n;
 
-        final StringBuilder                              urlBuilder = new StringBuilder();
+        final StringBuilder urlBuilder = new StringBuilder();
 
         /**
          * Print out as much data as possible about this call
          *
-         * @param flag
+         * @param flag this flag is true if it should print
          * @return this
          */
         public DataCallBuilder asVerbose(final boolean flag)
@@ -53,14 +55,16 @@ public class DataCall
          * Puts together all the data, and then returns an object representing the JSON from the call
          *
          * @return an object generated from the requested JSON
-         * @throws APINoValidResponseException
+         * @throws APINoValidResponseException         if the api failed to return a valid response
+         * @throws APIServerEndpointMissmatchException if the method is not callable from that server
+         * @throws APIResponseException                if the response is not a 200 OK
          */
         public Object build()
         {
 
             if (!this.dc.endpoint.isAvalibleFrom(this.dc.server))
             {
-                throw new APIServerEndpointMissmatchException(this.dc.endpoint.toString() + " not avalible from " + this.dc.server.asURLFormat());
+                throw new APIServerEndpointMissmatchException(this.dc.endpoint.toString() + " not available from " + this.dc.server.asURLFormat());
             }
 
             final boolean isServerRatelimited = this.dc.server.isLimited();
@@ -141,7 +145,7 @@ public class DataCall
         /**
          * Clears all the set data from the URL
          *
-         * @return
+         * @return this
          */
         public DataCallBuilder clearURLData()
         {
@@ -163,10 +167,9 @@ public class DataCall
         /**
          * Opens a connection to the URL, then reads the data into a Response.
          *
-         * @param url
-         *            the URL to call
+         * @param url the URL to call
          * @return a DataCallResponse with the data from the call
-         * @throws APINoValidResponseException
+         * @throws APINoValidResponseException if the api failed to return a valid response
          */
         private DataCallResponse getResponse(final String url)
         {
@@ -277,7 +280,8 @@ public class DataCall
             this.withURLData("{region}", this.dc.region == null ? this.dc.server.asURLFormat() : this.dc.region.asURLFormat());
             this.withURLData("{version}", this.dc.endpoint.getVersion());
 
-            this.dc.urlData.forEach((k, v) -> {
+            this.dc.urlData.forEach((k, v) ->
+            {
                 String temp = this.urlBuilder.toString();
                 temp = temp.replace(k, v);
                 this.urlBuilder.setLength(0);
@@ -312,8 +316,7 @@ public class DataCall
         /**
          * Sets the endpoint to make the call to
          *
-         * @param endpoint
-         *            the endpoint to make the call to
+         * @param endpoint the endpoint to make the call to
          * @return this
          */
         public DataCallBuilder withEndpoint(final URLEndpoint endpoint)
@@ -325,10 +328,8 @@ public class DataCall
         /**
          * Sets the headers to use with the call
          *
-         * @param key
-         *            the header key
-         * @param value
-         *            the header value
+         * @param key   the header key
+         * @param value the header value
          * @return this
          */
         public DataCallBuilder withHeader(final String key, final String value)
@@ -340,8 +341,7 @@ public class DataCall
         /**
          * Sets the data to send with the request if its a POST call
          *
-         * @param data
-         *            the data to send
+         * @param data the data to send
          * @return this
          */
         public DataCallBuilder withPostData(final String data)
@@ -353,8 +353,7 @@ public class DataCall
         /**
          * The region to make this call to. This is part of the URL, "{region}"
          *
-         * @param region
-         *            the region to make the call to
+         * @param region the region to make the call to
          * @return this
          */
         public DataCallBuilder withRegion(final Server region)
@@ -366,8 +365,7 @@ public class DataCall
         /**
          * The request-method on the call (usually GET or POST)
          *
-         * @param method
-         *            the request method
+         * @param method the request method
          * @return this
          */
         public DataCallBuilder withRequestMethod(final String method)
@@ -379,8 +377,7 @@ public class DataCall
         /**
          * Set the server to make this call to. (ie. EUW)
          *
-         * @param server
-         *            the server to make the call to
+         * @param server the server to make the call to
          * @return this
          */
         public DataCallBuilder withServer(final Server server)
@@ -392,10 +389,8 @@ public class DataCall
         /**
          * Replaces placeholders in the URL (ie. {region})
          *
-         * @param key
-         *            The key to replace (ie. {region})
-         * @param value
-         *            The data to replace it with (ie. EUW)
+         * @param key   The key to replace (ie. {region})
+         * @param value The data to replace it with (ie. EUW)
          * @return this
          */
         public DataCallBuilder withURLData(final String key, final String value)
@@ -407,10 +402,8 @@ public class DataCall
         /**
          * Adds parameters to the url (ie. ?api_key)
          *
-         * @param key
-         *            the parameter to add (ie. api_key)
-         * @param value
-         *            the value to add after the parameter (ie. 6fa459ea-ee8a-3ca4-894e-db77e160355e)
+         * @param key   the parameter to add (ie. api_key)
+         * @param value the value to add after the parameter (ie. 6fa459ea-ee8a-3ca4-894e-db77e160355e)
          * @return this
          */
         public DataCallBuilder withURLParameter(final String key, final String value)
@@ -423,8 +416,8 @@ public class DataCall
 
     static class DataCallResponse
     {
-        int    responseCode;
-        String responseData;
+        final int responseCode;
+        final String responseData;
 
         DataCallResponse(final int a, final String b)
         {
@@ -434,7 +427,6 @@ public class DataCall
 
         /**
          * Response code
-         *
          */
         int getResponseCode()
         {
@@ -443,7 +435,6 @@ public class DataCall
 
         /**
          * Response data
-         *
          */
         String getResponseData()
         {
@@ -452,17 +443,17 @@ public class DataCall
 
     }
 
-    private static final String                       HTTP                                   = "http://";
-    private static final String                       HTTPS                                  = "https://";
+    private static final String HTTP = "http://";
+    private static final String HTTPS = "https://";
 
-    private static final Double                       DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
+    private static final Double DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
 
-    private static final Double                       DEFAULT_LIMITER_10_MINUTES             = 600.0;
-    public static final Logger                        LOGGER                                 = Logger.getGlobal();
+    private static final Double DEFAULT_LIMITER_10_MINUTES = 600.0;
+    private static final Logger LOGGER = Logger.getGlobal();
 
-    private static APICredentials                     creds;
-    private static Map<Integer, Integer>              calls                                  = new HashMap<>();
-    private static final EnumMap<Server, RateLimiter> limiter                                = new EnumMap<>(Server.class);
+    private static APICredentials creds;
+    private static final Map<Integer, Integer> calls = new HashMap<>();
+    private static final EnumMap<Server, RateLimiter> limiter = new EnumMap<>(Server.class);
 
     public static DataCallBuilder builder()
     {
@@ -479,27 +470,27 @@ public class DataCall
         return DataCall.calls.get(period);
     }
 
-    private String                    postData      = "";
+    private String postData = "";
 
-    private final Map<String, String> urlData       = new TreeMap<>();
-    private final Map<String, String> urlParams     = new TreeMap<>();
+    private final Map<String, String> urlData = new TreeMap<>();
+    private final Map<String, String> urlParams = new TreeMap<>();
 
-    private final Map<String, String> urlHeaders    = new TreeMap<>();
+    private final Map<String, String> urlHeaders = new TreeMap<>();
 
-    private boolean                   verbose       = false;
+    private boolean verbose = false;
 
-    private String                    requestMethod = "GET";
+    private String requestMethod = "GET";
 
-    private Server                    server;
+    private Server server;
 
-    private Server                    region;
+    private Server region;
 
-    private URLEndpoint               endpoint;
+    private URLEndpoint endpoint;
 
     private DataCall()
     {
         final double permitsPerSecond = DataCall.DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DataCall.DEFAULT_LIMITER_10_MINUTES;
-        Arrays.stream(Server.values()).filter(s -> s.isLimited()).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
+        Arrays.stream(Server.values()).filter(Server::isLimited).forEach(s -> DataCall.limiter.put(s, RateLimiter.create(permitsPerSecond)));
 
     }
 
