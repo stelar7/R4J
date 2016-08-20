@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
-public class MasteryTreeItem
+class MasteryTreeItem
 {
-    Integer masteryId;
-    String  prereq;
+    private Integer masteryId;
+    private String prereq;
 
     @Override
     public boolean equals(final Object obj)

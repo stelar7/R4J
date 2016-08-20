@@ -1,13 +1,14 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.Champion;
+import no.stelar7.api.l4j8.basic.constants.Team;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import java.util.Optional;
 
-public class Player
+class Player
 {
     private Integer championId;
-    private Long    summonerId;
+    private Long summonerId;
     private Integer teamId;
 
     @Override

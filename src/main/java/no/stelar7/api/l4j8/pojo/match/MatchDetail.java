@@ -1,29 +1,30 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.time.*;
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+
+import java.time.*;
+import java.util.List;
+import java.util.Optional;
 
 public class MatchDetail
 {
-    private Integer                   mapId;
-    private Long                      matchCreation;
-    private Long                      matchDuration;
-    private Long                      matchId;
-    private String                    matchMode;
-    private String                    matchType;
-    private String                    matchVersion;
+    private Integer mapId;
+    private Long matchCreation;
+    private Long matchDuration;
+    private Long matchId;
+    private String matchMode;
+    private String matchType;
+    private String matchVersion;
     private List<ParticipantIdentity> participantIdentities;
-    private List<Participant>         participants;
-    private String                    platformId;
-    private String                    queueType;
-    private String                    region;
-    private String                    season;
-    private List<Team>                teams;
-    private Timeline                  timeline;
+    private List<Participant> participants;
+    private String platformId;
+    private String queueType;
+    private String region;
+    private String season;
+    private List<Team> teams;
+    private Timeline timeline;
 
     @Override
     public boolean equals(final Object obj)
@@ -236,7 +237,7 @@ public class MatchDetail
 
     /**
      * A ZonedDateTime of {@code getMatchCreation()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getMatchCreationDate()
@@ -337,7 +338,7 @@ public class MatchDetail
     /**
      * Platform of the match (inferred from the platformId)
      *
-     * @return
+     * @return {@code Optional<Platform>}
      */
     public Optional<Platform> getPlatform()
     {

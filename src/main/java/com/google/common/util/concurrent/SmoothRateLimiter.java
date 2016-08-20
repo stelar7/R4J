@@ -16,7 +16,7 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 abstract class SmoothRateLimiter extends RateLimiter
 {
@@ -51,9 +51,9 @@ abstract class SmoothRateLimiter extends RateLimiter
         }
     }
 
-    double       storedPermits;
-    double       maxPermits;
-    double       stableIntervalMicros;
+    double storedPermits;
+    double maxPermits;
+    private double stableIntervalMicros;
     private long nextFreeTicketMicros = 0L;
 
     private SmoothRateLimiter(final SleepingStopwatch stopwatch)

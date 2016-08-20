@@ -1,16 +1,17 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BasicData;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.List;
+import java.util.Map;
 
 public class ItemList
 {
 
-    BasicData         basic;
-    Map<String, Item> data;
-    List<Group>       groups;
-    List<ItemTree>    tree;
+    private BasicData basic;
+    private Map<String, Item> data;
+    private List<Group> groups;
+    private List<ItemTree> tree;
 
     @Override
     public boolean equals(final Object obj)

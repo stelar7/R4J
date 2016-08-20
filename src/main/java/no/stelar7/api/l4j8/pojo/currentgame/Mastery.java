@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.currentgame;
 
-public class Mastery
+class Mastery
 {
-    private Long    masteryId;
+    private Long masteryId;
     private Integer rank;
 
     @Override

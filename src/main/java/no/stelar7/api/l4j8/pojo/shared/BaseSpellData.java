@@ -1,31 +1,31 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import java.util.*;
-
 import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+
+import java.util.List;
 
 public class BaseSpellData
 {
-    List<Double>       cooldown;
-    String             cooldownBurn;
-    List<Integer>      cost;
-    String             costBurn;
-    String             costType;
-    String             description;
-    List<List<Double>> effect;
-    List<String>       effectBurn;
-    Image              image;
-    String             key;
-    LevelTip           leveltip;
-    Integer            maxrank;
-    String             name;
-    List<Integer>      range;
-    String             rangeBurn;
-    String             resource;
-    String             sanitizedDescription;
-    String             sanitizedTooltip;
-    String             tooltip;
-    List<SpellVars>    vars;
+    private List<Double> cooldown;
+    private String cooldownBurn;
+    private List<Integer> cost;
+    private String costBurn;
+    private String costType;
+    private String description;
+    private List<List<Double>> effect;
+    private List<String> effectBurn;
+    private Image image;
+    private String key;
+    private LevelTip leveltip;
+    private Integer maxrank;
+    private String name;
+    private List<Integer> range;
+    private String rangeBurn;
+    private String resource;
+    private String sanitizedDescription;
+    private String sanitizedTooltip;
+    private String tooltip;
+    private List<SpellVars> vars;
 
     /**
      * Gets the cooldown.

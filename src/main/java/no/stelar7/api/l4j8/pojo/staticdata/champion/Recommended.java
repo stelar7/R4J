@@ -1,16 +1,16 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.*;
+import java.util.List;
 
-public class Recommended
+class Recommended
 {
-    List<Block> blocks;
-    String      champion;
-    String      map;
-    String      mode;
-    Boolean     priority;
-    String      title;
-    String      type;
+    private List<Block> blocks;
+    private String champion;
+    private String map;
+    private String mode;
+    private Boolean priority;
+    private String title;
+    private String type;
 
     @Override
     public boolean equals(final Object obj)

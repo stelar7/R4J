@@ -1,17 +1,19 @@
 package no.stelar7.api.l4j8.pojo.league;
 
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.RankedQueue;
+import no.stelar7.api.l4j8.basic.constants.Tier;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import java.util.List;
+import java.util.Optional;
 
-public class League
+class League
 {
 
     private List<LeagueEntry> entries;
-    private String            name;
-    private String            participantId;
-    private String            queue;
-    private String            tier;
+    private String name;
+    private String participantId;
+    private String queue;
+    private String tier;
 
     @Override
     public boolean equals(final Object obj)

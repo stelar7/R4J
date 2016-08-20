@@ -1,13 +1,13 @@
 package no.stelar7.api.l4j8.pojo.staticdata.rune;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BasicData;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.Map;
 
 public class RuneList
 {
-    BasicData         basic;
-    Map<String, Rune> data;
+    private BasicData basic;
+    private Map<String, Rune> data;
 
     @Override
     public boolean equals(final Object obj)

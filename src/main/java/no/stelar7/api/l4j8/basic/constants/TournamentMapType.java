@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum TournamentMapType
 {
@@ -27,7 +27,7 @@ public enum TournamentMapType
         return Stream.of(Team.values()).filter(t -> t.code.equals(teamId)).findFirst();
     }
 
-    Integer code;
+    final Integer code;
 
     TournamentMapType(final Integer code)
     {

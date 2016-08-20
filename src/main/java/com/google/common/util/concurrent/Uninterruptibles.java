@@ -16,11 +16,11 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.*;
-
 import java.util.concurrent.*;
 
-public final class Uninterruptibles
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+
+final class Uninterruptibles
 {
 
     public static void awaitUninterruptibly(final CountDownLatch latch)
@@ -261,7 +261,7 @@ public final class Uninterruptibles
         }
     }
 
-    public static boolean tryAcquireUninterruptibly(final Semaphore semaphore, final int permits, final long timeout, final TimeUnit unit)
+    private static boolean tryAcquireUninterruptibly(final Semaphore semaphore, final int permits, final long timeout, final TimeUnit unit)
     {
         boolean interrupted = false;
         try
@@ -296,5 +296,6 @@ public final class Uninterruptibles
     }
 
     private Uninterruptibles()
-    {}
+    {
+    }
 }

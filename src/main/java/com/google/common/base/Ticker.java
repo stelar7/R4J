@@ -32,8 +32,9 @@ public abstract class Ticker
         return Ticker.SYSTEM_TICKER;
     }
 
-    protected Ticker()
-    {}
+    private Ticker()
+    {
+    }
 
     public abstract long read();
 }

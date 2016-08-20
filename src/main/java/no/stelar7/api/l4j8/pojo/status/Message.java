@@ -1,15 +1,15 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.util.List;
 
-public class Message
+class Message
 {
-    private String            author;
-    private String            content;
-    private String            created_at;
-    private Long              id;
-    private String            severity;
-    private String            updated_at;
+    private String author;
+    private String content;
+    private String created_at;
+    private Long id;
+    private String severity;
+    private String updated_at;
     private List<Translation> translations;
 
     @Override

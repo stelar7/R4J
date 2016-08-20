@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.pojo.league;
 public class MiniSeries
 {
     private Integer losses;
-    private String  progress;
+    private String progress;
     private Integer target;
     private Integer wins;
 

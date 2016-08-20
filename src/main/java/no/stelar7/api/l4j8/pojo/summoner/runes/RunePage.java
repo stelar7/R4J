@@ -1,15 +1,16 @@
 package no.stelar7.api.l4j8.pojo.summoner.runes;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class RunePage
 {
 
-    private Boolean        current;
-    private Long           id;
+    private Boolean current;
+    private Long id;
     private List<RuneSlot> slots;
-
-    private String         name;
+    private String name;
 
     @Override
     public boolean equals(final Object obj)

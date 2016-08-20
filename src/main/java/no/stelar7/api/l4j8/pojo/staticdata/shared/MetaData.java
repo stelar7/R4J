@@ -2,9 +2,9 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 public class MetaData
 {
-    Boolean isRune;
-    String  tier;
-    String  type;
+    private Boolean isRune;
+    private String tier;
+    private String type;
 
     @Override
     public boolean equals(final Object obj)

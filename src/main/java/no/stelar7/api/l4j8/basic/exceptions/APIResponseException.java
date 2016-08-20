@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.basic.exceptions;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.APIHTTPErrorReason;
 
 public class APIResponseException extends RuntimeException
 {
 
-    APIHTTPErrorReason reason;
-    String             data;
+    private final APIHTTPErrorReason reason;
+    private final String data;
 
     public APIResponseException(APIHTTPErrorReason errorCode, String response)
     {
@@ -19,10 +19,15 @@ public class APIResponseException extends RuntimeException
     {
         switch (reason)
         {
-            case ERROR429:
-                return String.format("HTTP 429 hit. Reason for hit: %s", data);
-            default:
-                return String.format("%s: %s", reason, data);
+        case ERROR429:
+            return String.format("HTTP 429 hit. Reason for hit: %s", data);
+        default:
+            return String.format("%s: %s", reason, data);
         }
+    }
+
+    public APIHTTPErrorReason getReason()
+    {
+        return reason;
     }
 }

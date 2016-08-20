@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.util.List;
 
-public class Service
+class Service
 {
-    private String         name;
-    private String         slug;
-    private String         status;
+    private String name;
+    private String slug;
+    private String status;
     private List<Incident> incidents;
 
     @Override

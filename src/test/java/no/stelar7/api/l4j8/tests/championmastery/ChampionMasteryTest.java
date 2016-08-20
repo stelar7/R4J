@@ -1,14 +1,14 @@
 package no.stelar7.api.l4j8.tests.championmastery;
 
-import java.util.*;
-
-import org.junit.*;
-
-import no.stelar7.api.l4j8.basic.*;
-import no.stelar7.api.l4j8.basic.DataCall.*;
-import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.DataCall;
+import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
+import no.stelar7.api.l4j8.basic.constants.Champion;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.championmastery.*;
+import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.List;
 
 public class ChampionMasteryTest
 {
@@ -29,8 +29,8 @@ public class ChampionMasteryTest
         final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
 
         data.forEach(inner ->
-        // Make sure all the data is returned as expected
-        Assert.assertTrue("the summonerId changed?", inner.getPlayerId() == 19613950L));
+                // Make sure all the data is returned as expected
+                Assert.assertTrue("the summonerId changed?", inner.getPlayerId() == 19613950L));
     }
 
     @Test
@@ -79,8 +79,8 @@ public class ChampionMasteryTest
         final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
 
         data.forEach(inner ->
-        // Make sure all the data is returned as expected
-        Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L));
+                // Make sure all the data is returned as expected
+                Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L));
 
     }
 

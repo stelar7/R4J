@@ -1,11 +1,11 @@
 package no.stelar7.api.l4j8.pojo.summoner.runes;
 
-import java.util.*;
+import java.util.List;
 
 public class RunePages
 {
-    List<RunePage> pages;
-    Long           summonerId;
+    private List<RunePage> pages;
+    private Long summonerId;
 
     @Override
     public boolean equals(final Object obj)

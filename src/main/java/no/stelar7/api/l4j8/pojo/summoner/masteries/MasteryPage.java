@@ -1,15 +1,17 @@
 package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class MasteryPage
 {
 
-    private Boolean       current;
-    private Long          id;
+    private Boolean current;
+    private Long id;
     private List<Mastery> masteries;
 
-    private String        name;
+    private String name;
 
     @Override
     public boolean equals(final Object obj)

@@ -2,8 +2,8 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 public class BaseStaticData
 {
-    String type;
-    String version;
+    private String type;
+    private String version;
 
     @Override
     public boolean equals(final Object obj)

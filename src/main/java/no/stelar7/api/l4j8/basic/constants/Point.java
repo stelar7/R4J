@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum Point
 {
@@ -14,8 +14,7 @@ public enum Point
     /**
      * Returns an Point from the provided code
      *
-     * @param code
-     *            the lookup key
+     * @param type the lookup key
      * @return Point
      */
     public static Optional<Point> getFromCode(final String type)

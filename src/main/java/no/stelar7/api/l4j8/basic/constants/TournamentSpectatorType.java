@@ -4,5 +4,5 @@ public enum TournamentSpectatorType
 {
     NONE,
     LOBBYONLY,
-    ALL;
+    ALL
 }

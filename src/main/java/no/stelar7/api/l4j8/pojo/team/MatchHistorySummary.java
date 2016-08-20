@@ -2,18 +2,18 @@ package no.stelar7.api.l4j8.pojo.team;
 
 import java.time.*;
 
-public class MatchHistorySummary
+class MatchHistorySummary
 {
     private Integer assists;
     private Integer deaths;
     private Integer kills;
     private Integer mapId;
     private Integer opposingTeamKills;
-    private Long    date;
+    private Long date;
     private Boolean invalid;
-    private String  gameMode;
-    private Long    gameId;
-    private String  opposingTeamName;
+    private String gameMode;
+    private Long gameId;
+    private String opposingTeamName;
     private Boolean win;
 
     @Override
@@ -167,7 +167,7 @@ public class MatchHistorySummary
 
     /**
      * A ZonedDateTime of {@code getDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getDateAsDate()

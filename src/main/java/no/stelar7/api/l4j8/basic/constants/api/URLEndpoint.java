@@ -1,29 +1,33 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
-import java.util.*;
-
-import com.google.gson.reflect.*;
-
-import no.stelar7.api.l4j8.pojo.championmastery.*;
-import no.stelar7.api.l4j8.pojo.currentgame.*;
-import no.stelar7.api.l4j8.pojo.featuredgames.*;
-import no.stelar7.api.l4j8.pojo.match.*;
-import no.stelar7.api.l4j8.pojo.matchlist.*;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
-import no.stelar7.api.l4j8.pojo.staticdata.item.*;
-import no.stelar7.api.l4j8.pojo.staticdata.language.*;
-import no.stelar7.api.l4j8.pojo.staticdata.map.*;
-import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import com.google.gson.reflect.TypeToken;
+import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.match.MatchDetail;
+import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.ChampionList;
+import no.stelar7.api.l4j8.pojo.staticdata.item.Item;
+import no.stelar7.api.l4j8.pojo.staticdata.item.ItemList;
+import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
+import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.Mastery;
-import no.stelar7.api.l4j8.pojo.staticdata.realm.*;
-import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
+import no.stelar7.api.l4j8.pojo.staticdata.mastery.MasteryList;
+import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.Rune;
-import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
-import no.stelar7.api.l4j8.pojo.status.*;
-import no.stelar7.api.l4j8.pojo.summoner.*;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
-import no.stelar7.api.l4j8.pojo.summoner.runes.*;
-import no.stelar7.api.l4j8.pojo.tournament.*;
+import no.stelar7.api.l4j8.pojo.staticdata.rune.RuneList;
+import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.SummonerSpell;
+import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.SummonerSpellList;
+import no.stelar7.api.l4j8.pojo.status.Shard;
+import no.stelar7.api.l4j8.pojo.status.ShardStatus;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
+import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
+import no.stelar7.api.l4j8.pojo.tournament.LobbyEventWrapper;
+import no.stelar7.api.l4j8.pojo.tournament.TournamentCode;
+
+import java.util.List;
+import java.util.Map;
 
 public enum URLEndpoint
 {
@@ -38,7 +42,7 @@ public enum URLEndpoint
     SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", new TypeToken<Map<Long, String>>()
     {}.getType()),
 
-    CHAMPIONS("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
+    CHAMPIONS("/api/lol/{region}/{version}/champion/", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
     CHAMPION_BY_ID("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.Champion.class),
 
     MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchList.class),
@@ -86,11 +90,11 @@ public enum URLEndpoint
     {}.getType()),
     STATUS_BY_SHARD("/shards/{shard}", "", ShardStatus.class);
 
-    private String value;
-    private String version;
-    private Object type;
+    private final String value;
+    private final String version;
+    private final Object type;
 
-    private URLEndpoint(final String value, final String version, final Object type)
+    URLEndpoint(final String value, final String version, final Object type)
     {
         this.value = value;
         this.version = version;
@@ -115,8 +119,7 @@ public enum URLEndpoint
     /**
      * Checks if the endpoint is avalible from the server
      *
-     * @param server
-     *            the server to check
+     * @param server the server to check
      * @return true if it is avalible
      */
     public boolean isAvalibleFrom(final Server server)
@@ -125,28 +128,28 @@ public enum URLEndpoint
         {
             switch (this)
             {
-                case CURRENTGAME:
-                case FEATUREDGAME:
-                case STATIC_CHAMPION:
-                case STATIC_CHAMPION_BY_ID:
-                case STATIC_ITEM:
-                case STATIC_ITEM_BY_ID:
-                case STATIC_LANGUAGE_STRINGS:
-                case STATIC_LANGUAGES:
-                case STATIC_MAP:
-                case STATIC_MASTERY:
-                case STATIC_MASTERY_BY_ID:
-                case STATIC_REALM:
-                case STATIC_RUNE:
-                case STATIC_RUNE_BY_ID:
-                case STATIC_SUMMONER_SPELL:
-                case STATIC_SUMMONER_SPELL_BY_ID:
-                case STATIC_VERSIONS:
-                case STATUS:
-                case STATUS_BY_SHARD:
-                    return true;
-                default:
-                    return false;
+            case CURRENTGAME:
+            case FEATUREDGAME:
+            case STATIC_CHAMPION:
+            case STATIC_CHAMPION_BY_ID:
+            case STATIC_ITEM:
+            case STATIC_ITEM_BY_ID:
+            case STATIC_LANGUAGE_STRINGS:
+            case STATIC_LANGUAGES:
+            case STATIC_MAP:
+            case STATIC_MASTERY:
+            case STATIC_MASTERY_BY_ID:
+            case STATIC_REALM:
+            case STATIC_RUNE:
+            case STATIC_RUNE_BY_ID:
+            case STATIC_SUMMONER_SPELL:
+            case STATIC_SUMMONER_SPELL_BY_ID:
+            case STATIC_VERSIONS:
+            case STATUS:
+            case STATUS_BY_SHARD:
+                return true;
+            default:
+                return false;
             }
         }
         return true;

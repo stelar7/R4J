@@ -1,14 +1,14 @@
 package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.shared.BaseSpellData;
 
-import no.stelar7.api.l4j8.pojo.shared.*;
+import java.util.List;
 
 public class SummonerSpell extends BaseSpellData
 {
-    Integer      id;
-    List<String> modes;
-    Integer      summonerLevel;
+    private Integer id;
+    private List<String> modes;
+    private Integer summonerLevel;
 
     @Override
     public boolean equals(final Object obj)

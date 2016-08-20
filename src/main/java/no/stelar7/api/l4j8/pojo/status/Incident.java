@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.util.List;
 
-public class Incident
+class Incident
 {
-    private Boolean       active;
-    private String        created_at;
-    private Long          id;
+    private Boolean active;
+    private String created_at;
+    private Long id;
     private List<Message> updates;
 
     @Override
