@@ -4,7 +4,9 @@ import java.util.stream.Stream;
 
 public enum RateLimitType
 {
-    LIMIT_USER("user", "User ratelimit reached"), LIMIT_SERVICE("service", "Service ratelimit reached"), LIMIT_UNDERLYING("", "Underlying service limit reached");
+    LIMIT_USER("user", "User ratelimit reached"),
+    LIMIT_SERVICE("service", "Service ratelimit reached"),
+    LIMIT_UNDERLYING("", "Underlying service limit reached");
 
     private final String value;
     private final String reason;

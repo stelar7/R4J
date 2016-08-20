@@ -8,13 +8,15 @@ public enum GameType
     /**
      * Custom games
      */
-    CUSTOM_GAME, /**
- * Tutorial games
- */
-TUTORIAL_GAME, /**
- * All other games
- */
-MATCHED_GAME;
+    CUSTOM_GAME,
+    /**
+     * Tutorial games
+     */
+    TUTORIAL_GAME,
+    /**
+     * All other games
+     */
+    MATCHED_GAME;
 
     /**
      * Returns a GameType from the provided code

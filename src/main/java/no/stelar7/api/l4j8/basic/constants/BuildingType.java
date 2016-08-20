@@ -6,7 +6,8 @@ import java.util.stream.Stream;
 public enum BuildingType
 
 {
-    INHIBITOR_BUILDING, TOWER_BUILDING;
+    INHIBITOR_BUILDING,
+    TOWER_BUILDING;
 
     /**
      * Returns an BuildingType from the provided code

@@ -8,31 +8,39 @@ public enum GameMode
     /**
      * Classic Summoner's Rift and Twisted Treeline games
      */
-    CLASSIC, /**
- * Dominion/Crystal Scar games
- */
-ODIN, /**
- * ARAM games
- */
-ARAM, /**
- * Tutorial games
- */
-TUTORIAL, /**
- * One for All games
- */
-ONEFORALL, /**
- * Ascension games
- */
-ASCENSION, /**
- * Snowdown Showdown games
- */
-FIRSTBLOOD, /**
- * King Poro games
- */
-KINGPORO, /**
- * Nexus Siege games
- */
-SIEGE,;
+    CLASSIC,
+    /**
+     * Dominion/Crystal Scar games
+     */
+    ODIN,
+    /**
+     * ARAM games
+     */
+    ARAM,
+    /**
+     * Tutorial games
+     */
+    TUTORIAL,
+    /**
+     * One for All games
+     */
+    ONEFORALL,
+    /**
+     * Ascension games
+     */
+    ASCENSION,
+    /**
+     * Snowdown Showdown games
+     */
+    FIRSTBLOOD,
+    /**
+     * King Poro games
+     */
+    KINGPORO,
+    /**
+     * Nexus Siege games
+     */
+    SIEGE,;
 
     /**
      * Returns a GameMode from the provided code

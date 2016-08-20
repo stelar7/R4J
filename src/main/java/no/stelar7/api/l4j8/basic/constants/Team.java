@@ -6,7 +6,8 @@ import java.util.stream.Stream;
 public enum Team
 {
 
-    BLUE(100), PURPLE(200);
+    BLUE(100),
+    PURPLE(200);
 
     public static Optional<Team> getFromCode(final Number teamId)
     {

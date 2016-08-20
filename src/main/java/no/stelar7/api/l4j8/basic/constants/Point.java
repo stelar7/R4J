@@ -5,7 +5,11 @@ import java.util.stream.Stream;
 
 public enum Point
 {
-    POINT_A, POINT_B, POINT_C, POINT_D, POINT_E;
+    POINT_A,
+    POINT_B,
+    POINT_C,
+    POINT_D,
+    POINT_E;
 
     /**
      * Returns an Point from the provided code

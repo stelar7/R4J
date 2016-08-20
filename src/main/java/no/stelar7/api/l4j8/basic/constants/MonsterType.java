@@ -5,7 +5,12 @@ import java.util.stream.Stream;
 
 public enum MonsterType
 {
-    BARON_NASHOR, BLUE_GOLEM, DRAGON, RED_LIZARD, RIFTHERALD, VILEMAW;
+    BARON_NASHOR,
+    BLUE_GOLEM,
+    DRAGON,
+    RED_LIZARD,
+    RIFTHERALD,
+    VILEMAW;
 
     /**
      * Returns an MonsterType from the provided code
