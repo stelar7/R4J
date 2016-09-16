@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.Champion;
+import no.stelar7.api.l4j8.basic.constants.Team;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import java.util.Optional;
 
 public class BaseGameParticipant
 {
@@ -175,8 +176,8 @@ public class BaseGameParticipant
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
         result = (prime * result) + ((this.profileIconId == null) ? 0 : this.profileIconId.hashCode());
         result = (prime * result) + ((this.spell1Id == null) ? 0 : this.spell1Id.hashCode());

@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
-import java.util.*;
+import java.util.List;
 
 public class MasteryPages
 {
@@ -69,8 +69,8 @@ public class MasteryPages
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.pages == null) ? 0 : this.pages.hashCode());
         result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
         return result;

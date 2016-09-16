@@ -16,49 +16,35 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
-abstract class SmoothRateLimiter extends RateLimiter
+class SmoothRateLimiter extends RateLimiter
 {
-    static final class SmoothBursty extends SmoothRateLimiter
-    {
-        final double maxBurstSeconds;
 
-        SmoothBursty(final SleepingStopwatch stopwatch, final double maxBurstSeconds)
-        {
-            super(stopwatch);
-            this.maxBurstSeconds = maxBurstSeconds;
-        }
 
-        @Override
-        void doSetRate(final double permitsPerSecond, final double stableIntervalMicros)
-        {
-            final double oldMaxPermits = this.maxPermits;
-            this.maxPermits = this.maxBurstSeconds * permitsPerSecond;
-            if (oldMaxPermits == Double.POSITIVE_INFINITY)
-            {
-                this.storedPermits = this.maxPermits;
-            } else
-            {
-                this.storedPermits = (oldMaxPermits == 0.0) ? 0.0 : (this.storedPermits * this.maxPermits) / oldMaxPermits;
-            }
-        }
-
-        @Override
-        long storedPermitsToWaitTime(final double storedPermits, final double permitsToTake)
-        {
-            return 0L;
-        }
-    }
-
-    double       storedPermits;
-    double       maxPermits;
-    double       stableIntervalMicros;
+    private double maxBurstSeconds;
+    private double storedPermits;
+    private double maxPermits;
+    private double stableIntervalMicros;
     private long nextFreeTicketMicros = 0L;
 
-    private SmoothRateLimiter(final SleepingStopwatch stopwatch)
+    SmoothRateLimiter(final SleepingStopwatch stopwatch, final double maxBurstSeconds)
     {
         super(stopwatch);
+        this.maxBurstSeconds = maxBurstSeconds;
+    }
+
+    private void doSetRate(final double permitsPerSecond, final double stableIntervalMicros)
+    {
+        final double oldMaxPermits = this.maxPermits;
+        this.maxPermits = this.maxBurstSeconds * permitsPerSecond;
+        if (oldMaxPermits == Double.POSITIVE_INFINITY)
+        {
+            this.storedPermits = this.maxPermits;
+        } else
+        {
+            this.storedPermits = (oldMaxPermits == 0.0) ? 0.0 : (this.storedPermits * this.maxPermits) / oldMaxPermits;
+        }
     }
 
     @Override
@@ -66,8 +52,6 @@ abstract class SmoothRateLimiter extends RateLimiter
     {
         return SECONDS.toMicros(1L) / this.stableIntervalMicros;
     }
-
-    abstract void doSetRate(final double permitsPerSecond, final double stableIntervalMicros);
 
     @Override
     final void doSetRate(final double permitsPerSecond, final long nowMicros)
@@ -79,22 +63,12 @@ abstract class SmoothRateLimiter extends RateLimiter
     }
 
     @Override
-    final long queryEarliestAvailable(final long nowMicros)
-    {
-        return this.nextFreeTicketMicros;
-    }
-
-    @Override
     final long reserveEarliestAvailable(final int requiredPermits, final long nowMicros)
     {
         this.resync(nowMicros);
-        final long returnValue = this.nextFreeTicketMicros;
+        final long   returnValue          = this.nextFreeTicketMicros;
         final double storedPermitsToSpend = Math.min(requiredPermits, this.storedPermits);
-        final double freshPermits = requiredPermits - storedPermitsToSpend;
 
-        final long waitMicros = this.storedPermitsToWaitTime(this.storedPermits, storedPermitsToSpend) + (long) (freshPermits * this.stableIntervalMicros);
-
-        this.nextFreeTicketMicros = this.nextFreeTicketMicros + waitMicros;
         this.storedPermits -= storedPermitsToSpend;
         return returnValue;
     }
@@ -108,5 +82,4 @@ abstract class SmoothRateLimiter extends RateLimiter
         }
     }
 
-    abstract long storedPermitsToWaitTime(final double storedPermits, final double permitsToTake);
 }

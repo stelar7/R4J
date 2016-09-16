@@ -110,8 +110,8 @@ public class ParticipantTimelineData
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.tenToTwenty == null) ? 0 : this.tenToTwenty.hashCode());
         result = (prime * result) + ((this.thirtyToEnd == null) ? 0 : this.thirtyToEnd.hashCode());
         result = (prime * result) + ((this.twentyToThirty == null) ? 0 : this.twentyToThirty.hashCode());

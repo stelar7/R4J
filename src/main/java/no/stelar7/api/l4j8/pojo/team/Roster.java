@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.team;
 
-import java.util.*;
+import java.util.List;
 
 public class Roster
 {
@@ -69,8 +69,8 @@ public class Roster
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.memberList == null) ? 0 : this.memberList.hashCode());
         result = (prime * result) + ((this.ownerId == null) ? 0 : this.ownerId.hashCode());
         return result;

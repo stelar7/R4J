@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.map;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.List;
 
 public class MapDetails
 {
@@ -113,8 +113,8 @@ public class MapDetails
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());
         result = (prime * result) + ((this.mapId == null) ? 0 : this.mapId.hashCode());
         result = (prime * result) + ((this.mapName == null) ? 0 : this.mapName.hashCode());

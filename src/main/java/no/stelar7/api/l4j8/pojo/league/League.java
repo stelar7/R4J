@@ -1,8 +1,10 @@
 package no.stelar7.api.l4j8.pojo.league;
 
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.RankedQueue;
+import no.stelar7.api.l4j8.basic.constants.Tier;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import java.util.List;
+import java.util.Optional;
 
 public class League
 {
@@ -155,8 +157,8 @@ public class League
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.entries == null) ? 0 : this.entries.hashCode());
         result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
         result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());

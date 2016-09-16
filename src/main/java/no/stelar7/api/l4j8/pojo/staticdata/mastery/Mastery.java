@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.List;
 
 public class Mastery
 {
@@ -146,7 +146,7 @@ public class Mastery
 
     /**
      * Gets the mastery tree.
-     *
+     * <p>
      * Legal values: Defense, Offense, Utility
      *
      * @return the mastery tree
@@ -199,8 +199,8 @@ public class Mastery
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
         result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
         result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());

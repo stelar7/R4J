@@ -67,8 +67,8 @@ public class ParticipantIdentity
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());
         result = (prime * result) + ((this.player == null) ? 0 : this.player.hashCode());
         return result;

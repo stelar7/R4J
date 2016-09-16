@@ -4,7 +4,7 @@ import java.time.*;
 
 public class ChampionMastery
 {
-    Long    championId;
+    Integer championId;
     Integer championLevel;
     Integer championPoints;
     Long    championPointsSinceLastLevel;
@@ -117,7 +117,7 @@ public class ChampionMastery
      *
      * @return the champion id
      */
-    public Long getChampionId()
+    public Integer getChampionId()
     {
         return this.championId;
     }
@@ -184,7 +184,7 @@ public class ChampionMastery
 
     /**
      * A ZonedDateTime of {@code getLastPlayTime()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getLastPlayTimeAsDate()
@@ -205,8 +205,8 @@ public class ChampionMastery
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
         result = (prime * result) + ((this.championLevel == null) ? 0 : this.championLevel.hashCode());
         result = (prime * result) + ((this.championPoints == null) ? 0 : this.championPoints.hashCode());

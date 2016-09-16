@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.featuredgames;
 
-import no.stelar7.api.l4j8.pojo.shared.*;
+import no.stelar7.api.l4j8.pojo.shared.BaseGameParticipant;
 
 public class FeaturedGameParticipant extends BaseGameParticipant
 {
@@ -42,8 +42,8 @@ public class FeaturedGameParticipant extends BaseGameParticipant
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + super.hashCode();
         result = (prime * result) + ((this.bot == null) ? 0 : this.bot.hashCode());
         return result;

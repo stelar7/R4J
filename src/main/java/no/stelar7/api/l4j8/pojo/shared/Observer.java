@@ -46,8 +46,8 @@ public class Observer
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.encryptionKey == null) ? 0 : this.encryptionKey.hashCode());
         return result;
     }

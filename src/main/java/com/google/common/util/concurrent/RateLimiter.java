@@ -16,18 +16,16 @@
 
 package com.google.common.util.concurrent;
 
-import static java.util.concurrent.TimeUnit.*;
+import com.google.common.base.Stopwatch;
 
-import java.util.concurrent.*;
-
-import com.google.common.base.*;
-import com.google.common.util.concurrent.SmoothRateLimiter.*;
+import static java.util.concurrent.TimeUnit.MICROSECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public abstract class RateLimiter
 {
     abstract static class SleepingStopwatch
     {
-        static final SleepingStopwatch createFromSystemTimer()
+        static SleepingStopwatch createFromSystemTimer()
         {
             return new SleepingStopwatch()
             {
@@ -60,16 +58,16 @@ public abstract class RateLimiter
         return RateLimiter.create(SleepingStopwatch.createFromSystemTimer(), permitsPerSecond);
     }
 
-    static RateLimiter create(final SleepingStopwatch stopwatch, final double permitsPerSecond)
+    private static RateLimiter create(final SleepingStopwatch stopwatch, final double permitsPerSecond)
     {
-        final RateLimiter rateLimiter = new SmoothBursty(stopwatch, 1.0);
+        final RateLimiter rateLimiter = new SmoothRateLimiter(stopwatch, 1.0);
         rateLimiter.setRate(permitsPerSecond);
         return rateLimiter;
     }
 
     private final SleepingStopwatch stopwatch;
 
-    private volatile Object         mutexDoNotUseDirectly;
+    private volatile Object mutexDoNotUseDirectly;
 
     RateLimiter(final SleepingStopwatch stopwatch)
     {
@@ -81,23 +79,18 @@ public abstract class RateLimiter
         return this.acquire(1);
     }
 
-    public double acquire(final int permits)
+    private double acquire(final int permits)
     {
         final long microsToWait = this.reserve(permits);
         this.stopwatch.sleepMicrosUninterruptibly(microsToWait);
         return (1.0 * microsToWait) / SECONDS.toMicros(1L);
     }
 
-    private boolean canAcquire(final long nowMicros, final long timeoutMicros)
-    {
-        return (this.queryEarliestAvailable(nowMicros) - timeoutMicros) <= nowMicros;
-    }
-
     abstract double doGetRate();
 
     abstract void doSetRate(final double permitsPerSecond, final long nowMicros);
 
-    public final double getRate()
+    private double getRate()
     {
         synchronized (this.mutex())
         {
@@ -122,9 +115,7 @@ public abstract class RateLimiter
         return mutex;
     }
 
-    abstract long queryEarliestAvailable(final long nowMicros);
-
-    final long reserve(final int permits)
+    private long reserve(final int permits)
     {
         synchronized (this.mutex())
         {
@@ -132,7 +123,7 @@ public abstract class RateLimiter
         }
     }
 
-    final long reserveAndGetWaitLength(final int permits, final long nowMicros)
+    private long reserveAndGetWaitLength(final int permits, final long nowMicros)
     {
         final long momentAvailable = this.reserveEarliestAvailable(permits, nowMicros);
         return Math.max(momentAvailable - nowMicros, 0);
@@ -140,7 +131,7 @@ public abstract class RateLimiter
 
     abstract long reserveEarliestAvailable(final int permits, final long nowMicros);
 
-    public final void setRate(final double permitsPerSecond)
+    private void setRate(final double permitsPerSecond)
     {
         synchronized (this.mutex())
         {
@@ -154,27 +145,5 @@ public abstract class RateLimiter
         return String.format("RateLimiter[stableRate=%3.1fqps]", this.getRate());
     }
 
-    public boolean tryAcquire()
-    {
-        return this.tryAcquire(1, 0, MICROSECONDS);
-    }
 
-    public boolean tryAcquire(final int permits, final long timeout, final TimeUnit unit)
-    {
-        final long timeoutMicros = Math.max(unit.toMicros(timeout), 0);
-        long microsToWait;
-        synchronized (this.mutex())
-        {
-            final long nowMicros = this.stopwatch.readMicros();
-            if (!this.canAcquire(nowMicros, timeoutMicros))
-            {
-                return false;
-            } else
-            {
-                microsToWait = this.reserveAndGetWaitLength(permits, nowMicros);
-            }
-        }
-        this.stopwatch.sleepMicrosUninterruptibly(microsToWait);
-        return true;
-    }
 }

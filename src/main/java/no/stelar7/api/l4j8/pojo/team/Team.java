@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.pojo.team;
 
 import java.time.*;
-import java.util.*;
+import java.util.List;
 
 public class Team
 {
@@ -191,7 +191,7 @@ public class Team
 
     /**
      * A ZonedDateTime of {@code getCreateDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getCreateDateAsDate()
@@ -221,7 +221,7 @@ public class Team
 
     /**
      * A ZonedDateTime of {@code getLastGameDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getLastGameDateAsDate()
@@ -251,7 +251,7 @@ public class Team
 
     /**
      * A ZonedDateTime of {@code getLastJoinedRankedTeamQueueDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getLastJoinedRankedTeamQueueDateAsDate()
@@ -281,7 +281,7 @@ public class Team
 
     /**
      * A ZonedDateTime of {@code getModifyDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getModifyDateAsDate()
@@ -321,7 +321,7 @@ public class Team
 
     /**
      * A ZonedDateTime of {@code getSecondLastJoinDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getSecondLastJoinDateAsDate()
@@ -371,7 +371,7 @@ public class Team
 
     /**
      * A ZonedDateTime of {@code getThirdLastJoinDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getThirdLastJoinDateAsDate()
@@ -382,8 +382,8 @@ public class Team
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.createDate == null) ? 0 : this.createDate.hashCode());
         result = (prime * result) + ((this.fullId == null) ? 0 : this.fullId.hashCode());
         result = (prime * result) + ((this.lastGameDate == null) ? 0 : this.lastGameDate.hashCode());

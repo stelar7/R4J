@@ -1390,8 +1390,8 @@ public class BasicDataStats
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.FlatArmorMod == null) ? 0 : this.FlatArmorMod.hashCode());
         result = (prime * result) + ((this.FlatAttackSpeedMod == null) ? 0 : this.FlatAttackSpeedMod.hashCode());
         result = (prime * result) + ((this.FlatBlockMod == null) ? 0 : this.FlatBlockMod.hashCode());
@@ -1448,12 +1448,14 @@ public class BasicDataStats
         result = (prime * result) + ((this.rFlatTimeDeadMod == null) ? 0 : this.rFlatTimeDeadMod.hashCode());
         result = (prime * result) + ((this.rFlatTimeDeadModPerLevel == null) ? 0 : this.rFlatTimeDeadModPerLevel.hashCode());
         result = (prime * result) + ((this.rPercentArmorPenetrationMod == null) ? 0 : this.rPercentArmorPenetrationMod.hashCode());
-        result = (prime * result) + ((this.rPercentArmorPenetrationModPerLevel == null) ? 0 : this.rPercentArmorPenetrationModPerLevel.hashCode());
+        result = (prime * result) + ((this.rPercentArmorPenetrationModPerLevel == null) ? 0 : this.rPercentArmorPenetrationModPerLevel
+                .hashCode());
         result = (prime * result) + ((this.rPercentAttackSpeedModPerLevel == null) ? 0 : this.rPercentAttackSpeedModPerLevel.hashCode());
         result = (prime * result) + ((this.rPercentCooldownMod == null) ? 0 : this.rPercentCooldownMod.hashCode());
         result = (prime * result) + ((this.rPercentCooldownModPerLevel == null) ? 0 : this.rPercentCooldownModPerLevel.hashCode());
         result = (prime * result) + ((this.rPercentMagicPenetrationMod == null) ? 0 : this.rPercentMagicPenetrationMod.hashCode());
-        result = (prime * result) + ((this.rPercentMagicPenetrationModPerLevel == null) ? 0 : this.rPercentMagicPenetrationModPerLevel.hashCode());
+        result = (prime * result) + ((this.rPercentMagicPenetrationModPerLevel == null) ? 0 : this.rPercentMagicPenetrationModPerLevel
+                .hashCode());
         result = (prime * result) + ((this.rPercentMovementSpeedModPerLevel == null) ? 0 : this.rPercentMovementSpeedModPerLevel.hashCode());
         result = (prime * result) + ((this.rPercentTimeDeadMod == null) ? 0 : this.rPercentTimeDeadMod.hashCode());
         result = (prime * result) + ((this.rPercentTimeDeadModPerLevel == null) ? 0 : this.rPercentTimeDeadModPerLevel.hashCode());

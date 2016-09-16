@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.util.List;
 
 public class Shard
 {
@@ -132,8 +132,8 @@ public class Shard
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.hostname == null) ? 0 : this.hostname.hashCode());
         result = (prime * result) + ((this.locales == null) ? 0 : this.locales.hashCode());
         result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());

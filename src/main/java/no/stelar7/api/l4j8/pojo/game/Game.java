@@ -1,10 +1,10 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import java.time.*;
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.Map;
+
+import java.time.*;
+import java.util.List;
+import java.util.Optional;
 
 public class Game
 {
@@ -23,7 +23,7 @@ public class Game
     private RawStats     stats;
     private String       subType;
 
-    private Integer      teamId;
+    private Integer teamId;
 
     @Override
     public boolean equals(final Object obj)
@@ -226,7 +226,7 @@ public class Game
 
     /**
      * A ZonedDateTime of {@code getCreateDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getCreateDateAsDate()
@@ -357,7 +357,7 @@ public class Game
     /**
      * Statistics associated with the game for this summoner.
      *
-     * @return
+     * @return stats
      */
     public RawStats getStats()
     {
@@ -407,8 +407,8 @@ public class Game
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
         result = (prime * result) + ((this.createDate == null) ? 0 : this.createDate.hashCode());
         result = (prime * result) + ((this.fellowPlayers == null) ? 0 : this.fellowPlayers.hashCode());

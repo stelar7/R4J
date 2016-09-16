@@ -130,8 +130,8 @@ public class PlayerStatsSummary
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.aggregatedStats == null) ? 0 : this.aggregatedStats.hashCode());
         result = (prime * result) + ((this.losses == null) ? 0 : this.losses.hashCode());
         result = (prime * result) + ((this.modifyDate == null) ? 0 : this.modifyDate.hashCode());

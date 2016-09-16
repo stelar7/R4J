@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 public enum RateLimitType
 {
@@ -11,7 +11,7 @@ public enum RateLimitType
     private String value;
     private String reason;
 
-    private RateLimitType(String value, String reason)
+    RateLimitType(String value, String reason)
     {
         this.value = value;
         this.reason = reason;

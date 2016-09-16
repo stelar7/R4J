@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.language;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BaseStaticData;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.Map;
 
 public class LanguageStrings extends BaseStaticData
 {
@@ -50,8 +50,8 @@ public class LanguageStrings extends BaseStaticData
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
         result = (prime * result) + super.hashCode();
         return result;

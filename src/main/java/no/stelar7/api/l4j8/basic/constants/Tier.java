@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 public enum Tier
 {
@@ -16,8 +16,6 @@ public enum Tier
     /**
      * Returns an Tier from the provided code
      *
-     * @param code
-     *            the lookup key
      * @return Tier
      */
     public static Tier getFromCode(final String type)

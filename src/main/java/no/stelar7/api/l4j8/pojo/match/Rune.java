@@ -67,8 +67,8 @@ public class Rune
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.rank == null) ? 0 : this.rank.hashCode());
         result = (prime * result) + ((this.runeId == null) ? 0 : this.runeId.hashCode());
         return result;

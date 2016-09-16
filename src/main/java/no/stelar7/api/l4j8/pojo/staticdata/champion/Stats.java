@@ -445,8 +445,8 @@ public class Stats
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.armor == null) ? 0 : this.armor.hashCode());
         result = (prime * result) + ((this.armorperlevel == null) ? 0 : this.armorperlevel.hashCode());
         result = (prime * result) + ((this.attackdamage == null) ? 0 : this.attackdamage.hashCode());

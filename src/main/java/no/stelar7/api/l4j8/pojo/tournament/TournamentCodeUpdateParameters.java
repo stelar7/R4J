@@ -100,8 +100,8 @@ public class TournamentCodeUpdateParameters
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.allowedParticipants == null) ? 0 : this.allowedParticipants.hashCode());
         result = (prime * result) + ((this.mapType == null) ? 0 : this.mapType.hashCode());
         result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());

@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.*;
+import java.util.List;
 
 public class Block
 {
@@ -90,8 +90,8 @@ public class Block
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.items == null) ? 0 : this.items.hashCode());
         result = (prime * result) + ((this.recMath == null) ? 0 : this.recMath.hashCode());
         result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());

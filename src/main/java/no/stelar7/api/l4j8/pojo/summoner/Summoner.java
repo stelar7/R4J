@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.summoner;
 
-import java.time.*;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import java.time.*;
 
 public class Summoner
 {
@@ -124,7 +124,7 @@ public class Summoner
 
     /**
      * Date summoner was last modified specified as epoch milliseconds. The following events will update this timestamp: profile icon change, playing the tutorial or advanced tutorial, finishing a game, summoner name change
-     *
+     * <p>
      * * @return Long
      */
     public Long getRevisionDate()
@@ -134,7 +134,7 @@ public class Summoner
 
     /**
      * A ZonedDateTime of {@code getRevisionDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getRevisionDateAsDate()
@@ -155,8 +155,8 @@ public class Summoner
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
         result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
         result = (prime * result) + ((this.profileIconId == null) ? 0 : this.profileIconId.hashCode());

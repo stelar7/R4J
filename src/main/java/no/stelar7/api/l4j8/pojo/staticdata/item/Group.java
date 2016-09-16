@@ -67,8 +67,8 @@ public class Group
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.MaxGroupOwnable == null) ? 0 : this.MaxGroupOwnable.hashCode());
         result = (prime * result) + ((this.key == null) ? 0 : this.key.hashCode());
         return result;

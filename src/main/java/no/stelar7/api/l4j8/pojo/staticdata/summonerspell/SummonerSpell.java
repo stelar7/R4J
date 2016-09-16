@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.shared.BaseSpellData;
 
-import no.stelar7.api.l4j8.pojo.shared.*;
+import java.util.List;
 
 public class SummonerSpell extends BaseSpellData
 {
@@ -96,8 +96,8 @@ public class SummonerSpell extends BaseSpellData
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
         result = (prime * result) + ((this.modes == null) ? 0 : this.modes.hashCode());
         result = (prime * result) + ((this.summonerLevel == null) ? 0 : this.summonerLevel.hashCode());

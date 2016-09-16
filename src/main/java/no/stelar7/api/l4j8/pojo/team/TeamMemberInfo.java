@@ -80,7 +80,7 @@ public class TeamMemberInfo
 
     /**
      * A ZonedDateTime of {@code getInviteDateAsDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getInviteDateAsDate()
@@ -100,7 +100,7 @@ public class TeamMemberInfo
 
     /**
      * A ZonedDateTime of {@code getInviteDateAsDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getJoinDateAsDate()
@@ -131,8 +131,8 @@ public class TeamMemberInfo
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.inviteDate == null) ? 0 : this.inviteDate.hashCode());
         result = (prime * result) + ((this.joinDate == null) ? 0 : this.joinDate.hashCode());
         result = (prime * result) + ((this.playerId == null) ? 0 : this.playerId.hashCode());

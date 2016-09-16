@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.stats;
 
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.Champion;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import java.util.Optional;
 
 public class ChampionStats
 {
@@ -81,8 +81,8 @@ public class ChampionStats
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
         result = (prime * result) + ((this.stats == null) ? 0 : this.stats.hashCode());
         return result;

@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.regex.*;
-import java.util.stream.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
+
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class TournamentCodeParameters
 {
@@ -21,7 +21,10 @@ public class TournamentCodeParameters
 
     public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final Integer teamSize)
     {
-        this.allowedSummonerIds = new SummonerIdParams(Pattern.compile(",").splitAsStream(updateParams.allowedParticipants).map(Long::parseLong).collect(Collectors.toSet()));
+        this.allowedSummonerIds = new SummonerIdParams(Pattern.compile(",")
+                                                              .splitAsStream(updateParams.allowedParticipants)
+                                                              .map(Long::parseLong)
+                                                              .collect(Collectors.toSet()));
         this.mapType = updateParams.mapType;
         this.metadata = metadata;
         this.pickType = updateParams.pickType;
@@ -141,8 +144,8 @@ public class TournamentCodeParameters
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.allowedSummonerIds == null) ? 0 : this.allowedSummonerIds.hashCode());
         result = (prime * result) + ((this.mapType == null) ? 0 : this.mapType.hashCode());
         result = (prime * result) + ((this.metadata == null) ? 0 : this.metadata.hashCode());

@@ -1,9 +1,11 @@
 package no.stelar7.api.l4j8.pojo.currentgame;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGameParticipant;
 
-import no.stelar7.api.l4j8.pojo.featuredgames.*;
+import java.util.Collections;
+import java.util.List;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class CurrentGameParticipant extends FeaturedGameParticipant
 {
     private List<Mastery> masteries;
@@ -96,8 +98,8 @@ public class CurrentGameParticipant extends FeaturedGameParticipant
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + super.hashCode();
         result = (prime * result) + ((this.masteries == null) ? 0 : this.masteries.hashCode());
         result = (prime * result) + ((this.runes == null) ? 0 : this.runes.hashCode());
@@ -108,7 +110,10 @@ public class CurrentGameParticipant extends FeaturedGameParticipant
     @Override
     public String toString()
     {
-        return "CurrentGameParticipant [masteries=" + this.masteries + ", runes=" + this.runes + ", summonerId=" + this.summonerId + ", getChampion()=" + this.getChampion() + ", getChampionId()=" + this.getChampionId() + ", getProfileIconId()=" + this.getProfileIconId() + ", getSpell1Id()=" + this.getSpell1Id() + ", getSpell2Id()=" + this.getSpell2Id() + ", getSummonerName()=" + this.getSummonerName() + ", getTeam()=" + this.getTeam() + ", getTeamId()=" + this.getTeamId() + ", isBot()=" + this.isBot() + "]";
+        return "CurrentGameParticipant [masteries=" + this.masteries + ", runes=" + this.runes + ", summonerId=" + this.summonerId + ", getChampion()=" + this
+                .getChampion() + ", getChampionId()=" + this.getChampionId() + ", getProfileIconId()=" + this.getProfileIconId() + ", getSpell1Id()=" + this
+                .getSpell1Id() + ", getSpell2Id()=" + this.getSpell2Id() + ", getSummonerName()=" + this.getSummonerName() + ", getTeam()=" + this
+                .getTeam() + ", getTeamId()=" + this.getTeamId() + ", isBot()=" + this.isBot() + "]";
     }
 
 }

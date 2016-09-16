@@ -1,18 +1,16 @@
 package no.stelar7.api.l4j8.impl;
 
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.*;
-import no.stelar7.api.l4j8.basic.DataCall.*;
+import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.summoner.*;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
-import no.stelar7.api.l4j8.pojo.summoner.runes.*;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
+import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
+
+import java.util.*;
 
 /**
  * The base class for calling anything from this api wrapper
- *
- *
  */
 public class L4J8
 {
@@ -20,8 +18,7 @@ public class L4J8
     /**
      * Constructor for the L4J8 class.
      *
-     * @param cred
-     *            the API credentials used for the API (your token)
+     * @param creds the API credentials used for the API (your token)
      */
     public L4J8(final APICredentials creds)
     {
@@ -31,10 +28,8 @@ public class L4J8
     /**
      * The response object contains the MasteryPages objects mapped by their userId.
      *
-     * @param server
-     *            the region to execute against
-     * @param usernames
-     *            list of summonerIds associated with summoners to retrieve.
+     * @param server  the region to execute against
+     * @param initial list of summonerIds associated with summoners to retrieve.
      * @return a map of the userId to an Optional MasteryPages
      */
     public Map<Long, Optional<MasteryPages>> getMasteries(final Server server, final List<Long> initial)
@@ -80,10 +75,8 @@ public class L4J8
     /**
      * The response object contains the RunePages objects mapped by their userId.
      *
-     * @param server
-     *            the region to execute against
-     * @param usernames
-     *            list of summonerIds associated with summoners to retrieve.
+     * @param server  the region to execute against
+     * @param initial list of summonerIds associated with summoners to retrieve.
      * @return a map of the userId to an Optional RunePages
      */
     public Map<Long, Optional<RunePages>> getRunes(final Server server, final List<Long> initial)
@@ -129,10 +122,8 @@ public class L4J8
     /**
      * The response object contains the summoner objects mapped by their user id.
      *
-     * @param server
-     *            the region to execute against
-     * @param userids
-     *            list of summonerIds associated with summoners to retrieve.
+     * @param server  the region to execute against
+     * @param userIds list of summonerIds associated with summoners to retrieve.
      * @return a map of the userId to an Optional Summoner
      */
     public Map<Long, Optional<Summoner>> getSummonerById(final Server server, final List<Long> userIds)
@@ -178,10 +169,8 @@ public class L4J8
     /**
      * The response object contains the summoner objects mapped by their username.
      *
-     * @param server
-     *            the region to execute against
-     * @param usernames
-     *            list of summoner names or standardized summoner names associated with summoners to retrieve.
+     * @param server    the region to execute against
+     * @param usernames list of summoner names or standardized summoner names associated with summoners to retrieve.
      * @return a map of the userId to an Optional Summoner
      */
     public Map<String, Optional<Summoner>> getSummonerByName(final Server server, final List<String> usernames)
@@ -227,17 +216,15 @@ public class L4J8
     /**
      * This method abstracts out the call to getSummonerByName, as there is NO good reason to call this.
      *
-     * @param values
-     *            a list of ids to get the name for
+     * @param values a list of ids to get the name for
      * @return a mapping of the id to the name
-     *
      */
     public Map<Long, Optional<String>> getSummonerNames(final Server server, final List<Long> values)
     {
         final Map<Long, Optional<Summoner>> summoners = this.getSummonerById(server, values);
-        final Map<Long, Optional<String>> result = new HashMap<>();
+        final Map<Long, Optional<String>>   result    = new HashMap<>();
 
-        summoners.forEach((k, v) -> result.put(k, v.map(s -> s.getName())));
+        summoners.forEach((k, v) -> result.put(k, v.map(Summoner::getName)));
 
         return result;
     }

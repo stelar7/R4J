@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 
-import no.stelar7.api.l4j8.pojo.shared.*;
+import java.util.List;
 
 public class Team
 {
@@ -365,8 +365,8 @@ public class Team
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.bans == null) ? 0 : this.bans.hashCode());
         result = (prime * result) + ((this.baronKills == null) ? 0 : this.baronKills.hashCode());
         result = (prime * result) + ((this.dominionVictoryScore == null) ? 0 : this.dominionVictoryScore.hashCode());

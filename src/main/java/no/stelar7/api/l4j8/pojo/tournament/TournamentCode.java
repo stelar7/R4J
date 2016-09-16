@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.*;
+import java.util.Set;
 
 public class TournamentCode
 {
@@ -235,8 +235,8 @@ public class TournamentCode
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.code == null) ? 0 : this.code.hashCode());
         result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
         result = (prime * result) + ((this.lobbyName == null) ? 0 : this.lobbyName.hashCode());

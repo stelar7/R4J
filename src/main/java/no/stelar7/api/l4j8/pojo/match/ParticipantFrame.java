@@ -236,8 +236,8 @@ public class ParticipantFrame
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.currentGold == null) ? 0 : this.currentGold.hashCode());
         result = (prime * result) + ((this.dominionScore == null) ? 0 : this.dominionScore.hashCode());
         result = (prime * result) + ((this.jungleMinionsKilled == null) ? 0 : this.jungleMinionsKilled.hashCode());

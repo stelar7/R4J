@@ -1,7 +1,9 @@
 package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class MasteryPage
 {
 
@@ -9,7 +11,7 @@ public class MasteryPage
     private Long          id;
     private List<Mastery> masteries;
 
-    private String        name;
+    private String name;
 
     @Override
     public boolean equals(final Object obj)
@@ -103,8 +105,8 @@ public class MasteryPage
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.current == null) ? 0 : this.current.hashCode());
         result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
         result = (prime * result) + ((this.masteries == null) ? 0 : this.masteries.hashCode());

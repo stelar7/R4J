@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
 
 public class ProviderRegistrationParameters
 {
@@ -65,8 +65,8 @@ public class ProviderRegistrationParameters
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
         result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
         return result;

@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
+
+import java.util.List;
+import java.util.Optional;
 
 public class Event
 {
@@ -410,7 +411,6 @@ public class Event
     /**
      * The level up type of the event. Only present if relevant. (Legal values: EVOLVE, NORMAL)
      *
-     *
      * @return String
      */
     public String getLevelUpTypeId()
@@ -561,8 +561,8 @@ public class Event
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.ascendedType == null) ? 0 : this.ascendedType.hashCode());
         result = (prime * result) + ((this.assistingParticipantIds == null) ? 0 : this.assistingParticipantIds.hashCode());
         result = (prime * result) + ((this.buildingType == null) ? 0 : this.buildingType.hashCode());

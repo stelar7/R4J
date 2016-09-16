@@ -1,11 +1,12 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.time.*;
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+
+import java.time.*;
+import java.util.List;
+import java.util.Optional;
 
 public class MatchDetail
 {
@@ -236,7 +237,7 @@ public class MatchDetail
 
     /**
      * A ZonedDateTime of {@code getMatchCreation()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getMatchCreationDate()
@@ -337,7 +338,7 @@ public class MatchDetail
     /**
      * Platform of the match (inferred from the platformId)
      *
-     * @return
+     * @return {@code Optional<Platform>}
      */
     public Optional<Platform> getPlatform()
     {
@@ -427,8 +428,8 @@ public class MatchDetail
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.mapId == null) ? 0 : this.mapId.hashCode());
         result = (prime * result) + ((this.matchCreation == null) ? 0 : this.matchCreation.hashCode());
         result = (prime * result) + ((this.matchDuration == null) ? 0 : this.matchDuration.hashCode());

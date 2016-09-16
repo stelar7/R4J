@@ -88,8 +88,8 @@ public class MetaData
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.isRune == null) ? 0 : this.isRune.hashCode());
         result = (prime * result) + ((this.tier == null) ? 0 : this.tier.hashCode());
         result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());

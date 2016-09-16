@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.basic.constants;
 
 import java.awt.*;
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum Map
 {
@@ -49,7 +49,7 @@ public enum Map
         return Stream.of(Map.values()).filter(t -> t.code.equals(mapId)).findFirst();
     }
 
-    Integer   code;
+    Integer code;
 
     Rectangle bounds;
 

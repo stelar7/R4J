@@ -109,8 +109,8 @@ public class Info
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.attack == null) ? 0 : this.attack.hashCode());
         result = (prime * result) + ((this.defence == null) ? 0 : this.defence.hashCode());
         result = (prime * result) + ((this.difficulty == null) ? 0 : this.difficulty.hashCode());

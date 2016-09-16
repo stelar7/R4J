@@ -16,7 +16,7 @@
 
 package com.google.common.base;
 
-public abstract class Ticker
+abstract class Ticker
 {
     private static final Ticker SYSTEM_TICKER = new Ticker()
     {
@@ -27,13 +27,14 @@ public abstract class Ticker
         }
     };
 
-    public static Ticker systemTicker()
+    static Ticker systemTicker()
     {
         return Ticker.SYSTEM_TICKER;
     }
 
-    protected Ticker()
-    {}
+    private Ticker()
+    {
+    }
 
     public abstract long read();
 }

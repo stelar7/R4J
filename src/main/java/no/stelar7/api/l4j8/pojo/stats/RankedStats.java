@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.pojo.stats;
 
 import java.time.*;
-import java.util.*;
+import java.util.List;
 
 public class RankedStats
 {
@@ -80,7 +80,7 @@ public class RankedStats
 
     /**
      * A ZonedDateTime of {@code getModifyDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getModifyDateAsDate()
@@ -101,8 +101,8 @@ public class RankedStats
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.champions == null) ? 0 : this.champions.hashCode());
         result = (prime * result) + ((this.modifyDate == null) ? 0 : this.modifyDate.hashCode());
         result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());

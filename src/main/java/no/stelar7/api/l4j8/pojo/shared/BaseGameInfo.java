@@ -1,13 +1,14 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
+import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.Map;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameParticipant;
+
 import java.time.*;
 import java.util.*;
 
-import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.currentgame.*;
-
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class BaseGameInfo
 {
     private List<BannedChampion>         bannedChampions;
@@ -21,7 +22,7 @@ public class BaseGameInfo
     private Observer                     observers;
     private List<CurrentGameParticipant> participants;
 
-    private String                       platformId;
+    private String platformId;
 
     @Override
     public boolean equals(final Object obj)
@@ -234,7 +235,7 @@ public class BaseGameInfo
 
     /**
      * A ZonedDateTime of {@code getGameStartTime()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getGameStartTimeAsDate()
@@ -325,8 +326,8 @@ public class BaseGameInfo
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.bannedChampions == null) ? 0 : this.bannedChampions.hashCode());
         result = (prime * result) + ((this.gameId == null) ? 0 : this.gameId.hashCode());
         result = (prime * result) + ((this.gameLength == null) ? 0 : this.gameLength.hashCode());

@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SummonerIdParams
 {
@@ -14,10 +15,7 @@ public class SummonerIdParams
     public SummonerIdParams(final Set<Long> set)
     {
         this.participants = new HashSet<>();
-        for (final Number id : set)
-        {
-            this.participants.add(id);
-        }
+        this.participants.addAll(set);
     }
 
     public void addParticipant(final Number id)
@@ -62,8 +60,8 @@ public class SummonerIdParams
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.participants == null) ? 0 : this.participants.hashCode());
         return result;
     }

@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.realm;
 
-import java.util.*;
+import java.util.Map;
 
 public class Realm
 {
@@ -216,8 +216,8 @@ public class Realm
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.cdn == null) ? 0 : this.cdn.hashCode());
         result = (prime * result) + ((this.css == null) ? 0 : this.css.hashCode());
         result = (prime * result) + ((this.dd == null) ? 0 : this.dd.hashCode());

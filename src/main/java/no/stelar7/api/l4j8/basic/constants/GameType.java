@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum GameType
 {
@@ -21,8 +21,6 @@ public enum GameType
     /**
      * Returns a GameType from the provided code
      *
-     * @param code
-     *            the lookup key
      * @return GameType
      */
     public static Optional<GameType> getFromCode(final String gameType)

@@ -172,8 +172,8 @@ public class Image
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.full == null) ? 0 : this.full.hashCode());
         result = (prime * result) + ((this.group == null) ? 0 : this.group.hashCode());
         result = (prime * result) + ((this.h == null) ? 0 : this.h.hashCode());

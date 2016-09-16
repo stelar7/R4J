@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.*;
+import java.util.List;
 
 public class Recommended
 {
@@ -174,8 +174,8 @@ public class Recommended
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.blocks == null) ? 0 : this.blocks.hashCode());
         result = (prime * result) + ((this.champion == null) ? 0 : this.champion.hashCode());
         result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());

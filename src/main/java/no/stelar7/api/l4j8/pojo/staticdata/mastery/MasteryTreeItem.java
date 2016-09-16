@@ -67,8 +67,8 @@ public class MasteryTreeItem
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.masteryId == null) ? 0 : this.masteryId.hashCode());
         result = (prime * result) + ((this.prereq == null) ? 0 : this.prereq.hashCode());
         return result;

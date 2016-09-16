@@ -67,8 +67,8 @@ public class BaseStaticData
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
         result = (prime * result) + ((this.version == null) ? 0 : this.version.hashCode());
         return result;

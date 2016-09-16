@@ -67,8 +67,8 @@ public class Mastery
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.masteryId == null) ? 0 : this.masteryId.hashCode());
         result = (prime * result) + ((this.rank == null) ? 0 : this.rank.hashCode());
         return result;

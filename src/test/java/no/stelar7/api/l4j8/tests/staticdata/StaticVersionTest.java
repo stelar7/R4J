@@ -1,11 +1,11 @@
 package no.stelar7.api.l4j8.tests.staticdata;
 
-import java.util.*;
-
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+import no.stelar7.api.l4j8.tests.TestBase;
 import org.junit.*;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.tests.*;
+import java.util.List;
 
 public class StaticVersionTest extends TestBase
 {

@@ -1,18 +1,20 @@
 package no.stelar7.api.l4j8.tests.currentgame;
 
-import java.util.*;
-
+import no.stelar7.api.l4j8.basic.DataCall;
+import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
+import no.stelar7.api.l4j8.basic.Utils;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGameInfo;
+import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
-import org.junit.runners.*;
+import org.junit.runners.MethodSorters;
 
-import no.stelar7.api.l4j8.basic.*;
-import no.stelar7.api.l4j8.basic.DataCall.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.currentgame.*;
-import no.stelar7.api.l4j8.pojo.featuredgames.*;
-import no.stelar7.api.l4j8.pojo.summoner.*;
-import no.stelar7.api.l4j8.tests.*;
+import java.util.Map;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CurrentGameTest
@@ -35,7 +37,7 @@ public class CurrentGameTest
         final String parsedName = Utils.prepareForURL(name);
         this.idbuilder.withURLData("{summonerName}", parsedName);
 
-        final Object data = this.idbuilder.build();
+        final Object                data    = this.idbuilder.build();
         final Map<String, Summoner> datamap = (Map<String, Summoner>) data;
 
         // get the summoners id
@@ -47,7 +49,9 @@ public class CurrentGameTest
         // our ongoing game
         final CurrentGameInfo currentGame = (CurrentGameInfo) this.currentbuilder.build();
 
-        Assert.assertEquals("A CurrentGameParticipant is not equal to it self", currentGame.getParticipants().get(0), currentGame.getParticipants().get(0));
+        Assert.assertEquals("A CurrentGameParticipant is not equal to it self", currentGame.getParticipants()
+                                                                                           .get(0), currentGame.getParticipants()
+                                                                                                               .get(0));
 
         Assert.assertNotNull("bannedchampion is null", currentGame.getBannedChampions());
         Assert.assertNotNull("gameid is null", currentGame.getGameId());
@@ -66,9 +70,13 @@ public class CurrentGameTest
         Assert.assertNotNull("PLATFORM is null", currentGame.getPlatform());
         Assert.assertNotNull("GAMESTARTTIME is null", currentGame.getGameStartTimeAsDate());
 
-        Assert.assertEquals("Timestamp doesnt match TIMESTAMP", currentGame.getGameStartTime(), (Long) currentGame.getGameStartTimeAsDate().toInstant().toEpochMilli());
+        Assert.assertEquals("Timestamp doesnt match TIMESTAMP", currentGame.getGameStartTime(), (Long) currentGame.getGameStartTimeAsDate()
+                                                                                                                  .toInstant()
+                                                                                                                  .toEpochMilli());
         Assert.assertEquals("lane doesnt match LANE", currentGame.getGameModeId(), currentGame.getGameMode().get().getCode());
-        Assert.assertEquals("queue doesnt match QUEUE", currentGame.getGameQueueConfigId(), currentGame.getGameQueueType().get().getCode());
+        Assert.assertEquals("queue doesnt match QUEUE", currentGame.getGameQueueConfigId(), currentGame.getGameQueueType()
+                                                                                                       .get()
+                                                                                                       .getCode());
         Assert.assertEquals("role doesnt match ROLE", currentGame.getGameTypeId(), currentGame.getGameType().get().getCode());
         Assert.assertEquals("season doesnt match SEASON", currentGame.getMapId(), currentGame.getMap().get().getCode());
         Assert.assertEquals("region doesnt match REGION", currentGame.getPlatformId(), currentGame.getPlatform().get().getCode());

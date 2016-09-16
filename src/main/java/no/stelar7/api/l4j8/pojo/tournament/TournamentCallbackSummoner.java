@@ -57,8 +57,8 @@ public class TournamentCallbackSummoner
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
         result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
         return result;

@@ -73,8 +73,8 @@ public class LobbyEvent
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.eventType == null) ? 0 : this.eventType.hashCode());
         result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
         result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());

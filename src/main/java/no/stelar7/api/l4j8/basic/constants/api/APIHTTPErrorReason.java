@@ -4,6 +4,7 @@ public enum APIHTTPErrorReason
 {
     ERROR404,
     ERROR429,
+    ERROR400,
     ERROR500
 
 }

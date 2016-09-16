@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.util.List;
 
 public class Incident
 {
@@ -111,8 +111,8 @@ public class Incident
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.active == null) ? 0 : this.active.hashCode());
         result = (prime * result) + ((this.created_at == null) ? 0 : this.created_at.hashCode());
         result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());

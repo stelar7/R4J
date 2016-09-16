@@ -109,8 +109,8 @@ public class TeamStatDetail
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.averageGamesPlayed == null) ? 0 : this.averageGamesPlayed.hashCode());
         result = (prime * result) + ((this.losses == null) ? 0 : this.losses.hashCode());
         result = (prime * result) + ((this.teamStatType == null) ? 0 : this.teamStatType.hashCode());

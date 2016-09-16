@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.pojo.matchlist;
 
-import java.time.*;
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.Server;
+
+import java.time.*;
+import java.util.Optional;
 
 public class MatchReference
 {
@@ -295,8 +296,8 @@ public class MatchReference
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.champion == null) ? 0 : this.champion.hashCode());
         result = (prime * result) + ((this.lane == null) ? 0 : this.lane.hashCode());
         result = (prime * result) + ((this.matchId == null) ? 0 : this.matchId.hashCode());

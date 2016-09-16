@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
-import java.util.*;
+import java.util.List;
 
 public class LevelTip
 {
@@ -69,8 +69,8 @@ public class LevelTip
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.effect == null) ? 0 : this.effect.hashCode());
         result = (prime * result) + ((this.label == null) ? 0 : this.label.hashCode());
         return result;

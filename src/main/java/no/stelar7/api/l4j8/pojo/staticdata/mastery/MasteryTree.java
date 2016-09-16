@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
-import java.util.*;
+import java.util.List;
 
 public class MasteryTree
 {
@@ -90,8 +90,8 @@ public class MasteryTree
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.Defense == null) ? 0 : this.Defense.hashCode());
         result = (prime * result) + ((this.Offense == null) ? 0 : this.Offense.hashCode());
         result = (prime * result) + ((this.Utility == null) ? 0 : this.Utility.hashCode());

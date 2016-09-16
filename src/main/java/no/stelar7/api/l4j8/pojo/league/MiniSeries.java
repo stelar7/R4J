@@ -109,8 +109,8 @@ public class MiniSeries
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.losses == null) ? 0 : this.losses.hashCode());
         result = (prime * result) + ((this.progress == null) ? 0 : this.progress.hashCode());
         result = (prime * result) + ((this.target == null) ? 0 : this.target.hashCode());

@@ -1201,8 +1201,8 @@ public class AggregatedStats
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.averageAssists == null) ? 0 : this.averageAssists.hashCode());
         result = (prime * result) + ((this.averageChampionsKilled == null) ? 0 : this.averageChampionsKilled.hashCode());
         result = (prime * result) + ((this.averageCombatPlayerScore == null) ? 0 : this.averageCombatPlayerScore.hashCode());

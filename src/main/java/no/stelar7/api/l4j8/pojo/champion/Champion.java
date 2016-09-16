@@ -97,8 +97,8 @@ public class Champion
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.active == null) ? 0 : this.active.hashCode());
         result = (prime * result) + ((this.botEnabled == null) ? 0 : this.botEnabled.hashCode());
         result = (prime * result) + ((this.botMmEnabled == null) ? 0 : this.botMmEnabled.hashCode());

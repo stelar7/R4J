@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class Frame
 {
@@ -90,8 +91,8 @@ public class Frame
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.events == null) ? 0 : this.events.hashCode());
         result = (prime * result) + ((this.participantFrames == null) ? 0 : this.participantFrames.hashCode());
         result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());

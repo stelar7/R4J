@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.util.List;
 
 public class Service
 {
@@ -111,8 +111,8 @@ public class Service
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.incidents == null) ? 0 : this.incidents.hashCode());
         result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
         result = (prime * result) + ((this.slug == null) ? 0 : this.slug.hashCode());

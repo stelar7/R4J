@@ -1,13 +1,12 @@
 package no.stelar7.api.l4j8.impl;
 
-import java.util.*;
-
-import com.google.gson.*;
-
-import no.stelar7.api.l4j8.basic.DataCall.*;
+import com.google.gson.Gson;
+import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.match.MatchDetail;
 import no.stelar7.api.l4j8.pojo.tournament.*;
+
+import java.util.List;
 
 public class TournamentAPI
 {
@@ -27,12 +26,12 @@ public class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder();
 
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
-        builder = builder.withRequestMethod("POST");
+        builder = builder.withRequestMethod(Constants.REQUEST_METHOD_POST);
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
         builder = builder.withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, "");
-        builder = builder.withURLParameter("tournamentId", String.valueOf(tournamentId));
-        builder = builder.withURLParameter("count", String.valueOf(count));
+        builder = builder.withURLParameter(Constants.TOURNAMENT_ID_URL_PARAM, String.valueOf(tournamentId));
+        builder = builder.withURLParameter(Constants.TOURNAMENT_COUNT_URL_PARAM, String.valueOf(count));
         builder = builder.withServer(Server.GLOBAL);
         builder = builder.asVerbose(true);
 
@@ -64,9 +63,9 @@ public class TournamentAPI
 
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH_BY_ID);
-        builder = builder.withURLData("{matchId}", String.valueOf(matchId));
-        builder = builder.withURLParameter("tournamentCode", tournamentCode);
-        builder = builder.withURLParameter("includeTimeline", "true");
+        builder = builder.withURLData(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId));
+        builder = builder.withURLParameter(Constants.TOURNAMENT_CODE_URL_PARAM, tournamentCode);
+        builder = builder.withURLParameter(Constants.TOURNAMENT_TIMELINE_URL_PARAM, String.valueOf(true));
         builder = builder.withServer(Server.GLOBAL);
         builder = builder.asVerbose(true);
 
@@ -113,7 +112,7 @@ public class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder();
 
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
-        builder = builder.withRequestMethod("POST");
+        builder = builder.withRequestMethod(Constants.REQUEST_METHOD_POST);
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_PROVIDER);
         builder = builder.withServer(Server.GLOBAL);
@@ -130,7 +129,7 @@ public class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder();
 
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
-        builder = builder.withRequestMethod("POST");
+        builder = builder.withRequestMethod(Constants.REQUEST_METHOD_POST);
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_REGISTRATION);
         builder = builder.withServer(Server.GLOBAL);
@@ -147,7 +146,7 @@ public class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder();
 
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
-        builder = builder.withRequestMethod("PUT");
+        builder = builder.withRequestMethod(Constants.REQUEST_METHOD_PUT);
         builder = builder.withPostData(new Gson().toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
         builder = builder.withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode);

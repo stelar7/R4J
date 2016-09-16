@@ -256,8 +256,8 @@ public class LeagueEntry
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.division == null) ? 0 : this.division.hashCode());
         result = (prime * result) + ((this.isFreshBlood == null) ? 0 : this.isFreshBlood.hashCode());
         result = (prime * result) + ((this.isHotStreak == null) ? 0 : this.isHotStreak.hashCode());

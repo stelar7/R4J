@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum Platform
 {
@@ -20,8 +20,7 @@ public enum Platform
     /**
      * Returns a Platform from the provided code
      *
-     * @param code
-     *            the lookup key
+     * @param code the lookup key
      * @return Platform
      */
     public static Optional<Platform> getFromCode(final String code)

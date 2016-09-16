@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum AscencionType
 {
@@ -12,8 +12,6 @@ public enum AscencionType
     /**
      * Returns an AscentionType from the provided code
      *
-     * @param code
-     *            the lookup key
      * @return AscentionType
      */
     public static Optional<AscencionType> getFromCode(final String type)

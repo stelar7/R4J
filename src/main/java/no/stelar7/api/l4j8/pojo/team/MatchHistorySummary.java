@@ -167,7 +167,7 @@ public class MatchHistorySummary
 
     /**
      * A ZonedDateTime of {@code getDate()}
-     *
+     * <p>
      * * @return ZonedDateTime
      */
     public ZonedDateTime getDateAsDate()
@@ -268,8 +268,8 @@ public class MatchHistorySummary
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.assists == null) ? 0 : this.assists.hashCode());
         result = (prime * result) + ((this.date == null) ? 0 : this.date.hashCode());
         result = (prime * result) + ((this.deaths == null) ? 0 : this.deaths.hashCode());

@@ -1,7 +1,8 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum Server
 {
@@ -24,7 +25,7 @@ public enum Server
         return Stream.of(Server.values()).filter(t -> t.name().equals(code)).findFirst();
     }
 
-    private final String  endpoint;
+    private final String endpoint;
 
     private final Boolean limited;
 

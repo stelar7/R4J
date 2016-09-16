@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum Lane
 {
@@ -28,8 +28,7 @@ public enum Lane
     /**
      * Returns a Lane from the provided code
      *
-     * @param code
-     *            the lookup key
+     * @param code the lookup key
      * @return Lane
      */
     public static Optional<Lane> getFromCode(final String code)

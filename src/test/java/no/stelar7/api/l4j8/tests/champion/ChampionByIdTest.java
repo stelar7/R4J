@@ -1,12 +1,13 @@
 package no.stelar7.api.l4j8.tests.champion;
 
-import java.util.*;
-
+import no.stelar7.api.l4j8.basic.constants.api.Constants;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+import no.stelar7.api.l4j8.pojo.champion.Champion;
+import no.stelar7.api.l4j8.pojo.champion.ChampionList;
+import no.stelar7.api.l4j8.tests.TestBase;
 import org.junit.*;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.champion.*;
-import no.stelar7.api.l4j8.tests.*;
+import java.util.List;
 
 public class ChampionByIdTest extends TestBase
 {

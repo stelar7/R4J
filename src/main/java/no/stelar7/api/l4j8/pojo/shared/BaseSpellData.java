@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import java.util.*;
-
 import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+
+import java.util.List;
 
 public class BaseSpellData
 {

@@ -16,9 +16,9 @@
 
 package com.google.common.base;
 
-import static java.util.concurrent.TimeUnit.*;
+import java.util.concurrent.TimeUnit;
 
-import java.util.concurrent.*;
+import static java.util.concurrent.TimeUnit.*;
 
 public final class Stopwatch
 {
@@ -26,22 +26,22 @@ public final class Stopwatch
     {
         switch (unit)
         {
-            case NANOSECONDS:
-                return "ns";
-            case MICROSECONDS:
-                return "\u03bcs"; // μs
-            case MILLISECONDS:
-                return "ms";
-            case SECONDS:
-                return "s";
-            case MINUTES:
-                return "min";
-            case HOURS:
-                return "h";
-            case DAYS:
-                return "d";
-            default:
-                throw new AssertionError();
+        case NANOSECONDS:
+            return "ns";
+        case MICROSECONDS:
+            return "\u03bcs"; // μs
+        case MILLISECONDS:
+            return "ms";
+        case SECONDS:
+            return "s";
+        case MINUTES:
+            return "min";
+        case HOURS:
+            return "h";
+        case DAYS:
+            return "d";
+        default:
+            throw new AssertionError();
         }
     }
 
@@ -79,36 +79,19 @@ public final class Stopwatch
         return new Stopwatch().start();
     }
 
-    public static Stopwatch createStarted(final Ticker ticker)
-    {
-        return new Stopwatch(ticker).start();
-    }
-
-    public static Stopwatch createUnstarted()
-    {
-        return new Stopwatch();
-    }
-
-    public static Stopwatch createUnstarted(final Ticker ticker)
-    {
-        return new Stopwatch(ticker);
-    }
-
     private final Ticker ticker;
 
-    private boolean      isRunning;
+    private boolean isRunning;
 
-    private long         elapsedNanos;
+    private long elapsedNanos;
 
-    private long         startTick;
+    private long startTick;
 
-    @Deprecated
     Stopwatch()
     {
         this(Ticker.systemTicker());
     }
 
-    @Deprecated
     Stopwatch(final Ticker ticker)
     {
         this.ticker = Preconditions.checkNotNull(ticker, "ticker");
@@ -158,8 +141,8 @@ public final class Stopwatch
     {
         final long nanos = this.elapsedNanos();
 
-        final TimeUnit unit = Stopwatch.chooseUnit(nanos);
-        final double value = (double) nanos / NANOSECONDS.convert(1, unit);
+        final TimeUnit unit  = Stopwatch.chooseUnit(nanos);
+        final double   value = (double) nanos / NANOSECONDS.convert(1, unit);
 
         return String.format("%.4g %s", value, Stopwatch.abbreviate(unit));
     }

@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum SummonerSpell
 {
@@ -69,8 +69,7 @@ public enum SummonerSpell
     /**
      * Returns an SummonerSpell from the provided code.
      *
-     * @param type
-     *            the type
+     * @param type the type
      * @return SummonerSpell
      */
     public static Optional<SummonerSpell> getFromCode(final Integer type)
@@ -83,8 +82,7 @@ public enum SummonerSpell
     /**
      * Instantiates a new summoner spell.
      *
-     * @param id
-     *            the id
+     * @param id the id
      */
     SummonerSpell(final Integer id)
     {

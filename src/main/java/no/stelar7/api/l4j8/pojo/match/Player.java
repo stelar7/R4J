@@ -109,8 +109,8 @@ public class Player
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.matchHistoryUri == null) ? 0 : this.matchHistoryUri.hashCode());
         result = (prime * result) + ((this.profileIcon == null) ? 0 : this.profileIcon.hashCode());
         result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());

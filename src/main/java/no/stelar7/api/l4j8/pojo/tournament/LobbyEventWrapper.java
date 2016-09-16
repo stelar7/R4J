@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.*;
+import java.util.List;
 
 public class LobbyEventWrapper
 {
@@ -43,8 +43,8 @@ public class LobbyEventWrapper
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.eventList == null) ? 0 : this.eventList.hashCode());
         return result;
     }

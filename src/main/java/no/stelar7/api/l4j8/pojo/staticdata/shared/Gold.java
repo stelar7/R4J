@@ -109,8 +109,8 @@ public class Gold
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.base == null) ? 0 : this.base.hashCode());
         result = (prime * result) + ((this.purchasable == null) ? 0 : this.purchasable.hashCode());
         result = (prime * result) + ((this.sell == null) ? 0 : this.sell.hashCode());

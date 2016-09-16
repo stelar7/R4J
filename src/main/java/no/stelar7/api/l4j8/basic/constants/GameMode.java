@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum GameMode
 {
@@ -45,8 +45,6 @@ public enum GameMode
     /**
      * Returns a GameMode from the provided code
      *
-     * @param code
-     *            the lookup key
      * @return GameMode
      */
     public static Optional<GameMode> getFromCode(final String gameMode)

@@ -5,5 +5,5 @@ public enum TournamentPickType
     BLIND_PICK,
     DRAFT_MODE,
     ALL_RANDOM,
-    TOURNAMENT_DRAFT;
+    TOURNAMENT_DRAFT
 }

@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import java.util.List;
 
 public class Champion
 {
@@ -386,8 +386,8 @@ public class Champion
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.allytips == null) ? 0 : this.allytips.hashCode());
         result = (prime * result) + ((this.blurb == null) ? 0 : this.blurb.hashCode());
         result = (prime * result) + ((this.enemytips == null) ? 0 : this.enemytips.hashCode());

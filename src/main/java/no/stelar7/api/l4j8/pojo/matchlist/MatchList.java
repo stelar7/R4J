@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.matchlist;
 
-import java.util.*;
+import java.util.List;
 
 public class MatchList
 {
@@ -111,8 +111,8 @@ public class MatchList
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.endIndex == null) ? 0 : this.endIndex.hashCode());
         result = (prime * result) + ((this.matches == null) ? 0 : this.matches.hashCode());
         result = (prime * result) + ((this.startIndex == null) ? 0 : this.startIndex.hashCode());

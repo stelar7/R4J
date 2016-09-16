@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class BasicData
 {
@@ -510,8 +511,8 @@ public class BasicData
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.colloq == null) ? 0 : this.colloq.hashCode());
         result = (prime * result) + ((this.consumeOnFull == null) ? 0 : this.consumeOnFull.hashCode());
         result = (prime * result) + ((this.consumed == null) ? 0 : this.consumed.hashCode());

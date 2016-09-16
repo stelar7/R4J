@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.*;
+import java.util.List;
 
 public class TournamentCallback
 {
@@ -203,8 +203,8 @@ public class TournamentCallback
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.gameId == null) ? 0 : this.gameId.hashCode());
         result = (prime * result) + ((this.gameMap == null) ? 0 : this.gameMap.hashCode());
         result = (prime * result) + ((this.gameMode == null) ? 0 : this.gameMode.hashCode());

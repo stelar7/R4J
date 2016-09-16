@@ -1,9 +1,10 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
-
 import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.Team;
+
+import java.util.List;
+import java.util.Optional;
 
 public class Participant
 {
@@ -280,8 +281,8 @@ public class Participant
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
         result = (prime * result) + ((this.highestAchievedSeasonTier == null) ? 0 : this.highestAchievedSeasonTier.hashCode());
         result = (prime * result) + ((this.masteries == null) ? 0 : this.masteries.hashCode());
