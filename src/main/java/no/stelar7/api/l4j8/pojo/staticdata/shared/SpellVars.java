@@ -4,11 +4,11 @@ import java.util.List;
 
 public class SpellVars
 {
-    List<Double> coeff;
-    String       dyn;
-    String       key;
-    String       link;
-    String       ranksWith;
+    private List<Double> coeff;
+    private String dyn;
+    private String key;
+    private String link;
+    private String ranksWith;
 
     @Override
     public boolean equals(final Object obj)

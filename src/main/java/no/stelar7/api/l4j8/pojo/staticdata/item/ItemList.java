@@ -8,10 +8,10 @@ import java.util.Map;
 public class ItemList
 {
 
-    BasicData         basic;
-    Map<String, Item> data;
-    List<Group>       groups;
-    List<ItemTree>    tree;
+    private BasicData basic;
+    private Map<String, Item> data;
+    private List<Group> groups;
+    private List<ItemTree> tree;
 
     @Override
     public boolean equals(final Object obj)

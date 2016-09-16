@@ -5,7 +5,7 @@ import java.util.List;
 public class Roster
 {
     private List<TeamMemberInfo> memberList;
-    private Long                 ownerId;
+    private Long ownerId;
 
     @Override
     public boolean equals(final Object obj)

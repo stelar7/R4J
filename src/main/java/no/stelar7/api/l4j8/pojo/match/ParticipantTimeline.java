@@ -33,8 +33,8 @@ public class ParticipantTimeline
     private ParticipantTimelineData wardsPerMinDeltas;
     private ParticipantTimelineData xpDiffPerMinDeltas;
     private ParticipantTimelineData xpPerMinDeltas;
-    private String                  lane;
-    private String                  role;
+    private String lane;
+    private String role;
 
     @Override
     public boolean equals(final Object obj)

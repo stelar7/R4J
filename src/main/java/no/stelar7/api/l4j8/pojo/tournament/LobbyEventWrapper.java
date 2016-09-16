@@ -4,7 +4,7 @@ import java.util.List;
 
 public class LobbyEventWrapper
 {
-    List<LobbyEvent> eventList;
+    private List<LobbyEvent> eventList;
 
     @Override
     public boolean equals(final Object obj)

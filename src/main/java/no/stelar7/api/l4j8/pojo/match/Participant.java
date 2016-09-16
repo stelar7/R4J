@@ -8,15 +8,15 @@ import java.util.Optional;
 
 public class Participant
 {
-    private Integer             championId;
-    private String              highestAchievedSeasonTier;
-    private List<Mastery>       masteries;
-    private Integer             participantId;
-    private List<Rune>          runes;
-    private Integer             spell1Id;
-    private Integer             spell2Id;
-    private ParticipantStats    stats;
-    private Integer             teamId;
+    private Integer championId;
+    private String highestAchievedSeasonTier;
+    private List<Mastery> masteries;
+    private Integer participantId;
+    private List<Rune> runes;
+    private Integer spell1Id;
+    private Integer spell2Id;
+    private ParticipantStats stats;
+    private Integer teamId;
     private ParticipantTimeline timeline;
 
     @Override

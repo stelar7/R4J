@@ -8,11 +8,11 @@ import java.util.Optional;
 public class BaseGameParticipant
 {
     private Integer championId;
-    private Long    profileIconId;
-    private Long    spell1Id;
-    private Long    spell2Id;
-    private String  summonerName;
-    private Long    teamId;
+    private Long profileIconId;
+    private Long spell1Id;
+    private Long spell2Id;
+    private String summonerName;
+    private Long teamId;
 
     @Override
     public boolean equals(final Object obj)
@@ -98,7 +98,7 @@ public class BaseGameParticipant
      *
      * @return Champion
      */
-    public Optional<Champion> getChampion()
+    protected Optional<Champion> getChampion()
     {
         return Champion.getFromId(this.championId);
     }
@@ -108,7 +108,7 @@ public class BaseGameParticipant
      *
      * @return Long
      */
-    public Integer getChampionId()
+    protected Integer getChampionId()
     {
         return this.championId;
     }
@@ -118,7 +118,7 @@ public class BaseGameParticipant
      *
      * @return Long
      */
-    public Long getProfileIconId()
+    protected Long getProfileIconId()
     {
         return this.profileIconId;
     }
@@ -128,7 +128,7 @@ public class BaseGameParticipant
      *
      * @return Long
      */
-    public Long getSpell1Id()
+    protected Long getSpell1Id()
     {
         return this.spell1Id;
     }
@@ -138,7 +138,7 @@ public class BaseGameParticipant
      *
      * @return Long
      */
-    public Long getSpell2Id()
+    protected Long getSpell2Id()
     {
         return this.spell2Id;
     }
@@ -158,7 +158,7 @@ public class BaseGameParticipant
      *
      * @return Team
      */
-    public Optional<Team> getTeam()
+    protected Optional<Team> getTeam()
     {
         return Team.getFromCode(this.teamId);
     }
@@ -168,7 +168,7 @@ public class BaseGameParticipant
      *
      * @return Long
      */
-    public Long getTeamId()
+    protected Long getTeamId()
     {
         return this.teamId;
     }

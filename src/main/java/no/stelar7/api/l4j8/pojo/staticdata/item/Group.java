@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-public class Group
+class Group
 {
-    String MaxGroupOwnable;
-    String key;
+    private String MaxGroupOwnable;
+    private String key;
 
     @Override
     public boolean equals(final Object obj)

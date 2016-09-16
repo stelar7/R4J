@@ -4,10 +4,10 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
 public class Passive
 {
-    String description;
-    Image  image;
-    String name;
-    String sanitizedDescription;
+    private String description;
+    private Image image;
+    private String name;
+    private String sanitizedDescription;
 
     @Override
     public boolean equals(final Object obj)

@@ -4,9 +4,9 @@ import java.util.List;
 
 public class MasteryTree
 {
-    List<MasteryTreeList> Defense;
-    List<MasteryTreeList> Offense;
-    List<MasteryTreeList> Utility;
+    private List<MasteryTreeList> Defense;
+    private List<MasteryTreeList> Offense;
+    private List<MasteryTreeList> Utility;
 
     @Override
     public boolean equals(final Object obj)

@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 
 public enum Champion
 {
-    ALL(0),
     AATROX(266),
     AHRI(103),
     AKALI(84),
@@ -57,6 +56,7 @@ public enum Champion
     KENNEN(85),
     KHAZIX(121),
     KINDRED(203),
+    KLED(240),
     KOG_MAW(96),
     LEBLANC(7),
     LEESIN(64),
@@ -139,7 +139,7 @@ public enum Champion
         return Stream.of(Champion.values()).filter(t -> t.id.equals(id)).findFirst();
     }
 
-    Integer id;
+    final Integer id;
 
     Champion(final Integer id)
     {

@@ -5,29 +5,29 @@ import java.util.Map;
 
 public class BasicData
 {
-    String               colloq;
-    Boolean              consumeOnFull;
-    Boolean              consumed;
-    Integer              depth;
-    String               description;
-    List<String>         from;
-    Gold                 gold;
-    String               group;
-    Boolean              hideFromAll;
-    Integer              id;
-    Image                image;
-    Boolean              inStore;
-    List<String>         into;
-    Map<String, Boolean> maps;
-    String               name;
-    String               plaintext;
-    String               requiredChampion;
-    MetaData             rune;
-    String               sanitizedDescription;
-    Integer              specialRecipe;
-    Integer              stacks;
-    BasicDataStats       stats;
-    List<String>         tags;
+    private String colloq;
+    private Boolean consumeOnFull;
+    private Boolean consumed;
+    private Integer depth;
+    private String description;
+    private List<String> from;
+    private Gold gold;
+    private String group;
+    private Boolean hideFromAll;
+    private Integer id;
+    private Image image;
+    private Boolean inStore;
+    private List<String> into;
+    private Map<String, Boolean> maps;
+    private String name;
+    private String plaintext;
+    private String requiredChampion;
+    private MetaData rune;
+    private String sanitizedDescription;
+    private Integer specialRecipe;
+    private Integer stacks;
+    private BasicDataStats stats;
+    private List<String> tags;
 
     @Override
     public boolean equals(final Object obj)

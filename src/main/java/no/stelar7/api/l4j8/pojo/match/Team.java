@@ -4,24 +4,24 @@ import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 
 import java.util.List;
 
-public class Team
+class Team
 {
     private List<BannedChampion> bans;
-    private Integer              baronKills;
-    private Long                 dominionVictoryScore;
-    private Integer              dragonKills;
-    private Boolean              firstBaron;
-    private Boolean              firstBlood;
-    private Boolean              firstDragon;
-    private Boolean              firstInhibitor;
-    private Boolean              firstTower;
-    private Integer              inhibitorKills;
-    private Integer              teamId;
-    private Integer              towerKills;
-    private Integer              vilemawKills;
-    private Boolean              winner;
-    private Boolean              firstRiftHerald;
-    private Integer              riftHeraldKills;
+    private Integer baronKills;
+    private Long dominionVictoryScore;
+    private Integer dragonKills;
+    private Boolean firstBaron;
+    private Boolean firstBlood;
+    private Boolean firstDragon;
+    private Boolean firstInhibitor;
+    private Boolean firstTower;
+    private Integer inhibitorKills;
+    private Integer teamId;
+    private Integer towerKills;
+    private Integer vilemawKills;
+    private Boolean winner;
+    private Boolean firstRiftHerald;
+    private Integer riftHeraldKills;
 
     @Override
     public boolean equals(final Object obj)

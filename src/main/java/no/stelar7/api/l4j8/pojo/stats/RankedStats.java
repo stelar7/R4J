@@ -3,11 +3,11 @@ package no.stelar7.api.l4j8.pojo.stats;
 import java.time.*;
 import java.util.List;
 
-public class RankedStats
+class RankedStats
 {
     private List<ChampionStats> champions;
-    private Long                modifyDate;
-    private Long                summonerId;
+    private Long modifyDate;
+    private Long summonerId;
 
     @Override
     public boolean equals(final Object obj)

@@ -4,8 +4,8 @@ import java.util.List;
 
 public class LevelTip
 {
-    List<String> effect;
-    List<String> label;
+    private List<String> effect;
+    private List<String> label;
 
     @Override
     public boolean equals(final Object obj)

@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-public class BlockItem
+class BlockItem
 {
-    Integer count;
-    Integer id;
+    private Integer count;
+    private Integer id;
 
     @Override
     public boolean equals(final Object obj)

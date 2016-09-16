@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class LanguageStrings extends BaseStaticData
 {
-    Map<String, String> data;
+    private Map<String, String> data;
 
     @Override
     public boolean equals(final Object obj)

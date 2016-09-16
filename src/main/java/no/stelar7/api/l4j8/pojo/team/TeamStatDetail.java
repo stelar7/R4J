@@ -1,10 +1,10 @@
 package no.stelar7.api.l4j8.pojo.team;
 
-public class TeamStatDetail
+class TeamStatDetail
 {
     private Integer averageGamesPlayed;
     private Integer losses;
-    private String  teamStatType;
+    private String teamStatType;
     private Integer wins;
 
     @Override

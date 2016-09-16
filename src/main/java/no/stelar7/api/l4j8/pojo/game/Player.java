@@ -5,10 +5,10 @@ import no.stelar7.api.l4j8.basic.constants.Team;
 
 import java.util.Optional;
 
-public class Player
+class Player
 {
     private Integer championId;
-    private Long    summonerId;
+    private Long summonerId;
     private Integer teamId;
 
     @Override

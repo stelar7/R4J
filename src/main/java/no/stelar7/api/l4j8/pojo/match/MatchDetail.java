@@ -10,21 +10,21 @@ import java.util.Optional;
 
 public class MatchDetail
 {
-    private Integer                   mapId;
-    private Long                      matchCreation;
-    private Long                      matchDuration;
-    private Long                      matchId;
-    private String                    matchMode;
-    private String                    matchType;
-    private String                    matchVersion;
+    private Integer mapId;
+    private Long matchCreation;
+    private Long matchDuration;
+    private Long matchId;
+    private String matchMode;
+    private String matchType;
+    private String matchVersion;
     private List<ParticipantIdentity> participantIdentities;
-    private List<Participant>         participants;
-    private String                    platformId;
-    private String                    queueType;
-    private String                    region;
-    private String                    season;
-    private List<Team>                teams;
-    private Timeline                  timeline;
+    private List<Participant> participants;
+    private String platformId;
+    private String queueType;
+    private String region;
+    private String season;
+    private List<Team> teams;
+    private Timeline timeline;
 
     @Override
     public boolean equals(final Object obj)

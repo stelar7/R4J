@@ -42,7 +42,7 @@ public enum URLEndpoint
     SUMMONER_NAME_BY_ID("/api/lol/{region}/{version}/summoner/{summonerId}/name", "v1.4", new TypeToken<Map<Long, String>>()
     {}.getType()),
 
-    CHAMPIONS("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
+    CHAMPIONS("/api/lol/{region}/{version}/champion/", "v1.2", no.stelar7.api.l4j8.pojo.champion.ChampionList.class),
     CHAMPION_BY_ID("/api/lol/{region}/{version}/champion/{championId}", "v1.2", no.stelar7.api.l4j8.pojo.champion.Champion.class),
 
     MATCHLIST("/api/lol/{region}/{version}/matchlist/by-summoner/{summonerId}", "v2.2", MatchList.class),
@@ -90,9 +90,9 @@ public enum URLEndpoint
     {}.getType()),
     STATUS_BY_SHARD("/shards/{shard}", "", ShardStatus.class);
 
-    private String value;
-    private String version;
-    private Object type;
+    private final String value;
+    private final String version;
+    private final Object type;
 
     URLEndpoint(final String value, final String version, final Object type)
     {

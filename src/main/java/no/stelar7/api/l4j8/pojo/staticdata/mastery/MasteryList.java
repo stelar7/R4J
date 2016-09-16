@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class MasteryList
 {
-    Map<String, Mastery> data;
-    MasteryTree          tree;
+    private Map<String, Mastery> data;
+    private MasteryTree tree;
 
     @Override
     public boolean equals(final Object obj)

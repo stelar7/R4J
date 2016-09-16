@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class SummonerSpellList
 {
-    Map<String, SummonerSpell> data;
+    private Map<String, SummonerSpell> data;
 
     @Override
     public boolean equals(final Object obj)

@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.pojo.stats;
 
-public class PlayerStatsSummary
+class PlayerStatsSummary
 {
     private AggregatedStats aggregatedStats;
-    private Integer         losses;
-    private Long            modifyDate;
-    private String          playerStatSummaryType;
-    private Integer         wins;
+    private Integer losses;
+    private Long modifyDate;
+    private String playerStatSummaryType;
+    private Integer wins;
 
     @Override
     public boolean equals(final Object obj)

@@ -4,8 +4,8 @@ import java.util.List;
 
 public class MasteryPages
 {
-    List<MasteryPage> pages;
-    Long              summonerId;
+    private List<MasteryPage> pages;
+    private Long summonerId;
 
     @Override
     public boolean equals(final Object obj)

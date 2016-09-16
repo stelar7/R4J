@@ -2,10 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 public class Info
 {
-    Integer attack;
-    Integer defence;
-    Integer difficulty;
-    Integer magic;
+    private Integer attack;
+    private Integer defence;
+    private Integer difficulty;
+    private Integer magic;
 
     @Override
     public boolean equals(final Object obj)

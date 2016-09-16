@@ -9,8 +9,8 @@ import java.util.List;
 public class CurrentGameParticipant extends FeaturedGameParticipant
 {
     private List<Mastery> masteries;
-    private List<Rune>    runes;
-    private Long          summonerId;
+    private List<Rune> runes;
+    private Long summonerId;
 
     @Override
     public boolean equals(final Object obj)

@@ -1,18 +1,18 @@
 package no.stelar7.api.l4j8.pojo.league;
 
-public class LeagueEntry
+class LeagueEntry
 {
-    private String     division;
-    private Boolean    isFreshBlood;
-    private Boolean    isHotStreak;
-    private Boolean    isInactive;
-    private Boolean    isVeteran;
-    private Integer    leaguePoints;
-    private Integer    losses;
+    private String division;
+    private Boolean isFreshBlood;
+    private Boolean isHotStreak;
+    private Boolean isInactive;
+    private Boolean isVeteran;
+    private Integer leaguePoints;
+    private Integer losses;
     private MiniSeries miniSeries;
-    private String     playerOrTeamId;
-    private String     playerOrTeamName;
-    private Integer    wins;
+    private String playerOrTeamId;
+    private String playerOrTeamName;
+    private Integer wins;
 
     @Override
     public boolean equals(final Object obj)

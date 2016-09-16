@@ -6,9 +6,9 @@ import java.util.List;
 
 public class SummonerSpell extends BaseSpellData
 {
-    Integer      id;
-    List<String> modes;
-    Integer      summonerLevel;
+    private Integer id;
+    private List<String> modes;
+    private Integer summonerLevel;
 
     @Override
     public boolean equals(final Object obj)

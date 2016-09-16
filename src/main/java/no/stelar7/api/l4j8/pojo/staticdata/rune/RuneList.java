@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class RuneList
 {
-    BasicData         basic;
-    Map<String, Rune> data;
+    private BasicData basic;
+    private Map<String, Rune> data;
 
     @Override
     public boolean equals(final Object obj)

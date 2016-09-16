@@ -2,10 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.item;
 
 import java.util.List;
 
-public class ItemTree
+class ItemTree
 {
-    String       header;
-    List<String> tags;
+    private String header;
+    private List<String> tags;
 
     @Override
     public boolean equals(final Object obj)

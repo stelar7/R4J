@@ -2,19 +2,19 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 import java.util.List;
 
-public class TournamentCallback
+class TournamentCallback
 {
-    Long                             startTime;
-    List<TournamentCallbackSummoner> winningTeam;
-    List<TournamentCallbackSummoner> losingTeam;
-    String                           shortCode;
-    String                           metaData;
-    Long                             gameId;
-    String                           gameName;
-    String                           gameType;
-    Integer                          gameMap;
-    String                           gameMode;
-    String                           region;
+    private Long startTime;
+    private List<TournamentCallbackSummoner> winningTeam;
+    private List<TournamentCallbackSummoner> losingTeam;
+    private String shortCode;
+    private String metaData;
+    private Long gameId;
+    private String gameName;
+    private String gameType;
+    private Integer gameMap;
+    private String gameMode;
+    private String region;
 
     @Override
     public boolean equals(final Object obj)

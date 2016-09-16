@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-public class TournamentCallbackSummoner
+class TournamentCallbackSummoner
 {
-    String summonerName;
-    Long   summonerId;
+    private String summonerName;
+    private Long summonerId;
 
     @Override
     public boolean equals(final Object obj)

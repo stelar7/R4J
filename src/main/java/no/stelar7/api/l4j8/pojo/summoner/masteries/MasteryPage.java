@@ -7,8 +7,8 @@ import java.util.List;
 public class MasteryPage
 {
 
-    private Boolean       current;
-    private Long          id;
+    private Boolean current;
+    private Long id;
     private List<Mastery> masteries;
 
     private String name;

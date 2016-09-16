@@ -54,7 +54,7 @@ public class FeaturedGameParticipant extends BaseGameParticipant
      *
      * @return boolean
      */
-    public Boolean isBot()
+    protected Boolean isBot()
     {
         return this.bot;
     }

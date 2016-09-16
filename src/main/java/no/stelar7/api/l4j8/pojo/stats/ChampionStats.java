@@ -4,9 +4,9 @@ import no.stelar7.api.l4j8.basic.constants.Champion;
 
 import java.util.Optional;
 
-public class ChampionStats
+class ChampionStats
 {
-    private Integer         id;
+    private Integer id;
     private AggregatedStats stats;
 
     @Override

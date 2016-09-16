@@ -6,23 +6,23 @@ import java.util.List;
 
 public class Champion
 {
-    List<String>        allytips;
-    String              blurb;
-    List<String>        enemytips;
-    Integer             id;
-    Image               image;
-    Info                info;
-    String              key;
-    String              lore;
-    String              name;
-    String              partype;
-    Passive             passive;
-    List<Recommended>   recommended;
-    List<Skin>          skins;
-    List<ChampionSpell> spells;
-    Stats               stats;
-    List<String>        tags;
-    String              title;
+    private List<String> allytips;
+    private String blurb;
+    private List<String> enemytips;
+    private Integer id;
+    private Image image;
+    private Info info;
+    private String key;
+    private String lore;
+    private String name;
+    private String partype;
+    private Passive passive;
+    private List<Recommended> recommended;
+    private List<Skin> skins;
+    private List<ChampionSpell> spells;
+    private Stats stats;
+    private List<String> tags;
+    private String title;
 
     @Override
     public boolean equals(final Object obj)

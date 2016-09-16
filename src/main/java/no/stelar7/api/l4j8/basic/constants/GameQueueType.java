@@ -168,7 +168,7 @@ public enum GameQueueType
         return Stream.of(GameQueueType.values()).filter(t -> t.name().equalsIgnoreCase(queueType)).findFirst();
     }
 
-    Integer code;
+    final Integer code;
 
     GameQueueType(final Integer code)
     {

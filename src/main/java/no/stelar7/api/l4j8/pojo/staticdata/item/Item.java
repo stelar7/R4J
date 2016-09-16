@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Item extends BasicData
 {
-    Map<String, String> effect;
+    private Map<String, String> effect;
 
     @Override
     public boolean equals(final Object obj)

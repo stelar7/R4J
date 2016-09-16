@@ -4,12 +4,12 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
 import java.util.List;
 
-public class MapDetails
+class MapDetails
 {
-    Image      image;
-    Long       mapId;
-    String     mapName;
-    List<Long> unpurchasableItemList;
+    private Image image;
+    private Long mapId;
+    private String mapName;
+    private List<Long> unpurchasableItemList;
 
     @Override
     public boolean equals(final Object obj)

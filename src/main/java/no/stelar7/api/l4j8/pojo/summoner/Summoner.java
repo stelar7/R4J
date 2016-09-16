@@ -6,11 +6,11 @@ import java.time.*;
 
 public class Summoner
 {
-    private Long    id;
-    private String  name;
+    private Long id;
+    private String name;
     private Integer profileIconId;
-    private Long    revisionDate;
-    private Server  server;
+    private Long revisionDate;
+    private Server server;
     private Integer summonerLevel;
 
     @Override

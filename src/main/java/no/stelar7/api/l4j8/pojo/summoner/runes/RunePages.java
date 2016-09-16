@@ -4,8 +4,8 @@ import java.util.List;
 
 public class RunePages
 {
-    List<RunePage> pages;
-    Long           summonerId;
+    private List<RunePage> pages;
+    private Long summonerId;
 
     @Override
     public boolean equals(final Object obj)

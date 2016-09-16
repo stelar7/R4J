@@ -2,9 +2,9 @@ package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
 import java.util.List;
 
-public class MasteryTreeList
+class MasteryTreeList
 {
-    List<MasteryTreeItem> masteryTreeItems;
+    private List<MasteryTreeItem> masteryTreeItems;
 
     @Override
     public boolean equals(final Object obj)

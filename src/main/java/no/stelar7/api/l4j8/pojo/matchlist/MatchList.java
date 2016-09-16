@@ -4,10 +4,10 @@ import java.util.List;
 
 public class MatchList
 {
-    Integer              endIndex;
-    Integer              startIndex;
-    Integer              totalGames;
-    List<MatchReference> matches;
+    private Integer endIndex;
+    private Integer startIndex;
+    private Integer totalGames;
+    private List<MatchReference> matches;
 
     @Override
     public boolean equals(final Object obj)

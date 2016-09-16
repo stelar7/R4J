@@ -2,9 +2,9 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 public class LobbyEvent
 {
-    String eventType;
-    String summonerId;
-    String timestamp;
+    private String eventType;
+    private String summonerId;
+    private String timestamp;
 
     @Override
     public boolean equals(final Object obj)

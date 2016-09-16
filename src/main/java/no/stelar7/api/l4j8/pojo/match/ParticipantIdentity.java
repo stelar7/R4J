@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-public class ParticipantIdentity
+class ParticipantIdentity
 {
     private Integer participantId;
-    private Player  player;
+    private Player player;
 
     @Override
     public boolean equals(final Object obj)

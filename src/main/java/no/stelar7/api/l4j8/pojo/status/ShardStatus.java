@@ -4,12 +4,12 @@ import java.util.List;
 
 public class ShardStatus
 {
-    private String        hostname;
-    private List<String>  locales;
-    private String        name;
-    private String        regionTag;
+    private String hostname;
+    private List<String> locales;
+    private String name;
+    private String regionTag;
     private List<Service> services;
-    private String        slug;
+    private String slug;
 
     @Override
     public boolean equals(final Object obj)

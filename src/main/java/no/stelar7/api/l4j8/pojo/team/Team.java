@@ -3,22 +3,22 @@ package no.stelar7.api.l4j8.pojo.team;
 import java.time.*;
 import java.util.List;
 
-public class Team
+class Team
 {
-    private Long                      createDate;
-    private String                    fullId;
-    private Long                      lastGameDate;
-    private Long                      lastJoinDate;
-    private Long                      lastJoinedRankedTeamQueueDate;
+    private Long createDate;
+    private String fullId;
+    private Long lastGameDate;
+    private Long lastJoinDate;
+    private Long lastJoinedRankedTeamQueueDate;
     private List<MatchHistorySummary> matchHistory;
-    private Long                      modifyDate;
-    private String                    name;
-    private Roster                    roster;
-    private Long                      secondLastJoinDate;
-    private String                    status;
-    private String                    tag;
-    private List<TeamStatDetail>      teamStatDetails;
-    private Long                      thirdLastJoinDate;
+    private Long modifyDate;
+    private String name;
+    private Roster roster;
+    private Long secondLastJoinDate;
+    private String status;
+    private String tag;
+    private List<TeamStatDetail> teamStatDetails;
+    private Long thirdLastJoinDate;
 
     @Override
     public boolean equals(final Object obj)

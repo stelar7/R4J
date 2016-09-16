@@ -4,9 +4,9 @@ import no.stelar7.api.l4j8.basic.constants.*;
 
 public class TournamentCodeUpdateParameters
 {
-    String                  allowedParticipants;
-    TournamentMapType       mapType;
-    TournamentPickType      pickType;
+    String allowedParticipants;
+    TournamentMapType mapType;
+    TournamentPickType pickType;
     TournamentSpectatorType spectatorType;
 
     public TournamentCodeUpdateParameters(final String allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)

@@ -1,18 +1,18 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-public class ParticipantFrame
+class ParticipantFrame
 {
 
-    private Integer     currentGold;
-    private Integer     dominionScore;
-    private Integer     jungleMinionsKilled;
-    private Integer     level;
-    private Integer     minionsKilled;
-    private Integer     participantId;
+    private Integer currentGold;
+    private Integer dominionScore;
+    private Integer jungleMinionsKilled;
+    private Integer level;
+    private Integer minionsKilled;
+    private Integer participantId;
     private Participant position;
-    private Integer     teamScore;
-    private Integer     totalGold;
-    private Integer     xp;
+    private Integer teamScore;
+    private Integer totalGold;
+    private Integer xp;
 
     @Override
     public boolean equals(final Object obj)

@@ -36,7 +36,7 @@ public enum Lane
         return Stream.of(Lane.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }
 
-    String[] keys;
+    final String[] keys;
 
     Lane(final String... keys)
     {

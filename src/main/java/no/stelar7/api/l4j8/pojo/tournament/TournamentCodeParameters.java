@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 
 public class TournamentCodeParameters
 {
-    SummonerIdParams        allowedSummonerIds;
-    TournamentMapType       mapType;
-    String                  metadata;
-    TournamentPickType      pickType;
-    TournamentSpectatorType spectatorType;
-    Integer                 teamSize;
+    private SummonerIdParams allowedSummonerIds;
+    private TournamentMapType mapType;
+    private String metadata;
+    private TournamentPickType pickType;
+    private TournamentSpectatorType spectatorType;
+    private Integer teamSize;
 
     public TournamentCodeParameters()
     {

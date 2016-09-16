@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ChampionList
 {
-    List<Champion> champions;
+    private List<Champion> champions;
 
     @Override
     public boolean equals(final Object obj)

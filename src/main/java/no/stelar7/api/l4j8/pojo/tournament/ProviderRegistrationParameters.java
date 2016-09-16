@@ -4,8 +4,8 @@ import no.stelar7.api.l4j8.basic.constants.api.Server;
 
 public class ProviderRegistrationParameters
 {
-    Server region;
-    String url;
+    private Server region;
+    private String url;
 
     public ProviderRegistrationParameters(final Server region, final String callbackUrl)
     {

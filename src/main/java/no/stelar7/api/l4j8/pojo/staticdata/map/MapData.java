@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class MapData extends BaseStaticData
 {
-    Map<String, MapDetails> data;
+    private Map<String, MapDetails> data;
 
     @Override
     public boolean equals(final Object obj)

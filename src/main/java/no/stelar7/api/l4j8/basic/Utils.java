@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class Utils
 {
-    public static final Logger LOGGER = Logger.getGlobal();
+    private static final Logger LOGGER = Logger.getGlobal();
 
     public static String prepareForURL(final String data)
     {

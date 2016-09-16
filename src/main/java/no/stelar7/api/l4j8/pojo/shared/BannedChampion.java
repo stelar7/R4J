@@ -9,7 +9,7 @@ public class BannedChampion
 {
     private Integer championId;
     private Integer pickTurn;
-    private Long    teamId;
+    private Long teamId;
 
     @Override
     public boolean equals(final Object obj)

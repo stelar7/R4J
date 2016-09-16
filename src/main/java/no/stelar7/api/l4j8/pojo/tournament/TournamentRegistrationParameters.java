@@ -2,8 +2,8 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 public class TournamentRegistrationParameters
 {
-    String name;
-    Long   providerId;
+    private String name;
+    private Long providerId;
 
     public TournamentRegistrationParameters(final Long providerId)
     {

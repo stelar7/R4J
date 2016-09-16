@@ -6,7 +6,7 @@ import no.stelar7.api.l4j8.basic.exceptions.APIUnsupportedAction;
 public class APICredentials
 {
     String baseApiKey;
-    String tournamentApiKey;
+    private String tournamentApiKey;
 
     /**
      * Instantiates the APICredentials
