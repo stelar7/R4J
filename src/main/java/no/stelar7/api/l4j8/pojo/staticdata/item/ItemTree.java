@@ -4,7 +4,7 @@ import java.util.List;
 
 class ItemTree
 {
-    private String header;
+    private String       header;
     private List<String> tags;
 
     @Override
@@ -69,8 +69,8 @@ class ItemTree
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
+        final int prime = 31;
+        int result = 1;
         result = (prime * result) + ((this.header == null) ? 0 : this.header.hashCode());
         result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
         return result;

@@ -4,5 +4,5 @@ import no.stelar7.api.l4j8.tests.TestBase;
 
 class StaticSummonerSpellTest extends TestBase
 {
-    // TODO
+	// TODO
 }

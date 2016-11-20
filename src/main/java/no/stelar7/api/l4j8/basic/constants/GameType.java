@@ -5,36 +5,36 @@ import java.util.stream.Stream;
 
 public enum GameType
 {
-    /**
-     * Custom games
-     */
-    CUSTOM_GAME,
-    /**
-     * Tutorial games
-     */
-    TUTORIAL_GAME,
-    /**
-     * All other games
-     */
-    MATCHED_GAME;
+	/**
+	 * Custom games
+	 */
+	CUSTOM_GAME,
+	/**
+	 * Tutorial games
+	 */
+	TUTORIAL_GAME,
+	/**
+	 * All other games
+	 */
+	MATCHED_GAME;
 
-    /**
-     * Returns a GameType from the provided code
-     *
-     * @return GameType
-     */
-    public static Optional<GameType> getFromCode(final String gameType)
-    {
-        return Stream.of(GameType.values()).filter(t -> t.name().equalsIgnoreCase(gameType)).findFirst();
-    }
+	/**
+	 * Returns a GameType from the provided code
+	 *
+	 * @return GameType
+	 */
+	public static Optional<GameType> getFromCode(final String gameType)
+	{
+		return Stream.of(GameType.values()).filter(t -> t.name().equalsIgnoreCase(gameType)).findFirst();
+	}
 
-    /**
-     * The code used to map strings to objects
-     *
-     * @return String
-     */
-    public String getCode()
-    {
-        return this.name();
-    }
+	/**
+	 * The code used to map strings to objects
+	 *
+	 * @return String
+	 */
+	public String getCode()
+	{
+		return this.name();
+	}
 }

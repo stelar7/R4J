@@ -8,15 +8,15 @@ import java.util.Optional;
 
 public class Participant
 {
-    private Integer championId;
-    private String highestAchievedSeasonTier;
-    private List<Mastery> masteries;
-    private Integer participantId;
-    private List<Rune> runes;
-    private Integer spell1Id;
-    private Integer spell2Id;
-    private ParticipantStats stats;
-    private Integer teamId;
+    private Integer             championId;
+    private String              highestAchievedSeasonTier;
+    private List<Mastery>       masteries;
+    private Integer             participantId;
+    private List<Rune>          runes;
+    private Integer             spell1Id;
+    private Integer             spell2Id;
+    private ParticipantStats    stats;
+    private Integer             teamId;
     private ParticipantTimeline timeline;
 
     @Override
@@ -281,8 +281,8 @@ public class Participant
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
+        final int prime = 31;
+        int result = 1;
         result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
         result = (prime * result) + ((this.highestAchievedSeasonTier == null) ? 0 : this.highestAchievedSeasonTier.hashCode());
         result = (prime * result) + ((this.masteries == null) ? 0 : this.masteries.hashCode());

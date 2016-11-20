@@ -10,20 +10,20 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestBase
 {
-    protected static DataCallBuilder builder = DataCall.builder();
-
-    @BeforeClass
-    public static void init()
-    {
-        TestBase.builder = DataCall.builder();
-        TestBase.builder.asVerbose(true);
-        TestBase.builder.withServer(Server.EUW);
-        TestBase.builder.withRegion(Server.EUW);
-    }
-
-    public TestBase()
-    {
-        // Empty public constructor
-    }
-
+	protected static DataCallBuilder builder = DataCall.builder();
+	
+	@BeforeClass
+	public static void init()
+	{
+		TestBase.builder = DataCall.builder();
+		TestBase.builder.asVerbose(true);
+		TestBase.builder.withServer(Server.EUW);
+		TestBase.builder.withRegion(Server.EUW);
+	}
+	
+	public TestBase()
+	{
+		// Empty public constructor
+	}
+	
 }

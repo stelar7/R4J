@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_8" jdk="1.8" jdk_type="JavaSDK">
+	<output-anime url="file://$MODULE_DIR$/target/anime-classes"/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<levels>
+		<level name="Maven: com.google.code.gson:gson:2.7" value="project"/>
+		<level name="Maven: junit:junit:4.12" value="project"/>
+	</levels>
+</component>

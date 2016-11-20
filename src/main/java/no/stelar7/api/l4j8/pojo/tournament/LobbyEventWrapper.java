@@ -4,54 +4,54 @@ import java.util.List;
 
 public class LobbyEventWrapper
 {
-    private List<LobbyEvent> eventList;
+	private List<LobbyEvent> eventList;
 
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final LobbyEventWrapper other = (LobbyEventWrapper) obj;
-        if (this.eventList == null)
-        {
-            if (other.eventList != null)
-            {
-                return false;
-            }
-        } else if (!this.eventList.equals(other.eventList))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (this.getClass() != obj.getClass())
+		{
+			return false;
+		}
+		final LobbyEventWrapper other = (LobbyEventWrapper) obj;
+		if (this.eventList == null)
+		{
+			if (other.eventList != null)
+			{
+				return false;
+			}
+		} else if (!this.eventList.equals(other.eventList))
+		{
+			return false;
+		}
+		return true;
+	}
 
-    public List<LobbyEvent> getEventList()
-    {
-        return this.eventList;
-    }
+	public List<LobbyEvent> getEventList()
+	{
+		return this.eventList;
+	}
 
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.eventList == null) ? 0 : this.eventList.hashCode());
-        return result;
-    }
+	@Override
+	public int hashCode()
+	{
+		final int prime  = 31;
+		int       result = 1;
+		result = (prime * result) + ((this.eventList == null) ? 0 : this.eventList.hashCode());
+		return result;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "LobbyEventWrapper [eventList=" + this.eventList + "]";
-    }
+	@Override
+	public String toString()
+	{
+		return "LobbyEventWrapper [eventList=" + this.eventList + "]";
+	}
 }

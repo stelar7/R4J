@@ -5,5 +5,5 @@ package no.stelar7.api.l4j8.basic.constants.api;
  */
 public enum ChampionCallFlags
 {
-    FREE_TO_PLAY
+	FREE_TO_PLAY
 }
