@@ -1,10 +1,10 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
+import no.stelar7.api.l4j8.pojo.shared.*;
 
-import java.util.List;
+import java.util.*;
 
-class Team
+public class Team
 {
 	private List<BannedChampion> bans;
 	private Integer              baronKills;

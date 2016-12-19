@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-class ParticipantIdentity
+public class ParticipantIdentity
 {
 	private Integer participantId;
 	private Player  player;

@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.stats;
 
-class PlayerStatsSummary
+public class PlayerStatsSummary
 {
 	private AggregatedStats aggregatedStats;
 	private Integer         losses;

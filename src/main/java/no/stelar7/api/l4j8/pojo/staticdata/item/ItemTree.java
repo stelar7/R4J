@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-import java.util.List;
+import java.util.*;
 
-class ItemTree
+public class ItemTree
 {
     private String       header;
     private List<String> tags;

@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.currentgame;
 
-class Mastery
+public class Mastery
 {
 	private Long    masteryId;
 	private Integer rank;

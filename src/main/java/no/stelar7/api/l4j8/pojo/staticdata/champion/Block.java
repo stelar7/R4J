@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.List;
+import java.util.*;
 
-class Block
+public class Block
 {
 	private List<BlockItem> items;
 	private Boolean         recMath;

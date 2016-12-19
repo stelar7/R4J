@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.List;
+import java.util.*;
 
-class Incident
+public class Incident
 {
 	private Boolean       active;
 	private String        created_at;

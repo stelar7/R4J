@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.team;
 
-class TeamStatDetail
+public class TeamStatDetail
 {
 	private Integer averageGamesPlayed;
 	private Integer losses;

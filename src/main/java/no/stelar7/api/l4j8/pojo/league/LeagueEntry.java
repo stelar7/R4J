@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.league;
 
-class LeagueEntry
+public class LeagueEntry
 {
 	private String     division;
 	private Boolean    isFreshBlood;

@@ -1,11 +1,10 @@
 package no.stelar7.api.l4j8.tests;
 
-import no.stelar7.api.l4j8.basic.DataCall;
-import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.constants.api.Server;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.runners.MethodSorters;
+import no.stelar7.api.l4j8.basic.*;
+import no.stelar7.api.l4j8.basic.DataCall.*;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import org.junit.*;
+import org.junit.runners.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestBase
@@ -19,6 +18,7 @@ public class TestBase
 		TestBase.builder.asVerbose(true);
 		TestBase.builder.withServer(Server.EUW);
 		TestBase.builder.withRegion(Server.EUW);
+		DataCallBuilder.setCredentials(SecretFile.CREDS);
 	}
 	
 	public TestBase()

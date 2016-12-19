@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.team;
 
 import java.time.*;
-import java.util.List;
+import java.util.*;
 
-class Team
+public class Team
 {
 	private Long                      createDate;
 	private String                    fullId;

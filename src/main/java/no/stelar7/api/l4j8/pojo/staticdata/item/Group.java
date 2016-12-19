@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-class Group
+public class Group
 {
 	private String MaxGroupOwnable;
 	private String key;

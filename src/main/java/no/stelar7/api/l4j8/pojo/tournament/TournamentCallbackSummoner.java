@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-class TournamentCallbackSummoner
+public class TournamentCallbackSummoner
 {
 	private String summonerName;
 	private Long   summonerId;

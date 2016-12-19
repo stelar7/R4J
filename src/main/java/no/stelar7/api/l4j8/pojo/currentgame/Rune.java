@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.currentgame;
 
-class Rune
+public class Rune
 {
 	private Integer count;
 	private Long    runeId;

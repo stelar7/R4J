@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.List;
+import java.util.*;
 
-class Recommended
+public class Recommended
 {
 	private List<Block> blocks;
 	private String      champion;

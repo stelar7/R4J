@@ -1,9 +1,8 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-class Frame
+public class Frame
 {
 	private List<Event>                   events;
 	private Map<String, ParticipantFrame> participantFrames;

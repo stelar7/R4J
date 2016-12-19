@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-class Rune
+public class Rune
 {
 	private Long rank;
 	private Long runeId;

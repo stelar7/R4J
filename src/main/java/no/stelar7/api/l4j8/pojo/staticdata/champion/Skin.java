@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-class Skin
+public class Skin
 {
 	private Integer id;
 	private String  name;

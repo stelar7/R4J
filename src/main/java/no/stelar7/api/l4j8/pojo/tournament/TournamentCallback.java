@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.List;
+import java.util.*;
 
-class TournamentCallback
+public class TournamentCallback
 {
 	private Long                             startTime;
 	private List<TournamentCallbackSummoner> winningTeam;

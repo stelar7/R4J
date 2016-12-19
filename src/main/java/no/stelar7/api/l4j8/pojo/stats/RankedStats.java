@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.stats;
 
 import java.time.*;
-import java.util.List;
+import java.util.*;
 
-class RankedStats
+public class RankedStats
 {
 	private List<ChampionStats> champions;
 	private Long                modifyDate;

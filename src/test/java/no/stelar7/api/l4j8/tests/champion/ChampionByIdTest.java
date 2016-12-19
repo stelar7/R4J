@@ -1,18 +1,16 @@
 package no.stelar7.api.l4j8.tests.champion;
 
-import no.stelar7.api.l4j8.basic.constants.api.Constants;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
-import no.stelar7.api.l4j8.pojo.champion.Champion;
-import no.stelar7.api.l4j8.pojo.champion.ChampionList;
-import no.stelar7.api.l4j8.tests.TestBase;
-import org.junit.Assert;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.pojo.champion.*;
+import no.stelar7.api.l4j8.tests.*;
+import org.junit.*;
 
-import java.util.List;
+import java.util.*;
 
 public class ChampionByIdTest extends TestBase
 {
 	
-	@org.junit.Before
+	@Before
 	public void initForTest()
 	{
 		TestBase.init();
@@ -24,7 +22,7 @@ public class ChampionByIdTest extends TestBase
 		return cl.getChampions();
 	}
 	
-	@org.junit.Test
+	@Test
 	public void testMany()
 	{
 		TestBase.builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, "");
@@ -33,7 +31,7 @@ public class ChampionByIdTest extends TestBase
 		Assert.assertTrue("Less than 100 champions?", champs.size() > 100);
 	}
 	
-	@org.junit.Test
+	@Test
 	public void testManyWithParam()
 	{
 		TestBase.builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, "");
@@ -43,7 +41,7 @@ public class ChampionByIdTest extends TestBase
 		champs.forEach(c -> Assert.assertTrue("Free to play is false?!", c.isFreeToPlay()));
 	}
 	
-	@org.junit.Test
+	@Test
 	public void testSingle()
 	{
 		TestBase.builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, "266");

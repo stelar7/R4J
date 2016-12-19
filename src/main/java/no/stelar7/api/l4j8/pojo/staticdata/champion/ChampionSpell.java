@@ -1,11 +1,11 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import no.stelar7.api.l4j8.pojo.shared.BaseSpellData;
-import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
+import no.stelar7.api.l4j8.pojo.shared.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 
-import java.util.List;
+import java.util.*;
 
-class ChampionSpell extends BaseSpellData
+public class ChampionSpell extends BaseSpellData
 {
 	private List<Image> altimages;
 
