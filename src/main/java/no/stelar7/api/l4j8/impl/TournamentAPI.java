@@ -31,8 +31,8 @@ public class TournamentAPI
 		builder = builder.withPostData(Utils.toJson(params));
 		builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
 		builder = builder.withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, "");
-		builder = builder.withURLParameter(Constants.TOURNAMENT_ID_URL_PARAM, String.valueOf(tournamentId));
-		builder = builder.withURLParameter(Constants.TOURNAMENT_COUNT_URL_PARAM, String.valueOf(count));
+		builder = builder.withURLParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId));
+		builder = builder.withURLParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count));
 		builder = builder.withServer(Server.GLOBAL);
 		
 		return (List<String>) builder.build();
@@ -63,8 +63,8 @@ public class TournamentAPI
 		builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
 		builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_MATCH_BY_ID);
 		builder = builder.withURLData(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId));
-		builder = builder.withURLParameter(Constants.TOURNAMENT_CODE_URL_PARAM, tournamentCode);
-		builder = builder.withURLParameter(Constants.TOURNAMENT_TIMELINE_URL_PARAM, String.valueOf(true));
+		builder = builder.withURLParameter(Constants.URL_PARAM_TOURNAMENT_CODE, tournamentCode);
+		builder = builder.withURLParameter(Constants.URL_PARAM_TOURNAMENT_TIMELINE, String.valueOf(true));
 		builder = builder.withServer(Server.GLOBAL);
 		
 		return (MatchDetail) builder.build();
