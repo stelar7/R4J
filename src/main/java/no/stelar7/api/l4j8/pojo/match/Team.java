@@ -22,7 +22,7 @@ public class Team
 	private Boolean              winner;
 	private Boolean              firstRiftHerald;
 	private Integer              riftHeraldKills;
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -201,7 +201,7 @@ public class Team
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Gets the bans.
 	 *
@@ -211,7 +211,7 @@ public class Team
 	{
 		return this.bans;
 	}
-
+	
 	/**
 	 * Gets the baron kills.
 	 *
@@ -221,7 +221,7 @@ public class Team
 	{
 		return this.baronKills;
 	}
-
+	
 	/**
 	 * Gets the dominion victory score.
 	 *
@@ -231,7 +231,7 @@ public class Team
 	{
 		return this.dominionVictoryScore;
 	}
-
+	
 	/**
 	 * Gets the dragon kills.
 	 *
@@ -241,7 +241,7 @@ public class Team
 	{
 		return this.dragonKills;
 	}
-
+	
 	/**
 	 * Gets the first baron.
 	 *
@@ -251,7 +251,7 @@ public class Team
 	{
 		return this.firstBaron;
 	}
-
+	
 	/**
 	 * Gets the first blood.
 	 *
@@ -261,7 +261,7 @@ public class Team
 	{
 		return this.firstBlood;
 	}
-
+	
 	/**
 	 * Gets the first dragon.
 	 *
@@ -271,7 +271,7 @@ public class Team
 	{
 		return this.firstDragon;
 	}
-
+	
 	/**
 	 * Gets the first inhibitor.
 	 *
@@ -281,7 +281,7 @@ public class Team
 	{
 		return this.firstInhibitor;
 	}
-
+	
 	/**
 	 * Flag indicating whether or not the team got the first rift herald kill.
 	 *
@@ -291,7 +291,7 @@ public class Team
 	{
 		return this.firstRiftHerald;
 	}
-
+	
 	/**
 	 * Gets the first tower.
 	 *
@@ -301,7 +301,7 @@ public class Team
 	{
 		return this.firstTower;
 	}
-
+	
 	/**
 	 * Gets the inhibitor kills.
 	 *
@@ -311,7 +311,7 @@ public class Team
 	{
 		return this.inhibitorKills;
 	}
-
+	
 	/**
 	 * Number of times the team killed rift herald.
 	 *
@@ -321,7 +321,7 @@ public class Team
 	{
 		return this.riftHeraldKills;
 	}
-
+	
 	/**
 	 * Gets the team id.
 	 *
@@ -331,7 +331,7 @@ public class Team
 	{
 		return this.teamId;
 	}
-
+	
 	/**
 	 * Gets the tower kills.
 	 *
@@ -341,7 +341,7 @@ public class Team
 	{
 		return this.towerKills;
 	}
-
+	
 	/**
 	 * Gets the vilemaw kills.
 	 *
@@ -351,7 +351,7 @@ public class Team
 	{
 		return this.vilemawKills;
 	}
-
+	
 	/**
 	 * Gets the winner.
 	 *
@@ -361,7 +361,7 @@ public class Team
 	{
 		return this.winner;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{
@@ -385,7 +385,7 @@ public class Team
 		result = (prime * result) + ((this.winner == null) ? 0 : this.winner.hashCode());
 		return result;
 	}
-
+	
 	/**
 	 * Checks if is first baron.
 	 *
@@ -395,7 +395,7 @@ public class Team
 	{
 		return this.firstBaron;
 	}
-
+	
 	/**
 	 * Checks if is first blood.
 	 *
@@ -405,7 +405,7 @@ public class Team
 	{
 		return this.firstBlood;
 	}
-
+	
 	/**
 	 * Checks if is first dragon.
 	 *
@@ -415,7 +415,7 @@ public class Team
 	{
 		return this.firstDragon;
 	}
-
+	
 	/**
 	 * Checks if is first inhibitor.
 	 *
@@ -425,7 +425,7 @@ public class Team
 	{
 		return this.firstInhibitor;
 	}
-
+	
 	/**
 	 * Checks if is first tower.
 	 *
@@ -435,7 +435,7 @@ public class Team
 	{
 		return this.firstTower;
 	}
-
+	
 	/**
 	 * Checks if is winner.
 	 *
@@ -445,11 +445,11 @@ public class Team
 	{
 		return this.winner;
 	}
-
+	
 	@Override
 	public String toString()
 	{
 		return "Team [bans=" + this.bans + ", baronKills=" + this.baronKills + ", dominionVictoryScore=" + this.dominionVictoryScore + ", dragonKills=" + this.dragonKills + ", firstBaron=" + this.firstBaron + ", firstBlood=" + this.firstBlood + ", firstDragon=" + this.firstDragon + ", firstInhibitor=" + this.firstInhibitor + ", firstTower=" + this.firstTower + ", inhibitorKills=" + this.inhibitorKills + ", teamId=" + this.teamId + ", towerKills=" + this.towerKills + ", vilemawKills=" + this.vilemawKills + ", winner=" + this.winner + ", firstRiftHerald=" + this.firstRiftHerald + ", riftHeraldKills=" + this.riftHeraldKills + "]";
 	}
-
+	
 }

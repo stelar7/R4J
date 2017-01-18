@@ -2,8 +2,7 @@ package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Event
 {
@@ -28,7 +27,7 @@ public class Event
 	private String        towerType;
 	private Integer       victimId;
 	private String        wardType;
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -257,7 +256,7 @@ public class Event
 		}
 		return true;
 	}
-
+	
 	/**
 	 * The ascended type of the event as AscencionType
 	 *
@@ -267,7 +266,7 @@ public class Event
 	{
 		return AscencionType.getFromCode(this.ascendedType);
 	}
-
+	
 	/**
 	 * The ascended type of the event. Only present if relevant. Note that CLEAR_ASCENDED refers to when a participants kills the ascended player. (Legal values: CHAMPION_ASCENDED, CLEAR_ASCENDED, MINION_ASCENDED)
 	 *
@@ -277,7 +276,7 @@ public class Event
 	{
 		return this.ascendedType;
 	}
-
+	
 	/**
 	 * The assisting participant IDs of the event. Only present if relevant.
 	 *
@@ -287,7 +286,7 @@ public class Event
 	{
 		return this.assistingParticipantIds;
 	}
-
+	
 	/**
 	 * The building type as a BuildingType
 	 *
@@ -297,7 +296,7 @@ public class Event
 	{
 		return BuildingType.getFromCode(this.buildingType);
 	}
-
+	
 	/**
 	 * The building type of the event. Only present if relevant. (Legal values: INHIBITOR_BUILDING, TOWER_BUILDING)
 	 *
@@ -307,7 +306,7 @@ public class Event
 	{
 		return this.buildingType;
 	}
-
+	
 	/**
 	 * The creator ID of the event. Only present if relevant.
 	 *
@@ -317,7 +316,7 @@ public class Event
 	{
 		return this.creatorId;
 	}
-
+	
 	/**
 	 * The event type as EventType
 	 *
@@ -327,7 +326,7 @@ public class Event
 	{
 		return EventType.getFromCode(this.eventType);
 	}
-
+	
 	/**
 	 * Event type. (Legal values: ASCENDED_EVENT, BUILDING_KILL, CAPTURE_POINT, CHAMPION_KILL, ELITE_MONSTER_KILL, ITEM_DESTROYED, ITEM_PURCHASED, ITEM_SOLD, ITEM_UNDO, PORO_KING_SUMMON, SKILL_LEVEL_UP, WARD_KILL, WARD_PLACED)
 	 *
@@ -337,7 +336,7 @@ public class Event
 	{
 		return this.eventType;
 	}
-
+	
 	/**
 	 * The ending item ID of the event. Only present if relevant.
 	 *
@@ -347,7 +346,7 @@ public class Event
 	{
 		return this.itemAfter;
 	}
-
+	
 	/**
 	 * The starting item ID of the event. Only present if relevant.
 	 *
@@ -357,7 +356,7 @@ public class Event
 	{
 		return this.itemBefore;
 	}
-
+	
 	/**
 	 * The item ID of the event. Only present if relevant.
 	 *
@@ -367,7 +366,7 @@ public class Event
 	{
 		return this.itemId;
 	}
-
+	
 	/**
 	 * The killer ID of the event. Only present if relevant. Killer ID 0 indicates a minion.
 	 *
@@ -377,7 +376,7 @@ public class Event
 	{
 		return this.killerId;
 	}
-
+	
 	/**
 	 * The lane inferred from the type
 	 *
@@ -387,7 +386,7 @@ public class Event
 	{
 		return Lane.getFromCode(this.laneType);
 	}
-
+	
 	/**
 	 * The lane type of the event. Only present if relevant. (Legal values: BOT_LANE, MID_LANE, TOP_LANE)
 	 *
@@ -397,7 +396,7 @@ public class Event
 	{
 		return this.laneType;
 	}
-
+	
 	/**
 	 * The LevelUpType inferred from the id
 	 *
@@ -407,7 +406,7 @@ public class Event
 	{
 		return LevelUpType.getFromCode(this.levelUpType);
 	}
-
+	
 	/**
 	 * The level up type of the event. Only present if relevant. (Legal values: EVOLVE, NORMAL)
 	 *
@@ -417,7 +416,7 @@ public class Event
 	{
 		return this.levelUpType;
 	}
-
+	
 	/**
 	 * The MonsterType inferred from the id
 	 *
@@ -427,7 +426,7 @@ public class Event
 	{
 		return MonsterType.getFromCode(this.monsterType);
 	}
-
+	
 	/**
 	 * The monster type of the event. Only present if relevant. (Legal values: BARON_NASHOR, BLUE_GOLEM, DRAGON, RED_LIZARD, VILEMAW)
 	 *
@@ -437,7 +436,7 @@ public class Event
 	{
 		return this.monsterType;
 	}
-
+	
 	/**
 	 * The participant ID of the event. Only present if relevant.
 	 *
@@ -447,7 +446,7 @@ public class Event
 	{
 		return this.participantId;
 	}
-
+	
 	/**
 	 * The point captured inferred from the id
 	 *
@@ -457,7 +456,7 @@ public class Event
 	{
 		return Point.getFromCode(this.pointCaptured);
 	}
-
+	
 	/**
 	 * The point captured in the event. Only present if relevant. (Legal values: POINT_A, POINT_B, POINT_C, POINT_D, POINT_E)
 	 *
@@ -467,7 +466,7 @@ public class Event
 	{
 		return this.pointCaptured;
 	}
-
+	
 	/**
 	 * The position of the event. Only present if relevant.
 	 *
@@ -477,7 +476,7 @@ public class Event
 	{
 		return this.position;
 	}
-
+	
 	/**
 	 * The skill slot of the event. Only present if relevant.
 	 *
@@ -487,7 +486,7 @@ public class Event
 	{
 		return this.skillSlot;
 	}
-
+	
 	/**
 	 * The team ID of the event. Only present if relevant.
 	 *
@@ -497,7 +496,7 @@ public class Event
 	{
 		return this.teamId;
 	}
-
+	
 	/**
 	 * Represents how many milliseconds into the game the event occurred.
 	 *
@@ -507,7 +506,7 @@ public class Event
 	{
 		return this.timestamp;
 	}
-
+	
 	/**
 	 * The tower type inferred from the id
 	 *
@@ -517,7 +516,7 @@ public class Event
 	{
 		return TowerType.getFromCode(this.towerType);
 	}
-
+	
 	/**
 	 * The tower type of the event. Only present if relevant. (Legal values: BASE_TURRET, FOUNTAIN_TURRET, INNER_TURRET, NEXUS_TURRET, OUTER_TURRET, UNDEFINED_TURRET)
 	 *
@@ -527,7 +526,7 @@ public class Event
 	{
 		return this.towerType;
 	}
-
+	
 	/**
 	 * The victim ID of the event. Only present if relevant.
 	 *
@@ -537,7 +536,7 @@ public class Event
 	{
 		return this.victimId;
 	}
-
+	
 	/**
 	 * The ward type inferred from the id
 	 *
@@ -547,7 +546,7 @@ public class Event
 	{
 		return WardType.getFromCode(this.wardType);
 	}
-
+	
 	/**
 	 * The ward type of the event. Only present if relevant. (Legal values: SIGHT_WARD, TEEMO_MUSHROOM, UNDEFINED, VISION_WARD, YELLOW_TRINKET, YELLOW_TRINKET_UPGRADE)
 	 *
@@ -557,7 +556,7 @@ public class Event
 	{
 		return this.wardType;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{

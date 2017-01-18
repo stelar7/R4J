@@ -6,7 +6,7 @@ public class Player
 	private Integer profileIcon;
 	private Long    summonerId;
 	private String  summonerName;
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -65,7 +65,7 @@ public class Player
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Gets the match history uri.
 	 *
@@ -75,7 +75,7 @@ public class Player
 	{
 		return this.matchHistoryUri;
 	}
-
+	
 	/**
 	 * Gets the profile icon.
 	 *
@@ -85,7 +85,7 @@ public class Player
 	{
 		return this.profileIcon;
 	}
-
+	
 	/**
 	 * Gets the summoner id.
 	 *
@@ -95,7 +95,7 @@ public class Player
 	{
 		return this.summonerId;
 	}
-
+	
 	/**
 	 * Gets the summoner name.
 	 *
@@ -105,7 +105,7 @@ public class Player
 	{
 		return this.summonerName;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{
@@ -117,11 +117,11 @@ public class Player
 		result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public String toString()
 	{
 		return "Player [matchHistoryUri=" + this.matchHistoryUri + ", profileIcon=" + this.profileIcon + ", summonerId=" + this.summonerId + ", summonerName=" + this.summonerName + "]";
 	}
-
+	
 }

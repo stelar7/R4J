@@ -2,12 +2,12 @@ package no.stelar7.api.l4j8.pojo.match;
 
 public class ParticipantTimelineData
 {
-
+	
 	private Double tenToTwenty;
 	private Double thirtyToEnd;
 	private Double twentyToThirty;
 	private Double zeroToTen;
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -66,7 +66,7 @@ public class ParticipantTimelineData
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Gets the ten to twenty.
 	 *
@@ -76,7 +76,7 @@ public class ParticipantTimelineData
 	{
 		return this.tenToTwenty;
 	}
-
+	
 	/**
 	 * Gets the thirty to end.
 	 *
@@ -86,7 +86,7 @@ public class ParticipantTimelineData
 	{
 		return this.thirtyToEnd;
 	}
-
+	
 	/**
 	 * Gets the twenty to thirty.
 	 *
@@ -96,7 +96,7 @@ public class ParticipantTimelineData
 	{
 		return this.twentyToThirty;
 	}
-
+	
 	/**
 	 * Gets the zero to ten.
 	 *
@@ -106,7 +106,7 @@ public class ParticipantTimelineData
 	{
 		return this.zeroToTen;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{
@@ -118,7 +118,7 @@ public class ParticipantTimelineData
 		result = (prime * result) + ((this.zeroToTen == null) ? 0 : this.zeroToTen.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public String toString()
 	{

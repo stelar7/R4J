@@ -8,7 +8,7 @@ public class TournamentCodeUpdateParameters
 	TournamentMapType       mapType;
 	TournamentPickType      pickType;
 	TournamentSpectatorType spectatorType;
-
+	
 	public TournamentCodeUpdateParameters(final String allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)
 	{
 		super();
@@ -17,7 +17,7 @@ public class TournamentCodeUpdateParameters
 		this.pickType = pickType;
 		this.spectatorType = specType;
 	}
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -76,27 +76,47 @@ public class TournamentCodeUpdateParameters
 		}
 		return true;
 	}
-
+	
 	public String getAllowedParticipants()
 	{
 		return this.allowedParticipants;
 	}
-
+	
+	public void setAllowedParticipants(final String allowedParticipants)
+	{
+		this.allowedParticipants = allowedParticipants;
+	}
+	
 	public TournamentMapType getMapType()
 	{
 		return this.mapType;
 	}
-
+	
+	public void setMapType(final TournamentMapType mapType)
+	{
+		this.mapType = mapType;
+	}
+	
 	public TournamentPickType getPickType()
 	{
 		return this.pickType;
 	}
-
+	
+	public void setPickType(final TournamentPickType pickType)
+	{
+		this.pickType = pickType;
+	}
+	
 	public TournamentSpectatorType getSpectatorType()
 	{
 		return this.spectatorType;
 	}
-
+	
+	public void setSpectatorType(final TournamentSpectatorType spectatorType)
+	{
+		this.spectatorType = spectatorType;
+	}
+	
 	@Override
 	public int hashCode()
 	{
@@ -108,27 +128,7 @@ public class TournamentCodeUpdateParameters
 		result = (prime * result) + ((this.spectatorType == null) ? 0 : this.spectatorType.hashCode());
 		return result;
 	}
-
-	public void setAllowedParticipants(final String allowedParticipants)
-	{
-		this.allowedParticipants = allowedParticipants;
-	}
-
-	public void setMapType(final TournamentMapType mapType)
-	{
-		this.mapType = mapType;
-	}
-
-	public void setPickType(final TournamentPickType pickType)
-	{
-		this.pickType = pickType;
-	}
-
-	public void setSpectatorType(final TournamentSpectatorType spectatorType)
-	{
-		this.spectatorType = spectatorType;
-	}
-
+	
 	@Override
 	public String toString()
 	{

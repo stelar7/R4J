@@ -1,12 +1,11 @@
 package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.basic.constants.api.Server;
+import no.stelar7.api.l4j8.basic.constants.Map;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 
 import java.time.*;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class MatchDetail
 {
@@ -25,7 +24,7 @@ public class MatchDetail
 	private String                    season;
 	private List<Team>                teams;
 	private Timeline                  timeline;
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -194,7 +193,7 @@ public class MatchDetail
 		}
 		return true;
 	}
-
+	
 	/**
 	 * a GameQueueType representing the GameQueueType.
 	 *
@@ -204,7 +203,7 @@ public class MatchDetail
 	{
 		return GameQueueType.getFromCode(this.queueType);
 	}
-
+	
 	/**
 	 * a Map representing the Map.
 	 *
@@ -214,7 +213,7 @@ public class MatchDetail
 	{
 		return Map.getFromCode(this.mapId);
 	}
-
+	
 	/**
 	 * Match map ID
 	 *
@@ -224,7 +223,7 @@ public class MatchDetail
 	{
 		return this.mapId;
 	}
-
+	
 	/**
 	 * Match creation time. Designates when the team select lobby is created and/or the match is made through match making, not when the game actually starts.
 	 *
@@ -234,7 +233,7 @@ public class MatchDetail
 	{
 		return this.matchCreation;
 	}
-
+	
 	/**
 	 * A ZonedDateTime of {@code getMatchCreation()}
 	 * <p>
@@ -244,7 +243,7 @@ public class MatchDetail
 	{
 		return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.matchCreation), ZoneOffset.UTC);
 	}
-
+	
 	/**
 	 * Match duration
 	 *
@@ -254,7 +253,7 @@ public class MatchDetail
 	{
 		return this.matchDuration;
 	}
-
+	
 	/**
 	 * ID of the match
 	 *
@@ -264,7 +263,7 @@ public class MatchDetail
 	{
 		return this.matchId;
 	}
-
+	
 	/**
 	 * a GameMode representing the gameMode.
 	 *
@@ -274,7 +273,7 @@ public class MatchDetail
 	{
 		return GameMode.getFromCode(this.matchMode);
 	}
-
+	
 	/**
 	 * Match mode (Legal values: CLASSIC, ODIN, ARAM, TUTORIAL, ONEFORALL, ASCENSION, FIRSTBLOOD, KINGPORO)
 	 *
@@ -284,7 +283,7 @@ public class MatchDetail
 	{
 		return this.matchMode;
 	}
-
+	
 	/**
 	 * a GameType representing the GameType.
 	 *
@@ -294,7 +293,7 @@ public class MatchDetail
 	{
 		return GameType.getFromCode(this.matchType);
 	}
-
+	
 	/**
 	 * Match type (Legal values: CUSTOM_GAME, MATCHED_GAME, TUTORIAL_GAME)
 	 *
@@ -304,7 +303,7 @@ public class MatchDetail
 	{
 		return this.matchType;
 	}
-
+	
 	/**
 	 * Match version
 	 *
@@ -314,7 +313,7 @@ public class MatchDetail
 	{
 		return this.matchVersion;
 	}
-
+	
 	/**
 	 * Participant identity information
 	 *
@@ -324,7 +323,7 @@ public class MatchDetail
 	{
 		return this.participantIdentities;
 	}
-
+	
 	/**
 	 * Participant information
 	 *
@@ -334,7 +333,7 @@ public class MatchDetail
 	{
 		return this.participants;
 	}
-
+	
 	/**
 	 * Platform of the match (inferred from the platformId)
 	 *
@@ -344,7 +343,7 @@ public class MatchDetail
 	{
 		return Platform.getFromCode(this.platformId);
 	}
-
+	
 	/**
 	 * Platform ID of the match
 	 *
@@ -354,7 +353,7 @@ public class MatchDetail
 	{
 		return this.platformId;
 	}
-
+	
 	/**
 	 * Match queue type (Legal values: CUSTOM, NORMAL_5x5_BLIND, RANKED_SOLO_5x5, RANKED_PREMADE_5x5, BOT_5x5, NORMAL_3x3, RANKED_PREMADE_3x3, NORMAL_5x5_DRAFT, ODIN_5x5_BLIND, ODIN_5x5_DRAFT, BOT_ODIN_5x5, BOT_5x5_INTRO, BOT_5x5_BEGINNER, BOT_5x5_INTERMEDIATE, RANKED_TEAM_3x3, RANKED_TEAM_5x5, BOT_TT_3x3, GROUP_FINDER_5x5, ARAM_5x5, ONEFORALL_5x5, FIRSTBLOOD_1x1, FIRSTBLOOD_2x2, SR_6x6, URF_5x5, ONEFORALL_MIRRORMODE_5x5, BOT_URF_5x5, NIGHTMARE_BOT_5x5_RANK1, NIGHTMARE_BOT_5x5_RANK2, NIGHTMARE_BOT_5x5_RANK5, ASCENSION_5x5, HEXAKILL, BILGEWATER_ARAM_5x5, KING_PORO_5x5, COUNTER_PICK, BILGEWATER_5x5)
 	 *
@@ -364,7 +363,7 @@ public class MatchDetail
 	{
 		return this.queueType;
 	}
-
+	
 	/**
 	 * The server inferred from the regionId
 	 *
@@ -374,7 +373,7 @@ public class MatchDetail
 	{
 		return Server.getFromCode(this.region);
 	}
-
+	
 	/**
 	 * Region where the match was played
 	 *
@@ -384,7 +383,7 @@ public class MatchDetail
 	{
 		return this.region;
 	}
-
+	
 	/**
 	 * the Season inferred from the seasonId
 	 *
@@ -394,7 +393,7 @@ public class MatchDetail
 	{
 		return Season.getFromCode(this.season);
 	}
-
+	
 	/**
 	 * Season match was played (Legal values: PRESEASON3, SEASON3, PRESEASON2014, SEASON2014, PRESEASON2015, SEASON2015)
 	 *
@@ -404,7 +403,7 @@ public class MatchDetail
 	{
 		return this.season;
 	}
-
+	
 	/**
 	 * Team information
 	 *
@@ -414,7 +413,7 @@ public class MatchDetail
 	{
 		return this.teams;
 	}
-
+	
 	/**
 	 * Match timeline data (not included by default)
 	 *
@@ -424,7 +423,7 @@ public class MatchDetail
 	{
 		return this.timeline;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{
@@ -447,7 +446,7 @@ public class MatchDetail
 		result = (prime * result) + ((this.timeline == null) ? 0 : this.timeline.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public String toString()
 	{

@@ -9,21 +9,21 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestBase
 {
-	protected static DataCallBuilder builder = DataCall.builder();
-	
-	@BeforeClass
-	public static void init()
-	{
-		TestBase.builder = DataCall.builder();
-		TestBase.builder.asVerbose(true);
-		TestBase.builder.withServer(Server.EUW);
-		TestBase.builder.withRegion(Server.EUW);
-		DataCallBuilder.setCredentials(SecretFile.CREDS);
-	}
-	
-	public TestBase()
-	{
-		// Empty public constructor
-	}
-	
+    protected static DataCallBuilder builder = DataCall.builder();
+    
+    public TestBase()
+    {
+        // Empty public constructor
+    }
+    
+    @BeforeClass
+    public static void init()
+    {
+        TestBase.builder = DataCall.builder();
+        TestBase.builder.asVerbose(true);
+        TestBase.builder.withServer(Server.EUW);
+        TestBase.builder.withRegion(Server.EUW);
+        DataCallBuilder.setCredentials(SecretFile.CREDS);
+    }
+
 }

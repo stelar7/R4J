@@ -1,13 +1,12 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.basic.constants.Lane;
-import no.stelar7.api.l4j8.basic.constants.Role;
+import no.stelar7.api.l4j8.basic.constants.*;
 
-import java.util.Optional;
+import java.util.*;
 
 public class ParticipantTimeline
 {
-
+	
 	private ParticipantTimelineData ancientGolemAssistsPerMinCounts;
 	private ParticipantTimelineData ancientGolemKillsPerMinCounts;
 	private ParticipantTimelineData assistedLaneDeathsPerMinDeltas;
@@ -35,7 +34,7 @@ public class ParticipantTimeline
 	private ParticipantTimelineData xpPerMinDeltas;
 	private String                  lane;
 	private String                  role;
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -324,7 +323,7 @@ public class ParticipantTimeline
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Gets the ancient golem assists per min counts.
 	 *
@@ -334,7 +333,7 @@ public class ParticipantTimeline
 	{
 		return this.ancientGolemAssistsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the ancient golem kills per min counts.
 	 *
@@ -344,7 +343,7 @@ public class ParticipantTimeline
 	{
 		return this.ancientGolemKillsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the assisted lane deaths per min deltas.
 	 *
@@ -354,7 +353,7 @@ public class ParticipantTimeline
 	{
 		return this.assistedLaneDeathsPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the assisted lane kills per min deltas.
 	 *
@@ -364,7 +363,7 @@ public class ParticipantTimeline
 	{
 		return this.assistedLaneKillsPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the baron assists per min counts.
 	 *
@@ -374,7 +373,7 @@ public class ParticipantTimeline
 	{
 		return this.baronAssistsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the baron kills per min counts.
 	 *
@@ -384,7 +383,7 @@ public class ParticipantTimeline
 	{
 		return this.baronKillsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the creeps per min deltas.
 	 *
@@ -394,7 +393,7 @@ public class ParticipantTimeline
 	{
 		return this.creepsPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the cs diff per min deltas.
 	 *
@@ -404,7 +403,7 @@ public class ParticipantTimeline
 	{
 		return this.csDiffPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the damage taken diff per min deltas.
 	 *
@@ -414,7 +413,7 @@ public class ParticipantTimeline
 	{
 		return this.damageTakenDiffPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the damage taken per min deltas.
 	 *
@@ -424,7 +423,7 @@ public class ParticipantTimeline
 	{
 		return this.damageTakenPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the dragon assists per min counts.
 	 *
@@ -434,7 +433,7 @@ public class ParticipantTimeline
 	{
 		return this.dragonAssistsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the dragon kills per min counts.
 	 *
@@ -444,7 +443,7 @@ public class ParticipantTimeline
 	{
 		return this.dragonKillsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the elder lizard assists per min counts.
 	 *
@@ -454,7 +453,7 @@ public class ParticipantTimeline
 	{
 		return this.elderLizardAssistsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the elder lizard kills per min counts.
 	 *
@@ -464,7 +463,7 @@ public class ParticipantTimeline
 	{
 		return this.elderLizardKillsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the gold per min deltas.
 	 *
@@ -474,7 +473,7 @@ public class ParticipantTimeline
 	{
 		return this.goldPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the inhibitor assists per min counts.
 	 *
@@ -484,7 +483,7 @@ public class ParticipantTimeline
 	{
 		return this.inhibitorAssistsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the inhibitor kills per min counts.
 	 *
@@ -494,7 +493,7 @@ public class ParticipantTimeline
 	{
 		return this.inhibitorKillsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the lane.
 	 *
@@ -504,7 +503,7 @@ public class ParticipantTimeline
 	{
 		return Lane.getFromCode(this.lane);
 	}
-
+	
 	/**
 	 * Gets the lane.
 	 *
@@ -514,7 +513,7 @@ public class ParticipantTimeline
 	{
 		return this.lane;
 	}
-
+	
 	/**
 	 * Gets the role.
 	 *
@@ -524,7 +523,7 @@ public class ParticipantTimeline
 	{
 		return Role.getFromCode(this.role);
 	}
-
+	
 	/**
 	 * Gets the role.
 	 *
@@ -534,7 +533,7 @@ public class ParticipantTimeline
 	{
 		return this.role;
 	}
-
+	
 	/**
 	 * Gets the tower assists per min counts.
 	 *
@@ -544,7 +543,7 @@ public class ParticipantTimeline
 	{
 		return this.towerAssistsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the tower kills per min counts.
 	 *
@@ -554,7 +553,7 @@ public class ParticipantTimeline
 	{
 		return this.towerKillsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the tower kills per min deltas.
 	 *
@@ -564,7 +563,7 @@ public class ParticipantTimeline
 	{
 		return this.towerKillsPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the vilemaw assists per min counts.
 	 *
@@ -574,7 +573,7 @@ public class ParticipantTimeline
 	{
 		return this.vilemawAssistsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the vilemaw kills per min counts.
 	 *
@@ -584,7 +583,7 @@ public class ParticipantTimeline
 	{
 		return this.vilemawKillsPerMinCounts;
 	}
-
+	
 	/**
 	 * Gets the wards per min deltas.
 	 *
@@ -594,7 +593,7 @@ public class ParticipantTimeline
 	{
 		return this.wardsPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the xp diff per min deltas.
 	 *
@@ -604,7 +603,7 @@ public class ParticipantTimeline
 	{
 		return this.xpDiffPerMinDeltas;
 	}
-
+	
 	/**
 	 * Gets the xp per min deltas.
 	 *
@@ -614,7 +613,7 @@ public class ParticipantTimeline
 	{
 		return this.xpPerMinDeltas;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{
@@ -649,11 +648,11 @@ public class ParticipantTimeline
 		result = (prime * result) + ((this.xpPerMinDeltas == null) ? 0 : this.xpPerMinDeltas.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public String toString()
 	{
 		return "ParticipantTimeline [ancientGolemAssistsPerMinCounts=" + this.ancientGolemAssistsPerMinCounts + ", ancientGolemKillsPerMinCounts=" + this.ancientGolemKillsPerMinCounts + ", assistedLaneDeathsPerMinDeltas=" + this.assistedLaneDeathsPerMinDeltas + ", assistedLaneKillsPerMinDeltas=" + this.assistedLaneKillsPerMinDeltas + ", baronAssistsPerMinCounts=" + this.baronAssistsPerMinCounts + ", baronKillsPerMinCounts=" + this.baronKillsPerMinCounts + ", creepsPerMinDeltas=" + this.creepsPerMinDeltas + ", csDiffPerMinDeltas=" + this.csDiffPerMinDeltas + ", damageTakenDiffPerMinDeltas=" + this.damageTakenDiffPerMinDeltas + ", damageTakenPerMinDeltas=" + this.damageTakenPerMinDeltas + ", dragonAssistsPerMinCounts=" + this.dragonAssistsPerMinCounts + ", dragonKillsPerMinCounts=" + this.dragonKillsPerMinCounts + ", elderLizardAssistsPerMinCounts=" + this.elderLizardAssistsPerMinCounts + ", elderLizardKillsPerMinCounts=" + this.elderLizardKillsPerMinCounts + ", goldPerMinDeltas=" + this.goldPerMinDeltas + ", inhibitorAssistsPerMinCounts=" + this.inhibitorAssistsPerMinCounts + ", inhibitorKillsPerMinCounts=" + this.inhibitorKillsPerMinCounts + ", towerAssistsPerMinCounts=" + this.towerAssistsPerMinCounts + ", towerKillsPerMinCounts=" + this.towerKillsPerMinCounts + ", towerKillsPerMinDeltas=" + this.towerKillsPerMinDeltas + ", vilemawAssistsPerMinCounts=" + this.vilemawAssistsPerMinCounts + ", vilemawKillsPerMinCounts=" + this.vilemawKillsPerMinCounts + ", wardsPerMinDeltas=" + this.wardsPerMinDeltas + ", xpDiffPerMinDeltas=" + this.xpDiffPerMinDeltas + ", xpPerMinDeltas=" + this.xpPerMinDeltas + ", lane=" + this.lane + ", role=" + this.role + "]";
 	}
-
+	
 }

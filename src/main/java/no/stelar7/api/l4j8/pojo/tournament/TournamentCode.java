@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.Set;
+import java.util.*;
 
 public class TournamentCode
 {
@@ -17,7 +17,7 @@ public class TournamentCode
 	private String    spectators;
 	private Integer   teamSize;
 	private Integer   tournamentId;
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -166,72 +166,72 @@ public class TournamentCode
 		}
 		return true;
 	}
-
+	
 	public String getCode()
 	{
 		return this.code;
 	}
-
+	
 	public Long getId()
 	{
 		return this.id;
 	}
-
+	
 	public String getLobbyName()
 	{
 		return this.lobbyName;
 	}
-
+	
 	public String getMap()
 	{
 		return this.map;
 	}
-
+	
 	public String getMetaData()
 	{
 		return this.metaData;
 	}
-
+	
 	public Set<Long> getParticipants()
 	{
 		return this.participants;
 	}
-
+	
 	public String getPassword()
 	{
 		return this.password;
 	}
-
+	
 	public String getPickType()
 	{
 		return this.pickType;
 	}
-
+	
 	public Integer getProviderId()
 	{
 		return this.providerId;
 	}
-
+	
 	public String getRegion()
 	{
 		return this.region;
 	}
-
+	
 	public String getSpectators()
 	{
 		return this.spectators;
 	}
-
+	
 	public Integer getTeamSize()
 	{
 		return this.teamSize;
 	}
-
+	
 	public Integer getTournamentId()
 	{
 		return this.tournamentId;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{
@@ -252,7 +252,7 @@ public class TournamentCode
 		result = (prime * result) + ((this.tournamentId == null) ? 0 : this.tournamentId.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public String toString()
 	{

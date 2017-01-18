@@ -1,16 +1,14 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.logging.*;
+import java.util.stream.*;
 
 public class ParticipantStats
 {
-
+	
 	public static final Logger LOGGER = Logger.getGlobal();
-
+	
 	private Long    assists;
 	private Long    champLevel;
 	private Long    combatPlayerScore;
@@ -74,7 +72,7 @@ public class ParticipantStats
 	private Long    wardsKilled;
 	private Long    wardsPlaced;
 	private Boolean winner;
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -723,7 +721,7 @@ public class ParticipantStats
 		}
 		return true;
 	}
-
+	
 	/**
 	 * a {@code Map<String, String>} of all the fields in this class.
 	 *
@@ -744,7 +742,7 @@ public class ParticipantStats
 		                                               });
 		return map;
 	}
-
+	
 	/**
 	 * Gets the assists.
 	 *
@@ -754,7 +752,7 @@ public class ParticipantStats
 	{
 		return this.assists;
 	}
-
+	
 	/**
 	 * Gets the champ level.
 	 *
@@ -764,7 +762,7 @@ public class ParticipantStats
 	{
 		return this.champLevel;
 	}
-
+	
 	/**
 	 * Gets the combat player score.
 	 *
@@ -774,7 +772,7 @@ public class ParticipantStats
 	{
 		return this.combatPlayerScore;
 	}
-
+	
 	/**
 	 * Gets the deaths.
 	 *
@@ -784,7 +782,7 @@ public class ParticipantStats
 	{
 		return this.deaths;
 	}
-
+	
 	/**
 	 * Gets the double kills.
 	 *
@@ -794,7 +792,7 @@ public class ParticipantStats
 	{
 		return this.doubleKills;
 	}
-
+	
 	/**
 	 * Gets the gold earned.
 	 *
@@ -804,7 +802,7 @@ public class ParticipantStats
 	{
 		return this.goldEarned;
 	}
-
+	
 	/**
 	 * Gets the gold spent.
 	 *
@@ -814,7 +812,7 @@ public class ParticipantStats
 	{
 		return this.goldSpent;
 	}
-
+	
 	/**
 	 * Gets the inhibitor kills.
 	 *
@@ -824,7 +822,7 @@ public class ParticipantStats
 	{
 		return this.inhibitorKills;
 	}
-
+	
 	/**
 	 * Gets the item0.
 	 *
@@ -834,7 +832,7 @@ public class ParticipantStats
 	{
 		return this.item0;
 	}
-
+	
 	/**
 	 * Gets the item1.
 	 *
@@ -844,7 +842,7 @@ public class ParticipantStats
 	{
 		return this.item1;
 	}
-
+	
 	/**
 	 * Gets the item2.
 	 *
@@ -854,7 +852,7 @@ public class ParticipantStats
 	{
 		return this.item2;
 	}
-
+	
 	/**
 	 * Gets the item3.
 	 *
@@ -864,7 +862,7 @@ public class ParticipantStats
 	{
 		return this.item3;
 	}
-
+	
 	/**
 	 * Gets the item4.
 	 *
@@ -874,7 +872,7 @@ public class ParticipantStats
 	{
 		return this.item4;
 	}
-
+	
 	/**
 	 * Gets the item5.
 	 *
@@ -884,7 +882,7 @@ public class ParticipantStats
 	{
 		return this.item5;
 	}
-
+	
 	/**
 	 * Gets the item6.
 	 *
@@ -894,7 +892,7 @@ public class ParticipantStats
 	{
 		return this.item6;
 	}
-
+	
 	/**
 	 * Gets the killing sprees.
 	 *
@@ -904,7 +902,7 @@ public class ParticipantStats
 	{
 		return this.killingSprees;
 	}
-
+	
 	/**
 	 * Gets the kills.
 	 *
@@ -914,7 +912,7 @@ public class ParticipantStats
 	{
 		return this.kills;
 	}
-
+	
 	/**
 	 * Gets the largest critical strike.
 	 *
@@ -924,7 +922,7 @@ public class ParticipantStats
 	{
 		return this.largestCriticalStrike;
 	}
-
+	
 	/**
 	 * Gets the largest killing spree.
 	 *
@@ -934,7 +932,7 @@ public class ParticipantStats
 	{
 		return this.largestKillingSpree;
 	}
-
+	
 	/**
 	 * Gets the largest multi kill.
 	 *
@@ -944,7 +942,7 @@ public class ParticipantStats
 	{
 		return this.largestMultiKill;
 	}
-
+	
 	/**
 	 * Gets the magic damage dealt.
 	 *
@@ -954,7 +952,7 @@ public class ParticipantStats
 	{
 		return this.magicDamageDealt;
 	}
-
+	
 	/**
 	 * Gets the magic damage dealt to champions.
 	 *
@@ -964,7 +962,7 @@ public class ParticipantStats
 	{
 		return this.magicDamageDealtToChampions;
 	}
-
+	
 	/**
 	 * Gets the magic damage taken.
 	 *
@@ -974,7 +972,7 @@ public class ParticipantStats
 	{
 		return this.magicDamageTaken;
 	}
-
+	
 	/**
 	 * Gets the minions killed.
 	 *
@@ -984,7 +982,7 @@ public class ParticipantStats
 	{
 		return this.minionsKilled;
 	}
-
+	
 	/**
 	 * Gets the neutral minions killed.
 	 *
@@ -994,7 +992,7 @@ public class ParticipantStats
 	{
 		return this.neutralMinionsKilled;
 	}
-
+	
 	/**
 	 * Gets the neutral minions killed enemy jungle.
 	 *
@@ -1004,7 +1002,7 @@ public class ParticipantStats
 	{
 		return this.neutralMinionsKilledEnemyJungle;
 	}
-
+	
 	/**
 	 * Gets the neutral minions killed team jungle.
 	 *
@@ -1014,7 +1012,7 @@ public class ParticipantStats
 	{
 		return this.neutralMinionsKilledTeamJungle;
 	}
-
+	
 	/**
 	 * Gets the node capture.
 	 *
@@ -1024,7 +1022,7 @@ public class ParticipantStats
 	{
 		return this.nodeCapture;
 	}
-
+	
 	/**
 	 * Gets the node capture assist.
 	 *
@@ -1034,7 +1032,7 @@ public class ParticipantStats
 	{
 		return this.nodeCaptureAssist;
 	}
-
+	
 	/**
 	 * Gets the node neutralize.
 	 *
@@ -1044,7 +1042,7 @@ public class ParticipantStats
 	{
 		return this.nodeNeutralize;
 	}
-
+	
 	/**
 	 * Gets the node neutralize assist.
 	 *
@@ -1054,7 +1052,7 @@ public class ParticipantStats
 	{
 		return this.nodeNeutralizeAssist;
 	}
-
+	
 	/**
 	 * Gets the objective player score.
 	 *
@@ -1064,7 +1062,7 @@ public class ParticipantStats
 	{
 		return this.objectivePlayerScore;
 	}
-
+	
 	/**
 	 * Gets the penta kills.
 	 *
@@ -1074,7 +1072,7 @@ public class ParticipantStats
 	{
 		return this.pentaKills;
 	}
-
+	
 	/**
 	 * Gets the physical damage dealt.
 	 *
@@ -1084,7 +1082,7 @@ public class ParticipantStats
 	{
 		return this.physicalDamageDealt;
 	}
-
+	
 	/**
 	 * Gets the physical damage dealt to champions.
 	 *
@@ -1094,7 +1092,7 @@ public class ParticipantStats
 	{
 		return this.physicalDamageDealtToChampions;
 	}
-
+	
 	/**
 	 * Gets the physical damage taken.
 	 *
@@ -1104,7 +1102,7 @@ public class ParticipantStats
 	{
 		return this.physicalDamageTaken;
 	}
-
+	
 	/**
 	 * Gets the quadra kills.
 	 *
@@ -1114,7 +1112,7 @@ public class ParticipantStats
 	{
 		return this.quadraKills;
 	}
-
+	
 	/**
 	 * Gets the sight wards bought in game.
 	 *
@@ -1124,7 +1122,7 @@ public class ParticipantStats
 	{
 		return this.sightWardsBoughtInGame;
 	}
-
+	
 	/**
 	 * Gets the team objective.
 	 *
@@ -1134,7 +1132,7 @@ public class ParticipantStats
 	{
 		return this.teamObjective;
 	}
-
+	
 	/**
 	 * Gets the total damage dealt.
 	 *
@@ -1144,7 +1142,7 @@ public class ParticipantStats
 	{
 		return this.totalDamageDealt;
 	}
-
+	
 	/**
 	 * Gets the total damage dealt to champions.
 	 *
@@ -1154,7 +1152,7 @@ public class ParticipantStats
 	{
 		return this.totalDamageDealtToChampions;
 	}
-
+	
 	/**
 	 * Gets the total damage taken.
 	 *
@@ -1164,7 +1162,7 @@ public class ParticipantStats
 	{
 		return this.totalDamageTaken;
 	}
-
+	
 	/**
 	 * Gets the total heal.
 	 *
@@ -1174,7 +1172,7 @@ public class ParticipantStats
 	{
 		return this.totalHeal;
 	}
-
+	
 	/**
 	 * Gets the total player score.
 	 *
@@ -1184,7 +1182,7 @@ public class ParticipantStats
 	{
 		return this.totalPlayerScore;
 	}
-
+	
 	/**
 	 * Gets the total score rank.
 	 *
@@ -1194,7 +1192,7 @@ public class ParticipantStats
 	{
 		return this.totalScoreRank;
 	}
-
+	
 	/**
 	 * Gets the total time crowd control dealt.
 	 *
@@ -1204,7 +1202,7 @@ public class ParticipantStats
 	{
 		return this.totalTimeCrowdControlDealt;
 	}
-
+	
 	/**
 	 * Gets the total units healed.
 	 *
@@ -1214,7 +1212,7 @@ public class ParticipantStats
 	{
 		return this.totalUnitsHealed;
 	}
-
+	
 	/**
 	 * Gets the tower kills.
 	 *
@@ -1224,7 +1222,7 @@ public class ParticipantStats
 	{
 		return this.towerKills;
 	}
-
+	
 	/**
 	 * Gets the triple kills.
 	 *
@@ -1234,7 +1232,7 @@ public class ParticipantStats
 	{
 		return this.tripleKills;
 	}
-
+	
 	/**
 	 * Gets the true damage dealt.
 	 *
@@ -1244,7 +1242,7 @@ public class ParticipantStats
 	{
 		return this.trueDamageDealt;
 	}
-
+	
 	/**
 	 * Gets the true damage dealt to champions.
 	 *
@@ -1254,7 +1252,7 @@ public class ParticipantStats
 	{
 		return this.trueDamageDealtToChampions;
 	}
-
+	
 	/**
 	 * Gets the true damage taken.
 	 *
@@ -1264,7 +1262,7 @@ public class ParticipantStats
 	{
 		return this.trueDamageTaken;
 	}
-
+	
 	/**
 	 * Gets the unreal kills.
 	 *
@@ -1274,7 +1272,7 @@ public class ParticipantStats
 	{
 		return this.unrealKills;
 	}
-
+	
 	/**
 	 * Gets the vision wards bought in game.
 	 *
@@ -1284,7 +1282,7 @@ public class ParticipantStats
 	{
 		return this.visionWardsBoughtInGame;
 	}
-
+	
 	/**
 	 * Gets the wards killed.
 	 *
@@ -1294,7 +1292,7 @@ public class ParticipantStats
 	{
 		return this.wardsKilled;
 	}
-
+	
 	/**
 	 * Gets the wards placed.
 	 *
@@ -1304,7 +1302,7 @@ public class ParticipantStats
 	{
 		return this.wardsPlaced;
 	}
-
+	
 	@Override
 	public int hashCode()
 	{
@@ -1375,7 +1373,7 @@ public class ParticipantStats
 		result = (prime * result) + ((this.winner == null) ? 0 : this.winner.hashCode());
 		return result;
 	}
-
+	
 	/**
 	 * Id first inhibitor kill.
 	 *
@@ -1385,7 +1383,7 @@ public class ParticipantStats
 	{
 		return this.firstInhibitorKill;
 	}
-
+	
 	/**
 	 * Checks if is first blood assist.
 	 *
@@ -1395,7 +1393,7 @@ public class ParticipantStats
 	{
 		return this.firstBloodAssist;
 	}
-
+	
 	/**
 	 * Checks if is first blood kill.
 	 *
@@ -1405,7 +1403,7 @@ public class ParticipantStats
 	{
 		return this.firstBloodKill;
 	}
-
+	
 	/**
 	 * Checks if is first inhibitor assist.
 	 *
@@ -1415,7 +1413,7 @@ public class ParticipantStats
 	{
 		return this.firstInhibitorAssist;
 	}
-
+	
 	/**
 	 * Checks if is first tower assist.
 	 *
@@ -1425,7 +1423,7 @@ public class ParticipantStats
 	{
 		return this.firstTowerAssist;
 	}
-
+	
 	/**
 	 * Checks if is first tower kill.
 	 *
@@ -1435,7 +1433,7 @@ public class ParticipantStats
 	{
 		return this.firstTowerKill;
 	}
-
+	
 	/**
 	 * Checks if is winner.
 	 *
@@ -1445,11 +1443,11 @@ public class ParticipantStats
 	{
 		return this.winner;
 	}
-
+	
 	@Override
 	public String toString()
 	{
 		return "ParticipantStats [assists=" + this.assists + ", champLevel=" + this.champLevel + ", combatPlayerScore=" + this.combatPlayerScore + ", deaths=" + this.deaths + ", doubleKills=" + this.doubleKills + ", firstBloodAssist=" + this.firstBloodAssist + ", firstBloodKill=" + this.firstBloodKill + ", firstInhibitorAssist=" + this.firstInhibitorAssist + ", firstInhibitorKill=" + this.firstInhibitorKill + ", firstTowerAssist=" + this.firstTowerAssist + ", firstTowerKill=" + this.firstTowerKill + ", goldEarned=" + this.goldEarned + ", goldSpent=" + this.goldSpent + ", inhibitorKills=" + this.inhibitorKills + ", item0=" + this.item0 + ", item1=" + this.item1 + ", item2=" + this.item2 + ", item3=" + this.item3 + ", item4=" + this.item4 + ", item5=" + this.item5 + ", item6=" + this.item6 + ", killingSprees=" + this.killingSprees + ", kills=" + this.kills + ", largestCriticalStrike=" + this.largestCriticalStrike + ", largestKillingSpree=" + this.largestKillingSpree + ", largestMultiKill=" + this.largestMultiKill + ", magicDamageDealt=" + this.magicDamageDealt + ", magicDamageDealtToChampions=" + this.magicDamageDealtToChampions + ", magicDamageTaken=" + this.magicDamageTaken + ", minionsKilled=" + this.minionsKilled + ", neutralMinionsKilled=" + this.neutralMinionsKilled + ", neutralMinionsKilledEnemyJungle=" + this.neutralMinionsKilledEnemyJungle + ", neutralMinionsKilledTeamJungle=" + this.neutralMinionsKilledTeamJungle + ", nodeCapture=" + this.nodeCapture + ", nodeCaptureAssist=" + this.nodeCaptureAssist + ", nodeNeutralize=" + this.nodeNeutralize + ", nodeNeutralizeAssist=" + this.nodeNeutralizeAssist + ", objectivePlayerScore=" + this.objectivePlayerScore + ", pentaKills=" + this.pentaKills + ", physicalDamageDealt=" + this.physicalDamageDealt + ", physicalDamageDealtToChampions=" + this.physicalDamageDealtToChampions + ", physicalDamageTaken=" + this.physicalDamageTaken + ", quadraKills=" + this.quadraKills + ", sightWardsBoughtInGame=" + this.sightWardsBoughtInGame + ", teamObjective=" + this.teamObjective + ", totalDamageDealt=" + this.totalDamageDealt + ", totalDamageDealtToChampions=" + this.totalDamageDealtToChampions + ", totalDamageTaken=" + this.totalDamageTaken + ", totalHeal=" + this.totalHeal + ", totalPlayerScore=" + this.totalPlayerScore + ", totalScoreRank=" + this.totalScoreRank + ", totalTimeCrowdControlDealt=" + this.totalTimeCrowdControlDealt + ", totalUnitsHealed=" + this.totalUnitsHealed + ", towerKills=" + this.towerKills + ", tripleKills=" + this.tripleKills + ", trueDamageDealt=" + this.trueDamageDealt + ", trueDamageDealtToChampions=" + this.trueDamageDealtToChampions + ", trueDamageTaken=" + this.trueDamageTaken + ", unrealKills=" + this.unrealKills + ", visionWardsBoughtInGame=" + this.visionWardsBoughtInGame + ", wardsKilled=" + this.wardsKilled + ", wardsPlaced=" + this.wardsPlaced + ", winner=" + this.winner + "]";
 	}
-
+    
 }

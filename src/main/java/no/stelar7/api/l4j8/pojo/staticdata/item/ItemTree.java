@@ -6,7 +6,7 @@ public class ItemTree
 {
     private String       header;
     private List<String> tags;
-
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -45,7 +45,7 @@ public class ItemTree
         }
         return true;
     }
-
+    
     /**
      * Gets the header.
      *
@@ -55,7 +55,7 @@ public class ItemTree
     {
         return this.header;
     }
-
+    
     /**
      * Gets the tags.
      *
@@ -65,12 +65,12 @@ public class ItemTree
     {
         return this.tags;
     }
-
+    
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
+        final int prime  = 31;
+        int       result = 1;
         result = (prime * result) + ((this.header == null) ? 0 : this.header.hashCode());
         result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
         return result;

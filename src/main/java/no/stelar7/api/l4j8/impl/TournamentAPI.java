@@ -50,7 +50,10 @@ public class TournamentAPI
 		builder = builder.withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode);
 		builder = builder.withServer(server);
 		
-		return (List<Long>) builder.build();
+		@SuppressWarnings("unchecked")
+		List<Long> ids = (List<Long>) builder.build();
+		
+		return ids;
 	}
 	
 	/**

@@ -2,8 +2,8 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 import no.stelar7.api.l4j8.basic.constants.*;
 
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.regex.*;
+import java.util.stream.*;
 
 public class TournamentCodeParameters
 {
@@ -13,12 +13,12 @@ public class TournamentCodeParameters
 	private TournamentPickType      pickType;
 	private TournamentSpectatorType spectatorType;
 	private Integer                 teamSize;
-
+	
 	public TournamentCodeParameters()
 	{
 		// GSON needs an empty constructor to initialize.. i think..?
 	}
-
+	
 	public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final Integer teamSize)
 	{
 		this.allowedSummonerIds = new SummonerIdParams(Pattern.compile(",")
@@ -31,7 +31,7 @@ public class TournamentCodeParameters
 		this.spectatorType = updateParams.spectatorType;
 		this.teamSize = teamSize;
 	}
-
+	
 	@Override
 	public boolean equals(final Object obj)
 	{
@@ -110,37 +110,67 @@ public class TournamentCodeParameters
 		}
 		return true;
 	}
-
+	
 	public SummonerIdParams getAllowedSummonerIds()
 	{
 		return this.allowedSummonerIds;
 	}
-
+	
+	public void setAllowedSummonerIds(final SummonerIdParams allowedSummonerIds)
+	{
+		this.allowedSummonerIds = allowedSummonerIds;
+	}
+	
 	public TournamentMapType getMapType()
 	{
 		return this.mapType;
 	}
-
+	
+	public void setMapType(final TournamentMapType mapType)
+	{
+		this.mapType = mapType;
+	}
+	
 	public String getMetadata()
 	{
 		return this.metadata;
 	}
-
+	
+	public void setMetadata(final String metadata)
+	{
+		this.metadata = metadata;
+	}
+	
 	public TournamentPickType getPickType()
 	{
 		return this.pickType;
 	}
-
+	
+	public void setPickType(final TournamentPickType pickType)
+	{
+		this.pickType = pickType;
+	}
+	
 	public TournamentSpectatorType getSpectatorType()
 	{
 		return this.spectatorType;
 	}
-
+	
+	public void setSpectatorType(final TournamentSpectatorType spectatorType)
+	{
+		this.spectatorType = spectatorType;
+	}
+	
 	public Integer getTeamSize()
 	{
 		return this.teamSize;
 	}
-
+	
+	public void setTeamSize(final Integer teamSize)
+	{
+		this.teamSize = teamSize;
+	}
+	
 	@Override
 	public int hashCode()
 	{
@@ -154,41 +184,11 @@ public class TournamentCodeParameters
 		result = (prime * result) + ((this.teamSize == null) ? 0 : this.teamSize.hashCode());
 		return result;
 	}
-
-	public void setAllowedSummonerIds(final SummonerIdParams allowedSummonerIds)
-	{
-		this.allowedSummonerIds = allowedSummonerIds;
-	}
-
-	public void setMapType(final TournamentMapType mapType)
-	{
-		this.mapType = mapType;
-	}
-
-	public void setMetadata(final String metadata)
-	{
-		this.metadata = metadata;
-	}
-
-	public void setPickType(final TournamentPickType pickType)
-	{
-		this.pickType = pickType;
-	}
-
-	public void setSpectatorType(final TournamentSpectatorType spectatorType)
-	{
-		this.spectatorType = spectatorType;
-	}
-
-	public void setTeamSize(final Integer teamSize)
-	{
-		this.teamSize = teamSize;
-	}
-
+	
 	@Override
 	public String toString()
 	{
 		return "TournamentCodeParameters [allowedSummonerIds=" + this.allowedSummonerIds + ", mapType=" + this.mapType + ", metadata=" + this.metadata + ", pickType=" + this.pickType + ", spectatorType=" + this.spectatorType + ", teamSize=" + this.teamSize + "]";
 	}
-
+	
 }
