@@ -1,65 +1,27 @@
 package no.stelar7.api.l4j8.basic;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
-import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.summoner.*;
+import no.stelar7.api.l4j8.impl.RateLimiter;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;
-import java.lang.reflect.*;
-import java.net.*;
-import java.nio.charset.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.*;
-import java.util.logging.*;
+import java.util.function.BiFunction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class DataCall
+public final class DataCall
 {
     
-    e state
-    static final String HTTP = "http://";
-    private static final String HTTPS = "https://";
-    
-    private static final Double DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
-    
-    private static final Double DEFAULT_LIMITER_10_MINUTES = 600.0;
-    public static final  Logger LOGGER                     = Logger.getGlobal();
-    
-    private static APICredentials creds;
-    private static final EnumMap<Server, RateLimiter> limiter = new EnumMap<>(Server.class);
-    
-    public statie String
-    postData ="";
-    
-    private final Map<String, String> urlData   = new TreeMap<>();
-    private final Map<String, String> urlParams = new TreeMap<>();
-    
-    private final Map<String, String> urlHeaders = new TreeMap<>();
-    
-    private boolean verbose = false;
-    
-    private String requestMethod = "GET";
-    
-    private Server server;
-    
-    private Serv
-    c DataCallBuilder
-    
-    builder()
-    {
-        return new DataCallBuilder();
-    }
-    
-    privater region;
-    
-    private URLE
     public static class DataCallBuilder
     {
-        final         StringBuilder                      urlBuilder = new StringBuilder();
-        private final DataCall                           dc         = new DataCall();
-        private final BiFunction<String, String, String> merge      = (o, n) -> o + "," + n;
-        
         public static APICredentials getCredentials()
         {
             return DataCall.creds;
@@ -69,6 +31,12 @@ public class DataCall
         {
             DataCall.creds = creds;
         }
+        
+        private final DataCall dc = new DataCall();
+        
+        private final BiFunction<String, String, String> merge = (o, n) -> o + "," + n;
+        
+        private final StringBuilder urlBuilder = new StringBuilder();
         
         /**
          * Print out as much data as possible about this call
@@ -93,8 +61,7 @@ public class DataCall
             
             if (!this.dc.endpoint.isAvalibleFrom(this.dc.server))
             {
-                throw new APIServerEndpointMissmatchException(this.dc.endpoint.toString() + " not avalible from " + this.dc.server
-                                                                                                                        .asURLFormat());
+                throw new APIServerEndpointMissmatchException(this.dc.endpoint.toString() + " not avalible from " + this.dc.server.asURLFormat());
             }
             
             final boolean isServerRatelimited = this.dc.server.isLimited();
@@ -226,6 +193,20 @@ public class DataCall
                 
                 final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
                 
+                final String limitCount = con.getHeaderField("X-Rate-Limit-Count");
+                
+                if (limitCount != null)
+                {
+                    final String[] limits = limitCount.split(",");
+                    for (final String limitPair : limits)
+                    {
+                        final String[] limit = limitPair.split(":");
+                        final Integer  call  = Integer.parseInt(limit[0]);
+                        final Integer  time  = Integer.parseInt(limit[1]);
+                        DataCall.calls.put(time, call);
+                    }
+                }
+                
                 if (con.getResponseCode() != 200)
                 {
                     return new DataCallResponse(con.getResponseCode(), limitType);
@@ -305,7 +286,7 @@ public class DataCall
                 final Field field = Summoner.class.getDeclaredField("server");
                 field.setAccessible(true);
                 field.set(sum, this.dc.region);
-            } catch (final Exception e)
+            } catch (final NoSuchFieldException | IllegalAccessException e)
             {
                 DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
@@ -412,15 +393,10 @@ public class DataCall
         
     }
     
-    privatndpoint endpoint;
-    
-    private Data
-    ic
-    
-    class DataCallResponse
+    private static class DataCallResponse
     {
-        final int    responseCode;
-        final String responseData;
+        private final int    responseCode;
+        private final String responseData;
         
         DataCallResponse(final int a, final String b)
         {
@@ -446,7 +422,42 @@ public class DataCall
         
     }
     
-    privatCall()
+    private static final String HTTP  = "http://";
+    private static final String HTTPS = "https://";
+    
+    private static final Double DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
+    private static final Double DEFAULT_LIMITER_10_MINUTES             = 600.0;
+    
+    private static final Logger LOGGER = Logger.getGlobal();
+    
+    private static final EnumMap<Server, RateLimiter> limiter = new EnumMap<>(Server.class);
+    
+    public static DataCallBuilder builder()
+    {
+        return new DataCallBuilder();
+    }
+    
+    private static APICredentials creds;
+    
+    
+    private final Map<String, String> urlParams = new TreeMap<>();
+    private final Map<String, String> urlData   = new TreeMap<>();
+    
+    private final        Map<String, String>   urlHeaders = new TreeMap<>();
+    private static final Map<Integer, Integer> calls      = new TreeMap<>();
+    
+    private boolean verbose;
+    
+    private String requestMethod = "GET";
+    private String postData      = "";
+    
+    private Server server;
+    
+    private Server region;
+    
+    private URLEndpoint endpoint;
+    
+    private DataCall()
     {
         final double permitsPerSecond = DataCall.DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DataCall.DEFAULT_LIMITER_10_MINUTES;
         Arrays.stream(Server.values())
