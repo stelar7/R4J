@@ -14,7 +14,6 @@ public class ChampionByIdTest extends TestBase
     public void initForTest()
     {
         TestBase.init();
-        TestBase.builder.withEndpoint(URLEndpoint.CHAMPIONS);
     }
     
     private List<Champion> objectToList(final ChampionList cl)
@@ -45,7 +44,6 @@ public class ChampionByIdTest extends TestBase
     public void testSingle()
     {
         TestBase.builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, "266");
-        TestBase.builder.withEndpoint(URLEndpoint.CHAMPION_BY_ID);
         final Champion champs = (Champion) TestBase.builder.build();
         
         Assert.assertTrue("Champion id is not 266?", champs.getId().equals(266));

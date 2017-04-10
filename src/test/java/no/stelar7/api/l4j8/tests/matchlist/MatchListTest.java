@@ -1,14 +1,13 @@
 package no.stelar7.api.l4j8.tests.matchlist;
 
 import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.matchlist.*;
-import no.stelar7.api.l4j8.tests.*;
-import org.junit.*;
+import no.stelar7.api.l4j8.tests.TestBase;
+import org.junit.Assert;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class MatchListTest extends TestBase
 {
@@ -60,9 +59,4 @@ public class MatchListTest extends TestBase
         matches.forEach(this.doAssertions);
     }
     
-    @org.junit.Before
-    public void initBeforeTest()
-    {
-        TestBase.builder.withEndpoint(URLEndpoint.MATCHLIST);
-    }
 }

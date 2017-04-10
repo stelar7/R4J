@@ -1,17 +1,16 @@
 package no.stelar7.api.l4j8.tests.currentgame;
 
 import no.stelar7.api.l4j8.basic.*;
-import no.stelar7.api.l4j8.basic.DataCall.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.currentgame.*;
+import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
+import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.*;
-import no.stelar7.api.l4j8.pojo.summoner.*;
-import no.stelar7.api.l4j8.tests.*;
-import org.junit.*;
-import org.junit.runners.*;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import no.stelar7.api.l4j8.tests.SecretFile;
+import org.junit.Assert;
+import org.junit.runners.MethodSorters;
 
-import java.util.*;
+import java.util.Map;
 
 @org.junit.FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CurrentGameTest
@@ -42,7 +41,7 @@ public class CurrentGameTest
         final Long id = datamap.get(parsedName).getId();
         
         this.currentbuilder.withURLData("{summonerId}", id.toString());
-        this.currentbuilder.withURLData("{platformId}", game.getPlatform().getCode());
+        this.currentbuilder.withURLData("{platformId}", game.getPlatform().toString());
         
         // our ongoing game
         final CurrentGameInfo currentGame = (CurrentGameInfo) this.currentbuilder.build();
@@ -76,24 +75,7 @@ public class CurrentGameTest
                                                                                                        .getCode());
         Assert.assertEquals("role doesnt match ROLE", currentGame.getGameTypeId(), currentGame.getGameType().getCode());
         Assert.assertEquals("season doesnt match SEASON", currentGame.getMapId(), currentGame.getMap().getCode());
-        Assert.assertEquals("region doesnt match REGION", currentGame.getPlatformId(), currentGame.getPlatform().getCode());
-        
-    }
-    
-    @org.junit.Before
-    public void init()
-    {
-        this.currentbuilder.withServer(Server.EUW);
-        this.featuredbuilder.withServer(Server.EUW);
-        this.idbuilder.withServer(Server.EUW);
-        
-        this.currentbuilder.withRegion(Server.EUW);
-        this.featuredbuilder.withRegion(Server.EUW);
-        this.idbuilder.withRegion(Server.EUW);
-        
-        this.currentbuilder.withEndpoint(URLEndpoint.CURRENTGAME);
-        this.featuredbuilder.withEndpoint(URLEndpoint.FEATUREDGAME);
-        this.idbuilder.withEndpoint(URLEndpoint.SUMMONER_BY_NAME);
+        Assert.assertEquals("region doesnt match REGION", currentGame.getPlatformId(), currentGame.getPlatform().toString());
         
     }
     

@@ -1,21 +1,18 @@
 package no.stelar7.api.l4j8.basic;
 
+
 import com.google.gson.Gson;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.impl.RateLimiter;
-import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public final class DataCall
 {
@@ -35,8 +32,6 @@ public final class DataCall
         private final DataCall dc = new DataCall();
         
         private final BiFunction<String, String, String> merge = (o, n) -> o + "," + n;
-        
-        private final StringBuilder urlBuilder = new StringBuilder();
         
         /**
          * Print out as much data as possible about this call
@@ -59,18 +54,7 @@ public final class DataCall
         public Object build()
         {
             
-            if (!this.dc.endpoint.isAvalibleFrom(this.dc.server))
-            {
-                throw new APIServerEndpointMissmatchException(this.dc.endpoint.toString() + " not avalible from " + this.dc.server.asURLFormat());
-            }
-            
-            final boolean isServerRatelimited = this.dc.server.isLimited();
-            final boolean isToRatelimitedURL  = !this.dc.endpoint.getValue().startsWith(DataCall.HTTP);
-            
-            if (isServerRatelimited && isToRatelimitedURL)
-            {
-                DataCall.limiter.get(this.dc.server).acquire();
-            }
+            DataCall.limiter.get(this.dc.platform).acquire();
             
             final String           url      = this.getURL();
             final DataCallResponse response = this.getResponse(url);
@@ -85,12 +69,6 @@ public final class DataCall
                 } else
                 {
                     dtoobj = new Gson().fromJson(response.getResponseData(), (Type) this.dc.endpoint.getType());
-                }
-                
-                if (dtoobj instanceof Map)
-                {
-                    final Map<?, ?> map = (Map<?, ?>) dtoobj;
-                    map.values().stream().filter(value -> value instanceof Summoner).forEach(this::setServerOnSummoner);
                 }
                 
                 return dtoobj;
@@ -235,62 +213,18 @@ public final class DataCall
          */
         private String getURL()
         {
-            if (this.urlBuilder.length() != 0)
-            {
-                return this.urlBuilder.toString();
-            }
             
-            if (!this.dc.endpoint.getValue().startsWith(DataCall.HTTP))
-            {
-                this.urlBuilder.append(DataCall.HTTPS);
-            } else
-            {
-                this.dc.server = Server.GLOBAL;
-            }
-            
-            this.urlBuilder.append(this.dc.server.getURL()).append(this.dc.endpoint.getValue());
-            
-            this.withURLData("{region}", this.dc.region == null ? this.dc.server.asURLFormat() : this.dc.region.asURLFormat());
-            this.withURLData("{version}", this.dc.endpoint.getVersion());
-            
-            this.dc.urlData.forEach((k, v) ->
-                                    {
-                                        String temp = this.urlBuilder.toString();
-                                        temp = temp.replace(k, v);
-                                        this.urlBuilder.setLength(0);
-                                        this.urlBuilder.append(temp);
-                                    });
-            
-            this.dc.urlParams.put("api_key", DataCall.creds.getBaseAPIKey());
-            
-            final Optional<String> firstKey = this.dc.urlParams.keySet().stream().findFirst();
-            if (firstKey.isPresent())
-            {
-                this.urlBuilder.append("?").append(firstKey.get()).append("=").append(this.dc.urlParams.get(firstKey.get()));
-                this.dc.urlParams.keySet()
-                                 .stream()
-                                 .skip(1)
-                                 .forEach(k -> this.urlBuilder.append("&")
-                                                              .append(k)
-                                                              .append("=")
-                                                              .append(this.dc.urlParams.get(k)));
-            }
-            
-            return this.urlBuilder.toString();
+            String[] url = {Constants.REQUEST_URL_BASE};
+            url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.platform.toString());
+            url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.endpoint.getGame());
+            url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.endpoint.getService());
+            url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.endpoint.getVersion());
+            url[0] = url[0].replace(Constants.RESOURCE_PLACEHOLDER, dc.endpoint.getResource());
+            dc.urlParams.forEach((k, v) -> url[0] = url[0].replace(k, v));
+            url[0] += "?" + Constants.API_KEY_PLACEHOLDER + "=" + creds.getBaseAPIKey();
+            return url[0];
         }
         
-        private void setServerOnSummoner(final Object sum)
-        {
-            try
-            {
-                final Field field = Summoner.class.getDeclaredField("server");
-                field.setAccessible(true);
-                field.set(sum, this.dc.region);
-            } catch (final NoSuchFieldException | IllegalAccessException e)
-            {
-                DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
-            }
-        }
         
         /**
          * Sets the endpoint to make the call to
@@ -329,17 +263,6 @@ public final class DataCall
             return this;
         }
         
-        /**
-         * The region to make this call to. This is part of the URL, "{region}"
-         *
-         * @param region the region to make the call to
-         * @return this
-         */
-        public DataCallBuilder withRegion(final Server region)
-        {
-            this.dc.region = region;
-            return this;
-        }
         
         /**
          * The request-method on the call (usually GET or POST)
@@ -354,14 +277,14 @@ public final class DataCall
         }
         
         /**
-         * Set the server to make this call to. (ie. EUW)
+         * Set the platform to make this call to. (ie. EUW1)
          *
          * @param server the server to make the call to
          * @return this
          */
-        public DataCallBuilder withServer(final Server server)
+        public DataCallBuilder withPlatform(final Platform server)
         {
-            this.dc.server = server;
+            this.dc.platform = server;
             return this;
         }
         
@@ -422,15 +345,12 @@ public final class DataCall
         
     }
     
-    private static final String HTTP  = "http://";
-    private static final String HTTPS = "https://";
-    
     private static final Double DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
     private static final Double DEFAULT_LIMITER_10_MINUTES             = 600.0;
     
     private static final Logger LOGGER = Logger.getGlobal();
     
-    private static final EnumMap<Server, RateLimiter> limiter = new EnumMap<>(Server.class);
+    private static final EnumMap<Platform, RateLimiter> limiter = new EnumMap<>(Platform.class);
     
     public static DataCallBuilder builder()
     {
@@ -451,18 +371,13 @@ public final class DataCall
     private String requestMethod = "GET";
     private String postData      = "";
     
-    private Server server;
-    
-    private Server region;
-    
+    private Platform    platform;
     private URLEndpoint endpoint;
     
     private DataCall()
     {
         final double permitsPerSecond = DataCall.DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DataCall.DEFAULT_LIMITER_10_MINUTES;
-        Arrays.stream(Server.values())
-              .filter(Server::isLimited)
-              .forEach(s -> DataCall.limiter.put(s, new RateLimiter(permitsPerSecond)));
+        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new RateLimiter(permitsPerSecond)));
         
     }
     

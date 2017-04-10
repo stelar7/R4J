@@ -1,10 +1,9 @@
 package no.stelar7.api.l4j8.tests.staticdata;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.tests.*;
-import org.junit.*;
+import no.stelar7.api.l4j8.tests.TestBase;
+import org.junit.Assert;
 
-import java.util.*;
+import java.util.List;
 
 public class StaticVersionTest extends TestBase
 {
@@ -18,10 +17,4 @@ public class StaticVersionTest extends TestBase
         
     }
     
-    @org.junit.Before
-    public void initBeforeClass()
-    {
-        TestBase.builder.withServer(Server.GLOBAL);
-        TestBase.builder.withEndpoint(URLEndpoint.STATIC_VERSIONS);
-    }
 }

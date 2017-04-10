@@ -10,14 +10,6 @@ import org.junit.*;
 public class StaticChampionTest extends TestBase
 {
     
-    @Before
-    public void initForTest()
-    {
-        TestBase.init();
-        TestBase.builder.withEndpoint(URLEndpoint.STATIC_CHAMPION);
-        TestBase.builder.withServer(Server.GLOBAL);
-        TestBase.builder.withRegion(Server.EUW);
-    }
     
     @Test
     public void printAllCds()
@@ -32,5 +24,5 @@ public class StaticChampionTest extends TestBase
             }
         }
     }
-
+    
 }

@@ -1,35 +1,9 @@
 package no.stelar7.api.l4j8.tests.championmastery;
 
-import no.stelar7.api.l4j8.basic.*;
-import no.stelar7.api.l4j8.basic.DataCall.*;
-import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.championmastery.*;
-import org.junit.*;
-
-import java.util.*;
-
 public class ChampionMasteryTest
 {
     
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testMultiple()
-    {
-        // Generate data for call
-        final DataCallBuilder builder = DataCall.builder();
-        builder.asVerbose(true);
-        builder.withServer(Server.EUW);
-        builder.withRegion(Server.EUW);
-        builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY);
-        builder.withURLData(Constants.PLATFORM_ID_PLACEHOLDER, Platform.EUW1.getCode());
-        builder.withURLData(Constants.SUMMONER_ID_PLACEHOLDER, "19613950");
-        
-        // Get the response
-        final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
-        
-        data.forEach(inner -> Assert.assertTrue("the summonerId changed?", inner.getPlayerId() == 19613950L));
-    }
+    /*
     
     @Test
     public void testSingle()
@@ -84,5 +58,6 @@ public class ChampionMasteryTest
                          Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L));
         
     }
+    */
     
 }

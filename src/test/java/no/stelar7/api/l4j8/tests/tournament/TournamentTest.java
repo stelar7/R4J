@@ -17,6 +17,8 @@ public class TournamentTest
     public static final Logger        LOGGER  = Logger.getGlobal();
     final               TournamentAPI builder = new L4J8(SecretFile.CREDS).getTournamentAPI();
     
+    /*
+    
     // @Test
     public void testAllRegistrations()
     {
@@ -136,5 +138,7 @@ public class TournamentTest
         final Long                             id         = this.builder.registerTournament(params);
         TournamentTest.LOGGER.log(Level.INFO, String.valueOf(id));
     }
+    
+    */
 
 }
