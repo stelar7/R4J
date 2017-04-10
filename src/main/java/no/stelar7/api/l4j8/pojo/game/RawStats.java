@@ -901,7 +901,7 @@ public class RawStats
                                                            try
                                                            {
                                                                map.put(f.getName(), f.get(this).toString());
-                                                           } catch (final Exception e)
+                                                           } catch (final IllegalAccessException e)
                                                            {
                                                                RawStats.LOGGER.log(Level.WARNING, e.getMessage(), e);
                                                            }

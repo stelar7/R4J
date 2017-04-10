@@ -4,15 +4,15 @@ import java.time.*;
 
 public class ChampionMastery
 {
-    Integer championLevel;
-    Boolean chestGranted;
-    Integer championPoints;
-    Long    championPointsSinceLastLevel;
-    Long    playerId;
-    Long    championPointsUntilNextLevel;
-    Integer tokensEarned;
-    Integer championId;
-    Long    lastPlayTime;
+    private Integer championLevel;
+    private Boolean chestGranted;
+    private Integer championPoints;
+    private Long    championPointsSinceLastLevel;
+    private Long    playerId;
+    private Long    championPointsUntilNextLevel;
+    private Integer tokensEarned;
+    private Integer championId;
+    private Long    lastPlayTime;
     
     
     /**
