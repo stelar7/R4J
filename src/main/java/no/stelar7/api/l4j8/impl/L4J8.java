@@ -19,6 +19,16 @@ public class L4J8
         DataCallBuilder.setCredentials(creds);
     }
     
+    public MasteryAPI getMasteryrAPI()
+    {
+        return MasteryAPI.getInstance();
+    }
+    
+    public SpectatorAPI getSpectatorAPI()
+    {
+        return SpectatorAPI.getInstance();
+    }
+    
     public SummonerAPI getSummonerAPI() {return SummonerAPI.getInstance();}
     
     public TournamentAPI getTournamentAPI()

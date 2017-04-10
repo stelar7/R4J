@@ -1,30 +1,22 @@
 package no.stelar7.api.l4j8.tests.championmastery;
 
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
+import no.stelar7.api.l4j8.tests.SecretFile;
+import org.junit.*;
+
+import java.util.*;
+import java.util.function.Consumer;
+
 public class ChampionMasteryTest
 {
     
-    /*
     
-    @Test
-    public void testSingle()
+    Consumer<ChampionMastery> doAssertions = (final ChampionMastery data) ->
     {
-        // Generate data for call
-        final DataCallBuilder builder = DataCall.builder();
-        builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY_BY_ID);
-        builder.asVerbose(true);
-        
-        builder.withServer(Server.EUW);
-        builder.withRegion(Server.EUW);
-        builder.withURLData(Constants.PLATFORM_ID_PLACEHOLDER, Platform.EUW1.getCode());
-        builder.withURLData(Constants.SUMMONER_ID_PLACEHOLDER, "19613950");
-        builder.withURLData(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(Champion.LEONA.getId()));
-        
-        // Get the response
-        final ChampionMastery data = (ChampionMastery) builder.build();
-        
-        // Make sure all the data is returned as expected
-        Assert.assertTrue("ChampionId has changed?", data.getChampionId().equals(Champion.LEONA.getId()));
-        Assert.assertTrue("Max level is not 5?", data.getChampionLevel() == 5);
+        Assert.assertTrue("ChampionId has changed?", data.getChampionId().equals(Constants.TEST_CHAMPION_IDS[0]));
+        Assert.assertTrue("Max level is not 5?", data.getChampionLevel() > 5);
         Assert.assertTrue("Points less than 80k", data.getChampionPoints() > 80000);
         Assert.assertTrue("0 Points?", data.getChampionPointsSinceLastLevel() > 0L);
         Assert.assertTrue("There is another level?", data.getChampionPointsUntilNextLevel() == 0L);
@@ -33,31 +25,48 @@ public class ChampionMasteryTest
         Assert.assertEquals("last play date and DATE do not match", data.getLastPlayTime(), (Long) data.getLastPlayTimeAsDate()
                                                                                                        .toInstant()
                                                                                                        .toEpochMilli());
-        Assert.assertTrue("SummonerId changed?", data.getPlayerId() == 19613950L);
+    };
+    
+    Consumer<List<ChampionMastery>> doListAssertions = (final List<ChampionMastery> list) ->
+    {
+        for (ChampionMastery championMastery : list)
+        {
+            Assert.assertTrue("no data", championMastery.getChampionId() != 0);
+        }
+    };
+    
+    @Test
+    public void testChampionMastery()
+    {
+        final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+        MasteryAPI api  = l4j8.getMasteryrAPI();
+        
+        Optional<ChampionMastery> mastrey = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
+        Assert.assertTrue("No data returned", mastrey.isPresent());
+        mastrey.ifPresent(doAssertions);
     }
     
     @Test
-    @SuppressWarnings("unchecked")
-    public void testTop()
+    public void testChampionMasteryAll()
     {
-        // Generate data for call
-        final DataCallBuilder builder = DataCall.builder();
-        builder.asVerbose(true);
-        builder.withServer(Server.EUW);
-        builder.withRegion(Server.EUW);
-        builder.withEndpoint(URLEndpoint.CHAMPIONMASTERY_TOP);
-        builder.withURLData("{platformId}", Platform.EUW1.getCode());
-        builder.withURLData("{summonerId}", "19613950");
-        builder.withURLParameter("count", "5");
+        final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+        MasteryAPI api  = l4j8.getMasteryrAPI();
         
-        // Get the response
-        final List<ChampionMastery> data = (List<ChampionMastery>) builder.build();
-        
-        data.forEach(inner ->
-                         // Make sure all the data is returned as expected
-                         Assert.assertTrue("SummonerId changed?", inner.getPlayerId() == 19613950L));
+        Optional<List<ChampionMastery>> all = api.getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        Assert.assertTrue("No data returned", all.isPresent());
+        all.ifPresent(doListAssertions);
         
     }
-    */
+    
+    @Test
+    public void testChampionMasteryScore()
+    {
+        final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+        MasteryAPI api  = l4j8.getMasteryrAPI();
+        
+        Optional<Integer> score = api.getMasteryScore(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        Assert.assertTrue("No data returned", score.isPresent());
+        score.ifPresent(Assert::assertNotNull);
+    }
     
 }

@@ -4,113 +4,16 @@ import java.time.*;
 
 public class ChampionMastery
 {
-    Integer championId;
     Integer championLevel;
+    Boolean chestGranted;
     Integer championPoints;
     Long    championPointsSinceLastLevel;
-    Long    championPointsUntilNextLevel;
-    Boolean chestGranted;
-    Long    lastPlayTime;
     Long    playerId;
+    Long    championPointsUntilNextLevel;
+    Integer tokensEarned;
+    Integer championId;
+    Long    lastPlayTime;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final ChampionMastery other = (ChampionMastery) obj;
-        if (this.championId == null)
-        {
-            if (other.championId != null)
-            {
-                return false;
-            }
-        } else if (!this.championId.equals(other.championId))
-        {
-            return false;
-        }
-        if (this.championLevel == null)
-        {
-            if (other.championLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.championLevel.equals(other.championLevel))
-        {
-            return false;
-        }
-        if (this.championPoints == null)
-        {
-            if (other.championPoints != null)
-            {
-                return false;
-            }
-        } else if (!this.championPoints.equals(other.championPoints))
-        {
-            return false;
-        }
-        if (this.championPointsSinceLastLevel == null)
-        {
-            if (other.championPointsSinceLastLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.championPointsSinceLastLevel.equals(other.championPointsSinceLastLevel))
-        {
-            return false;
-        }
-        if (this.championPointsUntilNextLevel == null)
-        {
-            if (other.championPointsUntilNextLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.championPointsUntilNextLevel.equals(other.championPointsUntilNextLevel))
-        {
-            return false;
-        }
-        if (this.chestGranted == null)
-        {
-            if (other.chestGranted != null)
-            {
-                return false;
-            }
-        } else if (!this.chestGranted.equals(other.chestGranted))
-        {
-            return false;
-        }
-        if (this.lastPlayTime == null)
-        {
-            if (other.lastPlayTime != null)
-            {
-                return false;
-            }
-        } else if (!this.lastPlayTime.equals(other.lastPlayTime))
-        {
-            return false;
-        }
-        if (this.playerId == null)
-        {
-            if (other.playerId != null)
-            {
-                return false;
-            }
-        } else if (!this.playerId.equals(other.playerId))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Champion ID for this entry.
@@ -202,31 +105,94 @@ public class ChampionMastery
         return this.playerId;
     }
     
+    /**
+     * The tokens earned for this entry.
+     *
+     * @return the token count
+     */
+    public Integer getTokensEarned()
+    {
+        return tokensEarned;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        ChampionMastery that = (ChampionMastery) o;
+        
+        if ((championLevel != null) ? !championLevel.equals(that.championLevel) : (that.championLevel != null))
+        {
+            return false;
+        }
+        if ((chestGranted != null) ? !chestGranted.equals(that.chestGranted) : (that.chestGranted != null))
+        {
+            return false;
+        }
+        if ((championPoints != null) ? !championPoints.equals(that.championPoints) : (that.championPoints != null))
+        {
+            return false;
+        }
+        if ((championPointsSinceLastLevel != null) ? !championPointsSinceLastLevel.equals(that.championPointsSinceLastLevel) : (that.championPointsSinceLastLevel != null))
+        {
+            return false;
+        }
+        if ((playerId != null) ? !playerId.equals(that.playerId) : (that.playerId != null))
+        {
+            return false;
+        }
+        if ((championPointsUntilNextLevel != null) ? !championPointsUntilNextLevel.equals(that.championPointsUntilNextLevel) : (that.championPointsUntilNextLevel != null))
+        {
+            return false;
+        }
+        if ((tokensEarned != null) ? !tokensEarned.equals(that.tokensEarned) : (that.tokensEarned != null))
+        {
+            return false;
+        }
+        if ((championId != null) ? !championId.equals(that.championId) : (that.championId != null))
+        {
+            return false;
+        }
+        return (lastPlayTime != null) ? lastPlayTime.equals(that.lastPlayTime) : (that.lastPlayTime == null);
+    }
+    
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
-        result = (prime * result) + ((this.championLevel == null) ? 0 : this.championLevel.hashCode());
-        result = (prime * result) + ((this.championPoints == null) ? 0 : this.championPoints.hashCode());
-        result = (prime * result) + ((this.championPointsSinceLastLevel == null) ? 0 : this.championPointsSinceLastLevel.hashCode());
-        result = (prime * result) + ((this.championPointsUntilNextLevel == null) ? 0 : this.championPointsUntilNextLevel.hashCode());
-        result = (prime * result) + ((this.chestGranted == null) ? 0 : this.chestGranted.hashCode());
-        result = (prime * result) + ((this.lastPlayTime == null) ? 0 : this.lastPlayTime.hashCode());
-        result = (prime * result) + ((this.playerId == null) ? 0 : this.playerId.hashCode());
+        int result = championLevel != null ? championLevel.hashCode() : 0;
+        result = 31 * result + (chestGranted != null ? chestGranted.hashCode() : 0);
+        result = 31 * result + (championPoints != null ? championPoints.hashCode() : 0);
+        result = 31 * result + (championPointsSinceLastLevel != null ? championPointsSinceLastLevel.hashCode() : 0);
+        result = 31 * result + (playerId != null ? playerId.hashCode() : 0);
+        result = 31 * result + (championPointsUntilNextLevel != null ? championPointsUntilNextLevel.hashCode() : 0);
+        result = 31 * result + (tokensEarned != null ? tokensEarned.hashCode() : 0);
+        result = 31 * result + (championId != null ? championId.hashCode() : 0);
+        result = 31 * result + (lastPlayTime != null ? lastPlayTime.hashCode() : 0);
         return result;
     }
     
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
+    
     @Override
     public String toString()
     {
-        return "ChampionMastery [championId=" + this.championId + ", championLevel=" + this.championLevel + ", championPoints=" + this.championPoints + ", championPointsSinceLastLevel=" + this.championPointsSinceLastLevel + ", championPointsUntilNextLevel=" + this.championPointsUntilNextLevel + ", chestGranted=" + this.chestGranted + ", lastPlayTime=" + this.lastPlayTime + ", playerId=" + this.playerId + "]";
+        return "ChampionMastery{" +
+               "championLevel=" + championLevel +
+               ", chestGranted=" + chestGranted +
+               ", championPoints=" + championPoints +
+               ", championPointsSinceLastLevel=" + championPointsSinceLastLevel +
+               ", playerId=" + playerId +
+               ", championPointsUntilNextLevel=" + championPointsUntilNextLevel +
+               ", tokensEarned=" + tokensEarned +
+               ", championId=" + championId +
+               ", lastPlayTime=" + lastPlayTime +
+               '}';
     }
-    
 }

@@ -43,6 +43,7 @@ public class Constants
     public static final Long[]   TEST_SUMMONER_IDS   = {19613950L};
     public static final Long[]   TEST_ACCOUNT_IDS    = {22401330L};
     public static final String[] TEST_SUMMONER_NAMES = {"stelar7"};
+    public static final int[]    TEST_CHAMPION_IDS   = {89};
     
     private Constants()
     {

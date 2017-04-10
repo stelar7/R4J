@@ -29,7 +29,7 @@ public final class SummonerAPI
      *
      * @param server     the region to execute against
      * @param summonerId summonerId associated with summoners to retrieve.
-     * @return a map of the userId to an Optional MasteryPages
+     * @return Optional MasteryPages
      */
     public Optional<MasteryPages> getMasteries(final Platform server, long summonerId)
     {
@@ -47,7 +47,7 @@ public final class SummonerAPI
      *
      * @param server     the region to execute against
      * @param summonerId summonerId associated with summoners to retrieve.
-     * @return a map of the userId to an Optional RunePages
+     * @return Optional RunePages
      */
     public Optional<RunePages> getRunes(final Platform server, long summonerId)
     {
@@ -65,7 +65,7 @@ public final class SummonerAPI
      *
      * @param server     the region to execute against
      * @param summonerId summonerId associated with summoners to retrieve.
-     * @return a map of the userId to an Optional Summoner
+     * @return Optional Summoner
      */
     public Optional<Summoner> getSummonerById(final Platform server, long summonerId)
     {
@@ -82,7 +82,7 @@ public final class SummonerAPI
      *
      * @param server       the region to execute against
      * @param summonerName summoner name  associated with summoner to retrieve.
-     * @return a map of the userId to an Optional Summoner
+     * @return Optional Summoner
      */
     public Optional<Summoner> getSummonerByName(final Platform server, String summonerName)
     {
@@ -99,7 +99,7 @@ public final class SummonerAPI
      *
      * @param server    the region to execute against
      * @param accountId accountId associated with summoner to retrieve.
-     * @return a map of the userId to an Optional Summoner
+     * @return Optional Summoner
      */
     public Optional<Summoner> getSummonerByAccount(final Platform server, long accountId)
     {
