@@ -169,10 +169,9 @@ public final class DataCall
                        .forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
                 
-                final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
                 
-                final String limitCount = con.getHeaderField("X-Rate-Limit-Count");
-                
+                // Log this for future use(?)
+                final String limitCount = con.getHeaderField("X-App-Rate-Limit-Count");
                 if (limitCount != null)
                 {
                     final String[] limits = limitCount.split(",");
@@ -181,10 +180,25 @@ public final class DataCall
                         final String[] limit = limitPair.split(":");
                         final Integer  call  = Integer.parseInt(limit[0]);
                         final Integer  time  = Integer.parseInt(limit[1]);
-                        DataCall.calls.put(time, call);
+                        DataCall.appLimit.put(time, call);
                     }
                 }
                 
+                // Log this for future use(?)
+                final String methodLimitCount = con.getHeaderField("X-Method-Rate-Limit-Count");
+                if (methodLimitCount != null)
+                {
+                    final String[] limits = methodLimitCount.split(",");
+                    for (final String limitPair : limits)
+                    {
+                        final String[] limit = limitPair.split(":");
+                        final Integer  call  = Integer.parseInt(limit[0]);
+                        final Integer  time  = Integer.parseInt(limit[1]);
+                        DataCall.methodLimit.get(dc.endpoint).put(time, call);
+                    }
+                }
+                
+                final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
                 if (con.getResponseCode() != 200)
                 {
                     return new DataCallResponse(con.getResponseCode(), limitType);
@@ -364,8 +378,11 @@ public final class DataCall
     private final Map<String, String> urlParams = new TreeMap<>();
     private final Map<String, String> urlData   = new TreeMap<>();
     
-    private final        Map<String, String>   urlHeaders = new TreeMap<>();
-    private static final Map<Integer, Integer> calls      = new TreeMap<>();
+    private final Map<String, String> urlHeaders = new TreeMap<>();
+    
+    // How many calls our app has made in a timeframe, Map<Timeframe, CallCount>
+    private static final Map<Integer, Integer>                   appLimit    = new TreeMap<>();
+    private static final Map<URLEndpoint, Map<Integer, Integer>> methodLimit = new TreeMap<>();
     
     private boolean verbose;
     
