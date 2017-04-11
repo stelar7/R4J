@@ -136,6 +136,13 @@ public class Champion
     @Override
     public String toString()
     {
-        return "Champion [active=" + this.active + ", botEnabled=" + this.botEnabled + ", botMmEnabled=" + this.botMmEnabled + ", freeToPlay=" + this.freeToPlay + ", id=" + this.id + ", rankedPlayEnabled=" + this.rankedPlayEnabled + "]";
+        return "Champion{" +
+               "active=" + active +
+               ", botEnabled=" + botEnabled +
+               ", botMmEnabled=" + botMmEnabled +
+               ", freeToPlay=" + freeToPlay +
+               ", rankedPlayEnabled=" + rankedPlayEnabled +
+               ", id=" + id +
+               '}';
     }
 }

@@ -8,6 +8,8 @@ public class PlayerStatsSummary
     private String          playerStatSummaryType;
     private Integer         wins;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -138,5 +140,17 @@ public class PlayerStatsSummary
         result = (prime * result) + ((this.playerStatSummaryType == null) ? 0 : this.playerStatSummaryType.hashCode());
         result = (prime * result) + ((this.wins == null) ? 0 : this.wins.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "PlayerStatsSummary{" +
+               "aggregatedStats=" + aggregatedStats +
+               ", losses=" + losses +
+               ", modifyDate=" + modifyDate +
+               ", playerStatSummaryType='" + playerStatSummaryType + '\'' +
+               ", wins=" + wins +
+               '}';
     }
 }

@@ -6,6 +6,9 @@ public class SummonerSpellList
 {
     private Map<String, SummonerSpell> data;
     
+    
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -54,5 +57,13 @@ public class SummonerSpellList
         result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
         result = (prime * result) + super.hashCode();
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "SummonerSpellList{" +
+               "data=" + data +
+               '}';
     }
 }

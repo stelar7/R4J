@@ -10,6 +10,8 @@ public class Image
     private Integer x;
     private Integer y;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -182,5 +184,19 @@ public class Image
         result = (prime * result) + ((this.x == null) ? 0 : this.x.hashCode());
         result = (prime * result) + ((this.y == null) ? 0 : this.y.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Image{" +
+               "full='" + full + '\'' +
+               ", group='" + group + '\'' +
+               ", h=" + h +
+               ", sprite='" + sprite + '\'' +
+               ", w=" + w +
+               ", x=" + x +
+               ", y=" + y +
+               '}';
     }
 }

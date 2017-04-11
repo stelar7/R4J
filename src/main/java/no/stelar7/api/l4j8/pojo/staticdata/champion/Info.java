@@ -117,4 +117,15 @@ public class Info
         result = (prime * result) + ((this.magic == null) ? 0 : this.magic.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Info{" +
+               "attack=" + attack +
+               ", defence=" + defence +
+               ", difficulty=" + difficulty +
+               ", magic=" + magic +
+               '}';
+    }
 }

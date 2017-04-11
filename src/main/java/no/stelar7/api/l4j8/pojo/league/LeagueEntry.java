@@ -272,4 +272,21 @@ public class LeagueEntry
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "LeagueEntry{" +
+               "division='" + division + '\'' +
+               ", isFreshBlood=" + isFreshBlood +
+               ", isHotStreak=" + isHotStreak +
+               ", isInactive=" + isInactive +
+               ", isVeteran=" + isVeteran +
+               ", leaguePoints=" + leaguePoints +
+               ", losses=" + losses +
+               ", miniSeries=" + miniSeries +
+               ", playerOrTeamId='" + playerOrTeamId + '\'' +
+               ", playerOrTeamName='" + playerOrTeamName + '\'' +
+               ", wins=" + wins +
+               '}';
+    }
 }

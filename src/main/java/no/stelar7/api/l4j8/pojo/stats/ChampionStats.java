@@ -9,6 +9,8 @@ public class ChampionStats
     private Integer         id;
     private AggregatedStats stats;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -88,4 +90,12 @@ public class ChampionStats
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "ChampionStats{" +
+               "id=" + id +
+               ", stats=" + stats +
+               '}';
+    }
 }

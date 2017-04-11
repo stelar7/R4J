@@ -6,6 +6,8 @@ public class MetaData
     private String  tier;
     private String  type;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -94,5 +96,15 @@ public class MetaData
         result = (prime * result) + ((this.tier == null) ? 0 : this.tier.hashCode());
         result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "MetaData{" +
+               "isRune=" + isRune +
+               ", tier='" + tier + '\'' +
+               ", type='" + type + '\'' +
+               '}';
     }
 }

@@ -5,6 +5,7 @@ public class MasteryTreeItem
     private Integer masteryId;
     private String  prereq;
     
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -72,5 +73,14 @@ public class MasteryTreeItem
         result = (prime * result) + ((this.masteryId == null) ? 0 : this.masteryId.hashCode());
         result = (prime * result) + ((this.prereq == null) ? 0 : this.prereq.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "MasteryTreeItem{" +
+               "masteryId=" + masteryId +
+               ", prereq='" + prereq + '\'' +
+               '}';
     }
 }

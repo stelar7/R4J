@@ -75,4 +75,13 @@ public class ItemTree
         result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "ItemTree{" +
+               "header='" + header + '\'' +
+               ", tags=" + tags +
+               '}';
+    }
 }

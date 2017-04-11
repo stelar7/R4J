@@ -16,6 +16,8 @@ public class MatchHistorySummary
     private String  opposingTeamName;
     private Boolean win;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -283,5 +285,22 @@ public class MatchHistorySummary
         result = (prime * result) + ((this.win == null) ? 0 : this.win.hashCode());
         return result;
     }
-
+    
+    @Override
+    public String toString()
+    {
+        return "MatchHistorySummary{" +
+               "assists=" + assists +
+               ", deaths=" + deaths +
+               ", kills=" + kills +
+               ", mapId=" + mapId +
+               ", opposingTeamKills=" + opposingTeamKills +
+               ", date=" + date +
+               ", invalid=" + invalid +
+               ", gameMode='" + gameMode + '\'' +
+               ", gameId=" + gameId +
+               ", opposingTeamName='" + opposingTeamName + '\'' +
+               ", win=" + win +
+               '}';
+    }
 }

@@ -57,6 +57,8 @@ public class ChampionList
     @Override
     public String toString()
     {
-        return "ChampionList [champions=" + this.champions + "]";
+        return "ChampionList{" +
+               "champions=" + champions +
+               '}';
     }
 }

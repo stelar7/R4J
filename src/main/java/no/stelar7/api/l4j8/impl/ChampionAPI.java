@@ -25,7 +25,7 @@ public final class ChampionAPI
         
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPIONS)
                                                        .withPlatform(server);
-        freeToPlay.ifPresent(value -> builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER, String.valueOf(value)));
+        freeToPlay.ifPresent(value -> builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, String.valueOf(value)));
         
         return Optional.of((ChampionList) builder.build());
     }

@@ -20,6 +20,8 @@ public class Team
     private List<TeamStatDetail>      teamStatDetails;
     private Long                      thirdLastJoinDate;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -400,5 +402,25 @@ public class Team
         result = (prime * result) + ((this.thirdLastJoinDate == null) ? 0 : this.thirdLastJoinDate.hashCode());
         return result;
     }
-
+    
+    @Override
+    public String toString()
+    {
+        return "Team{" +
+               "createDate=" + createDate +
+               ", fullId='" + fullId + '\'' +
+               ", lastGameDate=" + lastGameDate +
+               ", lastJoinDate=" + lastJoinDate +
+               ", lastJoinedRankedTeamQueueDate=" + lastJoinedRankedTeamQueueDate +
+               ", matchHistory=" + matchHistory +
+               ", modifyDate=" + modifyDate +
+               ", name='" + name + '\'' +
+               ", roster=" + roster +
+               ", secondLastJoinDate=" + secondLastJoinDate +
+               ", status='" + status + '\'' +
+               ", tag='" + tag + '\'' +
+               ", teamStatDetails=" + teamStatDetails +
+               ", thirdLastJoinDate=" + thirdLastJoinDate +
+               '}';
+    }
 }

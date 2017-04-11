@@ -7,6 +7,8 @@ public class MasteryList
     private Map<String, Mastery> data;
     private MasteryTree          tree;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -78,4 +80,12 @@ public class MasteryList
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "MasteryList{" +
+               "data=" + data +
+               ", tree=" + tree +
+               '}';
+    }
 }

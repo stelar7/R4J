@@ -95,4 +95,14 @@ public class Skin
         result = (prime * result) + ((this.num == null) ? 0 : this.num.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Skin{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", num=" + num +
+               '}';
+    }
 }

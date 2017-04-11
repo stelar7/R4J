@@ -250,4 +250,21 @@ public class ParticipantFrame
         result = (prime * result) + ((this.xp == null) ? 0 : this.xp.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "ParticipantFrame{" +
+               "currentGold=" + currentGold +
+               ", dominionScore=" + dominionScore +
+               ", jungleMinionsKilled=" + jungleMinionsKilled +
+               ", level=" + level +
+               ", minionsKilled=" + minionsKilled +
+               ", participantId=" + participantId +
+               ", position=" + position +
+               ", teamScore=" + teamScore +
+               ", totalGold=" + totalGold +
+               ", xp=" + xp +
+               '}';
+    }
 }

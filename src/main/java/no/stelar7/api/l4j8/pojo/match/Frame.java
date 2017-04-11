@@ -97,4 +97,14 @@ public class Frame
         result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Frame{" +
+               "events=" + events +
+               ", participantFrames=" + participantFrames +
+               ", timestamp=" + timestamp +
+               '}';
+    }
 }

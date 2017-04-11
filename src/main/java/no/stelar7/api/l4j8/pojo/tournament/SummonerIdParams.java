@@ -17,6 +17,8 @@ public class SummonerIdParams
         this.participants.addAll(set);
     }
     
+    
+    
     public void addParticipant(final Number id)
     {
         this.participants.add(id);
@@ -63,5 +65,13 @@ public class SummonerIdParams
         int       result = 1;
         result = (prime * result) + ((this.participants == null) ? 0 : this.participants.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "SummonerIdParams{" +
+               "participants=" + participants +
+               '}';
     }
 }

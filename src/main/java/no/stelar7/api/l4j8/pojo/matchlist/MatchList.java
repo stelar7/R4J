@@ -123,7 +123,11 @@ public class MatchList
     @Override
     public String toString()
     {
-        return "MatchList [endIndex=" + this.endIndex + ", startIndex=" + this.startIndex + ", totalGames=" + this.totalGames + ", matches=" + this.matches + "]";
+        return "MatchList{" +
+               "endIndex=" + endIndex +
+               ", startIndex=" + startIndex +
+               ", totalGames=" + totalGames +
+               ", matches=" + matches +
+               '}';
     }
-    
 }

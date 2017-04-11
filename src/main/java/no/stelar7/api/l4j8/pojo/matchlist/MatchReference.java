@@ -312,6 +312,16 @@ public class MatchReference
     @Override
     public String toString()
     {
-        return "MatchReference [champion=" + this.champion + ", lane=" + this.lane + ", matchId=" + this.matchId + ", platformId=" + this.platformId + ", queue=" + this.queue + ", role=" + this.role + ", season=" + this.season + ", timestamp=" + this.timestamp + "]";
+        return "MatchReference{" +
+               "champion=" + champion +
+               ", matchId=" + matchId +
+               ", timestamp=" + timestamp +
+               ", lane='" + lane + '\'' +
+               ", platformId='" + platformId + '\'' +
+               ", queue='" + queue + '\'' +
+               ", region='" + region + '\'' +
+               ", role='" + role + '\'' +
+               ", season='" + season + '\'' +
+               '}';
     }
 }

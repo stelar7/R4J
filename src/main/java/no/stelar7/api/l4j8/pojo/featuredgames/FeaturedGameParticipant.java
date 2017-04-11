@@ -59,4 +59,11 @@ public class FeaturedGameParticipant extends BaseGameParticipant
         return this.bot;
     }
     
+    @Override
+    public String toString()
+    {
+        return "FeaturedGameParticipant{" +
+               "bot=" + bot +
+               '}';
+    }
 }

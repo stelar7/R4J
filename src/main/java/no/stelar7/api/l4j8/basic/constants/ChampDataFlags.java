@@ -18,7 +18,7 @@ public enum ChampDataFlags
     STATS("stats"),
     TAGS("tags");
     
-    String value;
+    private String value;
     
     ChampDataFlags(final String value)
     {

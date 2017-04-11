@@ -15,6 +15,8 @@ public class Mastery
     private Integer      ranks;
     private List<String> sanitizedDescription;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -210,5 +212,20 @@ public class Mastery
         result = (prime * result) + ((this.ranks == null) ? 0 : this.ranks.hashCode());
         result = (prime * result) + ((this.sanitizedDescription == null) ? 0 : this.sanitizedDescription.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Mastery{" +
+               "description=" + description +
+               ", id=" + id +
+               ", image=" + image +
+               ", masteryTree='" + masteryTree + '\'' +
+               ", name='" + name + '\'' +
+               ", prereq='" + prereq + '\'' +
+               ", ranks=" + ranks +
+               ", sanitizedDescription=" + sanitizedDescription +
+               '}';
     }
 }

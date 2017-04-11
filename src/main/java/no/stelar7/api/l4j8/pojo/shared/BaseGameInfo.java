@@ -344,30 +344,18 @@ public class BaseGameInfo
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("FeaturedGameInfo [bannedChampions=");
-        sb.append(this.bannedChampions);
-        sb.append(", gameId=");
-        sb.append(this.gameId);
-        sb.append(", gameLength=");
-        sb.append(this.gameLength);
-        sb.append(", gameMode=");
-        sb.append(this.gameMode);
-        sb.append(", gameQueueConfigId=");
-        sb.append(this.gameQueueConfigId);
-        sb.append(", gameStartTime=");
-        sb.append(this.gameStartTime);
-        sb.append(", gameType=");
-        sb.append(this.gameType);
-        sb.append(", mapId=");
-        sb.append(this.mapId);
-        sb.append(", observers=");
-        sb.append(this.observers);
-        sb.append(", participants=");
-        sb.append(this.participants);
-        sb.append(", platformId=");
-        sb.append(this.platformId);
-        sb.append("]");
-        return sb.toString();
+        return "BaseGameInfo{" +
+               "bannedChampions=" + bannedChampions +
+               ", gameId=" + gameId +
+               ", gameLength=" + gameLength +
+               ", gameMode='" + gameMode + '\'' +
+               ", gameQueueConfigId=" + gameQueueConfigId +
+               ", gameStartTime=" + gameStartTime +
+               ", gameType='" + gameType + '\'' +
+               ", mapId=" + mapId +
+               ", observers=" + observers +
+               ", participants=" + participants +
+               ", platformId='" + platformId + '\'' +
+               '}';
     }
 }

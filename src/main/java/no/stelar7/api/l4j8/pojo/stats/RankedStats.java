@@ -9,6 +9,8 @@ public class RankedStats
     private Long                modifyDate;
     private Long                summonerId;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -109,4 +111,13 @@ public class RankedStats
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "RankedStats{" +
+               "champions=" + champions +
+               ", modifyDate=" + modifyDate +
+               ", summonerId=" + summonerId +
+               '}';
+    }
 }

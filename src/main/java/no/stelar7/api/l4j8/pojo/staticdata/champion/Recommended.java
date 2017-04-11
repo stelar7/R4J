@@ -185,4 +185,18 @@ public class Recommended
         result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Recommended{" +
+               "blocks=" + blocks +
+               ", champion='" + champion + '\'' +
+               ", map='" + map + '\'' +
+               ", mode='" + mode + '\'' +
+               ", priority=" + priority +
+               ", title='" + title + '\'' +
+               ", type='" + type + '\'' +
+               '}';
+    }
 }

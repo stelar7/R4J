@@ -121,4 +121,15 @@ public class MapDetails
         result = (prime * result) + ((this.unpurchasableItemList == null) ? 0 : this.unpurchasableItemList.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "MapDetails{" +
+               "image=" + image +
+               ", mapId=" + mapId +
+               ", mapName='" + mapName + '\'' +
+               ", unpurchasableItemList=" + unpurchasableItemList +
+               '}';
+    }
 }

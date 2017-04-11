@@ -123,7 +123,10 @@ public class BannedChampion
     @Override
     public String toString()
     {
-        return "BannedChampion [championId=" + this.championId + ", pickTurn=" + this.pickTurn + ", teamId=" + this.teamId + "]";
+        return "BannedChampion{" +
+               "championId=" + championId +
+               ", pickTurn=" + pickTurn +
+               ", teamId=" + teamId +
+               '}';
     }
-    
 }

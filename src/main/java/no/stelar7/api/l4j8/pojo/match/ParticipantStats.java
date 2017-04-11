@@ -1447,7 +1447,70 @@ public class ParticipantStats
     @Override
     public String toString()
     {
-        return "ParticipantStats [assists=" + this.assists + ", champLevel=" + this.champLevel + ", combatPlayerScore=" + this.combatPlayerScore + ", deaths=" + this.deaths + ", doubleKills=" + this.doubleKills + ", firstBloodAssist=" + this.firstBloodAssist + ", firstBloodKill=" + this.firstBloodKill + ", firstInhibitorAssist=" + this.firstInhibitorAssist + ", firstInhibitorKill=" + this.firstInhibitorKill + ", firstTowerAssist=" + this.firstTowerAssist + ", firstTowerKill=" + this.firstTowerKill + ", goldEarned=" + this.goldEarned + ", goldSpent=" + this.goldSpent + ", inhibitorKills=" + this.inhibitorKills + ", item0=" + this.item0 + ", item1=" + this.item1 + ", item2=" + this.item2 + ", item3=" + this.item3 + ", item4=" + this.item4 + ", item5=" + this.item5 + ", item6=" + this.item6 + ", killingSprees=" + this.killingSprees + ", kills=" + this.kills + ", largestCriticalStrike=" + this.largestCriticalStrike + ", largestKillingSpree=" + this.largestKillingSpree + ", largestMultiKill=" + this.largestMultiKill + ", magicDamageDealt=" + this.magicDamageDealt + ", magicDamageDealtToChampions=" + this.magicDamageDealtToChampions + ", magicDamageTaken=" + this.magicDamageTaken + ", minionsKilled=" + this.minionsKilled + ", neutralMinionsKilled=" + this.neutralMinionsKilled + ", neutralMinionsKilledEnemyJungle=" + this.neutralMinionsKilledEnemyJungle + ", neutralMinionsKilledTeamJungle=" + this.neutralMinionsKilledTeamJungle + ", nodeCapture=" + this.nodeCapture + ", nodeCaptureAssist=" + this.nodeCaptureAssist + ", nodeNeutralize=" + this.nodeNeutralize + ", nodeNeutralizeAssist=" + this.nodeNeutralizeAssist + ", objectivePlayerScore=" + this.objectivePlayerScore + ", pentaKills=" + this.pentaKills + ", physicalDamageDealt=" + this.physicalDamageDealt + ", physicalDamageDealtToChampions=" + this.physicalDamageDealtToChampions + ", physicalDamageTaken=" + this.physicalDamageTaken + ", quadraKills=" + this.quadraKills + ", sightWardsBoughtInGame=" + this.sightWardsBoughtInGame + ", teamObjective=" + this.teamObjective + ", totalDamageDealt=" + this.totalDamageDealt + ", totalDamageDealtToChampions=" + this.totalDamageDealtToChampions + ", totalDamageTaken=" + this.totalDamageTaken + ", totalHeal=" + this.totalHeal + ", totalPlayerScore=" + this.totalPlayerScore + ", totalScoreRank=" + this.totalScoreRank + ", totalTimeCrowdControlDealt=" + this.totalTimeCrowdControlDealt + ", totalUnitsHealed=" + this.totalUnitsHealed + ", towerKills=" + this.towerKills + ", tripleKills=" + this.tripleKills + ", trueDamageDealt=" + this.trueDamageDealt + ", trueDamageDealtToChampions=" + this.trueDamageDealtToChampions + ", trueDamageTaken=" + this.trueDamageTaken + ", unrealKills=" + this.unrealKills + ", visionWardsBoughtInGame=" + this.visionWardsBoughtInGame + ", wardsKilled=" + this.wardsKilled + ", wardsPlaced=" + this.wardsPlaced + ", winner=" + this.winner + "]";
+        return "ParticipantStats{" +
+               "assists=" + assists +
+               ", champLevel=" + champLevel +
+               ", combatPlayerScore=" + combatPlayerScore +
+               ", deaths=" + deaths +
+               ", doubleKills=" + doubleKills +
+               ", firstBloodAssist=" + firstBloodAssist +
+               ", firstBloodKill=" + firstBloodKill +
+               ", firstInhibitorAssist=" + firstInhibitorAssist +
+               ", firstInhibitorKill=" + firstInhibitorKill +
+               ", firstTowerAssist=" + firstTowerAssist +
+               ", firstTowerKill=" + firstTowerKill +
+               ", goldEarned=" + goldEarned +
+               ", goldSpent=" + goldSpent +
+               ", inhibitorKills=" + inhibitorKills +
+               ", item0=" + item0 +
+               ", item1=" + item1 +
+               ", item2=" + item2 +
+               ", item3=" + item3 +
+               ", item4=" + item4 +
+               ", item5=" + item5 +
+               ", item6=" + item6 +
+               ", killingSprees=" + killingSprees +
+               ", kills=" + kills +
+               ", largestCriticalStrike=" + largestCriticalStrike +
+               ", largestKillingSpree=" + largestKillingSpree +
+               ", largestMultiKill=" + largestMultiKill +
+               ", magicDamageDealt=" + magicDamageDealt +
+               ", magicDamageDealtToChampions=" + magicDamageDealtToChampions +
+               ", magicDamageTaken=" + magicDamageTaken +
+               ", minionsKilled=" + minionsKilled +
+               ", neutralMinionsKilled=" + neutralMinionsKilled +
+               ", neutralMinionsKilledEnemyJungle=" + neutralMinionsKilledEnemyJungle +
+               ", neutralMinionsKilledTeamJungle=" + neutralMinionsKilledTeamJungle +
+               ", nodeCapture=" + nodeCapture +
+               ", nodeCaptureAssist=" + nodeCaptureAssist +
+               ", nodeNeutralize=" + nodeNeutralize +
+               ", nodeNeutralizeAssist=" + nodeNeutralizeAssist +
+               ", objectivePlayerScore=" + objectivePlayerScore +
+               ", pentaKills=" + pentaKills +
+               ", physicalDamageDealt=" + physicalDamageDealt +
+               ", physicalDamageDealtToChampions=" + physicalDamageDealtToChampions +
+               ", physicalDamageTaken=" + physicalDamageTaken +
+               ", quadraKills=" + quadraKills +
+               ", sightWardsBoughtInGame=" + sightWardsBoughtInGame +
+               ", teamObjective=" + teamObjective +
+               ", totalDamageDealt=" + totalDamageDealt +
+               ", totalDamageDealtToChampions=" + totalDamageDealtToChampions +
+               ", totalDamageTaken=" + totalDamageTaken +
+               ", totalHeal=" + totalHeal +
+               ", totalPlayerScore=" + totalPlayerScore +
+               ", totalScoreRank=" + totalScoreRank +
+               ", totalTimeCrowdControlDealt=" + totalTimeCrowdControlDealt +
+               ", totalUnitsHealed=" + totalUnitsHealed +
+               ", towerKills=" + towerKills +
+               ", tripleKills=" + tripleKills +
+               ", trueDamageDealt=" + trueDamageDealt +
+               ", trueDamageDealtToChampions=" + trueDamageDealtToChampions +
+               ", trueDamageTaken=" + trueDamageTaken +
+               ", unrealKills=" + unrealKills +
+               ", visionWardsBoughtInGame=" + visionWardsBoughtInGame +
+               ", wardsKilled=" + wardsKilled +
+               ", wardsPlaced=" + wardsPlaced +
+               ", winner=" + winner +
+               '}';
     }
-    
 }

@@ -9,6 +9,8 @@ public class TeamMemberInfo
     private Long   playerId;
     private String status;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -140,4 +142,14 @@ public class TeamMemberInfo
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "TeamMemberInfo{" +
+               "inviteDate=" + inviteDate +
+               ", joinDate=" + joinDate +
+               ", playerId=" + playerId +
+               ", status='" + status + '\'' +
+               '}';
+    }
 }

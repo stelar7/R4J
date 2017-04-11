@@ -7,6 +7,8 @@ public class RunePages
     private List<RunePage> pages;
     private Long           summonerId;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -74,5 +76,14 @@ public class RunePages
         result = (prime * result) + ((this.pages == null) ? 0 : this.pages.hashCode());
         result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "RunePages{" +
+               "pages=" + pages +
+               ", summonerId=" + summonerId +
+               '}';
     }
 }

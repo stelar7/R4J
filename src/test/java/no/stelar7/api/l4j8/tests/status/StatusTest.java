@@ -11,15 +11,15 @@ import java.util.Optional;
 public class StatusTest
 {
     
+    final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+    StatusAPI api = l4j8.getStatusAPI();
+    
     @Test
     public void testStats()
     {
-        final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-        StatusAPI  api  = l4j8.getStatusAPI();
-        
         Optional<ShardStatus> status = api.getShardStatus(Platform.EUW1);
         Assert.assertTrue("no data?", status.isPresent());
-    
+        
         status.ifPresent(System.out::println);
     }
 }

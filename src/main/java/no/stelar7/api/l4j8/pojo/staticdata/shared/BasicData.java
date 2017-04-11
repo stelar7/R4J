@@ -28,6 +28,8 @@ public class BasicData
     private BasicDataStats       stats;
     private List<String>         tags;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -536,5 +538,35 @@ public class BasicData
         result = (prime * result) + ((this.stats == null) ? 0 : this.stats.hashCode());
         result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "BasicData{" +
+               "colloq='" + colloq + '\'' +
+               ", consumeOnFull=" + consumeOnFull +
+               ", consumed=" + consumed +
+               ", depth=" + depth +
+               ", description='" + description + '\'' +
+               ", from=" + from +
+               ", gold=" + gold +
+               ", group='" + group + '\'' +
+               ", hideFromAll=" + hideFromAll +
+               ", id=" + id +
+               ", image=" + image +
+               ", inStore=" + inStore +
+               ", into=" + into +
+               ", maps=" + maps +
+               ", name='" + name + '\'' +
+               ", plaintext='" + plaintext + '\'' +
+               ", requiredChampion='" + requiredChampion + '\'' +
+               ", rune=" + rune +
+               ", sanitizedDescription='" + sanitizedDescription + '\'' +
+               ", specialRecipe=" + specialRecipe +
+               ", stacks=" + stacks +
+               ", stats=" + stats +
+               ", tags=" + tags +
+               '}';
     }
 }

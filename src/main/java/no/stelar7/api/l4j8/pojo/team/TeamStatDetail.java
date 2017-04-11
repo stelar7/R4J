@@ -7,6 +7,8 @@ public class TeamStatDetail
     private String  teamStatType;
     private Integer wins;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -117,5 +119,15 @@ public class TeamStatDetail
         result = (prime * result) + ((this.wins == null) ? 0 : this.wins.hashCode());
         return result;
     }
-
+    
+    @Override
+    public String toString()
+    {
+        return "TeamStatDetail{" +
+               "averageGamesPlayed=" + averageGamesPlayed +
+               ", losses=" + losses +
+               ", teamStatType='" + teamStatType + '\'' +
+               ", wins=" + wins +
+               '}';
+    }
 }

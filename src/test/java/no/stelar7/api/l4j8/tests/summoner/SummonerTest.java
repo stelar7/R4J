@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.logging.*;
 
-public class SummonerTest extends TestBase
+public class SummonerTest
 {
     
     private static final Logger LOGGER = Logger.getGlobal();

@@ -8,6 +8,7 @@ public class MasteryTree
     private List<MasteryTreeList> Offense;
     private List<MasteryTreeList> Utility;
     
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -96,5 +97,15 @@ public class MasteryTree
         result = (prime * result) + ((this.Offense == null) ? 0 : this.Offense.hashCode());
         result = (prime * result) + ((this.Utility == null) ? 0 : this.Utility.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "MasteryTree{" +
+               "Defense=" + Defense +
+               ", Offense=" + Offense +
+               ", Utility=" + Utility +
+               '}';
     }
 }

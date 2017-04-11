@@ -10,6 +10,8 @@ public class SpellVars
     private String       link;
     private String       ranksWith;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -141,5 +143,16 @@ public class SpellVars
         result = (prime * result) + ((this.ranksWith == null) ? 0 : this.ranksWith.hashCode());
         return result;
     }
-
+    
+    @Override
+    public String toString()
+    {
+        return "SpellVars{" +
+               "coeff=" + coeff +
+               ", dyn='" + dyn + '\'' +
+               ", key='" + key + '\'' +
+               ", link='" + link + '\'' +
+               ", ranksWith='" + ranksWith + '\'' +
+               '}';
+    }
 }

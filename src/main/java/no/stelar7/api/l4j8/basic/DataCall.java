@@ -214,14 +214,14 @@ public final class DataCall
         private String getURL()
         {
             
-            String[] url = {Constants.REQUEST_URL_BASE};
+            String[] url = {Constants.REQUEST_URL};
             url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.platform.toString());
             url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.endpoint.getGame());
             url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.endpoint.getService());
             url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.endpoint.getVersion());
             url[0] = url[0].replace(Constants.RESOURCE_PLACEHOLDER, dc.endpoint.getResource());
             dc.urlParams.forEach((k, v) -> url[0] = url[0].replace(k, v));
-            url[0] += "?" + Constants.API_KEY_PLACEHOLDER + "=" + creds.getBaseAPIKey();
+            url[0] += "?" + Constants.API_KEY_PLACEHOLDER_DATA + "=" + creds.getBaseAPIKey();
             dc.urlData.forEach((k, v) -> url[0] = url[0] + "&" + k + "=" + v);
             return url[0];
         }

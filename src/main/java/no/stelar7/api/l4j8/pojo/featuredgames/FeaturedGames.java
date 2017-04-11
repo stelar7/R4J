@@ -79,7 +79,9 @@ public class FeaturedGames
     @Override
     public String toString()
     {
-        return "FeaturedGames [clientRefreshInterval=" + this.clientRefreshInterval + ", gameList=" + this.gameList + "]";
+        return "FeaturedGames{" +
+               "clientRefreshInterval=" + clientRefreshInterval +
+               ", gameList=" + gameList +
+               '}';
     }
-    
 }

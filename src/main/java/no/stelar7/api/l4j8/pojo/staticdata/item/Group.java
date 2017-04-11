@@ -73,4 +73,13 @@ public class Group
         result = (prime * result) + ((this.key == null) ? 0 : this.key.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Group{" +
+               "MaxGroupOwnable='" + MaxGroupOwnable + '\'' +
+               ", key='" + key + '\'' +
+               '}';
+    }
 }

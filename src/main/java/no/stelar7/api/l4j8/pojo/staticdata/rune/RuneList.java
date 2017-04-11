@@ -9,6 +9,8 @@ public class RuneList
     private BasicData         basic;
     private Map<String, Rune> data;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -78,5 +80,14 @@ public class RuneList
         result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
         result = (prime * result) + super.hashCode();
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "RuneList{" +
+               "basic=" + basic +
+               ", data=" + data +
+               '}';
     }
 }

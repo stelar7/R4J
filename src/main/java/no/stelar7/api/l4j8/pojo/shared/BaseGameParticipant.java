@@ -189,20 +189,13 @@ public class BaseGameParticipant
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("FeaturedGameParticipant [championId=");
-        sb.append(this.championId);
-        sb.append(", profileIconId=");
-        sb.append(this.profileIconId);
-        sb.append(", spell1Id=");
-        sb.append(this.spell1Id);
-        sb.append(", spell2Id=");
-        sb.append(this.spell2Id);
-        sb.append(", summonerName=");
-        sb.append(this.summonerName);
-        sb.append(", teamId=");
-        sb.append(this.teamId);
-        sb.append("]");
-        return sb.toString();
+        return "BaseGameParticipant{" +
+               "championId=" + championId +
+               ", profileIconId=" + profileIconId +
+               ", spell1Id=" + spell1Id +
+               ", spell2Id=" + spell2Id +
+               ", summonerName='" + summonerName + '\'' +
+               ", teamId=" + teamId +
+               '}';
     }
 }

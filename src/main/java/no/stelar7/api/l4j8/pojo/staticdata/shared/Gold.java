@@ -7,6 +7,8 @@ public class Gold
     private Integer sell;
     private Integer total;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -116,5 +118,16 @@ public class Gold
         result = (prime * result) + ((this.sell == null) ? 0 : this.sell.hashCode());
         result = (prime * result) + ((this.total == null) ? 0 : this.total.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Gold{" +
+               "base=" + base +
+               ", purchasable=" + purchasable +
+               ", sell=" + sell +
+               ", total=" + total +
+               '}';
     }
 }

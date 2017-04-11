@@ -141,4 +141,16 @@ public class StaticChampionList
         result = (prime * result) + ((this.version == null) ? 0 : this.version.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "StaticChampionList{" +
+               "data=" + data +
+               ", format='" + format + '\'' +
+               ", keys=" + keys +
+               ", type='" + type + '\'' +
+               ", version='" + version + '\'' +
+               '}';
+    }
 }

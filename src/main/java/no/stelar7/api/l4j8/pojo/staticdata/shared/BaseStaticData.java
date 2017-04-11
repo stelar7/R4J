@@ -5,6 +5,8 @@ public class BaseStaticData
     private String type;
     private String version;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -74,4 +76,12 @@ public class BaseStaticData
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "BaseStaticData{" +
+               "type='" + type + '\'' +
+               ", version='" + version + '\'' +
+               '}';
+    }
 }

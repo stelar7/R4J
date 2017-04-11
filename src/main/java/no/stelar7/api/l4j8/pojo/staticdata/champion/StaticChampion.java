@@ -24,6 +24,8 @@ public class StaticChampion
     private List<String>              tags;
     private String                    title;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -406,5 +408,29 @@ public class StaticChampion
         result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
         result = (prime * result) + ((this.title == null) ? 0 : this.title.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "StaticChampion{" +
+               "allytips=" + allytips +
+               ", blurb='" + blurb + '\'' +
+               ", enemytips=" + enemytips +
+               ", id=" + id +
+               ", image=" + image +
+               ", info=" + info +
+               ", key='" + key + '\'' +
+               ", lore='" + lore + '\'' +
+               ", name='" + name + '\'' +
+               ", partype='" + partype + '\'' +
+               ", passive=" + passive +
+               ", recommended=" + recommended +
+               ", skins=" + skins +
+               ", spells=" + spells +
+               ", stats=" + stats +
+               ", tags=" + tags +
+               ", title='" + title + '\'' +
+               '}';
     }
 }

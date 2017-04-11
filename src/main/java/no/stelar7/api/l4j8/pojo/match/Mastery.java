@@ -77,7 +77,9 @@ public class Mastery
     @Override
     public String toString()
     {
-        return "Mastery [masteryId=" + this.masteryId + ", rank=" + this.rank + "]";
+        return "Mastery{" +
+               "masteryId=" + masteryId +
+               ", rank=" + rank +
+               '}';
     }
-    
 }

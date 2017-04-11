@@ -124,4 +124,15 @@ public class ItemList
         result = (prime * result) + super.hashCode();
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "ItemList{" +
+               "basic=" + basic +
+               ", data=" + data +
+               ", groups=" + groups +
+               ", tree=" + tree +
+               '}';
+    }
 }

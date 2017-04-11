@@ -68,6 +68,8 @@ public class BasicDataStats
     private Double rPercentTimeDeadMod;
     private Double rPercentTimeDeadModPerLevel;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -1462,4 +1464,75 @@ public class BasicDataStats
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "BasicDataStats{" +
+               "flatArmorMod=" + flatArmorMod +
+               ", flatAttackSpeedMod=" + flatAttackSpeedMod +
+               ", flatBlockMod=" + flatBlockMod +
+               ", flatCritChanceMod=" + flatCritChanceMod +
+               ", flatCritDamageMod=" + flatCritDamageMod +
+               ", flatEXPBonus=" + flatEXPBonus +
+               ", flatEnergyPoolMod=" + flatEnergyPoolMod +
+               ", flatEnergyRegenMod=" + flatEnergyRegenMod +
+               ", flatHPPoolMod=" + flatHPPoolMod +
+               ", flatHPRegenMod=" + flatHPRegenMod +
+               ", flatMPPoolMod=" + flatMPPoolMod +
+               ", flatMPRegenMod=" + flatMPRegenMod +
+               ", flatMagicDamageMod=" + flatMagicDamageMod +
+               ", flatMovementSpeedMod=" + flatMovementSpeedMod +
+               ", flatPhysicalDamageMod=" + flatPhysicalDamageMod +
+               ", flatSpellBlockMod=" + flatSpellBlockMod +
+               ", percentArmorMod=" + percentArmorMod +
+               ", percentAttackSpeedMod=" + percentAttackSpeedMod +
+               ", percentBlockMod=" + percentBlockMod +
+               ", percentCritChanceMod=" + percentCritChanceMod +
+               ", percentCritDamageMod=" + percentCritDamageMod +
+               ", percentDodgeMod=" + percentDodgeMod +
+               ", percentEXPBonus=" + percentEXPBonus +
+               ", percentHPPoolMod=" + percentHPPoolMod +
+               ", percentHPRegenMod=" + percentHPRegenMod +
+               ", percentLifeStealMod=" + percentLifeStealMod +
+               ", percentMPPoolMod=" + percentMPPoolMod +
+               ", percentMPRegenMod=" + percentMPRegenMod +
+               ", percentMagicDamageMod=" + percentMagicDamageMod +
+               ", percentMovementSpeedMod=" + percentMovementSpeedMod +
+               ", percentPhysicalDamageMod=" + percentPhysicalDamageMod +
+               ", percentSpellBlockMod=" + percentSpellBlockMod +
+               ", percentSpellVampMod=" + percentSpellVampMod +
+               ", rFlatArmorModPerLevel=" + rFlatArmorModPerLevel +
+               ", rFlatArmorPenetrationMod=" + rFlatArmorPenetrationMod +
+               ", rFlatArmorPenetrationModPerLevel=" + rFlatArmorPenetrationModPerLevel +
+               ", rFlatCritChanceModPerLevel=" + rFlatCritChanceModPerLevel +
+               ", rFlatCritDamageModPerLevel=" + rFlatCritDamageModPerLevel +
+               ", rFlatDodgeMod=" + rFlatDodgeMod +
+               ", rFlatDodgeModPerLevel=" + rFlatDodgeModPerLevel +
+               ", rFlatEnergyModPerLevel=" + rFlatEnergyModPerLevel +
+               ", rFlatEnergyRegenModPerLevel=" + rFlatEnergyRegenModPerLevel +
+               ", rFlatGoldPer10Mod=" + rFlatGoldPer10Mod +
+               ", rFlatHPModPerLevel=" + rFlatHPModPerLevel +
+               ", rFlatHPRegenModPerLevel=" + rFlatHPRegenModPerLevel +
+               ", rFlatMPModPerLevel=" + rFlatMPModPerLevel +
+               ", rFlatMPRegenModPerLevel=" + rFlatMPRegenModPerLevel +
+               ", rFlatMagicDamageModPerLevel=" + rFlatMagicDamageModPerLevel +
+               ", rFlatMagicPenetrationMod=" + rFlatMagicPenetrationMod +
+               ", rFlatMagicPenetrationModPerLevel=" + rFlatMagicPenetrationModPerLevel +
+               ", rFlatMovementSpeedModPerLevel=" + rFlatMovementSpeedModPerLevel +
+               ", rFlatPhysicalDamageModPerLevel=" + rFlatPhysicalDamageModPerLevel +
+               ", rFlatSpellBlockModPerLevel=" + rFlatSpellBlockModPerLevel +
+               ", rFlatTimeDeadMod=" + rFlatTimeDeadMod +
+               ", rFlatTimeDeadModPerLevel=" + rFlatTimeDeadModPerLevel +
+               ", rPercentArmorPenetrationMod=" + rPercentArmorPenetrationMod +
+               ", rPercentArmorPenetrationModPerLevel=" + rPercentArmorPenetrationModPerLevel +
+               ", rPercentAttackSpeedModPerLevel=" + rPercentAttackSpeedModPerLevel +
+               ", rPercentCooldownMod=" + rPercentCooldownMod +
+               ", rPercentCooldownModPerLevel=" + rPercentCooldownModPerLevel +
+               ", rPercentMagicPenetrationMod=" + rPercentMagicPenetrationMod +
+               ", rPercentMagicPenetrationModPerLevel=" + rPercentMagicPenetrationModPerLevel +
+               ", rPercentMovementSpeedModPerLevel=" + rPercentMovementSpeedModPerLevel +
+               ", rPercentTimeDeadMod=" + rPercentTimeDeadMod +
+               ", rPercentTimeDeadModPerLevel=" + rPercentTimeDeadModPerLevel +
+               '}';
+    }
 }

@@ -56,4 +56,11 @@ public class Item extends BasicData
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "Item{" +
+               "effect=" + effect +
+               '}';
+    }
 }

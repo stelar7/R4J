@@ -79,7 +79,9 @@ public class Timeline
     @Override
     public String toString()
     {
-        return "Timeline [frameInterval=" + this.frameInterval + ", frames=" + this.frames + "]";
+        return "Timeline{" +
+               "frameInterval=" + frameInterval +
+               ", frames=" + frames +
+               '}';
     }
-    
 }

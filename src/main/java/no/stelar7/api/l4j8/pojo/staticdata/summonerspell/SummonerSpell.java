@@ -10,6 +10,8 @@ public class SummonerSpell extends BaseSpellData
     private List<String> modes;
     private Integer      summonerLevel;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -103,5 +105,15 @@ public class SummonerSpell extends BaseSpellData
         result = (prime * result) + ((this.summonerLevel == null) ? 0 : this.summonerLevel.hashCode());
         result = (prime * result) + super.hashCode();
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "SummonerSpell{" +
+               "id=" + id +
+               ", modes=" + modes +
+               ", summonerLevel=" + summonerLevel +
+               '}';
     }
 }

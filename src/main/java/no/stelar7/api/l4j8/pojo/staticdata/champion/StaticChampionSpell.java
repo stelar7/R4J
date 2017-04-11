@@ -53,4 +53,11 @@ public class StaticChampionSpell extends BaseSpellData
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "StaticChampionSpell{" +
+               "altimages=" + altimages +
+               '}';
+    }
 }

@@ -18,6 +18,8 @@ public class TournamentRegistrationParameters
         this.providerId = providerId2;
     }
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {

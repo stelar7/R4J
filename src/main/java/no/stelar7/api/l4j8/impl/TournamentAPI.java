@@ -27,7 +27,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder();
         
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
-        builder = builder.withRequestMethod(Constants.REQUEST_METHOD_POST);
+        builder = builder.withRequestMethod(Constants.METHOD_POST);
         builder = builder.withPostData(Utils.toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
         builder = builder.withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, "");
@@ -115,7 +115,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder();
         
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
-        builder = builder.withRequestMethod(Constants.REQUEST_METHOD_POST);
+        builder = builder.withRequestMethod(Constants.METHOD_POST);
         builder = builder.withPostData(Utils.toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_PROVIDER);
         builder = builder.withPlatform(Server.GLOBAL);
@@ -131,7 +131,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder();
         
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
-        builder = builder.withRequestMethod(Constants.REQUEST_METHOD_POST);
+        builder = builder.withRequestMethod(Constants.METHOD_POST);
         builder = builder.withPostData(Utils.toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_REGISTRATION);
         builder = builder.withPlatform(Server.GLOBAL);
@@ -147,7 +147,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder();
         
         builder = builder.withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey());
-        builder = builder.withRequestMethod(Constants.REQUEST_METHOD_PUT);
+        builder = builder.withRequestMethod(Constants.METHOD_PUT);
         builder = builder.withPostData(Utils.toJson(params));
         builder = builder.withEndpoint(URLEndpoint.TOURNAMENT_CODE_CODES);
         builder = builder.withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode);

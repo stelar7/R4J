@@ -35,6 +35,7 @@ public class MasteryTreeList
         return true;
     }
     
+    
     /**
      * Gets the mastery tree items.
      *
@@ -52,5 +53,13 @@ public class MasteryTreeList
         int       result = 1;
         result = (prime * result) + ((this.masteryTreeItems == null) ? 0 : this.masteryTreeItems.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "MasteryTreeList{" +
+               "masteryTreeItems=" + masteryTreeItems +
+               '}';
     }
 }

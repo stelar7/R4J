@@ -73,4 +73,13 @@ public class Position
         result = (prime * result) + ((this.y == null) ? 0 : this.y.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Position{" +
+               "x=" + x +
+               ", y=" + y +
+               '}';
+    }
 }

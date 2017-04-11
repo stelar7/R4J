@@ -469,4 +469,31 @@ public class Stats
         result = (prime * result) + ((this.spellblockperlevel == null) ? 0 : this.spellblockperlevel.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Stats{" +
+               "armor=" + armor +
+               ", armorperlevel=" + armorperlevel +
+               ", attackdamage=" + attackdamage +
+               ", attackdamageperlevel=" + attackdamageperlevel +
+               ", attackrange=" + attackrange +
+               ", attackspeedoffset=" + attackspeedoffset +
+               ", attackspeedperlevel=" + attackspeedperlevel +
+               ", crit=" + crit +
+               ", critperlevel=" + critperlevel +
+               ", hp=" + hp +
+               ", hpperlevel=" + hpperlevel +
+               ", hpregen=" + hpregen +
+               ", hpregenperlevel=" + hpregenperlevel +
+               ", movespeed=" + movespeed +
+               ", mp=" + mp +
+               ", mpperlevel=" + mpperlevel +
+               ", mpregen=" + mpregen +
+               ", mpregenperlevel=" + mpregenperlevel +
+               ", spellblock=" + spellblock +
+               ", spellblockperlevel=" + spellblockperlevel +
+               '}';
+    }
 }

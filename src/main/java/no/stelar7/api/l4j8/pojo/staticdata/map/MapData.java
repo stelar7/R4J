@@ -57,4 +57,12 @@ public class MapData extends BaseStaticData
         result = (prime * result) + super.hashCode();
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "MapData{" +
+               "data=" + data +
+               '}';
+    }
 }

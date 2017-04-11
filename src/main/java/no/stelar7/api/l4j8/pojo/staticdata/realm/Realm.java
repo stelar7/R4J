@@ -14,6 +14,8 @@ public class Realm
     private String              store;
     private String              v;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -228,5 +230,21 @@ public class Realm
         result = (prime * result) + ((this.store == null) ? 0 : this.store.hashCode());
         result = (prime * result) + ((this.v == null) ? 0 : this.v.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Realm{" +
+               "cdn='" + cdn + '\'' +
+               ", css='" + css + '\'' +
+               ", dd='" + dd + '\'' +
+               ", l='" + l + '\'' +
+               ", lg='" + lg + '\'' +
+               ", n=" + n +
+               ", profileiconmax=" + profileiconmax +
+               ", store='" + store + '\'' +
+               ", v='" + v + '\'' +
+               '}';
     }
 }

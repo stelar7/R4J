@@ -123,6 +123,10 @@ public class Player
     @Override
     public String toString()
     {
-        return "Player [championId=" + this.championId + ", summonerId=" + this.summonerId + ", teamId=" + this.teamId + "]";
+        return "Player{" +
+               "championId=" + championId +
+               ", summonerId=" + summonerId +
+               ", teamId=" + teamId +
+               '}';
     }
 }

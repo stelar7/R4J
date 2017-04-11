@@ -7,6 +7,8 @@ public class LevelTip
     private List<String> effect;
     private List<String> label;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -74,5 +76,14 @@ public class LevelTip
         result = (prime * result) + ((this.effect == null) ? 0 : this.effect.hashCode());
         result = (prime * result) + ((this.label == null) ? 0 : this.label.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "LevelTip{" +
+               "effect=" + effect +
+               ", label=" + label +
+               '}';
     }
 }

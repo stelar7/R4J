@@ -227,4 +227,30 @@ public class BaseSpellData
         return this.vars;
     }
     
+    @Override
+    public String toString()
+    {
+        return "BaseSpellData{" +
+               "cooldown=" + cooldown +
+               ", cooldownBurn='" + cooldownBurn + '\'' +
+               ", cost=" + cost +
+               ", costBurn='" + costBurn + '\'' +
+               ", costType='" + costType + '\'' +
+               ", description='" + description + '\'' +
+               ", effect=" + effect +
+               ", effectBurn=" + effectBurn +
+               ", image=" + image +
+               ", key='" + key + '\'' +
+               ", leveltip=" + leveltip +
+               ", maxrank=" + maxrank +
+               ", name='" + name + '\'' +
+               ", range=" + range +
+               ", rangeBurn='" + rangeBurn + '\'' +
+               ", resource='" + resource + '\'' +
+               ", sanitizedDescription='" + sanitizedDescription + '\'' +
+               ", sanitizedTooltip='" + sanitizedTooltip + '\'' +
+               ", tooltip='" + tooltip + '\'' +
+               ", vars=" + vars +
+               '}';
+    }
 }

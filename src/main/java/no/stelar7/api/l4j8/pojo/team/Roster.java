@@ -75,5 +75,13 @@ public class Roster
         result = (prime * result) + ((this.ownerId == null) ? 0 : this.ownerId.hashCode());
         return result;
     }
-
+    
+    @Override
+    public String toString()
+    {
+        return "Roster{" +
+               "memberList=" + memberList +
+               ", ownerId=" + ownerId +
+               '}';
+    }
 }

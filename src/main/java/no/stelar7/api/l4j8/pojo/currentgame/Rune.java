@@ -77,7 +77,9 @@ public class Rune
     @Override
     public String toString()
     {
-        return "Rune [count=" + this.count + ", runeId=" + this.runeId + "]";
+        return "Rune{" +
+               "count=" + count +
+               ", runeId=" + runeId +
+               '}';
     }
-    
 }

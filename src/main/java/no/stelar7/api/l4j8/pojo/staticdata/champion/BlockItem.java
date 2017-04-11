@@ -73,4 +73,13 @@ public class BlockItem
         result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "BlockItem{" +
+               "count=" + count +
+               ", id=" + id +
+               '}';
+    }
 }

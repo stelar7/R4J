@@ -35,12 +35,12 @@ public class ChampionMasteryTest
         }
     };
     
+    final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+    MasteryAPI api = l4j8.getMasteryrAPI();
+    
     @Test
     public void testChampionMastery()
     {
-        final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-        MasteryAPI api  = l4j8.getMasteryrAPI();
-        
         Optional<ChampionMastery> mastrey = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
         Assert.assertTrue("No data returned", mastrey.isPresent());
         mastrey.ifPresent(doAssertions);
@@ -49,9 +49,6 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryAll()
     {
-        final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-        MasteryAPI api  = l4j8.getMasteryrAPI();
-        
         Optional<List<ChampionMastery>> all = api.getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
         Assert.assertTrue("No data returned", all.isPresent());
         all.ifPresent(doListAssertions);
@@ -61,9 +58,6 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryScore()
     {
-        final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-        MasteryAPI api  = l4j8.getMasteryrAPI();
-        
         Optional<Integer> score = api.getMasteryScore(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
         Assert.assertTrue("No data returned", score.isPresent());
         score.ifPresent(Assert::assertNotNull);

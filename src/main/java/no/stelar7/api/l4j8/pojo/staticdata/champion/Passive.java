@@ -119,4 +119,15 @@ public class Passive
         result = (prime * result) + ((this.sanitizedDescription == null) ? 0 : this.sanitizedDescription.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Passive{" +
+               "description='" + description + '\'' +
+               ", image=" + image +
+               ", name='" + name + '\'' +
+               ", sanitizedDescription='" + sanitizedDescription + '\'' +
+               '}';
+    }
 }

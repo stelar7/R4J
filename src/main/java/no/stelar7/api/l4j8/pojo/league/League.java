@@ -164,4 +164,16 @@ public class League
         result = (prime * result) + ((this.tier == null) ? 0 : this.tier.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "League{" +
+               "entries=" + entries +
+               ", name='" + name + '\'' +
+               ", participantId='" + participantId + '\'' +
+               ", queue='" + queue + '\'' +
+               ", tier='" + tier + '\'' +
+               '}';
+    }
 }

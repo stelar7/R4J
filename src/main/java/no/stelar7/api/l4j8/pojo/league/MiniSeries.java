@@ -118,4 +118,14 @@ public class MiniSeries
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "MiniSeries{" +
+               "losses=" + losses +
+               ", progress='" + progress + '\'' +
+               ", target=" + target +
+               ", wins=" + wins +
+               '}';
+    }
 }

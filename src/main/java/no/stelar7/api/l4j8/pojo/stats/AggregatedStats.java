@@ -60,6 +60,7 @@ public class AggregatedStats
     private Integer totalTurretsKilled;
     private Integer totalUnrealKills;
     
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -1263,4 +1264,66 @@ public class AggregatedStats
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "AggregatedStats{" +
+               "averageAssists=" + averageAssists +
+               ", averageChampionsKilled=" + averageChampionsKilled +
+               ", averageCombatPlayerScore=" + averageCombatPlayerScore +
+               ", averageNodeCapture=" + averageNodeCapture +
+               ", averageNodeCaptureAssist=" + averageNodeCaptureAssist +
+               ", averageNodeNeutralize=" + averageNodeNeutralize +
+               ", averageNodeNeutralizeAssist=" + averageNodeNeutralizeAssist +
+               ", averageNumDeaths=" + averageNumDeaths +
+               ", averageObjectivePlayerScore=" + averageObjectivePlayerScore +
+               ", averageTeamObjective=" + averageTeamObjective +
+               ", averageTotalPlayerScore=" + averageTotalPlayerScore +
+               ", botGamesPlayed=" + botGamesPlayed +
+               ", killingSpree=" + killingSpree +
+               ", maxAssists=" + maxAssists +
+               ", maxChampionsKilled=" + maxChampionsKilled +
+               ", maxCombatPlayerScore=" + maxCombatPlayerScore +
+               ", maxLargestCriticalStrike=" + maxLargestCriticalStrike +
+               ", maxLargestKillingSpree=" + maxLargestKillingSpree +
+               ", maxNodeCapture=" + maxNodeCapture +
+               ", maxNodeCaptureAssist=" + maxNodeCaptureAssist +
+               ", maxNodeNeutralize=" + maxNodeNeutralize +
+               ", maxNodeNeutralizeAssist=" + maxNodeNeutralizeAssist +
+               ", maxNumDeaths=" + maxNumDeaths +
+               ", maxObjectivePlayerScore=" + maxObjectivePlayerScore +
+               ", maxTeamObjective=" + maxTeamObjective +
+               ", maxTimePlayed=" + maxTimePlayed +
+               ", maxTimeSpentLiving=" + maxTimeSpentLiving +
+               ", maxTotalPlayerScore=" + maxTotalPlayerScore +
+               ", mostChampionKillsPerSession=" + mostChampionKillsPerSession +
+               ", mostSpellsCast=" + mostSpellsCast +
+               ", normalGamesPlayed=" + normalGamesPlayed +
+               ", rankedPremadeGamesPlayed=" + rankedPremadeGamesPlayed +
+               ", rankedSoloGamesPlayed=" + rankedSoloGamesPlayed +
+               ", totalAssists=" + totalAssists +
+               ", totalChampionKills=" + totalChampionKills +
+               ", totalDamageDealt=" + totalDamageDealt +
+               ", totalDamageTaken=" + totalDamageTaken +
+               ", totalDeathsPerSession=" + totalDeathsPerSession +
+               ", totalDoubleKills=" + totalDoubleKills +
+               ", totalFirstBlood=" + totalFirstBlood +
+               ", totalGoldEarned=" + totalGoldEarned +
+               ", totalHeal=" + totalHeal +
+               ", totalMagicDamageDealt=" + totalMagicDamageDealt +
+               ", totalMinionKills=" + totalMinionKills +
+               ", totalNeutralMinionsKilled=" + totalNeutralMinionsKilled +
+               ", totalNodeCapture=" + totalNodeCapture +
+               ", totalNodeNeutralize=" + totalNodeNeutralize +
+               ", totalPentaKills=" + totalPentaKills +
+               ", totalPhysicalDamageDealt=" + totalPhysicalDamageDealt +
+               ", totalQuadraKills=" + totalQuadraKills +
+               ", totalSessionsLost=" + totalSessionsLost +
+               ", totalSessionsPlayed=" + totalSessionsPlayed +
+               ", totalSessionsWon=" + totalSessionsWon +
+               ", totalTripleKills=" + totalTripleKills +
+               ", totalTurretsKilled=" + totalTurretsKilled +
+               ", totalUnrealKills=" + totalUnrealKills +
+               '}';
+    }
 }

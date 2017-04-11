@@ -440,6 +440,22 @@ public class Game
     @Override
     public String toString()
     {
-        return "Game [championId=" + this.championId + ", createDate=" + this.createDate + ", fellowPlayers=" + this.fellowPlayers + ", gameId=" + this.gameId + ", gameMode=" + this.gameMode + ", gameType=" + this.gameType + ", invalid=" + this.invalid + ", ipEarned=" + this.ipEarned + ", level=" + this.level + ", mapId=" + this.mapId + ", spell1=" + this.spell1 + ", spell2=" + this.spell2 + ", stats=" + this.stats + ", subType=" + this.subType + ", teamId=" + this.teamId + "]";
+        return "Game{" +
+               "championId=" + championId +
+               ", createDate=" + createDate +
+               ", fellowPlayers=" + fellowPlayers +
+               ", gameId=" + gameId +
+               ", gameMode='" + gameMode + '\'' +
+               ", gameType='" + gameType + '\'' +
+               ", invalid=" + invalid +
+               ", ipEarned=" + ipEarned +
+               ", level=" + level +
+               ", mapId=" + mapId +
+               ", spell1=" + spell1 +
+               ", spell2=" + spell2 +
+               ", stats=" + stats +
+               ", subType='" + subType + '\'' +
+               ", teamId=" + teamId +
+               '}';
     }
 }

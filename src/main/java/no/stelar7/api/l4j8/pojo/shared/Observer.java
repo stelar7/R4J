@@ -55,6 +55,8 @@ public class Observer
     @Override
     public String toString()
     {
-        return "Observer [encryptionKey=" + this.encryptionKey + "]";
+        return "Observer{" +
+               "encryptionKey='" + encryptionKey + '\'' +
+               '}';
     }
 }
