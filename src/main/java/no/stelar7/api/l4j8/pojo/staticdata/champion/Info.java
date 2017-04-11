@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 public class Info
 {
     private Integer attack;
-    private Integer defence;
+    private Integer defense;
     private Integer difficulty;
     private Integer magic;
     
@@ -33,13 +33,13 @@ public class Info
         {
             return false;
         }
-        if (this.defence == null)
+        if (this.defense == null)
         {
-            if (other.defence != null)
+            if (other.defense != null)
             {
                 return false;
             }
-        } else if (!this.defence.equals(other.defence))
+        } else if (!this.defense.equals(other.defense))
         {
             return false;
         }
@@ -77,13 +77,13 @@ public class Info
     }
     
     /**
-     * Gets the defence.
+     * Gets the defense.
      *
-     * @return the defence
+     * @return the defense
      */
-    public Integer getDefence()
+    public Integer getDefense()
     {
-        return this.defence;
+        return this.defense;
     }
     
     /**
@@ -112,7 +112,7 @@ public class Info
         final int prime  = 31;
         int       result = 1;
         result = (prime * result) + ((this.attack == null) ? 0 : this.attack.hashCode());
-        result = (prime * result) + ((this.defence == null) ? 0 : this.defence.hashCode());
+        result = (prime * result) + ((this.defense == null) ? 0 : this.defense.hashCode());
         result = (prime * result) + ((this.difficulty == null) ? 0 : this.difficulty.hashCode());
         result = (prime * result) + ((this.magic == null) ? 0 : this.magic.hashCode());
         return result;
@@ -123,7 +123,7 @@ public class Info
     {
         return "Info{" +
                "attack=" + attack +
-               ", defence=" + defence +
+               ", defense=" + defense +
                ", difficulty=" + difficulty +
                ", magic=" + magic +
                '}';

@@ -44,7 +44,7 @@ public class Constants
     public static final String SEPARATOR   = "/";
     public static final String METHOD_PUT  = "PUT";
     public static final String METHOD_POST = "POST";
-    public static final String PROTOCOL    = "HTTPS://";
+    public static final String PROTOCOL    = "https://";
     public static final String HOST        = ".api.riotgames.com";
     
     public static final String REQUEST_URL = PROTOCOL + PLATFORM_PLACEHOLDER + HOST + SEPARATOR + GAME_PLACEHOLDER + SEPARATOR + SERVICE_PLACEHOLDER + SEPARATOR + VERSION_PLACEHOLDER + SEPARATOR + RESOURCE_PLACEHOLDER;
