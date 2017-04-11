@@ -59,15 +59,6 @@ public class BannedChampion
         return true;
     }
     
-    /**
-     * The banned champion as a Champion
-     *
-     * @return Champion
-     */
-    public Optional<Champions> getChampion()
-    {
-        return Champions.getFromId(this.championId);
-    }
     
     /**
      * The ID of the banned champion

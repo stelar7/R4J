@@ -1,9 +1,5 @@
 package no.stelar7.api.l4j8.pojo.stats;
 
-import no.stelar7.api.l4j8.basic.constants.*;
-
-import java.util.*;
-
 public class ChampionStats
 {
     private Integer         id;
@@ -50,15 +46,6 @@ public class ChampionStats
         return true;
     }
     
-    /**
-     * Returns the Champion representing this id
-     *
-     * @return the champion
-     */
-    public Optional<Champions> getChampion()
-    {
-        return Champions.getFromId(this.id);
-    }
     
     /**
      * Champion ID. Note that champion ID 0 represents the combined stats for all champions. For static information correlating to champion IDs, please refer to the LoL Static Data API.

@@ -1,6 +1,5 @@
 package no.stelar7.api.l4j8.tests.champion;
 
-import no.stelar7.api.l4j8.basic.constants.Champions;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.champion.*;
@@ -18,9 +17,9 @@ public class ChampionTest
     @Test
     public void testSingleChampion()
     {
-        Optional<Champion> champ = api.getChampion(Platform.EUW1, Champions.LEONA.getId());
+        Optional<Champion> champ = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0]);
         Assert.assertTrue("no data?", champ.isPresent());
-        Assert.assertTrue("Champion id is not leona?", champ.get().getId().equals(Champions.LEONA.getId()));
+        Assert.assertTrue("Champion id is not leona?", champ.get().getId().equals(Constants.TEST_CHAMPION_IDS[0]));
     }
     
     @Test

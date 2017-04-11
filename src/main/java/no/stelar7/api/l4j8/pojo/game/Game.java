@@ -194,15 +194,6 @@ public class Game
         return true;
     }
     
-    /**
-     * The champion as a Champion
-     *
-     * @return Champion
-     */
-    public Optional<Champions> getChampion()
-    {
-        return Champions.getFromId(this.championId);
-    }
     
     /**
      * Champion ID associated with game.

@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.tests.matchlist;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.RankedQueue;
+import no.stelar7.api.l4j8.basic.constants.api.Constants;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
 import org.junit.Assert;
 
@@ -11,7 +12,6 @@ public class MatchListTest
 {
     private final Consumer<MatchReference> doAssertions = (final MatchReference match) ->
     {
-        Assert.assertNotNull("champion is null", match.getChampion());
         Assert.assertNotNull("matchId is null", match.getMatchId());
         Assert.assertNotNull("timestamp is null", match.getTimestamp());
         Assert.assertNotNull("lane is null", match.getLane());
@@ -28,7 +28,7 @@ public class MatchListTest
         Assert.assertNotNull("SEASON is null", match.getSeason());
         Assert.assertNotNull("REGION is null", match.getRegion());
         
-        Assert.assertEquals("Unexpected Champion Id", Champions.LEONA, match.getChampion());
+        Assert.assertEquals("Unexpected Champion Id", (long) Constants.TEST_CHAMPION_IDS[0], (long) match.getChampionId());
         Assert.assertEquals("Unexpected Queue", RankedQueue.RANKED_SOLO_5X5, match.getQueue());
         Assert.assertEquals("Timestamp doesnt match TIMESTAMP", match.getTimestamp(), (Long) match.getTimestampAsDate()
                                                                                                   .toInstant()
@@ -44,7 +44,7 @@ public class MatchListTest
     @org.junit.Test
     public void doTest()
     {
-        
+        // Constants.TEST_CHAMPION_IDS[0] == LEONA
         //final List<MatchReference> matches = ((MatchList) TestBase.builder.build()).getMatches();
         
         // I played 47 ranked solo games as leona in 2014

@@ -6,6 +6,7 @@ import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
+import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.status.ShardStatus;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
@@ -52,8 +53,13 @@ public enum URLEndpoint
     V3_SHARD_STATUS("lol", "status", "v3", "shard-data", ShardStatus.class),
     
     // lol/static-data/v3/champions
+    // lol/static-data/v3/champions/{id}
+    // lol/static-data/v3/items
+    // lol/static-data/v3/items/{id}
     V3_STATIC_CHAMPIONS("lol", "static-data", "v3", "champions", StaticChampionList.class),
-    V3_STATIC_CHAMPIONS_BY_ID("lol", "static-data", "v3", "champions/" + Constants.ID_PLACEHOLDER, StaticChampion.class),;
+    V3_STATIC_CHAMPION_BY_ID("lol", "static-data", "v3", "champions/" + Constants.ID_PLACEHOLDER, StaticChampion.class),
+    V3_STATIC_ITEMS("lol", "static-data", "v3", "items", ItemList.class),
+    V3_STATIC_ITEM_BY_ID("lol", "static-data", "v3", "items/" + Constants.ID_PLACEHOLDER, Item.class),;
     
     
     private final String game;

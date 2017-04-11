@@ -92,15 +92,6 @@ public class BaseGameParticipant
         return true;
     }
     
-    /**
-     * The champion as a Champion
-     *
-     * @return Champion
-     */
-    protected Optional<Champions> getChampion()
-    {
-        return Champions.getFromId(this.championId);
-    }
     
     /**
      * The ID of the champion played by this participant

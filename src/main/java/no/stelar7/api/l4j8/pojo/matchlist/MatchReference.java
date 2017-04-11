@@ -127,15 +127,6 @@ public class MatchReference
         return true;
     }
     
-    /**
-     * The played champion as a Champion
-     *
-     * @return Champion
-     */
-    public Champions getChampion()
-    {
-        return Champions.getFromId(this.champion).orElseThrow(APIDataNotParseableException::new);
-    }
     
     /**
      * Champion ID associated with game.
