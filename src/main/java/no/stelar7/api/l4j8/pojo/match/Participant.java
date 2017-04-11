@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.Team;
+import no.stelar7.api.l4j8.basic.constants.*;
 
 import java.util.*;
 
@@ -17,8 +17,8 @@ public class Participant
     private ParticipantStats    stats;
     private Integer             teamId;
     private ParticipantTimeline timeline;
-	
-	@Override
+    
+    @Override
     public boolean equals(final Object obj)
     {
         if (this == obj)
@@ -136,8 +136,8 @@ public class Participant
         }
         return true;
     }
-	
-	/**
+    
+    /**
      * Champion ID
      *
      * @return Integer
@@ -146,8 +146,8 @@ public class Participant
     {
         return this.championId;
     }
-	
-	/**
+    
+    /**
      * Highest ranked tier achieved for the previous season, if any, otherwise null. Used to display border in game loading screen. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE, UNRANKED)
      *
      * @return String
@@ -156,8 +156,8 @@ public class Participant
     {
         return this.highestAchievedSeasonTier;
     }
-	
-	/**
+    
+    /**
      * Highest ranked tier achieved for the previous season (inferred from the id)
      *
      * @return Tier
@@ -166,8 +166,8 @@ public class Participant
     {
         return Tier.getFromCode(this.highestAchievedSeasonTier);
     }
-	
-	/**
+    
+    /**
      * List of mastery information
      *
      * @return {@code List<Mastery>}
@@ -176,8 +176,8 @@ public class Participant
     {
         return this.masteries;
     }
-	
-	/**
+    
+    /**
      * Participant ID
      *
      * @return Integer
@@ -186,8 +186,8 @@ public class Participant
     {
         return this.participantId;
     }
-	
-	/**
+    
+    /**
      * List of rune information
      *
      * @return {@code List<Rune>}
@@ -196,18 +196,9 @@ public class Participant
     {
         return this.runes;
     }
-	
-	/**
-     * First summoner spell
-     *
-     * @return SummonerSpell
-     */
-    public Optional<SummonerSpell> getSpell1()
-    {
-        return SummonerSpell.getFromCode(this.spell1Id);
-    }
-	
-	/**
+    
+    
+    /**
      * First summoner spell ID
      *
      * @return Long
@@ -216,18 +207,9 @@ public class Participant
     {
         return this.spell1Id;
     }
-	
-	/**
-     * Second summoner spell
-     *
-     * @return SummonerSpell
-     */
-    public Optional<SummonerSpell> getSpell2()
-    {
-        return SummonerSpell.getFromCode(this.spell2Id);
-    }
-	
-	/**
+    
+    
+    /**
      * Second summoner spell ID
      *
      * @return Long
@@ -236,8 +218,8 @@ public class Participant
     {
         return this.spell2Id;
     }
-	
-	/**
+    
+    /**
      * Participant statistics
      *
      * @return ParticipantStats
@@ -246,8 +228,8 @@ public class Participant
     {
         return this.stats;
     }
-	
-	/**
+    
+    /**
      * Team inferred from the team id
      *
      * @return Team
@@ -256,8 +238,8 @@ public class Participant
     {
         return Team.getFromCode(this.teamId);
     }
-	
-	/**
+    
+    /**
      * Team ID
      *
      * @return Integer
@@ -266,9 +248,10 @@ public class Participant
     {
         return this.teamId;
     }
-	
-	/**
-     * Timeline data. Delta fields refer to values for the specified period (e.g., the gold per minute over the first 10 minutes of the game versus the second 20 minutes of the game. Diffs fields refer to the deltas versus the calculated lane opponent(s).
+    
+    /**
+     * Timeline data.
+     * Delta fields refer to values for the specified period (e.g., the gold per minute over the first 10 minutes of the game versus the second 20 minutes of the game. Diffs fields refer to the deltas versus the calculated lane opponent(s).
      *
      * @return ParticipantTimeline
      */
@@ -276,13 +259,13 @@ public class Participant
     {
         return this.timeline;
     }
-	
-	@Override
+    
+    @Override
     public int hashCode()
     {
-	    final int prime  = 31;
-	    int       result = 1;
-	    result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
+        final int prime  = 31;
+        int       result = 1;
+        result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
         result = (prime * result) + ((this.highestAchievedSeasonTier == null) ? 0 : this.highestAchievedSeasonTier.hashCode());
         result = (prime * result) + ((this.masteries == null) ? 0 : this.masteries.hashCode());
         result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());

@@ -7,6 +7,12 @@ import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
+import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
+import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
+import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
+import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
+import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
 import no.stelar7.api.l4j8.pojo.status.ShardStatus;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
@@ -56,10 +62,34 @@ public enum URLEndpoint
     // lol/static-data/v3/champions/{id}
     // lol/static-data/v3/items
     // lol/static-data/v3/items/{id}
+    // lol/static-data/v3/language-strings Retrieve language strings data.
+    // lol/static-data/v3/languages Retrieve supported languages data.
+    // lol/static-data/v3/maps Retrieve map data.
+    // lol/static-data/v3/masteries Retrieves mastery list.
+    // lol/static-data/v3/masteries/{id} Retrieves mastery item by its unique id.
+    // lol/static-data/v3/realms Retrieve realm data.
+    // lol/static-data/v3/runes Retrieves rune list.
+    // lol/static-data/v3/runes/{id} Retrieves rune by its unique id.
+    // lol/static-data/v3/summoner-spells Retrieves summoner spell list.
+    // lol/static-data/v3/summoner-spells/{id} Retrieves summoner spell by its unique id.
+    // lol/static-data/v3/versions
     V3_STATIC_CHAMPIONS("lol", "static-data", "v3", "champions", StaticChampionList.class),
     V3_STATIC_CHAMPION_BY_ID("lol", "static-data", "v3", "champions/" + Constants.ID_PLACEHOLDER, StaticChampion.class),
     V3_STATIC_ITEMS("lol", "static-data", "v3", "items", ItemList.class),
-    V3_STATIC_ITEM_BY_ID("lol", "static-data", "v3", "items/" + Constants.ID_PLACEHOLDER, Item.class),;
+    V3_STATIC_ITEM_BY_ID("lol", "static-data", "v3", "items/" + Constants.ID_PLACEHOLDER, Item.class),
+    V3_STATIC_LANGUAGE_STRINGS("lol", "static-data", "v3", "language-strings", LanguageStrings.class),
+    V3_STATIC_LANGUAGES("lol", "static-data", "v3", "languages", new TypeToken<List<String>>()
+    {}.getType()),
+    V3_STATIC_MAPS("lol", "static-data", "v3", "maps", MapData.class),
+    V3_STATIC_MASTERIES("lol", "static-data", "v3", "masteries", MasteryList.class),
+    V3_STATIC_MASTERY_BY_ID("lol", "static-data", "v3", "masteries/" + Constants.ID_PLACEHOLDER, Mastery.class),
+    V3_STATIC_REALMS("lol", "static-data", "v3", "realms", Realm.class),
+    V3_STATIC_RUNES("lol", "static-data", "v3", "runes", RuneList.class),
+    V3_STATIC_RUNE_BY_ID("lol", "static-data", "v3", "runes/" + Constants.ID_PLACEHOLDER, Rune.class),
+    V3_STATIC_SUMMONER_SPELLS("lol", "static-data", "v3", "summoner-spells", SummonerSpellList.class),
+    V3_STATIC_SUMMONER_SPELL_BY_ID("lol", "static-data", "v3", "summoner-spells/" + Constants.ID_PLACEHOLDER, SummonerSpell.class),
+    V3_STATIC_VERSIONS("lol", "static-data", "v3", "versions", new TypeToken<List<String>>()
+    {}.getType());
     
     
     private final String game;

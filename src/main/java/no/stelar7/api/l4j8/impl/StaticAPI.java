@@ -77,5 +77,20 @@ public final class StaticAPI
         return Optional.of((Item) builder.build());
     }
     
+    /*
+        TODO:
+        lol/static-data/v3/language-strings Retrieve language strings data.
+        lol/static-data/v3/languages Retrieve supported languages data.
+        lol/static-data/v3/maps Retrieve map data.
+        lol/static-data/v3/masteries Retrieves mastery list.
+        lol/static-data/v3/masteries/{id} Retrieves mastery item by its unique id.
+        lol/static-data/v3/realms Retrieve realm data.
+        lol/static-data/v3/runes Retrieves rune list.
+        lol/static-data/v3/runes/{id} Retrieves rune by its unique id.
+        lol/static-data/v3/summoner-spells Retrieves summoner spell list.
+        lol/static-data/v3/summoner-spells/{id} Retrieves summoner spell by its unique id.
+        lol/static-data/v3/versions
+     */
+    
     
 }
