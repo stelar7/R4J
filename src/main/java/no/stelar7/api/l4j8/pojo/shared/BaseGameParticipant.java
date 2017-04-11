@@ -97,9 +97,9 @@ public class BaseGameParticipant
      *
      * @return Champion
      */
-    protected Optional<Champion> getChampion()
+    protected Optional<Champions> getChampion()
     {
-        return Champion.getFromId(this.championId);
+        return Champions.getFromId(this.championId);
     }
     
     /**

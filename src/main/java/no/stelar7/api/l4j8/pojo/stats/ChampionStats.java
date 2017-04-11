@@ -53,9 +53,9 @@ public class ChampionStats
      *
      * @return the champion
      */
-    public Optional<Champion> getChampion()
+    public Optional<Champions> getChampion()
     {
-        return Champion.getFromId(this.id);
+        return Champions.getFromId(this.id);
     }
     
     /**

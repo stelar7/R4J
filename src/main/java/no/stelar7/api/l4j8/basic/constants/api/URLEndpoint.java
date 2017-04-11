@@ -1,9 +1,11 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
 import com.google.gson.reflect.TypeToken;
+import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.status.ShardStatus;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
@@ -38,7 +40,16 @@ public enum URLEndpoint
     V3_MASTERY_BY_ID("lol", "champion-mastery", "v3", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<ChampionMastery>>()
     {}.getType()),
     V3_MASTERY_BY_CHAMPION("lol", "champion-mastery", "v3", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER + "/by-champion/" + Constants.CHAMPION_ID_PLACEHOLDER, ChampionMastery.class),
-    V3_MASTERY_SCORE("lol", "champion-mastery", "v3", "scores/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, Integer.class),;
+    V3_MASTERY_SCORE("lol", "champion-mastery", "v3", "scores/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, Integer.class),
+    
+    // lol/platform/v3/champions
+    // lol/platform/v3/champions/{id}
+    V3_CHAMPIONS("lol", "platform", "v3", "champions", ChampionList.class),
+    V3_CHAMPIONS_BY_ID("lol", "platform", "v3", "champions/" + Constants.ID_PLACEHOLDER, Champion.class),
+    
+    // lol/status/v3/shard-data
+    V3_SHARD_STATUS("lol", "status", "v3", "shard-data", ShardStatus.class),
+    ;
     
     
     private final String game;

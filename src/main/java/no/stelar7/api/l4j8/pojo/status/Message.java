@@ -7,10 +7,12 @@ public class Message
     private String            author;
     private String            content;
     private String            created_at;
-    private Long              id;
+    private String            id;
     private String            severity;
     private String            updated_at;
     private List<Translation> translations;
+    
+    
     
     @Override
     public boolean equals(final Object obj)
@@ -126,7 +128,7 @@ public class Message
      *
      * @return the created_at
      */
-    public String getCreated_at()
+    public String getCreatedAt()
     {
         return this.created_at;
     }
@@ -136,7 +138,7 @@ public class Message
      *
      * @return the id
      */
-    public Long getId()
+    public String getId()
     {
         return this.id;
     }
@@ -166,7 +168,7 @@ public class Message
      *
      * @return the updated_at
      */
-    public String getUpdated_at()
+    public String getUpdatedAt()
     {
         return this.updated_at;
     }
@@ -186,4 +188,17 @@ public class Message
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "Message{" +
+               "author='" + author + '\'' +
+               ", content='" + content + '\'' +
+               ", created_at='" + created_at + '\'' +
+               ", id='" + id + '\'' +
+               ", severity='" + severity + '\'' +
+               ", updated_at='" + updated_at + '\'' +
+               ", translations=" + translations +
+               '}';
+    }
 }

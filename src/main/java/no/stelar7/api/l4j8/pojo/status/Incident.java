@@ -9,6 +9,8 @@ public class Incident
     private Long          id;
     private List<Message> updates;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -120,4 +122,14 @@ public class Incident
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "Incident{" +
+               "active=" + active +
+               ", created_at='" + created_at + '\'' +
+               ", id=" + id +
+               ", updates=" + updates +
+               '}';
+    }
 }

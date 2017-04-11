@@ -4,7 +4,9 @@ public class Translation
 {
     private String content;
     private String locale;
-    private String updated_at;
+    private String heading;
+    
+    
     
     @Override
     public boolean equals(final Object obj)
@@ -42,13 +44,13 @@ public class Translation
         {
             return false;
         }
-        if (this.updated_at == null)
+        if (this.heading == null)
         {
-            if (other.updated_at != null)
+            if (other.heading != null)
             {
                 return false;
             }
-        } else if (!this.updated_at.equals(other.updated_at))
+        } else if (!this.heading.equals(other.heading))
         {
             return false;
         }
@@ -76,13 +78,13 @@ public class Translation
     }
     
     /**
-     * Gets the updated_at.
+     * Gets the heading.
      *
-     * @return the updated_at
+     * @return the heading
      */
-    public String getUpdated_at()
+    public String getUpdatedAt()
     {
-        return this.updated_at;
+        return this.heading;
     }
     
     @Override
@@ -92,8 +94,17 @@ public class Translation
         int       result = 1;
         result = (prime * result) + ((this.content == null) ? 0 : this.content.hashCode());
         result = (prime * result) + ((this.locale == null) ? 0 : this.locale.hashCode());
-        result = (prime * result) + ((this.updated_at == null) ? 0 : this.updated_at.hashCode());
+        result = (prime * result) + ((this.heading == null) ? 0 : this.heading.hashCode());
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "Translation{" +
+               "content='" + content + '\'' +
+               ", locale='" + locale + '\'' +
+               ", heading='" + heading + '\'' +
+               '}';
+    }
 }

@@ -36,4 +36,12 @@ public class L4J8
         return TournamentAPI.getInstance();
     }
     
+    public ChampionAPI getChampionAPI()
+    {
+        return ChampionAPI.getInstance();
+    }
+    
+    public StatusAPI getStatusAPI() {
+        return StatusAPI.getInstance();
+    }
 }

@@ -6,7 +6,9 @@ package no.stelar7.api.l4j8.basic.constants.api;
  */
 public class Constants
 {
-    public static final String API_KEY_PLACEHOLDER         = "api_key";
+    public static final String API_KEY_PLACEHOLDER      = "api_key";
+    public static final String FREE_TO_PLAY_PLACEHOLDER = "freeToPlay";
+    
     public static final String TOURNAMENT_CODE_PLACEHOLDER = "{tournamentCode}";
     public static final String PLATFORM_ID_PLACEHOLDER     = "{platformId}";
     public static final String SUMMONER_ID_PLACEHOLDER     = "{summonerId}";
@@ -14,6 +16,7 @@ public class Constants
     public static final String SUMMONER_NAME_PLACEHOLDER   = "{summonerName}";
     public static final String CHAMPION_ID_PLACEHOLDER     = "{championId}";
     public static final String MATCH_ID_PLACEHOLDER        = "{matchId}";
+    public static final String ID_PLACEHOLDER              = "{id}";
     public static final String PLATFORM_PLACEHOLDER        = "{platform}";
     public static final String GAME_PLACEHOLDER            = "{game}";
     public static final String SERVICE_PLACEHOLDER         = "{service}";

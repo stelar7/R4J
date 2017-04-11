@@ -222,6 +222,7 @@ public final class DataCall
             url[0] = url[0].replace(Constants.RESOURCE_PLACEHOLDER, dc.endpoint.getResource());
             dc.urlParams.forEach((k, v) -> url[0] = url[0].replace(k, v));
             url[0] += "?" + Constants.API_KEY_PLACEHOLDER + "=" + creds.getBaseAPIKey();
+            dc.urlData.forEach((k, v) -> url[0] = url[0] + "&" + k + "=" + v);
             return url[0];
         }
         

@@ -199,9 +199,9 @@ public class Game
      *
      * @return Champion
      */
-    public Optional<Champion> getChampion()
+    public Optional<Champions> getChampion()
     {
-        return Champion.getFromId(this.championId);
+        return Champions.getFromId(this.championId);
     }
     
     /**

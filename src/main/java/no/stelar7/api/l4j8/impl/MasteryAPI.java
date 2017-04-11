@@ -31,8 +31,7 @@ public final class MasteryAPI
      */
     public Optional<Integer> getMasteryScore(Platform server, long summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().asVerbose(true)
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_SCORE)
                                                        .withPlatform(server);
         
@@ -50,8 +49,7 @@ public final class MasteryAPI
      */
     public Optional<ChampionMastery> getChampionMastery(Platform server, long summonerId, int championId)
     {
-        DataCallBuilder builder = new DataCallBuilder().asVerbose(true)
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(championId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
@@ -69,8 +67,7 @@ public final class MasteryAPI
      */
     public Optional<List<ChampionMastery>> getMasteries(Platform server, long summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().asVerbose(true)
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_ID)
                                                        .withPlatform(server);
         

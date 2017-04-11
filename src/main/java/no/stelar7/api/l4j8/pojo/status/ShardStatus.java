@@ -7,7 +7,7 @@ public class ShardStatus
     private String        hostname;
     private List<String>  locales;
     private String        name;
-    private String        regionTag;
+    private String        region_tag;
     private List<Service> services;
     private String        slug;
     
@@ -57,13 +57,13 @@ public class ShardStatus
         {
             return false;
         }
-        if (this.regionTag == null)
+        if (this.region_tag == null)
         {
-            if (other.regionTag != null)
+            if (other.region_tag != null)
             {
                 return false;
             }
-        } else if (!this.regionTag.equals(other.regionTag))
+        } else if (!this.region_tag.equals(other.region_tag))
         {
             return false;
         }
@@ -125,9 +125,9 @@ public class ShardStatus
      *
      * @return the region_tag
      */
-    public String getRegioTag()
+    public String getRegionTag()
     {
-        return this.regionTag;
+        return this.region_tag;
     }
     
     /**
@@ -158,10 +158,22 @@ public class ShardStatus
         result = (prime * result) + ((this.hostname == null) ? 0 : this.hostname.hashCode());
         result = (prime * result) + ((this.locales == null) ? 0 : this.locales.hashCode());
         result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        result = (prime * result) + ((this.regionTag == null) ? 0 : this.regionTag.hashCode());
+        result = (prime * result) + ((this.region_tag == null) ? 0 : this.region_tag.hashCode());
         result = (prime * result) + ((this.services == null) ? 0 : this.services.hashCode());
         result = (prime * result) + ((this.slug == null) ? 0 : this.slug.hashCode());
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "ShardStatus{" +
+               "hostname='" + hostname + '\'' +
+               ", locales=" + locales +
+               ", name='" + name + '\'' +
+               ", regionTag='" + region_tag + '\'' +
+               ", services=" + services +
+               ", slug='" + slug + '\'' +
+               '}';
+    }
 }

@@ -9,6 +9,8 @@ public class Service
     private String         status;
     private List<Incident> incidents;
     
+    
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -120,4 +122,14 @@ public class Service
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return "Service{" +
+               "name='" + name + '\'' +
+               ", slug='" + slug + '\'' +
+               ", status='" + status + '\'' +
+               ", incidents=" + incidents +
+               '}';
+    }
 }

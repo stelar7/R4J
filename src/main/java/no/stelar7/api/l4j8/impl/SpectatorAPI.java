@@ -31,8 +31,7 @@ public final class SpectatorAPI
      */
     public Optional<FeaturedGames> getFeaturedGames(Platform server)
     {
-        DataCallBuilder builder = new DataCallBuilder().asVerbose(true)
-                                                       .withEndpoint(URLEndpoint.V3_SPECTATOR_FEATURED)
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
         
         return Optional.of((FeaturedGames) builder.build());
@@ -48,8 +47,7 @@ public final class SpectatorAPI
      */
     public Optional<CurrentGameInfo> getCurrentGame(Platform server, long summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().asVerbose(true)
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         

@@ -132,9 +132,9 @@ public class MatchReference
      *
      * @return Champion
      */
-    public Champion getChampion()
+    public Champions getChampion()
     {
-        return Champion.getFromId(this.champion).orElseThrow(APIDataNotParseableException::new);
+        return Champions.getFromId(this.champion).orElseThrow(APIDataNotParseableException::new);
     }
     
     /**
