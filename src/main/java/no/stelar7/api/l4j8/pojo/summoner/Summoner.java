@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.summoner;
 
 
+import no.stelar7.api.l4j8.basic.Utils;
+
 import java.time.*;
 
 public final class Summoner
@@ -30,6 +32,16 @@ public final class Summoner
     public String getName()
     {
         return this.name;
+    }
+    
+    /**
+     * The Summoners name normalized. (no whitespace, lowercase Locale.ENGLISH)
+     *
+     * @return String
+     */
+    public String getNormalizedName()
+    {
+        return Utils.normalizeSummonerName(name);
     }
     
     /**

@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
+import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
@@ -33,7 +34,7 @@ public final class SummonerAPI
      */
     public Optional<MasteryPages> getMasteries(final Platform server, long summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder()                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERIES_BY_ID)
                                                        .withPlatform(server);
         
@@ -86,7 +87,7 @@ public final class SummonerAPI
     public Optional<Summoner> getSummonerByName(final Platform server, String summonerName)
     {
         DataCallBuilder builder = new DataCallBuilder()
-                .withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, summonerName)
+                .withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeSummonerName(summonerName))
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_NAME)
                 .withPlatform(server);
         

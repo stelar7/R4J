@@ -1,13 +1,11 @@
 package no.stelar7.api.l4j8.basic;
 
-import com.google.gson.*;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Locale;
 import java.util.logging.*;
 
-public class Utils
+public final class Utils
 {
     private static final Logger LOGGER = Logger.getGlobal();
     
@@ -15,11 +13,11 @@ public class Utils
     {
     }
     
-    public static String prepareForURL(final String data)
+    public static String normalizeSummonerName(final String data)
     {
         try
         {
-            final String stripped  = data.replace(" ", "");
+            final String stripped  = data.replaceAll("\\s+", "");
             final String lowercase = stripped.toLowerCase(Locale.ENGLISH);
             return URLEncoder.encode(lowercase, "UTF-8");
         } catch (final UnsupportedEncodingException e)
@@ -27,11 +25,6 @@ public class Utils
             Utils.LOGGER.log(Level.WARNING, e.getMessage(), e);
         }
         return null;
-    }
-    
-    public static String toJson(Object o)
-    {
-        return new Gson().toJson(o);
     }
     
 }
