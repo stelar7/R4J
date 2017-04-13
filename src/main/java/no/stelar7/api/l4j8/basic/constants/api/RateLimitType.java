@@ -25,7 +25,7 @@ public enum RateLimitType
         {
             return LIMIT_UNDERLYING;
         }
-        return Stream.of(values()).filter(s -> s.getValue().equalsIgnoreCase(data)).findFirst().orElseThrow(APIDataNotParseableException::new);
+        return Stream.of(values()).filter(s -> s.getValue().equalsIgnoreCase(data)).findFirst().orElseThrow(()->new APIDataNotParseableException(data));
     }
     
     public String getValue()
