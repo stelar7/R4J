@@ -136,7 +136,7 @@ public class Champion
     @Override
     public String toString()
     {
-        return "Champion{" +
+        return "ChampionType{" +
                "active=" + active +
                ", botEnabled=" + botEnabled +
                ", botMmEnabled=" + botMmEnabled +

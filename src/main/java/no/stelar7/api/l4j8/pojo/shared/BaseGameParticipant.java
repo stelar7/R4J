@@ -1,17 +1,15 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import no.stelar7.api.l4j8.basic.constants.*;
-
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 public class BaseGameParticipant
 {
-    private Integer championId;
-    private Long    profileIconId;
-    private Long    spell1Id;
-    private Long    spell2Id;
-    private String  summonerName;
-    private Long    teamId;
+    private ChampionType      championId;
+    private Long              profileIconId;
+    private SummonerSpellType spell1Id;
+    private SummonerSpellType spell2Id;
+    private String            summonerName;
+    private TeamType          teamId;
     
     @Override
     public boolean equals(final Object obj)
@@ -98,7 +96,7 @@ public class BaseGameParticipant
      *
      * @return Long
      */
-    protected Integer getChampionId()
+    protected ChampionType getChampion()
     {
         return this.championId;
     }
@@ -118,7 +116,7 @@ public class BaseGameParticipant
      *
      * @return Long
      */
-    protected Long getSpell1Id()
+    protected SummonerSpellType getSpell1()
     {
         return this.spell1Id;
     }
@@ -128,7 +126,7 @@ public class BaseGameParticipant
      *
      * @return Long
      */
-    protected Long getSpell2Id()
+    protected SummonerSpellType getSpell2()
     {
         return this.spell2Id;
     }
@@ -143,22 +141,13 @@ public class BaseGameParticipant
         return this.summonerName;
     }
     
-    /**
-     * a Team representing the team of the participant
-     *
-     * @return Team
-     */
-    protected Optional<Team> getTeam()
-    {
-        return Team.getFromCode(this.teamId);
-    }
     
     /**
      * The team ID of this participant, indicating the participant's team
      *
      * @return Long
      */
-    protected Long getTeamId()
+    protected TeamType getTeam()
     {
         return this.teamId;
     }

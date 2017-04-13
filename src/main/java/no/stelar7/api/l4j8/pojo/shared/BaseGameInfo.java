@@ -1,10 +1,8 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.Map;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.exceptions.*;
-import no.stelar7.api.l4j8.pojo.currentgame.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameParticipant;
 
 import java.time.*;
 import java.util.*;
@@ -14,14 +12,14 @@ public class BaseGameInfo
     private List<BannedChampion>         bannedChampions;
     private Long                         gameId;
     private Long                         gameLength;
-    private String                       gameMode;
-    private Integer                      gameQueueConfigId;
+    private GameModeType                 gameMode;
+    private GameQueueType                gameQueueConfigId;
     private Long                         gameStartTime;
-    private String                       gameType;
-    private Integer                      mapId;
+    private GameType                     gameType;
+    private MapType                      mapId;
     private Observer                     observers;
     private List<CurrentGameParticipant> participants;
-    private String                       platformId;
+    private Platform                     platformId;
     
     @Override
     public boolean equals(final Object obj)
@@ -182,22 +180,13 @@ public class BaseGameInfo
         return this.gameLength;
     }
     
-    /**
-     * a GameMode representing the gameMode.
-     *
-     * @return GameMode
-     */
-    public GameMode getGameMode()
-    {
-        return GameMode.getFromCode(this.gameMode).orElseThrow(APIDataNotParseableException::new);
-    }
     
     /**
      * The game mode
      *
      * @return String
      */
-    public String getGameModeId()
+    public GameModeType getGameMode()
     {
         return this.gameMode;
     }
@@ -207,29 +196,9 @@ public class BaseGameInfo
      *
      * @return Long
      */
-    public Integer getGameQueueConfigId()
+    public GameQueueType getGameQueueConfig()
     {
         return this.gameQueueConfigId;
-    }
-    
-    /**
-     * a GameQueueType representing the GameQueueType.
-     *
-     * @return GameQueueType
-     */
-    public GameQueueType getGameQueueType()
-    {
-        return GameQueueType.getFromCode(this.gameQueueConfigId).orElseThrow(APIDataNotParseableException::new);
-    }
-    
-    /**
-     * The game start time represented in epoch milliseconds
-     *
-     * @return Long
-     */
-    public Long getGameStartTime()
-    {
-        return this.gameStartTime;
     }
     
     /**
@@ -243,33 +212,13 @@ public class BaseGameInfo
     }
     
     /**
-     * a GameType representing the GameType.
-     *
-     * @return GameType
-     */
-    public GameType getGameType()
-    {
-        return GameType.getFromCode(this.gameType).orElseThrow(APIDataNotParseableException::new);
-    }
-    
-    /**
      * The game type
      *
      * @return String
      */
-    public String getGameTypeId()
+    public GameType getGameType()
     {
         return this.gameType;
-    }
-    
-    /**
-     * a Map representing the Map.
-     *
-     * @return Map
-     */
-    public Map getMap()
-    {
-        return Map.getFromCode(this.mapId).orElseThrow(APIDataNotParseableException::new);
     }
     
     /**
@@ -277,7 +226,7 @@ public class BaseGameInfo
      *
      * @return Long
      */
-    public Integer getMapId()
+    public MapType getMap()
     {
         return this.mapId;
     }
@@ -303,21 +252,11 @@ public class BaseGameInfo
     }
     
     /**
-     * the platformId represented as a Platform
-     *
-     * @return Platform
-     */
-    public Platform getPlatform()
-    {
-        return Platform.getFromCode(this.platformId).orElseThrow(APIDataNotParseableException::new);
-    }
-    
-    /**
      * The ID of the platform on which the game belongs
      *
      * @return String
      */
-    public String getPlatformId()
+    public Platform getPlatform()
     {
         return this.platformId;
     }

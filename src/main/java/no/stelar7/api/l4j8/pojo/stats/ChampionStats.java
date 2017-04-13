@@ -48,7 +48,7 @@ public class ChampionStats
     
     
     /**
-     * Champion ID. Note that champion ID 0 represents the combined stats for all champions. For static information correlating to champion IDs, please refer to the LoL Static Data API.
+     * ChampionType ID. Note that champion ID 0 represents the combined stats for all champions. For static information correlating to champion IDs, please refer to the LoL Static Data API.
      *
      * @return the id
      */

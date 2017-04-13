@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.pojo.match.MatchDetail;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
 
@@ -24,7 +24,7 @@ public final class MatchAPI
     
     
     public Optional<MatchList> getMatchList(Platform server, long summonerId, Optional<Long> endTime, Optional<Integer> endIndex,
-                                            Optional<EnumSet<RankedQueue>> rankedQueues, Optional<EnumSet<Season>> seasons,
+                                            Optional<EnumSet<RankedQueueType>> rankedQueues, Optional<EnumSet<SeasonType>> seasons,
                                             Optional<Long> beginTime, Optional<Integer> beginIndex, Optional<List<Integer>> championIds)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))

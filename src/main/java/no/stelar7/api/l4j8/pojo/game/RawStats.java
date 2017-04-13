@@ -889,7 +889,7 @@ public class RawStats
     }
     
     /**
-     * a {@code Map<String, String>} of all the fields in this class.
+     * a {@code MapType<String, String>} of all the fields in this class.
      *
      * @return the all stats
      */

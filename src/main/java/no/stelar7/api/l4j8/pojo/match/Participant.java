@@ -1,21 +1,21 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.basic.constants.Team;
-import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.types.SummonerSpellType;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
-import java.util.*;
+import java.util.List;
 
 public class Participant
 {
-    private Integer             championId;
-    private String              highestAchievedSeasonTier;
+    private ChampionType        championId;
+    private TierType            highestAchievedSeasonTier;
     private List<Mastery>       masteries;
     private Integer             participantId;
     private List<Rune>          runes;
-    private Integer             spell1Id;
-    private Integer             spell2Id;
+    private SummonerSpellType   spell1Id;
+    private SummonerSpellType   spell2Id;
     private ParticipantStats    stats;
-    private Integer             teamId;
+    private TeamType            teamId;
     private ParticipantTimeline timeline;
     
     @Override
@@ -138,11 +138,11 @@ public class Participant
     }
     
     /**
-     * Champion ID
+     * ChampionType ID
      *
      * @return Integer
      */
-    public Integer getChampionId()
+    public ChampionType getChampion()
     {
         return this.championId;
     }
@@ -152,20 +152,11 @@ public class Participant
      *
      * @return String
      */
-    public String getHighestAchievedSeasonTierId()
+    public TierType getHighestAchievedSeasonTier()
     {
         return this.highestAchievedSeasonTier;
     }
     
-    /**
-     * Highest ranked tier achieved for the previous season (inferred from the id)
-     *
-     * @return Tier
-     */
-    public Tier getHighestAchivedSeasonTier()
-    {
-        return Tier.getFromCode(this.highestAchievedSeasonTier);
-    }
     
     /**
      * List of mastery information
@@ -203,7 +194,7 @@ public class Participant
      *
      * @return Long
      */
-    public Integer getSpell1Id()
+    public SummonerSpellType getSpell1()
     {
         return this.spell1Id;
     }
@@ -214,7 +205,7 @@ public class Participant
      *
      * @return Long
      */
-    public Integer getSpell2Id()
+    public SummonerSpellType getSpell2()
     {
         return this.spell2Id;
     }
@@ -230,21 +221,11 @@ public class Participant
     }
     
     /**
-     * Team inferred from the team id
-     *
-     * @return Team
-     */
-    public Optional<Team> getTeam()
-    {
-        return Team.getFromCode(this.teamId);
-    }
-    
-    /**
-     * Team ID
+     * TeamType ID
      *
      * @return Integer
      */
-    public Integer getTeamId()
+    public TeamType getTeam()
     {
         return this.teamId;
     }

@@ -1,13 +1,14 @@
 package no.stelar7.api.l4j8.pojo.staticdata.map;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import no.stelar7.api.l4j8.basic.constants.types.MapType;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
 import java.util.*;
 
 public class MapDetails
 {
     private Image      image;
-    private Long       mapId;
+    private MapType    mapId;
     private String     mapName;
     private List<Long> unpurchasableItemList;
     
@@ -85,7 +86,7 @@ public class MapDetails
      *
      * @return the map id
      */
-    public Long getMapId()
+    public MapType getMapId()
     {
         return this.mapId;
     }

@@ -1,14 +1,12 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import no.stelar7.api.l4j8.basic.constants.*;
-
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 public class Player
 {
-    private Integer championId;
-    private Long    summonerId;
-    private Integer teamId;
+    private ChampionType championId;
+    private Long         summonerId;
+    private TeamType     teamId;
     
     @Override
     public boolean equals(final Object obj)
@@ -61,11 +59,11 @@ public class Player
     
     
     /**
-     * Champion id associated with player.
+     * ChampionType id associated with player.
      *
      * @return Integer
      */
-    public Integer getChampionId()
+    public ChampionType getChampion()
     {
         return this.championId;
     }
@@ -81,21 +79,11 @@ public class Player
     }
     
     /**
-     * a Team representing the team associated with player.
-     *
-     * @return Team
-     */
-    public Optional<Team> getTeam()
-    {
-        return Team.getFromCode(this.teamId);
-    }
-    
-    /**
-     * Team id associated with player.
+     * TeamType id associated with player.
      *
      * @return Integer
      */
-    public Integer getTeamId()
+    public TeamType getTeam()
     {
         return this.teamId;
     }

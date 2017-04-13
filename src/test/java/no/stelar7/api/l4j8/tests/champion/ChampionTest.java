@@ -18,8 +18,16 @@ public class ChampionTest
     public void testSingleChampion()
     {
         Optional<Champion> champ = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0]);
+        
         Assert.assertTrue("no data?", champ.isPresent());
-        Assert.assertTrue("Champion id is not leona?", champ.get().getId().equals(Constants.TEST_CHAMPION_IDS[0]));
+        Assert.assertTrue("ChampionType id is not leona?", champ.get().getId().equals(Constants.TEST_CHAMPION_IDS[0]));
+        
+        Assert.assertNotNull("active is null", champ.get().isActive());
+        Assert.assertNotNull("botenabled is null", champ.get().isBotEnabled());
+        Assert.assertNotNull("botmmenabled is null", champ.get().isBotMmEnabled());
+        Assert.assertNotNull("rankedplay is null", champ.get().isRankedPlayEnabled());
+        
+        
     }
     
     @Test

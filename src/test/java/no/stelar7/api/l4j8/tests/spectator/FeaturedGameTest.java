@@ -19,30 +19,12 @@ public class FeaturedGameTest
             Assert.assertNotNull("gameid is null", featured.getGameId());
             Assert.assertNotNull("gamelength is null", featured.getGameLength());
             Assert.assertNotNull("gamemode is null", featured.getGameMode());
-            Assert.assertNotNull("gamequeuecongifid is null", featured.getGameQueueConfigId());
-            Assert.assertNotNull("gamestarttime is null", featured.getGameStartTime());
+            Assert.assertNotNull("gamequeuecongifid is null", featured.getGameQueueConfig());
+            Assert.assertNotNull("gamestarttime is null", featured.getGameStartTimeAsDate());
             Assert.assertNotNull("gametype is null", featured.getGameType());
-            Assert.assertNotNull("mapid is null", featured.getMapId());
+            Assert.assertNotNull("mapid is null", featured.getMap());
             Assert.assertNotNull("observers is null", featured.getObservers());
             Assert.assertNotNull("participantsis null", featured.getParticipants());
-            
-            Assert.assertNotNull("GAMEMODE is null", featured.getGameMode());
-            Assert.assertNotNull("GAMEQUEUETYPE is null", featured.getGameQueueType());
-            Assert.assertNotNull("GAMETYPE is null", featured.getGameType());
-            Assert.assertNotNull("PLATFORM is null", featured.getPlatform());
-            Assert.assertNotNull("GAMESTARTTIME is null", featured.getGameStartTimeAsDate());
-            
-            Assert.assertEquals("Timestamp doesnt match TIMESTAMP", featured.getGameStartTime(), (Long) featured.getGameStartTimeAsDate()
-                                                                                                                .toInstant()
-                                                                                                                .toEpochMilli());
-            
-            Assert.assertEquals("lane doesnt match LANE", featured.getGameModeId(), featured.getGameMode().getCode());
-            Assert.assertEquals("queue doesnt match QUEUE", featured.getGameQueueConfigId(), featured.getGameQueueType()
-                                                                                                     .getCode());
-            
-            Assert.assertEquals("role doesnt match ROLE", featured.getGameTypeId(), featured.getGameType().getCode());
-            Assert.assertEquals("season doesnt match SEASON", featured.getMapId(), featured.getMap().getCode());
-            Assert.assertEquals("region doesnt match REGION", featured.getPlatformId(), featured.getPlatform().name());
         }
     };
     

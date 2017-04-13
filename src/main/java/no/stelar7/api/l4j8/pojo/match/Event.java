@@ -1,32 +1,32 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
-import java.util.*;
+import java.util.List;
 
 public class Event
 {
-    private String        ascendedType;
+    private AscencionType ascendedType;
     private List<Integer> assistingParticipantIds;
-    private String        buildingType;
+    private BuildingType  buildingType;
     private Integer       creatorId;
-    private String        eventType;
+    private EventType     eventType;
     private Integer       itemAfter;
     private Integer       itemBefore;
     private Integer       itemId;
     private Integer       killerId;
-    private String        laneType;
-    private String        levelUpType;
-    private String        monsterType;
+    private LaneType      laneType;
+    private LevelUpType   levelUpType;
+    private MonsterType   monsterType;
     private Integer       participantId;
-    private String        pointCaptured;
+    private PointType     pointCaptured;
     private Position      position;
     private Integer       skillSlot;
-    private Integer       teamId;
+    private Team          teamId;
     private Long          timestamp;
-    private String        towerType;
+    private TowerType     towerType;
     private Integer       victimId;
-    private String        wardType;
+    private WardType      wardType;
     
     @Override
     public boolean equals(final Object obj)
@@ -262,19 +262,9 @@ public class Event
      *
      * @return AscencionType
      */
-    public Optional<AscencionType> getAscendedType()
+    public AscencionType getAscendedType()
     {
-        return AscencionType.getFromCode(this.ascendedType);
-    }
-    
-    /**
-     * The ascended type of the event. Only present if relevant. Note that CLEAR_ASCENDED refers to when a participants kills the ascended player. (Legal values: CHAMPION_ASCENDED, CLEAR_ASCENDED, MINION_ASCENDED)
-     *
-     * @return String
-     */
-    public String getAscendedTypeId()
-    {
-        return this.ascendedType;
+        return ascendedType;
     }
     
     /**
@@ -287,22 +277,13 @@ public class Event
         return this.assistingParticipantIds;
     }
     
-    /**
-     * The building type as a BuildingType
-     *
-     * @return BuildingType
-     */
-    public Optional<BuildingType> getBuildingType()
-    {
-        return BuildingType.getFromCode(this.buildingType);
-    }
     
     /**
      * The building type of the event. Only present if relevant. (Legal values: INHIBITOR_BUILDING, TOWER_BUILDING)
      *
      * @return the building type
      */
-    public String getBuildingTypeId()
+    public BuildingType getBuildingType()
     {
         return this.buildingType;
     }
@@ -317,22 +298,13 @@ public class Event
         return this.creatorId;
     }
     
-    /**
-     * The event type as EventType
-     *
-     * @return Event
-     */
-    public Optional<EventType> getEventType()
-    {
-        return EventType.getFromCode(this.eventType);
-    }
     
     /**
      * Event type. (Legal values: ASCENDED_EVENT, BUILDING_KILL, CAPTURE_POINT, CHAMPION_KILL, ELITE_MONSTER_KILL, ITEM_DESTROYED, ITEM_PURCHASED, ITEM_SOLD, ITEM_UNDO, PORO_KING_SUMMON, SKILL_LEVEL_UP, WARD_KILL, WARD_PLACED)
      *
      * @return String
      */
-    public String getEventTypeId()
+    public EventType getEventType()
     {
         return this.eventType;
     }
@@ -378,33 +350,13 @@ public class Event
     }
     
     /**
-     * The lane inferred from the type
-     *
-     * @return Lane
-     */
-    public Optional<Lane> getLane()
-    {
-        return Lane.getFromCode(this.laneType);
-    }
-    
-    /**
      * The lane type of the event. Only present if relevant. (Legal values: BOT_LANE, MID_LANE, TOP_LANE)
      *
      * @return the lane type
      */
-    public String getLaneType()
+    public LaneType getLaneType()
     {
         return this.laneType;
-    }
-    
-    /**
-     * The LevelUpType inferred from the id
-     *
-     * @return LevelUpType
-     */
-    public Optional<LevelUpType> getLevelUpType()
-    {
-        return LevelUpType.getFromCode(this.levelUpType);
     }
     
     /**
@@ -412,19 +364,9 @@ public class Event
      *
      * @return String
      */
-    public String getLevelUpTypeId()
+    public LevelUpType getLevelUpType()
     {
         return this.levelUpType;
-    }
-    
-    /**
-     * The MonsterType inferred from the id
-     *
-     * @return MonsterType
-     */
-    public Optional<MonsterType> getMonsterType()
-    {
-        return MonsterType.getFromCode(this.monsterType);
     }
     
     /**
@@ -432,7 +374,7 @@ public class Event
      *
      * @return String
      */
-    public String getMonsterTypeId()
+    public MonsterType getMonsterType()
     {
         return this.monsterType;
     }
@@ -448,21 +390,11 @@ public class Event
     }
     
     /**
-     * The point captured inferred from the id
-     *
-     * @return Point
-     */
-    public Optional<Point> getPointCaptured()
-    {
-        return Point.getFromCode(this.pointCaptured);
-    }
-    
-    /**
      * The point captured in the event. Only present if relevant. (Legal values: POINT_A, POINT_B, POINT_C, POINT_D, POINT_E)
      *
      * @return String
      */
-    public String getPointCapturedId()
+    public PointType getPointCaptured()
     {
         return this.pointCaptured;
     }
@@ -492,7 +424,7 @@ public class Event
      *
      * @return Integer
      */
-    public Integer getTeamId()
+    public Team getTeam()
     {
         return this.teamId;
     }
@@ -508,21 +440,11 @@ public class Event
     }
     
     /**
-     * The tower type inferred from the id
-     *
-     * @return TowerType
-     */
-    public Optional<TowerType> getTowerType()
-    {
-        return TowerType.getFromCode(this.towerType);
-    }
-    
-    /**
      * The tower type of the event. Only present if relevant. (Legal values: BASE_TURRET, FOUNTAIN_TURRET, INNER_TURRET, NEXUS_TURRET, OUTER_TURRET, UNDEFINED_TURRET)
      *
      * @return String
      */
-    public String getTowerTypeId()
+    public TowerType getTowerType()
     {
         return this.towerType;
     }
@@ -538,21 +460,11 @@ public class Event
     }
     
     /**
-     * The ward type inferred from the id
-     *
-     * @return WardType
-     */
-    public Optional<WardType> getWardType()
-    {
-        return WardType.getFromCode(this.wardType);
-    }
-    
-    /**
      * The ward type of the event. Only present if relevant. (Legal values: SIGHT_WARD, TEEMO_MUSHROOM, UNDEFINED, VISION_WARD, YELLOW_TRINKET, YELLOW_TRINKET_UPGRADE)
      *
      * @return String
      */
-    public String getWardTypeId()
+    public WardType getWardType()
     {
         return this.wardType;
     }

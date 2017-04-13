@@ -449,7 +449,7 @@ public class Team
 	@Override
 	public String toString()
 	{
-		return "Team{" +
+		return "TeamType{" +
 			   "bans=" + bans +
 			   ", baronKills=" + baronKills +
 			   ", dominionVictoryScore=" + dominionVictoryScore +

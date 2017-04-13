@@ -23,10 +23,6 @@ public class SummonerTest
         Assert.assertNotEquals("Summoner revision date is NULL", value.getRevisionDate(), (Long) 0L);
         Assert.assertNotEquals("Summoner level is NULL", value.getSummonerLevel(), (Integer) 0);
         Assert.assertNotNull("Summoner revison date DATE is NULL", value.getRevisionDateAsDate());
-        Assert.assertEquals("Summoner revison date and DATE do not match", value.getRevisionDate(), (Long) value.getRevisionDateAsDate()
-                                                                                                                .toInstant()
-                                                                                                                .toEpochMilli());
-        SummonerTest.LOGGER.log(Level.INFO, String.valueOf(value));
     };
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);

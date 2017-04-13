@@ -1,14 +1,12 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import no.stelar7.api.l4j8.basic.constants.*;
-
-import java.util.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 public class BannedChampion
 {
-    private Integer championId;
-    private Integer pickTurn;
-    private Long    teamId;
+    private ChampionType championId;
+    private Integer      pickTurn;
+    private TeamType     teamId;
     
     @Override
     public boolean equals(final Object obj)
@@ -65,7 +63,7 @@ public class BannedChampion
      *
      * @return Long
      */
-    public Integer getChampionId()
+    public ChampionType getChampion()
     {
         return this.championId;
     }
@@ -80,22 +78,13 @@ public class BannedChampion
         return this.pickTurn;
     }
     
-    /**
-     * a Team representing the team that banned the champion
-     *
-     * @return Team
-     */
-    public Optional<Team> getTeam()
-    {
-        return Team.getFromCode(this.teamId);
-    }
     
     /**
      * The ID of the team that banned the champion
      *
      * @return Long
      */
-    public Long getTeamId()
+    public TeamType getTeam()
     {
         return this.teamId;
     }

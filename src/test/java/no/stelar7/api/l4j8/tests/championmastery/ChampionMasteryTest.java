@@ -15,23 +15,20 @@ public class ChampionMasteryTest
     
     Consumer<ChampionMastery> doAssertions = (final ChampionMastery data) ->
     {
-        Assert.assertTrue("ChampionId has changed?", data.getChampionId().equals(Constants.TEST_CHAMPION_IDS[0]));
+        Assert.assertTrue("ChampionId has changed?", data.getChampion().getId().equals(Constants.TEST_CHAMPION_IDS[0]));
         Assert.assertTrue("Max level is not 5?", data.getChampionLevel() > 5);
         Assert.assertTrue("Points less than 80k", data.getChampionPoints() > 80000);
         Assert.assertTrue("0 Points?", data.getChampionPointsSinceLastLevel() > 0L);
         Assert.assertTrue("There is another level?", data.getChampionPointsUntilNextLevel() == 0L);
         Assert.assertNotNull("Chest has been removed implemented", data.getChestGranted());
         Assert.assertNotNull("Last play date DATE is NULL", data.getLastPlayTimeAsDate());
-        Assert.assertEquals("last play date and DATE do not match", data.getLastPlayTime(), (Long) data.getLastPlayTimeAsDate()
-                                                                                                       .toInstant()
-                                                                                                       .toEpochMilli());
     };
     
     Consumer<List<ChampionMastery>> doListAssertions = (final List<ChampionMastery> list) ->
     {
         for (ChampionMastery championMastery : list)
         {
-            Assert.assertTrue("no data", championMastery.getChampionId() != 0);
+            Assert.assertTrue("no data", championMastery.getChampion().getId() != 0);
         }
     };
     
@@ -41,9 +38,9 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMastery()
     {
-        Optional<ChampionMastery> mastrey = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
-        Assert.assertTrue("No data returned", mastrey.isPresent());
-        mastrey.ifPresent(doAssertions);
+        Optional<ChampionMastery> mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
+        Assert.assertTrue("No data returned", mastery.isPresent());
+        mastery.ifPresent(doAssertions);
     }
     
     @Test

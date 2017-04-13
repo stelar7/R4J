@@ -1,7 +1,8 @@
 package no.stelar7.api.l4j8.tests.staticdata;
 
-import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.flags.*;
+import no.stelar7.api.l4j8.basic.constants.flags.ChampDataFlags;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
@@ -157,7 +158,7 @@ public class StaticTest
     {
         Optional<EnumSet<SpellDataFlags>> dataFlags = Optional.of(EnumSet.of(SpellDataFlags.ALL));
         
-        Optional<SummonerSpellList> list = api.getSummonerSpells(Platform.EUW1, dataFlags, version, locale);
+        Optional<StaticSummonerSpellList> list = api.getSummonerSpells(Platform.EUW1, dataFlags, version, locale);
         
         Assert.assertTrue("no data?", list.isPresent());
     }
@@ -168,7 +169,7 @@ public class StaticTest
     {
         Optional<EnumSet<SpellDataFlags>> dataFlags = Optional.of(EnumSet.of(SpellDataFlags.ALL));
         
-        Optional<SummonerSpell> list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, version, locale);
+        Optional<StaticSummonerSpell> list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, version, locale);
         
         Assert.assertTrue("no data?", list.isPresent());
         Assert.assertTrue("ok?", list.get().getId() == 21);

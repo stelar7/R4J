@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.league;
 
-import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 import java.util.*;
 
@@ -10,8 +10,8 @@ public class League
     private List<LeagueEntry> entries;
     private String            name;
     private String            participantId;
-    private String            queue;
-    private String            tier;
+    private RankedQueueType   queue;
+    private TierType          tier;
     
     @Override
     public boolean equals(final Object obj)
@@ -112,22 +112,13 @@ public class League
         return this.participantId;
     }
     
-    /**
-     * The league's queue type. (Legal values: RANKED_SOLO_5x5, RANKED_TEAM_3x3, RANKED_TEAM_5x5)
-     *
-     * @return the queue
-     */
-    public Optional<RankedQueue> getQueue()
-    {
-        return RankedQueue.getFromValue(this.queue);
-    }
     
     /**
      * The league's queue type. (Legal values: RANKED_SOLO_5x5, RANKED_TEAM_3x3, RANKED_TEAM_5x5)
      *
      * @return the queue
      */
-    public String getQueueString()
+    public RankedQueueType getQueue()
     {
         return this.queue;
     }
@@ -137,17 +128,7 @@ public class League
      *
      * @return the tier
      */
-    public Tier getTier()
-    {
-        return Tier.getFromCode(this.tier);
-    }
-    
-    /**
-     * The league's tier. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE)
-     *
-     * @return the tier
-     */
-    public String getTierString()
+    public TierType getTier()
     {
         return this.tier;
     }

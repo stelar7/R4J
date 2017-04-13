@@ -1,21 +1,22 @@
 package no.stelar7.api.l4j8.pojo.team;
 
+import no.stelar7.api.l4j8.basic.constants.types.*;
+
 import java.time.*;
 
 public class MatchHistorySummary
 {
-    private Integer assists;
-    private Integer deaths;
-    private Integer kills;
-    private Integer mapId;
-    private Integer opposingTeamKills;
-    private Long    date;
-    private Boolean invalid;
-    private String  gameMode;
-    private Long    gameId;
-    private String  opposingTeamName;
-    private Boolean win;
-    
+    private Integer      assists;
+    private Integer      deaths;
+    private Integer      kills;
+    private MapType      mapId;
+    private Integer      opposingTeamKills;
+    private Long         date;
+    private Boolean      invalid;
+    private GameModeType gameMode;
+    private Long         gameId;
+    private String       opposingTeamName;
+    private Boolean      win;
     
     
     @Override
@@ -202,7 +203,7 @@ public class MatchHistorySummary
      *
      * @return the game mode
      */
-    public String getGameMode()
+    public GameModeType getGameMode()
     {
         return this.gameMode;
     }
@@ -232,7 +233,7 @@ public class MatchHistorySummary
      *
      * @return the map id
      */
-    public Integer getMapId()
+    public MapType getMap()
     {
         return this.mapId;
     }

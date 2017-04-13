@@ -1,29 +1,28 @@
 package no.stelar7.api.l4j8.pojo.game;
 
-import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.Map;
+import no.stelar7.api.l4j8.basic.constants.types.SummonerSpellType;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 import java.time.*;
-import java.util.*;
+import java.util.List;
 
 public class Game
 {
-    private Integer      championId;
-    private Long         createDate;
-    private List<Player> fellowPlayers;
-    private Long         gameId;
-    private String       gameMode;
-    private String       gameType;
-    private Boolean      invalid;
-    private Integer      ipEarned;
-    private Integer      level;
-    private Integer      mapId;
-    private Integer      spell1;
-    private Integer      spell2;
-    private RawStats     stats;
-    private String       subType;
-    
-    private Integer teamId;
+    private ChampionType      championId;
+    private Long              createDate;
+    private List<Player>      fellowPlayers;
+    private Long              gameId;
+    private GameModeType      gameMode;
+    private GameType          gameType;
+    private Boolean           invalid;
+    private Integer           ipEarned;
+    private Integer           level;
+    private MapType           mapId;
+    private SummonerSpellType spell1;
+    private SummonerSpellType spell2;
+    private RawStats          stats;
+    private GameSubType       subType;
+    private TeamType          teamId;
     
     @Override
     public boolean equals(final Object obj)
@@ -196,11 +195,11 @@ public class Game
     
     
     /**
-     * Champion ID associated with game.
+     * ChampionType ID associated with game.
      *
      * @return Integer
      */
-    public Integer getChampionId()
+    public ChampionType getChampion()
     {
         return this.championId;
     }
@@ -245,42 +244,24 @@ public class Game
         return this.gameId;
     }
     
-    /**
-     * a GameMode representing the gameMode.
-     *
-     * @return GameMode
-     */
-    public Optional<GameMode> getGameMode()
-    {
-        return GameMode.getFromCode(this.gameMode);
-    }
     
     /**
      * Game mode.
      *
      * @return String
      */
-    public String getGameModeId()
+    public GameModeType getGameMode()
     {
         return this.gameMode;
     }
     
-    /**
-     * a GameType representing the GameType.
-     *
-     * @return GameType
-     */
-    public Optional<GameType> getGameType()
-    {
-        return GameType.getFromCode(this.gameType);
-    }
     
     /**
      * Game type
      *
      * @return String
      */
-    public String getGameTypeId()
+    public GameType getGameType()
     {
         return this.gameType;
     }
@@ -306,21 +287,11 @@ public class Game
     }
     
     /**
-     * a Map representing the Map.
-     *
-     * @return Map
-     */
-    public Optional<Map> getMap()
-    {
-        return Map.getFromCode(this.mapId);
-    }
-    
-    /**
-     * Map ID.
+     * MapType ID.
      *
      * @return Integer.
      */
-    public Integer getMapId()
+    public MapType getMap()
     {
         return this.mapId;
     }
@@ -330,7 +301,7 @@ public class Game
      *
      * @return Integer
      */
-    public Integer getSpell1()
+    public SummonerSpellType getSpell1()
     {
         return this.spell1;
     }
@@ -340,7 +311,7 @@ public class Game
      *
      * @return Integer
      */
-    public Integer getSpell2()
+    public SummonerSpellType getSpell2()
     {
         return this.spell2;
     }
@@ -355,42 +326,23 @@ public class Game
         return this.stats;
     }
     
-    /**
-     * a GameSubType representing the GameSubType.
-     *
-     * @return GameSubType
-     */
-    public Optional<GameSubType> getSubType()
-    {
-        return GameSubType.getFromCode(this.subType);
-    }
     
     /**
      * Game sub-type.
      *
      * @return String
      */
-    public String getSubTypeId()
+    public GameSubType getSubType()
     {
         return this.subType;
     }
     
     /**
-     * a Team representing the team associated with game.
-     *
-     * @return Team
-     */
-    public Optional<Team> getTeam()
-    {
-        return Team.getFromCode(this.teamId);
-    }
-    
-    /**
-     * Team ID associated with game.
+     * TeamType ID associated with game.
      *
      * @return Integer
      */
-    public Integer getTeamId()
+    public TeamType getTeam()
     {
         return this.teamId;
     }

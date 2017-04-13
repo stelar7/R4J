@@ -1,22 +1,21 @@
 package no.stelar7.api.l4j8.pojo.matchlist;
 
-import no.stelar7.api.l4j8.basic.constants.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.exceptions.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 import java.time.*;
 
 public class MatchReference
 {
-    private Integer champion;
-    private Long    matchId;
-    private Long    timestamp;
-    private String  lane;
-    private String  platformId;
-    private String  queue;
-    private String  region;
-    private String  role;
-    private String  season;
+    private ChampionType    champion;
+    private Long            matchId;
+    private Long            timestamp;
+    private LaneType        lane;
+    private Platform        platformId;
+    private RankedQueueType queue;
+    private Server          region;
+    private RoleType        role;
+    private SeasonType      season;
     
     @Override
     public boolean equals(final Object obj)
@@ -129,31 +128,21 @@ public class MatchReference
     
     
     /**
-     * Champion ID associated with game.
+     * ChampionType ID associated with game.
      *
      * @return Long
      */
-    public Integer getChampionId()
+    public ChampionType getChampion()
     {
         return this.champion;
     }
     
     /**
-     * the lane represented as a Lane
-     *
-     * @return Lane
-     */
-    public Lane getLane()
-    {
-        return Lane.getFromCode(this.lane).orElseThrow(APIDataNotParseableException::new);
-    }
-    
-    /**
-     * Lane associated with game
+     * LaneType associated with game
      *
      * @return String
      */
-    public String getLaneId()
+    public LaneType getLane()
     {
         return this.lane;
     }
@@ -169,33 +158,13 @@ public class MatchReference
     }
     
     /**
-     * the platformId represented as a Platform
-     *
-     * @return Platform
-     */
-    public Platform getPlatform()
-    {
-        return Platform.getFromCode(this.platformId).orElseThrow(APIDataNotParseableException::new);
-    }
-    
-    /**
      * Platform ID.
      *
      * @return String
      */
-    public String getPlatformId()
+    public Platform getPlatform()
     {
         return this.platformId;
-    }
-    
-    /**
-     * the queue represented as a RankedQueue
-     *
-     * @return RankedQueue
-     */
-    public RankedQueue getQueue()
-    {
-        return RankedQueue.getFromValue(this.queue).orElseThrow(APIDataNotParseableException::new);
     }
     
     /**
@@ -203,19 +172,9 @@ public class MatchReference
      *
      * @return String
      */
-    public String getQueueId()
+    public RankedQueueType getQueue()
     {
         return this.queue;
-    }
-    
-    /**
-     * the region represented as a Server
-     *
-     * @return Server
-     */
-    public Server getRegion()
-    {
-        return Server.getFromCode(this.region).orElseThrow(APIDataNotParseableException::new);
     }
     
     /**
@@ -223,47 +182,27 @@ public class MatchReference
      *
      * @return String
      */
-    public String getRegionId()
+    public Server getRegion()
     {
         return this.region;
     }
     
     /**
-     * the role represented as a Role
-     *
-     * @return Role
-     */
-    public Role getRole()
-    {
-        return Role.getFromCode(this.role).orElseThrow(APIDataNotParseableException::new);
-    }
-    
-    /**
-     * Role
+     * RoleType
      *
      * @return String
      */
-    public String getRoleId()
+    public RoleType getRole()
     {
         return this.role;
     }
     
     /**
-     * the season represented as a Season
-     *
-     * @return Season
-     */
-    public Season getSeason()
-    {
-        return Season.getFromValue(this.season).orElseThrow(APIDataNotParseableException::new);
-    }
-    
-    /**
-     * Season
+     * SeasonType
      *
      * @return String
      */
-    public String getSeasonId()
+    public SeasonType getSeason()
     {
         return this.season;
     }

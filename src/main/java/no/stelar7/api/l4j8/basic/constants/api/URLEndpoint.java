@@ -88,8 +88,8 @@ public enum URLEndpoint
     V3_STATIC_REALMS("lol", "static-data", "v3", "realms", Realm.class),
     V3_STATIC_RUNES("lol", "static-data", "v3", "runes", StaticRuneList.class),
     V3_STATIC_RUNE_BY_ID("lol", "static-data", "v3", "runes/" + Constants.ID_PLACEHOLDER, StaticRune.class),
-    V3_STATIC_SUMMONER_SPELLS("lol", "static-data", "v3", "summoner-spells", SummonerSpellList.class),
-    V3_STATIC_SUMMONER_SPELL_BY_ID("lol", "static-data", "v3", "summoner-spells/" + Constants.ID_PLACEHOLDER, SummonerSpell.class),
+    V3_STATIC_SUMMONER_SPELLS("lol", "static-data", "v3", "summoner-spells", StaticSummonerSpellList.class),
+    V3_STATIC_SUMMONER_SPELL_BY_ID("lol", "static-data", "v3", "summoner-spells/" + Constants.ID_PLACEHOLDER, StaticSummonerSpell.class),
     V3_STATIC_VERSIONS("lol", "static-data", "v3", "versions", new TypeToken<List<String>>()
     {}.getType()),
     

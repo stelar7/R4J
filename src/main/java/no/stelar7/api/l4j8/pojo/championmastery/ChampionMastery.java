@@ -1,32 +1,34 @@
 package no.stelar7.api.l4j8.pojo.championmastery;
 
+import no.stelar7.api.l4j8.basic.constants.types.ChampionType;
+
 import java.time.*;
 
 public class ChampionMastery
 {
-    private Integer championLevel;
-    private Boolean chestGranted;
-    private Integer championPoints;
-    private Long    championPointsSinceLastLevel;
-    private Long    playerId;
-    private Long    championPointsUntilNextLevel;
-    private Integer tokensEarned;
-    private Integer championId;
-    private Long    lastPlayTime;
+    private Integer      championLevel;
+    private Boolean      chestGranted;
+    private Integer      championPoints;
+    private Long         championPointsSinceLastLevel;
+    private Long         playerId;
+    private Long         championPointsUntilNextLevel;
+    private Integer      tokensEarned;
+    private ChampionType championId;
+    private Long         lastPlayTime;
     
     
     /**
-     * Champion ID for this entry.
+     * ChampionType ID for this entry.
      *
      * @return the champion id
      */
-    public Integer getChampionId()
+    public ChampionType getChampion()
     {
         return this.championId;
     }
     
     /**
-     * Champion level for specified player and champion combination.
+     * ChampionType level for specified player and champion combination.
      *
      * @return the champion level
      */

@@ -1,0 +1,28 @@
+package no.stelar7.api.l4j8.basic.constants.types;
+
+import java.util.*;
+import java.util.stream.*;
+
+public enum TeamType
+{
+    
+    BLUE(100),
+    PURPLE(200);
+    
+    private final Integer code;
+    
+    TeamType(final int code)
+    {
+        this.code = code;
+    }
+    
+    public static Optional<TeamType> getFromCode(final String teamId)
+    {
+        return Stream.of(TeamType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
+    }
+    
+    public Integer getCode()
+    {
+        return this.code;
+    }
+}

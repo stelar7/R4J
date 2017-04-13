@@ -1,8 +1,10 @@
 package no.stelar7.api.l4j8.basic;
 
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.deserializer.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.impl.RateLimiter;
 
@@ -16,6 +18,42 @@ import java.util.logging.*;
 
 public final class DataCall
 {
+    
+    private static final Gson gson;
+    
+    static
+    {
+        GsonBuilder builder = new GsonBuilder();
+        
+        // Register enum types with GSON
+        builder.registerTypeAdapter(AscencionType.class, new AscencionTypeDeserializer());
+        builder.registerTypeAdapter(BuildingType.class, new BuildingTypeDeserializer());
+        builder.registerTypeAdapter(ChampionType.class, new ChampionTypeDeserializer());
+        builder.registerTypeAdapter(EventType.class, new EventTypeDeserializer());
+        builder.registerTypeAdapter(GameModeType.class, new GameModeTypeDeserializer());
+        builder.registerTypeAdapter(GameQueueType.class, new GameQueueTypeDeserializer());
+        builder.registerTypeAdapter(GameSubType.class, new GameSubTypeDeserializer());
+        builder.registerTypeAdapter(GameType.class, new GameTypeDeserializer());
+        builder.registerTypeAdapter(LaneType.class, new LaneTypeDeserializer());
+        builder.registerTypeAdapter(LevelUpType.class, new LevelUpTypeDeserializer());
+        builder.registerTypeAdapter(MapType.class, new MapTypeDeserializer());
+        builder.registerTypeAdapter(MonsterType.class, new MonsterTypeDeserializer());
+        builder.registerTypeAdapter(PlayerStatSummaryType.class, new PlayerStatSummaryTypeDeserializer());
+        builder.registerTypeAdapter(PointType.class, new PointTypeDeserializer());
+        builder.registerTypeAdapter(RankedQueueType.class, new RankedQueueTypeDeserializer());
+        builder.registerTypeAdapter(RoleType.class, new RoleTypeDeserializer());
+        builder.registerTypeAdapter(SeasonType.class, new SeasonTypeDeserializer());
+        builder.registerTypeAdapter(SummonerSpellType.class, new SummonerSpellTypeDeserializer());
+        builder.registerTypeAdapter(TeamType.class, new TeamTypeDeserializer());
+        builder.registerTypeAdapter(TierType.class, new TierTypeDeserializer());
+        builder.registerTypeAdapter(TournamentMapType.class, new TournamentMapTypeDeserializer());
+        builder.registerTypeAdapter(TournamentPickType.class, new TournamentPickTypeDeserializer());
+        builder.registerTypeAdapter(TournamentSpectatorType.class, new TournamentSpectatorTypeDeserializer());
+        builder.registerTypeAdapter(TowerType.class, new TowerTypeDeserializer());
+        builder.registerTypeAdapter(WardType.class, new WardTypeDeserializer());
+        
+        gson = builder.create();
+    }
     
     public static class DataCallBuilder
     {
@@ -65,10 +103,10 @@ public final class DataCall
                 Object       dtoobj;
                 if (type instanceof Class<?>)
                 {
-                    dtoobj = new Gson().fromJson(response.getResponseData(), (Class<?>) this.dc.endpoint.getType());
+                    dtoobj = gson.fromJson(response.getResponseData(), (Class<?>) this.dc.endpoint.getType());
                 } else
                 {
-                    dtoobj = new Gson().fromJson(response.getResponseData(), (Type) this.dc.endpoint.getType());
+                    dtoobj = gson.fromJson(response.getResponseData(), (Type) this.dc.endpoint.getType());
                 }
                 
                 return dtoobj;
@@ -380,7 +418,7 @@ public final class DataCall
     
     private final Map<String, String> urlHeaders = new TreeMap<>();
     
-    // How many calls our app has made in a timeframe, Map<Timeframe, CallCount>
+    // How many calls our app has made in a timeframe, MapType<Timeframe, CallCount>
     private static final Map<Integer, Integer>                   appLimit    = new TreeMap<>();
     private static final Map<URLEndpoint, Map<Integer, Integer>> methodLimit = new TreeMap<>();
     
