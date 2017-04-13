@@ -14,7 +14,7 @@ public enum WardType
     YELLOW_TRINKET_UPGRADE;
     
     /**
-     * Returns an WardType from the provided code
+     * Returns an WardType from the provided value
      *
      * @return WardType
      */
@@ -24,7 +24,7 @@ public enum WardType
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

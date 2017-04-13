@@ -9,7 +9,7 @@ public enum LevelUpType
     NORMAL;
     
     /**
-     * Returns an LevelUpType from the provided code
+     * Returns an LevelUpType from the provided value
      *
      * @return LevelUpType
      */
@@ -19,7 +19,7 @@ public enum LevelUpType
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

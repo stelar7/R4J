@@ -391,7 +391,7 @@ public class MatchDetail
 	 */
 	public Optional<Season> getSeason()
 	{
-		return Season.getFromCode(this.season);
+		return Season.getFromValue(this.season);
 	}
 	
 	/**

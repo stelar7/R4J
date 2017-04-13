@@ -107,7 +107,7 @@ public class MapDetails
      */
     public List<Long> getUnpurchasableItemList()
     {
-        return this.unpurchasableItemList;
+        return (this.unpurchasableItemList == null) ? Collections.emptyList() : this.unpurchasableItemList;
     }
     
     @Override

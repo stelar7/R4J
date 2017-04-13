@@ -28,7 +28,7 @@ public enum Role
     DUO_SUPPORT;
     
     /**
-     * Returns a Role from the provided code
+     * Returns a Role from the provided value
      *
      * @param code the lookup key
      * @return Role
@@ -39,7 +39,7 @@ public enum Role
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

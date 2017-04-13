@@ -195,7 +195,7 @@ public class MatchReference
      */
     public RankedQueue getQueue()
     {
-        return RankedQueue.getFromCode(this.queue).orElseThrow(APIDataNotParseableException::new);
+        return RankedQueue.getFromValue(this.queue).orElseThrow(APIDataNotParseableException::new);
     }
     
     /**
@@ -255,7 +255,7 @@ public class MatchReference
      */
     public Season getSeason()
     {
-        return Season.getFromCode(this.season).orElseThrow(APIDataNotParseableException::new);
+        return Season.getFromValue(this.season).orElseThrow(APIDataNotParseableException::new);
     }
     
     /**

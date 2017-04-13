@@ -19,7 +19,7 @@ public enum GameType
     MATCHED_GAME;
     
     /**
-     * Returns a GameType from the provided code
+     * Returns a GameType from the provided value
      *
      * @return GameType
      */
@@ -29,7 +29,7 @@ public enum GameType
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

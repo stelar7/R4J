@@ -13,7 +13,7 @@ public enum MonsterType
     VILEMAW;
     
     /**
-     * Returns an MonsterType from the provided code
+     * Returns an MonsterType from the provided value
      *
      * @return MonsterType
      */
@@ -23,7 +23,7 @@ public enum MonsterType
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

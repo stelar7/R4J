@@ -50,4 +50,9 @@ public class L4J8
     {
         return StaticAPI.getInstance();
     }
+    
+    public MatchAPI getMatchAPI()
+    {
+        return MatchAPI.getInstance();
+    }
 }

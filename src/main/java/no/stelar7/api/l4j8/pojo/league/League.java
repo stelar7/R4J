@@ -119,7 +119,7 @@ public class League
      */
     public Optional<RankedQueue> getQueue()
     {
-        return RankedQueue.getFromCode(this.queue);
+        return RankedQueue.getFromValue(this.queue);
     }
     
     /**

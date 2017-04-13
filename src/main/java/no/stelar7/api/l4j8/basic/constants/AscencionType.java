@@ -10,7 +10,7 @@ public enum AscencionType
     MINION_ASCENDED;
     
     /**
-     * Returns an AscentionType from the provided code
+     * Returns an AscentionType from the provided value
      *
      * @return AscentionType
      */
@@ -20,7 +20,7 @@ public enum AscencionType
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

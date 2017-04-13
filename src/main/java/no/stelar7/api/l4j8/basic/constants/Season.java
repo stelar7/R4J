@@ -17,26 +17,26 @@ public enum Season
     SEASON_2016("SEASON2016"),
     SEASON_2017("SEASON2017");
     
-    final String code;
+    final String value;
     
-    Season(final String code)
+    Season(final String value)
     {
-        this.code = code;
+        this.value = value;
     }
     
-    public static Optional<Season> getFromCode(final String code)
+    public static Optional<Season> getFromValue(final String value)
     {
-        return Stream.of(Season.values()).filter(t -> t.code.equalsIgnoreCase(code)).findFirst();
+        return Stream.of(Season.values()).filter(t -> t.value.equalsIgnoreCase(value)).findFirst();
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */
-    public String getCode()
+    public String getValue()
     {
-        return this.code;
+        return this.value;
     }
     
 }

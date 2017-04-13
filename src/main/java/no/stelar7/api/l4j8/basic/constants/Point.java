@@ -12,7 +12,7 @@ public enum Point
     POINT_E;
     
     /**
-     * Returns an Point from the provided code
+     * Returns an Point from the provided value
      *
      * @return Point
      */
@@ -22,7 +22,7 @@ public enum Point
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

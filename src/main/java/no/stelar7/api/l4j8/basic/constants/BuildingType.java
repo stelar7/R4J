@@ -10,7 +10,7 @@ public enum BuildingType
     TOWER_BUILDING;
     
     /**
-     * Returns an BuildingType from the provided code
+     * Returns an BuildingType from the provided value
      *
      * @return BuildingType
      */
@@ -20,7 +20,7 @@ public enum BuildingType
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

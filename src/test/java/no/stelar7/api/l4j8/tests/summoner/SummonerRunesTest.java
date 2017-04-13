@@ -20,17 +20,17 @@ public class SummonerRunesTest
         pages.getPages().forEach(page ->
                                  {
             
-                                     Assert.assertNotNull("Rune Page does not have an id", page.getId());
-                                     Assert.assertNotNull("Rune Page does not have a name", page.getName());
-                                     Assert.assertNotNull("Rune Page does not contain any slots", page.getSlots());
-                                     Assert.assertNotNull("Unable to determine current Rune page", page.isCurrent());
+                                     Assert.assertNotNull("StaticRune Page does not have an id", page.getId());
+                                     Assert.assertNotNull("StaticRune Page does not have a name", page.getName());
+                                     Assert.assertNotNull("StaticRune Page does not contain any slots", page.getSlots());
+                                     Assert.assertNotNull("Unable to determine current StaticRune page", page.isCurrent());
             
                                      page.getSlots().forEach((final RuneSlot slot) ->
                                                              {
-                                                                 Assert.assertNotNull("Rune slot does not have a slot id", slot.getRuneSlotId());
-                                                                 Assert.assertNotNull("Rune slot does not have a rune id", slot.getRuneId());
-                                                                 Assert.assertNotEquals("Rune slot does not have a valid id", slot.getRuneSlotId(), (Integer) 0);
-                                                                 Assert.assertNotEquals("Rune slot does not have a valid rune id", slot.getRuneId(), (Integer) 0);
+                                                                 Assert.assertNotNull("StaticRune slot does not have a slot id", slot.getRuneSlotId());
+                                                                 Assert.assertNotNull("StaticRune slot does not have a rune id", slot.getRuneId());
+                                                                 Assert.assertNotEquals("StaticRune slot does not have a valid id", slot.getRuneSlotId(), (Integer) 0);
+                                                                 Assert.assertNotEquals("StaticRune slot does not have a valid rune id", slot.getRuneId(), (Integer) 0);
                                                              });
                                  });
         

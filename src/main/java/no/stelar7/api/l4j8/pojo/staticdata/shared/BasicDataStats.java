@@ -2,39 +2,39 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 public class BasicDataStats
 {
-    private Double flatArmorMod;
-    private Double flatAttackSpeedMod;
-    private Double flatBlockMod;
-    private Double flatCritChanceMod;
-    private Double flatCritDamageMod;
-    private Double flatEXPBonus;
-    private Double flatEnergyPoolMod;
-    private Double flatEnergyRegenMod;
-    private Double flatHPPoolMod;
-    private Double flatHPRegenMod;
-    private Double flatMPPoolMod;
-    private Double flatMPRegenMod;
-    private Double flatMagicDamageMod;
-    private Double flatMovementSpeedMod;
-    private Double flatPhysicalDamageMod;
-    private Double flatSpellBlockMod;
-    private Double percentArmorMod;
-    private Double percentAttackSpeedMod;
-    private Double percentBlockMod;
-    private Double percentCritChanceMod;
-    private Double percentCritDamageMod;
-    private Double percentDodgeMod;
-    private Double percentEXPBonus;
-    private Double percentHPPoolMod;
-    private Double percentHPRegenMod;
-    private Double percentLifeStealMod;
-    private Double percentMPPoolMod;
-    private Double percentMPRegenMod;
-    private Double percentMagicDamageMod;
-    private Double percentMovementSpeedMod;
-    private Double percentPhysicalDamageMod;
-    private Double percentSpellBlockMod;
-    private Double percentSpellVampMod;
+    private Double FlatArmorMod;
+    private Double FlatAttackSpeedMod;
+    private Double FlatBlockMod;
+    private Double FlatCritChanceMod;
+    private Double FlatCritDamageMod;
+    private Double FlatEXPBonus;
+    private Double FlatEnergyPoolMod;
+    private Double FlatEnergyRegenMod;
+    private Double FlatHPPoolMod;
+    private Double FlatHPRegenMod;
+    private Double FlatMPPoolMod;
+    private Double FlatMPRegenMod;
+    private Double FlatMagicDamageMod;
+    private Double FlatMovementSpeedMod;
+    private Double FlatPhysicalDamageMod;
+    private Double FlatSpellBlockMod;
+    private Double PercentArmorMod;
+    private Double PercentAttackSpeedMod;
+    private Double PercentBlockMod;
+    private Double PercentCritChanceMod;
+    private Double PercentCritDamageMod;
+    private Double PercentDodgeMod;
+    private Double PercentEXPBonus;
+    private Double PercentHPPoolMod;
+    private Double PercentHPRegenMod;
+    private Double PercentLifeStealMod;
+    private Double PercentMPPoolMod;
+    private Double PercentMPRegenMod;
+    private Double PercentMagicDamageMod;
+    private Double PercentMovementSpeedMod;
+    private Double PercentPhysicalDamageMod;
+    private Double PercentSpellBlockMod;
+    private Double PercentSpellVampMod;
     private Double rFlatArmorModPerLevel;
     private Double rFlatArmorPenetrationMod;
     private Double rFlatArmorPenetrationModPerLevel;
@@ -69,674 +69,348 @@ public class BasicDataStats
     private Double rPercentTimeDeadModPerLevel;
     
     
-    
     @Override
-    public boolean equals(final Object obj)
+    public boolean equals(Object o)
     {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
+        
+        BasicDataStats that = (BasicDataStats) o;
+        
+        if ((FlatArmorMod != null) ? !FlatArmorMod.equals(that.FlatArmorMod) : (that.FlatArmorMod != null))
         {
             return false;
         }
-        final BasicDataStats other = (BasicDataStats) obj;
-        if (this.flatArmorMod == null)
+        if ((FlatAttackSpeedMod != null) ? !FlatAttackSpeedMod.equals(that.FlatAttackSpeedMod) : (that.FlatAttackSpeedMod != null))
         {
-            if (other.flatArmorMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatArmorMod.equals(other.flatArmorMod))
-        {
-            return false;
-        }
-        if (this.flatAttackSpeedMod == null)
-        {
-            if (other.flatAttackSpeedMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatAttackSpeedMod.equals(other.flatAttackSpeedMod))
-        {
-            return false;
-        }
-        if (this.flatBlockMod == null)
-        {
-            if (other.flatBlockMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatBlockMod.equals(other.flatBlockMod))
-        {
             return false;
         }
-        if (this.flatCritChanceMod == null)
-        {
-            if (other.flatCritChanceMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatCritChanceMod.equals(other.flatCritChanceMod))
+        if ((FlatBlockMod != null) ? !FlatBlockMod.equals(that.FlatBlockMod) : (that.FlatBlockMod != null))
         {
             return false;
         }
-        if (this.flatCritDamageMod == null)
+        if ((FlatCritChanceMod != null) ? !FlatCritChanceMod.equals(that.FlatCritChanceMod) : (that.FlatCritChanceMod != null))
         {
-            if (other.flatCritDamageMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatCritDamageMod.equals(other.flatCritDamageMod))
-        {
             return false;
         }
-        if (this.flatEXPBonus == null)
-        {
-            if (other.flatEXPBonus != null)
-            {
-                return false;
-            }
-        } else if (!this.flatEXPBonus.equals(other.flatEXPBonus))
+        if ((FlatCritDamageMod != null) ? !FlatCritDamageMod.equals(that.FlatCritDamageMod) : (that.FlatCritDamageMod != null))
         {
             return false;
         }
-        if (this.flatEnergyPoolMod == null)
+        if ((FlatEXPBonus != null) ? !FlatEXPBonus.equals(that.FlatEXPBonus) : (that.FlatEXPBonus != null))
         {
-            if (other.flatEnergyPoolMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatEnergyPoolMod.equals(other.flatEnergyPoolMod))
-        {
             return false;
         }
-        if (this.flatEnergyRegenMod == null)
-        {
-            if (other.flatEnergyRegenMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatEnergyRegenMod.equals(other.flatEnergyRegenMod))
+        if ((FlatEnergyPoolMod != null) ? !FlatEnergyPoolMod.equals(that.FlatEnergyPoolMod) : (that.FlatEnergyPoolMod != null))
         {
             return false;
         }
-        if (this.flatHPPoolMod == null)
+        if ((FlatEnergyRegenMod != null) ? !FlatEnergyRegenMod.equals(that.FlatEnergyRegenMod) : (that.FlatEnergyRegenMod != null))
         {
-            if (other.flatHPPoolMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatHPPoolMod.equals(other.flatHPPoolMod))
-        {
             return false;
         }
-        if (this.flatHPRegenMod == null)
+        if ((FlatHPPoolMod != null) ? !FlatHPPoolMod.equals(that.FlatHPPoolMod) : (that.FlatHPPoolMod != null))
         {
-            if (other.flatHPRegenMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatHPRegenMod.equals(other.flatHPRegenMod))
-        {
             return false;
         }
-        if (this.flatMPPoolMod == null)
-        {
-            if (other.flatMPPoolMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatMPPoolMod.equals(other.flatMPPoolMod))
+        if ((FlatHPRegenMod != null) ? !FlatHPRegenMod.equals(that.FlatHPRegenMod) : (that.FlatHPRegenMod != null))
         {
             return false;
         }
-        if (this.flatMPRegenMod == null)
+        if ((FlatMPPoolMod != null) ? !FlatMPPoolMod.equals(that.FlatMPPoolMod) : (that.FlatMPPoolMod != null))
         {
-            if (other.flatMPRegenMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatMPRegenMod.equals(other.flatMPRegenMod))
-        {
             return false;
         }
-        if (this.flatMagicDamageMod == null)
-        {
-            if (other.flatMagicDamageMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatMagicDamageMod.equals(other.flatMagicDamageMod))
+        if ((FlatMPRegenMod != null) ? !FlatMPRegenMod.equals(that.FlatMPRegenMod) : (that.FlatMPRegenMod != null))
         {
             return false;
         }
-        if (this.flatMovementSpeedMod == null)
+        if ((FlatMagicDamageMod != null) ? !FlatMagicDamageMod.equals(that.FlatMagicDamageMod) : (that.FlatMagicDamageMod != null))
         {
-            if (other.flatMovementSpeedMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatMovementSpeedMod.equals(other.flatMovementSpeedMod))
-        {
             return false;
         }
-        if (this.flatPhysicalDamageMod == null)
-        {
-            if (other.flatPhysicalDamageMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatPhysicalDamageMod.equals(other.flatPhysicalDamageMod))
+        if ((FlatMovementSpeedMod != null) ? !FlatMovementSpeedMod.equals(that.FlatMovementSpeedMod) : (that.FlatMovementSpeedMod != null))
         {
             return false;
         }
-        if (this.flatSpellBlockMod == null)
+        if ((FlatPhysicalDamageMod != null) ? !FlatPhysicalDamageMod.equals(that.FlatPhysicalDamageMod) : (that.FlatPhysicalDamageMod != null))
         {
-            if (other.flatSpellBlockMod != null)
-            {
-                return false;
-            }
-        } else if (!this.flatSpellBlockMod.equals(other.flatSpellBlockMod))
-        {
             return false;
         }
-        if (this.percentArmorMod == null)
-        {
-            if (other.percentArmorMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentArmorMod.equals(other.percentArmorMod))
+        if ((FlatSpellBlockMod != null) ? !FlatSpellBlockMod.equals(that.FlatSpellBlockMod) : (that.FlatSpellBlockMod != null))
         {
             return false;
         }
-        if (this.percentAttackSpeedMod == null)
+        if ((PercentArmorMod != null) ? !PercentArmorMod.equals(that.PercentArmorMod) : (that.PercentArmorMod != null))
         {
-            if (other.percentAttackSpeedMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentAttackSpeedMod.equals(other.percentAttackSpeedMod))
-        {
             return false;
         }
-        if (this.percentBlockMod == null)
+        if ((PercentAttackSpeedMod != null) ? !PercentAttackSpeedMod.equals(that.PercentAttackSpeedMod) : (that.PercentAttackSpeedMod != null))
         {
-            if (other.percentBlockMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentBlockMod.equals(other.percentBlockMod))
-        {
             return false;
         }
-        if (this.percentCritChanceMod == null)
-        {
-            if (other.percentCritChanceMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentCritChanceMod.equals(other.percentCritChanceMod))
+        if ((PercentBlockMod != null) ? !PercentBlockMod.equals(that.PercentBlockMod) : (that.PercentBlockMod != null))
         {
             return false;
         }
-        if (this.percentCritDamageMod == null)
+        if ((PercentCritChanceMod != null) ? !PercentCritChanceMod.equals(that.PercentCritChanceMod) : (that.PercentCritChanceMod != null))
         {
-            if (other.percentCritDamageMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentCritDamageMod.equals(other.percentCritDamageMod))
-        {
             return false;
         }
-        if (this.percentDodgeMod == null)
-        {
-            if (other.percentDodgeMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentDodgeMod.equals(other.percentDodgeMod))
+        if ((PercentCritDamageMod != null) ? !PercentCritDamageMod.equals(that.PercentCritDamageMod) : (that.PercentCritDamageMod != null))
         {
             return false;
         }
-        if (this.percentEXPBonus == null)
+        if ((PercentDodgeMod != null) ? !PercentDodgeMod.equals(that.PercentDodgeMod) : (that.PercentDodgeMod != null))
         {
-            if (other.percentEXPBonus != null)
-            {
-                return false;
-            }
-        } else if (!this.percentEXPBonus.equals(other.percentEXPBonus))
-        {
             return false;
         }
-        if (this.percentHPPoolMod == null)
-        {
-            if (other.percentHPPoolMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentHPPoolMod.equals(other.percentHPPoolMod))
+        if ((PercentEXPBonus != null) ? !PercentEXPBonus.equals(that.PercentEXPBonus) : (that.PercentEXPBonus != null))
         {
             return false;
         }
-        if (this.percentHPRegenMod == null)
+        if ((PercentHPPoolMod != null) ? !PercentHPPoolMod.equals(that.PercentHPPoolMod) : (that.PercentHPPoolMod != null))
         {
-            if (other.percentHPRegenMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentHPRegenMod.equals(other.percentHPRegenMod))
-        {
             return false;
         }
-        if (this.percentLifeStealMod == null)
-        {
-            if (other.percentLifeStealMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentLifeStealMod.equals(other.percentLifeStealMod))
+        if ((PercentHPRegenMod != null) ? !PercentHPRegenMod.equals(that.PercentHPRegenMod) : (that.PercentHPRegenMod != null))
         {
             return false;
         }
-        if (this.percentMPPoolMod == null)
+        if ((PercentLifeStealMod != null) ? !PercentLifeStealMod.equals(that.PercentLifeStealMod) : (that.PercentLifeStealMod != null))
         {
-            if (other.percentMPPoolMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentMPPoolMod.equals(other.percentMPPoolMod))
-        {
             return false;
         }
-        if (this.percentMPRegenMod == null)
+        if ((PercentMPPoolMod != null) ? !PercentMPPoolMod.equals(that.PercentMPPoolMod) : (that.PercentMPPoolMod != null))
         {
-            if (other.percentMPRegenMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentMPRegenMod.equals(other.percentMPRegenMod))
-        {
             return false;
         }
-        if (this.percentMagicDamageMod == null)
-        {
-            if (other.percentMagicDamageMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentMagicDamageMod.equals(other.percentMagicDamageMod))
+        if ((PercentMPRegenMod != null) ? !PercentMPRegenMod.equals(that.PercentMPRegenMod) : (that.PercentMPRegenMod != null))
         {
             return false;
         }
-        if (this.percentMovementSpeedMod == null)
+        if ((PercentMagicDamageMod != null) ? !PercentMagicDamageMod.equals(that.PercentMagicDamageMod) : (that.PercentMagicDamageMod != null))
         {
-            if (other.percentMovementSpeedMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentMovementSpeedMod.equals(other.percentMovementSpeedMod))
-        {
             return false;
         }
-        if (this.percentPhysicalDamageMod == null)
-        {
-            if (other.percentPhysicalDamageMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentPhysicalDamageMod.equals(other.percentPhysicalDamageMod))
+        if ((PercentMovementSpeedMod != null) ? !PercentMovementSpeedMod.equals(that.PercentMovementSpeedMod) : (that.PercentMovementSpeedMod != null))
         {
             return false;
         }
-        if (this.percentSpellBlockMod == null)
+        if ((PercentPhysicalDamageMod != null) ? !PercentPhysicalDamageMod.equals(that.PercentPhysicalDamageMod) : (that.PercentPhysicalDamageMod != null))
         {
-            if (other.percentSpellBlockMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentSpellBlockMod.equals(other.percentSpellBlockMod))
-        {
             return false;
         }
-        if (this.percentSpellVampMod == null)
-        {
-            if (other.percentSpellVampMod != null)
-            {
-                return false;
-            }
-        } else if (!this.percentSpellVampMod.equals(other.percentSpellVampMod))
+        if ((PercentSpellBlockMod != null) ? !PercentSpellBlockMod.equals(that.PercentSpellBlockMod) : (that.PercentSpellBlockMod != null))
         {
             return false;
         }
-        if (this.rFlatArmorModPerLevel == null)
+        if ((PercentSpellVampMod != null) ? !PercentSpellVampMod.equals(that.PercentSpellVampMod) : (that.PercentSpellVampMod != null))
         {
-            if (other.rFlatArmorModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatArmorModPerLevel.equals(other.rFlatArmorModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatArmorPenetrationMod == null)
-        {
-            if (other.rFlatArmorPenetrationMod != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatArmorPenetrationMod.equals(other.rFlatArmorPenetrationMod))
+        if ((rFlatArmorModPerLevel != null) ? !rFlatArmorModPerLevel.equals(that.rFlatArmorModPerLevel) : (that.rFlatArmorModPerLevel != null))
         {
             return false;
         }
-        if (this.rFlatArmorPenetrationModPerLevel == null)
+        if ((rFlatArmorPenetrationMod != null) ? !rFlatArmorPenetrationMod.equals(that.rFlatArmorPenetrationMod) : (that.rFlatArmorPenetrationMod != null))
         {
-            if (other.rFlatArmorPenetrationModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatArmorPenetrationModPerLevel.equals(other.rFlatArmorPenetrationModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatCritChanceModPerLevel == null)
+        if ((rFlatArmorPenetrationModPerLevel != null) ? !rFlatArmorPenetrationModPerLevel.equals(that.rFlatArmorPenetrationModPerLevel) : (that.rFlatArmorPenetrationModPerLevel != null))
         {
-            if (other.rFlatCritChanceModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatCritChanceModPerLevel.equals(other.rFlatCritChanceModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatCritDamageModPerLevel == null)
-        {
-            if (other.rFlatCritDamageModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatCritDamageModPerLevel.equals(other.rFlatCritDamageModPerLevel))
+        if ((rFlatCritChanceModPerLevel != null) ? !rFlatCritChanceModPerLevel.equals(that.rFlatCritChanceModPerLevel) : (that.rFlatCritChanceModPerLevel != null))
         {
             return false;
         }
-        if (this.rFlatDodgeMod == null)
+        if ((rFlatCritDamageModPerLevel != null) ? !rFlatCritDamageModPerLevel.equals(that.rFlatCritDamageModPerLevel) : (that.rFlatCritDamageModPerLevel != null))
         {
-            if (other.rFlatDodgeMod != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatDodgeMod.equals(other.rFlatDodgeMod))
-        {
             return false;
         }
-        if (this.rFlatDodgeModPerLevel == null)
-        {
-            if (other.rFlatDodgeModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatDodgeModPerLevel.equals(other.rFlatDodgeModPerLevel))
+        if ((rFlatDodgeMod != null) ? !rFlatDodgeMod.equals(that.rFlatDodgeMod) : (that.rFlatDodgeMod != null))
         {
             return false;
         }
-        if (this.rFlatEnergyModPerLevel == null)
+        if ((rFlatDodgeModPerLevel != null) ? !rFlatDodgeModPerLevel.equals(that.rFlatDodgeModPerLevel) : (that.rFlatDodgeModPerLevel != null))
         {
-            if (other.rFlatEnergyModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatEnergyModPerLevel.equals(other.rFlatEnergyModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatEnergyRegenModPerLevel == null)
-        {
-            if (other.rFlatEnergyRegenModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatEnergyRegenModPerLevel.equals(other.rFlatEnergyRegenModPerLevel))
+        if ((rFlatEnergyModPerLevel != null) ? !rFlatEnergyModPerLevel.equals(that.rFlatEnergyModPerLevel) : (that.rFlatEnergyModPerLevel != null))
         {
             return false;
         }
-        if (this.rFlatGoldPer10Mod == null)
+        if ((rFlatEnergyRegenModPerLevel != null) ? !rFlatEnergyRegenModPerLevel.equals(that.rFlatEnergyRegenModPerLevel) : (that.rFlatEnergyRegenModPerLevel != null))
         {
-            if (other.rFlatGoldPer10Mod != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatGoldPer10Mod.equals(other.rFlatGoldPer10Mod))
-        {
             return false;
         }
-        if (this.rFlatHPModPerLevel == null)
-        {
-            if (other.rFlatHPModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatHPModPerLevel.equals(other.rFlatHPModPerLevel))
+        if ((rFlatGoldPer10Mod != null) ? !rFlatGoldPer10Mod.equals(that.rFlatGoldPer10Mod) : (that.rFlatGoldPer10Mod != null))
         {
             return false;
         }
-        if (this.rFlatHPRegenModPerLevel == null)
+        if ((rFlatHPModPerLevel != null) ? !rFlatHPModPerLevel.equals(that.rFlatHPModPerLevel) : (that.rFlatHPModPerLevel != null))
         {
-            if (other.rFlatHPRegenModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatHPRegenModPerLevel.equals(other.rFlatHPRegenModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatMPModPerLevel == null)
+        if ((rFlatHPRegenModPerLevel != null) ? !rFlatHPRegenModPerLevel.equals(that.rFlatHPRegenModPerLevel) : (that.rFlatHPRegenModPerLevel != null))
         {
-            if (other.rFlatMPModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatMPModPerLevel.equals(other.rFlatMPModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatMPRegenModPerLevel == null)
-        {
-            if (other.rFlatMPRegenModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatMPRegenModPerLevel.equals(other.rFlatMPRegenModPerLevel))
+        if ((rFlatMPModPerLevel != null) ? !rFlatMPModPerLevel.equals(that.rFlatMPModPerLevel) : (that.rFlatMPModPerLevel != null))
         {
             return false;
         }
-        if (this.rFlatMagicDamageModPerLevel == null)
+        if ((rFlatMPRegenModPerLevel != null) ? !rFlatMPRegenModPerLevel.equals(that.rFlatMPRegenModPerLevel) : (that.rFlatMPRegenModPerLevel != null))
         {
-            if (other.rFlatMagicDamageModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatMagicDamageModPerLevel.equals(other.rFlatMagicDamageModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatMagicPenetrationMod == null)
-        {
-            if (other.rFlatMagicPenetrationMod != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatMagicPenetrationMod.equals(other.rFlatMagicPenetrationMod))
+        if ((rFlatMagicDamageModPerLevel != null) ? !rFlatMagicDamageModPerLevel.equals(that.rFlatMagicDamageModPerLevel) : (that.rFlatMagicDamageModPerLevel != null))
         {
             return false;
         }
-        if (this.rFlatMagicPenetrationModPerLevel == null)
+        if ((rFlatMagicPenetrationMod != null) ? !rFlatMagicPenetrationMod.equals(that.rFlatMagicPenetrationMod) : (that.rFlatMagicPenetrationMod != null))
         {
-            if (other.rFlatMagicPenetrationModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatMagicPenetrationModPerLevel.equals(other.rFlatMagicPenetrationModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatMovementSpeedModPerLevel == null)
-        {
-            if (other.rFlatMovementSpeedModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatMovementSpeedModPerLevel.equals(other.rFlatMovementSpeedModPerLevel))
+        if ((rFlatMagicPenetrationModPerLevel != null) ? !rFlatMagicPenetrationModPerLevel.equals(that.rFlatMagicPenetrationModPerLevel) : (that.rFlatMagicPenetrationModPerLevel != null))
         {
             return false;
         }
-        if (this.rFlatPhysicalDamageModPerLevel == null)
+        if ((rFlatMovementSpeedModPerLevel != null) ? !rFlatMovementSpeedModPerLevel.equals(that.rFlatMovementSpeedModPerLevel) : (that.rFlatMovementSpeedModPerLevel != null))
         {
-            if (other.rFlatPhysicalDamageModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatPhysicalDamageModPerLevel.equals(other.rFlatPhysicalDamageModPerLevel))
-        {
             return false;
         }
-        if (this.rFlatSpellBlockModPerLevel == null)
-        {
-            if (other.rFlatSpellBlockModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatSpellBlockModPerLevel.equals(other.rFlatSpellBlockModPerLevel))
+        if ((rFlatPhysicalDamageModPerLevel != null) ? !rFlatPhysicalDamageModPerLevel.equals(that.rFlatPhysicalDamageModPerLevel) : (that.rFlatPhysicalDamageModPerLevel != null))
         {
             return false;
         }
-        if (this.rFlatTimeDeadMod == null)
+        if ((rFlatSpellBlockModPerLevel != null) ? !rFlatSpellBlockModPerLevel.equals(that.rFlatSpellBlockModPerLevel) : (that.rFlatSpellBlockModPerLevel != null))
         {
-            if (other.rFlatTimeDeadMod != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatTimeDeadMod.equals(other.rFlatTimeDeadMod))
-        {
             return false;
         }
-        if (this.rFlatTimeDeadModPerLevel == null)
+        if ((rFlatTimeDeadMod != null) ? !rFlatTimeDeadMod.equals(that.rFlatTimeDeadMod) : (that.rFlatTimeDeadMod != null))
         {
-            if (other.rFlatTimeDeadModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rFlatTimeDeadModPerLevel.equals(other.rFlatTimeDeadModPerLevel))
-        {
             return false;
         }
-        if (this.rPercentArmorPenetrationMod == null)
-        {
-            if (other.rPercentArmorPenetrationMod != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentArmorPenetrationMod.equals(other.rPercentArmorPenetrationMod))
+        if ((rFlatTimeDeadModPerLevel != null) ? !rFlatTimeDeadModPerLevel.equals(that.rFlatTimeDeadModPerLevel) : (that.rFlatTimeDeadModPerLevel != null))
         {
             return false;
         }
-        if (this.rPercentArmorPenetrationModPerLevel == null)
+        if ((rPercentArmorPenetrationMod != null) ? !rPercentArmorPenetrationMod.equals(that.rPercentArmorPenetrationMod) : (that.rPercentArmorPenetrationMod != null))
         {
-            if (other.rPercentArmorPenetrationModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentArmorPenetrationModPerLevel.equals(other.rPercentArmorPenetrationModPerLevel))
-        {
             return false;
         }
-        if (this.rPercentAttackSpeedModPerLevel == null)
-        {
-            if (other.rPercentAttackSpeedModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentAttackSpeedModPerLevel.equals(other.rPercentAttackSpeedModPerLevel))
+        if ((rPercentArmorPenetrationModPerLevel != null) ? !rPercentArmorPenetrationModPerLevel.equals(that.rPercentArmorPenetrationModPerLevel) : (that.rPercentArmorPenetrationModPerLevel != null))
         {
             return false;
         }
-        if (this.rPercentCooldownMod == null)
+        if ((rPercentAttackSpeedModPerLevel != null) ? !rPercentAttackSpeedModPerLevel.equals(that.rPercentAttackSpeedModPerLevel) : (that.rPercentAttackSpeedModPerLevel != null))
         {
-            if (other.rPercentCooldownMod != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentCooldownMod.equals(other.rPercentCooldownMod))
-        {
             return false;
         }
-        if (this.rPercentCooldownModPerLevel == null)
-        {
-            if (other.rPercentCooldownModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentCooldownModPerLevel.equals(other.rPercentCooldownModPerLevel))
+        if ((rPercentCooldownMod != null) ? !rPercentCooldownMod.equals(that.rPercentCooldownMod) : (that.rPercentCooldownMod != null))
         {
             return false;
         }
-        if (this.rPercentMagicPenetrationMod == null)
+        if ((rPercentCooldownModPerLevel != null) ? !rPercentCooldownModPerLevel.equals(that.rPercentCooldownModPerLevel) : (that.rPercentCooldownModPerLevel != null))
         {
-            if (other.rPercentMagicPenetrationMod != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentMagicPenetrationMod.equals(other.rPercentMagicPenetrationMod))
-        {
             return false;
         }
-        if (this.rPercentMagicPenetrationModPerLevel == null)
-        {
-            if (other.rPercentMagicPenetrationModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentMagicPenetrationModPerLevel.equals(other.rPercentMagicPenetrationModPerLevel))
+        if ((rPercentMagicPenetrationMod != null) ? !rPercentMagicPenetrationMod.equals(that.rPercentMagicPenetrationMod) : (that.rPercentMagicPenetrationMod != null))
         {
             return false;
         }
-        if (this.rPercentMovementSpeedModPerLevel == null)
+        if ((rPercentMagicPenetrationModPerLevel != null) ? !rPercentMagicPenetrationModPerLevel.equals(that.rPercentMagicPenetrationModPerLevel) : (that.rPercentMagicPenetrationModPerLevel != null))
         {
-            if (other.rPercentMovementSpeedModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentMovementSpeedModPerLevel.equals(other.rPercentMovementSpeedModPerLevel))
-        {
             return false;
         }
-        if (this.rPercentTimeDeadMod == null)
+        if ((rPercentMovementSpeedModPerLevel != null) ? !rPercentMovementSpeedModPerLevel.equals(that.rPercentMovementSpeedModPerLevel) : (that.rPercentMovementSpeedModPerLevel != null))
         {
-            if (other.rPercentTimeDeadMod != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentTimeDeadMod.equals(other.rPercentTimeDeadMod))
-        {
             return false;
         }
-        if (this.rPercentTimeDeadModPerLevel == null)
-        {
-            if (other.rPercentTimeDeadModPerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.rPercentTimeDeadModPerLevel.equals(other.rPercentTimeDeadModPerLevel))
+        if ((rPercentTimeDeadMod != null) ? !rPercentTimeDeadMod.equals(that.rPercentTimeDeadMod) : (that.rPercentTimeDeadMod != null))
         {
             return false;
         }
-        return true;
+        return (rPercentTimeDeadModPerLevel != null) ? rPercentTimeDeadModPerLevel.equals(that.rPercentTimeDeadModPerLevel) : (that.rPercentTimeDeadModPerLevel == null);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = FlatArmorMod != null ? FlatArmorMod.hashCode() : 0;
+        result = 31 * result + (FlatAttackSpeedMod != null ? FlatAttackSpeedMod.hashCode() : 0);
+        result = 31 * result + (FlatBlockMod != null ? FlatBlockMod.hashCode() : 0);
+        result = 31 * result + (FlatCritChanceMod != null ? FlatCritChanceMod.hashCode() : 0);
+        result = 31 * result + (FlatCritDamageMod != null ? FlatCritDamageMod.hashCode() : 0);
+        result = 31 * result + (FlatEXPBonus != null ? FlatEXPBonus.hashCode() : 0);
+        result = 31 * result + (FlatEnergyPoolMod != null ? FlatEnergyPoolMod.hashCode() : 0);
+        result = 31 * result + (FlatEnergyRegenMod != null ? FlatEnergyRegenMod.hashCode() : 0);
+        result = 31 * result + (FlatHPPoolMod != null ? FlatHPPoolMod.hashCode() : 0);
+        result = 31 * result + (FlatHPRegenMod != null ? FlatHPRegenMod.hashCode() : 0);
+        result = 31 * result + (FlatMPPoolMod != null ? FlatMPPoolMod.hashCode() : 0);
+        result = 31 * result + (FlatMPRegenMod != null ? FlatMPRegenMod.hashCode() : 0);
+        result = 31 * result + (FlatMagicDamageMod != null ? FlatMagicDamageMod.hashCode() : 0);
+        result = 31 * result + (FlatMovementSpeedMod != null ? FlatMovementSpeedMod.hashCode() : 0);
+        result = 31 * result + (FlatPhysicalDamageMod != null ? FlatPhysicalDamageMod.hashCode() : 0);
+        result = 31 * result + (FlatSpellBlockMod != null ? FlatSpellBlockMod.hashCode() : 0);
+        result = 31 * result + (PercentArmorMod != null ? PercentArmorMod.hashCode() : 0);
+        result = 31 * result + (PercentAttackSpeedMod != null ? PercentAttackSpeedMod.hashCode() : 0);
+        result = 31 * result + (PercentBlockMod != null ? PercentBlockMod.hashCode() : 0);
+        result = 31 * result + (PercentCritChanceMod != null ? PercentCritChanceMod.hashCode() : 0);
+        result = 31 * result + (PercentCritDamageMod != null ? PercentCritDamageMod.hashCode() : 0);
+        result = 31 * result + (PercentDodgeMod != null ? PercentDodgeMod.hashCode() : 0);
+        result = 31 * result + (PercentEXPBonus != null ? PercentEXPBonus.hashCode() : 0);
+        result = 31 * result + (PercentHPPoolMod != null ? PercentHPPoolMod.hashCode() : 0);
+        result = 31 * result + (PercentHPRegenMod != null ? PercentHPRegenMod.hashCode() : 0);
+        result = 31 * result + (PercentLifeStealMod != null ? PercentLifeStealMod.hashCode() : 0);
+        result = 31 * result + (PercentMPPoolMod != null ? PercentMPPoolMod.hashCode() : 0);
+        result = 31 * result + (PercentMPRegenMod != null ? PercentMPRegenMod.hashCode() : 0);
+        result = 31 * result + (PercentMagicDamageMod != null ? PercentMagicDamageMod.hashCode() : 0);
+        result = 31 * result + (PercentMovementSpeedMod != null ? PercentMovementSpeedMod.hashCode() : 0);
+        result = 31 * result + (PercentPhysicalDamageMod != null ? PercentPhysicalDamageMod.hashCode() : 0);
+        result = 31 * result + (PercentSpellBlockMod != null ? PercentSpellBlockMod.hashCode() : 0);
+        result = 31 * result + (PercentSpellVampMod != null ? PercentSpellVampMod.hashCode() : 0);
+        result = 31 * result + (rFlatArmorModPerLevel != null ? rFlatArmorModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatArmorPenetrationMod != null ? rFlatArmorPenetrationMod.hashCode() : 0);
+        result = 31 * result + (rFlatArmorPenetrationModPerLevel != null ? rFlatArmorPenetrationModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatCritChanceModPerLevel != null ? rFlatCritChanceModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatCritDamageModPerLevel != null ? rFlatCritDamageModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatDodgeMod != null ? rFlatDodgeMod.hashCode() : 0);
+        result = 31 * result + (rFlatDodgeModPerLevel != null ? rFlatDodgeModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatEnergyModPerLevel != null ? rFlatEnergyModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatEnergyRegenModPerLevel != null ? rFlatEnergyRegenModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatGoldPer10Mod != null ? rFlatGoldPer10Mod.hashCode() : 0);
+        result = 31 * result + (rFlatHPModPerLevel != null ? rFlatHPModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatHPRegenModPerLevel != null ? rFlatHPRegenModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatMPModPerLevel != null ? rFlatMPModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatMPRegenModPerLevel != null ? rFlatMPRegenModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatMagicDamageModPerLevel != null ? rFlatMagicDamageModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatMagicPenetrationMod != null ? rFlatMagicPenetrationMod.hashCode() : 0);
+        result = 31 * result + (rFlatMagicPenetrationModPerLevel != null ? rFlatMagicPenetrationModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatMovementSpeedModPerLevel != null ? rFlatMovementSpeedModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatPhysicalDamageModPerLevel != null ? rFlatPhysicalDamageModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatSpellBlockModPerLevel != null ? rFlatSpellBlockModPerLevel.hashCode() : 0);
+        result = 31 * result + (rFlatTimeDeadMod != null ? rFlatTimeDeadMod.hashCode() : 0);
+        result = 31 * result + (rFlatTimeDeadModPerLevel != null ? rFlatTimeDeadModPerLevel.hashCode() : 0);
+        result = 31 * result + (rPercentArmorPenetrationMod != null ? rPercentArmorPenetrationMod.hashCode() : 0);
+        result = 31 * result + (rPercentArmorPenetrationModPerLevel != null ? rPercentArmorPenetrationModPerLevel.hashCode() : 0);
+        result = 31 * result + (rPercentAttackSpeedModPerLevel != null ? rPercentAttackSpeedModPerLevel.hashCode() : 0);
+        result = 31 * result + (rPercentCooldownMod != null ? rPercentCooldownMod.hashCode() : 0);
+        result = 31 * result + (rPercentCooldownModPerLevel != null ? rPercentCooldownModPerLevel.hashCode() : 0);
+        result = 31 * result + (rPercentMagicPenetrationMod != null ? rPercentMagicPenetrationMod.hashCode() : 0);
+        result = 31 * result + (rPercentMagicPenetrationModPerLevel != null ? rPercentMagicPenetrationModPerLevel.hashCode() : 0);
+        result = 31 * result + (rPercentMovementSpeedModPerLevel != null ? rPercentMovementSpeedModPerLevel.hashCode() : 0);
+        result = 31 * result + (rPercentTimeDeadMod != null ? rPercentTimeDeadMod.hashCode() : 0);
+        result = 31 * result + (rPercentTimeDeadModPerLevel != null ? rPercentTimeDeadModPerLevel.hashCode() : 0);
+        return result;
     }
     
     /**
@@ -746,7 +420,7 @@ public class BasicDataStats
      */
     public Double getFlatArmorMod()
     {
-        return this.flatArmorMod;
+        return this.FlatArmorMod;
     }
     
     /**
@@ -756,7 +430,7 @@ public class BasicDataStats
      */
     public Double getFlatAttackSpeedMod()
     {
-        return this.flatAttackSpeedMod;
+        return this.FlatAttackSpeedMod;
     }
     
     /**
@@ -766,7 +440,7 @@ public class BasicDataStats
      */
     public Double getFlatBlockMod()
     {
-        return this.flatBlockMod;
+        return this.FlatBlockMod;
     }
     
     /**
@@ -776,7 +450,7 @@ public class BasicDataStats
      */
     public Double getFlatCritChanceMod()
     {
-        return this.flatCritChanceMod;
+        return this.FlatCritChanceMod;
     }
     
     /**
@@ -786,7 +460,7 @@ public class BasicDataStats
      */
     public Double getFlatCritDamageMod()
     {
-        return this.flatCritDamageMod;
+        return this.FlatCritDamageMod;
     }
     
     /**
@@ -796,7 +470,7 @@ public class BasicDataStats
      */
     public Double getFlatEnergyPoolMod()
     {
-        return this.flatEnergyPoolMod;
+        return this.FlatEnergyPoolMod;
     }
     
     /**
@@ -806,7 +480,7 @@ public class BasicDataStats
      */
     public Double getFlatEnergyRegenMod()
     {
-        return this.flatEnergyRegenMod;
+        return this.FlatEnergyRegenMod;
     }
     
     /**
@@ -816,7 +490,7 @@ public class BasicDataStats
      */
     public Double getFlatEXPBonus()
     {
-        return this.flatEXPBonus;
+        return this.FlatEXPBonus;
     }
     
     /**
@@ -826,7 +500,7 @@ public class BasicDataStats
      */
     public Double getFlatHPPoolMod()
     {
-        return this.flatHPPoolMod;
+        return this.FlatHPPoolMod;
     }
     
     /**
@@ -836,7 +510,7 @@ public class BasicDataStats
      */
     public Double getFlatHPRegenMod()
     {
-        return this.flatHPRegenMod;
+        return this.FlatHPRegenMod;
     }
     
     /**
@@ -846,7 +520,7 @@ public class BasicDataStats
      */
     public Double getFlatMagicDamageMod()
     {
-        return this.flatMagicDamageMod;
+        return this.FlatMagicDamageMod;
     }
     
     /**
@@ -856,7 +530,7 @@ public class BasicDataStats
      */
     public Double getFlatMovementSpeedMod()
     {
-        return this.flatMovementSpeedMod;
+        return this.FlatMovementSpeedMod;
     }
     
     /**
@@ -866,7 +540,7 @@ public class BasicDataStats
      */
     public Double getFlatMPPoolMod()
     {
-        return this.flatMPPoolMod;
+        return this.FlatMPPoolMod;
     }
     
     /**
@@ -876,7 +550,7 @@ public class BasicDataStats
      */
     public Double getFlatMPRegenMod()
     {
-        return this.flatMPRegenMod;
+        return this.FlatMPRegenMod;
     }
     
     /**
@@ -886,7 +560,7 @@ public class BasicDataStats
      */
     public Double getFlatPhysicalDamageMod()
     {
-        return this.flatPhysicalDamageMod;
+        return this.FlatPhysicalDamageMod;
     }
     
     /**
@@ -896,7 +570,7 @@ public class BasicDataStats
      */
     public Double getFlatSpellBlockMod()
     {
-        return this.flatSpellBlockMod;
+        return this.FlatSpellBlockMod;
     }
     
     /**
@@ -906,7 +580,7 @@ public class BasicDataStats
      */
     public Double getPercentArmorMod()
     {
-        return this.percentArmorMod;
+        return this.PercentArmorMod;
     }
     
     /**
@@ -916,7 +590,7 @@ public class BasicDataStats
      */
     public Double getPercentAttackSpeedMod()
     {
-        return this.percentAttackSpeedMod;
+        return this.PercentAttackSpeedMod;
     }
     
     /**
@@ -926,7 +600,7 @@ public class BasicDataStats
      */
     public Double getPercentBlockMod()
     {
-        return this.percentBlockMod;
+        return this.PercentBlockMod;
     }
     
     /**
@@ -936,7 +610,7 @@ public class BasicDataStats
      */
     public Double getPercentCritChanceMod()
     {
-        return this.percentCritChanceMod;
+        return this.PercentCritChanceMod;
     }
     
     /**
@@ -946,7 +620,7 @@ public class BasicDataStats
      */
     public Double getPercentCritDamageMod()
     {
-        return this.percentCritDamageMod;
+        return this.PercentCritDamageMod;
     }
     
     /**
@@ -956,7 +630,7 @@ public class BasicDataStats
      */
     public Double getPercentDodgeMod()
     {
-        return this.percentDodgeMod;
+        return this.PercentDodgeMod;
     }
     
     /**
@@ -966,7 +640,7 @@ public class BasicDataStats
      */
     public Double getPercentEXPBonus()
     {
-        return this.percentEXPBonus;
+        return this.PercentEXPBonus;
     }
     
     /**
@@ -976,7 +650,7 @@ public class BasicDataStats
      */
     public Double getPercentHPPoolMod()
     {
-        return this.percentHPPoolMod;
+        return this.PercentHPPoolMod;
     }
     
     /**
@@ -986,7 +660,7 @@ public class BasicDataStats
      */
     public Double getPercentHPRegenMod()
     {
-        return this.percentHPRegenMod;
+        return this.PercentHPRegenMod;
     }
     
     /**
@@ -996,7 +670,7 @@ public class BasicDataStats
      */
     public Double getPercentLifeStealMod()
     {
-        return this.percentLifeStealMod;
+        return this.PercentLifeStealMod;
     }
     
     /**
@@ -1006,7 +680,7 @@ public class BasicDataStats
      */
     public Double getPercentMagicDamageMod()
     {
-        return this.percentMagicDamageMod;
+        return this.PercentMagicDamageMod;
     }
     
     /**
@@ -1016,7 +690,7 @@ public class BasicDataStats
      */
     public Double getPercentMovementSpeedMod()
     {
-        return this.percentMovementSpeedMod;
+        return this.PercentMovementSpeedMod;
     }
     
     /**
@@ -1026,7 +700,7 @@ public class BasicDataStats
      */
     public Double getPercentMPPoolMod()
     {
-        return this.percentMPPoolMod;
+        return this.PercentMPPoolMod;
     }
     
     /**
@@ -1036,7 +710,7 @@ public class BasicDataStats
      */
     public Double getPercentMPRegenMod()
     {
-        return this.percentMPRegenMod;
+        return this.PercentMPRegenMod;
     }
     
     /**
@@ -1046,7 +720,7 @@ public class BasicDataStats
      */
     public Double getPercentPhysicalDamageMod()
     {
-        return this.percentPhysicalDamageMod;
+        return this.PercentPhysicalDamageMod;
     }
     
     /**
@@ -1056,7 +730,7 @@ public class BasicDataStats
      */
     public Double getPercentSpellBlockMod()
     {
-        return this.percentSpellBlockMod;
+        return this.PercentSpellBlockMod;
     }
     
     /**
@@ -1066,7 +740,7 @@ public class BasicDataStats
      */
     public Double getPercentSpellVampMod()
     {
-        return this.percentSpellVampMod;
+        return this.PercentSpellVampMod;
     }
     
     /**
@@ -1390,117 +1064,42 @@ public class BasicDataStats
     }
     
     @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.flatArmorMod == null) ? 0 : this.flatArmorMod.hashCode());
-        result = (prime * result) + ((this.flatAttackSpeedMod == null) ? 0 : this.flatAttackSpeedMod.hashCode());
-        result = (prime * result) + ((this.flatBlockMod == null) ? 0 : this.flatBlockMod.hashCode());
-        result = (prime * result) + ((this.flatCritChanceMod == null) ? 0 : this.flatCritChanceMod.hashCode());
-        result = (prime * result) + ((this.flatCritDamageMod == null) ? 0 : this.flatCritDamageMod.hashCode());
-        result = (prime * result) + ((this.flatEXPBonus == null) ? 0 : this.flatEXPBonus.hashCode());
-        result = (prime * result) + ((this.flatEnergyPoolMod == null) ? 0 : this.flatEnergyPoolMod.hashCode());
-        result = (prime * result) + ((this.flatEnergyRegenMod == null) ? 0 : this.flatEnergyRegenMod.hashCode());
-        result = (prime * result) + ((this.flatHPPoolMod == null) ? 0 : this.flatHPPoolMod.hashCode());
-        result = (prime * result) + ((this.flatHPRegenMod == null) ? 0 : this.flatHPRegenMod.hashCode());
-        result = (prime * result) + ((this.flatMPPoolMod == null) ? 0 : this.flatMPPoolMod.hashCode());
-        result = (prime * result) + ((this.flatMPRegenMod == null) ? 0 : this.flatMPRegenMod.hashCode());
-        result = (prime * result) + ((this.flatMagicDamageMod == null) ? 0 : this.flatMagicDamageMod.hashCode());
-        result = (prime * result) + ((this.flatMovementSpeedMod == null) ? 0 : this.flatMovementSpeedMod.hashCode());
-        result = (prime * result) + ((this.flatPhysicalDamageMod == null) ? 0 : this.flatPhysicalDamageMod.hashCode());
-        result = (prime * result) + ((this.flatSpellBlockMod == null) ? 0 : this.flatSpellBlockMod.hashCode());
-        result = (prime * result) + ((this.percentArmorMod == null) ? 0 : this.percentArmorMod.hashCode());
-        result = (prime * result) + ((this.percentAttackSpeedMod == null) ? 0 : this.percentAttackSpeedMod.hashCode());
-        result = (prime * result) + ((this.percentBlockMod == null) ? 0 : this.percentBlockMod.hashCode());
-        result = (prime * result) + ((this.percentCritChanceMod == null) ? 0 : this.percentCritChanceMod.hashCode());
-        result = (prime * result) + ((this.percentCritDamageMod == null) ? 0 : this.percentCritDamageMod.hashCode());
-        result = (prime * result) + ((this.percentDodgeMod == null) ? 0 : this.percentDodgeMod.hashCode());
-        result = (prime * result) + ((this.percentEXPBonus == null) ? 0 : this.percentEXPBonus.hashCode());
-        result = (prime * result) + ((this.percentHPPoolMod == null) ? 0 : this.percentHPPoolMod.hashCode());
-        result = (prime * result) + ((this.percentHPRegenMod == null) ? 0 : this.percentHPRegenMod.hashCode());
-        result = (prime * result) + ((this.percentLifeStealMod == null) ? 0 : this.percentLifeStealMod.hashCode());
-        result = (prime * result) + ((this.percentMPPoolMod == null) ? 0 : this.percentMPPoolMod.hashCode());
-        result = (prime * result) + ((this.percentMPRegenMod == null) ? 0 : this.percentMPRegenMod.hashCode());
-        result = (prime * result) + ((this.percentMagicDamageMod == null) ? 0 : this.percentMagicDamageMod.hashCode());
-        result = (prime * result) + ((this.percentMovementSpeedMod == null) ? 0 : this.percentMovementSpeedMod.hashCode());
-        result = (prime * result) + ((this.percentPhysicalDamageMod == null) ? 0 : this.percentPhysicalDamageMod.hashCode());
-        result = (prime * result) + ((this.percentSpellBlockMod == null) ? 0 : this.percentSpellBlockMod.hashCode());
-        result = (prime * result) + ((this.percentSpellVampMod == null) ? 0 : this.percentSpellVampMod.hashCode());
-        result = (prime * result) + ((this.rFlatArmorModPerLevel == null) ? 0 : this.rFlatArmorModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatArmorPenetrationMod == null) ? 0 : this.rFlatArmorPenetrationMod.hashCode());
-        result = (prime * result) + ((this.rFlatArmorPenetrationModPerLevel == null) ? 0 : this.rFlatArmorPenetrationModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatCritChanceModPerLevel == null) ? 0 : this.rFlatCritChanceModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatCritDamageModPerLevel == null) ? 0 : this.rFlatCritDamageModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatDodgeMod == null) ? 0 : this.rFlatDodgeMod.hashCode());
-        result = (prime * result) + ((this.rFlatDodgeModPerLevel == null) ? 0 : this.rFlatDodgeModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatEnergyModPerLevel == null) ? 0 : this.rFlatEnergyModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatEnergyRegenModPerLevel == null) ? 0 : this.rFlatEnergyRegenModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatGoldPer10Mod == null) ? 0 : this.rFlatGoldPer10Mod.hashCode());
-        result = (prime * result) + ((this.rFlatHPModPerLevel == null) ? 0 : this.rFlatHPModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatHPRegenModPerLevel == null) ? 0 : this.rFlatHPRegenModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatMPModPerLevel == null) ? 0 : this.rFlatMPModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatMPRegenModPerLevel == null) ? 0 : this.rFlatMPRegenModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatMagicDamageModPerLevel == null) ? 0 : this.rFlatMagicDamageModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatMagicPenetrationMod == null) ? 0 : this.rFlatMagicPenetrationMod.hashCode());
-        result = (prime * result) + ((this.rFlatMagicPenetrationModPerLevel == null) ? 0 : this.rFlatMagicPenetrationModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatMovementSpeedModPerLevel == null) ? 0 : this.rFlatMovementSpeedModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatPhysicalDamageModPerLevel == null) ? 0 : this.rFlatPhysicalDamageModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatSpellBlockModPerLevel == null) ? 0 : this.rFlatSpellBlockModPerLevel.hashCode());
-        result = (prime * result) + ((this.rFlatTimeDeadMod == null) ? 0 : this.rFlatTimeDeadMod.hashCode());
-        result = (prime * result) + ((this.rFlatTimeDeadModPerLevel == null) ? 0 : this.rFlatTimeDeadModPerLevel.hashCode());
-        result = (prime * result) + ((this.rPercentArmorPenetrationMod == null) ? 0 : this.rPercentArmorPenetrationMod.hashCode());
-        result = (prime * result) + ((this.rPercentArmorPenetrationModPerLevel == null) ? 0 : this.rPercentArmorPenetrationModPerLevel
-                                                                                                  .hashCode());
-        result = (prime * result) + ((this.rPercentAttackSpeedModPerLevel == null) ? 0 : this.rPercentAttackSpeedModPerLevel.hashCode());
-        result = (prime * result) + ((this.rPercentCooldownMod == null) ? 0 : this.rPercentCooldownMod.hashCode());
-        result = (prime * result) + ((this.rPercentCooldownModPerLevel == null) ? 0 : this.rPercentCooldownModPerLevel.hashCode());
-        result = (prime * result) + ((this.rPercentMagicPenetrationMod == null) ? 0 : this.rPercentMagicPenetrationMod.hashCode());
-        result = (prime * result) + ((this.rPercentMagicPenetrationModPerLevel == null) ? 0 : this.rPercentMagicPenetrationModPerLevel
-                                                                                                  .hashCode());
-        result = (prime * result) + ((this.rPercentMovementSpeedModPerLevel == null) ? 0 : this.rPercentMovementSpeedModPerLevel.hashCode());
-        result = (prime * result) + ((this.rPercentTimeDeadMod == null) ? 0 : this.rPercentTimeDeadMod.hashCode());
-        result = (prime * result) + ((this.rPercentTimeDeadModPerLevel == null) ? 0 : this.rPercentTimeDeadModPerLevel.hashCode());
-        return result;
-    }
-    
-    @Override
     public String toString()
     {
         return "BasicDataStats{" +
-               "flatArmorMod=" + flatArmorMod +
-               ", flatAttackSpeedMod=" + flatAttackSpeedMod +
-               ", flatBlockMod=" + flatBlockMod +
-               ", flatCritChanceMod=" + flatCritChanceMod +
-               ", flatCritDamageMod=" + flatCritDamageMod +
-               ", flatEXPBonus=" + flatEXPBonus +
-               ", flatEnergyPoolMod=" + flatEnergyPoolMod +
-               ", flatEnergyRegenMod=" + flatEnergyRegenMod +
-               ", flatHPPoolMod=" + flatHPPoolMod +
-               ", flatHPRegenMod=" + flatHPRegenMod +
-               ", flatMPPoolMod=" + flatMPPoolMod +
-               ", flatMPRegenMod=" + flatMPRegenMod +
-               ", flatMagicDamageMod=" + flatMagicDamageMod +
-               ", flatMovementSpeedMod=" + flatMovementSpeedMod +
-               ", flatPhysicalDamageMod=" + flatPhysicalDamageMod +
-               ", flatSpellBlockMod=" + flatSpellBlockMod +
-               ", percentArmorMod=" + percentArmorMod +
-               ", percentAttackSpeedMod=" + percentAttackSpeedMod +
-               ", percentBlockMod=" + percentBlockMod +
-               ", percentCritChanceMod=" + percentCritChanceMod +
-               ", percentCritDamageMod=" + percentCritDamageMod +
-               ", percentDodgeMod=" + percentDodgeMod +
-               ", percentEXPBonus=" + percentEXPBonus +
-               ", percentHPPoolMod=" + percentHPPoolMod +
-               ", percentHPRegenMod=" + percentHPRegenMod +
-               ", percentLifeStealMod=" + percentLifeStealMod +
-               ", percentMPPoolMod=" + percentMPPoolMod +
-               ", percentMPRegenMod=" + percentMPRegenMod +
-               ", percentMagicDamageMod=" + percentMagicDamageMod +
-               ", percentMovementSpeedMod=" + percentMovementSpeedMod +
-               ", percentPhysicalDamageMod=" + percentPhysicalDamageMod +
-               ", percentSpellBlockMod=" + percentSpellBlockMod +
-               ", percentSpellVampMod=" + percentSpellVampMod +
+               "FlatArmorMod=" + FlatArmorMod +
+               ", FlatAttackSpeedMod=" + FlatAttackSpeedMod +
+               ", flatBlockMod=" + FlatBlockMod +
+               ", flatCritChanceMod=" + FlatCritChanceMod +
+               ", flatCritDamageMod=" + FlatCritDamageMod +
+               ", flatEXPBonus=" + FlatEXPBonus +
+               ", flatEnergyPoolMod=" + FlatEnergyPoolMod +
+               ", flatEnergyRegenMod=" + FlatEnergyRegenMod +
+               ", flatHPPoolMod=" + FlatHPPoolMod +
+               ", flatHPRegenMod=" + FlatHPRegenMod +
+               ", flatMPPoolMod=" + FlatMPPoolMod +
+               ", flatMPRegenMod=" + FlatMPRegenMod +
+               ", flatMagicDamageMod=" + FlatMagicDamageMod +
+               ", flatMovementSpeedMod=" + FlatMovementSpeedMod +
+               ", flatPhysicalDamageMod=" + FlatPhysicalDamageMod +
+               ", flatSpellBlockMod=" + FlatSpellBlockMod +
+               ", percentArmorMod=" + PercentArmorMod +
+               ", percentAttackSpeedMod=" + PercentAttackSpeedMod +
+               ", percentBlockMod=" + PercentBlockMod +
+               ", percentCritChanceMod=" + PercentCritChanceMod +
+               ", percentCritDamageMod=" + PercentCritDamageMod +
+               ", percentDodgeMod=" + PercentDodgeMod +
+               ", percentEXPBonus=" + PercentEXPBonus +
+               ", percentHPPoolMod=" + PercentHPPoolMod +
+               ", percentHPRegenMod=" + PercentHPRegenMod +
+               ", percentLifeStealMod=" + PercentLifeStealMod +
+               ", percentMPPoolMod=" + PercentMPPoolMod +
+               ", percentMPRegenMod=" + PercentMPRegenMod +
+               ", percentMagicDamageMod=" + PercentMagicDamageMod +
+               ", percentMovementSpeedMod=" + PercentMovementSpeedMod +
+               ", percentPhysicalDamageMod=" + PercentPhysicalDamageMod +
+               ", percentSpellBlockMod=" + PercentSpellBlockMod +
+               ", percentSpellVampMod=" + PercentSpellVampMod +
                ", rFlatArmorModPerLevel=" + rFlatArmorModPerLevel +
                ", rFlatArmorPenetrationMod=" + rFlatArmorPenetrationMod +
                ", rFlatArmorPenetrationModPerLevel=" + rFlatArmorPenetrationModPerLevel +

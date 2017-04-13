@@ -33,7 +33,7 @@ public enum Lane
     }
     
     /**
-     * Returns a Lane from the provided code
+     * Returns a Lane from the provided value
      *
      * @param code the lookup key
      * @return Lane
@@ -44,7 +44,7 @@ public enum Lane
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

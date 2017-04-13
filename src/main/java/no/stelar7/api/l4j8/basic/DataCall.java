@@ -76,7 +76,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 400)
             {
-                throw new APIResponseException(APIHTTPErrorReason.ERROR400, "API call error.. contact developer to get this fixed");
+                throw new APIResponseException(APIHTTPErrorReason.ERROR400, "API call error.. contact developer to get this fixed ..." + response.getResponseData());
             }
             
             if (response.getResponseCode() == 404)
@@ -194,7 +194,7 @@ public final class DataCall
                         final String[] limit = limitPair.split(":");
                         final Integer  call  = Integer.parseInt(limit[0]);
                         final Integer  time  = Integer.parseInt(limit[1]);
-                        DataCall.methodLimit.get(dc.endpoint).put(time, call);
+                        DataCall.methodLimit.getOrDefault(dc.endpoint, new TreeMap<>()).put(time, call);
                     }
                 }
                 

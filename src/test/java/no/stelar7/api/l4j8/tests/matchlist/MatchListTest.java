@@ -1,10 +1,13 @@
 package no.stelar7.api.l4j8.tests.matchlist;
 
-import no.stelar7.api.l4j8.basic.constants.RankedQueue;
-import no.stelar7.api.l4j8.basic.constants.api.Constants;
-import no.stelar7.api.l4j8.pojo.matchlist.MatchReference;
-import org.junit.Assert;
+import no.stelar7.api.l4j8.basic.constants.*;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.pojo.matchlist.*;
+import no.stelar7.api.l4j8.tests.SecretFile;
+import org.junit.*;
 
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -35,22 +38,29 @@ public class MatchListTest
                                                                                                   .toEpochMilli());
         Assert.assertTrue("lane doesnt match LANE", Stream.of(match.getLane().getCodes())
                                                           .anyMatch(s -> s.equalsIgnoreCase(match.getLaneId())));
-        Assert.assertEquals("queue doesnt match QUEUE", match.getQueueId(), match.getQueue().getCode());
+        Assert.assertEquals("queue doesnt match QUEUE", match.getQueueId(), match.getQueue().getValue());
         Assert.assertEquals("role doesnt match ROLE", match.getRoleId(), match.getRole().getCode());
-        Assert.assertEquals("season doesnt match SEASON", match.getSeasonId(), match.getSeason().getCode());
+        Assert.assertEquals("season doesnt match SEASON", match.getSeasonId(), match.getSeason().getValue());
         Assert.assertEquals("region doesnt match REGION", match.getRegionId(), match.getRegion().getCode());
     };
     
-    @org.junit.Test
-    public void doTest()
+    final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+    MatchAPI api   = l4j8.getMatchAPI();
+    Optional empty = Optional.empty();
+    
+    @Test
+    public void testMatchList()
     {
-        // Constants.TEST_CHAMPION_IDS[0] == LEONA
-        //final List<MatchReference> matches = ((MatchList) TestBase.builder.build()).getMatches();
+        Optional<EnumSet<RankedQueue>> queue  = Optional.of(EnumSet.of(RankedQueue.RANKED_SOLO_5X5));
+        Optional<EnumSet<Season>>      season = Optional.of(EnumSet.of(Season.SEASON_2014));
+        Optional<List<Integer>>        champs = Optional.of(Collections.singletonList(Constants.TEST_CHAMPION_IDS[0]));
+        Optional<MatchList>            list   = api.getMatchList(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], empty, empty, queue, season, empty, empty, champs);
+        
+        Assert.assertTrue("no data?", list.isPresent());
         
         // I played 47 ranked solo games as leona in 2014
-        //Assert.assertEquals("Unexpected amount of games returned", matches.size(), 47);
-        
-        //matches.forEach(this.doAssertions);
+        Assert.assertEquals("Unexpected amount of games returned", list.get().getMatches().size(), 47);
+        list.get().getMatches().forEach(this.doAssertions);
     }
     
 }

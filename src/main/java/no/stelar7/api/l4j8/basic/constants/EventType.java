@@ -20,7 +20,7 @@ public enum EventType
     WARD_PLACED;
     
     /**
-     * Returns an EventType from the provided code
+     * Returns an EventType from the provided value
      *
      * @return EventType
      */
@@ -30,7 +30,7 @@ public enum EventType
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

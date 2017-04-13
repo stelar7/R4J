@@ -13,7 +13,7 @@ public enum TowerType
     UNDEFINED_TURRET;
     
     /**
-     * Returns an TowerType from the provided code
+     * Returns an TowerType from the provided value
      *
      * @return TowerType
      */
@@ -23,7 +23,7 @@ public enum TowerType
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

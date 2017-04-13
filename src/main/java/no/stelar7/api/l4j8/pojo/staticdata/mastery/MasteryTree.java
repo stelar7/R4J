@@ -4,9 +4,9 @@ import java.util.*;
 
 public class MasteryTree
 {
-    private List<MasteryTreeList> Defense;
-    private List<MasteryTreeList> Offense;
-    private List<MasteryTreeList> Utility;
+    private List<MasteryTreeList> Cunning;
+    private List<MasteryTreeList> Ferocity;
+    private List<MasteryTreeList> Resolve;
     
     
     @Override
@@ -25,33 +25,33 @@ public class MasteryTree
             return false;
         }
         final MasteryTree other = (MasteryTree) obj;
-        if (this.Defense == null)
+        if (this.Cunning == null)
         {
-            if (other.Defense != null)
+            if (other.Cunning != null)
             {
                 return false;
             }
-        } else if (!this.Defense.equals(other.Defense))
+        } else if (!this.Cunning.equals(other.Cunning))
         {
             return false;
         }
-        if (this.Offense == null)
+        if (this.Ferocity == null)
         {
-            if (other.Offense != null)
+            if (other.Ferocity != null)
             {
                 return false;
             }
-        } else if (!this.Offense.equals(other.Offense))
+        } else if (!this.Ferocity.equals(other.Ferocity))
         {
             return false;
         }
-        if (this.Utility == null)
+        if (this.Resolve == null)
         {
-            if (other.Utility != null)
+            if (other.Resolve != null)
             {
                 return false;
             }
-        } else if (!this.Utility.equals(other.Utility))
+        } else if (!this.Resolve.equals(other.Resolve))
         {
             return false;
         }
@@ -63,9 +63,9 @@ public class MasteryTree
      *
      * @return the defense
      */
-    public List<MasteryTreeList> getDefense()
+    public List<MasteryTreeList> getCunning()
     {
-        return this.Defense;
+        return this.Cunning;
     }
     
     /**
@@ -73,9 +73,9 @@ public class MasteryTree
      *
      * @return the offense
      */
-    public List<MasteryTreeList> getOffense()
+    public List<MasteryTreeList> getFerocity()
     {
-        return this.Offense;
+        return this.Ferocity;
     }
     
     /**
@@ -83,9 +83,9 @@ public class MasteryTree
      *
      * @return the utility
      */
-    public List<MasteryTreeList> getUtility()
+    public List<MasteryTreeList> getResolve()
     {
-        return this.Utility;
+        return this.Resolve;
     }
     
     @Override
@@ -93,9 +93,9 @@ public class MasteryTree
     {
         final int prime  = 31;
         int       result = 1;
-        result = (prime * result) + ((this.Defense == null) ? 0 : this.Defense.hashCode());
-        result = (prime * result) + ((this.Offense == null) ? 0 : this.Offense.hashCode());
-        result = (prime * result) + ((this.Utility == null) ? 0 : this.Utility.hashCode());
+        result = (prime * result) + ((this.Cunning == null) ? 0 : this.Cunning.hashCode());
+        result = (prime * result) + ((this.Ferocity == null) ? 0 : this.Ferocity.hashCode());
+        result = (prime * result) + ((this.Resolve == null) ? 0 : this.Resolve.hashCode());
         return result;
     }
     
@@ -103,9 +103,9 @@ public class MasteryTree
     public String toString()
     {
         return "MasteryTree{" +
-               "Defense=" + Defense +
-               ", Offense=" + Offense +
-               ", Utility=" + Utility +
+               "Cunning=" + Cunning +
+               ", Ferocity=" + Ferocity +
+               ", Resolve=" + Resolve +
                '}';
     }
 }

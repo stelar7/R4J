@@ -14,7 +14,7 @@ public enum Tier
     UNRANKED;
     
     /**
-     * Returns an Tier from the provided code
+     * Returns an Tier from the provided value
      *
      * @return Tier
      */
@@ -24,7 +24,7 @@ public enum Tier
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */

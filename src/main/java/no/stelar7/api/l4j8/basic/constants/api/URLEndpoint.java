@@ -5,6 +5,8 @@ import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.match.MatchDetail;
+import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
@@ -84,12 +86,18 @@ public enum URLEndpoint
     V3_STATIC_MASTERIES("lol", "static-data", "v3", "masteries", MasteryList.class),
     V3_STATIC_MASTERY_BY_ID("lol", "static-data", "v3", "masteries/" + Constants.ID_PLACEHOLDER, Mastery.class),
     V3_STATIC_REALMS("lol", "static-data", "v3", "realms", Realm.class),
-    V3_STATIC_RUNES("lol", "static-data", "v3", "runes", RuneList.class),
-    V3_STATIC_RUNE_BY_ID("lol", "static-data", "v3", "runes/" + Constants.ID_PLACEHOLDER, Rune.class),
+    V3_STATIC_RUNES("lol", "static-data", "v3", "runes", StaticRuneList.class),
+    V3_STATIC_RUNE_BY_ID("lol", "static-data", "v3", "runes/" + Constants.ID_PLACEHOLDER, StaticRune.class),
     V3_STATIC_SUMMONER_SPELLS("lol", "static-data", "v3", "summoner-spells", SummonerSpellList.class),
     V3_STATIC_SUMMONER_SPELL_BY_ID("lol", "static-data", "v3", "summoner-spells/" + Constants.ID_PLACEHOLDER, SummonerSpell.class),
     V3_STATIC_VERSIONS("lol", "static-data", "v3", "versions", new TypeToken<List<String>>()
-    {}.getType());
+    {}.getType()),
+    
+    // NOT ADDED TO THE API YET!!
+    // api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}
+    // api/lol/{region}/v2.2/match/{matchId}
+    V3_MATCHLIST("lol", "platform", "v3", "matchlist/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MatchList.class),
+    V3_MATCH("lol", "platform", "v3", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class);
     
     
     private final String game;
@@ -97,7 +105,6 @@ public enum URLEndpoint
     private final String version;
     private final String resource;
     private final Object type;
-    
     
     URLEndpoint(String game, String service, String version, String resource, Object type)
     {

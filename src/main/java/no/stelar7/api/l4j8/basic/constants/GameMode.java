@@ -43,7 +43,7 @@ public enum GameMode
     SIEGE,;
     
     /**
-     * Returns a GameMode from the provided code
+     * Returns a GameMode from the provided value
      *
      * @return GameMode
      */
@@ -53,7 +53,7 @@ public enum GameMode
     }
     
     /**
-     * The code used to map strings to objects
+     * The value used to map strings to objects
      *
      * @return String
      */
