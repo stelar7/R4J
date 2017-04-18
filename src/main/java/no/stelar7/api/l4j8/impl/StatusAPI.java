@@ -25,7 +25,7 @@ public final class StatusAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SHARD_STATUS)
                                                        .withPlatform(server);
         
-        return Optional.of((ShardStatus) builder.build());
+        return Optional.ofNullable((ShardStatus) builder.build());
     }
     
 }

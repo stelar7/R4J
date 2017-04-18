@@ -39,7 +39,7 @@ public final class SummonerAPI
                                                        .withPlatform(server);
         
         Map<Long, MasteryPages> data = (Map) builder.build();
-        return Optional.of(data.get(summonerId));
+        return Optional.ofNullable(data.get(summonerId));
     }
     
     /**
@@ -57,7 +57,7 @@ public final class SummonerAPI
                 .withPlatform(server);
         
         Map<Long, RunePages> data = (Map) builder.build();
-        return Optional.of(data.get(summonerId));
+        return Optional.ofNullable(data.get(summonerId));
     }
     
     /**
@@ -74,7 +74,7 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ID)
                 .withPlatform(server);
         
-        return Optional.of((Summoner) builder.build());
+        return Optional.ofNullable((Summoner) builder.build());
     }
     
     /**
@@ -91,7 +91,7 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_NAME)
                 .withPlatform(server);
         
-        return Optional.of((Summoner) builder.build());
+        return Optional.ofNullable((Summoner) builder.build());
     }
     
     /**
@@ -108,6 +108,6 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
-        return Optional.of((Summoner) builder.build());
+        return Optional.ofNullable((Summoner) builder.build());
     }
 }

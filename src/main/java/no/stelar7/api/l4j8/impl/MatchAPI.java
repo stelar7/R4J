@@ -42,7 +42,7 @@ public final class MatchAPI
         
         championIds.ifPresent(value -> value.forEach(id -> builder.withURLData(Constants.CHAMPIDS_PLACEHOLDER_DATA, String.valueOf(id))));
         
-        return Optional.of((MatchList) builder.build());
+        return Optional.ofNullable((MatchList) builder.build());
     }
     
     public Optional<MatchDetail> getMatch(Platform server, long matchId, Optional<Boolean> includeTimeline)
@@ -53,6 +53,6 @@ public final class MatchAPI
         
         includeTimeline.ifPresent(value -> builder.withURLData(Constants.TIMELINE_PLACEHOLDER_DATA, String.valueOf(value)));
         
-        return Optional.of((MatchDetail) builder.build());
+        return Optional.ofNullable((MatchDetail) builder.build());
     }
 }

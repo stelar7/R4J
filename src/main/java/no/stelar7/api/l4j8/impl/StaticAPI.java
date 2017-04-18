@@ -40,7 +40,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((StaticChampionList) builder.build());
+        return Optional.ofNullable((StaticChampionList) builder.build());
     }
     
     public Optional<StaticChampion> getChampion(Platform server, int id, Optional<EnumSet<ChampDataFlags>> champData, Optional<String> version, Optional<String> locale)
@@ -54,7 +54,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((StaticChampion) builder.build());
+        return Optional.ofNullable((StaticChampion) builder.build());
     }
     
     public Optional<ItemList> getItems(Platform server, Optional<EnumSet<ItemDataFlags>> itemData, Optional<String> version, Optional<String> locale)
@@ -67,7 +67,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((ItemList) builder.build());
+        return Optional.ofNullable((ItemList) builder.build());
     }
     
     public Optional<Item> getItem(Platform server, int id, Optional<EnumSet<ItemDataFlags>> itemData, Optional<String> version, Optional<String> locale)
@@ -81,7 +81,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((Item) builder.build());
+        return Optional.ofNullable((Item) builder.build());
     }
     
     public Optional<LanguageStrings> getLanguageStrings(Platform server, Optional<String> version, Optional<String> locale)
@@ -93,7 +93,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((LanguageStrings) builder.build());
+        return Optional.ofNullable((LanguageStrings) builder.build());
     }
     
     /**
@@ -105,7 +105,7 @@ public final class StaticAPI
                                                        .withPlatform(server)
                                                        .asVerbose(true);
         
-        return Optional.of((List<String>) builder.build());
+        return Optional.ofNullable((List<String>) builder.build());
     }
     
     public Optional<MapData> getMaps(Platform server, Optional<String> version, Optional<String> locale)
@@ -117,7 +117,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((MapData) builder.build());
+        return Optional.ofNullable((MapData) builder.build());
     }
     
     public Optional<MasteryList> getMasteries(Platform server, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
@@ -130,7 +130,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((MasteryList) builder.build());
+        return Optional.ofNullable((MasteryList) builder.build());
     }
     
     public Optional<Mastery> getMastery(Platform server, int id, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
@@ -144,7 +144,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((Mastery) builder.build());
+        return Optional.ofNullable((Mastery) builder.build());
     }
     
     public Optional<Realm> getRealm(Platform server)
@@ -152,7 +152,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_REALMS)
                                                        .withPlatform(server)
                                                        .asVerbose(true);
-        return Optional.of((Realm) builder.build());
+        return Optional.ofNullable((Realm) builder.build());
     }
     
     public Optional<StaticRuneList> getRunes(Platform server, Optional<EnumSet<RuneDataFlags>> itemData, Optional<String> version, Optional<String> locale)
@@ -165,7 +165,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((StaticRuneList) builder.build());
+        return Optional.ofNullable((StaticRuneList) builder.build());
     }
     
     public Optional<StaticRune> getRune(Platform server, int id, Optional<EnumSet<RuneDataFlags>> itemData, Optional<String> version, Optional<String> locale)
@@ -179,7 +179,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((StaticRune) builder.build());
+        return Optional.ofNullable((StaticRune) builder.build());
     }
     
     
@@ -193,7 +193,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((StaticSummonerSpellList) builder.build());
+        return Optional.ofNullable((StaticSummonerSpellList) builder.build());
     }
     
     public Optional<StaticSummonerSpell> getSummonerSpell(Platform server, int id, Optional<EnumSet<SpellDataFlags>> itemData, Optional<String> version, Optional<String> locale)
@@ -207,7 +207,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return Optional.of((StaticSummonerSpell) builder.build());
+        return Optional.ofNullable((StaticSummonerSpell) builder.build());
     }
     
     
@@ -217,7 +217,7 @@ public final class StaticAPI
                                                        .withPlatform(server)
                                                        .asVerbose(true);
         
-        return Optional.of((List<String>) builder.build());
+        return Optional.ofNullable((List<String>) builder.build());
     }
     
 }

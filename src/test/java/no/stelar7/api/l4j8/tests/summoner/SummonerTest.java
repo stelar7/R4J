@@ -42,6 +42,10 @@ public class SummonerTest
         Optional<Summoner> optional = api.getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[0]);
         Assert.assertTrue("No data returned", optional.isPresent());
         optional.ifPresent(doAssertions);
+    
+        optional = api.getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[1]);
+        Assert.assertFalse("No data returned", optional.isPresent());
+        optional.ifPresent(doAssertions);
     }
     
     @Test

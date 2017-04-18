@@ -112,14 +112,25 @@ public final class DataCall
                 return dtoobj;
             }
             
+            if (response.getResponseCode() == 404)
+            {
+                return null;
+            }
+            
+            if (response.getResponseCode() == 500)
+            {
+                if (this.dc.verbose)
+                {
+                    DataCall.LOGGER.log(Level.INFO, "Server error");
+                }
+                
+                throw new APIResponseException(APIHTTPErrorReason.ERROR500, response.getResponseData());
+                
+            }
+            
             if (response.getResponseCode() == 400)
             {
                 throw new APIResponseException(APIHTTPErrorReason.ERROR400, "API call error.. contact developer to get this fixed ..." + response.getResponseData());
-            }
-            
-            if (response.getResponseCode() == 404)
-            {
-                throw new APIResponseException(APIHTTPErrorReason.ERROR404, response.getResponseData());
             }
             
             if (response.getResponseCode() == 429)
@@ -131,17 +142,6 @@ public final class DataCall
                 }
                 
                 throw new APIResponseException(APIHTTPErrorReason.ERROR429, response.getResponseData());
-                
-            }
-            
-            if (response.getResponseCode() == 500)
-            {
-                if (this.dc.verbose)
-                {
-                    DataCall.LOGGER.log(Level.INFO, "HIT 500 ERROR");
-                }
-                
-                throw new APIResponseException(APIHTTPErrorReason.ERROR500, response.getResponseData());
                 
             }
             
@@ -236,13 +236,15 @@ public final class DataCall
                     }
                 }
                 
-                final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
-                if (con.getResponseCode() != 200)
+                if (con.getResponseCode() == 429)
                 {
+                    final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
                     return new DataCallResponse(con.getResponseCode(), limitType);
                 }
                 
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)))
+                InputStream stream = (con.getResponseCode() == 200) ? con.getInputStream() : con.getErrorStream();
+                
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)))
                 {
                     br.lines().forEach(data::append);
                 }

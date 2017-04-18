@@ -7,7 +7,7 @@ public enum TeamType
 {
     
     BLUE(100),
-    PURPLE(200);
+    RED(200);
     
     private final Integer code;
     

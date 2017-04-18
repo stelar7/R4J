@@ -17,13 +17,7 @@ public class APIResponseException extends RuntimeException
     @Override
     public String getMessage()
     {
-        if (reason == APIHTTPErrorReason.ERROR429)
-        {
-            return String.format("HTTP 429 hit. Reason for hit: %s", data);
-        } else
-        {
-            return String.format("%s: %s", reason, data);
-        }
+        return data;
     }
     
     public APIHTTPErrorReason getReason()

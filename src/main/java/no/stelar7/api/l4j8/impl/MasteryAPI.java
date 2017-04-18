@@ -35,7 +35,7 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_SCORE)
                                                        .withPlatform(server);
         
-        return Optional.of((Integer) builder.build());
+        return Optional.ofNullable((Integer) builder.build());
     }
     
     
@@ -54,7 +54,7 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
         
-        return Optional.of((ChampionMastery) builder.build());
+        return Optional.ofNullable((ChampionMastery) builder.build());
     }
     
     
@@ -71,7 +71,7 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
-        return Optional.of((List<ChampionMastery>) builder.build());
+        return Optional.ofNullable((List<ChampionMastery>) builder.build());
     }
     
 }

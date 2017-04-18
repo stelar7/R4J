@@ -27,7 +27,7 @@ public final class ChampionAPI
                                                        .withPlatform(server);
         freeToPlay.ifPresent(value -> builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, String.valueOf(value)));
         
-        return Optional.of((ChampionList) builder.build());
+        return Optional.ofNullable((ChampionList) builder.build());
     }
     
     
@@ -38,7 +38,7 @@ public final class ChampionAPI
                                                        .withEndpoint(URLEndpoint.V3_CHAMPIONS_BY_ID)
                                                        .withPlatform(server);
         
-        return Optional.of((Champion) builder.build());
+        return Optional.ofNullable((Champion) builder.build());
     }
     
 }

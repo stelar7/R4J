@@ -34,7 +34,7 @@ public final class SpectatorAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
         
-        return Optional.of((FeaturedGames) builder.build());
+        return Optional.ofNullable((FeaturedGames) builder.build());
         
     }
     
@@ -51,6 +51,6 @@ public final class SpectatorAPI
                                                        .withEndpoint(URLEndpoint.V3_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         
-        return Optional.of((CurrentGameInfo) builder.build());
+        return Optional.ofNullable((CurrentGameInfo) builder.build());
     }
 }
