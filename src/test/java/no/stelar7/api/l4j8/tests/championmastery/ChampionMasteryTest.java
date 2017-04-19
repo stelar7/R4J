@@ -15,6 +15,13 @@ public class ChampionMasteryTest
     
     Consumer<ChampionMastery> doAssertions = (final ChampionMastery data) ->
     {
+        if (data.getChampionLevel() == 0)
+        {
+            Assert.assertNotNull("champion is null", data.getChampion());
+            Assert.assertNotNull("summoner is null", data.getSummonerId());
+            
+        }
+        
         Assert.assertTrue("ChampionId has changed?", data.getChampion().getId().equals(Constants.TEST_CHAMPION_IDS[0]));
         Assert.assertTrue("Max level is not 5?", data.getChampionLevel() > 5);
         Assert.assertTrue("Points less than 80k", data.getChampionPoints() > 80000);
@@ -41,12 +48,17 @@ public class ChampionMasteryTest
         Optional<ChampionMastery> mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
         Assert.assertTrue("No data returned", mastery.isPresent());
         mastery.ifPresent(doAssertions);
+        
+        
+        mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[1]);
+        Assert.assertTrue("No data returned", mastery.isPresent());
+        mastery.ifPresent(doAssertions);
     }
     
     @Test
     public void testChampionMasteryAll()
     {
-        Optional<List<ChampionMastery>> all = api.getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        Optional<List<ChampionMastery>> all = api.getChampionMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
         Assert.assertTrue("No data returned", all.isPresent());
         all.ifPresent(doListAssertions);
         

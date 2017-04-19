@@ -23,6 +23,7 @@ public final class Constants
     public static final String BEGININDEX_PLACEHOLDER_DATA    = "beginIndex";
     public static final String CHAMPIDS_PLACEHOLDER_DATA      = "championIds";
     public static final String TIMELINE_PLACEHOLDER_DATA      = "includeTimeline";
+    public static final String COUNT_PLACEHOLDER_DATA         = "count";
     
     public static final String TOURNAMENT_CODE_PLACEHOLDER = "{tournamentCode}";
     public static final String PLATFORM_ID_PLACEHOLDER     = "{platformId}";
@@ -65,7 +66,7 @@ public final class Constants
     public static final String[] TEST_SUMMONER_NAMES   = {"stelar7", "NRG Zenon"};
     public static final Long[]   TEST_SUMMONER_IDS     = {19613950L};
     public static final Long[]   TEST_ACCOUNT_IDS      = {22401330L};
-    public static final int[]    TEST_CHAMPION_IDS     = {89};
+    public static final int[]    TEST_CHAMPION_IDS     = {89, 50};
     
     private Constants()
     {

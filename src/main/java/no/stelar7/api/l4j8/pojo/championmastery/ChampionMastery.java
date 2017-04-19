@@ -102,7 +102,7 @@ public class ChampionMastery
      *
      * @return the player id
      */
-    public Long getPlayerId()
+    public Long getSummonerId()
     {
         return this.playerId;
     }
