@@ -6,7 +6,7 @@ import java.util.*;
 
 public class StaticChampion
 {
-    private List<String>        allytips;
+    private List<String>              allytips;
     private String                    blurb;
     private List<String>              enemytips;
     private Integer                   id;
@@ -23,7 +23,6 @@ public class StaticChampion
     private Stats                     stats;
     private List<String>              tags;
     private String                    title;
-    
     
     
     @Override
