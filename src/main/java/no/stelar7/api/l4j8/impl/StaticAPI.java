@@ -3,12 +3,12 @@ package no.stelar7.api.l4j8.impl;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
-import no.stelar7.api.l4j8.basic.constants.flags.ChampDataFlags;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
@@ -47,8 +47,7 @@ public final class StaticAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPION_BY_ID)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         champData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -60,8 +59,7 @@ public final class StaticAPI
     public Optional<ItemList> getItems(Platform server, Optional<EnumSet<ItemDataFlags>> itemData, Optional<String> version, Optional<String> locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_ITEMS)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -74,8 +72,7 @@ public final class StaticAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_ITEM_BY_ID)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -87,8 +84,7 @@ public final class StaticAPI
     public Optional<LanguageStrings> getLanguageStrings(Platform server, Optional<String> version, Optional<String> locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
@@ -105,8 +101,7 @@ public final class StaticAPI
     public Optional<List<String>> getLanguages(Platform server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_LANGUAGES)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         return Optional.ofNullable((List<String>) builder.build());
     }
@@ -114,8 +109,7 @@ public final class StaticAPI
     public Optional<MapData> getMaps(Platform server, Optional<String> version, Optional<String> locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MAPS)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
@@ -126,8 +120,7 @@ public final class StaticAPI
     public Optional<MasteryList> getMasteries(Platform server, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -140,8 +133,7 @@ public final class StaticAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_MASTERY_BY_ID)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -150,19 +142,28 @@ public final class StaticAPI
         return Optional.ofNullable((Mastery) builder.build());
     }
     
+    public Optional<ProfileIconData> getProfileIcons(Platform server, Optional<String> version, Optional<String> locale)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_PROFILEICONS)
+                                                       .withPlatform(server);
+        
+        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
+        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        
+        return Optional.ofNullable((ProfileIconData) builder.build());
+    }
+    
     public Optional<Realm> getRealm(Platform server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_REALMS)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         return Optional.ofNullable((Realm) builder.build());
     }
     
     public Optional<StaticRuneList> getRunes(Platform server, Optional<EnumSet<RuneDataFlags>> itemData, Optional<String> version, Optional<String> locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_RUNES)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -175,8 +176,7 @@ public final class StaticAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_RUNE_BY_ID)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -189,8 +189,7 @@ public final class StaticAPI
     public Optional<StaticSummonerSpellList> getSummonerSpells(Platform server, Optional<EnumSet<SpellDataFlags>> itemData, Optional<String> version, Optional<String> locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELLS)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -203,8 +202,7 @@ public final class StaticAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
@@ -217,8 +215,7 @@ public final class StaticAPI
     public Optional<List<String>> getVersions(Platform server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_VERSIONS)
-                                                       .withPlatform(server)
-                                                       .asVerbose(true);
+                                                       .withPlatform(server);
         
         return Optional.ofNullable((List<String>) builder.build());
     }

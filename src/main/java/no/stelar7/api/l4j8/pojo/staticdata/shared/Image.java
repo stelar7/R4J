@@ -4,12 +4,11 @@ public class Image
 {
     private String  full;
     private String  group;
-    private Integer h;
     private String  sprite;
+    private Integer h;
     private Integer w;
     private Integer x;
     private Integer y;
-    
     
     
     @Override

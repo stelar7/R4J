@@ -1,15 +1,9 @@
 package no.stelar7.api.l4j8.tests.tournament;
 
-import no.stelar7.api.l4j8.basic.constants.*;
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.match.*;
-import no.stelar7.api.l4j8.pojo.tournament.*;
-import no.stelar7.api.l4j8.tests.*;
+import no.stelar7.api.l4j8.tests.SecretFile;
 
-import java.util.*;
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 public class TournamentTest
 {
@@ -140,5 +134,5 @@ public class TournamentTest
     }
     
     */
-
+    
 }

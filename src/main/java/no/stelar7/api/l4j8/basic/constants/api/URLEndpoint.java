@@ -12,6 +12,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
@@ -68,6 +69,7 @@ public enum URLEndpoint
     // lol/static-data/v3/maps Retrieve map data.
     // lol/static-data/v3/masteries Retrieves mastery list.
     // lol/static-data/v3/masteries/{id} Retrieves mastery item by its unique id.
+    // lol/static-data/v3/profile-icons Retrieve profile icons.
     // lol/static-data/v3/realms Retrieve realm data.
     // lol/static-data/v3/runes Retrieves rune list.
     // lol/static-data/v3/runes/{id} Retrieves rune by its unique id.
@@ -84,6 +86,7 @@ public enum URLEndpoint
     V3_STATIC_MAPS("lol", "static-data", "v3", "maps", MapData.class),
     V3_STATIC_MASTERIES("lol", "static-data", "v3", "masteries", MasteryList.class),
     V3_STATIC_MASTERY_BY_ID("lol", "static-data", "v3", "masteries/" + Constants.ID_PLACEHOLDER, Mastery.class),
+    V3_STATIC_PROFILEICONS("lol", "static-data", "v3", "profile-icons", ProfileIconData.class),
     V3_STATIC_REALMS("lol", "static-data", "v3", "realms", Realm.class),
     V3_STATIC_RUNES("lol", "static-data", "v3", "runes", StaticRuneList.class),
     V3_STATIC_RUNE_BY_ID("lol", "static-data", "v3", "runes/" + Constants.ID_PLACEHOLDER, StaticRune.class),
@@ -99,7 +102,7 @@ public enum URLEndpoint
     V3_MATCH("lol", "platform", "v3", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),
     
     OLD_MATCHLIST("api/lol", "{region}", "v2.2", "matchlist/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MatchList.class),
-    OLD_MATCH("api/lol", "{region}", "v2.2", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class);
+    OLD_MATCH("api/lol", "{region}", "v2.2", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),;
     
     
     private final String game;

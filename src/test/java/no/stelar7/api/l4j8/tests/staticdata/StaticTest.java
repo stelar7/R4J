@@ -9,6 +9,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
@@ -115,6 +116,13 @@ public class StaticTest
         
         Assert.assertTrue("no data?", list.isPresent());
         Assert.assertTrue("ok?", list.get().getId() == 6131);
+    }
+    
+    @Test
+    public void testProfileIcons()
+    {
+        Optional<ProfileIconData> data = api.getProfileIcons(Platform.EUW1, Optional.empty(), Optional.empty());
+        Assert.assertTrue("no data?", data.isPresent());
     }
     
     @Test
