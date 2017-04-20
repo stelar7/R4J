@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SummonerIdParams
 {
-    final Set<Number> participants;
+    private final Set<Number> participants;
     
     public SummonerIdParams()
     {

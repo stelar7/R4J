@@ -6,7 +6,6 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.deserializer.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
-import no.stelar7.api.l4j8.impl.RateLimiter;
 
 import java.io.*;
 import java.lang.reflect.Type;

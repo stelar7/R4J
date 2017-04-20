@@ -34,7 +34,7 @@ public enum TournamentMapType
     
     public static Optional<TournamentMapType> getFromCode(final String teamId)
     {
-        return Stream.of(TournamentMapType.values()).filter(t -> t.code.equals(String.valueOf(teamId))).findFirst();
+        return Stream.of(TournamentMapType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
     }
     
     public Integer getCode()

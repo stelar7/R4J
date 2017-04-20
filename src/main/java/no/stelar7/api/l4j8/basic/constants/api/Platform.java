@@ -32,6 +32,6 @@ public enum Platform
     @Override
     public String toString()
     {
-        return this.name().toLowerCase();
+        return this.name().toLowerCase(Locale.ENGLISH);
     }
 }

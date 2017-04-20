@@ -147,8 +147,6 @@ public final class ImageAPI
                 {
                     "name": "Flash Frost",
                     "key": "FlashFrost",
-                    "description": "Anivia brings her wings together and summons a sphere of ice that flies towards her opponents, chilling and damaging anyone in its path. When the sphere explodes it does moderate damage in a radius, stunning anyone in the area.",
-                    "sanitizedDescription": "Anivia brings her wings together and summons a sphere of ice that flies towards her opponents, chilling and damaging anyone in its path. When the sphere explodes it does moderate damage in a radius, stunning anyone in the area.",
                     "image": {
                         "full": "FlashFrost.png",
                         "sprite": "spell0.png",
@@ -171,8 +169,6 @@ public final class ImageAPI
                 {
                     "name": "Flash Frost",
                     "key": "FlashFrost",
-                    "description": "Anivia brings her wings together and summons a sphere of ice that flies towards her opponents, chilling and damaging anyone in its path. When the sphere explodes it does moderate damage in a radius, stunning anyone in the area.",
-                    "sanitizedDescription": "Anivia brings her wings together and summons a sphere of ice that flies towards her opponents, chilling and damaging anyone in its path. When the sphere explodes it does moderate damage in a radius, stunning anyone in the area.",
                     "image": {
                         "full": "FlashFrost.png",
                         "sprite": "spell0.png",

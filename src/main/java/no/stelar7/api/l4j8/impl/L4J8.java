@@ -29,7 +29,10 @@ public class L4J8
         return SpectatorAPI.getInstance();
     }
     
-    public SummonerAPI getSummonerAPI() {return SummonerAPI.getInstance();}
+    public SummonerAPI getSummonerAPI()
+    {
+        return SummonerAPI.getInstance();
+    }
     
     public TournamentAPI getTournamentAPI()
     {

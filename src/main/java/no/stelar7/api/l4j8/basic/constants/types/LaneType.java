@@ -25,11 +25,11 @@ public enum LaneType
      */
     BOT("BOT", "BOTTOM", "BOT_LANE");
     
-    final String[] keys;
+    private final String[] keys;
     
     LaneType(final String... keys)
     {
-        this.keys = keys;
+        this.keys = keys.clone();
     }
     
     /**

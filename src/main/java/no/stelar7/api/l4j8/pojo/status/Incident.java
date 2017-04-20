@@ -85,7 +85,7 @@ public class Incident
      *
      * @return the created_at
      */
-    public String getCreated_at()
+    public String getCreatedAt()
     {
         return this.created_at;
     }
