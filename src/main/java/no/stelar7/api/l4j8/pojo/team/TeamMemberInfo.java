@@ -10,7 +10,6 @@ public class TeamMemberInfo
     private String status;
     
     
-    
     @Override
     public boolean equals(final Object obj)
     {
@@ -82,8 +81,8 @@ public class TeamMemberInfo
     
     /**
      * A ZonedDateTime of {@code getInviteDateAsDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getInviteDateAsDate()
     {
@@ -102,8 +101,8 @@ public class TeamMemberInfo
     
     /**
      * A ZonedDateTime of {@code getInviteDateAsDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getJoinDateAsDate()
     {

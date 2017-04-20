@@ -45,6 +45,7 @@ public enum GameModeType
     /**
      * Returns a GameModeType from the provided value
      *
+     * @param gameMode the mode to check
      * @return GameModeType
      */
     public static Optional<GameModeType> getFromCode(final String gameMode)

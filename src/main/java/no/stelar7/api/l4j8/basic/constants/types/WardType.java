@@ -16,6 +16,7 @@ public enum WardType
     /**
      * Returns an WardType from the provided value
      *
+     * @param type the type to check
      * @return WardType
      */
     public static Optional<WardType> getFromCode(final String type)

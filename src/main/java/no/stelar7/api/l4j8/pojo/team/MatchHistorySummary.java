@@ -170,8 +170,8 @@ public class MatchHistorySummary
     
     /**
      * A ZonedDateTime of {@code getDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getDateAsDate()
     {

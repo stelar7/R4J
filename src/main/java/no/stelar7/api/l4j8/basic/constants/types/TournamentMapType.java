@@ -11,8 +11,6 @@ public enum TournamentMapType
     SUMMONERS_RIFT(11),
     /**
      * The Crystal Scar Dominion Map
-     * <p>
-     * <p>
      * Dominion is gone...
      */
     @Deprecated CRYSTAL_SCAR(8),

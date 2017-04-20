@@ -10,7 +10,6 @@ public class RankedStats
     private Long                summonerId;
     
     
-    
     @Override
     public boolean equals(final Object obj)
     {
@@ -82,8 +81,8 @@ public class RankedStats
     
     /**
      * A ZonedDateTime of {@code getModifyDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getModifyDateAsDate()
     {

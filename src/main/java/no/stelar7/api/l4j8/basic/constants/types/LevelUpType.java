@@ -11,6 +11,7 @@ public enum LevelUpType
     /**
      * Returns an LevelUpType from the provided value
      *
+     * @param type the type to check
      * @return LevelUpType
      */
     public static Optional<LevelUpType> getFromCode(final String type)

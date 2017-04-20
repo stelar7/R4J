@@ -12,6 +12,7 @@ public enum BuildingType
     /**
      * Returns an BuildingType from the provided value
      *
+     * @param type the type to check
      * @return BuildingType
      */
     public static Optional<BuildingType> getFromCode(final String type)

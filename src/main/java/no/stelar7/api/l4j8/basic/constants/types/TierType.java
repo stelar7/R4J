@@ -17,6 +17,8 @@ public enum TierType
     /**
      * Returns an TierType from the provided value
      *
+     *
+     * @param type the type to check
      * @return TierType
      */
     public static Optional<TierType> getFromCode(final String type)

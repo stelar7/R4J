@@ -15,6 +15,7 @@ public enum MonsterType
     /**
      * Returns an MonsterType from the provided value
      *
+     * @param type the type to check
      * @return MonsterType
      */
     public static Optional<MonsterType> getFromCode(final String type)

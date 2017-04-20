@@ -89,8 +89,8 @@ public class ChampionMastery
     
     /**
      * A ZonedDateTime of {@code getLastPlayTime()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getLastPlayTimeAsDate()
     {

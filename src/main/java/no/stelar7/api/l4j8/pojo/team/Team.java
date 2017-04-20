@@ -21,7 +21,6 @@ public class Team
     private Long                      thirdLastJoinDate;
     
     
-    
     @Override
     public boolean equals(final Object obj)
     {
@@ -193,8 +192,8 @@ public class Team
     
     /**
      * A ZonedDateTime of {@code getCreateDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getCreateDateAsDate()
     {
@@ -223,8 +222,8 @@ public class Team
     
     /**
      * A ZonedDateTime of {@code getLastGameDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getLastGameDateAsDate()
     {
@@ -253,8 +252,8 @@ public class Team
     
     /**
      * A ZonedDateTime of {@code getLastJoinedRankedTeamQueueDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getLastJoinedRankedTeamQueueDateAsDate()
     {
@@ -283,8 +282,8 @@ public class Team
     
     /**
      * A ZonedDateTime of {@code getModifyDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getModifyDateAsDate()
     {
@@ -323,8 +322,8 @@ public class Team
     
     /**
      * A ZonedDateTime of {@code getSecondLastJoinDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getSecondLastJoinDateAsDate()
     {
@@ -373,8 +372,8 @@ public class Team
     
     /**
      * A ZonedDateTime of {@code getThirdLastJoinDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getThirdLastJoinDateAsDate()
     {

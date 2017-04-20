@@ -270,7 +270,7 @@ public class Event
     /**
      * The assisting participant IDs of the event. Only present if relevant.
      *
-     * @return List<Integer>
+     * @return {@code List<Integer>}
      */
     public List<Integer> getAssistingParticipantIds()
     {

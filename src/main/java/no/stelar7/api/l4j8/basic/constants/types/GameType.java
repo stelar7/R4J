@@ -21,6 +21,7 @@ public enum GameType
     /**
      * Returns a GameType from the provided value
      *
+     * @param gameType the type to check
      * @return GameType
      */
     public static Optional<GameType> getFromCode(final String gameType)

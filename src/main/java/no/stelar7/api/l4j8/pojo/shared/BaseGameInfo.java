@@ -203,8 +203,8 @@ public class BaseGameInfo
     
     /**
      * A ZonedDateTime of {@code getGameStartTime()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getGameStartTimeAsDate()
     {

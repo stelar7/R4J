@@ -216,8 +216,8 @@ public class Game
     
     /**
      * A ZonedDateTime of {@code getCreateDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getCreateDateAsDate()
     {

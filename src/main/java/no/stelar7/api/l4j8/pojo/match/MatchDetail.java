@@ -215,8 +215,8 @@ public class MatchDetail
     
     /**
      * A ZonedDateTime of {@code getMatchCreation()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getMatchCreationDate()
     {

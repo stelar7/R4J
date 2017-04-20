@@ -107,9 +107,10 @@ public enum PlayerStatSummaryType
     RANKEDFLEXTT,;
     
     /**
-     * Returns an MonsterType from the provided value
+     * Returns an PlayerStatSummaryType from the provided value
      *
-     * @return MonsterType
+     * @param type the type to check
+     * @return PlayerStatSummaryType
      */
     public static Optional<PlayerStatSummaryType> getFromCode(final String type)
     {

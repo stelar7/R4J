@@ -56,8 +56,8 @@ public final class Summoner
     
     /**
      * Date summoner was last modified specified as epoch milliseconds. The following events will update this timestamp: profile icon change, playing the tutorial or advanced tutorial, finishing a game, summoner name change
-     * <p>
-     * * @return Long
+     *
+     * @return Long
      */
     public Long getRevisionDate()
     {
@@ -66,8 +66,8 @@ public final class Summoner
     
     /**
      * A ZonedDateTime of {@code getRevisionDate()}
-     * <p>
-     * * @return ZonedDateTime
+     *
+     * @return ZonedDateTime
      */
     public ZonedDateTime getRevisionDateAsDate()
     {

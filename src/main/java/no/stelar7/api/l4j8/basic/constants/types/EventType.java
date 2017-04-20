@@ -22,6 +22,7 @@ public enum EventType
     /**
      * Returns an EventType from the provided value
      *
+     * @param type the type to check
      * @return EventType
      */
     public static Optional<EventType> getFromCode(final String type)

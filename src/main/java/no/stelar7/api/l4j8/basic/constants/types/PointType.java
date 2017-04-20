@@ -14,6 +14,7 @@ public enum PointType
     /**
      * Returns an PointType from the provided value
      *
+     * @param type the type to check
      * @return PointType
      */
     public static Optional<PointType> getFromCode(final String type)

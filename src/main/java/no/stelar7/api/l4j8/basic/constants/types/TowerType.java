@@ -15,6 +15,7 @@ public enum TowerType
     /**
      * Returns an TowerType from the provided value
      *
+     * @param type the type to check
      * @return TowerType
      */
     public static Optional<TowerType> getFromCode(final String type)

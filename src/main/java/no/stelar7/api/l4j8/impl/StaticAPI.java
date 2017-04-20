@@ -98,6 +98,9 @@ public final class StaticAPI
     
     /**
      * Returns a list of possible locales
+     *
+     * @param server the server to get from
+     * @return a list of strings avaliable in this language
      */
     public Optional<List<String>> getLanguages(Platform server)
     {
