@@ -63,7 +63,7 @@ public class MatchListTest
         //Assert.assertEquals("Unexpected amount of games returned", list.get().getMatches().size(), 47);
         
         
-        Optional<MatchDetail> detail = api.getOldMatch(Server.EUW, list.get().getMatches().get(1).getMatchId(), Optional.of(true));
+        Optional<MatchDetail> detail = api.getOldMatch(Server.EUW, list.get().getMatches().get(0).getMatchId(), Optional.of(true));
         System.out.println(detail);
     }
     

@@ -91,11 +91,20 @@ public final class DataCall
         public Object build()
         {
             
+            // TODO: Make this better
             //DataCall.limiter.get(this.dc.platform).acquire();
             
-            final String           url      = this.getURL();
-            System.out.println(url);
+            final String url = this.getURL();
+            if (this.dc.verbose)
+            {
+                System.out.println(url);
+            }
+            
             final DataCallResponse response = this.getResponse(url);
+            if (this.dc.verbose)
+            {
+                System.out.println(response);
+            }
             
             if ((response.getResponseCode() == 200) || (response.getResponseCode() == 204))
             {
