@@ -34,10 +34,9 @@ public enum URLEndpoint
     // lol/platform/v3/runes/by-summoner/{summonerId}
     // lol/platform/v3/masteries/by-summoner/{summonerId}
     // typetoken should be removed once riot removes the map structure from the JSON
-    V3_RUNES_BY_ID("lol", "platform", "v3", "runes/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<Map<Long, RunePages>>()
-    {}.getType()),
-    V3_MASTERIES_BY_ID("lol", "platform", "v3", "masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<Map<Long, MasteryPages>>()
-    {}.getType()),
+    V3_RUNES_BY_ID("lol", "platform", "v3", "runes/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, RunePages.class),
+    V3_MASTERIES_BY_ID("lol", "platform", "v3", "masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MasteryPages.class),
+    
     
     // lol/spectator/v3/featured-games
     // lol/spectator/v3/active-games/by-summoner/{summonerId}
@@ -97,7 +96,10 @@ public enum URLEndpoint
     // api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}
     // api/lol/{region}/v2.2/match/{matchId}
     V3_MATCHLIST("lol", "platform", "v3", "matchlist/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MatchList.class),
-    V3_MATCH("lol", "platform", "v3", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class);
+    V3_MATCH("lol", "platform", "v3", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),
+    
+    OLD_MATCHLIST("api/lol", "{region}", "v2.2", "matchlist/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MatchList.class),
+    OLD_MATCH("api/lol", "{region}", "v2.2", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class);
     
     
     private final String game;

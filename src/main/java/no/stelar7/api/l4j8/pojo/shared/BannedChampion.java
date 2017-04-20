@@ -6,7 +6,6 @@ public class BannedChampion
 {
     private ChampionType championId;
     private Integer      pickTurn;
-    private TeamType     teamId;
     
     @Override
     public boolean equals(final Object obj)
@@ -44,16 +43,6 @@ public class BannedChampion
         {
             return false;
         }
-        if (this.teamId == null)
-        {
-            if (other.teamId != null)
-            {
-                return false;
-            }
-        } else if (!this.teamId.equals(other.teamId))
-        {
-            return false;
-        }
         return true;
     }
     
@@ -79,16 +68,6 @@ public class BannedChampion
     }
     
     
-    /**
-     * The ID of the team that banned the champion
-     *
-     * @return Long
-     */
-    public TeamType getTeam()
-    {
-        return this.teamId;
-    }
-    
     @Override
     public int hashCode()
     {
@@ -96,7 +75,6 @@ public class BannedChampion
         int       result = 1;
         result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
         result = (prime * result) + ((this.pickTurn == null) ? 0 : this.pickTurn.hashCode());
-        result = (prime * result) + ((this.teamId == null) ? 0 : this.teamId.hashCode());
         return result;
     }
     
@@ -106,7 +84,6 @@ public class BannedChampion
         return "BannedChampion{" +
                "championId=" + championId +
                ", pickTurn=" + pickTurn +
-               ", teamId=" + teamId +
                '}';
     }
 }

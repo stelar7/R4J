@@ -92,9 +92,10 @@ public final class DataCall
         public Object build()
         {
             
-            DataCall.limiter.get(this.dc.platform).acquire();
+            //DataCall.limiter.get(this.dc.platform).acquire();
             
             final String           url      = this.getURL();
+            System.out.println(url);
             final DataCallResponse response = this.getResponse(url);
             
             if ((response.getResponseCode() == 200) || (response.getResponseCode() == 204))
@@ -267,9 +268,14 @@ public final class DataCall
          */
         private String getURL()
         {
-            
-            String[] url = {Constants.REQUEST_URL};
-            url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.platform.toString());
+            String[] url = {dc.baseURL};
+            if (dc.platform == null)
+            {
+                url[0] = url[0].replace(Constants.SERVER_PLACEHOLDER, dc.server.asURLFormat());
+            } else
+            {
+                url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.platform.toString());
+            }
             url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.endpoint.getGame());
             url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.endpoint.getService());
             url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.endpoint.getVersion());
@@ -369,6 +375,17 @@ public final class DataCall
             return this;
         }
         
+        public DataCallBuilder withURL(String url)
+        {
+            this.dc.baseURL = url;
+            return this;
+        }
+        
+        public DataCallBuilder withServer(Server s)
+        {
+            this.dc.server = s;
+            return this;
+        }
     }
     
     private static class DataCallResponse
@@ -431,6 +448,10 @@ public final class DataCall
     
     private Platform    platform;
     private URLEndpoint endpoint;
+    
+    private String baseURL = Constants.REQUEST_URL;
+    
+    private Server server;
     
     private DataCall()
     {

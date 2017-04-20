@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.impl;
 
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
@@ -24,6 +25,12 @@ public final class ImageAPI
     public String getProfileIcon(String iconid, Optional<String> version)
     {
         //http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png
+        return null;
+    }
+    
+    public String getProfileIcon(Platform region, String summonerName)
+    {
+        // http://avatar.leagueoflegends.com/region/summonername.png
         return null;
     }
     

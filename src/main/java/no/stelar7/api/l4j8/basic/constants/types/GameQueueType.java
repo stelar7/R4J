@@ -170,7 +170,7 @@ public enum GameQueueType
      */
     RANKED_FLEX_TT(9);
     
-    final Integer code;
+    private final Integer code;
     
     GameQueueType(final Integer code)
     {
@@ -180,6 +180,11 @@ public enum GameQueueType
     public static Optional<GameQueueType> getFromCode(final String value)
     {
         return Stream.of(GameQueueType.values()).filter(t -> t.code.equals(Integer.valueOf(value))).findFirst();
+    }
+    
+    public static Optional<GameQueueType> getFromName(final String value)
+    {
+        return Stream.of(GameQueueType.values()).filter(t -> t.name().equalsIgnoreCase(value)).findFirst();
     }
     
     public Integer getCode()

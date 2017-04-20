@@ -22,6 +22,30 @@ public final class MatchAPI
         // Hide public constructor
     }
     
+    public Optional<MatchList> getOldMatchList(Server server, long summonerId, Optional<Long> endTime, Optional<Integer> endIndex,
+                                               Optional<EnumSet<RankedQueueType>> rankedQueues, Optional<EnumSet<SeasonType>> seasons,
+                                               Optional<Long> beginTime, Optional<Integer> beginIndex, Optional<List<Integer>> championIds)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
+                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+                                                       .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withEndpoint(URLEndpoint.OLD_MATCHLIST)
+                                                       .withServer(server);
+        
+        endTime.ifPresent(value -> builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(value)));
+        endIndex.ifPresent(value -> builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, String.valueOf(value)));
+        
+        rankedQueues.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RANKEDQUEUE_PLACEHOLDER_DATA, flag.getValue())));
+        seasons.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.SEASON_PLACEHOLDER_DATA, flag.getValue())));
+        
+        beginTime.ifPresent(value -> builder.withURLData(Constants.BEGINTIME_PLACEHOLDER_DATA, String.valueOf(value)));
+        beginIndex.ifPresent(value -> builder.withURLData(Constants.BEGININDEX_PLACEHOLDER_DATA, String.valueOf(value)));
+        
+        championIds.ifPresent(value -> value.forEach(id -> builder.withURLData(Constants.CHAMPIDS_PLACEHOLDER_DATA, String.valueOf(id))));
+        
+        return Optional.ofNullable((MatchList) builder.build());
+    }
+    
     
     public Optional<MatchList> getMatchList(Platform server, long summonerId, Optional<Long> endTime, Optional<Integer> endIndex,
                                             Optional<EnumSet<RankedQueueType>> rankedQueues, Optional<EnumSet<SeasonType>> seasons,
@@ -34,15 +58,16 @@ public final class MatchAPI
         endTime.ifPresent(value -> builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(value)));
         endIndex.ifPresent(value -> builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, String.valueOf(value)));
         
-        rankedQueues.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.SEASON_PLACEHOLDER_DATA, flag.getValue())));
-        seasons.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RANKEDQUEUE_PLACEHOLDER_DATA, flag.getValue())));
+        rankedQueues.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RANKEDQUEUE_PLACEHOLDER_DATA, flag.getValue())));
+        seasons.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.SEASON_PLACEHOLDER_DATA, flag.getValue())));
         
         beginTime.ifPresent(value -> builder.withURLData(Constants.BEGINTIME_PLACEHOLDER_DATA, String.valueOf(value)));
         beginIndex.ifPresent(value -> builder.withURLData(Constants.BEGININDEX_PLACEHOLDER_DATA, String.valueOf(value)));
         
         championIds.ifPresent(value -> value.forEach(id -> builder.withURLData(Constants.CHAMPIDS_PLACEHOLDER_DATA, String.valueOf(id))));
         
-        return Optional.ofNullable((MatchList) builder.build());
+        throw new UnsupportedOperationException("Use the old version untill V3 works");
+        //return Optional.ofNullable((MatchList) builder.build());
     }
     
     public Optional<MatchDetail> getMatch(Platform server, long matchId, Optional<Boolean> includeTimeline)
@@ -50,6 +75,22 @@ public final class MatchAPI
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V3_MATCH)
                                                        .withPlatform(server);
+        
+        includeTimeline.ifPresent(value -> builder.withURLData(Constants.TIMELINE_PLACEHOLDER_DATA, String.valueOf(value)));
+        
+        throw new UnsupportedOperationException("Use the old version untill V3 works");
+        
+        //return Optional.ofNullable((MatchDetail) builder.build());
+    }
+    
+    
+    public Optional<MatchDetail> getOldMatch(Server server, long matchId, Optional<Boolean> includeTimeline)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
+                                                       .withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
+                                                       .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withEndpoint(URLEndpoint.OLD_MATCH)
+                                                       .withServer(server);
         
         includeTimeline.ifPresent(value -> builder.withURLData(Constants.TIMELINE_PLACEHOLDER_DATA, String.valueOf(value)));
         

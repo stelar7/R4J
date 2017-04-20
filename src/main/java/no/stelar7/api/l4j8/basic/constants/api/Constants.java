@@ -38,6 +38,8 @@ public final class Constants
     public static final String SERVICE_PLACEHOLDER         = "{service}";
     public static final String VERSION_PLACEHOLDER         = "{version}";
     public static final String RESOURCE_PLACEHOLDER        = "{resource}";
+    public static final String REGION_PLACEHOLDER          = "{region}";
+    public static final String SERVER_PLACEHOLDER          = "{server}";
     
     public static final String URL_PARAM_TOURNAMENT_ID       = "tournamentId";
     public static final String URL_PARAM_TOURNAMENT_CODE     = "tournamentCode";

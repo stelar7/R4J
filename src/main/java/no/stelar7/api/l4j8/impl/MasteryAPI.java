@@ -110,8 +110,6 @@ public final class MasteryAPI
             }
         }
         
-        System.out.println(mastery);
-        
         return Optional.ofNullable(mastery);
     }
     

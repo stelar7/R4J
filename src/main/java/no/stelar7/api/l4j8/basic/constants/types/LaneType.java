@@ -18,7 +18,7 @@ public enum LaneType
     /**
      * the jungle
      */
-    JUNGLE,
+    JUNGLE("JUNGLE"),
     
     /**
      * The bottom lane
