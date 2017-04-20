@@ -19,7 +19,7 @@ public class L4J8
         DataCallBuilder.setCredentials(creds);
     }
     
-    public MasteryAPI getMasteryrAPI()
+    public MasteryAPI getMasteryAPI()
     {
         return MasteryAPI.getInstance();
     }

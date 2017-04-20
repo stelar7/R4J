@@ -40,7 +40,7 @@ public class ChampionMasteryTest
     };
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-    MasteryAPI api = l4j8.getMasteryrAPI();
+    MasteryAPI api = l4j8.getMasteryAPI();
     
     @Test
     public void testChampionMastery()
