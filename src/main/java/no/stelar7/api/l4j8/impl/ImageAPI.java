@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.impl;
 
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
+import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
 
 import java.util.Optional;
@@ -24,250 +25,182 @@ public final class ImageAPI
     
     public String getProfileIcon(String iconid, Optional<String> version)
     {
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/profileicon";
+        
         //http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png
-        return null;
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + iconid + ".png";
     }
     
     public String getProfileIcon(Platform region, String summonerName)
     {
         // http://avatar.leagueoflegends.com/region/summonername.png
-        return null;
+        return "http://avatar.leagueoflegends.com/" + region.toString() + Constants.SEPARATOR + summonerName + ".png";
     }
     
-    public String getSplashArt(int championId, int skinNum, Optional<String> version)
+    public String getSplashArt(String championId, int skinNum)
     {
+        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn   = realm.getCDN();
+        String path  = "img/champion/splash";
+        
         // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
-        return null;
+        return cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + championId + "_" + skinNum + ".png";
     }
     
-    public String getSplashArt(Skin skin, Optional<String> version)
+    public String getSplashArt(Skin skin)
     {
-        /* http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
-    
-        "skins": [
-        {
-            "id": 266000,
-                "name": "default",
-                "num": 0
-        },
-        */
-        return null;
-    }
-    
-    public String getLoadingScreenArt(int championId, int skinNum, Optional<String> version)
-    {
-        /* http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
+        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn   = realm.getCDN();
+        String path  = "img/champion/splash";
         
-        champid-num
-        266-001
-        "skins": [
-        {
-                "id": 266001,
-                "name": "Justicar Aatrox",
-                "num": 1
-        },
-         */
-        return null;
+        // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
+        return cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + skin.getId() + "_" + skin.getNum() + ".png";
     }
     
-    public String getLoadingScreenArt(Skin skin, Optional<String> version)
+    public String getLoadingScreenArt(String championId, int skinNum)
     {
-        /* http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
+        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn   = realm.getCDN();
+        String path  = "img/champion/loading";
         
-        champid-num
-        266-001
-        "skins": [
-        {
-                "id": 266001,
-                "name": "Justicar Aatrox",
-                "num": 1
-        },
-         */
-        return null;
+        // http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
+        return cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + championId + "_" + skinNum + ".png";
+    }
+    
+    public String getLoadingScreenArt(Skin skin)
+    {
+        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn   = realm.getCDN();
+        String path  = "img/champion/loading";
+        
+        // http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
+        return cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + skin.getId() + "_" + skin.getNum() + ".png";
     }
     
     
-    public String getSquare(int championId, Optional<String> version)
+    public String getSquare(String championId, Optional<String> version)
     {
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/champion";
+        
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
-        return null;
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + championId + ".png";
     }
     
-    public String getPassive(int championId, Optional<String> version)
+    public String getPassive(String passiveId, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Cryophoenix_Rebirth.png
-            "passive": {
-                "name": "Rebirth",
-                "description": "Upon dying, Anivia will revert into an egg. If the egg can survive for six seconds, she is gloriously reborn.",
-                "sanitizedDescription": "Upon dying, Anivia will revert into an egg. If the egg can survive for six seconds, she is gloriously reborn.",
-                "image": {
-                    "full": "Anivia_P.png",
-                    "sprite": "passive0.png",
-                    "group": "passive",
-                    "x": 240,
-                    "y": 0,
-                    "w": 48,
-                    "h": 48
-                }
-            }
-        }
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/passive";
+        
+        // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + passiveId + ".png";
     }
     
     public String getPassive(Passive passive, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Cryophoenix_Rebirth.png
-            "passive": {
-                "name": "Rebirth",
-                "description": "Upon dying, Anivia will revert into an egg. If the egg can survive for six seconds, she is gloriously reborn.",
-                "sanitizedDescription": "Upon dying, Anivia will revert into an egg. If the egg can survive for six seconds, she is gloriously reborn.",
-                "image": {
-                    "full": "Anivia_P.png",
-                    "sprite": "passive0.png",
-                    "group": "passive",
-                    "x": 240,
-                    "y": 0,
-                    "w": 48,
-                    "h": 48
-                }
-            }
-        }
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/passive";
+        
+        // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + passive.getImage().getFull();
     }
     
-    public String getAbility(int championId, int abilityCount, Optional<String> version)
+    public String getAbility(String abilityId, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
-            "spells": [
-                {
-                    "name": "Flash Frost",
-                    "key": "FlashFrost",
-                    "image": {
-                        "full": "FlashFrost.png",
-                        "sprite": "spell0.png",
-                        "group": "spell",
-                        "x": 192,
-                        "y": 144,
-                        "w": 48,
-                        "h": 48
-                    }
-                },
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/spell";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + abilityId + ".png";
     }
     
     public String getAbility(StaticChampionSpell spell, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
-            "spells": [
-                {
-                    "name": "Flash Frost",
-                    "key": "FlashFrost",
-                    "image": {
-                        "full": "FlashFrost.png",
-                        "sprite": "spell0.png",
-                        "group": "spell",
-                        "x": 192,
-                        "y": 144,
-                        "w": 48,
-                        "h": 48
-                    }
-                },
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/spell";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + spell.getImage().getFull();
     }
     
     public String getSummonerSpell(SummonerSpellType spell, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
-            
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/spell";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + spell.getApiName() + ".png";
     }
     
-    public String getItem(int id, Optional<String> version)
+    public String getItem(String id, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/item";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id + ".png";
     }
     
-    public String getMastery(int id, Optional<String> version)
+    public String getMastery(String id, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/mastery";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id + ".png";
     }
     
-    public String getRune(String name, Optional<String> version)
+    public String getRune(String id, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
-            
-            8001: {
-               "name": "Mark of the Crippling Candy Cane",
-                "description": "+2% critical damage",
-                "image": {
-                    "full": "8001.png",
-                    "sprite": "rune0.png",
-                    "group": "rune",
-                    "x": 0,
-                    "y": 240,
-                    "w": 48,
-                    "h": 48
-                }
-            }
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/rune";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id + ".png";
     }
     
     public String getRune(StaticRune rune, Optional<String> version)
     {
-        /*
-            http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
-            
-            8001: {
-               "name": "Mark of the Crippling Candy Cane",
-                "description": "+2% critical damage",
-                "image": {
-                    "full": "8001.png",
-                    "sprite": "rune0.png",
-                    "group": "rune",
-                    "x": 0,
-                    "y": 240,
-                    "w": 48,
-                    "h": 48
-                }
-            }
-            
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/rune";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + rune.getImage().getFull();
     }
     
-    
-    public String getMap(int id, Optional<String> version)
-    {
-        /*
-          http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
-         */
-        return null;
-    }
     
     public String getMap(MapType map, Optional<String> version)
     {
-        /*
-           http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
-         */
-        return null;
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        String cdn           = realm.getCDN();
+        String versionString = version.orElseGet(realm::getV);
+        String path          = "img/map";
+        
+        // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + "map" + map.getId() + ".png";
     }
     
     

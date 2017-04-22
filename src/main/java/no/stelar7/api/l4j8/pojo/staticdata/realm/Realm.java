@@ -130,7 +130,7 @@ public class Realm
      *
      * @return the cdn
      */
-    public String getCdn()
+    public String getCDN()
     {
         return this.cdn;
     }
@@ -140,7 +140,7 @@ public class Realm
      *
      * @return the css
      */
-    public String getCss()
+    public String getCSS()
     {
         return this.css;
     }
@@ -150,7 +150,7 @@ public class Realm
      *
      * @return the dd
      */
-    public String getDd()
+    public String getDD()
     {
         return this.dd;
     }
@@ -170,7 +170,7 @@ public class Realm
      *
      * @return the lg
      */
-    public String getLg()
+    public String getLG()
     {
         return this.lg;
     }
@@ -190,7 +190,7 @@ public class Realm
      *
      * @return the profileiconmax
      */
-    public Integer getProfileiconmax()
+    public Integer getProfileIconMax()
     {
         return this.profileiconmax;
     }

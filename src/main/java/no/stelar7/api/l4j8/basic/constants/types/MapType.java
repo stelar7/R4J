@@ -44,18 +44,18 @@ public enum MapType
      */
     BUTCHERS_BRIDGE(14, new Rectangle(-28, -19, 12849, 12858));
     
-    private final Integer   code;
+    private final Integer   mapId;
     private final Rectangle bounds;
     
     MapType(final Integer code, final Rectangle bounds)
     {
-        this.code = code;
+        this.mapId = code;
         this.bounds = bounds;
     }
     
     public static Optional<MapType> getFromCode(final String mapId)
     {
-        return Stream.of(MapType.values()).filter(t -> t.code.equals(Integer.valueOf(mapId))).findFirst();
+        return Stream.of(MapType.values()).filter(t -> t.mapId.equals(Integer.valueOf(mapId))).findFirst();
     }
     
     public Rectangle getBounds()
@@ -63,9 +63,9 @@ public enum MapType
         return this.bounds;
     }
     
-    public Integer getCode()
+    public Integer getId()
     {
-        return this.code;
+        return this.mapId;
     }
     
 }
