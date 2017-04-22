@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.tests.matchlist;
+package no.stelar7.api.l4j8.tests.match;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -46,7 +46,7 @@ public class MatchListTest
     Optional empty = Optional.empty();
     
     @Test
-    public void testMatchList()
+    public void testMatchAndMatchList()
     {
         Optional<EnumSet<RankedQueueType>> queue  = Optional.of(EnumSet.of(RankedQueueType.RANKED_SOLO_5X5));
         Optional<EnumSet<SeasonType>>      season = Optional.of(EnumSet.of(SeasonType.SEASON_2014));
@@ -62,9 +62,9 @@ public class MatchListTest
         // Just remove this check for now
         //Assert.assertEquals("Unexpected amount of games returned", list.get().getMatches().size(), 47);
         
-        
         Optional<MatchDetail> detail = api.getOldMatch(Server.EUW, list.get().getMatches().get(0).getMatchId(), Optional.of(true));
         System.out.println(detail);
     }
+    
     
 }

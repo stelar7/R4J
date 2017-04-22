@@ -58,4 +58,9 @@ public class L4J8
     {
         return MatchAPI.getInstance();
     }
+    
+    public LeagueAPI getLeagueAPI()
+    {
+        return LeagueAPI.getInstance();
+    }
 }

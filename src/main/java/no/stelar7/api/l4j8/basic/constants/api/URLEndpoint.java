@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.league.League;
 import no.stelar7.api.l4j8.pojo.match.MatchDetail;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
@@ -47,8 +48,7 @@ public enum URLEndpoint
     // lol/champion-mastery/v3/champion-masteries/by-summoner/{summonerId}
     // lol/champion-mastery/v3/champion-masteries/by-summoner/{summonerId}/by-champion/{championId}
     // lol/champion-mastery/v3/scores/by-summoner/{summonerId}
-    V3_MASTERY_BY_ID("lol", "champion-mastery", "v3", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<ChampionMastery>>()
-    {}.getType()),
+    V3_MASTERY_BY_ID("lol", "champion-mastery", "v3", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<ChampionMastery>>() {}.getType()),
     V3_MASTERY_BY_CHAMPION("lol", "champion-mastery", "v3", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER + "/by-champion/" + Constants.CHAMPION_ID_PLACEHOLDER, ChampionMastery.class),
     V3_MASTERY_SCORE("lol", "champion-mastery", "v3", "scores/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, Integer.class),
     
@@ -81,8 +81,7 @@ public enum URLEndpoint
     V3_STATIC_ITEMS("lol", "static-data", "v3", "items", ItemList.class),
     V3_STATIC_ITEM_BY_ID("lol", "static-data", "v3", "items/" + Constants.ID_PLACEHOLDER, Item.class),
     V3_STATIC_LANGUAGE_STRINGS("lol", "static-data", "v3", "language-strings", LanguageStrings.class),
-    V3_STATIC_LANGUAGES("lol", "static-data", "v3", "languages", new TypeToken<List<String>>()
-    {}.getType()),
+    V3_STATIC_LANGUAGES("lol", "static-data", "v3", "languages", new TypeToken<List<String>>() {}.getType()),
     V3_STATIC_MAPS("lol", "static-data", "v3", "maps", MapData.class),
     V3_STATIC_MASTERIES("lol", "static-data", "v3", "masteries", MasteryList.class),
     V3_STATIC_MASTERY_BY_ID("lol", "static-data", "v3", "masteries/" + Constants.ID_PLACEHOLDER, Mastery.class),
@@ -92,17 +91,32 @@ public enum URLEndpoint
     V3_STATIC_RUNE_BY_ID("lol", "static-data", "v3", "runes/" + Constants.ID_PLACEHOLDER, StaticRune.class),
     V3_STATIC_SUMMONER_SPELLS("lol", "static-data", "v3", "summoner-spells", StaticSummonerSpellList.class),
     V3_STATIC_SUMMONER_SPELL_BY_ID("lol", "static-data", "v3", "summoner-spells/" + Constants.ID_PLACEHOLDER, StaticSummonerSpell.class),
-    V3_STATIC_VERSIONS("lol", "static-data", "v3", "versions", new TypeToken<List<String>>()
-    {}.getType()),
+    V3_STATIC_VERSIONS("lol", "static-data", "v3", "versions", new TypeToken<List<String>>() {}.getType()),
     
-    // NOT ADDED TO THE API YET!!
+    // NOT ADDED TO V3 YET!!
     // api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}
     // api/lol/{region}/v2.2/match/{matchId}
     V3_MATCHLIST("lol", "platform", "v3", "matchlist/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MatchList.class),
     V3_MATCH("lol", "platform", "v3", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),
     
     OLD_MATCHLIST("api/lol", "{region}", "v2.2", "matchlist/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MatchList.class),
-    OLD_MATCH("api/lol", "{region}", "v2.2", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),;
+    OLD_MATCH("api/lol", "{region}", "v2.2", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),
+    
+    
+    // NOT ADDED TO V3 YET!!
+    // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}
+    // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}/entry
+    // api/lol/{region}/v2.5/league/challenger
+    // api/lol/{region}/v2.5/league/master
+    V3_LEAGUE("lol", "platform", "v3", "league/by-summoner/" + Constants.SUMMONER_IDS_PLACEHOLDER, new TypeToken<List<League>>() {}.getType()),
+    V3_LEAGUE_ENTRY("lol", "platform", "v3", "league/by-summoner/" + Constants.SUMMONER_IDS_PLACEHOLDER + "/entry", new TypeToken<List<League>>() {}.getType()),
+    V3_LEAGUE_CHALLENGER("lol", "platform", "v3", "league/challenger", League.class),
+    V3_LEAGUE_MASTER("lol", "platform", "v3", "league/master", League.class),
+    
+    OLD_LEAGUE("api/lol", "{region}", "v2.5", "league/by-summoner/" + Constants.SUMMONER_IDS_PLACEHOLDER, new TypeToken<Map<String, List<League>>>() {}.getType()),
+    OLD_LEAGUE_ENTRY("api/lol", "{region}", "v2.5", "league/by-summoner/" + Constants.SUMMONER_IDS_PLACEHOLDER + "/entry", new TypeToken<Map<String, List<League>>>() {}.getType()),
+    OLD_LEAGUE_CHALLENGER("api/lol", "{region}", "v2.5", "league/challenger", League.class),
+    OLD_LEAGUE_MASTER("api/lol", "{region}", "v2.5", "league/master", League.class),;
     
     
     private final String game;

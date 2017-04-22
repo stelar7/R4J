@@ -24,10 +24,12 @@ public final class Constants
     public static final String CHAMPIDS_PLACEHOLDER_DATA      = "championIds";
     public static final String TIMELINE_PLACEHOLDER_DATA      = "includeTimeline";
     public static final String COUNT_PLACEHOLDER_DATA         = "count";
+    public static final String TYPE_PLACEHOLDER_DATA          = "type";
     
     public static final String TOURNAMENT_CODE_PLACEHOLDER = "{tournamentCode}";
     public static final String PLATFORM_ID_PLACEHOLDER     = "{platformId}";
     public static final String SUMMONER_ID_PLACEHOLDER     = "{summonerId}";
+    public static final String SUMMONER_IDS_PLACEHOLDER    = "{summonerIds}";
     public static final String ACCOUNT_ID_PLACEHOLDER      = "{accountId}";
     public static final String SUMMONER_NAME_PLACEHOLDER   = "{summonerName}";
     public static final String CHAMPION_ID_PLACEHOLDER     = "{championId}";
