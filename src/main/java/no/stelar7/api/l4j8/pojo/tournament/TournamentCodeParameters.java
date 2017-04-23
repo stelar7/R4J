@@ -2,9 +2,6 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
-import java.util.regex.*;
-import java.util.stream.*;
-
 public class TournamentCodeParameters
 {
     private SummonerIdParams        allowedSummonerIds;
@@ -16,19 +13,97 @@ public class TournamentCodeParameters
     
     public TournamentCodeParameters()
     {
-        // GSON needs an empty constructor to initialize.. i think..?
+        // GSON needs an empty constructor to initialize..
     }
     
     public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final Integer teamSize)
     {
-        this.allowedSummonerIds = new SummonerIdParams(Pattern.compile(",")
-                                                              .splitAsStream(updateParams.getAllowedParticipants())
-                                                              .map(Long::parseLong)
-                                                              .collect(Collectors.toSet()));
+        this.allowedSummonerIds = new SummonerIdParams(updateParams.getAllowedParticipants());
+        this.spectatorType = updateParams.getSpectatorType();
+        this.pickType = updateParams.getPickType();
         this.mapType = updateParams.getMapType();
         this.metadata = metadata;
-        this.pickType = updateParams.getPickType();
-        this.spectatorType = updateParams.getSpectatorType();
+        this.teamSize = teamSize;
+    }
+    
+    /**
+     * Optional list of participants in order to validate the players eligible to join the lobby.
+     * NOTE: We currently do not enforce participants at the team level, but rather the aggregate of teamOne and teamTwo.
+     * We may add the ability to enforce at the team level in the future.
+     */
+    public SummonerIdParams getAllowedSummonerIds()
+    {
+        return this.allowedSummonerIds;
+    }
+    
+    public void setAllowedSummonerIds(final SummonerIdParams allowedSummonerIds)
+    {
+        this.allowedSummonerIds = allowedSummonerIds;
+    }
+    
+    /**
+     * The map type of the game. Valid values are SUMMONERS_RIFT, TWISTED_TREELINE, and HOWLING_ABYSS.
+     */
+    public TournamentMapType getMapType()
+    {
+        return this.mapType;
+    }
+    
+    public void setMapType(final TournamentMapType mapType)
+    {
+        this.mapType = mapType;
+    }
+    
+    /**
+     * Optional string that may contain any data in any format, if specified at all.
+     * Used to denote any custom information about the game.
+     */
+    public String getMetadata()
+    {
+        return this.metadata;
+    }
+    
+    public void setMetadata(final String metadata)
+    {
+        this.metadata = metadata;
+    }
+    
+    /**
+     * The pick type of the game. Valid values are BLIND_PICK, DRAFT_MODE, ALL_RANDOM, TOURNAMENT_DRAFT.
+     */
+    public TournamentPickType getPickType()
+    {
+        return this.pickType;
+    }
+    
+    public void setPickType(final TournamentPickType pickType)
+    {
+        this.pickType = pickType;
+    }
+    
+    /**
+     * The spectator type of the game. Valid values are NONE, LOBBYONLY, ALL.
+     */
+    public TournamentSpectatorType getSpectatorType()
+    {
+        return this.spectatorType;
+    }
+    
+    public void setSpectatorType(final TournamentSpectatorType spectatorType)
+    {
+        this.spectatorType = spectatorType;
+    }
+    
+    /**
+     * The team size of the game. Valid values are 1-5.
+     */
+    public Integer getTeamSize()
+    {
+        return this.teamSize;
+    }
+    
+    public void setTeamSize(final Integer teamSize)
+    {
         this.teamSize = teamSize;
     }
     
@@ -111,65 +186,6 @@ public class TournamentCodeParameters
         return true;
     }
     
-    public SummonerIdParams getAllowedSummonerIds()
-    {
-        return this.allowedSummonerIds;
-    }
-    
-    public void setAllowedSummonerIds(final SummonerIdParams allowedSummonerIds)
-    {
-        this.allowedSummonerIds = allowedSummonerIds;
-    }
-    
-    public TournamentMapType getMapType()
-    {
-        return this.mapType;
-    }
-    
-    public void setMapType(final TournamentMapType mapType)
-    {
-        this.mapType = mapType;
-    }
-    
-    public String getMetadata()
-    {
-        return this.metadata;
-    }
-    
-    public void setMetadata(final String metadata)
-    {
-        this.metadata = metadata;
-    }
-    
-    public TournamentPickType getPickType()
-    {
-        return this.pickType;
-    }
-    
-    public void setPickType(final TournamentPickType pickType)
-    {
-        this.pickType = pickType;
-    }
-    
-    public TournamentSpectatorType getSpectatorType()
-    {
-        return this.spectatorType;
-    }
-    
-    public void setSpectatorType(final TournamentSpectatorType spectatorType)
-    {
-        this.spectatorType = spectatorType;
-    }
-    
-    public Integer getTeamSize()
-    {
-        return this.teamSize;
-    }
-    
-    public void setTeamSize(final Integer teamSize)
-    {
-        this.teamSize = teamSize;
-    }
     
     @Override
     public int hashCode()

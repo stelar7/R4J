@@ -19,7 +19,6 @@ public class TournamentRegistrationParameters
     }
     
     
-    
     @Override
     public boolean equals(final Object obj)
     {
@@ -59,6 +58,9 @@ public class TournamentRegistrationParameters
         return true;
     }
     
+    /**
+     * The optional name of the tournament.
+     */
     public String getName()
     {
         return this.name;
@@ -69,6 +71,9 @@ public class TournamentRegistrationParameters
         this.name = name;
     }
     
+    /**
+     * The provider ID to specify the regional registered provider data to associate this tournament.
+     */
     public Long getProviderId()
     {
         return this.providerId;

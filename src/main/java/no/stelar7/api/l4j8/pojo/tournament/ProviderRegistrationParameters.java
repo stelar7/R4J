@@ -9,9 +9,46 @@ public class ProviderRegistrationParameters
     
     public ProviderRegistrationParameters(final Server region, final String callbackUrl)
     {
-        super();
         this.region = region;
         this.url = callbackUrl;
+    }
+    
+    /**
+     * The provider's callback URL to which tournament game results in this region should be posted.
+     * The URL must be well-formed, use the http or https protocol, and use the default port for the protocol (http URLs must use port 80, https URLs must use port 443).
+     */
+    public String getCallbackUrl()
+    {
+        return this.url;
+    }
+    
+    public void setCallbackUrl(final String url)
+    {
+        this.url = url;
+    }
+    
+    /**
+     * The region in which the provider will be running tournaments.
+     */
+    public Server getRegion()
+    {
+        return this.region;
+    }
+    
+    public void setRegion(final Server region)
+    {
+        this.region = region;
+    }
+    
+    
+    @Override
+    public int hashCode()
+    {
+        final int prime  = 31;
+        int       result = 1;
+        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
+        result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
+        return result;
     }
     
     @Override
@@ -45,41 +82,6 @@ public class ProviderRegistrationParameters
             return false;
         }
         return true;
-    }
-    
-    public String getCallbackUrl()
-    {
-        return this.url;
-    }
-    
-    public Server getRegion()
-    {
-        return this.region;
-    }
-    
-    public void setRegion(final Server region)
-    {
-        this.region = region;
-    }
-    
-    public String getUrl()
-    {
-        return this.url;
-    }
-    
-    public void setUrl(final String url)
-    {
-        this.url = url;
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
-        result = (prime * result) + ((this.url == null) ? 0 : this.url.hashCode());
-        return result;
     }
     
     @Override

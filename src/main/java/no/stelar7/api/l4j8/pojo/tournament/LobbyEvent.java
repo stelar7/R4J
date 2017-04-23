@@ -6,6 +6,42 @@ public class LobbyEvent
     private String summonerId;
     private String timestamp;
     
+    
+    /**
+     * The type of event that was triggered
+     */
+    public String getEventType()
+    {
+        return this.eventType;
+    }
+    
+    /**
+     * The summoner that triggered the event
+     */
+    public String getSummonerId()
+    {
+        return this.summonerId;
+    }
+    
+    /**
+     * Timestamp from the event
+     */
+    public String getTimestamp()
+    {
+        return this.timestamp;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        final int prime  = 31;
+        int       result = 1;
+        result = (prime * result) + ((this.eventType == null) ? 0 : this.eventType.hashCode());
+        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
+        result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
+        return result;
+    }
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -53,32 +89,6 @@ public class LobbyEvent
             return false;
         }
         return true;
-    }
-    
-    public String getEventType()
-    {
-        return this.eventType;
-    }
-    
-    public String getSummonerId()
-    {
-        return this.summonerId;
-    }
-    
-    public String getTimestamp()
-    {
-        return this.timestamp;
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.eventType == null) ? 0 : this.eventType.hashCode());
-        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
-        result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
-        return result;
     }
     
     @Override

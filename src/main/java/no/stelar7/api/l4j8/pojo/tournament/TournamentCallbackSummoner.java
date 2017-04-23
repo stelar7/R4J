@@ -5,6 +5,27 @@ public class TournamentCallbackSummoner
     private String summonerName;
     private Long   summonerId;
     
+    
+    public Long getSummonerId()
+    {
+        return this.summonerId;
+    }
+    
+    public String getSummonerName()
+    {
+        return this.summonerName;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        final int prime  = 31;
+        int       result = 1;
+        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
+        result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
+        return result;
+    }
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -42,26 +63,6 @@ public class TournamentCallbackSummoner
             return false;
         }
         return true;
-    }
-    
-    public Long getSummonerId()
-    {
-        return this.summonerId;
-    }
-    
-    public String getSummonerName()
-    {
-        return this.summonerName;
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
-        result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
-        return result;
     }
     
     @Override

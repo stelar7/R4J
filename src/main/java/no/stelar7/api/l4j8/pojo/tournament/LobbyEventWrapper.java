@@ -35,6 +35,9 @@ public class LobbyEventWrapper
         return true;
     }
     
+    /**
+     * A list of the lobby events
+     */
     public List<LobbyEvent> getEventList()
     {
         return this.eventList;

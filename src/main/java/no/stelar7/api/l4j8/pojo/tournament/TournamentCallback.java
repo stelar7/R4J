@@ -16,6 +16,81 @@ public class TournamentCallback
     private String                           gameMode;
     private String                           region;
     
+    
+    public Long getGameId()
+    {
+        return this.gameId;
+    }
+    
+    public Integer getGameMap()
+    {
+        return this.gameMap;
+    }
+    
+    public String getGameMode()
+    {
+        return this.gameMode;
+    }
+    
+    public String getGameName()
+    {
+        return this.gameName;
+    }
+    
+    public String getGameType()
+    {
+        return this.gameType;
+    }
+    
+    public List<TournamentCallbackSummoner> getLosingTeam()
+    {
+        return this.losingTeam;
+    }
+    
+    public String getMetaData()
+    {
+        return this.metaData;
+    }
+    
+    public String getRegion()
+    {
+        return this.region;
+    }
+    
+    public String getShortCode()
+    {
+        return this.shortCode;
+    }
+    
+    public Long getStartTime()
+    {
+        return this.startTime;
+    }
+    
+    public List<TournamentCallbackSummoner> getWinningTeam()
+    {
+        return this.winningTeam;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        final int prime  = 31;
+        int       result = 1;
+        result = (prime * result) + ((this.gameId == null) ? 0 : this.gameId.hashCode());
+        result = (prime * result) + ((this.gameMap == null) ? 0 : this.gameMap.hashCode());
+        result = (prime * result) + ((this.gameMode == null) ? 0 : this.gameMode.hashCode());
+        result = (prime * result) + ((this.gameName == null) ? 0 : this.gameName.hashCode());
+        result = (prime * result) + ((this.gameType == null) ? 0 : this.gameType.hashCode());
+        result = (prime * result) + ((this.losingTeam == null) ? 0 : this.losingTeam.hashCode());
+        result = (prime * result) + ((this.metaData == null) ? 0 : this.metaData.hashCode());
+        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
+        result = (prime * result) + ((this.shortCode == null) ? 0 : this.shortCode.hashCode());
+        result = (prime * result) + ((this.startTime == null) ? 0 : this.startTime.hashCode());
+        result = (prime * result) + ((this.winningTeam == null) ? 0 : this.winningTeam.hashCode());
+        return result;
+    }
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -143,80 +218,6 @@ public class TournamentCallback
             return false;
         }
         return true;
-    }
-    
-    public Long getGameId()
-    {
-        return this.gameId;
-    }
-    
-    public Integer getGameMap()
-    {
-        return this.gameMap;
-    }
-    
-    public String getGameMode()
-    {
-        return this.gameMode;
-    }
-    
-    public String getGameName()
-    {
-        return this.gameName;
-    }
-    
-    public String getGameType()
-    {
-        return this.gameType;
-    }
-    
-    public List<TournamentCallbackSummoner> getLosingTeam()
-    {
-        return this.losingTeam;
-    }
-    
-    public String getMetaData()
-    {
-        return this.metaData;
-    }
-    
-    public String getRegion()
-    {
-        return this.region;
-    }
-    
-    public String getShortCode()
-    {
-        return this.shortCode;
-    }
-    
-    public Long getStartTime()
-    {
-        return this.startTime;
-    }
-    
-    public List<TournamentCallbackSummoner> getWinningTeam()
-    {
-        return this.winningTeam;
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.gameId == null) ? 0 : this.gameId.hashCode());
-        result = (prime * result) + ((this.gameMap == null) ? 0 : this.gameMap.hashCode());
-        result = (prime * result) + ((this.gameMode == null) ? 0 : this.gameMode.hashCode());
-        result = (prime * result) + ((this.gameName == null) ? 0 : this.gameName.hashCode());
-        result = (prime * result) + ((this.gameType == null) ? 0 : this.gameType.hashCode());
-        result = (prime * result) + ((this.losingTeam == null) ? 0 : this.losingTeam.hashCode());
-        result = (prime * result) + ((this.metaData == null) ? 0 : this.metaData.hashCode());
-        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
-        result = (prime * result) + ((this.shortCode == null) ? 0 : this.shortCode.hashCode());
-        result = (prime * result) + ((this.startTime == null) ? 0 : this.startTime.hashCode());
-        result = (prime * result) + ((this.winningTeam == null) ? 0 : this.winningTeam.hashCode());
-        return result;
     }
     
     @Override

@@ -61,7 +61,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_ITEMS)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue())));
+        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
@@ -122,7 +122,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue())));
+        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
@@ -165,7 +165,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_RUNES)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue())));
+        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNELISTDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         

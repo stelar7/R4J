@@ -12,6 +12,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
 import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BasicData;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
@@ -58,6 +59,8 @@ public class StaticTest
         
         Assert.assertTrue("no data?", list.isPresent());
         Assert.assertTrue("less than 100?", list.get().getData().size() > 100);
+        
+        list.get().getData().values().stream().sorted(Comparator.comparing(BasicData::getId)).forEach((v) -> System.out.format("%s - %s: %s%n", v.getId(), v.getName(), v.getSanitizedDescription()));
     }
     
     

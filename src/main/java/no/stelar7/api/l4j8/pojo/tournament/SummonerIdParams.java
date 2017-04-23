@@ -13,15 +13,12 @@ public class SummonerIdParams
     
     public SummonerIdParams(final Set<Long> set)
     {
-        this.participants = new HashSet<>();
-        this.participants.addAll(set);
+        this.participants = new HashSet<>(set);
     }
     
-    
-    
-    public void addParticipant(final Number id)
+    public Set<Number> getParticipants()
     {
-        this.participants.add(id);
+        return this.participants;
     }
     
     @Override
@@ -51,11 +48,6 @@ public class SummonerIdParams
             return false;
         }
         return true;
-    }
-    
-    public Set<Number> getParticipants()
-    {
-        return this.participants;
     }
     
     @Override

@@ -18,6 +18,132 @@ public class TournamentCode
     private Integer   teamSize;
     private Integer   tournamentId;
     
+    
+    /**
+     * The tournament code.
+     */
+    public String getCode()
+    {
+        return this.code;
+    }
+    
+    /**
+     * The tournament code's ID.
+     */
+    public Long getId()
+    {
+        return this.id;
+    }
+    
+    /**
+     * The lobby name for the tournament code game.
+     */
+    public String getLobbyName()
+    {
+        return this.lobbyName;
+    }
+    
+    /**
+     * The game map for the tournament code game
+     */
+    public String getMap()
+    {
+        return this.map;
+    }
+    
+    /**
+     * The metadata for tournament code.
+     */
+    public String getMetaData()
+    {
+        return this.metaData;
+    }
+    
+    /**
+     * The participants for tournament code.
+     */
+    public Set<Long> getParticipants()
+    {
+        return this.participants;
+    }
+    
+    /**
+     * The password for the tournament code game.
+     */
+    public String getPassword()
+    {
+        return this.password;
+    }
+    
+    /**
+     * The pick mode for tournament code game.
+     */
+    public String getPickType()
+    {
+        return this.pickType;
+    }
+    
+    /**
+     * The provider's ID.
+     */
+    public Integer getProviderId()
+    {
+        return this.providerId;
+    }
+    
+    /**
+     * The tournament code's region.
+     */
+    public String getRegion()
+    {
+        return this.region;
+    }
+    
+    /**
+     * The spectator mode for the tournament code game.
+     */
+    public String getSpectators()
+    {
+        return this.spectators;
+    }
+    
+    /**
+     * The team size for the tournament code game.
+     */
+    public Integer getTeamSize()
+    {
+        return this.teamSize;
+    }
+    
+    /**
+     * The tournament's ID.
+     */
+    public Integer getTournamentId()
+    {
+        return this.tournamentId;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        final int prime  = 31;
+        int       result = 1;
+        result = (prime * result) + ((this.code == null) ? 0 : this.code.hashCode());
+        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
+        result = (prime * result) + ((this.lobbyName == null) ? 0 : this.lobbyName.hashCode());
+        result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
+        result = (prime * result) + ((this.metaData == null) ? 0 : this.metaData.hashCode());
+        result = (prime * result) + ((this.participants == null) ? 0 : this.participants.hashCode());
+        result = (prime * result) + ((this.password == null) ? 0 : this.password.hashCode());
+        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
+        result = (prime * result) + ((this.providerId == null) ? 0 : this.providerId.hashCode());
+        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
+        result = (prime * result) + ((this.spectators == null) ? 0 : this.spectators.hashCode());
+        result = (prime * result) + ((this.teamSize == null) ? 0 : this.teamSize.hashCode());
+        result = (prime * result) + ((this.tournamentId == null) ? 0 : this.tournamentId.hashCode());
+        return result;
+    }
+    
     @Override
     public boolean equals(final Object obj)
     {
@@ -165,92 +291,6 @@ public class TournamentCode
             return false;
         }
         return true;
-    }
-    
-    public String getCode()
-    {
-        return this.code;
-    }
-    
-    public Long getId()
-    {
-        return this.id;
-    }
-    
-    public String getLobbyName()
-    {
-        return this.lobbyName;
-    }
-    
-    public String getMap()
-    {
-        return this.map;
-    }
-    
-    public String getMetaData()
-    {
-        return this.metaData;
-    }
-    
-    public Set<Long> getParticipants()
-    {
-        return this.participants;
-    }
-    
-    public String getPassword()
-    {
-        return this.password;
-    }
-    
-    public String getPickType()
-    {
-        return this.pickType;
-    }
-    
-    public Integer getProviderId()
-    {
-        return this.providerId;
-    }
-    
-    public String getRegion()
-    {
-        return this.region;
-    }
-    
-    public String getSpectators()
-    {
-        return this.spectators;
-    }
-    
-    public Integer getTeamSize()
-    {
-        return this.teamSize;
-    }
-    
-    public Integer getTournamentId()
-    {
-        return this.tournamentId;
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.code == null) ? 0 : this.code.hashCode());
-        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-        result = (prime * result) + ((this.lobbyName == null) ? 0 : this.lobbyName.hashCode());
-        result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
-        result = (prime * result) + ((this.metaData == null) ? 0 : this.metaData.hashCode());
-        result = (prime * result) + ((this.participants == null) ? 0 : this.participants.hashCode());
-        result = (prime * result) + ((this.password == null) ? 0 : this.password.hashCode());
-        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
-        result = (prime * result) + ((this.providerId == null) ? 0 : this.providerId.hashCode());
-        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
-        result = (prime * result) + ((this.spectators == null) ? 0 : this.spectators.hashCode());
-        result = (prime * result) + ((this.teamSize == null) ? 0 : this.teamSize.hashCode());
-        result = (prime * result) + ((this.tournamentId == null) ? 0 : this.tournamentId.hashCode());
-        return result;
     }
     
     @Override

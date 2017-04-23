@@ -2,20 +2,88 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
+import java.util.*;
+
 public class TournamentCodeUpdateParameters
 {
-    private String                  allowedParticipants;
+    private Set<Long>               allowedParticipants;
     private TournamentMapType       mapType;
     private TournamentPickType      pickType;
     private TournamentSpectatorType spectatorType;
     
-    public TournamentCodeUpdateParameters(final String allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)
+    public TournamentCodeUpdateParameters(final Set<Long> allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)
     {
         super();
-        this.allowedParticipants = allowedParticipants;
         this.mapType = map;
         this.pickType = pickType;
         this.spectatorType = specType;
+        this.allowedParticipants = new HashSet<>(allowedParticipants);
+    }
+    
+    /**
+     * Optional list of participants in order to validate the players eligible to join the lobby.
+     * NOTE: We currently do not enforce participants at the team level, but rather the aggregate of teamOne and teamTwo.
+     * We may add the ability to enforce at the team level in the future.
+     */
+    public Set<Long> getAllowedParticipants()
+    {
+        return this.allowedParticipants;
+    }
+    
+    public void setAllowedParticipants(final Set<Long> allowedParticipants)
+    {
+        this.allowedParticipants = new HashSet<>(allowedParticipants);
+    }
+    
+    /**
+     * The map type of the game. Valid values are SUMMONERS_RIFT, TWISTED_TREELINE and HOWLING_ABYSS.
+     */
+    public TournamentMapType getMapType()
+    {
+        return this.mapType;
+    }
+    
+    public void setMapType(final TournamentMapType mapType)
+    {
+        this.mapType = mapType;
+    }
+    
+    /**
+     * The pick type of the game. Valid values are BLIND_PICK, DRAFT_MODE, ALL_RANDOM, TOURNAMENT_DRAFT.
+     */
+    public TournamentPickType getPickType()
+    {
+        return this.pickType;
+    }
+    
+    public void setPickType(final TournamentPickType pickType)
+    {
+        this.pickType = pickType;
+    }
+    
+    /**
+     * The spectator type of the game. Valid values are NONE, LOBBYONLY, ALL.
+     */
+    public TournamentSpectatorType getSpectatorType()
+    {
+        return this.spectatorType;
+    }
+    
+    public void setSpectatorType(final TournamentSpectatorType spectatorType)
+    {
+        this.spectatorType = spectatorType;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        final int prime  = 31;
+        int       result = 1;
+        result = (prime * result) + ((this.allowedParticipants == null) ? 0 : this.allowedParticipants.hashCode());
+        result = (prime * result) + ((this.mapType == null) ? 0 : this.mapType.hashCode());
+        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
+        result = (prime * result) + ((this.spectatorType == null) ? 0 : this.spectatorType.hashCode());
+        return result;
     }
     
     @Override
@@ -77,57 +145,6 @@ public class TournamentCodeUpdateParameters
         return true;
     }
     
-    public String getAllowedParticipants()
-    {
-        return this.allowedParticipants;
-    }
-    
-    public void setAllowedParticipants(final String allowedParticipants)
-    {
-        this.allowedParticipants = allowedParticipants;
-    }
-    
-    public TournamentMapType getMapType()
-    {
-        return this.mapType;
-    }
-    
-    public void setMapType(final TournamentMapType mapType)
-    {
-        this.mapType = mapType;
-    }
-    
-    public TournamentPickType getPickType()
-    {
-        return this.pickType;
-    }
-    
-    public void setPickType(final TournamentPickType pickType)
-    {
-        this.pickType = pickType;
-    }
-    
-    public TournamentSpectatorType getSpectatorType()
-    {
-        return this.spectatorType;
-    }
-    
-    public void setSpectatorType(final TournamentSpectatorType spectatorType)
-    {
-        this.spectatorType = spectatorType;
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.allowedParticipants == null) ? 0 : this.allowedParticipants.hashCode());
-        result = (prime * result) + ((this.mapType == null) ? 0 : this.mapType.hashCode());
-        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
-        result = (prime * result) + ((this.spectatorType == null) ? 0 : this.spectatorType.hashCode());
-        return result;
-    }
     
     @Override
     public String toString()
