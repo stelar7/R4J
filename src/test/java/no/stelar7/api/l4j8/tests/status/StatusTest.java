@@ -4,9 +4,7 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.status.ShardStatus;
 import no.stelar7.api.l4j8.tests.SecretFile;
-import org.junit.*;
-
-import java.util.Optional;
+import org.junit.Test;
 
 public class StatusTest
 {
@@ -17,9 +15,6 @@ public class StatusTest
     @Test
     public void testStats()
     {
-        Optional<ShardStatus> status = api.getShardStatus(Platform.EUW1);
-        Assert.assertTrue("no data?", status.isPresent());
-        
-        status.ifPresent(System.out::println);
+        ShardStatus status = api.getShardStatus(Platform.EUW1);
     }
 }

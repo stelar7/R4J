@@ -12,7 +12,7 @@ public final class ImageAPI
 {
     private static final ImageAPI INSTANCE = new ImageAPI();
     
-    static ImageAPI getInstance()
+    public static ImageAPI getInstance()
     {
         return ImageAPI.INSTANCE;
     }
@@ -25,7 +25,7 @@ public final class ImageAPI
     
     public String getProfileIcon(String iconid, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/profileicon";
@@ -42,7 +42,7 @@ public final class ImageAPI
     
     public String getSplashArt(String championId, int skinNum)
     {
-        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn   = realm.getCDN();
         String path  = "img/champion/splash";
         
@@ -52,7 +52,7 @@ public final class ImageAPI
     
     public String getSplashArt(Skin skin)
     {
-        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn   = realm.getCDN();
         String path  = "img/champion/splash";
         
@@ -62,7 +62,7 @@ public final class ImageAPI
     
     public String getLoadingScreenArt(String championId, int skinNum)
     {
-        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn   = realm.getCDN();
         String path  = "img/champion/loading";
         
@@ -72,7 +72,7 @@ public final class ImageAPI
     
     public String getLoadingScreenArt(Skin skin)
     {
-        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn   = realm.getCDN();
         String path  = "img/champion/loading";
         
@@ -83,7 +83,7 @@ public final class ImageAPI
     
     public String getSquare(String championId, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/champion";
@@ -94,7 +94,7 @@ public final class ImageAPI
     
     public String getPassive(String passiveId, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/passive";
@@ -105,7 +105,7 @@ public final class ImageAPI
     
     public String getPassive(Passive passive, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/passive";
@@ -116,7 +116,7 @@ public final class ImageAPI
     
     public String getAbility(String abilityId, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/spell";
@@ -127,7 +127,7 @@ public final class ImageAPI
     
     public String getAbility(StaticChampionSpell spell, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/spell";
@@ -138,7 +138,7 @@ public final class ImageAPI
     
     public String getSummonerSpell(SummonerSpellType spell, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/spell";
@@ -149,7 +149,7 @@ public final class ImageAPI
     
     public String getItem(String id, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/item";
@@ -160,7 +160,7 @@ public final class ImageAPI
     
     public String getMastery(String id, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/mastery";
@@ -171,7 +171,7 @@ public final class ImageAPI
     
     public String getRune(String id, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/rune";
@@ -182,7 +182,7 @@ public final class ImageAPI
     
     public String getRune(StaticRune rune, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/rune";
@@ -194,7 +194,7 @@ public final class ImageAPI
     
     public String getMap(MapType map, Optional<String> version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1).get();
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
         String versionString = version.orElseGet(realm::getV);
         String path          = "img/map";

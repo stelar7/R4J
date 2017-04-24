@@ -8,7 +8,6 @@ import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class CurrentGameTest
@@ -37,17 +36,14 @@ public class CurrentGameTest
         SpectatorAPI api  = l4j8.getSpectatorAPI();
         
         // Get a game in progess
-        final Optional<FeaturedGames> game = api.getFeaturedGames(Platform.EUW1);
-        Assert.assertTrue("No data returned", game.isPresent());
+        final FeaturedGames game = api.getFeaturedGames(Platform.EUW1);
         
         // Get a summoner from that game
-        final String             name = game.get().getGameList().get(0).getParticipants().get(0).getSummonerName();
-        final Optional<Summoner> sum  = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, name);
-        Assert.assertTrue("No data returned", sum.isPresent());
+        final String   name = game.getGameList().get(0).getParticipants().get(0).getSummonerName();
+        final Summoner sum  = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, name);
         
         // Get game info
-        final Optional<CurrentGameInfo> currentGame = api.getCurrentGame(Platform.EUW1, sum.get().getId());
-        Assert.assertTrue("No data returned", currentGame.isPresent());
-        currentGame.ifPresent(doAssertions);
+        final CurrentGameInfo currentGame = api.getCurrentGame(Platform.EUW1, sum.getId());
+        doAssertions.accept(currentGame);
     }
 }

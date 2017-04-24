@@ -73,4 +73,35 @@ public enum Server
         return this.limited;
     }
     
+    public static Server fromPlatform(Platform platform)
+    {
+        switch (platform)
+        {
+            case BR1:
+                return BR;
+            case EUN1:
+                return EUNE;
+            case EUW1:
+                return EUW;
+            case KR:
+                return KR;
+            case LA1:
+                return LAN;
+            case LA2:
+                return LAN;
+            case NA1:
+                return NA;
+            case OC1:
+                return OCE;
+            case TR1:
+                return TR;
+            case RU:
+                return RU;
+            case PBE1:
+                return PBE;
+            
+            default:
+                return null;
+        }
+    }
 }

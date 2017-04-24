@@ -11,7 +11,7 @@ public final class LeagueAPI
 {
     private static final LeagueAPI INSTANCE = new LeagueAPI();
     
-    static LeagueAPI getInstance()
+    public static LeagueAPI getInstance()
     {
         return LeagueAPI.INSTANCE;
     }
@@ -30,7 +30,7 @@ public final class LeagueAPI
      * @deprecated will be replaced with V3 sometime in the future
      */
     @Deprecated
-    public Optional<League> getOldMasterLeague(Server server, RankedQueueType queue)
+    public League getOldMasterLeague(Server server, RankedQueueType queue)
     {
         DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
                                                        .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -39,7 +39,7 @@ public final class LeagueAPI
                                                        .withServer(server);
         
         
-        return Optional.ofNullable((League) builder.build());
+        return (League) builder.build();
     }
     
     /**
@@ -49,7 +49,7 @@ public final class LeagueAPI
      * @param queue  queueType to get data for
      * @return League
      */
-    public Optional<League> getMasterLeague(Platform server, RankedQueueType queue)
+    public League getMasterLeague(Platform server, RankedQueueType queue)
     {
        /*
        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -59,7 +59,7 @@ public final class LeagueAPI
         */
         throw new UnsupportedOperationException("Use the old version untill V3 works");
         
-        //return Optional.ofNullable((League) builder.build());
+        //return (League) builder.build();
     }
     
     /**
@@ -71,7 +71,7 @@ public final class LeagueAPI
      * @deprecated will be replaced with V3 sometime in the future
      */
     @Deprecated
-    public Optional<League> getOldChallengerLeague(Server server, RankedQueueType queue)
+    public League getOldChallengerLeague(Server server, RankedQueueType queue)
     {
         DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
                                                        .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -80,7 +80,7 @@ public final class LeagueAPI
                                                        .withServer(server);
         
         
-        return Optional.ofNullable((League) builder.build());
+        return (League) builder.build();
     }
     
     /**
@@ -90,7 +90,7 @@ public final class LeagueAPI
      * @param queue  queueType to get data for
      * @return League
      */
-    public Optional<League> getChallengerLeague(Platform server, RankedQueueType queue)
+    public League getChallengerLeague(Platform server, RankedQueueType queue)
     {
         /*
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -100,7 +100,7 @@ public final class LeagueAPI
         */
         throw new UnsupportedOperationException("Use the old version untill V3 works");
         
-        //return Optional.ofNullable((League) builder.build());
+        //return (League) builder.build();
         
     }
     
@@ -115,7 +115,7 @@ public final class LeagueAPI
      * @deprecated will be replaced with V3 sometime in the future
      */
     @Deprecated
-    public Optional<Map<String, List<League>>> getOldLeagueEntry(Server server, long summonerId)
+    public Map<String, List<League>> getOldLeagueEntry(Server server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
                                                        .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -124,7 +124,7 @@ public final class LeagueAPI
                                                        .withServer(server);
         
         
-        return Optional.ofNullable((Map<String, List<League>>) builder.build());
+        return (Map<String, List<League>>) builder.build();
     }
     
     /**
@@ -134,7 +134,7 @@ public final class LeagueAPI
      * @param summonerId summoner to get data for
      * @return League
      */
-    public Optional<List<League>> getLeagueEntry(Platform server, long summonerId)
+    public List<League> getLeagueEntry(Platform server, long summonerId)
     {
         /*
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -145,7 +145,7 @@ public final class LeagueAPI
         throw new UnsupportedOperationException("Use the old version untill V3 works");
         
         
-        //return Optional.ofNullable((List<League>) builder.build());
+        //return (List<League>) builder.build();
     }
     
     /**
@@ -158,7 +158,7 @@ public final class LeagueAPI
      * @deprecated will be replaced with V3 sometime in the future
      */
     @Deprecated
-    public Optional<Map<String, List<League>>> getOldLeague(Server server, long summonerId)
+    public Map<String, List<League>> getOldLeague(Server server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
                                                        .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -167,7 +167,7 @@ public final class LeagueAPI
                                                        .withServer(server);
         
         
-        return Optional.ofNullable((Map<String, List<League>>) builder.build());
+        return (Map<String, List<League>>) builder.build();
     }
     
     /**
@@ -177,7 +177,7 @@ public final class LeagueAPI
      * @param summonerId summoner to get data for
      * @return League
      */
-    public Optional<List<League>> getLeague(Platform server, long summonerId)
+    public List<League> getLeague(Platform server, long summonerId)
     {
         /*
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -187,6 +187,6 @@ public final class LeagueAPI
         */
         throw new UnsupportedOperationException("Use the old version untill V3 works");
         
-        //return Optional.ofNullable((List<League>) builder.build());
+        //return (List<League>) builder.build();
     }
 }

@@ -15,7 +15,7 @@ public final class MasteryAPI
     
     private static final MasteryAPI INSTANCE = new MasteryAPI();
     
-    static MasteryAPI getInstance()
+    public static MasteryAPI getInstance()
     {
         return MasteryAPI.INSTANCE;
     }
@@ -33,13 +33,13 @@ public final class MasteryAPI
      * @param summonerId the summonerId
      * @return Optional FeaturedGames
      */
-    public Optional<Integer> getMasteryScore(Platform server, long summonerId)
+    public Integer getMasteryScore(Platform server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_SCORE)
                                                        .withPlatform(server);
         
-        return Optional.ofNullable((Integer) builder.build());
+        return (Integer) builder.build();
     }
     
     /**
@@ -50,22 +50,14 @@ public final class MasteryAPI
      * @param count      the amount of champions to get
      * @return A sorted list of ChampionMastery
      */
-    public Optional<List<ChampionMastery>> getTopChampions(Platform server, long summonerId, Optional<Integer> count)
+    public List<ChampionMastery> getTopChampions(Platform server, long summonerId, Optional<Integer> count)
     {
-        Optional<List<ChampionMastery>> list = getChampionMasteries(server, summonerId);
+        List<ChampionMastery> list = getChampionMasteries(server, summonerId);
         
-        if (!list.isPresent())
-        {
-            return Optional.empty();
-        }
+        return list.stream().sorted(Comparator.comparing(ChampionMastery::getChampionPoints))
+                   .limit(count.orElseGet(() -> 3))
+                   .collect(Collectors.toList());
         
-        List<ChampionMastery> data = list.get()
-                                         .stream()
-                                         .sorted(Comparator.comparing(ChampionMastery::getChampionPoints))
-                                         .limit(count.orElseGet(() -> 3))
-                                         .collect(Collectors.toList());
-        
-        return Optional.ofNullable(data);
     }
     
     
@@ -78,7 +70,7 @@ public final class MasteryAPI
      * @param championId the championId
      * @return Optional ChampionMastery
      */
-    public Optional<ChampionMastery> getChampionMastery(Platform server, long summonerId, int championId)
+    public ChampionMastery getChampionMastery(Platform server, long summonerId, int championId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(championId))
@@ -110,7 +102,7 @@ public final class MasteryAPI
             }
         }
         
-        return Optional.ofNullable(mastery);
+        return mastery;
     }
     
     
@@ -122,13 +114,13 @@ public final class MasteryAPI
      * @param summonerId the summonerId
      * @return Optional ChampionMastery
      */
-    public Optional<List<ChampionMastery>> getChampionMasteries(Platform server, long summonerId)
+    public List<ChampionMastery> getChampionMasteries(Platform server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
-        return Optional.ofNullable((List<ChampionMastery>) builder.build());
+        return (List<ChampionMastery>) builder.build();
     }
     
 }

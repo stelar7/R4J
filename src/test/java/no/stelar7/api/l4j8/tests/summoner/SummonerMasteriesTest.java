@@ -6,9 +6,8 @@ import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
-import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 public class SummonerMasteriesTest
 {
@@ -42,11 +41,9 @@ public class SummonerMasteriesTest
     @Test
     public void testMasteryPages()
     {
-        final L4J8             l4j8     = new L4J8(SecretFile.CREDS);
-        SummonerAPI            api      = l4j8.getSummonerAPI();
-        Optional<MasteryPages> optional = api.getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
-        
-        Assert.assertTrue("No data returned", optional.isPresent());
-        optional.ifPresent(doAssertions);
+        final L4J8   l4j8     = new L4J8(SecretFile.CREDS);
+        SummonerAPI  api      = l4j8.getSummonerAPI();
+        MasteryPages optional = api.getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        doAssertions.accept(optional);
     }
 }

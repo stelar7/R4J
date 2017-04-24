@@ -10,7 +10,7 @@ public final class ChampionAPI
 {
     private static final ChampionAPI INSTANCE = new ChampionAPI();
     
-    static ChampionAPI getInstance()
+    public static ChampionAPI getInstance()
     {
         return ChampionAPI.INSTANCE;
     }
@@ -20,25 +20,25 @@ public final class ChampionAPI
         // Hide public constructor
     }
     
-    public Optional<ChampionList> getChampions(Platform server, Optional<Boolean> freeToPlay)
+    public ChampionList getChampions(Platform server, Optional<Boolean> freeToPlay)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPIONS)
                                                        .withPlatform(server);
         freeToPlay.ifPresent(value -> builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, String.valueOf(value)));
         
-        return Optional.ofNullable((ChampionList) builder.build());
+        return (ChampionList) builder.build();
     }
     
     
-    public Optional<Champion> getChampion(Platform server, int id)
+    public Champion getChampion(Platform server, int id)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_CHAMPIONS_BY_ID)
                                                        .withPlatform(server);
         
-        return Optional.ofNullable((Champion) builder.build());
+        return (Champion) builder.build();
     }
     
 }

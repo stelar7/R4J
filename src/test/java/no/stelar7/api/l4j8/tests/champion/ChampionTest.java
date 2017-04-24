@@ -17,15 +17,14 @@ public class ChampionTest
     @Test
     public void testSingleChampion()
     {
-        Optional<Champion> champ = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0]);
+        Champion champ = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0]);
         
-        Assert.assertTrue("no data?", champ.isPresent());
-        Assert.assertTrue("ChampionType id is not leona?", champ.get().getId().equals(Constants.TEST_CHAMPION_IDS[0]));
+        Assert.assertTrue("ChampionType id is not leona?", champ.getId().equals(Constants.TEST_CHAMPION_IDS[0]));
         
-        Assert.assertNotNull("active is null", champ.get().isActive());
-        Assert.assertNotNull("botenabled is null", champ.get().isBotEnabled());
-        Assert.assertNotNull("botmmenabled is null", champ.get().isBotMmEnabled());
-        Assert.assertNotNull("rankedplay is null", champ.get().isRankedPlayEnabled());
+        Assert.assertNotNull("active is null", champ.isActive());
+        Assert.assertNotNull("botenabled is null", champ.isBotEnabled());
+        Assert.assertNotNull("botmmenabled is null", champ.isBotMmEnabled());
+        Assert.assertNotNull("rankedplay is null", champ.isRankedPlayEnabled());
         
         
     }
@@ -33,16 +32,14 @@ public class ChampionTest
     @Test
     public void testFreeToPlay()
     {
-        Optional<ChampionList> champ = api.getChampions(Platform.EUW1, Optional.of(true));
-        Assert.assertTrue("no data?", champ.isPresent());
-        Assert.assertTrue("count greater than 20?", champ.get().getChampions().size() < 20);
+        ChampionList champ = api.getChampions(Platform.EUW1, Optional.of(true));
+        Assert.assertTrue("count greater than 20?", champ.getChampions().size() < 20);
     }
     
     @Test
     public void testChampionList()
     {
-        Optional<ChampionList> champ = api.getChampions(Platform.EUW1, Optional.empty());
-        Assert.assertTrue("no data?", champ.isPresent());
-        Assert.assertTrue("count less than 100?", champ.get().getChampions().size() > 100);
+        ChampionList champ = api.getChampions(Platform.EUW1, Optional.empty());
+        Assert.assertTrue("count less than 100?", champ.getChampions().size() > 100);
     }
 }

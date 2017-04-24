@@ -15,7 +15,7 @@ public final class SummonerAPI
     
     private static final SummonerAPI INSTANCE = new SummonerAPI();
     
-    static SummonerAPI getInstance()
+    public static SummonerAPI getInstance()
     {
         return SummonerAPI.INSTANCE;
     }
@@ -32,14 +32,14 @@ public final class SummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional MasteryPages
      */
-    public Optional<MasteryPages> getMasteries(final Platform server, long summonerId)
+    public MasteryPages getMasteries(final Platform server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERIES_BY_ID)
                                                        .withPlatform(server);
         
         Map<Long, MasteryPages> data = (Map) builder.build();
-        return Optional.ofNullable(data.get(summonerId));
+        return data.get(summonerId);
     }
     
     /**
@@ -49,7 +49,7 @@ public final class SummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional RunePages
      */
-    public Optional<RunePages> getRunes(final Platform server, long summonerId)
+    public RunePages getRunes(final Platform server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
@@ -57,7 +57,7 @@ public final class SummonerAPI
                 .withPlatform(server);
         
         Map<Long, RunePages> data = (Map) builder.build();
-        return Optional.ofNullable(data.get(summonerId));
+        return data.get(summonerId);
     }
     
     /**
@@ -67,14 +67,14 @@ public final class SummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional Summoner
      */
-    public Optional<Summoner> getSummonerById(final Platform server, long summonerId)
+    public Summoner getSummonerById(final Platform server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ID)
                 .withPlatform(server);
         
-        return Optional.ofNullable((Summoner) builder.build());
+        return (Summoner) builder.build();
     }
     
     /**
@@ -84,14 +84,14 @@ public final class SummonerAPI
      * @param summonerName summoner name  associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Optional<Summoner> getSummonerByName(final Platform server, String summonerName)
+    public Summoner getSummonerByName(final Platform server, String summonerName)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeSummonerName(summonerName))
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_NAME)
                 .withPlatform(server);
         
-        return Optional.ofNullable((Summoner) builder.build());
+        return (Summoner) builder.build();
     }
     
     /**
@@ -101,13 +101,13 @@ public final class SummonerAPI
      * @param accountId accountId associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Optional<Summoner> getSummonerByAccount(final Platform server, long accountId)
+    public Summoner getSummonerByAccount(final Platform server, long accountId)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
-        return Optional.ofNullable((Summoner) builder.build());
+        return (Summoner) builder.build();
     }
 }

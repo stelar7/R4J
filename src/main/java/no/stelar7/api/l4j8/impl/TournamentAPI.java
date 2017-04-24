@@ -13,7 +13,7 @@ public final class TournamentAPI
     
     private static final TournamentAPI INSTANCE = new TournamentAPI();
     
-    static TournamentAPI getInstance()
+    public static TournamentAPI getInstance()
     {
         return TournamentAPI.INSTANCE;
     }

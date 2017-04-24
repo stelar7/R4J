@@ -6,7 +6,6 @@ import no.stelar7.api.l4j8.pojo.featuredgames.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class FeaturedGameTest
@@ -34,9 +33,8 @@ public class FeaturedGameTest
         final L4J8   l4j8 = new L4J8(SecretFile.CREDS);
         SpectatorAPI api  = l4j8.getSpectatorAPI();
         
-        final Optional<FeaturedGames> game = api.getFeaturedGames(Platform.EUW1);
-        Assert.assertTrue("No data returned", game.isPresent());
-        game.ifPresent(doAssertions);
+        final FeaturedGames game = api.getFeaturedGames(Platform.EUW1);
+        doAssertions.accept(game);
     }
     
 }

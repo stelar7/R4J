@@ -3,9 +3,10 @@ package no.stelar7.api.l4j8.basic;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -14,6 +15,7 @@ import java.util.logging.*;
 
 public final class DataCall
 {
+    
     
     public static class DataCallBuilder
     {
@@ -51,6 +53,10 @@ public final class DataCall
          */
         public Object build()
         {
+            if (DataCall.creds == null)
+            {
+                throw new APIUnsupportedAction("No API Creds set!");
+            }
             
             // TODO: Make this better
             if (this.dc.platform != null)
@@ -83,6 +89,20 @@ public final class DataCall
                 } else
                 {
                     dtoobj = Utils.getGson().fromJson(response.getResponseData(), (Type) this.dc.endpoint.getType());
+                }
+                
+                try
+                {
+                    if (dtoobj instanceof Summoner)
+                    {
+                        Summoner sum = (Summoner) dtoobj;
+                        Field    f   = sum.getClass().getDeclaredField("platform");
+                        f.setAccessible(true);
+                        f.set(sum, this.dc.platform);
+                    }
+                } catch (NoSuchFieldException | IllegalAccessException e)
+                {
+                    e.printStackTrace();
                 }
                 
                 return dtoobj;
@@ -161,8 +181,7 @@ public final class DataCall
                     DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod()));
                     DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData));
                     DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", ""));
-                    con.getRequestProperties()
-                       .forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    con.getRequestProperties().forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
                 
                 if (!this.dc.postData.isEmpty())
@@ -179,8 +198,7 @@ public final class DataCall
                 if (this.dc.verbose)
                 {
                     DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
-                    con.getHeaderFields()
-                       .forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    con.getHeaderFields().forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
                 
                 
@@ -425,7 +443,6 @@ public final class DataCall
     private static final Map<Integer, Integer>                   appLimit    = new TreeMap<>();
     private static final Map<URLEndpoint, Map<Integer, Integer>> methodLimit = new TreeMap<>();
     
-    private boolean verbose;
     
     private String requestMethod = "GET";
     private String postData      = "";
@@ -436,6 +453,9 @@ public final class DataCall
     private String baseURL = Constants.REQUEST_URL;
     
     private Server server;
+    
+    public static final boolean VERBOSE_DEFAULT = false;
+    private             boolean verbose         = VERBOSE_DEFAULT;
     
     private DataCall()
     {

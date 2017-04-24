@@ -2,17 +2,24 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 
 import no.stelar7.api.l4j8.basic.Utils;
+import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
+import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
 
 import java.time.*;
+import java.util.Optional;
 
 public final class Summoner
 {
-    private Integer profileIconId;
-    private String  name;
-    private Integer summonerLevel;
-    private Long    accountId;
-    private Long    id;
-    private Long    revisionDate;
+    private Integer  profileIconId;
+    private String   name;
+    private Integer  summonerLevel;
+    private Long     accountId;
+    private Long     id;
+    private Long     revisionDate;
+    private Platform platform;
     
     /**
      * The Summoners ID
@@ -92,6 +99,23 @@ public final class Summoner
     public Long getAccountId()
     {
         return accountId;
+    }
+    
+    
+    public RunePages getRunePages()
+    {
+        return SummonerAPI.getInstance().getRunes(platform, this.getId());
+    }
+    
+    public MasteryPages getMasteryPages()
+    {
+        return SummonerAPI.getInstance().getMasteries(platform, this.getId());
+    }
+    
+    public MatchList getRecentGames()
+    {
+        Optional empty = Optional.empty();
+        return MatchAPI.getInstance().getOldMatchList(Server.fromPlatform(platform), getId(), empty, empty, empty, empty, empty, empty, empty);
     }
     
     @Override

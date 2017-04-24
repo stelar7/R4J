@@ -4,12 +4,11 @@ package no.stelar7.api.l4j8.tests.summoner;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
-import no.stelar7.api.l4j8.tests.*;
+import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
-import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 public class SummonerTest
 {
@@ -31,29 +30,24 @@ public class SummonerTest
     @Test
     public void testById()
     {
-        Optional<Summoner> optional = api.getSummonerById(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
-        Assert.assertTrue("No data returned", optional.isPresent());
-        optional.ifPresent(doAssertions);
+        Summoner optional = api.getSummonerById(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        doAssertions.accept(optional);
     }
     
     @Test
     public void testByName()
     {
-        Optional<Summoner> optional = api.getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[0]);
-        Assert.assertTrue("No data returned", optional.isPresent());
-        optional.ifPresent(doAssertions);
-    
+        Summoner optional = api.getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[0]);
+        doAssertions.accept(optional);
+        
         optional = api.getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[1]);
-        Assert.assertFalse("No data returned", optional.isPresent());
-        optional.ifPresent(doAssertions);
+        doAssertions.accept(optional);
     }
     
     @Test
     public void testByAccount()
     {
-        Optional<Summoner> optional = api.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        Assert.assertTrue("No data returned", optional.isPresent());
-        optional.ifPresent(doAssertions);
-        
+        Summoner optional = api.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+        doAssertions.accept(optional);
     }
 }

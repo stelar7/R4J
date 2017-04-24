@@ -45,31 +45,26 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMastery()
     {
-        Optional<ChampionMastery> mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
-        Assert.assertTrue("No data returned", mastery.isPresent());
-        mastery.ifPresent(doAssertions);
-        
+        ChampionMastery mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
+        doAssertions.accept(mastery);
         
         mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[1]);
-        Assert.assertTrue("No data returned", mastery.isPresent());
-        mastery.ifPresent(doAssertions);
+        doAssertions.accept(mastery);
     }
     
     @Test
     public void testChampionMasteryAll()
     {
-        Optional<List<ChampionMastery>> all = api.getChampionMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
-        Assert.assertTrue("No data returned", all.isPresent());
-        all.ifPresent(doListAssertions);
+        List<ChampionMastery> all = api.getChampionMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        doListAssertions.accept(all);
         
     }
     
     @Test
     public void testChampionMasteryScore()
     {
-        Optional<Integer> score = api.getMasteryScore(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
-        Assert.assertTrue("No data returned", score.isPresent());
-        score.ifPresent(Assert::assertNotNull);
+        Integer score = api.getMasteryScore(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        Assert.assertNotNull("no data", score);
     }
     
 }

@@ -52,18 +52,16 @@ public class MatchListTest
         Optional<EnumSet<SeasonType>>      season = Optional.of(EnumSet.of(SeasonType.SEASON_2014));
         Optional<List<Integer>>            champs = Optional.of(Collections.singletonList(Constants.TEST_CHAMPION_IDS[0]));
         //Optional<MatchList>                list   = api.getMatchList(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], empty, empty, queue, season, empty, empty, champs);
-        Optional<MatchList> list = api.getOldMatchList(Server.EUW, Constants.TEST_SUMMONER_IDS[0], empty, empty, empty, empty, empty, empty, empty);
+        MatchList list = api.getOldMatchList(Server.EUW, Constants.TEST_SUMMONER_IDS[0], empty, empty, queue, empty, empty, empty, empty);
         
-        
-        Assert.assertTrue("no data?", list.isPresent());
         
         // I played 47 ranked solo games as leona in 2014
         // Or 50.. as it says suddenly
         // Just remove this check for now
         //Assert.assertEquals("Unexpected amount of games returned", list.get().getMatches().size(), 47);
-        for (MatchReference reference : list.get().getMatches())
+        for (MatchReference reference : list.getMatches())
         {
-            Optional<MatchDetail> detail = api.getOldMatch(reference.getRegion(), reference.getMatchId(), Optional.of(true));
+            MatchDetail detail = api.getOldMatch(reference.getRegion(), reference.getMatchId(), Optional.of(true));
         }
     }
     

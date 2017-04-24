@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 import java.time.*;
-import java.util.*;
+import java.util.List;
 
 public class MatchDetail
 {
@@ -341,6 +342,12 @@ public class MatchDetail
      */
     public Timeline getTimeline()
     {
+        
+        if (DataCall.VERBOSE_DEFAULT && getMatchCreationDate().plusYears(1).isBefore(ZonedDateTime.now()))
+    {
+        System.out.println("Timeline has expired!");
+    }
+        
         return this.timeline;
     }
     

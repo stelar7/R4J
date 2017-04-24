@@ -30,10 +30,8 @@ public class StaticTest
     {
         Optional<EnumSet<ChampDataFlags>> dataFlags = Optional.of(EnumSet.of(ChampDataFlags.ALL));
         
-        Optional<StaticChampionList> list = api.getChampions(Platform.EUW1, dataFlags, version, locale);
-        
-        Assert.assertTrue("no data?", list.isPresent());
-        Assert.assertTrue("less than 100?", list.get().getData().size() > 100);
+        StaticChampionList list = api.getChampions(Platform.EUW1, dataFlags, version, locale);
+        Assert.assertTrue("less than 100?", list.getData().size() > 100);
     }
     
     
@@ -42,10 +40,8 @@ public class StaticTest
     {
         Optional<EnumSet<ChampDataFlags>> dataFlags = Optional.of(EnumSet.of(ChampDataFlags.ALL));
         
-        Optional<StaticChampion> list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, version, locale);
-        
-        Assert.assertTrue("no data?", list.isPresent());
-        Assert.assertTrue("ok?", list.get().getId() == Constants.TEST_CHAMPION_IDS[0]);
+        StaticChampion list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, version, locale);
+        Assert.assertTrue("ok?", list.getId() == Constants.TEST_CHAMPION_IDS[0]);
     }
     
     @Test
@@ -53,10 +49,8 @@ public class StaticTest
     {
         Optional<EnumSet<ItemDataFlags>> dataFlags = Optional.of(EnumSet.of(ItemDataFlags.ALL));
         
-        Optional<ItemList> list = api.getItems(Platform.EUW1, dataFlags, version, locale);
-        
-        Assert.assertTrue("no data?", list.isPresent());
-        Assert.assertTrue("less than 100?", list.get().getData().size() > 100);
+        ItemList list = api.getItems(Platform.EUW1, dataFlags, version, locale);
+        Assert.assertTrue("less than 100?", list.getData().size() > 100);
     }
     
     
@@ -65,32 +59,27 @@ public class StaticTest
     {
         Optional<EnumSet<ItemDataFlags>> dataFlags = Optional.of(EnumSet.of(ItemDataFlags.ALL));
         
-        Optional<Item> list = api.getItem(Platform.EUW1, 1018, dataFlags, version, locale);
-        
-        Assert.assertTrue("no data?", list.isPresent());
-        Assert.assertTrue("ok?", list.get().getId() == 1018);
+        Item list = api.getItem(Platform.EUW1, 1018, dataFlags, version, locale);
+        Assert.assertTrue("ok?", list.getId() == 1018);
     }
     
     
     @Test
     public void testLanguageStrings()
     {
-        Optional<LanguageStrings> strings = api.getLanguageStrings(Platform.EUW1, version, locale);
-        Assert.assertTrue("no data?", strings.isPresent());
+        LanguageStrings strings = api.getLanguageStrings(Platform.EUW1, version, locale);
     }
     
     @Test
     public void testLanguages()
     {
-        Optional<List<String>> strings = api.getLanguages(Platform.EUW1);
-        Assert.assertTrue("no data?", strings.isPresent());
+        List<String> strings = api.getLanguages(Platform.EUW1);
     }
     
     @Test
     public void testMaps()
     {
-        Optional<MapData> data = api.getMaps(Platform.EUW1, version, locale);
-        Assert.assertTrue("no data?", data.isPresent());
+        MapData data = api.getMaps(Platform.EUW1, version, locale);
     }
     
     
@@ -99,10 +88,7 @@ public class StaticTest
     {
         Optional<EnumSet<MasteryDataFlags>> dataFlags = Optional.of(EnumSet.of(MasteryDataFlags.ALL));
         
-        Optional<MasteryList> list = api.getMasteries(Platform.EUW1, dataFlags, version, locale);
-        
-        
-        Assert.assertTrue("no data?", list.isPresent());
+        MasteryList list = api.getMasteries(Platform.EUW1, dataFlags, version, locale);
     }
     
     
@@ -111,24 +97,21 @@ public class StaticTest
     {
         Optional<EnumSet<MasteryDataFlags>> dataFlags = Optional.of(EnumSet.of(MasteryDataFlags.ALL));
         
-        Optional<Mastery> list = api.getMastery(Platform.EUW1, 6131, dataFlags, version, locale);
+        Mastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, version, locale);
         
-        Assert.assertTrue("no data?", list.isPresent());
-        Assert.assertTrue("ok?", list.get().getId() == 6131);
+        Assert.assertTrue("ok?", list.getId() == 6131);
     }
     
     @Test
     public void testProfileIcons()
     {
-        Optional<ProfileIconData> data = api.getProfileIcons(Platform.EUW1, Optional.empty(), Optional.empty());
-        Assert.assertTrue("no data?", data.isPresent());
+        ProfileIconData data = api.getProfileIcons(Platform.EUW1, Optional.empty(), Optional.empty());
     }
     
     @Test
     public void testRealms()
     {
-        Optional<Realm> data = api.getRealm(Platform.EUW1);
-        Assert.assertTrue("no data?", data.isPresent());
+        Realm data = api.getRealm(Platform.EUW1);
     }
     
     @Test
@@ -136,8 +119,7 @@ public class StaticTest
     {
         Optional<EnumSet<RuneDataFlags>> dataFlags = Optional.of(EnumSet.of(RuneDataFlags.ALL));
         
-        Optional<StaticRuneList> list = api.getRunes(Platform.EUW1, dataFlags, version, locale);
-        Assert.assertTrue("no data?", list.isPresent());
+        StaticRuneList list = api.getRunes(Platform.EUW1, dataFlags, version, locale);
     }
     
     
@@ -146,18 +128,16 @@ public class StaticTest
     {
         Optional<EnumSet<RuneDataFlags>> dataFlags = Optional.of(EnumSet.of(RuneDataFlags.ALL));
         
-        Optional<StaticRune> rune = api.getRune(Platform.EUW1, 5023, dataFlags, version, locale);
+        StaticRune rune = api.getRune(Platform.EUW1, 5023, dataFlags, version, locale);
         
-        Assert.assertTrue("no data?", rune.isPresent());
-        
-        Assert.assertTrue("missing id?", rune.get().getId() == 5023);
-        Assert.assertTrue("missing stats?", rune.get().getStats() != null);
-        Assert.assertTrue("missing desc?", rune.get().getDescription() != null);
-        Assert.assertTrue("missing tags?", rune.get().getTags() != null);
-        Assert.assertTrue("missing image?", rune.get().getImage() != null);
-        Assert.assertTrue("missing sandesc?", rune.get().getSanitizedDescription() != null);
-        Assert.assertTrue("missing rune?", rune.get().getRune() != null);
-        Assert.assertTrue("missing name?", rune.get().getName() != null);
+        Assert.assertTrue("missing id?", rune.getId() == 5023);
+        Assert.assertTrue("missing stats?", rune.getStats() != null);
+        Assert.assertTrue("missing desc?", rune.getDescription() != null);
+        Assert.assertTrue("missing tags?", rune.getTags() != null);
+        Assert.assertTrue("missing image?", rune.getImage() != null);
+        Assert.assertTrue("missing sandesc?", rune.getSanitizedDescription() != null);
+        Assert.assertTrue("missing rune?", rune.getRune() != null);
+        Assert.assertTrue("missing name?", rune.getName() != null);
     }
     
     @Test
@@ -165,9 +145,7 @@ public class StaticTest
     {
         Optional<EnumSet<SpellDataFlags>> dataFlags = Optional.of(EnumSet.of(SpellDataFlags.ALL));
         
-        Optional<StaticSummonerSpellList> list = api.getSummonerSpells(Platform.EUW1, dataFlags, version, locale);
-        
-        Assert.assertTrue("no data?", list.isPresent());
+        StaticSummonerSpellList list = api.getSummonerSpells(Platform.EUW1, dataFlags, version, locale);
     }
     
     
@@ -176,18 +154,15 @@ public class StaticTest
     {
         Optional<EnumSet<SpellDataFlags>> dataFlags = Optional.of(EnumSet.of(SpellDataFlags.ALL));
         
-        Optional<StaticSummonerSpell> list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, version, locale);
+        StaticSummonerSpell list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, version, locale);
         
-        Assert.assertTrue("no data?", list.isPresent());
-        Assert.assertTrue("ok?", list.get().getId() == 21);
+        Assert.assertTrue("ok?", list.getId() == 21);
     }
     
     
     @Test
     public void testVersions()
     {
-        Optional<List<String>> data = api.getVersions(Platform.EUW1);
-        Assert.assertTrue("no data?", data.isPresent());
-        
+        List<String> data = api.getVersions(Platform.EUW1);
     }
 }
