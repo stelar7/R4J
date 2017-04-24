@@ -53,7 +53,13 @@ public final class DataCall
         {
             
             // TODO: Make this better
-            //DataCall.limiter.get(this.dc.platform).acquire();
+            if (this.dc.platform != null)
+            {
+                DataCall.limiter.get(this.dc.platform).acquire();
+            } else
+            {
+                DataCall.oldlimiter.get(this.dc.server).acquire();
+            }
             
             final String url = this.getURL();
             if (this.dc.verbose)
@@ -399,7 +405,8 @@ public final class DataCall
     
     private static final Logger LOGGER = Logger.getGlobal();
     
-    private static final EnumMap<Platform, RateLimiter> limiter = new EnumMap<>(Platform.class);
+    private static final EnumMap<Platform, RateLimiter> limiter    = new EnumMap<>(Platform.class);
+    private static final EnumMap<Server, RateLimiter>   oldlimiter = new EnumMap<>(Server.class);
     
     public static DataCallBuilder builder()
     {
@@ -434,7 +441,7 @@ public final class DataCall
     {
         final double permitsPerSecond = DataCall.DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DataCall.DEFAULT_LIMITER_10_MINUTES;
         Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new RateLimiter(permitsPerSecond)));
-        
+        Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, new RateLimiter(permitsPerSecond)));
     }
     
 }

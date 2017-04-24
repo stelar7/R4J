@@ -22,7 +22,7 @@ public class Event
     private PointType     pointCaptured;
     private Position      position;
     private Integer       skillSlot;
-    private Team          teamId;
+    private TeamType      teamId;
     private Long          timestamp;
     private TowerType     towerType;
     private Integer       victimId;
@@ -424,7 +424,7 @@ public class Event
      *
      * @return Integer
      */
-    public Team getTeam()
+    public TeamType getTeam()
     {
         return this.teamId;
     }

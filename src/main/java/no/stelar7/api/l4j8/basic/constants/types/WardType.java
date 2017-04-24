@@ -5,7 +5,9 @@ import java.util.stream.*;
 
 public enum WardType
 {
+    
     BLUE_TRINKET,
+    CONTROL_WARD,
     SIGHT_WARD,
     TEEMO_MUSHROOM,
     UNDEFINED,

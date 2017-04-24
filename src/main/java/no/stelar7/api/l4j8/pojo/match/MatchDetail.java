@@ -334,7 +334,8 @@ public class MatchDetail
     }
     
     /**
-     * Match timeline data (not included by default)
+     * Match timeline data
+     * Only avaliable for one year after the game has finished!
      *
      * @return Timeline
      */

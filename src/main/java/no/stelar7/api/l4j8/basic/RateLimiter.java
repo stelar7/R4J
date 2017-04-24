@@ -14,7 +14,9 @@ public class RateLimiter
     {
         try
         {
-            Thread.sleep((long) permitsPerSec);
+            // Thread.sleep((long) permitsPerSec);
+            // Sleep for 1sec between calls so we NEVER go over the limit
+            Thread.sleep(1000);
         } catch (InterruptedException e)
         {
             e.printStackTrace();

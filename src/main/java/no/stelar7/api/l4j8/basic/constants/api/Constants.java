@@ -61,13 +61,13 @@ public final class Constants
     public static final String TABBED_VERBOSE_STRING_FORMAT = "\t%1$-20s: %2$-40s%n";
     
     
-    public static final String SEPARATOR   = "/";
-    public static final String METHOD_PUT  = "PUT";
-    public static final String METHOD_POST = "POST";
-    public static final String PROTOCOL    = "https://";
-    public static final String HOST        = ".api.riotgames.com";
+    public static final String SEPARATOR        = "/";
+    public static final String METHOD_PUT       = "PUT";
+    public static final String METHOD_POST      = "POST";
+    public static final String PROTOCOL         = "https://";
+    public static final String HOST_PLACEHOLDER = ".api.riotgames.com";
     
-    public static final String REQUEST_URL = PROTOCOL + PLATFORM_PLACEHOLDER + HOST + SEPARATOR + GAME_PLACEHOLDER + SEPARATOR + SERVICE_PLACEHOLDER + SEPARATOR + VERSION_PLACEHOLDER + SEPARATOR + RESOURCE_PLACEHOLDER;
+    public static final String REQUEST_URL = PROTOCOL + PLATFORM_PLACEHOLDER + HOST_PLACEHOLDER + SEPARATOR + GAME_PLACEHOLDER + SEPARATOR + SERVICE_PLACEHOLDER + SEPARATOR + VERSION_PLACEHOLDER + SEPARATOR + RESOURCE_PLACEHOLDER;
     
     public static final String[] TEST_TOURNAMENT_CODES = {"EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d"};
     public static final String[] TEST_SUMMONER_NAMES   = {"stelar7", "NRG Zenon"};
