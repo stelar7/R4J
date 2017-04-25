@@ -4,7 +4,7 @@ import java.util.concurrent.*;
 
 public abstract class RateLimiter
 {
-    protected final long      permits;
+    protected final int       requests;
     protected       long      delayInMs;
     protected       Semaphore semaphore;
     
@@ -17,9 +17,9 @@ public abstract class RateLimiter
      */
     public RateLimiter(final int permits, final int time, final TimeUnit unit)
     {
-        this.permits = permits;
+        requests = (permits - 1);
         delayInMs = unit.toMillis(time);
-        semaphore = new Semaphore(permits);
+        semaphore = new Semaphore(requests);
     }
     
     public abstract void acquire();
