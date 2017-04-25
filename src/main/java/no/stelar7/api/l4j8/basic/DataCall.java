@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.basic;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
+import no.stelar7.api.l4j8.basic.ratelimiting.BurstRateLimiter;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;
@@ -10,6 +11,7 @@ import java.lang.reflect.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.logging.*;
 
@@ -411,13 +413,10 @@ public final class DataCall
         }
     }
     
-    private static final Double DEFAULT_LIMITER_PERMITS_PER_10_MINUTES = 500.0;
-    private static final Double DEFAULT_LIMITER_10_MINUTES             = 600.0;
-    
     private static final Logger LOGGER = Logger.getGlobal();
     
-    private static final EnumMap<Platform, RateLimiter> limiter    = new EnumMap<>(Platform.class);
-    private static final EnumMap<Server, RateLimiter>   oldlimiter = new EnumMap<>(Server.class);
+    private static final EnumMap<Platform, BurstRateLimiter> limiter    = new EnumMap<>(Platform.class);
+    private static final EnumMap<Server, BurstRateLimiter>   oldlimiter = new EnumMap<>(Server.class);
     
     public static DataCallBuilder builder()
     {
@@ -450,11 +449,10 @@ public final class DataCall
     public static final boolean VERBOSE_DEFAULT = false;
     private             boolean verbose         = VERBOSE_DEFAULT;
     
-    private DataCall()
+    static
     {
-        final double permitsPerSecond = DataCall.DEFAULT_LIMITER_PERMITS_PER_10_MINUTES / DataCall.DEFAULT_LIMITER_10_MINUTES;
-        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new RateLimiter(permitsPerSecond)));
-        Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, new RateLimiter(permitsPerSecond)));
+        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(10, 10, TimeUnit.SECONDS)));
+        Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, new BurstRateLimiter(10, 10, TimeUnit.SECONDS)));
     }
     
 }

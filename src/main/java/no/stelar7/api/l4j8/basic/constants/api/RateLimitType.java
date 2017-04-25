@@ -6,8 +6,9 @@ import java.util.stream.*;
 
 public enum RateLimitType
 {
-    LIMIT_USER("user", "User ratelimit reached"),
+    LIMIT_USER("application", "Application ratelimit reached"),
     LIMIT_SERVICE("service", "Service ratelimit reached"),
+    LIMIT_METHOD("method", "Service ratelimit reached"),
     LIMIT_UNDERLYING("", "Underlying service limit reached");
     
     private final String value;
@@ -25,7 +26,7 @@ public enum RateLimitType
         {
             return LIMIT_UNDERLYING;
         }
-        return Stream.of(values()).filter(s -> s.getValue().equalsIgnoreCase(data)).findFirst().orElseThrow(()->new APIDataNotParseableException(data));
+        return Stream.of(values()).filter(s -> s.getValue().equalsIgnoreCase(data)).findFirst().orElseThrow(() -> new APIDataNotParseableException(data));
     }
     
     public String getValue()
