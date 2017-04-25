@@ -53,7 +53,7 @@ public final class DataCall
          * @return an object generated from the requested JSON
          * @throws APINoValidResponseException if the request failed in some fashion
          */
-        public Object build()
+        public Object build(int... retrys)
         {
             if (DataCall.creds == null)
             {
@@ -113,13 +113,15 @@ public final class DataCall
             
             if (response.getResponseCode() == 500)
             {
-                if (this.dc.verbose)
+                DataCall.LOGGER.log(Level.INFO, "Server error, retrying");
+                
+                int attempts = (retrys != null) ? retrys[0]++ : 1;
+                if (attempts > 3)
                 {
-                    DataCall.LOGGER.log(Level.INFO, "Server error");
+                    throw new APIResponseException(APIHTTPErrorReason.ERROR500, response.getResponseData());
                 }
                 
-                throw new APIResponseException(APIHTTPErrorReason.ERROR500, response.getResponseData());
-                
+                return this.build(attempts);
             }
             
             if (response.getResponseCode() == 400)
@@ -129,14 +131,12 @@ public final class DataCall
             
             if (response.getResponseCode() == 429)
             {
-                
                 if (this.dc.verbose)
                 {
                     DataCall.LOGGER.log(Level.INFO, "HIT 429");
                 }
                 
                 throw new APIResponseException(APIHTTPErrorReason.ERROR429, response.getResponseData());
-                
             }
             
             DataCall.LOGGER.log(Level.WARNING, "Response Code:" + response.getResponseCode());
@@ -231,7 +231,7 @@ public final class DataCall
                 if (con.getResponseCode() == 429)
                 {
                     final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
-                    return new DataCallResponse(con.getResponseCode(), limitType);
+                    return new DataCallResponse(con.getResponseCode(), limitType + appLimit.toString());
                 }
                 
                 InputStream stream = (con.getResponseCode() == 200) ? con.getInputStream() : con.getErrorStream();
