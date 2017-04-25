@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.impl;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.match.MatchDetail;
+import no.stelar7.api.l4j8.pojo.match.Match;
 import no.stelar7.api.l4j8.pojo.tournament.*;
 
 import java.util.*;
@@ -59,7 +59,7 @@ public final class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                       .withEndpoint(URLEndpoint.OLD_TOURNAMENT_MATCHLIST)
+                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCHLIST)
                                                        .withPlatform(server);
         
         
@@ -73,19 +73,17 @@ public final class TournamentAPI
      * @param server          the server the games are played on
      * @param tournamentCode  The tournament code of the match
      * @param matchId         the ID of the match.
-     * @param includeTimeline flag indicating whether or not to include match timeline data
-     * @return MatchDetail
+     * @return Match
      */
-    public MatchDetail getMatchInfo(final Platform server, final String tournamentCode, final Long matchId, final Optional<Boolean> includeTimeline)
+    public Match getMatchInfo(final Platform server, final String tournamentCode, final Long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
-                                                       .withURLParameter(Constants.URL_PARAM_TOURNAMENT_TIMELINE, String.valueOf(includeTimeline.orElseGet(() -> true)))
-                                                       .withURLParameter(Constants.URL_PARAM_TOURNAMENT_CODE, tournamentCode)
+                                                       .withURLData(Constants.URL_PARAM_TOURNAMENT_CODE, tournamentCode)
                                                        .withURLData(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
-                                                       .withEndpoint(URLEndpoint.OLD_MATCH)
+                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCH)
                                                        .withPlatform(server);
         
-        return (MatchDetail) builder.build();
+        return (Match) builder.build();
     }
     
     /**

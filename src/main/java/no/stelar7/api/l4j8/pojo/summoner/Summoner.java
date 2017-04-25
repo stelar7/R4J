@@ -114,8 +114,13 @@ public final class Summoner
     
     public MatchList getRecentGames()
     {
+        return MatchAPI.getInstance().getRecentMatches(platform, accountId);
+    }
+    
+    public MatchList getRankedGames()
+    {
         Optional empty = Optional.empty();
-        return MatchAPI.getInstance().getOldMatchList(Server.fromPlatform(platform), getId(), empty, empty, empty, empty, empty, empty, empty);
+        return MatchAPI.getInstance().getMatchList(platform, id, empty, empty, empty, empty, empty, empty, empty);
     }
     
     @Override

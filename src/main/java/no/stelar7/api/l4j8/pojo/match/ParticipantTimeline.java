@@ -4,34 +4,16 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 
 public class ParticipantTimeline
 {
-    
-    private ParticipantTimelineData ancientGolemAssistsPerMinCounts;
-    private ParticipantTimelineData ancientGolemKillsPerMinCounts;
-    private ParticipantTimelineData assistedLaneDeathsPerMinDeltas;
-    private ParticipantTimelineData assistedLaneKillsPerMinDeltas;
-    private ParticipantTimelineData baronAssistsPerMinCounts;
-    private ParticipantTimelineData baronKillsPerMinCounts;
-    private ParticipantTimelineData creepsPerMinDeltas;
+    private LaneType                lane;
+    private Long                    participantId;
     private ParticipantTimelineData csDiffPerMinDeltas;
+    private ParticipantTimelineData goldPerMinDeltas;
+    private ParticipantTimelineData xpDiffPerMinDeltas;
+    private ParticipantTimelineData creepsPerMinDeltas;
+    private ParticipantTimelineData xpPerMinDeltas;
+    private RoleType                role;
     private ParticipantTimelineData damageTakenDiffPerMinDeltas;
     private ParticipantTimelineData damageTakenPerMinDeltas;
-    private ParticipantTimelineData dragonAssistsPerMinCounts;
-    private ParticipantTimelineData dragonKillsPerMinCounts;
-    private ParticipantTimelineData elderLizardAssistsPerMinCounts;
-    private ParticipantTimelineData elderLizardKillsPerMinCounts;
-    private ParticipantTimelineData goldPerMinDeltas;
-    private ParticipantTimelineData inhibitorAssistsPerMinCounts;
-    private ParticipantTimelineData inhibitorKillsPerMinCounts;
-    private ParticipantTimelineData towerAssistsPerMinCounts;
-    private ParticipantTimelineData towerKillsPerMinCounts;
-    private ParticipantTimelineData towerKillsPerMinDeltas;
-    private ParticipantTimelineData vilemawAssistsPerMinCounts;
-    private ParticipantTimelineData vilemawKillsPerMinCounts;
-    private ParticipantTimelineData wardsPerMinDeltas;
-    private ParticipantTimelineData xpDiffPerMinDeltas;
-    private ParticipantTimelineData xpPerMinDeltas;
-    private LaneType                lane;
-    private RoleType                role;
     
     @Override
     public boolean equals(final Object obj)
@@ -49,66 +31,6 @@ public class ParticipantTimeline
             return false;
         }
         final ParticipantTimeline other = (ParticipantTimeline) obj;
-        if (this.ancientGolemAssistsPerMinCounts == null)
-        {
-            if (other.ancientGolemAssistsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.ancientGolemAssistsPerMinCounts.equals(other.ancientGolemAssistsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.ancientGolemKillsPerMinCounts == null)
-        {
-            if (other.ancientGolemKillsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.ancientGolemKillsPerMinCounts.equals(other.ancientGolemKillsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.assistedLaneDeathsPerMinDeltas == null)
-        {
-            if (other.assistedLaneDeathsPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.assistedLaneDeathsPerMinDeltas.equals(other.assistedLaneDeathsPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.assistedLaneKillsPerMinDeltas == null)
-        {
-            if (other.assistedLaneKillsPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.assistedLaneKillsPerMinDeltas.equals(other.assistedLaneKillsPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.baronAssistsPerMinCounts == null)
-        {
-            if (other.baronAssistsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.baronAssistsPerMinCounts.equals(other.baronAssistsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.baronKillsPerMinCounts == null)
-        {
-            if (other.baronKillsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.baronKillsPerMinCounts.equals(other.baronKillsPerMinCounts))
-        {
-            return false;
-        }
         if (this.creepsPerMinDeltas == null)
         {
             if (other.creepsPerMinDeltas != null)
@@ -149,46 +71,6 @@ public class ParticipantTimeline
         {
             return false;
         }
-        if (this.dragonAssistsPerMinCounts == null)
-        {
-            if (other.dragonAssistsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.dragonAssistsPerMinCounts.equals(other.dragonAssistsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.dragonKillsPerMinCounts == null)
-        {
-            if (other.dragonKillsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.dragonKillsPerMinCounts.equals(other.dragonKillsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.elderLizardAssistsPerMinCounts == null)
-        {
-            if (other.elderLizardAssistsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.elderLizardAssistsPerMinCounts.equals(other.elderLizardAssistsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.elderLizardKillsPerMinCounts == null)
-        {
-            if (other.elderLizardKillsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.elderLizardKillsPerMinCounts.equals(other.elderLizardKillsPerMinCounts))
-        {
-            return false;
-        }
         if (this.goldPerMinDeltas == null)
         {
             if (other.goldPerMinDeltas != null)
@@ -196,26 +78,6 @@ public class ParticipantTimeline
                 return false;
             }
         } else if (!this.goldPerMinDeltas.equals(other.goldPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.inhibitorAssistsPerMinCounts == null)
-        {
-            if (other.inhibitorAssistsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.inhibitorAssistsPerMinCounts.equals(other.inhibitorAssistsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.inhibitorKillsPerMinCounts == null)
-        {
-            if (other.inhibitorKillsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.inhibitorKillsPerMinCounts.equals(other.inhibitorKillsPerMinCounts))
         {
             return false;
         }
@@ -236,66 +98,6 @@ public class ParticipantTimeline
                 return false;
             }
         } else if (!this.role.equals(other.role))
-        {
-            return false;
-        }
-        if (this.towerAssistsPerMinCounts == null)
-        {
-            if (other.towerAssistsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.towerAssistsPerMinCounts.equals(other.towerAssistsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.towerKillsPerMinCounts == null)
-        {
-            if (other.towerKillsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.towerKillsPerMinCounts.equals(other.towerKillsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.towerKillsPerMinDeltas == null)
-        {
-            if (other.towerKillsPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.towerKillsPerMinDeltas.equals(other.towerKillsPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.vilemawAssistsPerMinCounts == null)
-        {
-            if (other.vilemawAssistsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.vilemawAssistsPerMinCounts.equals(other.vilemawAssistsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.vilemawKillsPerMinCounts == null)
-        {
-            if (other.vilemawKillsPerMinCounts != null)
-            {
-                return false;
-            }
-        } else if (!this.vilemawKillsPerMinCounts.equals(other.vilemawKillsPerMinCounts))
-        {
-            return false;
-        }
-        if (this.wardsPerMinDeltas == null)
-        {
-            if (other.wardsPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.wardsPerMinDeltas.equals(other.wardsPerMinDeltas))
         {
             return false;
         }
@@ -320,66 +122,6 @@ public class ParticipantTimeline
             return false;
         }
         return true;
-    }
-    
-    /**
-     * Gets the ancient golem assists per min counts.
-     *
-     * @return the ancient golem assists per min counts
-     */
-    public ParticipantTimelineData getAncientGolemAssistsPerMinCounts()
-    {
-        return this.ancientGolemAssistsPerMinCounts;
-    }
-    
-    /**
-     * Gets the ancient golem kills per min counts.
-     *
-     * @return the ancient golem kills per min counts
-     */
-    public ParticipantTimelineData getAncientGolemKillsPerMinCounts()
-    {
-        return this.ancientGolemKillsPerMinCounts;
-    }
-    
-    /**
-     * Gets the assisted lane deaths per min deltas.
-     *
-     * @return the assisted lane deaths per min deltas
-     */
-    public ParticipantTimelineData getAssistedLaneDeathsPerMinDeltas()
-    {
-        return this.assistedLaneDeathsPerMinDeltas;
-    }
-    
-    /**
-     * Gets the assisted lane kills per min deltas.
-     *
-     * @return the assisted lane kills per min deltas
-     */
-    public ParticipantTimelineData getAssistedLaneKillsPerMinDeltas()
-    {
-        return this.assistedLaneKillsPerMinDeltas;
-    }
-    
-    /**
-     * Gets the baron assists per min counts.
-     *
-     * @return the baron assists per min counts
-     */
-    public ParticipantTimelineData getBaronAssistsPerMinCounts()
-    {
-        return this.baronAssistsPerMinCounts;
-    }
-    
-    /**
-     * Gets the baron kills per min counts.
-     *
-     * @return the baron kills per min counts
-     */
-    public ParticipantTimelineData getBaronKillsPerMinCounts()
-    {
-        return this.baronKillsPerMinCounts;
     }
     
     /**
@@ -423,46 +165,6 @@ public class ParticipantTimeline
     }
     
     /**
-     * Gets the dragon assists per min counts.
-     *
-     * @return the dragon assists per min counts
-     */
-    public ParticipantTimelineData getDragonAssistsPerMinCounts()
-    {
-        return this.dragonAssistsPerMinCounts;
-    }
-    
-    /**
-     * Gets the dragon kills per min counts.
-     *
-     * @return the dragon kills per min counts
-     */
-    public ParticipantTimelineData getDragonKillsPerMinCounts()
-    {
-        return this.dragonKillsPerMinCounts;
-    }
-    
-    /**
-     * Gets the elder lizard assists per min counts.
-     *
-     * @return the elder lizard assists per min counts
-     */
-    public ParticipantTimelineData getElderLizardAssistsPerMinCounts()
-    {
-        return this.elderLizardAssistsPerMinCounts;
-    }
-    
-    /**
-     * Gets the elder lizard kills per min counts.
-     *
-     * @return the elder lizard kills per min counts
-     */
-    public ParticipantTimelineData getElderLizardKillsPerMinCounts()
-    {
-        return this.elderLizardKillsPerMinCounts;
-    }
-    
-    /**
      * Gets the gold per min deltas.
      *
      * @return the gold per min deltas
@@ -472,25 +174,6 @@ public class ParticipantTimeline
         return this.goldPerMinDeltas;
     }
     
-    /**
-     * Gets the inhibitor assists per min counts.
-     *
-     * @return the inhibitor assists per min counts
-     */
-    public ParticipantTimelineData getInhibitorAssistsPerMinCounts()
-    {
-        return this.inhibitorAssistsPerMinCounts;
-    }
-    
-    /**
-     * Gets the inhibitor kills per min counts.
-     *
-     * @return the inhibitor kills per min counts
-     */
-    public ParticipantTimelineData getInhibitorKillsPerMinCounts()
-    {
-        return this.inhibitorKillsPerMinCounts;
-    }
     
     /**
      * Gets the lane.
@@ -511,66 +194,6 @@ public class ParticipantTimeline
     public RoleType getRole()
     {
         return this.role;
-    }
-    
-    /**
-     * Gets the tower assists per min counts.
-     *
-     * @return the tower assists per min counts
-     */
-    public ParticipantTimelineData getTowerAssistsPerMinCounts()
-    {
-        return this.towerAssistsPerMinCounts;
-    }
-    
-    /**
-     * Gets the tower kills per min counts.
-     *
-     * @return the tower kills per min counts
-     */
-    public ParticipantTimelineData getTowerKillsPerMinCounts()
-    {
-        return this.towerKillsPerMinCounts;
-    }
-    
-    /**
-     * Gets the tower kills per min deltas.
-     *
-     * @return the tower kills per min deltas
-     */
-    public ParticipantTimelineData getTowerKillsPerMinDeltas()
-    {
-        return this.towerKillsPerMinDeltas;
-    }
-    
-    /**
-     * Gets the vilemaw assists per min counts.
-     *
-     * @return the vilemaw assists per min counts
-     */
-    public ParticipantTimelineData getVilemawAssistsPerMinCounts()
-    {
-        return this.vilemawAssistsPerMinCounts;
-    }
-    
-    /**
-     * Gets the vilemaw kills per min counts.
-     *
-     * @return the vilemaw kills per min counts
-     */
-    public ParticipantTimelineData getVilemawKillsPerMinCounts()
-    {
-        return this.vilemawKillsPerMinCounts;
-    }
-    
-    /**
-     * Gets the wards per min deltas.
-     *
-     * @return the wards per min deltas
-     */
-    public ParticipantTimelineData getWardsPerMinDeltas()
-    {
-        return this.wardsPerMinDeltas;
     }
     
     /**
@@ -598,31 +221,13 @@ public class ParticipantTimeline
     {
         final int prime  = 31;
         int       result = 1;
-        result = (prime * result) + ((this.ancientGolemAssistsPerMinCounts == null) ? 0 : this.ancientGolemAssistsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.ancientGolemKillsPerMinCounts == null) ? 0 : this.ancientGolemKillsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.assistedLaneDeathsPerMinDeltas == null) ? 0 : this.assistedLaneDeathsPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.assistedLaneKillsPerMinDeltas == null) ? 0 : this.assistedLaneKillsPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.baronAssistsPerMinCounts == null) ? 0 : this.baronAssistsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.baronKillsPerMinCounts == null) ? 0 : this.baronKillsPerMinCounts.hashCode());
         result = (prime * result) + ((this.creepsPerMinDeltas == null) ? 0 : this.creepsPerMinDeltas.hashCode());
         result = (prime * result) + ((this.csDiffPerMinDeltas == null) ? 0 : this.csDiffPerMinDeltas.hashCode());
         result = (prime * result) + ((this.damageTakenDiffPerMinDeltas == null) ? 0 : this.damageTakenDiffPerMinDeltas.hashCode());
         result = (prime * result) + ((this.damageTakenPerMinDeltas == null) ? 0 : this.damageTakenPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.dragonAssistsPerMinCounts == null) ? 0 : this.dragonAssistsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.dragonKillsPerMinCounts == null) ? 0 : this.dragonKillsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.elderLizardAssistsPerMinCounts == null) ? 0 : this.elderLizardAssistsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.elderLizardKillsPerMinCounts == null) ? 0 : this.elderLizardKillsPerMinCounts.hashCode());
         result = (prime * result) + ((this.goldPerMinDeltas == null) ? 0 : this.goldPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.inhibitorAssistsPerMinCounts == null) ? 0 : this.inhibitorAssistsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.inhibitorKillsPerMinCounts == null) ? 0 : this.inhibitorKillsPerMinCounts.hashCode());
         result = (prime * result) + ((this.lane == null) ? 0 : this.lane.hashCode());
         result = (prime * result) + ((this.role == null) ? 0 : this.role.hashCode());
-        result = (prime * result) + ((this.towerAssistsPerMinCounts == null) ? 0 : this.towerAssistsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.towerKillsPerMinCounts == null) ? 0 : this.towerKillsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.towerKillsPerMinDeltas == null) ? 0 : this.towerKillsPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.vilemawAssistsPerMinCounts == null) ? 0 : this.vilemawAssistsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.vilemawKillsPerMinCounts == null) ? 0 : this.vilemawKillsPerMinCounts.hashCode());
-        result = (prime * result) + ((this.wardsPerMinDeltas == null) ? 0 : this.wardsPerMinDeltas.hashCode());
         result = (prime * result) + ((this.xpDiffPerMinDeltas == null) ? 0 : this.xpDiffPerMinDeltas.hashCode());
         result = (prime * result) + ((this.xpPerMinDeltas == null) ? 0 : this.xpPerMinDeltas.hashCode());
         return result;
@@ -632,29 +237,11 @@ public class ParticipantTimeline
     public String toString()
     {
         return "ParticipantTimeline{" +
-               "ancientGolemAssistsPerMinCounts=" + ancientGolemAssistsPerMinCounts +
-               ", ancientGolemKillsPerMinCounts=" + ancientGolemKillsPerMinCounts +
-               ", assistedLaneDeathsPerMinDeltas=" + assistedLaneDeathsPerMinDeltas +
-               ", assistedLaneKillsPerMinDeltas=" + assistedLaneKillsPerMinDeltas +
-               ", baronAssistsPerMinCounts=" + baronAssistsPerMinCounts +
-               ", baronKillsPerMinCounts=" + baronKillsPerMinCounts +
                ", creepsPerMinDeltas=" + creepsPerMinDeltas +
                ", csDiffPerMinDeltas=" + csDiffPerMinDeltas +
                ", damageTakenDiffPerMinDeltas=" + damageTakenDiffPerMinDeltas +
                ", damageTakenPerMinDeltas=" + damageTakenPerMinDeltas +
-               ", dragonAssistsPerMinCounts=" + dragonAssistsPerMinCounts +
-               ", dragonKillsPerMinCounts=" + dragonKillsPerMinCounts +
-               ", elderLizardAssistsPerMinCounts=" + elderLizardAssistsPerMinCounts +
-               ", elderLizardKillsPerMinCounts=" + elderLizardKillsPerMinCounts +
                ", goldPerMinDeltas=" + goldPerMinDeltas +
-               ", inhibitorAssistsPerMinCounts=" + inhibitorAssistsPerMinCounts +
-               ", inhibitorKillsPerMinCounts=" + inhibitorKillsPerMinCounts +
-               ", towerAssistsPerMinCounts=" + towerAssistsPerMinCounts +
-               ", towerKillsPerMinCounts=" + towerKillsPerMinCounts +
-               ", towerKillsPerMinDeltas=" + towerKillsPerMinDeltas +
-               ", vilemawAssistsPerMinCounts=" + vilemawAssistsPerMinCounts +
-               ", vilemawKillsPerMinCounts=" + vilemawKillsPerMinCounts +
-               ", wardsPerMinDeltas=" + wardsPerMinDeltas +
                ", xpDiffPerMinDeltas=" + xpDiffPerMinDeltas +
                ", xpPerMinDeltas=" + xpPerMinDeltas +
                ", lane='" + lane + '\'' +

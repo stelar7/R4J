@@ -7,15 +7,14 @@ import java.time.*;
 
 public class MatchReference
 {
-    private ChampionType    champion;
-    private Long            matchId;
-    private Long            timestamp;
-    private LaneType        lane;
-    private Platform        platformId;
-    private RankedQueueType queue;
-    private Server          region;
-    private RoleType        role;
-    private SeasonType      season;
+    private LaneType      lane;
+    private Long          gameId;
+    private ChampionType  champion;
+    private Platform      platformId;
+    private Long          timestamp;
+    private GameQueueType queue;
+    private RoleType      role;
+    private SeasonType    season;
     
     @Override
     public boolean equals(final Object obj)
@@ -53,13 +52,13 @@ public class MatchReference
         {
             return false;
         }
-        if (this.matchId == null)
+        if (this.gameId == null)
         {
-            if (other.matchId != null)
+            if (other.gameId != null)
             {
                 return false;
             }
-        } else if (!this.matchId.equals(other.matchId))
+        } else if (!this.gameId.equals(other.gameId))
         {
             return false;
         }
@@ -80,16 +79,6 @@ public class MatchReference
                 return false;
             }
         } else if (!this.queue.equals(other.queue))
-        {
-            return false;
-        }
-        if (this.region == null)
-        {
-            if (other.region != null)
-            {
-                return false;
-            }
-        } else if (!this.region.equals(other.region))
         {
             return false;
         }
@@ -152,9 +141,9 @@ public class MatchReference
      *
      * @return Long
      */
-    public Long getMatchId()
+    public Long getGameId()
     {
-        return this.matchId;
+        return this.gameId;
     }
     
     /**
@@ -172,20 +161,11 @@ public class MatchReference
      *
      * @return String
      */
-    public RankedQueueType getQueue()
+    public GameQueueType getQueue()
     {
         return this.queue;
     }
     
-    /**
-     * Region
-     *
-     * @return String
-     */
-    public Server getRegion()
-    {
-        return this.region;
-    }
     
     /**
      * RoleType
@@ -229,10 +209,9 @@ public class MatchReference
         int       result = 1;
         result = (prime * result) + ((this.champion == null) ? 0 : this.champion.hashCode());
         result = (prime * result) + ((this.lane == null) ? 0 : this.lane.hashCode());
-        result = (prime * result) + ((this.matchId == null) ? 0 : this.matchId.hashCode());
+        result = (prime * result) + ((this.gameId == null) ? 0 : this.gameId.hashCode());
         result = (prime * result) + ((this.platformId == null) ? 0 : this.platformId.hashCode());
         result = (prime * result) + ((this.queue == null) ? 0 : this.queue.hashCode());
-        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
         result = (prime * result) + ((this.role == null) ? 0 : this.role.hashCode());
         result = (prime * result) + ((this.season == null) ? 0 : this.season.hashCode());
         result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
@@ -244,12 +223,11 @@ public class MatchReference
     {
         return "MatchReference{" +
                "champion=" + champion +
-               ", matchId=" + matchId +
+               ", gameId=" + gameId +
                ", timestamp=" + timestamp +
                ", lane='" + lane + '\'' +
                ", platformId='" + platformId + '\'' +
                ", queue='" + queue + '\'' +
-               ", region='" + region + '\'' +
                ", role='" + role + '\'' +
                ", season='" + season + '\'' +
                '}';

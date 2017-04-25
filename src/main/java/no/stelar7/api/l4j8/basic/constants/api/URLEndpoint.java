@@ -6,13 +6,14 @@ import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
 import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
 import no.stelar7.api.l4j8.pojo.league.League;
-import no.stelar7.api.l4j8.pojo.match.MatchDetail;
+import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.mastery.Mastery;
 import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
@@ -94,15 +95,14 @@ public enum URLEndpoint
     V3_STATIC_SUMMONER_SPELL_BY_ID("lol", "static-data", "v3", "summoner-spells/" + Constants.ID_PLACEHOLDER, StaticSummonerSpell.class),
     V3_STATIC_VERSIONS("lol", "static-data", "v3", "versions", new TypeToken<List<String>>() {}.getType()),
     
-    // NOT ADDED TO V3 YET!!
-    // api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}
-    // api/lol/{region}/v2.2/match/{matchId}
-    V3_MATCHLIST("lol", "platform", "v3", "matchlist/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MatchList.class),
-    V3_MATCH("lol", "platform", "v3", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),
-    
-    OLD_MATCHLIST("api/lol", "{region}", "v2.2", "matchlist/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, MatchList.class),
-    OLD_MATCH("api/lol", "{region}", "v2.2", "match/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),
-    
+    //    lol/match/v3/matches/{matchId}
+    //    lol/match/v3/matchlists/by-account/{accountId}
+    //    lol/match/v3/matchlists/by-account/{accountId}/recent
+    //    lol/match/v3/timelines/by-match/{matchId}
+    V3_MATCH("lol", "match", "v3", "matches/" + Constants.MATCH_ID_PLACEHOLDER, Match.class),
+    V3_MATCHLIST("lol", "match", "v3", "matchlists/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, MatchList.class),
+    V3_MATCHLIST_RECENT("lol", "match", "v3", "matchlists/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER + "/recent", MatchList.class),
+    V3_TIMELINE("lol", "match", "v3", "timelines/by-match/" + Constants.MATCH_ID_PLACEHOLDER, MatchTimeline.class),
     
     // NOT ADDED TO V3 YET!!
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}
@@ -136,17 +136,16 @@ public enum URLEndpoint
     // GET  lol/tournament/v3/lobby-events/by-code/{tournamentCode} Gets a list of lobby events by tournament code.
     // POST lol/tournament/v3/providers Creates a tournament provider and returns its ID.
     // POST lol/tournament/v3/tournaments Creates a tournament and returns its ID.
+    // GET  lol/match/v3/matches/{matchId}/by-tournament-code/{tournamentCode}
+    // GET  lol/match/v3/matches/by-tournament-code/{tournamentCode}/ids
+    V3_TOURNAMENT_MATCH("lol", "match", "v3", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, Match.class),
+    V3_TOURNAMENT_MATCHLIST("lol", "match", "v3", "matches/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER + "/ids", new TypeToken<List<Long>>() {}.getType()),
     V3_TOURNAMENT_CODES("lol", "tournament", "v3", "codes", new TypeToken<List<String>>() {}.getType()),
     V3_TOURNAMENT_CODES_BY_CODE("lol", "tournament", "v3", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
     V3_TOURNAMENT_LOBBY_EVENTS("lol", "tournament", "v3", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V3_TOURNAMENT_PROVIDER("lol", "tournament", "v3", "providers", Integer.class),
-    V3_TOURNAMENT_TOURNAMENT("lol", "tournament", "v3", "tournaments", Integer.class),
+    V3_TOURNAMENT_TOURNAMENT("lol", "tournament", "v3", "tournaments", Integer.class);
     
-    
-    ///api/lol/{region}/v2.2/match/by-tournament/{tournamentCode}/ids Retrieve match IDs by tournament code.
-    // api/lol/{region}/v2.2/match/for-tournament/{matchId} Retrieve match by match ID and tournament code.
-    OLD_TOURNAMENT_MATCH("api/lol", "{region}", "v2.2", "for-tournament/" + Constants.MATCH_ID_PLACEHOLDER, MatchDetail.class),
-    OLD_TOURNAMENT_MATCHLIST("api/lol", "{region}", "v2.2", "match/by-tournament/" + Constants.TOURNAMENT_CODE_PLACEHOLDER + "/ids", new TypeToken<List<Long>>() {}.getType());
     
     private final String game;
     private final String service;

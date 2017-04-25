@@ -9,9 +9,9 @@ public class Participant
 {
     private ChampionType        championId;
     private TierType            highestAchievedSeasonTier;
-    private List<Mastery>       masteries;
+    private List<MatchMastery>  masteries;
     private Integer             participantId;
-    private List<Rune>          runes;
+    private List<MatchRune>     runes;
     private SummonerSpellType   spell1Id;
     private SummonerSpellType   spell2Id;
     private ParticipantStats    stats;
@@ -161,9 +161,9 @@ public class Participant
     /**
      * List of mastery information
      *
-     * @return {@code List<Mastery>}
+     * @return {@code List<MatchMastery>}
      */
-    public List<Mastery> getMasteries()
+    public List<MatchMastery> getMasteries()
     {
         return this.masteries;
     }
@@ -181,9 +181,9 @@ public class Participant
     /**
      * List of rune information
      *
-     * @return {@code List<Rune>}
+     * @return {@code List<MatchRune>}
      */
-    public List<Rune> getRunes()
+    public List<MatchRune> getRunes()
     {
         return this.runes;
     }
@@ -231,7 +231,7 @@ public class Participant
     }
     
     /**
-     * Timeline data.
+     * MatchTimeline data.
      * Delta fields refer to values for the specified period (e.g., the gold per minute over the first 10 minutes of the game versus the second 20 minutes of the game. Diffs fields refer to the deltas versus the calculated lane opponent(s).
      *
      * @return ParticipantTimeline

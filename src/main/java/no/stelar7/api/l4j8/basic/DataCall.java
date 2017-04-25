@@ -81,15 +81,8 @@ public final class DataCall
             
             if ((response.getResponseCode() == 200) || (response.getResponseCode() == 204))
             {
-                final Object type = this.dc.endpoint.getType();
-                Object       dtoobj;
-                if (type instanceof Class<?>)
-                {
-                    dtoobj = Utils.getGson().fromJson(response.getResponseData(), (Class<?>) this.dc.endpoint.getType());
-                } else
-                {
-                    dtoobj = Utils.getGson().fromJson(response.getResponseData(), (Type) this.dc.endpoint.getType());
-                }
+                final Object returnType = this.dc.endpoint.getType();
+                Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
                 
                 try
                 {

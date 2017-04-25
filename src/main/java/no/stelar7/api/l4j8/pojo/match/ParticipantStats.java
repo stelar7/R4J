@@ -7,8 +7,6 @@ import java.util.stream.*;
 public class ParticipantStats
 {
     
-    public static final Logger LOGGER = Logger.getGlobal();
-    
     private Long    assists;
     private Long    champLevel;
     private Long    combatPlayerScore;
@@ -737,7 +735,7 @@ public class ParticipantStats
                                                                map.put(f.getName(), f.get(this).toString());
                                                            } catch (final IllegalAccessException e)
                                                            {
-                                                               ParticipantStats.LOGGER.log(Level.WARNING, e.getMessage(), e);
+                                                               Logger.getGlobal().log(Level.WARNING, e.getMessage(), e);
                                                            }
                                                        });
         return map;

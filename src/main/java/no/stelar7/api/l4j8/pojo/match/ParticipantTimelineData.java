@@ -8,65 +8,6 @@ public class ParticipantTimelineData
     private Double twentyToThirty;
     private Double zeroToTen;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final ParticipantTimelineData other = (ParticipantTimelineData) obj;
-        if (this.tenToTwenty == null)
-        {
-            if (other.tenToTwenty != null)
-            {
-                return false;
-            }
-        } else if (!this.tenToTwenty.equals(other.tenToTwenty))
-        {
-            return false;
-        }
-        if (this.thirtyToEnd == null)
-        {
-            if (other.thirtyToEnd != null)
-            {
-                return false;
-            }
-        } else if (!this.thirtyToEnd.equals(other.thirtyToEnd))
-        {
-            return false;
-        }
-        if (this.twentyToThirty == null)
-        {
-            if (other.twentyToThirty != null)
-            {
-                return false;
-            }
-        } else if (!this.twentyToThirty.equals(other.twentyToThirty))
-        {
-            return false;
-        }
-        if (this.zeroToTen == null)
-        {
-            if (other.zeroToTen != null)
-            {
-                return false;
-            }
-        } else if (!this.zeroToTen.equals(other.zeroToTen))
-        {
-            return false;
-        }
-        return true;
-    }
-    
     /**
      * Gets the ten to twenty.
      *
@@ -108,14 +49,41 @@ public class ParticipantTimelineData
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        ParticipantTimelineData that = (ParticipantTimelineData) o;
+        
+        if ((tenToTwenty != null) ? !tenToTwenty.equals(that.tenToTwenty) : (that.tenToTwenty != null))
+        {
+            return false;
+        }
+        if ((thirtyToEnd != null) ? !thirtyToEnd.equals(that.thirtyToEnd) : (that.thirtyToEnd != null))
+        {
+            return false;
+        }
+        if ((twentyToThirty != null) ? !twentyToThirty.equals(that.twentyToThirty) : (that.twentyToThirty != null))
+        {
+            return false;
+        }
+        return (zeroToTen != null) ? zeroToTen.equals(that.zeroToTen) : (that.zeroToTen == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.tenToTwenty == null) ? 0 : this.tenToTwenty.hashCode());
-        result = (prime * result) + ((this.thirtyToEnd == null) ? 0 : this.thirtyToEnd.hashCode());
-        result = (prime * result) + ((this.twentyToThirty == null) ? 0 : this.twentyToThirty.hashCode());
-        result = (prime * result) + ((this.zeroToTen == null) ? 0 : this.zeroToTen.hashCode());
+        int result = tenToTwenty != null ? tenToTwenty.hashCode() : 0;
+        result = 31 * result + (thirtyToEnd != null ? thirtyToEnd.hashCode() : 0);
+        result = 31 * result + (twentyToThirty != null ? twentyToThirty.hashCode() : 0);
+        result = 31 * result + (zeroToTen != null ? zeroToTen.hashCode() : 0);
         return result;
     }
     

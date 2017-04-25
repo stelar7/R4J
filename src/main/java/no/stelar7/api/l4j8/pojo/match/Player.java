@@ -1,70 +1,18 @@
 package no.stelar7.api.l4j8.pojo.match;
 
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+
 public class Player
 {
-    private String  matchHistoryUri;
-    private Integer profileIcon;
-    private Long    summonerId;
-    private String  summonerName;
+    private String   matchHistoryUri;
+    private Integer  profileIcon;
+    private Long     summonerId;
+    private String   summonerName;
+    private Platform currentPlatformId;
+    private Platform platformId;
+    private Long     accountId;
+    private Long     currentAccountId;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Player other = (Player) obj;
-        if (this.matchHistoryUri == null)
-        {
-            if (other.matchHistoryUri != null)
-            {
-                return false;
-            }
-        } else if (!this.matchHistoryUri.equals(other.matchHistoryUri))
-        {
-            return false;
-        }
-        if (this.profileIcon == null)
-        {
-            if (other.profileIcon != null)
-            {
-                return false;
-            }
-        } else if (!this.profileIcon.equals(other.profileIcon))
-        {
-            return false;
-        }
-        if (this.summonerId == null)
-        {
-            if (other.summonerId != null)
-            {
-                return false;
-            }
-        } else if (!this.summonerId.equals(other.summonerId))
-        {
-            return false;
-        }
-        if (this.summonerName == null)
-        {
-            if (other.summonerName != null)
-            {
-                return false;
-            }
-        } else if (!this.summonerName.equals(other.summonerName))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the match history uri.
@@ -106,15 +54,82 @@ public class Player
         return this.summonerName;
     }
     
+    public Platform getCurrentPlatformId()
+    {
+        return currentPlatformId;
+    }
+    
+    public Platform getPlatformId()
+    {
+        return platformId;
+    }
+    
+    public Long getAccountId()
+    {
+        return accountId;
+    }
+    
+    public Long getCurrentAccountId()
+    {
+        return currentAccountId;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Player player = (Player) o;
+        
+        if ((matchHistoryUri != null) ? !matchHistoryUri.equals(player.matchHistoryUri) : (player.matchHistoryUri != null))
+        {
+            return false;
+        }
+        if ((profileIcon != null) ? !profileIcon.equals(player.profileIcon) : (player.profileIcon != null))
+        {
+            return false;
+        }
+        if ((summonerId != null) ? !summonerId.equals(player.summonerId) : (player.summonerId != null))
+        {
+            return false;
+        }
+        if ((summonerName != null) ? !summonerName.equals(player.summonerName) : (player.summonerName != null))
+        {
+            return false;
+        }
+        if (currentPlatformId != player.currentPlatformId)
+        {
+            return false;
+        }
+        if (platformId != player.platformId)
+        {
+            return false;
+        }
+        if ((accountId != null) ? !accountId.equals(player.accountId) : (player.accountId != null))
+        {
+            return false;
+        }
+        return (currentAccountId != null) ? currentAccountId.equals(player.currentAccountId) : (player.currentAccountId == null);
+    }
+    
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.matchHistoryUri == null) ? 0 : this.matchHistoryUri.hashCode());
-        result = (prime * result) + ((this.profileIcon == null) ? 0 : this.profileIcon.hashCode());
-        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
-        result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
+        int result = matchHistoryUri != null ? matchHistoryUri.hashCode() : 0;
+        result = 31 * result + (profileIcon != null ? profileIcon.hashCode() : 0);
+        result = 31 * result + (summonerId != null ? summonerId.hashCode() : 0);
+        result = 31 * result + (summonerName != null ? summonerName.hashCode() : 0);
+        result = 31 * result + (currentPlatformId != null ? currentPlatformId.hashCode() : 0);
+        result = 31 * result + (platformId != null ? platformId.hashCode() : 0);
+        result = 31 * result + (accountId != null ? accountId.hashCode() : 0);
+        result = 31 * result + (currentAccountId != null ? currentAccountId.hashCode() : 0);
         return result;
     }
     

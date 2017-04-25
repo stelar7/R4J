@@ -5,44 +5,6 @@ public class Rune
     private Integer count;
     private Long    runeId;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Rune other = (Rune) obj;
-        if (this.count == null)
-        {
-            if (other.count != null)
-            {
-                return false;
-            }
-        } else if (!this.count.equals(other.count))
-        {
-            return false;
-        }
-        if (this.runeId == null)
-        {
-            if (other.runeId != null)
-            {
-                return false;
-            }
-        } else if (!this.runeId.equals(other.runeId))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * The count of this rune used by the participant
@@ -65,12 +27,31 @@ public class Rune
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Rune rune = (Rune) o;
+        
+        if ((count != null) ? !count.equals(rune.count) : (rune.count != null))
+        {
+            return false;
+        }
+        return (runeId != null) ? runeId.equals(rune.runeId) : (rune.runeId == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.count == null) ? 0 : this.count.hashCode());
-        result = (prime * result) + ((this.runeId == null) ? 0 : this.runeId.hashCode());
+        int result = count != null ? count.hashCode() : 0;
+        result = 31 * result + (runeId != null ? runeId.hashCode() : 0);
         return result;
     }
     

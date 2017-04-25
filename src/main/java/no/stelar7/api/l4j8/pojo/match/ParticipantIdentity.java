@@ -5,44 +5,6 @@ public class ParticipantIdentity
     private Integer participantId;
     private Player  player;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final ParticipantIdentity other = (ParticipantIdentity) obj;
-        if (this.participantId == null)
-        {
-            if (other.participantId != null)
-            {
-                return false;
-            }
-        } else if (!this.participantId.equals(other.participantId))
-        {
-            return false;
-        }
-        if (this.player == null)
-        {
-            if (other.player != null)
-            {
-                return false;
-            }
-        } else if (!this.player.equals(other.player))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Participant ID
@@ -65,12 +27,31 @@ public class ParticipantIdentity
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        ParticipantIdentity that = (ParticipantIdentity) o;
+        
+        if ((participantId != null) ? !participantId.equals(that.participantId) : (that.participantId != null))
+        {
+            return false;
+        }
+        return (player != null) ? player.equals(that.player) : (that.player == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());
-        result = (prime * result) + ((this.player == null) ? 0 : this.player.hashCode());
+        int result = participantId != null ? participantId.hashCode() : 0;
+        result = 31 * result + (player != null ? player.hashCode() : 0);
         return result;
     }
     

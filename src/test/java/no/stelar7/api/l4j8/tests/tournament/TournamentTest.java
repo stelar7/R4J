@@ -60,7 +60,7 @@ public class TournamentTest
         final List<Long> tournamentCodeMatchIds = this.builder.getMatchIds(Constants.TEST_TOURNAMENT_CODE, Server.EUW);
         tournamentCodeMatchIds.stream().map(String::valueOf).forEach(TournamentTest.LOGGER::info);
         
-        final MatchDetail matchDetail = this.builder.getMatchInfo(Constants.TEST_TOURNAMENT_CODE, tournamentCodeMatchIds.get(0));
+        final Match matchDetail = this.builder.getMatchInfo(Constants.TEST_TOURNAMENT_CODE, tournamentCodeMatchIds.get(0));
         TournamentTest.LOGGER.log(Level.INFO, String.valueOf(matchDetail));
     }
     
@@ -104,7 +104,7 @@ public class TournamentTest
     // @Test
     public void testTournamentMatchDetails()
     {
-        final MatchDetail eventWrapper = this.builder.getMatchInfo(Constants.TEST_TOURNAMENT_CODE, this.builder.getMatchIds(Constants.TEST_TOURNAMENT_CODE, Server.EUW)
+        final Match eventWrapper = this.builder.getMatchInfo(Constants.TEST_TOURNAMENT_CODE, this.builder.getMatchIds(Constants.TEST_TOURNAMENT_CODE, Server.EUW)
                                                                                                                .get(0));
         TournamentTest.LOGGER.log(Level.INFO, String.valueOf(eventWrapper));
     }
