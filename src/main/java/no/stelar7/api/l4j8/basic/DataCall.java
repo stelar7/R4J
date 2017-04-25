@@ -60,13 +60,16 @@ public final class DataCall
                 throw new APIUnsupportedAction("No API Creds set!");
             }
             
-            // TODO: Make this better
-            if (this.dc.platform != null)
+            if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
             {
-                DataCall.limiter.get(this.dc.platform).acquire();
-            } else
-            {
-                DataCall.oldlimiter.get(this.dc.server).acquire();
+                // TODO: Remove this when league-v3 is a thing
+                if (this.dc.platform != null)
+                {
+                    DataCall.limiter.get(this.dc.platform).acquire();
+                } else
+                {
+                    DataCall.oldlimiter.get(this.dc.server).acquire();
+                }
             }
             
             final String url = this.getURL();
