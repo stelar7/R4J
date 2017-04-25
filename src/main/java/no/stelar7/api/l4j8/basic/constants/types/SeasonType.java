@@ -5,28 +5,45 @@ import java.util.stream.*;
 
 public enum SeasonType
 {
-    PRE_SEASON_2013("PRESEASON3"),
-    PRE_SEASON_2014("PRESEASON2014"),
-    PRE_SEASON_2015("PRESEASON2015"),
-    PRE_SEASON_2016("PRESEASON2016"),
-    PRE_SEASON_2017("PRESEASON2017"),
+    PRE_SEASON_2013("PRESEASON3", 0),
+    SEASON_2013("SEASON3", 1),
+    PRE_SEASON_2014("PRESEASON2014", 2),
+    SEASON_2014("SEASON2014", 3),
+    PRE_SEASON_2015("PRESEASON2015", 4),
+    SEASON_2015("SEASON2015", 5),
+    PRE_SEASON_2016("PRESEASON2016", 6),
+    SEASON_2016("SEASON2016", 7),
+    PRE_SEASON_2017("PRESEASON2017", 8),
+    SEASON_2017("SEASON2017", 9);
     
-    SEASON_2013("SEASON3"),
-    SEASON_2014("SEASON2014"),
-    SEASON_2015("SEASON2015"),
-    SEASON_2016("SEASON2016"),
-    SEASON_2017("SEASON2017");
+    private final String  value;
+    private final Integer seasonId;
     
-    private final String value;
-    
-    SeasonType(final String value)
+    SeasonType(final String value, final int seasonId)
     {
         this.value = value;
+        this.seasonId = seasonId;
     }
     
     public static Optional<SeasonType> getFromCode(final String value)
     {
+        try
+        {
+            return getFromId(Integer.parseInt(value));
+        } catch (NumberFormatException e)
+        {
+            return getFromString(value);
+        }
+    }
+    
+    public static Optional<SeasonType> getFromString(final String value)
+    {
         return Stream.of(SeasonType.values()).filter(t -> t.value.equalsIgnoreCase(value)).findFirst();
+    }
+    
+    public static Optional<SeasonType> getFromId(final Integer value)
+    {
+        return Stream.of(SeasonType.values()).filter(t -> t.seasonId.equals(value)).findFirst();
     }
     
     /**

@@ -13,6 +13,6 @@ public class GameQueueTypeDeserializer implements JsonDeserializer<GameQueueType
     public GameQueueType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
     {
         String id = json.getAsString();
-        return GameQueueType.getFromName(id).orElseThrow(() -> new APIEnumNotUpToDateException(typeOfT, json));
+        return GameQueueType.getFromCode(id).orElseThrow(() -> new APIEnumNotUpToDateException(typeOfT, json));
     }
 }

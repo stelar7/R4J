@@ -179,12 +179,23 @@ public enum GameQueueType
     
     public static Optional<GameQueueType> getFromCode(final String value)
     {
-        return Stream.of(GameQueueType.values()).filter(t -> t.code.equals(Integer.valueOf(value))).findFirst();
+        try
+        {
+            return getFromId(Integer.parseInt(value));
+        } catch (NumberFormatException e)
+        {
+            return getFromString(value);
+        }
     }
     
-    public static Optional<GameQueueType> getFromName(final String value)
+    public static Optional<GameQueueType> getFromString(final String value)
     {
         return Stream.of(GameQueueType.values()).filter(t -> t.name().equalsIgnoreCase(value)).findFirst();
+    }
+    
+    public static Optional<GameQueueType> getFromId(final int value)
+    {
+        return Stream.of(GameQueueType.values()).filter(t -> t.code.equals(value)).findFirst();
     }
     
     public Integer getCode()
