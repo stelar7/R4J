@@ -6,256 +6,29 @@ import java.util.List;
 
 public class MatchEvent
 {
-    private AscencionType ascendedType;
-    private List<Integer> assistingParticipantIds;
-    private BuildingType  buildingType;
-    private Integer       creatorId;
-    private EventType     type;
-    private Integer       itemAfter;
-    private Integer       itemBefore;
-    private Integer       itemId;
-    private Integer       killerId;
-    private LaneType      laneType;
-    private LevelUpType   levelUpType;
-    private MonsterType   monsterType;
-    private Integer       participantId;
-    private PointType     pointCaptured;
-    private MatchPosition position;
-    private Integer       skillSlot;
-    private TeamType      teamId;
-    private Long          timestamp;
-    private TowerType     towerType;
-    private Integer       victimId;
-    private WardType      wardType;
+    private Integer        afterId;
+    private Integer        beforeId;
+    private AscencionType  ascendedType;
+    private List<Integer>  assistingParticipantIds;
+    private BuildingType   buildingType;
+    private Integer        creatorId;
+    private EventType      type;
+    private Integer        itemId;
+    private Integer        killerId;
+    private LaneType       laneType;
+    private LevelUpType    levelUpType;
+    private MonsterType    monsterType;
+    private MonsterSubType monsterSubType;
+    private Integer        participantId;
+    private PointType      pointCaptured;
+    private MatchPosition  position;
+    private Integer        skillSlot;
+    private TeamType       teamId;
+    private Long           timestamp;
+    private TowerType      towerType;
+    private Integer        victimId;
+    private WardType       wardType;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MatchEvent other = (MatchEvent) obj;
-        if (this.ascendedType == null)
-        {
-            if (other.ascendedType != null)
-            {
-                return false;
-            }
-        } else if (!this.ascendedType.equals(other.ascendedType))
-        {
-            return false;
-        }
-        if (this.assistingParticipantIds == null)
-        {
-            if (other.assistingParticipantIds != null)
-            {
-                return false;
-            }
-        } else if (!this.assistingParticipantIds.equals(other.assistingParticipantIds))
-        {
-            return false;
-        }
-        if (this.buildingType == null)
-        {
-            if (other.buildingType != null)
-            {
-                return false;
-            }
-        } else if (!this.buildingType.equals(other.buildingType))
-        {
-            return false;
-        }
-        if (this.creatorId == null)
-        {
-            if (other.creatorId != null)
-            {
-                return false;
-            }
-        } else if (!this.creatorId.equals(other.creatorId))
-        {
-            return false;
-        }
-        if (this.type == null)
-        {
-            if (other.type != null)
-            {
-                return false;
-            }
-        } else if (!this.type.equals(other.type))
-        {
-            return false;
-        }
-        if (this.itemAfter == null)
-        {
-            if (other.itemAfter != null)
-            {
-                return false;
-            }
-        } else if (!this.itemAfter.equals(other.itemAfter))
-        {
-            return false;
-        }
-        if (this.itemBefore == null)
-        {
-            if (other.itemBefore != null)
-            {
-                return false;
-            }
-        } else if (!this.itemBefore.equals(other.itemBefore))
-        {
-            return false;
-        }
-        if (this.itemId == null)
-        {
-            if (other.itemId != null)
-            {
-                return false;
-            }
-        } else if (!this.itemId.equals(other.itemId))
-        {
-            return false;
-        }
-        if (this.killerId == null)
-        {
-            if (other.killerId != null)
-            {
-                return false;
-            }
-        } else if (!this.killerId.equals(other.killerId))
-        {
-            return false;
-        }
-        if (this.laneType == null)
-        {
-            if (other.laneType != null)
-            {
-                return false;
-            }
-        } else if (!this.laneType.equals(other.laneType))
-        {
-            return false;
-        }
-        if (this.levelUpType == null)
-        {
-            if (other.levelUpType != null)
-            {
-                return false;
-            }
-        } else if (!this.levelUpType.equals(other.levelUpType))
-        {
-            return false;
-        }
-        if (this.monsterType == null)
-        {
-            if (other.monsterType != null)
-            {
-                return false;
-            }
-        } else if (!this.monsterType.equals(other.monsterType))
-        {
-            return false;
-        }
-        if (this.participantId == null)
-        {
-            if (other.participantId != null)
-            {
-                return false;
-            }
-        } else if (!this.participantId.equals(other.participantId))
-        {
-            return false;
-        }
-        if (this.pointCaptured == null)
-        {
-            if (other.pointCaptured != null)
-            {
-                return false;
-            }
-        } else if (!this.pointCaptured.equals(other.pointCaptured))
-        {
-            return false;
-        }
-        if (this.position == null)
-        {
-            if (other.position != null)
-            {
-                return false;
-            }
-        } else if (!this.position.equals(other.position))
-        {
-            return false;
-        }
-        if (this.skillSlot == null)
-        {
-            if (other.skillSlot != null)
-            {
-                return false;
-            }
-        } else if (!this.skillSlot.equals(other.skillSlot))
-        {
-            return false;
-        }
-        if (this.teamId == null)
-        {
-            if (other.teamId != null)
-            {
-                return false;
-            }
-        } else if (!this.teamId.equals(other.teamId))
-        {
-            return false;
-        }
-        if (this.timestamp == null)
-        {
-            if (other.timestamp != null)
-            {
-                return false;
-            }
-        } else if (!this.timestamp.equals(other.timestamp))
-        {
-            return false;
-        }
-        if (this.towerType == null)
-        {
-            if (other.towerType != null)
-            {
-                return false;
-            }
-        } else if (!this.towerType.equals(other.towerType))
-        {
-            return false;
-        }
-        if (this.victimId == null)
-        {
-            if (other.victimId != null)
-            {
-                return false;
-            }
-        } else if (!this.victimId.equals(other.victimId))
-        {
-            return false;
-        }
-        if (this.wardType == null)
-        {
-            if (other.wardType != null)
-            {
-                return false;
-            }
-        } else if (!this.wardType.equals(other.wardType))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * The ascended type of the event as AscencionType
@@ -316,7 +89,7 @@ public class MatchEvent
      */
     public Integer getItemAfter()
     {
-        return this.itemAfter;
+        return this.afterId;
     }
     
     /**
@@ -326,7 +99,7 @@ public class MatchEvent
      */
     public Integer getItemBefore()
     {
-        return this.itemBefore;
+        return this.beforeId;
     }
     
     /**
@@ -470,31 +243,131 @@ public class MatchEvent
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MatchEvent that = (MatchEvent) o;
+        
+        if ((afterId != null) ? !afterId.equals(that.afterId) : (that.afterId != null))
+        {
+            return false;
+        }
+        if ((beforeId != null) ? !beforeId.equals(that.beforeId) : (that.beforeId != null))
+        {
+            return false;
+        }
+        if (ascendedType != that.ascendedType)
+        {
+            return false;
+        }
+        if ((assistingParticipantIds != null) ? !assistingParticipantIds.equals(that.assistingParticipantIds) : (that.assistingParticipantIds != null))
+        {
+            return false;
+        }
+        if (buildingType != that.buildingType)
+        {
+            return false;
+        }
+        if ((creatorId != null) ? !creatorId.equals(that.creatorId) : (that.creatorId != null))
+        {
+            return false;
+        }
+        if (type != that.type)
+        {
+            return false;
+        }
+        if ((itemId != null) ? !itemId.equals(that.itemId) : (that.itemId != null))
+        {
+            return false;
+        }
+        if ((killerId != null) ? !killerId.equals(that.killerId) : (that.killerId != null))
+        {
+            return false;
+        }
+        if (laneType != that.laneType)
+        {
+            return false;
+        }
+        if (levelUpType != that.levelUpType)
+        {
+            return false;
+        }
+        if (monsterType != that.monsterType)
+        {
+            return false;
+        }
+        if (monsterSubType != that.monsterSubType)
+        {
+            return false;
+        }
+        if ((participantId != null) ? !participantId.equals(that.participantId) : (that.participantId != null))
+        {
+            return false;
+        }
+        if (pointCaptured != that.pointCaptured)
+        {
+            return false;
+        }
+        if ((position != null) ? !position.equals(that.position) : (that.position != null))
+        {
+            return false;
+        }
+        if ((skillSlot != null) ? !skillSlot.equals(that.skillSlot) : (that.skillSlot != null))
+        {
+            return false;
+        }
+        if (teamId != that.teamId)
+        {
+            return false;
+        }
+        if ((timestamp != null) ? !timestamp.equals(that.timestamp) : (that.timestamp != null))
+        {
+            return false;
+        }
+        if (towerType != that.towerType)
+        {
+            return false;
+        }
+        if ((victimId != null) ? !victimId.equals(that.victimId) : (that.victimId != null))
+        {
+            return false;
+        }
+        return wardType == that.wardType;
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.ascendedType == null) ? 0 : this.ascendedType.hashCode());
-        result = (prime * result) + ((this.assistingParticipantIds == null) ? 0 : this.assistingParticipantIds.hashCode());
-        result = (prime * result) + ((this.buildingType == null) ? 0 : this.buildingType.hashCode());
-        result = (prime * result) + ((this.creatorId == null) ? 0 : this.creatorId.hashCode());
-        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
-        result = (prime * result) + ((this.itemAfter == null) ? 0 : this.itemAfter.hashCode());
-        result = (prime * result) + ((this.itemBefore == null) ? 0 : this.itemBefore.hashCode());
-        result = (prime * result) + ((this.itemId == null) ? 0 : this.itemId.hashCode());
-        result = (prime * result) + ((this.killerId == null) ? 0 : this.killerId.hashCode());
-        result = (prime * result) + ((this.laneType == null) ? 0 : this.laneType.hashCode());
-        result = (prime * result) + ((this.levelUpType == null) ? 0 : this.levelUpType.hashCode());
-        result = (prime * result) + ((this.monsterType == null) ? 0 : this.monsterType.hashCode());
-        result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());
-        result = (prime * result) + ((this.pointCaptured == null) ? 0 : this.pointCaptured.hashCode());
-        result = (prime * result) + ((this.position == null) ? 0 : this.position.hashCode());
-        result = (prime * result) + ((this.skillSlot == null) ? 0 : this.skillSlot.hashCode());
-        result = (prime * result) + ((this.teamId == null) ? 0 : this.teamId.hashCode());
-        result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
-        result = (prime * result) + ((this.towerType == null) ? 0 : this.towerType.hashCode());
-        result = (prime * result) + ((this.victimId == null) ? 0 : this.victimId.hashCode());
-        result = (prime * result) + ((this.wardType == null) ? 0 : this.wardType.hashCode());
+        int result = afterId != null ? afterId.hashCode() : 0;
+        result = 31 * result + (beforeId != null ? beforeId.hashCode() : 0);
+        result = 31 * result + (ascendedType != null ? ascendedType.hashCode() : 0);
+        result = 31 * result + (assistingParticipantIds != null ? assistingParticipantIds.hashCode() : 0);
+        result = 31 * result + (buildingType != null ? buildingType.hashCode() : 0);
+        result = 31 * result + (creatorId != null ? creatorId.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (itemId != null ? itemId.hashCode() : 0);
+        result = 31 * result + (killerId != null ? killerId.hashCode() : 0);
+        result = 31 * result + (laneType != null ? laneType.hashCode() : 0);
+        result = 31 * result + (levelUpType != null ? levelUpType.hashCode() : 0);
+        result = 31 * result + (monsterType != null ? monsterType.hashCode() : 0);
+        result = 31 * result + (monsterSubType != null ? monsterSubType.hashCode() : 0);
+        result = 31 * result + (participantId != null ? participantId.hashCode() : 0);
+        result = 31 * result + (pointCaptured != null ? pointCaptured.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (skillSlot != null ? skillSlot.hashCode() : 0);
+        result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
+        result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
+        result = 31 * result + (towerType != null ? towerType.hashCode() : 0);
+        result = 31 * result + (victimId != null ? victimId.hashCode() : 0);
+        result = 31 * result + (wardType != null ? wardType.hashCode() : 0);
         return result;
     }
     
@@ -502,27 +375,28 @@ public class MatchEvent
     public String toString()
     {
         return "MatchEvent{" +
-               "eventType='" + type + '\'' +
-               ", ascendedType='" + ascendedType + '\'' +
+               "afterId=" + afterId +
+               ", beforeId=" + beforeId +
+               ", ascendedType=" + ascendedType +
                ", assistingParticipantIds=" + assistingParticipantIds +
-               ", buildingType='" + buildingType + '\'' +
+               ", buildingType=" + buildingType +
                ", creatorId=" + creatorId +
-               ", itemAfter=" + itemAfter +
-               ", itemBefore=" + itemBefore +
+               ", type=" + type +
                ", itemId=" + itemId +
                ", killerId=" + killerId +
-               ", laneType='" + laneType + '\'' +
-               ", levelUpType='" + levelUpType + '\'' +
-               ", monsterType='" + monsterType + '\'' +
+               ", laneType=" + laneType +
+               ", levelUpType=" + levelUpType +
+               ", monsterType=" + monsterType +
+               ", monsterSubType=" + monsterSubType +
                ", participantId=" + participantId +
-               ", pointCaptured='" + pointCaptured + '\'' +
+               ", pointCaptured=" + pointCaptured +
                ", position=" + position +
                ", skillSlot=" + skillSlot +
                ", teamId=" + teamId +
                ", timestamp=" + timestamp +
-               ", towerType='" + towerType + '\'' +
+               ", towerType=" + towerType +
                ", victimId=" + victimId +
-               ", wardType='" + wardType + '\'' +
+               ", wardType=" + wardType +
                '}';
     }
 }

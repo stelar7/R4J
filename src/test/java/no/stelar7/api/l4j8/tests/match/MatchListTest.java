@@ -49,15 +49,11 @@ public class MatchListTest
         MatchList all    = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], empty, empty, empty, empty, empty, empty, empty);
         MatchList recent = api.getRecentMatches(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
         
-        MatchReference          ref         = all.getMatches().get(all.getMatches().size() - 1);
-        Optional<MatchTimeline> oldtimeline = api.getMatch(ref.getPlatform(), ref.getGameId()).getTimeline();
-        
-        oldtimeline.ifPresent(a -> System.out.println("HUH? this shouldnt be here..."));
-        
         for (MatchReference reference : all.getMatches())
         {
             Match                   detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
             Optional<MatchTimeline> timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
+            System.out.println();
         }
     }
 }
