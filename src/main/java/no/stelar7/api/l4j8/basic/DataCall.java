@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
-import no.stelar7.api.l4j8.basic.ratelimiting.BurstRateLimiter;
+import no.stelar7.api.l4j8.basic.ratelimiting.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;
@@ -454,8 +454,8 @@ public final class DataCall
     
     static
     {
-        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(10, 10, TimeUnit.SECONDS)));
-        Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, new BurstRateLimiter(10, 10, TimeUnit.SECONDS)));
+        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(new RateLimit(10, 10, TimeUnit.SECONDS))));
+        Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, new BurstRateLimiter(new RateLimit(10, 10, TimeUnit.SECONDS))));
     }
     
 }

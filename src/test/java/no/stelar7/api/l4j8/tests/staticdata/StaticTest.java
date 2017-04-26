@@ -128,9 +128,9 @@ public class StaticTest
     {
         Optional<EnumSet<RuneDataFlags>> dataFlags = Optional.of(EnumSet.of(RuneDataFlags.ALL));
         
-        StaticRune rune = api.getRune(Platform.EUW1, 5023, dataFlags, version, locale);
+        StaticRune rune = api.getRune(Platform.EUW1, 5245, dataFlags, version, locale);
         
-        Assert.assertTrue("missing id?", rune.getId() == 5023);
+        Assert.assertTrue("missing id?", rune.getId() != null);
         Assert.assertTrue("missing stats?", rune.getStats() != null);
         Assert.assertTrue("missing desc?", rune.getDescription() != null);
         Assert.assertTrue("missing tags?", rune.getTags() != null);

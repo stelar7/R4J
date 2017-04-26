@@ -1,25 +1,26 @@
 package no.stelar7.api.l4j8.basic.ratelimiting;
 
-import java.util.concurrent.*;
+import java.util.*;
+import java.util.concurrent.Semaphore;
 
 public abstract class RateLimiter
 {
-    protected final int       requests;
-    protected       long      delayInMs;
-    protected       Semaphore semaphore;
     
-    /**
-     * Creates a new RateLimiter
-     *
-     * @param permits how many calls per time
-     * @param time    how long the time is
-     * @param unit    what unit the time is
-     */
-    public RateLimiter(final int permits, final int time, final TimeUnit unit)
+    protected List<RateLimit> limits;
+    protected Semaphore       semaphore;
+    
+    public RateLimiter(RateLimit... limiters)
     {
-        requests = (permits - 1);
-        delayInMs = unit.toMillis(time);
-        semaphore = new Semaphore(requests);
+        limits = Arrays.asList(limiters);
+        
+        // This line here... just wow..
+        int fewestRequests = limits.stream().sorted(Comparator.comparing(RateLimit::getRequests).reversed()).mapToInt(RateLimit::getRequests).limit(1).sum();
+        semaphore = new Semaphore(fewestRequests);
+    }
+    
+    public Semaphore getSemaphore()
+    {
+        return semaphore;
     }
     
     public abstract void acquire();
