@@ -33,7 +33,8 @@ public final class DataCall
         
         private final DataCall dc = new DataCall();
         
-        private final BiFunction<String, String, String> merge = (o, n) -> o + "," + n;
+        private final BiFunction<String, String, String> merge      = (o, n) -> o + "," + n;
+        private final BiFunction<String, String, String> mergeAsSet = (o, n) -> o + n;
         
         /**
          * Print out as much data as possible about this call
@@ -340,6 +341,20 @@ public final class DataCall
             this.dc.platform = server;
             return this;
         }
+        
+        /**
+         * Replaces placeholders in the URL (ie. {region})
+         *
+         * @param key   The key to replace (ie. {region})
+         * @param value The data to replace it with (ie. EUW)
+         * @return this
+         */
+        public DataCallBuilder withURLDataAsSet(final String key, final String value)
+        {
+            this.dc.urlData.merge(key, (this.dc.urlData.get(key) != null) ? ("&" + key + "=" + value) : value, this.mergeAsSet);
+            return this;
+        }
+        
         
         /**
          * Replaces placeholders in the URL (ie. {region})

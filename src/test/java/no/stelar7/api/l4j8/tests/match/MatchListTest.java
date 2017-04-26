@@ -42,18 +42,18 @@ public class MatchListTest
     @Test
     public void testMatchAndMatchList()
     {
-        Optional<EnumSet<RankedQueueType>> queue  = Optional.of(EnumSet.of(RankedQueueType.RANKED_SOLO_5X5));
-        Optional<EnumSet<SeasonType>>      season = Optional.of(EnumSet.of(SeasonType.SEASON_2014));
-        Optional<List<Integer>>            champs = Optional.of(Collections.singletonList(Constants.TEST_CHAMPION_IDS[0]));
-        //Optional<MatchList>                list   = api.getMatchList(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], empty, empty, queue, season, empty, empty, champs);
-        MatchList all    = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], empty, empty, empty, empty, empty, empty, empty);
-        MatchList recent = api.getRecentMatches(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+        Optional<EnumSet<GameQueueType>> queue     = Optional.of(EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO));
+        Optional<EnumSet<SeasonType>>    season    = Optional.of(EnumSet.of(SeasonType.PRE_SEASON_2017));
+        Optional<List<Integer>>          champs    = Optional.of(Arrays.asList(Constants.TEST_CHAMPION_IDS[0], 99));
+        Optional<Long>                   beginTime = Optional.of(1481108400000L);
+        
+        // use begintime instead of season because its broken ATM
+        MatchList all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, empty, empty, empty, queue, empty, champs);
         
         for (MatchReference reference : all.getMatches())
         {
             Match                   detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
             Optional<MatchTimeline> timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
-            System.out.println();
         }
     }
 }

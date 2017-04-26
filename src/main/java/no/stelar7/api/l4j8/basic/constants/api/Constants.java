@@ -18,13 +18,13 @@ public final class Constants
     public static final String SUMMONERSPELL_PLACEHOLDER_DATA   = "spellData";
     public static final String VERSION_PLACEHOLDER_DATA         = "version";
     public static final String LOCALE_PLACEHOLDER_DATA          = "locale";
-    public static final String RANKEDQUEUE_PLACEHOLDER_DATA     = "rankedQueues";
-    public static final String SEASON_PLACEHOLDER_DATA          = "seasons";
+    public static final String QUEUE_PLACEHOLDER_DATA           = "queue";
+    public static final String SEASON_PLACEHOLDER_DATA          = "season";
     public static final String ENDTIME_PLACEHOLDER_DATA         = "endTime";
     public static final String ENDINDEX_PLACEHOLDER_DATA        = "endIndex";
     public static final String BEGINTIME_PLACEHOLDER_DATA       = "beginTime";
     public static final String BEGININDEX_PLACEHOLDER_DATA      = "beginIndex";
-    public static final String CHAMPIDS_PLACEHOLDER_DATA        = "championIds";
+    public static final String CHAMPION_PLACEHOLDER_DATA        = "champion";
     public static final String TIMELINE_PLACEHOLDER_DATA        = "includeTimeline";
     public static final String COUNT_PLACEHOLDER_DATA           = "count";
     public static final String TYPE_PLACEHOLDER_DATA            = "type";
