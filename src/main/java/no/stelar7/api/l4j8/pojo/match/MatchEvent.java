@@ -13,6 +13,7 @@ public class MatchEvent
     private BuildingType   buildingType;
     private Integer        creatorId;
     private EventType      type;
+    private EventType      eventType;
     private Integer        itemId;
     private Integer        killerId;
     private LaneType       laneType;
@@ -79,7 +80,7 @@ public class MatchEvent
      */
     public EventType getEventType()
     {
-        return this.type;
+        return this.type != null ? this.type : eventType;
     }
     
     /**
