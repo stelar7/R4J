@@ -9,6 +9,8 @@ public class LobbyEvent
     
     /**
      * The type of event that was triggered
+     *
+     * @return event
      */
     public String getEventType()
     {
@@ -17,6 +19,8 @@ public class LobbyEvent
     
     /**
      * The summoner that triggered the event
+     *
+     * @return summoner
      */
     public String getSummonerId()
     {
@@ -25,6 +29,8 @@ public class LobbyEvent
     
     /**
      * Timestamp from the event
+     *
+     * @return timestamp
      */
     public String getTimestamp()
     {

@@ -50,6 +50,7 @@ public final class DataCall
         /**
          * Puts together all the data, and then returns an object representing the JSON from the call
          *
+         * @param retrys the amount of retries already done (should not be passed in!)
          * @return an object generated from the requested JSON
          * @throws APINoValidResponseException if the request failed in some fashion
          */

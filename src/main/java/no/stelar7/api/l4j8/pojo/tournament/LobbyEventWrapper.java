@@ -37,6 +37,8 @@ public class LobbyEventWrapper
     
     /**
      * A list of the lobby events
+     *
+     * @return event list
      */
     public List<LobbyEvent> getEventList()
     {

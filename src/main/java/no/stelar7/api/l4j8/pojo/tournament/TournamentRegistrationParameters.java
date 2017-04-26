@@ -60,6 +60,8 @@ public class TournamentRegistrationParameters
     
     /**
      * The optional name of the tournament.
+     *
+     * @return string
      */
     public String getName()
     {
@@ -73,6 +75,8 @@ public class TournamentRegistrationParameters
     
     /**
      * The provider ID to specify the regional registered provider data to associate this tournament.
+     *
+     * @return long
      */
     public Long getProviderId()
     {

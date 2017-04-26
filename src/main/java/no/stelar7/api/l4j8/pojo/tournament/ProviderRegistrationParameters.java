@@ -4,10 +4,10 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 
 public class ProviderRegistrationParameters
 {
-    private Server region;
-    private String url;
+    private Platform region;
+    private String   url;
     
-    public ProviderRegistrationParameters(final Server region, final String callbackUrl)
+    public ProviderRegistrationParameters(final Platform region, final String callbackUrl)
     {
         this.region = region;
         this.url = callbackUrl;
@@ -16,6 +16,8 @@ public class ProviderRegistrationParameters
     /**
      * The provider's callback URL to which tournament game results in this region should be posted.
      * The URL must be well-formed, use the http or https protocol, and use the default port for the protocol (http URLs must use port 80, https URLs must use port 443).
+     *
+     * @return callbackUrl
      */
     public String getCallbackUrl()
     {
@@ -29,13 +31,15 @@ public class ProviderRegistrationParameters
     
     /**
      * The region in which the provider will be running tournaments.
+     *
+     * @return platform
      */
-    public Server getRegion()
+    public Platform getRegion()
     {
         return this.region;
     }
     
-    public void setRegion(final Server region)
+    public void setRegion(final Platform region)
     {
         this.region = region;
     }

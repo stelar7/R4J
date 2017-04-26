@@ -24,6 +24,8 @@ public class TournamentCodeUpdateParameters
      * Optional list of participants in order to validate the players eligible to join the lobby.
      * NOTE: We currently do not enforce participants at the team level, but rather the aggregate of teamOne and teamTwo.
      * We may add the ability to enforce at the team level in the future.
+     *
+     * @return set
      */
     public Set<Long> getAllowedParticipants()
     {
@@ -37,6 +39,8 @@ public class TournamentCodeUpdateParameters
     
     /**
      * The map type of the game. Valid values are SUMMONERS_RIFT, TWISTED_TREELINE and HOWLING_ABYSS.
+     *
+     * @return TournamentMapType
      */
     public TournamentMapType getMapType()
     {
@@ -50,6 +54,8 @@ public class TournamentCodeUpdateParameters
     
     /**
      * The pick type of the game. Valid values are BLIND_PICK, DRAFT_MODE, ALL_RANDOM, TOURNAMENT_DRAFT.
+     *
+     * @return TournamentPickType
      */
     public TournamentPickType getPickType()
     {
@@ -63,6 +69,8 @@ public class TournamentCodeUpdateParameters
     
     /**
      * The spectator type of the game. Valid values are NONE, LOBBYONLY, ALL.
+     *
+     * @return TournamentSpectatorType
      */
     public TournamentSpectatorType getSpectatorType()
     {

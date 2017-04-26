@@ -1,26 +1,31 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.types.*;
+
 import java.util.*;
 
 public class TournamentCode
 {
-    private String    code;
-    private Long      id;
-    private String    lobbyName;
-    private String    map;
-    private String    metaData;
-    private Set<Long> participants;
-    private String    password;
-    private String    pickType;
-    private Integer   providerId;
-    private String    region;
-    private String    spectators;
-    private Integer   teamSize;
-    private Integer   tournamentId;
+    private String                  code;
+    private Long                    id;
+    private String                  lobbyName;
+    private String                  map;
+    private String                  metaData;
+    private Set<Long>               participants;
+    private String                  password;
+    private TournamentPickType      pickType;
+    private Integer                 providerId;
+    private Platform                region;
+    private TournamentSpectatorType spectators;
+    private Integer                 teamSize;
+    private Integer                 tournamentId;
     
     
     /**
      * The tournament code.
+     *
+     * @return string
      */
     public String getCode()
     {
@@ -29,6 +34,8 @@ public class TournamentCode
     
     /**
      * The tournament code's ID.
+     *
+     * @return long
      */
     public Long getId()
     {
@@ -37,6 +44,8 @@ public class TournamentCode
     
     /**
      * The lobby name for the tournament code game.
+     *
+     * @return string
      */
     public String getLobbyName()
     {
@@ -45,6 +54,8 @@ public class TournamentCode
     
     /**
      * The game map for the tournament code game
+     *
+     * @return map?
      */
     public String getMap()
     {
@@ -53,6 +64,8 @@ public class TournamentCode
     
     /**
      * The metadata for tournament code.
+     *
+     * @return string
      */
     public String getMetaData()
     {
@@ -61,6 +74,8 @@ public class TournamentCode
     
     /**
      * The participants for tournament code.
+     *
+     * @return set
      */
     public Set<Long> getParticipants()
     {
@@ -69,6 +84,8 @@ public class TournamentCode
     
     /**
      * The password for the tournament code game.
+     *
+     * @return string
      */
     public String getPassword()
     {
@@ -77,14 +94,18 @@ public class TournamentCode
     
     /**
      * The pick mode for tournament code game.
+     *
+     * @return TournamentPickType
      */
-    public String getPickType()
+    public TournamentPickType getPickType()
     {
         return this.pickType;
     }
     
     /**
      * The provider's ID.
+     *
+     * @return int
      */
     public Integer getProviderId()
     {
@@ -93,22 +114,28 @@ public class TournamentCode
     
     /**
      * The tournament code's region.
+     *
+     * @return platform
      */
-    public String getRegion()
+    public Platform getRegion()
     {
         return this.region;
     }
     
     /**
      * The spectator mode for the tournament code game.
+     *
+     * @return TournamentSpectatorType
      */
-    public String getSpectators()
+    public TournamentSpectatorType getSpectators()
     {
         return this.spectators;
     }
     
     /**
      * The team size for the tournament code game.
+     *
+     * @return int
      */
     public Integer getTeamSize()
     {
@@ -117,6 +144,8 @@ public class TournamentCode
     
     /**
      * The tournament's ID.
+     *
+     * @return int
      */
     public Integer getTournamentId()
     {

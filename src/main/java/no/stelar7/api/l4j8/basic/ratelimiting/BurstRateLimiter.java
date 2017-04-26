@@ -13,9 +13,6 @@ public class BurstRateLimiter extends RateLimiter
     private volatile Map<RateLimit, Instant> firstCallInTime;
     private volatile Map<RateLimit, Long>    callCountInTime;
     
-    /**
-     * @inheritDoc
-     */
     public BurstRateLimiter(RateLimit... limits)
     {
         super(limits);

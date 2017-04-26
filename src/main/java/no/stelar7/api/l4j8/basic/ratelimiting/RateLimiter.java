@@ -9,6 +9,9 @@ public abstract class RateLimiter
     protected List<RateLimit> limits;
     protected Semaphore       semaphore;
     
+    /**
+     * @param limiters the limits to obey
+     */
     public RateLimiter(RateLimit... limiters)
     {
         limits = Arrays.asList(limiters);
