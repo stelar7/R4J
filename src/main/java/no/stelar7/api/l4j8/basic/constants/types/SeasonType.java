@@ -51,9 +51,9 @@ public enum SeasonType
      *
      * @return String
      */
-    public String getValue()
+    public Integer getValue()
     {
-        return this.value;
+        return this.seasonId;
     }
     
 }

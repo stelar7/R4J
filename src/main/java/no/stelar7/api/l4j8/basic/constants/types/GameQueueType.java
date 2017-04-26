@@ -198,7 +198,7 @@ public enum GameQueueType
         return Stream.of(GameQueueType.values()).filter(t -> t.code.equals(value)).findFirst();
     }
     
-    public Integer getCode()
+    public Integer getValue()
     {
         return this.code;
     }

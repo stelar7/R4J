@@ -26,7 +26,7 @@ public final class MatchAPI
     public MatchList getMatchList(Platform server, long accountId,
                                   Optional<Long> beginTime, Optional<Long> endTime,
                                   Optional<Integer> beginIndex, Optional<Integer> endIndex,
-                                  Optional<EnumSet<RankedQueueType>> rankedQueues, Optional<EnumSet<SeasonType>> seasons, Optional<List<Integer>> championIds)
+                                  Optional<EnumSet<GameQueueType>> rankedQueues, Optional<EnumSet<SeasonType>> seasons, Optional<List<Integer>> championIds)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
@@ -35,8 +35,8 @@ public final class MatchAPI
         endTime.ifPresent(value -> builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(value)));
         endIndex.ifPresent(value -> builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, String.valueOf(value)));
         
-        rankedQueues.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RANKEDQUEUE_PLACEHOLDER_DATA, flag.getValue())));
-        seasons.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.SEASON_PLACEHOLDER_DATA, flag.getValue())));
+        rankedQueues.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RANKEDQUEUE_PLACEHOLDER_DATA, String.valueOf(flag.getValue()))));
+        seasons.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(flag.getValue()))));
         
         beginTime.ifPresent(value -> builder.withURLData(Constants.BEGINTIME_PLACEHOLDER_DATA, String.valueOf(value)));
         beginIndex.ifPresent(value -> builder.withURLData(Constants.BEGININDEX_PLACEHOLDER_DATA, String.valueOf(value)));
