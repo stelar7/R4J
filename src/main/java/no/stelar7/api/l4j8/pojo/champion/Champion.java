@@ -1,14 +1,16 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
+import no.stelar7.api.l4j8.basic.constants.types.ChampionType;
+
 public class Champion
 {
     
-    private Boolean active;
-    private Boolean botEnabled;
-    private Boolean botMmEnabled;
-    private Boolean freeToPlay;
-    private Boolean rankedPlayEnabled;
-    private Integer id;
+    private Boolean      active;
+    private Boolean      botEnabled;
+    private Boolean      botMmEnabled;
+    private Boolean      freeToPlay;
+    private Boolean      rankedPlayEnabled;
+    private ChampionType id;
     
     @Override
     public boolean equals(final Object obj)
@@ -90,6 +92,11 @@ public class Champion
     }
     
     public Integer getId()
+    {
+        return this.id.getId();
+    }
+    
+    public ChampionType getChampionType()
     {
         return this.id;
     }

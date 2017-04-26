@@ -32,6 +32,8 @@ public class StaticTest
         
         StaticChampionList list = api.getChampions(Platform.EUW1, dataFlags, version, locale);
         Assert.assertTrue("less than 100?", list.getData().size() > 100);
+        
+        //list.getData().values().stream().sorted(Comparator.comparing(StaticChampion::getName)).forEach(c -> System.out.format("%s(%s, \"%s\"),%n", c.getName().toUpperCase(Locale.ENGLISH), c.getId(), c.getName()));
     }
     
     
@@ -128,9 +130,9 @@ public class StaticTest
     {
         Optional<EnumSet<RuneDataFlags>> dataFlags = Optional.of(EnumSet.of(RuneDataFlags.ALL));
         
-        StaticRune rune = api.getRune(Platform.EUW1, 5245, dataFlags, version, locale);
+        StaticRune rune = api.getRune(Platform.EUW1, 5023, dataFlags, version, locale);
         
-        Assert.assertTrue("missing id?", rune.getId() != null);
+        Assert.assertTrue("missing id?", rune.getId() == 5023);
         Assert.assertTrue("missing stats?", rune.getStats() != null);
         Assert.assertTrue("missing desc?", rune.getDescription() != null);
         Assert.assertTrue("missing tags?", rune.getTags() != null);

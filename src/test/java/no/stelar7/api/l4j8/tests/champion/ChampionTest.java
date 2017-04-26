@@ -34,6 +34,12 @@ public class ChampionTest
     {
         ChampionList champ = api.getChampions(Platform.EUW1, Optional.of(true));
         Assert.assertTrue("count greater than 20?", champ.getChampions().size() < 20);
+        
+        champ.getChampions().sort(Comparator.comparing(Champion::getChampionType));
+        for (Champion champion : champ.getChampions())
+        {
+            System.out.println(champion.getChampionType().getFormattedName());
+        }
     }
     
     @Test
