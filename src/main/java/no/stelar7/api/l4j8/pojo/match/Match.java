@@ -162,7 +162,7 @@ public class Match
      */
     public Optional<MatchTimeline> getTimeline()
     {
-        return Optional.ofNullable(MatchAPI.getInstance().getTimeline(platformId, gameId));
+        return MatchAPI.getInstance().getTimeline(platformId, gameId);
     }
     
     

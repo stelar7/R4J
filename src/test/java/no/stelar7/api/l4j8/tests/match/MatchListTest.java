@@ -56,8 +56,8 @@ public class MatchListTest
         
         for (MatchReference reference : all.getMatches())
         {
-            Match         detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
-            MatchTimeline timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
+            Match                   detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
+            Optional<MatchTimeline> timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
         }
     }
 }
