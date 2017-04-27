@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.impl;
 
+import no.stelar7.api.l4j8.basic.*;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.match.Match;
 import no.stelar7.api.l4j8.pojo.tournament.*;
@@ -36,7 +36,7 @@ public final class TournamentAPI
      */
     public List<String> generateTournamentCodes(Platform server, final TournamentCodeParameters params, final long tournamentId, Optional<Integer> count)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count.orElseGet(() -> 1)))
                                                        .withURLParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, "")
@@ -57,7 +57,7 @@ public final class TournamentAPI
      */
     public List<Long> getMatchIds(final Platform server, final String tournamentCode)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCHLIST)
                                                        .withPlatform(server);
@@ -70,14 +70,14 @@ public final class TournamentAPI
      * Get details about a match from this tournament.
      * Differs from Match.getMatchInfo because this returns participants
      *
-     * @param server          the server the games are played on
-     * @param tournamentCode  The tournament code of the match
-     * @param matchId         the ID of the match.
+     * @param server         the server the games are played on
+     * @param tournamentCode The tournament code of the match
+     * @param matchId        the ID of the match.
      * @return Match
      */
     public Match getMatchInfo(final Platform server, final String tournamentCode, final Long matchId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.URL_PARAM_TOURNAMENT_CODE, tournamentCode)
                                                        .withURLData(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCH)
@@ -95,7 +95,7 @@ public final class TournamentAPI
      */
     public TournamentCode getTournamentInfo(Platform server, final String tournamentCode)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES_BY_CODE)
                                                        .withPlatform(server);
@@ -112,7 +112,7 @@ public final class TournamentAPI
      */
     public LobbyEventWrapper getTournamentLobbyInfo(final Platform server, final String tournamentCode)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_LOBBY_EVENTS)
                                                        .withPlatform(server);
@@ -133,7 +133,7 @@ public final class TournamentAPI
      */
     public long registerAsProvider(final Platform server, final ProviderRegistrationParameters params)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_PROVIDER)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
@@ -151,7 +151,7 @@ public final class TournamentAPI
      */
     public long registerTournament(final Platform server, final TournamentRegistrationParameters params)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_TOURNAMENT)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
@@ -169,7 +169,7 @@ public final class TournamentAPI
      */
     public void updateTournament(final Platform server, final String tournamentCode, final TournamentCodeUpdateParameters params)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCallBuilder.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))

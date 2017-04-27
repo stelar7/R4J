@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.basic.ratelimiting;
 
 
+import no.stelar7.api.l4j8.basic.DataCall;
+
 import java.time.Instant;
 import java.util.*;
 
@@ -68,7 +70,10 @@ public class BurstRateLimiter extends RateLimiter
             delay[0] = (Math.round(delay[0] / 1000f) + bias) * 1000L;
         }
         
-        System.out.println("Sleeping for: " + delay[0]);
+        if (DataCall.VERBOSE_LIMITING)
+        {
+            System.out.println("Sleeping for: " + delay[0]);
+        }
         
         return delay[0];
     }
@@ -86,7 +91,10 @@ public class BurstRateLimiter extends RateLimiter
             
                            callCountInTime.compute(l, (k, v) -> v + 1);
             
-                           System.out.println("Calls made: " + callCountInTime.get(l) + " in: " + l.getTimeframeInMS() / 1000);
+                           if (DataCall.VERBOSE_LIMITING)
+                           {
+                               System.out.println("Calls made: " + callCountInTime.get(l) + " in: " + l.getTimeframeInMS() / 1000);
+                           }
                        });
     }
     

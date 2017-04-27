@@ -1,6 +1,10 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
 
+import no.stelar7.api.l4j8.basic.ratelimiting.RateLimit;
+
+import java.util.concurrent.TimeUnit;
+
 /**
  * This class lists all the String constants in use in the project
  */
@@ -74,6 +78,12 @@ public final class Constants
     public static final Long[]   TEST_SUMMONER_IDS     = {19613950L};
     public static final Long[]   TEST_ACCOUNT_IDS      = {22401330L};
     public static final int[]    TEST_CHAMPION_IDS     = {89, 50};
+    
+    public static final RateLimit DEV_KEY_LIMIT_10  = new RateLimit(10, 10, TimeUnit.SECONDS);
+    public static final RateLimit DEV_KEY_LIMIT_600 = new RateLimit(500, 10, TimeUnit.MINUTES);
+    
+    public static final RateLimit PROD_KEY_LIMIT_10  = new RateLimit(3_000, 10, TimeUnit.SECONDS);
+    public static final RateLimit PROD_KEY_LIMIT_600 = new RateLimit(180_000, 10, TimeUnit.MINUTES);
     
     private Constants()
     {

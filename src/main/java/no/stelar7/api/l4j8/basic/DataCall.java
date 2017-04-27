@@ -11,7 +11,6 @@ import java.lang.reflect.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.logging.*;
 
@@ -21,16 +20,6 @@ public final class DataCall
     
     public static class DataCallBuilder
     {
-        public static APICredentials getCredentials()
-        {
-            return DataCall.creds;
-        }
-        
-        public static void setCredentials(final APICredentials creds)
-        {
-            DataCall.creds = creds;
-        }
-        
         private final DataCall dc = new DataCall();
         
         private final BiFunction<String, String, String> merge      = (o, n) -> o + "," + n;
@@ -108,10 +97,27 @@ public final class DataCall
                 return dtoobj;
             }
             
+            
+            if (response.getResponseCode() == 400)
+            {
+                throw new APIResponseException(APIHTTPErrorReason.ERROR400, "API call error.. contact developer to get this fixed ..." + response.getResponseData());
+            }
+            
             if (response.getResponseCode() == 404)
             {
                 return null;
             }
+            
+            if (response.getResponseCode() == 429)
+            {
+                if (this.dc.verbose)
+                {
+                    DataCall.LOGGER.log(Level.INFO, "HIT 429");
+                }
+                
+                return this.build();
+            }
+            
             
             if (response.getResponseCode() == 500)
             {
@@ -124,21 +130,6 @@ public final class DataCall
                 }
                 
                 return this.build(attempts);
-            }
-            
-            if (response.getResponseCode() == 400)
-            {
-                throw new APIResponseException(APIHTTPErrorReason.ERROR400, "API call error.. contact developer to get this fixed ..." + response.getResponseData());
-            }
-            
-            if (response.getResponseCode() == 429)
-            {
-                if (this.dc.verbose)
-                {
-                    DataCall.LOGGER.log(Level.INFO, "HIT 429");
-                }
-                
-                throw new APIResponseException(APIHTTPErrorReason.ERROR429, response.getResponseData());
             }
             
             DataCall.LOGGER.log(Level.WARNING, "Response Code:" + response.getResponseCode());
@@ -434,20 +425,11 @@ public final class DataCall
     
     private static final Logger LOGGER = Logger.getGlobal();
     
-    private static final EnumMap<Platform, BurstRateLimiter> limiter    = new EnumMap<>(Platform.class);
-    private static final EnumMap<Server, BurstRateLimiter>   oldlimiter = new EnumMap<>(Server.class);
+    private static final EnumMap<Platform, RateLimiter> limiter    = new EnumMap<>(Platform.class);
+    private static final EnumMap<Server, RateLimiter>   oldlimiter = new EnumMap<>(Server.class);
     
-    public static DataCallBuilder builder()
-    {
-        return new DataCallBuilder();
-    }
-    
-    private static APICredentials creds;
-    
-    
-    private final Map<String, String> urlParams = new TreeMap<>();
-    private final Map<String, String> urlData   = new TreeMap<>();
-    
+    private final Map<String, String> urlParams  = new TreeMap<>();
+    private final Map<String, String> urlData    = new TreeMap<>();
     private final Map<String, String> urlHeaders = new TreeMap<>();
     
     // How many calls our app has made in a timeframe, MapType<Timeframe, CallCount>
@@ -468,10 +450,40 @@ public final class DataCall
     public static final boolean VERBOSE_DEFAULT = false;
     private             boolean verbose         = VERBOSE_DEFAULT;
     
+    public static final boolean VERBOSE_LIMITING = true;
+    
+    
+    public static DataCallBuilder builder()
+    {
+        return new DataCallBuilder();
+    }
+    
+    private static APICredentials creds;
+    
+    public static APICredentials getCredentials()
+    {
+        return DataCall.creds;
+    }
+    
+    public static void setCredentials(final APICredentials creds)
+    {
+        DataCall.creds = creds;
+    }
+    
+    
+    public static void setRatelimiter(RateLimiter... limiters)
+    {
+        Arrays.stream(limiters).forEach(l ->
+                                        {
+                                            Arrays.stream(Platform.values()).forEach(p -> DataCall.limiter.put(p, l));
+                                            Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, l));
+                                        });
+    }
+    
     static
     {
-        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(new RateLimit(10, 10, TimeUnit.SECONDS))));
-        Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, new BurstRateLimiter(new RateLimit(10, 10, TimeUnit.SECONDS))));
+        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(Constants.DEV_KEY_LIMIT_10, Constants.DEV_KEY_LIMIT_600)));
+        Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, new BurstRateLimiter(Constants.DEV_KEY_LIMIT_10, Constants.DEV_KEY_LIMIT_600)));
     }
     
 }

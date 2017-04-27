@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.impl;
 
-import no.stelar7.api.l4j8.basic.APICredentials;
-import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
+import no.stelar7.api.l4j8.basic.*;
+import no.stelar7.api.l4j8.basic.ratelimiting.RateLimiter;
 
 /**
  * The base class for calling anything from this api wrapper
@@ -14,9 +14,10 @@ public class L4J8
      *
      * @param creds the API credentials used for the API (your token)
      */
-    public L4J8(final APICredentials creds)
+    public L4J8(final APICredentials creds, RateLimiter... limiter)
     {
-        DataCallBuilder.setCredentials(creds);
+        DataCall.setCredentials(creds);
+        DataCall.setRatelimiter(limiter);
     }
     
     public MasteryAPI getMasteryAPI()
