@@ -9,6 +9,7 @@ import org.junit.*;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class RatelimitTest
@@ -53,10 +54,28 @@ public class RatelimitTest
     @Test
     public void testRateLimit()
     {
-        for (int i = 0; i < 700; i++)
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < 3; i++)
         {
-            Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+            threads.add(new Thread(() ->
+                                   {
+                                       for (int i2 = 0; i2 < 700; i2++)
+                                       {
+                                           Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+                                       }
+                                   }));
         }
+        threads.forEach(Thread::start);
+        threads.forEach(th ->
+                        {
+                            try
+                            {
+                                th.join();
+                            } catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        });
     }
     
     @Test

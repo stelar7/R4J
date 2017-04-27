@@ -201,10 +201,11 @@ public final class DataCall
                     for (final String limitPair : limits)
                     {
                         final String[] limit = limitPair.split(":");
-                        final Integer  call  = Integer.parseInt(limit[0]);
+                        final Long     call  = Long.parseLong(limit[0]);
                         final Integer  time  = Integer.parseInt(limit[1]);
-                        DataCall.appLimit.put(time, call);
+                        DataCall.appLimit.put(dc.platform, Collections.singletonMap(time, call));
                     }
+                    updateRatelimiter(dc.platform);
                 }
                 
                 // Log this for future use(?)
@@ -215,9 +216,9 @@ public final class DataCall
                     for (final String limitPair : limits)
                     {
                         final String[] limit = limitPair.split(":");
-                        final Integer  call  = Integer.parseInt(limit[0]);
+                        final Long     call  = Long.parseLong(limit[0]);
                         final Integer  time  = Integer.parseInt(limit[1]);
-                        DataCall.methodLimit.getOrDefault(dc.endpoint, new TreeMap<>()).put(time, call);
+                        DataCall.methodLimit.put(dc.endpoint, Collections.singletonMap(time, call));
                     }
                 }
                 
@@ -433,8 +434,8 @@ public final class DataCall
     private final Map<String, String> urlHeaders = new TreeMap<>();
     
     // How many calls our app has made in a timeframe, MapType<Timeframe, CallCount>
-    private static final Map<Integer, Integer>                   appLimit    = new TreeMap<>();
-    private static final Map<URLEndpoint, Map<Integer, Integer>> methodLimit = new TreeMap<>();
+    private static final Map<Platform, Map<Integer, Long>>    appLimit    = new TreeMap<>();
+    private static final Map<URLEndpoint, Map<Integer, Long>> methodLimit = new TreeMap<>();
     
     
     private String requestMethod = "GET";
@@ -470,6 +471,10 @@ public final class DataCall
         DataCall.creds = creds;
     }
     
+    private static void updateRatelimiter(Platform server)
+    {
+        DataCall.limiter.get(server).updatePermitsPerX(appLimit.get(server));
+    }
     
     public static void setRatelimiter(RateLimiter... limiters)
     {

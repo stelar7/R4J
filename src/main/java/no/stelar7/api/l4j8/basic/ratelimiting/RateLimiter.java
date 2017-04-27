@@ -27,4 +27,6 @@ public abstract class RateLimiter
     }
     
     public abstract void acquire();
+    
+    public abstract void updatePermitsPerX(Map<Integer, Long> data);
 }

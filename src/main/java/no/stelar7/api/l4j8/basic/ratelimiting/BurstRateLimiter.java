@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.basic.DataCall;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * Burst ratelimiter will use as many calls as possible, then wait when it reaches the limit
@@ -44,6 +45,28 @@ public class BurstRateLimiter extends RateLimiter
         } catch (InterruptedException e)
         {
             e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void updatePermitsPerX(Map<Integer, Long> data)
+    {
+        for (Entry<Integer, Long> key : data.entrySet())
+        {
+            limits.stream().filter(l -> l.getTimeframeInMS() / 1000 == key.getKey()).forEach(l ->
+                                                                                             {
+                                                                                                 long oldVal = callCountInTime.get(l);
+                                                                                                 long newVal = key.getValue();
+                                                                                                 if (oldVal + 1 < newVal)
+                                                                                                 {
+                                                                                                     callCountInTime.put(l, newVal);
+                    
+                                                                                                     if (DataCall.VERBOSE_LIMITING)
+                                                                                                     {
+                                                                                                         System.out.println("limit " + key + " has changed from " + oldVal + " to " + newVal);
+                                                                                                     }
+                                                                                                 }
+                                                                                             });
         }
     }
     

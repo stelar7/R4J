@@ -23,4 +23,13 @@ public class RateLimit
         return delayInMs;
     }
     
+    
+    @Override
+    public String toString()
+    {
+        return "RateLimit{" +
+               "requests=" + requests +
+               ", delayInMs=" + delayInMs +
+               '}';
+    }
 }
