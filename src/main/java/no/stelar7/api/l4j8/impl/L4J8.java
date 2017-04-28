@@ -110,4 +110,14 @@ public class L4J8
     {
         return LeagueAPI.getInstance();
     }
+    
+    /**
+     * Gets image api.
+     *
+     * @return the image api
+     */
+    public ImageAPI getImageAPI()
+    {
+        return ImageAPI.getInstance();
+    }
 }

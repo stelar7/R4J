@@ -70,6 +70,7 @@ public enum SummonerSpellType
     /**
      * Instantly revives your champion at your team's Summoner Platform and increases their Movement Speed for a short duration.
      */
+    @Deprecated
     REVIVE(10, "SummonerRevive");
     
     private final Integer id;

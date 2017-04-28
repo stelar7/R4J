@@ -25,6 +25,11 @@ public final class DataCall
         private final BiFunction<String, String, String> merge      = (o, n) -> o + "," + n;
         private final BiFunction<String, String, String> mergeAsSet = (o, n) -> o + n;
         
+        private static void updateRatelimiter(Platform server)
+        {
+            DataCall.limiter.get(server).updatePermitsPerX(appLimit.get(server));
+        }
+        
         /**
          * Print out as much data as possible about this call
          *
@@ -465,11 +470,6 @@ public final class DataCall
     public static void setCredentials(final APICredentials creds)
     {
         DataCall.creds = creds;
-    }
-    
-    private static void updateRatelimiter(Platform server)
-    {
-        DataCall.limiter.get(server).updatePermitsPerX(appLimit.get(server));
     }
     
     public static void setRatelimiter(RateLimiter... limiters)

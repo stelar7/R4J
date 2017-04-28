@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
 import java.util.Optional;
 
@@ -81,7 +82,7 @@ public final class ImageAPI
     }
     
     
-    public String getSquare(String championId, Optional<String> version)
+    public String getSquare(Image image, Optional<String> version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -89,7 +90,7 @@ public final class ImageAPI
         String path          = "img/champion";
         
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + championId + ".png";
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + image.getFull();
     }
     
     public String getPassive(String passiveId, Optional<String> version)
