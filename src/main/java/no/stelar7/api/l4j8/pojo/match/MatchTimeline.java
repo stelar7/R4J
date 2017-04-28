@@ -7,49 +7,11 @@ public class MatchTimeline
     private Long             frameInterval;
     private List<MatchFrame> frames;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MatchTimeline other = (MatchTimeline) obj;
-        if (this.frameInterval == null)
-        {
-            if (other.frameInterval != null)
-            {
-                return false;
-            }
-        } else if (!this.frameInterval.equals(other.frameInterval))
-        {
-            return false;
-        }
-        if (this.frames == null)
-        {
-            if (other.frames != null)
-            {
-                return false;
-            }
-        } else if (!this.frames.equals(other.frames))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the frame interval.
      *
-     * @return the frame interval
+     * @return frame interval
      */
     public Long getFrameInterval()
     {
@@ -59,7 +21,7 @@ public class MatchTimeline
     /**
      * Gets the frames.
      *
-     * @return the frames
+     * @return frames
      */
     public List<MatchFrame> getFrames()
     {
@@ -67,12 +29,31 @@ public class MatchTimeline
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MatchTimeline that = (MatchTimeline) o;
+        
+        if ((frameInterval != null) ? !frameInterval.equals(that.frameInterval) : (that.frameInterval != null))
+        {
+            return false;
+        }
+        return (frames != null) ? frames.equals(that.frames) : (that.frames == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.frameInterval == null) ? 0 : this.frameInterval.hashCode());
-        result = (prime * result) + ((this.frames == null) ? 0 : this.frames.hashCode());
+        int result = frameInterval != null ? frameInterval.hashCode() : 0;
+        result = 31 * result + (frames != null ? frames.hashCode() : 0);
         return result;
     }
     

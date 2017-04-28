@@ -20,7 +20,7 @@ public class ParticipantTimeline
     /**
      * the lane the player was in
      *
-     * @return LaneType
+     * @return lane
      */
     public LaneType getLane()
     {
@@ -31,7 +31,7 @@ public class ParticipantTimeline
     /**
      * the participant id
      *
-     * @return LaneType
+     * @return participant id
      */
     public Long getParticipantId()
     {
@@ -45,7 +45,7 @@ public class ParticipantTimeline
      * 20-30
      * 30-end
      *
-     * @return map
+     * @return cs diff per min deltas
      */
     public Map<String, Double> getCsDiffPerMinDeltas()
     {
@@ -60,7 +60,7 @@ public class ParticipantTimeline
      * 20-30
      * 30-end
      *
-     * @return map
+     * @return gold per min deltas
      */
     public Map<String, Double> getGoldPerMinDeltas()
     {
@@ -74,7 +74,7 @@ public class ParticipantTimeline
      * 20-30
      * 30-end
      *
-     * @return map
+     * @return xp diff per min deltas
      */
     public Map<String, Double> getXpDiffPerMinDeltas()
     {
@@ -88,7 +88,7 @@ public class ParticipantTimeline
      * 20-30
      * 30-end
      *
-     * @return map
+     * @return creeps per min deltas
      */
     public Map<String, Double> getCreepsPerMinDeltas()
     {
@@ -102,7 +102,7 @@ public class ParticipantTimeline
      * 20-30
      * 30-end
      *
-     * @return map
+     * @return xp per min deltas
      */
     public Map<String, Double> getXpPerMinDeltas()
     {
@@ -112,7 +112,7 @@ public class ParticipantTimeline
     /**
      * the role of the player
      *
-     * @return RoleType
+     * @return role
      */
     public RoleType getRole()
     {
@@ -126,7 +126,7 @@ public class ParticipantTimeline
      * 20-30
      * 30-end
      *
-     * @return map
+     * @return damage taken diff per min deltas
      */
     public Map<String, Double> getDamageTakenDiffPerMinDeltas()
     {
@@ -140,7 +140,7 @@ public class ParticipantTimeline
      * 20-30
      * 30-end
      *
-     * @return map
+     * @return damage taken per min deltas
      */
     public Map<String, Double> getDamageTakenPerMinDeltas()
     {

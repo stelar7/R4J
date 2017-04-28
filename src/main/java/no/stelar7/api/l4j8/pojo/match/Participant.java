@@ -18,124 +18,6 @@ public class Participant
     private TeamType            teamId;
     private ParticipantTimeline timeline;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Participant other = (Participant) obj;
-        if (this.championId == null)
-        {
-            if (other.championId != null)
-            {
-                return false;
-            }
-        } else if (!this.championId.equals(other.championId))
-        {
-            return false;
-        }
-        if (this.highestAchievedSeasonTier == null)
-        {
-            if (other.highestAchievedSeasonTier != null)
-            {
-                return false;
-            }
-        } else if (!this.highestAchievedSeasonTier.equals(other.highestAchievedSeasonTier))
-        {
-            return false;
-        }
-        if (this.masteries == null)
-        {
-            if (other.masteries != null)
-            {
-                return false;
-            }
-        } else if (!this.masteries.equals(other.masteries))
-        {
-            return false;
-        }
-        if (this.participantId == null)
-        {
-            if (other.participantId != null)
-            {
-                return false;
-            }
-        } else if (!this.participantId.equals(other.participantId))
-        {
-            return false;
-        }
-        if (this.runes == null)
-        {
-            if (other.runes != null)
-            {
-                return false;
-            }
-        } else if (!this.runes.equals(other.runes))
-        {
-            return false;
-        }
-        if (this.spell1Id == null)
-        {
-            if (other.spell1Id != null)
-            {
-                return false;
-            }
-        } else if (!this.spell1Id.equals(other.spell1Id))
-        {
-            return false;
-        }
-        if (this.spell2Id == null)
-        {
-            if (other.spell2Id != null)
-            {
-                return false;
-            }
-        } else if (!this.spell2Id.equals(other.spell2Id))
-        {
-            return false;
-        }
-        if (this.stats == null)
-        {
-            if (other.stats != null)
-            {
-                return false;
-            }
-        } else if (!this.stats.equals(other.stats))
-        {
-            return false;
-        }
-        if (this.teamId == null)
-        {
-            if (other.teamId != null)
-            {
-                return false;
-            }
-        } else if (!this.teamId.equals(other.teamId))
-        {
-            return false;
-        }
-        if (this.timeline == null)
-        {
-            if (other.timeline != null)
-            {
-                return false;
-            }
-        } else if (!this.timeline.equals(other.timeline))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * ChampionType ID
@@ -242,20 +124,71 @@ public class Participant
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Participant that = (Participant) o;
+        
+        if (championId != that.championId)
+        {
+            return false;
+        }
+        if (highestAchievedSeasonTier != that.highestAchievedSeasonTier)
+        {
+            return false;
+        }
+        if ((masteries != null) ? !masteries.equals(that.masteries) : (that.masteries != null))
+        {
+            return false;
+        }
+        if ((participantId != null) ? !participantId.equals(that.participantId) : (that.participantId != null))
+        {
+            return false;
+        }
+        if ((runes != null) ? !runes.equals(that.runes) : (that.runes != null))
+        {
+            return false;
+        }
+        if (spell1Id != that.spell1Id)
+        {
+            return false;
+        }
+        if (spell2Id != that.spell2Id)
+        {
+            return false;
+        }
+        if ((stats != null) ? !stats.equals(that.stats) : (that.stats != null))
+        {
+            return false;
+        }
+        if (teamId != that.teamId)
+        {
+            return false;
+        }
+        return (timeline != null) ? timeline.equals(that.timeline) : (that.timeline == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
-        result = (prime * result) + ((this.highestAchievedSeasonTier == null) ? 0 : this.highestAchievedSeasonTier.hashCode());
-        result = (prime * result) + ((this.masteries == null) ? 0 : this.masteries.hashCode());
-        result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());
-        result = (prime * result) + ((this.runes == null) ? 0 : this.runes.hashCode());
-        result = (prime * result) + ((this.spell1Id == null) ? 0 : this.spell1Id.hashCode());
-        result = (prime * result) + ((this.spell2Id == null) ? 0 : this.spell2Id.hashCode());
-        result = (prime * result) + ((this.stats == null) ? 0 : this.stats.hashCode());
-        result = (prime * result) + ((this.teamId == null) ? 0 : this.teamId.hashCode());
-        result = (prime * result) + ((this.timeline == null) ? 0 : this.timeline.hashCode());
+        int result = championId != null ? championId.hashCode() : 0;
+        result = 31 * result + (highestAchievedSeasonTier != null ? highestAchievedSeasonTier.hashCode() : 0);
+        result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
+        result = 31 * result + (participantId != null ? participantId.hashCode() : 0);
+        result = 31 * result + (runes != null ? runes.hashCode() : 0);
+        result = 31 * result + (spell1Id != null ? spell1Id.hashCode() : 0);
+        result = 31 * result + (spell2Id != null ? spell2Id.hashCode() : 0);
+        result = 31 * result + (stats != null ? stats.hashCode() : 0);
+        result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
+        result = 31 * result + (timeline != null ? timeline.hashCode() : 0);
         return result;
     }
     
