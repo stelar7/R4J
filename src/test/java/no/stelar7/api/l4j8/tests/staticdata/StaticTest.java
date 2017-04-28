@@ -99,7 +99,7 @@ public class StaticTest
     {
         Optional<EnumSet<MasteryDataFlags>> dataFlags = Optional.of(EnumSet.of(MasteryDataFlags.ALL));
         
-        Mastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, version, locale);
+        StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, version, locale);
         
         Assert.assertTrue("ok?", list.getId() == 6131);
     }

@@ -4,8 +4,8 @@ import java.util.*;
 
 public class MasteryList
 {
-    private Map<String, Mastery> data;
-    private MasteryTree          tree;
+    private Map<String, StaticMastery> data;
+    private MasteryTree                tree;
     
     
     
@@ -54,7 +54,7 @@ public class MasteryList
      *
      * @return the data
      */
-    public Map<String, Mastery> getData()
+    public Map<String, StaticMastery> getData()
     {
         return this.data;
     }

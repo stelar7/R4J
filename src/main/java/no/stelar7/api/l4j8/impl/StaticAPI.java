@@ -129,7 +129,7 @@ public final class StaticAPI
         return (MasteryList) builder.build();
     }
     
-    public Mastery getMastery(Platform server, int id, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public StaticMastery getMastery(Platform server, int id, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_MASTERY_BY_ID)
@@ -139,7 +139,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return (Mastery) builder.build();
+        return (StaticMastery) builder.build();
     }
     
     public ProfileIconData getProfileIcons(Platform server, Optional<String> version, Optional<String> locale)
