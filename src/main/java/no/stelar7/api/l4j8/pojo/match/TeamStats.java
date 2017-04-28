@@ -20,7 +20,7 @@ public class TeamStats
     private TeamType             teamId;
     private Integer              towerKills;
     private Integer              vilemawKills;
-    private Boolean              win;
+    private String               win;
     private Boolean              firstRiftHerald;
     private Integer              riftHeraldKills;
     
@@ -358,7 +358,7 @@ public class TeamStats
      *
      * @return the winner
      */
-    public Boolean getWinner()
+    public String getWin()
     {
         return this.win;
     }
@@ -444,7 +444,7 @@ public class TeamStats
      */
     public Boolean isWinner()
     {
-        return this.win;
+        return "Win".equalsIgnoreCase(this.win);
     }
     
     @Override

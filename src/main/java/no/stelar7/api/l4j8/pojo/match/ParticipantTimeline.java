@@ -2,250 +2,235 @@ package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
+import java.util.Map;
+
 public class ParticipantTimeline
 {
-    private LaneType                lane;
-    private Long                    participantId;
-    private ParticipantTimelineData csDiffPerMinDeltas;
-    private ParticipantTimelineData goldPerMinDeltas;
-    private ParticipantTimelineData xpDiffPerMinDeltas;
-    private ParticipantTimelineData creepsPerMinDeltas;
-    private ParticipantTimelineData xpPerMinDeltas;
-    private RoleType                role;
-    private ParticipantTimelineData damageTakenDiffPerMinDeltas;
-    private ParticipantTimelineData damageTakenPerMinDeltas;
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final ParticipantTimeline other = (ParticipantTimeline) obj;
-        if (this.creepsPerMinDeltas == null)
-        {
-            if (other.creepsPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.creepsPerMinDeltas.equals(other.creepsPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.csDiffPerMinDeltas == null)
-        {
-            if (other.csDiffPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.csDiffPerMinDeltas.equals(other.csDiffPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.damageTakenDiffPerMinDeltas == null)
-        {
-            if (other.damageTakenDiffPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.damageTakenDiffPerMinDeltas.equals(other.damageTakenDiffPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.damageTakenPerMinDeltas == null)
-        {
-            if (other.damageTakenPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.damageTakenPerMinDeltas.equals(other.damageTakenPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.goldPerMinDeltas == null)
-        {
-            if (other.goldPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.goldPerMinDeltas.equals(other.goldPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.lane == null)
-        {
-            if (other.lane != null)
-            {
-                return false;
-            }
-        } else if (!this.lane.equals(other.lane))
-        {
-            return false;
-        }
-        if (this.role == null)
-        {
-            if (other.role != null)
-            {
-                return false;
-            }
-        } else if (!this.role.equals(other.role))
-        {
-            return false;
-        }
-        if (this.xpDiffPerMinDeltas == null)
-        {
-            if (other.xpDiffPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.xpDiffPerMinDeltas.equals(other.xpDiffPerMinDeltas))
-        {
-            return false;
-        }
-        if (this.xpPerMinDeltas == null)
-        {
-            if (other.xpPerMinDeltas != null)
-            {
-                return false;
-            }
-        } else if (!this.xpPerMinDeltas.equals(other.xpPerMinDeltas))
-        {
-            return false;
-        }
-        return true;
-    }
+    private LaneType            lane;
+    private Long                participantId;
+    private Map<String, Double> csDiffPerMinDeltas;
+    private Map<String, Double> goldPerMinDeltas;
+    private Map<String, Double> xpDiffPerMinDeltas;
+    private Map<String, Double> creepsPerMinDeltas;
+    private Map<String, Double> xpPerMinDeltas;
+    private RoleType            role;
+    private Map<String, Double> damageTakenDiffPerMinDeltas;
+    private Map<String, Double> damageTakenPerMinDeltas;
     
     /**
-     * Gets the creeps per min deltas.
+     * the lane the player was in
      *
-     * @return the creeps per min deltas
-     */
-    public ParticipantTimelineData getCreepsPerMinDeltas()
-    {
-        return this.creepsPerMinDeltas;
-    }
-    
-    /**
-     * Gets the cs diff per min deltas.
-     *
-     * @return the cs diff per min deltas
-     */
-    public ParticipantTimelineData getCsDiffPerMinDeltas()
-    {
-        return this.csDiffPerMinDeltas;
-    }
-    
-    /**
-     * Gets the damage taken diff per min deltas.
-     *
-     * @return the damage taken diff per min deltas
-     */
-    public ParticipantTimelineData getDamageTakenDiffPerMinDeltas()
-    {
-        return this.damageTakenDiffPerMinDeltas;
-    }
-    
-    /**
-     * Gets the damage taken per min deltas.
-     *
-     * @return the damage taken per min deltas
-     */
-    public ParticipantTimelineData getDamageTakenPerMinDeltas()
-    {
-        return this.damageTakenPerMinDeltas;
-    }
-    
-    /**
-     * Gets the gold per min deltas.
-     *
-     * @return the gold per min deltas
-     */
-    public ParticipantTimelineData getGoldPerMinDeltas()
-    {
-        return this.goldPerMinDeltas;
-    }
-    
-    
-    /**
-     * Gets the lane.
-     *
-     * @return the lane
+     * @return LaneType
      */
     public LaneType getLane()
     {
-        return this.lane;
+        return lane;
     }
     
     
     /**
-     * Gets the role.
+     * the participant id
      *
-     * @return the role
+     * @return LaneType
+     */
+    public Long getParticipantId()
+    {
+        return participantId;
+    }
+    
+    /**
+     * valid keys are:
+     * 0-10
+     * 10-20
+     * 20-30
+     * 30-end
+     *
+     * @return map
+     */
+    public Map<String, Double> getCsDiffPerMinDeltas()
+    {
+        return csDiffPerMinDeltas;
+    }
+    
+    
+    /**
+     * valid keys are:
+     * 0-10
+     * 10-20
+     * 20-30
+     * 30-end
+     *
+     * @return map
+     */
+    public Map<String, Double> getGoldPerMinDeltas()
+    {
+        return goldPerMinDeltas;
+    }
+    
+    /**
+     * valid keys are:
+     * 0-10
+     * 10-20
+     * 20-30
+     * 30-end
+     *
+     * @return map
+     */
+    public Map<String, Double> getXpDiffPerMinDeltas()
+    {
+        return xpDiffPerMinDeltas;
+    }
+    
+    /**
+     * valid keys are:
+     * 0-10
+     * 10-20
+     * 20-30
+     * 30-end
+     *
+     * @return map
+     */
+    public Map<String, Double> getCreepsPerMinDeltas()
+    {
+        return creepsPerMinDeltas;
+    }
+    
+    /**
+     * valid keys are:
+     * 0-10
+     * 10-20
+     * 20-30
+     * 30-end
+     *
+     * @return map
+     */
+    public Map<String, Double> getXpPerMinDeltas()
+    {
+        return xpPerMinDeltas;
+    }
+    
+    /**
+     * the role of the player
+     *
+     * @return RoleType
      */
     public RoleType getRole()
     {
-        return this.role;
+        return role;
     }
     
     /**
-     * Gets the xp diff per min deltas.
+     * valid keys are:
+     * 0-10
+     * 10-20
+     * 20-30
+     * 30-end
      *
-     * @return the xp diff per min deltas
+     * @return map
      */
-    public ParticipantTimelineData getXpDiffPerMinDeltas()
+    public Map<String, Double> getDamageTakenDiffPerMinDeltas()
     {
-        return this.xpDiffPerMinDeltas;
+        return damageTakenDiffPerMinDeltas;
     }
     
     /**
-     * Gets the xp per min deltas.
+     * valid keys are:
+     * 0-10
+     * 10-20
+     * 20-30
+     * 30-end
      *
-     * @return the xp per min deltas
+     * @return map
      */
-    public ParticipantTimelineData getXpPerMinDeltas()
+    public Map<String, Double> getDamageTakenPerMinDeltas()
     {
-        return this.xpPerMinDeltas;
+        return damageTakenPerMinDeltas;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        ParticipantTimeline that = (ParticipantTimeline) o;
+        
+        if (lane != that.lane)
+        {
+            return false;
+        }
+        if ((participantId != null) ? !participantId.equals(that.participantId) : (that.participantId != null))
+        {
+            return false;
+        }
+        if ((csDiffPerMinDeltas != null) ? !csDiffPerMinDeltas.equals(that.csDiffPerMinDeltas) : (that.csDiffPerMinDeltas != null))
+        {
+            return false;
+        }
+        if ((goldPerMinDeltas != null) ? !goldPerMinDeltas.equals(that.goldPerMinDeltas) : (that.goldPerMinDeltas != null))
+        {
+            return false;
+        }
+        if ((xpDiffPerMinDeltas != null) ? !xpDiffPerMinDeltas.equals(that.xpDiffPerMinDeltas) : (that.xpDiffPerMinDeltas != null))
+        {
+            return false;
+        }
+        if ((creepsPerMinDeltas != null) ? !creepsPerMinDeltas.equals(that.creepsPerMinDeltas) : (that.creepsPerMinDeltas != null))
+        {
+            return false;
+        }
+        if ((xpPerMinDeltas != null) ? !xpPerMinDeltas.equals(that.xpPerMinDeltas) : (that.xpPerMinDeltas != null))
+        {
+            return false;
+        }
+        if (role != that.role)
+        {
+            return false;
+        }
+        if ((damageTakenDiffPerMinDeltas != null) ? !damageTakenDiffPerMinDeltas.equals(that.damageTakenDiffPerMinDeltas) : (that.damageTakenDiffPerMinDeltas != null))
+        {
+            return false;
+        }
+        return (damageTakenPerMinDeltas != null) ? damageTakenPerMinDeltas.equals(that.damageTakenPerMinDeltas) : (that.damageTakenPerMinDeltas == null);
     }
     
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.creepsPerMinDeltas == null) ? 0 : this.creepsPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.csDiffPerMinDeltas == null) ? 0 : this.csDiffPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.damageTakenDiffPerMinDeltas == null) ? 0 : this.damageTakenDiffPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.damageTakenPerMinDeltas == null) ? 0 : this.damageTakenPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.goldPerMinDeltas == null) ? 0 : this.goldPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.lane == null) ? 0 : this.lane.hashCode());
-        result = (prime * result) + ((this.role == null) ? 0 : this.role.hashCode());
-        result = (prime * result) + ((this.xpDiffPerMinDeltas == null) ? 0 : this.xpDiffPerMinDeltas.hashCode());
-        result = (prime * result) + ((this.xpPerMinDeltas == null) ? 0 : this.xpPerMinDeltas.hashCode());
+        int result = lane != null ? lane.hashCode() : 0;
+        result = 31 * result + (participantId != null ? participantId.hashCode() : 0);
+        result = 31 * result + (csDiffPerMinDeltas != null ? csDiffPerMinDeltas.hashCode() : 0);
+        result = 31 * result + (goldPerMinDeltas != null ? goldPerMinDeltas.hashCode() : 0);
+        result = 31 * result + (xpDiffPerMinDeltas != null ? xpDiffPerMinDeltas.hashCode() : 0);
+        result = 31 * result + (creepsPerMinDeltas != null ? creepsPerMinDeltas.hashCode() : 0);
+        result = 31 * result + (xpPerMinDeltas != null ? xpPerMinDeltas.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (damageTakenDiffPerMinDeltas != null ? damageTakenDiffPerMinDeltas.hashCode() : 0);
+        result = 31 * result + (damageTakenPerMinDeltas != null ? damageTakenPerMinDeltas.hashCode() : 0);
         return result;
     }
+    
     
     @Override
     public String toString()
     {
         return "ParticipantTimeline{" +
-               ", creepsPerMinDeltas=" + creepsPerMinDeltas +
+               "lane=" + lane +
+               ", participantId=" + participantId +
                ", csDiffPerMinDeltas=" + csDiffPerMinDeltas +
-               ", damageTakenDiffPerMinDeltas=" + damageTakenDiffPerMinDeltas +
-               ", damageTakenPerMinDeltas=" + damageTakenPerMinDeltas +
                ", goldPerMinDeltas=" + goldPerMinDeltas +
                ", xpDiffPerMinDeltas=" + xpDiffPerMinDeltas +
+               ", creepsPerMinDeltas=" + creepsPerMinDeltas +
                ", xpPerMinDeltas=" + xpPerMinDeltas +
-               ", lane='" + lane + '\'' +
-               ", role='" + role + '\'' +
+               ", role=" + role +
+               ", damageTakenDiffPerMinDeltas=" + damageTakenDiffPerMinDeltas +
+               ", damageTakenPerMinDeltas=" + damageTakenPerMinDeltas +
                '}';
     }
 }

@@ -48,12 +48,14 @@ public class MatchListTest
         Optional<Long>                   beginTime = Optional.of(1481108400000L);
         
         // use begintime instead of season because its broken ATM
-        MatchList all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, empty, empty, empty, queue, empty, champs);
+        MatchList all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, empty, empty, empty, empty, empty, empty);
         
         for (MatchReference reference : all.getMatches())
         {
             Match                   detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
             Optional<MatchTimeline> timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
+            System.out.println(detail.getParticipants().get(1).getTimeline());
+            System.out.println();
         }
     }
 }

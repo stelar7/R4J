@@ -110,11 +110,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 429)
             {
-                if (this.dc.verbose)
-                {
-                    DataCall.LOGGER.log(Level.INFO, "HIT 429");
-                }
-                
+                DataCall.LOGGER.log(Level.INFO, "HIT 429");
                 return this.build();
             }
             
