@@ -31,11 +31,11 @@ public class ProfileIconDetails
         
         ProfileIconDetails that = (ProfileIconDetails) o;
         
-        if (image != null ? !image.equals(that.image) : that.image != null)
+        if ((image != null) ? !image.equals(that.image) : (that.image != null))
         {
             return false;
         }
-        return id != null ? id.equals(that.id) : that.id == null;
+        return (id != null) ? id.equals(that.id) : (that.id == null);
     }
     
     @Override
