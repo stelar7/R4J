@@ -2,8 +2,9 @@ package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
-import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.spectator.*;
+
+import java.util.List;
 
 public final class SpectatorAPI
 {
@@ -27,12 +28,13 @@ public final class SpectatorAPI
      * @param server the region to execute against
      * @return Optional FeaturedGames
      */
-    public FeaturedGames getFeaturedGames(Platform server)
+    public List<SpectatorGameInfo> getFeaturedGames(Platform server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
         
-        return (FeaturedGames) builder.build();
+        FeaturedGames fg = (FeaturedGames) builder.build();
+        return fg.getGameList();
         
     }
     
@@ -43,12 +45,12 @@ public final class SpectatorAPI
      * @param summonerId the summonerId
      * @return Optional FeaturedGames
      */
-    public CurrentGameInfo getCurrentGame(Platform server, long summonerId)
+    public SpectatorGameInfo getCurrentGame(Platform server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         
-        return (CurrentGameInfo) builder.build();
+        return (SpectatorGameInfo) builder.build();
     }
 }

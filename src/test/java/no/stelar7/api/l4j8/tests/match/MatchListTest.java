@@ -48,14 +48,25 @@ public class MatchListTest
         Optional<Long>                   beginTime = Optional.of(1481108400000L);
         
         // use begintime instead of season because its broken ATM
-        MatchList all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, empty, empty, empty, empty, empty, empty);
+        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, empty, empty, empty, empty, empty, empty);
         
-        for (MatchReference reference : all.getMatches())
+        for (MatchReference reference : all)
         {
             Match                   detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
             Optional<MatchTimeline> timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
-            System.out.println(detail.getParticipants().get(1).getTimeline());
-            System.out.println();
         }
     }
+    
+    @Test
+    public void testNormalGame()
+    {
+        long                    id       = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, "Doloress D").getAccountId();
+        MatchReference          ref      = api.getRecentMatches(Platform.EUW1, id).get(0);
+        long                    gameid   = ref.getGameId();
+        Match                   detail   = api.getMatch(Platform.EUW1, gameid);
+        Optional<MatchTimeline> timeline = api.getTimeline(Platform.EUW1, gameid);
+        System.out.println();
+    }
 }
+
+

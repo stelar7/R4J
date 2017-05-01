@@ -20,19 +20,19 @@ public class SummonerMasteriesTest
         pages.getPages().forEach(page ->
                                  {
             
-                                     Assert.assertNotNull("Mastery Page does not have an id", page.getId());
-                                     // Assert.assertNotNull("Mastery Page does not have a name",
+                                     Assert.assertNotNull("SpectatorMastery Page does not have an id", page.getId());
+                                     // Assert.assertNotNull("SpectatorMastery Page does not have a name",
                                      // page.getName()); Names can be empty, so ignore this...
-                                     Assert.assertNotNull("Mastery Page does not contain any masteries", page.getMasteries());
-                                     Assert.assertNotNull("Unable to determine current Mastery page", page.isCurrent());
+                                     Assert.assertNotNull("SpectatorMastery Page does not contain any masteries", page.getMasteries());
+                                     Assert.assertNotNull("Unable to determine current SpectatorMastery page", page.isCurrent());
             
                                      page.getMasteries().forEach((final Mastery mastery) ->
                                                                  {
-                                                                     Assert.assertNotNull("Mastery does not have an id", mastery.getId());
-                                                                     Assert.assertNotNull("Mastery does not have a rank", mastery.getRank());
+                                                                     Assert.assertNotNull("SpectatorMastery does not have an id", mastery.getId());
+                                                                     Assert.assertNotNull("SpectatorMastery does not have a rank", mastery.getRank());
                 
-                                                                     Assert.assertNotEquals("Mastery does not have a valid id", mastery.getId(), (Integer) 0);
-                                                                     Assert.assertNotEquals("Mastery does not have a valid rank", mastery.getRank(), (Integer) 0);
+                                                                     Assert.assertNotEquals("SpectatorMastery does not have a valid id", mastery.getId(), (Integer) 0);
+                                                                     Assert.assertNotEquals("SpectatorMastery does not have a valid rank", mastery.getRank(), (Integer) 0);
                                                                  });
             
                                  });

@@ -83,7 +83,7 @@ public class MasteryPage
     /**
      * Collection of masteries associated with the mastery page, if there are no masteries, it returns an empty list
      *
-     * @return {@code List<Mastery>}
+     * @return {@code List<SpectatorMastery>}
      */
     public List<Mastery> getMasteries()
     {

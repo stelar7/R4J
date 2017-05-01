@@ -4,7 +4,7 @@ import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.champion.*;
 
-import java.util.Optional;
+import java.util.*;
 
 public final class ChampionAPI
 {
@@ -20,14 +20,15 @@ public final class ChampionAPI
         // Hide public constructor
     }
     
-    public ChampionList getChampions(Platform server, Optional<Boolean> freeToPlay)
+    public List<Champion> getChampions(Platform server, Optional<Boolean> freeToPlay)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPIONS)
                                                        .withPlatform(server);
         freeToPlay.ifPresent(value -> builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, String.valueOf(value)));
         
-        return (ChampionList) builder.build();
+        ChampionList cl = (ChampionList) builder.build();
+        return cl.getChampions();
     }
     
     

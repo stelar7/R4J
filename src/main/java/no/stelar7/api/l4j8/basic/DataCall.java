@@ -452,7 +452,7 @@ public final class DataCall
     public static final boolean VERBOSE_DEFAULT = false;
     private             boolean verbose         = VERBOSE_DEFAULT;
     
-    public static final boolean VERBOSE_LIMITING = true;
+    public static final boolean VERBOSE_LIMITING = false;
     
     
     public static DataCallBuilder builder()

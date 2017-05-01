@@ -3,8 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.api;
 import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
-import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
-import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.spectator.*;
 import no.stelar7.api.l4j8.pojo.league.League;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
@@ -45,7 +44,7 @@ public enum URLEndpoint
     // lol/spectator/v3/featured-games
     // lol/spectator/v3/active-games/by-summoner/{summonerId}
     V3_SPECTATOR_FEATURED("lol", "spectator", "v3", "featured-games", FeaturedGames.class),
-    V3_SPECTATOR_CURRENT("lol", "spectator", "v3", "active-games/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, CurrentGameInfo.class),
+    V3_SPECTATOR_CURRENT("lol", "spectator", "v3", "active-games/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, SpectatorGameInfo.class),
     
     // lol/champion-mastery/v3/champion-masteries/by-summoner/{summonerId}
     // lol/champion-mastery/v3/champion-masteries/by-summoner/{summonerId}/by-champion/{championId}

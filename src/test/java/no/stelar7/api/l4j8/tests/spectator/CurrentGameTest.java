@@ -2,18 +2,18 @@ package no.stelar7.api.l4j8.tests.spectator;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.currentgame.CurrentGameInfo;
-import no.stelar7.api.l4j8.pojo.featuredgames.FeaturedGames;
+import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class CurrentGameTest
 {
     
-    Consumer<CurrentGameInfo> doAssertions = (final CurrentGameInfo currentGame) ->
+    Consumer<SpectatorGameInfo> doAssertions = (final SpectatorGameInfo currentGame) ->
     {
         
         Assert.assertNotNull("bannedchampion is null", currentGame.getBannedChampions());
@@ -36,14 +36,14 @@ public class CurrentGameTest
         SpectatorAPI api  = l4j8.getSpectatorAPI();
         
         // Get a game in progess
-        final FeaturedGames game = api.getFeaturedGames(Platform.EUW1);
+        final List<SpectatorGameInfo> game = api.getFeaturedGames(Platform.EUW1);
         
         // Get a summoner from that game
-        final String   name = game.getGameList().get(0).getParticipants().get(0).getSummonerName();
+        final String   name = game.get(0).getParticipants().get(0).getSummonerName();
         final Summoner sum  = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, name);
         
         // Get game info
-        final CurrentGameInfo currentGame = api.getCurrentGame(Platform.EUW1, sum.getId());
+        final SpectatorGameInfo currentGame = api.getCurrentGame(Platform.EUW1, sum.getId());
         doAssertions.accept(currentGame);
     }
 }

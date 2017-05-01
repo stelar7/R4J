@@ -2,14 +2,14 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 
 import no.stelar7.api.l4j8.basic.Utils;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
+import no.stelar7.api.l4j8.pojo.matchlist.*;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
 
 import java.time.*;
-import java.util.Optional;
+import java.util.*;
 
 public final class Summoner
 {
@@ -112,12 +112,12 @@ public final class Summoner
         return SummonerAPI.getInstance().getMasteries(platform, this.getId());
     }
     
-    public MatchList getRecentGames()
+    public List<MatchReference> getRecentGames()
     {
         return MatchAPI.getInstance().getRecentMatches(platform, accountId);
     }
     
-    public MatchList getRankedGames()
+    public List<MatchReference> getRankedGames()
     {
         Optional empty = Optional.empty();
         return MatchAPI.getInstance().getMatchList(platform, id, empty, empty, empty, empty, empty, empty, empty);

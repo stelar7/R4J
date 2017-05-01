@@ -110,14 +110,15 @@ public final class TournamentAPI
      * @param tournamentCode The tournament code of the match
      * @return Lobby events
      */
-    public LobbyEventWrapper getTournamentLobbyInfo(final Platform server, final String tournamentCode)
+    public List<LobbyEvent> getTournamentLobbyInfo(final Platform server, final String tournamentCode)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_LOBBY_EVENTS)
                                                        .withPlatform(server);
         
-        return (LobbyEventWrapper) builder.build();
+        LobbyEventWrapper lew = (LobbyEventWrapper) builder.build();
+        return lew.getEventList();
     }
     
     /**

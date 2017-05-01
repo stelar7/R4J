@@ -4,7 +4,7 @@ import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.pojo.match.*;
-import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
+import no.stelar7.api.l4j8.pojo.matchlist.*;
 
 import java.util.*;
 
@@ -43,12 +43,12 @@ public final class MatchAPI
      * @param championIds  optional filter for selecting the champion played
      * @return MatchList
      */
-    public MatchList getMatchList(Platform server, long accountId,
-                                  Optional<Long> beginTime, Optional<Long> endTime,
-                                  Optional<Integer> beginIndex, Optional<Integer> endIndex,
-                                  Optional<EnumSet<GameQueueType>> rankedQueues,
-                                  Optional<EnumSet<SeasonType>> seasons,
-                                  Optional<List<Integer>> championIds)
+    public List<MatchReference> getMatchList(Platform server, long accountId,
+                                             Optional<Long> beginTime, Optional<Long> endTime,
+                                             Optional<Integer> beginIndex, Optional<Integer> endIndex,
+                                             Optional<EnumSet<GameQueueType>> rankedQueues,
+                                             Optional<EnumSet<SeasonType>> seasons,
+                                             Optional<List<Integer>> championIds)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
@@ -64,7 +64,8 @@ public final class MatchAPI
         seasons.ifPresent(value -> value.forEach(flag -> builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(flag.getValue()))));
         championIds.ifPresent(value -> value.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id))));
         
-        return (MatchList) builder.build();
+        MatchList list = (MatchList) builder.build();
+        return list.getMatches();
     }
     
     /**
@@ -74,13 +75,14 @@ public final class MatchAPI
      * @param accountId the account to check
      * @return MatchList
      */
-    public MatchList getRecentMatches(Platform server, long accountId)
+    public List<MatchReference> getRecentMatches(Platform server, long accountId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST_RECENT)
                                                        .withPlatform(server);
         
-        return (MatchList) builder.build();
+        MatchList list = (MatchList) builder.build();
+        return list.getMatches();
     }
     
     /**

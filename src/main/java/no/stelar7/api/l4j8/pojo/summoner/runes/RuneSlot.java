@@ -46,7 +46,7 @@ public class RuneSlot
     }
     
     /**
-     * Rune ID associated with the rune slot. For static information correlating to rune IDs, please refer to the LoL Static Data API.
+     * SpectatorRune ID associated with the rune slot. For static information correlating to rune IDs, please refer to the LoL Static Data API.
      *
      * @return Integer
      */
@@ -56,7 +56,7 @@ public class RuneSlot
     }
     
     /**
-     * The Rune slot ID.
+     * The SpectatorRune slot ID.
      *
      * @return Integer
      */
@@ -78,7 +78,7 @@ public class RuneSlot
     @Override
     public String toString()
     {
-        return "Rune [runeId=" + this.runeId + ", runeSlotId=" + this.runeSlotId + "]";
+        return "SpectatorRune [runeId=" + this.runeId + ", runeSlotId=" + this.runeSlotId + "]";
     }
     
 }

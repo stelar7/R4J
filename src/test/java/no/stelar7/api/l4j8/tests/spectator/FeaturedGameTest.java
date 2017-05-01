@@ -2,17 +2,18 @@ package no.stelar7.api.l4j8.tests.spectator;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.featuredgames.*;
+import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class FeaturedGameTest
 {
-    Consumer<FeaturedGames> doAssertions = (final FeaturedGames currentGames) ->
+    Consumer<List<SpectatorGameInfo>> doAssertions = (final List<SpectatorGameInfo> currentGames) ->
     {
-        for (FeaturedGameInfo featured : currentGames.getGameList())
+        for (SpectatorGameInfo featured : currentGames)
         {
             Assert.assertNotNull("bannedchampion is null", featured.getBannedChampions());
             Assert.assertNotNull("gameid is null", featured.getGameId());
@@ -33,7 +34,7 @@ public class FeaturedGameTest
         final L4J8   l4j8 = new L4J8(SecretFile.CREDS);
         SpectatorAPI api  = l4j8.getSpectatorAPI();
         
-        final FeaturedGames game = api.getFeaturedGames(Platform.EUW1);
+        final List<SpectatorGameInfo> game = api.getFeaturedGames(Platform.EUW1);
         doAssertions.accept(game);
     }
     
