@@ -4,7 +4,14 @@
 * Implement smooth ratelimiter
 * Test to make sure that Tournament-V3 works as expected (need key for this...)
 * Add League-V3 when its out 
-* Add E-sports API (When/if its available, or [this](https://gist.github.com/levi/e7e5e808ac0119e154ce))
+* Add remainder of E-sports API
+
+http://api.lolesports.com/api/v1/scheduleItems?leagueId={id}
+http://api.lolesports.com/api/v1/leagues/{id}
+http://api.lolesports.com/api/v2/highlanderMatchDetails?tournamentId={tournamentId}&matchId={matchid}
+http://api.lolesports.com/api/v2/tournamentPlayerStats?groupName={group}&tournamentId={tournamentid}
+http://api.lolesports.com/api/v1/teams?slug={slug}&tournament={tournamentid}
+http://api.lolesports.com/api/v1/players?slug={slug}&tournament={tournamentid}
 
 * Write a usage guide:
 	* How to get a summoner
