@@ -171,10 +171,17 @@ public enum GameQueueType
     RANKED_FLEX_TT(9);
     
     private final Integer code;
+    private final String  apiname;
     
     GameQueueType(final Integer code)
     {
+        this(code, "");
+    }
+    
+    GameQueueType(final Integer code, final String apiName)
+    {
         this.code = code;
+        this.apiname = apiName;
     }
     
     public static Optional<GameQueueType> getFromCode(final String value)
@@ -196,6 +203,11 @@ public enum GameQueueType
     public static Optional<GameQueueType> getFromId(final int value)
     {
         return Stream.of(GameQueueType.values()).filter(t -> t.code.equals(value)).findFirst();
+    }
+    
+    public String getApiName()
+    {
+        return apiname.equals("") ? this.name() : apiname;
     }
     
     public Integer getValue()

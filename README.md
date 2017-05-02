@@ -3,7 +3,6 @@
 ## TODO:
 * Implement smooth ratelimiter
 * Test to make sure that Tournament-V3 works as expected (need key for this...)
-* Add League-V3 when its out 
 * Add remainder of E-sports API
 
 http://api.lolesports.com/api/v1/scheduleItems?leagueId={id}

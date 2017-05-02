@@ -2,8 +2,8 @@ package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.constants.types.RankedQueueType;
-import no.stelar7.api.l4j8.pojo.league.League;
+import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.pojo.league.*;
 
 import java.util.*;
 
@@ -21,172 +21,82 @@ public final class LeagueAPI
         // Hide public constructor
     }
     
-    /**
-     * Get master tier leagues.
-     *
-     * @param server region to get data from
-     * @param queue  queueType to get data for
-     * @return League
-     * @deprecated will be replaced with V3 sometime in the future
-     */
-    @Deprecated
-    public League getOldMasterLeague(Server server, RankedQueueType queue)
-    {
-        DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
-                                                       .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLData(Constants.TYPE_PLACEHOLDER_DATA, queue.getValue())
-                                                       .withEndpoint(URLEndpoint.OLD_LEAGUE_MASTER)
-                                                       .withServer(server);
-        
-        
-        return (League) builder.build();
-    }
     
     /**
      * Get master tier leagues.
+     * Valid queues are: RANKED_SOLO_5x5, RANKED_FLEX_SR, RANKED_FLEX_TT
      *
      * @param server region to get data from
      * @param queue  queueType to get data for
-     * @return League
+     * @return LeagueList
      */
-    public League getMasterLeague(Platform server, RankedQueueType queue)
+    public LeagueList getMasterLeague(Platform server, GameQueueType queue)
     {
-       /*
-       DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLData(Constants.TYPE_PLACEHOLDER_DATA, queue.getValue())
+        
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE_MASTER)
                                                        .withPlatform(server);
-        */
-        throw new UnsupportedOperationException("Use the old version untill V3 works");
         
-        //return (League) builder.build();
+        
+        return (LeagueList) builder.build();
     }
+    
     
     /**
      * Get challenger tier leagues.
+     * Valid queues are: RANKED_SOLO_5x5, RANKED_FLEX_SR, RANKED_FLEX_TT
      *
      * @param server region to get data from
      * @param queue  queueType to get data for
-     * @return League
-     * @deprecated will be replaced with V3 sometime in the future
+     * @return LeagueList
      */
-    @Deprecated
-    public League getOldChallengerLeague(Server server, RankedQueueType queue)
+    public LeagueList getChallengerLeague(Platform server, GameQueueType queue)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
-                                                       .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLData(Constants.TYPE_PLACEHOLDER_DATA, queue.getValue())
-                                                       .withEndpoint(URLEndpoint.OLD_LEAGUE_CHALLENGER)
-                                                       .withServer(server);
-        
-        
-        return (League) builder.build();
-    }
-    
-    /**
-     * Get challenger tier leagues.
-     *
-     * @param server region to get data from
-     * @param queue  queueType to get data for
-     * @return League
-     */
-    public League getChallengerLeague(Platform server, RankedQueueType queue)
-    {
-        /*
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLData(Constants.TYPE_PLACEHOLDER_DATA, queue.getValue())
-                                                       .withEndpoint(URLEndpoint.OLD_LEAGUE_CHALLENGER)
+                                                       .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
+                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
-        */
-        throw new UnsupportedOperationException("Use the old version untill V3 works");
         
-        //return (League) builder.build();
+        return (LeagueList) builder.build();
         
     }
     
-    
-    /**
-     * Get league entries mapped by summoner ID for a given list of summoner IDs.
-     * (This does not take a list given that V3 is on the way)
-     *
-     * @param server     region to get data from
-     * @param summonerId summoner to get data for
-     * @return League
-     * @deprecated will be replaced with V3 sometime in the future
-     */
-    @Deprecated
-    public Map<String, List<League>> getOldLeagueEntry(Server server, long summonerId)
-    {
-        DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
-                                                       .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.SUMMONER_IDS_PLACEHOLDER, String.valueOf(summonerId))
-                                                       .withEndpoint(URLEndpoint.OLD_LEAGUE_ENTRY)
-                                                       .withServer(server);
-        
-        
-        return (Map<String, List<League>>) builder.build();
-    }
     
     /**
      * Get league entries for a summonerId
      *
      * @param server     region to get data from
      * @param summonerId summoner to get data for
-     * @return League
+     * @return LeagueList
      */
-    public List<League> getLeagueEntry(Platform server, long summonerId)
+    public List<LeaguePosition> getLeaguePosition(Platform server, long summonerId)
     {
-        /*
+        
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.SUMMONER_IDS_PLACEHOLDER, String.valueOf(summonerId))
-                                                       .withEndpoint(URLEndpoint.OLD_LEAGUE_ENTRY)
+                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_ENTRY)
                                                        .withPlatform(server);
-        */
-        throw new UnsupportedOperationException("Use the old version untill V3 works");
         
         
-        //return (List<League>) builder.build();
+        return (List<LeaguePosition>) builder.build();
     }
     
-    /**
-     * Get leagues mapped by summoner ID for a given list of summoner IDs.
-     * (This does not take a list given that V3 is on the way)
-     *
-     * @param server     region to get data from
-     * @param summonerId summoner to get data for
-     * @return League
-     * @deprecated will be replaced with V3 sometime in the future
-     */
-    @Deprecated
-    public Map<String, List<League>> getOldLeague(Server server, long summonerId)
-    {
-        DataCallBuilder builder = new DataCallBuilder().withURL("https://{server}.api.riotgames.com/{game}/{service}/{version}/{resource}")
-                                                       .withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.SUMMONER_IDS_PLACEHOLDER, String.valueOf(summonerId))
-                                                       .withEndpoint(URLEndpoint.OLD_LEAGUE)
-                                                       .withServer(server);
-        
-        
-        return (Map<String, List<League>>) builder.build();
-    }
     
     /**
      * Get leagues mapped by summoner ID for a given list of summoner IDs.
      *
      * @param server     region to get data from
      * @param summonerId summoner to get data for
-     * @return League
+     * @return LeagueList
      */
-    public List<League> getLeague(Platform server, long summonerId)
+    public List<LeagueList> getLeague(Platform server, long summonerId)
     {
-        /*
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.SUMMONER_IDS_PLACEHOLDER, String.valueOf(summonerId))
-                                                       .withEndpoint(URLEndpoint.OLD_LEAGUE)
+                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+                                                       .withEndpoint(URLEndpoint.V3_LEAGUE)
                                                        .withPlatform(server);
-        */
-        throw new UnsupportedOperationException("Use the old version untill V3 works");
         
-        //return (List<League>) builder.build();
+        return (List<LeagueList>) builder.build();
     }
 }

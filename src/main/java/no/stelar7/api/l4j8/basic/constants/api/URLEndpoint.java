@@ -3,16 +3,15 @@ package no.stelar7.api.l4j8.basic.constants.api;
 import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
-import no.stelar7.api.l4j8.pojo.spectator.*;
-import no.stelar7.api.l4j8.pojo.league.League;
+import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
+import no.stelar7.api.l4j8.pojo.spectator.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
-import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
@@ -23,7 +22,7 @@ import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
 import no.stelar7.api.l4j8.pojo.tournament.*;
 
-import java.util.*;
+import java.util.List;
 
 public enum URLEndpoint
 {
@@ -103,20 +102,14 @@ public enum URLEndpoint
     V3_MATCHLIST_RECENT("lol", "match", "v3", "matchlists/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER + "/recent", MatchList.class),
     V3_TIMELINE("lol", "match", "v3", "timelines/by-match/" + Constants.MATCH_ID_PLACEHOLDER, MatchTimeline.class),
     
-    // NOT ADDED TO V3 YET!!
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}/entry
     // api/lol/{region}/v2.5/league/challenger
     // api/lol/{region}/v2.5/league/master
-    V3_LEAGUE("lol", "platform", "v3", "league/by-summoner/" + Constants.SUMMONER_IDS_PLACEHOLDER, new TypeToken<List<League>>() {}.getType()),
-    V3_LEAGUE_ENTRY("lol", "platform", "v3", "league/by-summoner/" + Constants.SUMMONER_IDS_PLACEHOLDER + "/entry", new TypeToken<List<League>>() {}.getType()),
-    V3_LEAGUE_CHALLENGER("lol", "platform", "v3", "league/challenger", League.class),
-    V3_LEAGUE_MASTER("lol", "platform", "v3", "league/master", League.class),
-    
-    OLD_LEAGUE("api/lol", "{region}", "v2.5", "league/by-summoner/" + Constants.SUMMONER_IDS_PLACEHOLDER, new TypeToken<Map<String, List<League>>>() {}.getType()),
-    OLD_LEAGUE_ENTRY("api/lol", "{region}", "v2.5", "league/by-summoner/" + Constants.SUMMONER_IDS_PLACEHOLDER + "/entry", new TypeToken<Map<String, List<League>>>() {}.getType()),
-    OLD_LEAGUE_CHALLENGER("api/lol", "{region}", "v2.5", "league/challenger", League.class),
-    OLD_LEAGUE_MASTER("api/lol", "{region}", "v2.5", "league/master", League.class),
+    V3_LEAGUE("lol", "league", "v3", "leagues/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeagueList>>() {}.getType()),
+    V3_LEAGUE_ENTRY("lol", "league", "v3", "positions/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeaguePosition>>() {}.getType()),
+    V3_LEAGUE_CHALLENGER("lol", "league", "v3", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
+    V3_LEAGUE_MASTER("lol", "league", "v3", "masterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     
     
     // POST lol/tournament-stub/v3/codes Create a mock tournament code for the given tournament.
