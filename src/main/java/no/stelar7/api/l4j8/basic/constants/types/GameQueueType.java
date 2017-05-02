@@ -24,7 +24,7 @@ public enum GameQueueType
     /**
      * Ranked Solo 5v5 games
      */
-    RANKED_SOLO_5X5(4),
+    RANKED_SOLO_5X5(4, "RANKED_SOLO_5x5"),
     /**
      * Ranked Premade 5v5 games
      */
@@ -207,7 +207,7 @@ public enum GameQueueType
     
     public String getApiName()
     {
-        return apiname.equals("") ? this.name() : apiname;
+        return "".equals(apiname) ? this.name() : apiname;
     }
     
     public Integer getValue()

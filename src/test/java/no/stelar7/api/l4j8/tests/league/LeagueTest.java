@@ -17,7 +17,7 @@ public class LeagueTest
     @Test
     public void testMasterLeague()
     {
-        LeagueList data = api.getMasterLeague(Platform.EUW1, GameQueueType.RANKED_FLEX_SR);
+        LeagueList data = api.getMasterLeague(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5);
     }
     
     @Test
