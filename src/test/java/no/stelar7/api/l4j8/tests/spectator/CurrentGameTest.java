@@ -43,7 +43,7 @@ public class CurrentGameTest
         final Summoner sum  = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, name);
         
         // Get game info
-        final SpectatorGameInfo currentGame = api.getCurrentGame(Platform.EUW1, sum.getId());
+        final SpectatorGameInfo currentGame = api.getCurrentGame(Platform.EUW1, sum.getSummonerId());
         doAssertions.accept(currentGame);
     }
 }

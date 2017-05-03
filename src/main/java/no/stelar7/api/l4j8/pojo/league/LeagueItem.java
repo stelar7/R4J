@@ -223,6 +223,11 @@ public class LeagueItem
         return this.miniSeries;
     }
     
+    public Boolean isInPromos()
+    {
+        return miniSeries != null;
+    }
+    
     /**
      * The ID of the participant (i.e., summoner or team) represented by this entry.
      *

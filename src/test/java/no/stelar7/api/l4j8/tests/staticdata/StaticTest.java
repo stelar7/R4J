@@ -33,7 +33,7 @@ public class StaticTest
         StaticChampionList list = api.getChampions(Platform.EUW1, dataFlags, version, locale);
         Assert.assertTrue("less than 100?", list.getData().size() > 100);
         
-        //list.getData().values().stream().sorted(Comparator.comparing(StaticChampion::getName)).forEach(c -> System.out.format("%s(%s, \"%s\"),%n", c.getName().toUpperCase(Locale.ENGLISH), c.getId(), c.getName()));
+        //list.getData().values().stream().sorted(Comparator.comparing(StaticChampion::getName)).forEach(c -> System.out.format("%s(%s, \"%s\"),%n", c.getName().toUpperCase(Locale.ENGLISH), c.getSummonerId(), c.getName()));
     }
     
     

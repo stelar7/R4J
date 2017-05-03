@@ -39,6 +39,11 @@ public class LeaguePosition
         return miniSeries;
     }
     
+    public Boolean isInPromos()
+    {
+        return miniSeries != null;
+    }
+    
     public Integer getWins()
     {
         return wins;

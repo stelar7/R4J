@@ -26,7 +26,7 @@ public final class Summoner
      *
      * @return Long
      */
-    public Long getId()
+    public Long getSummonerId()
     {
         return this.id;
     }
@@ -104,12 +104,12 @@ public final class Summoner
     
     public RunePages getRunePages()
     {
-        return SummonerAPI.getInstance().getRunes(platform, this.getId());
+        return SummonerAPI.getInstance().getRunes(platform, this.getSummonerId());
     }
     
     public MasteryPages getMasteryPages()
     {
-        return SummonerAPI.getInstance().getMasteries(platform, this.getId());
+        return SummonerAPI.getInstance().getMasteries(platform, this.getSummonerId());
     }
     
     public List<MatchReference> getRecentGames()
