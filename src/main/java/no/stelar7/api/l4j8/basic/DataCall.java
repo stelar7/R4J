@@ -124,7 +124,7 @@ public final class DataCall
             {
                 DataCall.LOGGER.log(Level.INFO, "Server error, retrying");
                 
-                int attempts = (retrys != null) ? retrys[0]++ : 1;
+                int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
                 if (attempts > 3)
                 {
                     throw new APIResponseException(APIHTTPErrorReason.ERROR500, response.getResponseData());

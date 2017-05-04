@@ -4,7 +4,6 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.match.*;
-import no.stelar7.api.l4j8.pojo.matchlist.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
@@ -52,19 +51,19 @@ public class MatchListTest
         
         for (MatchReference reference : all)
         {
-            Match                   detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
-            Optional<MatchTimeline> timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
+            Match         detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
+            MatchTimeline timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
         }
     }
     
     @Test
     public void testNormalGame()
     {
-        long                    id       = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, "Doloress D").getAccountId();
-        MatchReference          ref      = api.getRecentMatches(Platform.EUW1, id).get(0);
-        long                    gameid   = ref.getGameId();
-        Match                   detail   = api.getMatch(Platform.EUW1, gameid);
-        Optional<MatchTimeline> timeline = api.getTimeline(Platform.EUW1, gameid);
+        long           id       = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, "Doloress D").getAccountId();
+        MatchReference ref      = api.getRecentMatches(Platform.EUW1, id).get(0);
+        long           gameid   = ref.getGameId();
+        Match          detail   = api.getMatch(Platform.EUW1, gameid);
+        MatchTimeline  timeline = api.getTimeline(Platform.EUW1, gameid);
         System.out.println();
     }
 }

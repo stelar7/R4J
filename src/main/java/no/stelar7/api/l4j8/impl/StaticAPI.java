@@ -117,7 +117,7 @@ public final class StaticAPI
         return (MapData) builder.build();
     }
     
-    public MasteryList getMasteries(Platform server, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public StaticMasteryList getMasteries(Platform server, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
@@ -126,7 +126,7 @@ public final class StaticAPI
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         
-        return (MasteryList) builder.build();
+        return (StaticMasteryList) builder.build();
     }
     
     public StaticMastery getMastery(Platform server, int id, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)

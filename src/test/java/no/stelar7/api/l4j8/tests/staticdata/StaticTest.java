@@ -90,7 +90,7 @@ public class StaticTest
     {
         Optional<EnumSet<MasteryDataFlags>> dataFlags = Optional.of(EnumSet.of(MasteryDataFlags.ALL));
         
-        MasteryList list = api.getMasteries(Platform.EUW1, dataFlags, version, locale);
+        StaticMasteryList list = api.getMasteries(Platform.EUW1, dataFlags, version, locale);
     }
     
     

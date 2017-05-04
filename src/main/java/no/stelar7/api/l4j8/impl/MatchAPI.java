@@ -4,7 +4,6 @@ import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.pojo.match.*;
-import no.stelar7.api.l4j8.pojo.matchlist.*;
 
 import java.util.*;
 
@@ -109,12 +108,12 @@ public final class MatchAPI
      * @param matchId the matchId to find timeline for
      * @return MatchTimeline if avaliable
      */
-    public Optional<MatchTimeline> getTimeline(Platform server, long matchId)
+    public MatchTimeline getTimeline(Platform server, long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V3_TIMELINE)
                                                        .withPlatform(server);
         
-        return Optional.ofNullable((MatchTimeline) builder.build());
+        return (MatchTimeline) builder.build();
     }
 }

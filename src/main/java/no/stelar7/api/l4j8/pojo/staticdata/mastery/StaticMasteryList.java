@@ -1,13 +1,12 @@
-package no.stelar7.api.l4j8.pojo.staticdata.rune;
-
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
 import java.util.*;
 
-public class StaticRuneList
+public class StaticMasteryList
 {
-    private BasicData             basic;
-    private Map<Long, StaticRune> data;
+    private Map<Long, StaticMastery> data;
+    private MasteryTree                tree;
+    
     
     
     @Override
@@ -25,17 +24,7 @@ public class StaticRuneList
         {
             return false;
         }
-        final StaticRuneList other = (StaticRuneList) obj;
-        if (this.basic == null)
-        {
-            if (other.basic != null)
-            {
-                return false;
-            }
-        } else if (!this.basic.equals(other.basic))
-        {
-            return false;
-        }
+        final StaticMasteryList other = (StaticMasteryList) obj;
         if (this.data == null)
         {
             if (other.data != null)
@@ -46,18 +35,18 @@ public class StaticRuneList
         {
             return false;
         }
+        if (this.tree == null)
+        {
+            if (other.tree != null)
+            {
+                return false;
+            }
+        } else if (!this.tree.equals(other.tree))
+        {
+            return false;
+        }
         
         return true;
-    }
-    
-    /**
-     * Gets the basic.
-     *
-     * @return the basic
-     */
-    public BasicData getBasic()
-    {
-        return this.basic;
     }
     
     /**
@@ -65,9 +54,19 @@ public class StaticRuneList
      *
      * @return the data
      */
-    public Map<Long, StaticRune> getData()
+    public Map<Long, StaticMastery> getData()
     {
         return this.data;
+    }
+    
+    /**
+     * Gets the tree.
+     *
+     * @return the tree
+     */
+    public MasteryTree getTree()
+    {
+        return this.tree;
     }
     
     @Override
@@ -75,8 +74,8 @@ public class StaticRuneList
     {
         final int prime  = 31;
         int       result = 1;
-        result = (prime * result) + ((this.basic == null) ? 0 : this.basic.hashCode());
         result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
+        result = (prime * result) + ((this.tree == null) ? 0 : this.tree.hashCode());
         result = (prime * result) + super.hashCode();
         return result;
     }
@@ -84,9 +83,9 @@ public class StaticRuneList
     @Override
     public String toString()
     {
-        return "StaticRuneList{" +
-               "basic=" + basic +
-               ", data=" + data +
+        return "StaticMasteryList{" +
+               "data=" + data +
+               ", tree=" + tree +
                '}';
     }
 }

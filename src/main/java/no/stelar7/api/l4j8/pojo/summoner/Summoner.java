@@ -3,8 +3,11 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.types.ChampionType;
 import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.matchlist.*;
+import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
+import no.stelar7.api.l4j8.pojo.league.*;
+import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
 
@@ -120,7 +123,28 @@ public final class Summoner
     public List<MatchReference> getRankedGames()
     {
         Optional empty = Optional.empty();
-        return MatchAPI.getInstance().getMatchList(platform, id, empty, empty, empty, empty, empty, empty, empty);
+        return MatchAPI.getInstance().getMatchList(platform, accountId, empty, empty, empty, empty, empty, empty, empty);
+    }
+    
+    public ChampionMastery getChampionMastery(ChampionType type)
+    {
+        return MasteryAPI.getInstance().getChampionMastery(platform, id, type.getId());
+    }
+    
+    public List<ChampionMastery> getChampionMasteries()
+    {
+        return MasteryAPI.getInstance().getChampionMasteries(platform, id);
+    }
+    
+    
+    public List<LeaguePosition> getLeagueEntry()
+    {
+        return LeagueAPI.getInstance().getLeaguePosition(platform, id);
+    }
+    
+    public List<LeagueList> getFullLeague()
+    {
+        return LeagueAPI.getInstance().getLeague(platform, id);
     }
     
     @Override

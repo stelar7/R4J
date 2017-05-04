@@ -5,7 +5,7 @@ import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.match.*;
-import no.stelar7.api.l4j8.pojo.matchlist.MatchList;
+import no.stelar7.api.l4j8.pojo.match.MatchList;
 import no.stelar7.api.l4j8.pojo.spectator.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
@@ -83,7 +83,7 @@ public enum URLEndpoint
     V3_STATIC_LANGUAGE_STRINGS("lol", "static-data", "v3", "language-strings", LanguageStrings.class),
     V3_STATIC_LANGUAGES("lol", "static-data", "v3", "languages", new TypeToken<List<String>>() {}.getType()),
     V3_STATIC_MAPS("lol", "static-data", "v3", "maps", MapData.class),
-    V3_STATIC_MASTERIES("lol", "static-data", "v3", "masteries", MasteryList.class),
+    V3_STATIC_MASTERIES("lol", "static-data", "v3", "masteries", StaticMasteryList.class),
     V3_STATIC_MASTERY_BY_ID("lol", "static-data", "v3", "masteries/" + Constants.ID_PLACEHOLDER, StaticMastery.class),
     V3_STATIC_PROFILEICONS("lol", "static-data", "v3", "profile-icons", ProfileIconData.class),
     V3_STATIC_REALMS("lol", "static-data", "v3", "realms", Realm.class),

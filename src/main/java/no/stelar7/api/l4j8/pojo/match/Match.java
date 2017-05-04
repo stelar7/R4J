@@ -124,6 +124,91 @@ public class Match
         return this.participants;
     }
     
+    public Participant getParticipant(Integer participantId)
+    {
+        for (Participant participant : participants)
+        {
+            if (participant.getParticipantId().equals(participantId))
+            {
+                return participant;
+            }
+        }
+        return null;
+    }
+    
+    public ParticipantIdentity getParticipantIdentity(Integer participantId)
+    {
+        for (ParticipantIdentity participant : participantIdentities)
+        {
+            if (participant.getParticipantId().equals(participantId))
+            {
+                return participant;
+            }
+        }
+        return null;
+    }
+    
+    public Participant getParticipantFromSummonerId(Long summonerId)
+    {
+        for (ParticipantIdentity identity : participantIdentities)
+        {
+            if (identity.getPlayer().getSummonerId().equals(summonerId))
+            {
+                // return participants.get(participantIdentities.getParticipantId());
+                for (Participant participant : participants)
+                {
+                    if (participant.getParticipantId().equals(identity.getParticipantId()))
+                    {
+                        return participant;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Boolean didWin(Participant participant)
+    {
+        for (TeamStats team : teams)
+        {
+            if (participant.getTeam().equals(team.getTeamType()))
+            {
+                return team.isWinner();
+            }
+        }
+        return false;
+    }
+    
+    public ParticipantIdentity getLaneOpponentIdentity(Long summonerId)
+    {
+        Participant par  = getParticipantFromSummonerId(summonerId);
+        LaneType    lane = par.getTimeline().getLane();
+        RoleType    role = par.getTimeline().getRole();
+        
+        
+        for (Participant participant : participants)
+        {
+            if (participant.getParticipantId().equals(par.getParticipantId()))
+            {
+                continue;
+            }
+            
+            LaneType otherLane = participant.getTimeline().getLane();
+            RoleType otherRole = participant.getTimeline().getRole();
+            
+            if (lane.equals(otherLane))
+            {
+                if (role.equals(otherRole))
+                {
+                    return getParticipantIdentity(participant.getParticipantId());
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    
     /**
      * Platform ID of the match
      *
@@ -160,7 +245,7 @@ public class Match
      *
      * @return MatchTimeline
      */
-    public Optional<MatchTimeline> getTimeline()
+    public MatchTimeline getTimeline()
     {
         return MatchAPI.getInstance().getTimeline(platformId, gameId);
     }

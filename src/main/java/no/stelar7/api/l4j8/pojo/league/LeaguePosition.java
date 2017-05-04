@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.league;
 
-import no.stelar7.api.l4j8.basic.constants.types.GameQueueType;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 public class LeaguePosition
 {
@@ -87,6 +87,11 @@ public class LeaguePosition
     public String getTier()
     {
         return tier;
+    }
+    
+    public TierDivisionType getTierDivisionType()
+    {
+        return TierDivisionType.getFromCodes(tier, rank);
     }
     
     public Integer getLeaguePoints()
@@ -203,4 +208,5 @@ public class LeaguePosition
                ", leaguePoints=" + leaguePoints +
                '}';
     }
+    
 }

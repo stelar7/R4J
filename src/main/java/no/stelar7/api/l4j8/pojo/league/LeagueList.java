@@ -9,7 +9,7 @@ public class LeagueList
     
     private List<LeagueItem> entries;
     private String           name;
-    private RankedQueueType  queue;
+    private GameQueueType    queue;
     private TierType         tier;
     
     @Override
@@ -86,7 +86,7 @@ public class LeagueList
      *
      * @return the name
      */
-    public String getName()
+    public String getLeagueName()
     {
         return this.name;
     }
@@ -97,7 +97,7 @@ public class LeagueList
      *
      * @return the queue
      */
-    public RankedQueueType getQueue()
+    public GameQueueType getQueueType()
     {
         return this.queue;
     }

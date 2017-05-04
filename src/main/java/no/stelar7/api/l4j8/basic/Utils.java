@@ -38,7 +38,6 @@ public final class Utils
         builder.registerTypeAdapter(MonsterSubType.class, new MonsterSubTypeDeserializer());
         builder.registerTypeAdapter(PlayerStatSummaryType.class, new PlayerStatSummaryTypeDeserializer());
         builder.registerTypeAdapter(PointType.class, new PointTypeDeserializer());
-        builder.registerTypeAdapter(RankedQueueType.class, new RankedQueueTypeDeserializer());
         builder.registerTypeAdapter(RoleType.class, new RoleTypeDeserializer());
         builder.registerTypeAdapter(SeasonType.class, new SeasonTypeDeserializer());
         builder.registerTypeAdapter(SummonerSpellType.class, new SummonerSpellTypeDeserializer());
