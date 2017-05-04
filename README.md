@@ -5,30 +5,18 @@
 * Test to make sure that Tournament-V3 works as expected (need key for this...)
 * Add remainder of E-sports API
 
-http://api.lolesports.com/api/v1/navItems
-http://api.lolesports.com/api/v2/featuredTournamentOptions/en_US
-http://api.lolesports.com/api/v1/marquees?locale=en_US
-http://api.lolesports.com/api/v1/scheduleItems?leagueId={id}
-http://api.lolesports.com/api/v1/leagues/{id}
-http://api.lolesports.com/api/v2/highlanderMatchDetails?tournamentId={tournamentId}&matchId={matchid}
-http://api.lolesports.com/api/v2/tournamentPlayerStats?groupName={group}&tournamentId={tournamentid}
-http://api.lolesports.com/api/v1/teams?slug={slug}&tournament={tournamentid}
-http://api.lolesports.com/api/v1/players?slug={slug}&tournament={tournamentid}
+http://api.lolesports.com/api/v1/navItems  
+http://api.lolesports.com/api/v2/featuredTournamentOptions/en_US  
+http://api.lolesports.com/api/v1/marquees?locale=en_US  
+http://api.lolesports.com/api/v1/scheduleItems?leagueId={id}  
+http://api.lolesports.com/api/v1/leagues/{id}  
+http://api.lolesports.com/api/v2/highlanderMatchDetails?tournamentId={tournamentId}&matchId={matchid}  
+http://api.lolesports.com/api/v2/tournamentPlayerStats?groupName={group}&tournamentId={tournamentid}  
+http://api.lolesports.com/api/v1/teams?slug={slug}&tournament={tournamentid}  
+http://api.lolesports.com/api/v1/players?slug={slug}&tournament={tournamentid}  
 
 
 
-Add TierDivisionType  
-
-Move matchlist into the match package
-Make sure that the arraylength is one when we try to access its element
-Un-optional the timeline
-MasteryList -> StaticMasteryList
-Delete game-v1.3 package
-Sync names in LeagueList and LeaguePosition
-Remove RankedQueueType
-Use GameQueueType where RankedQueueType was before
-Add helper methods to Summoner, Match, and MatchReference
-Data map in StaticRune/MasteryList has a Long key
 
 ## Usage
 
