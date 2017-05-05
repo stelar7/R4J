@@ -19,7 +19,7 @@ public class BaseSpellData
     private LevelTip           leveltip;
     private Integer            maxrank;
     private String             name;
-    private List<Integer>      range;
+    private Object             range;
     private String             rangeBurn;
     private String             resource;
     private String             sanitizedDescription;
@@ -162,9 +162,18 @@ public class BaseSpellData
      *
      * @return the range
      */
-    public List<Integer> getRange()
+    public List<Integer> getRangeAsList()
     {
-        return this.range;
+        return (this.range instanceof List) ? (List<Integer>) this.range : null;
+    }
+    
+    /**
+     * Only valid for some spells
+     * @return the range
+     */
+    public String getRangeAsString()
+    {
+        return (this.range instanceof String) ? (String) this.range : null;
     }
     
     /**

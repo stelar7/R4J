@@ -9,6 +9,11 @@ public class StaticChampionSpell extends BaseSpellData
 {
     private List<Image> altimages;
     
+    public List<Image> getAltImages()
+    {
+        return altimages;
+    }
+    
     @Override
     public boolean equals(final Object obj)
     {

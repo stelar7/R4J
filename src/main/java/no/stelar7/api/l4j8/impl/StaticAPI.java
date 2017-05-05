@@ -36,7 +36,7 @@ public final class StaticAPI
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPIONS)
                                                        .withPlatform(server);
         
-        champData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue())));
+        champData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.CHAMPLISTDATA_PLACEHOLDER_DATA, flag.getValue())));
         version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
         locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
         

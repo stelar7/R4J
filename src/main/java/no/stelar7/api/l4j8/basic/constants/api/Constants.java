@@ -13,6 +13,7 @@ public final class Constants
     public static final String API_KEY_PLACEHOLDER_DATA         = "api_key";
     public static final String FREE_TO_PLAY_PLACEHOLDER_DATA    = "freeToPlay";
     public static final String CHAMPDATA_PLACEHOLDER_DATA       = "champData";
+    public static final String CHAMPLISTDATA_PLACEHOLDER_DATA   = "champListData";
     public static final String ITEMDATA_PLACEHOLDER_DATA        = "itemData";
     public static final String ITEMLISTDATA_PLACEHOLDER_DATA    = "itemListData";
     public static final String MASTERYLISTDATA_PLACEHOLDER_DATA = "masteryListData";
