@@ -58,14 +58,7 @@ public final class DataCall
             
             if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
             {
-                // TODO: Remove this when league-v3 is a thing
-                if (this.dc.platform != null)
-                {
-                    DataCall.limiter.get(this.dc.platform).acquire();
-                } else
-                {
-                    DataCall.oldlimiter.get(this.dc.server).acquire();
-                }
+                DataCall.limiter.get(this.dc.platform).acquire();
             }
             
             final String url = this.getURL();
@@ -120,7 +113,7 @@ public final class DataCall
             }
             
             
-            if (response.getResponseCode() == 500)
+            if (response.getResponseCode() >= 500)
             {
                 DataCall.LOGGER.log(Level.INFO, "Server error, retrying");
                 
@@ -255,13 +248,7 @@ public final class DataCall
         private String getURL()
         {
             String[] url = {dc.baseURL};
-            if (dc.platform == null)
-            {
-                url[0] = url[0].replace(Constants.SERVER_PLACEHOLDER, dc.server.asURLFormat());
-            } else
-            {
-                url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.platform.toString());
-            }
+            url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.platform.toString());
             url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.endpoint.getGame());
             url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.endpoint.getService());
             url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.endpoint.getVersion());
@@ -381,11 +368,6 @@ public final class DataCall
             return this;
         }
         
-        public DataCallBuilder withServer(Server s)
-        {
-            this.dc.server = s;
-            return this;
-        }
     }
     
     private static class DataCallResponse
@@ -427,8 +409,7 @@ public final class DataCall
     
     private static final Logger LOGGER = Logger.getGlobal();
     
-    private static final EnumMap<Platform, RateLimiter> limiter    = new EnumMap<>(Platform.class);
-    private static final EnumMap<Server, RateLimiter>   oldlimiter = new EnumMap<>(Server.class);
+    private static final EnumMap<Platform, RateLimiter> limiter = new EnumMap<>(Platform.class);
     
     private final Map<String, String> urlParams  = new TreeMap<>();
     private final Map<String, String> urlData    = new TreeMap<>();
@@ -446,8 +427,6 @@ public final class DataCall
     private URLEndpoint endpoint;
     
     private String baseURL = Constants.REQUEST_URL;
-    
-    private Server server;
     
     public static final boolean VERBOSE_DEFAULT = false;
     private             boolean verbose         = VERBOSE_DEFAULT;
@@ -474,17 +453,12 @@ public final class DataCall
     
     public static void setRatelimiter(RateLimiter... limiters)
     {
-        Arrays.stream(limiters).forEach(l ->
-                                        {
-                                            Arrays.stream(Platform.values()).forEach(p -> DataCall.limiter.put(p, l));
-                                            Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, l));
-                                        });
+        Arrays.stream(limiters).forEach(l -> Arrays.stream(Platform.values()).forEach(p -> DataCall.limiter.put(p, l)));
     }
     
     static
     {
         Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(Constants.DEV_KEY_LIMIT_10, Constants.DEV_KEY_LIMIT_600)));
-        Arrays.stream(Server.values()).forEach(s -> DataCall.oldlimiter.put(s, new BurstRateLimiter(Constants.DEV_KEY_LIMIT_10, Constants.DEV_KEY_LIMIT_600)));
     }
     
 }
