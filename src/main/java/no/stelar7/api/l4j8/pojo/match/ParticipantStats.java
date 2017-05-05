@@ -10,6 +10,9 @@ public class ParticipantStats
     private Long    assists;
     private Long    champLevel;
     private Long    combatPlayerScore;
+    private Long    damageSelfMitigated;
+    private Long    damageDealtToTurrets;
+    private Long    damageDealtToObjectives;
     private Long    deaths;
     private Long    doubleKills;
     private Boolean firstBloodAssist;
@@ -33,10 +36,10 @@ public class ParticipantStats
     private Long    largestCriticalStrike;
     private Long    largestKillingSpree;
     private Long    largestMultiKill;
+    private Long    longestTimeSpentLiving;
     private Long    magicDamageDealt;
     private Long    magicDamageDealtToChampions;
-    private Long    magicDamageTaken;
-    private Long    minionsKilled;
+    private Long    magicalDamageTaken;
     private Long    neutralMinionsKilled;
     private Long    neutralMinionsKilledEnemyJungle;
     private Long    neutralMinionsKilledTeamJungle;
@@ -52,673 +55,28 @@ public class ParticipantStats
     private Long    quadraKills;
     private Long    sightWardsBoughtInGame;
     private Long    teamObjective;
+    private Long    timeCCingOthers;
     private Long    totalDamageDealt;
     private Long    totalDamageDealtToChampions;
     private Long    totalDamageTaken;
     private Long    totalHeal;
+    private Long    totalMinionsKilled;
     private Long    totalPlayerScore;
     private Long    totalScoreRank;
     private Long    totalTimeCrowdControlDealt;
     private Long    totalUnitsHealed;
-    private Long    towerKills;
+    private Long    turretKills;
     private Long    tripleKills;
     private Long    trueDamageDealt;
     private Long    trueDamageDealtToChampions;
     private Long    trueDamageTaken;
     private Long    unrealKills;
+    private Long    visionScore;
     private Long    visionWardsBoughtInGame;
     private Long    wardsKilled;
     private Long    wardsPlaced;
-    private Boolean winner;
+    private Boolean win;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final ParticipantStats other = (ParticipantStats) obj;
-        if (this.assists == null)
-        {
-            if (other.assists != null)
-            {
-                return false;
-            }
-        } else if (!this.assists.equals(other.assists))
-        {
-            return false;
-        }
-        if (this.champLevel == null)
-        {
-            if (other.champLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.champLevel.equals(other.champLevel))
-        {
-            return false;
-        }
-        if (this.combatPlayerScore == null)
-        {
-            if (other.combatPlayerScore != null)
-            {
-                return false;
-            }
-        } else if (!this.combatPlayerScore.equals(other.combatPlayerScore))
-        {
-            return false;
-        }
-        if (this.deaths == null)
-        {
-            if (other.deaths != null)
-            {
-                return false;
-            }
-        } else if (!this.deaths.equals(other.deaths))
-        {
-            return false;
-        }
-        if (this.doubleKills == null)
-        {
-            if (other.doubleKills != null)
-            {
-                return false;
-            }
-        } else if (!this.doubleKills.equals(other.doubleKills))
-        {
-            return false;
-        }
-        if (this.firstBloodAssist == null)
-        {
-            if (other.firstBloodAssist != null)
-            {
-                return false;
-            }
-        } else if (!this.firstBloodAssist.equals(other.firstBloodAssist))
-        {
-            return false;
-        }
-        if (this.firstBloodKill == null)
-        {
-            if (other.firstBloodKill != null)
-            {
-                return false;
-            }
-        } else if (!this.firstBloodKill.equals(other.firstBloodKill))
-        {
-            return false;
-        }
-        if (this.firstInhibitorAssist == null)
-        {
-            if (other.firstInhibitorAssist != null)
-            {
-                return false;
-            }
-        } else if (!this.firstInhibitorAssist.equals(other.firstInhibitorAssist))
-        {
-            return false;
-        }
-        if (this.firstInhibitorKill == null)
-        {
-            if (other.firstInhibitorKill != null)
-            {
-                return false;
-            }
-        } else if (!this.firstInhibitorKill.equals(other.firstInhibitorKill))
-        {
-            return false;
-        }
-        if (this.firstTowerAssist == null)
-        {
-            if (other.firstTowerAssist != null)
-            {
-                return false;
-            }
-        } else if (!this.firstTowerAssist.equals(other.firstTowerAssist))
-        {
-            return false;
-        }
-        if (this.firstTowerKill == null)
-        {
-            if (other.firstTowerKill != null)
-            {
-                return false;
-            }
-        } else if (!this.firstTowerKill.equals(other.firstTowerKill))
-        {
-            return false;
-        }
-        if (this.goldEarned == null)
-        {
-            if (other.goldEarned != null)
-            {
-                return false;
-            }
-        } else if (!this.goldEarned.equals(other.goldEarned))
-        {
-            return false;
-        }
-        if (this.goldSpent == null)
-        {
-            if (other.goldSpent != null)
-            {
-                return false;
-            }
-        } else if (!this.goldSpent.equals(other.goldSpent))
-        {
-            return false;
-        }
-        if (this.inhibitorKills == null)
-        {
-            if (other.inhibitorKills != null)
-            {
-                return false;
-            }
-        } else if (!this.inhibitorKills.equals(other.inhibitorKills))
-        {
-            return false;
-        }
-        if (this.item0 == null)
-        {
-            if (other.item0 != null)
-            {
-                return false;
-            }
-        } else if (!this.item0.equals(other.item0))
-        {
-            return false;
-        }
-        if (this.item1 == null)
-        {
-            if (other.item1 != null)
-            {
-                return false;
-            }
-        } else if (!this.item1.equals(other.item1))
-        {
-            return false;
-        }
-        if (this.item2 == null)
-        {
-            if (other.item2 != null)
-            {
-                return false;
-            }
-        } else if (!this.item2.equals(other.item2))
-        {
-            return false;
-        }
-        if (this.item3 == null)
-        {
-            if (other.item3 != null)
-            {
-                return false;
-            }
-        } else if (!this.item3.equals(other.item3))
-        {
-            return false;
-        }
-        if (this.item4 == null)
-        {
-            if (other.item4 != null)
-            {
-                return false;
-            }
-        } else if (!this.item4.equals(other.item4))
-        {
-            return false;
-        }
-        if (this.item5 == null)
-        {
-            if (other.item5 != null)
-            {
-                return false;
-            }
-        } else if (!this.item5.equals(other.item5))
-        {
-            return false;
-        }
-        if (this.item6 == null)
-        {
-            if (other.item6 != null)
-            {
-                return false;
-            }
-        } else if (!this.item6.equals(other.item6))
-        {
-            return false;
-        }
-        if (this.killingSprees == null)
-        {
-            if (other.killingSprees != null)
-            {
-                return false;
-            }
-        } else if (!this.killingSprees.equals(other.killingSprees))
-        {
-            return false;
-        }
-        if (this.kills == null)
-        {
-            if (other.kills != null)
-            {
-                return false;
-            }
-        } else if (!this.kills.equals(other.kills))
-        {
-            return false;
-        }
-        if (this.largestCriticalStrike == null)
-        {
-            if (other.largestCriticalStrike != null)
-            {
-                return false;
-            }
-        } else if (!this.largestCriticalStrike.equals(other.largestCriticalStrike))
-        {
-            return false;
-        }
-        if (this.largestKillingSpree == null)
-        {
-            if (other.largestKillingSpree != null)
-            {
-                return false;
-            }
-        } else if (!this.largestKillingSpree.equals(other.largestKillingSpree))
-        {
-            return false;
-        }
-        if (this.largestMultiKill == null)
-        {
-            if (other.largestMultiKill != null)
-            {
-                return false;
-            }
-        } else if (!this.largestMultiKill.equals(other.largestMultiKill))
-        {
-            return false;
-        }
-        if (this.magicDamageDealt == null)
-        {
-            if (other.magicDamageDealt != null)
-            {
-                return false;
-            }
-        } else if (!this.magicDamageDealt.equals(other.magicDamageDealt))
-        {
-            return false;
-        }
-        if (this.magicDamageDealtToChampions == null)
-        {
-            if (other.magicDamageDealtToChampions != null)
-            {
-                return false;
-            }
-        } else if (!this.magicDamageDealtToChampions.equals(other.magicDamageDealtToChampions))
-        {
-            return false;
-        }
-        if (this.magicDamageTaken == null)
-        {
-            if (other.magicDamageTaken != null)
-            {
-                return false;
-            }
-        } else if (!this.magicDamageTaken.equals(other.magicDamageTaken))
-        {
-            return false;
-        }
-        if (this.minionsKilled == null)
-        {
-            if (other.minionsKilled != null)
-            {
-                return false;
-            }
-        } else if (!this.minionsKilled.equals(other.minionsKilled))
-        {
-            return false;
-        }
-        if (this.neutralMinionsKilled == null)
-        {
-            if (other.neutralMinionsKilled != null)
-            {
-                return false;
-            }
-        } else if (!this.neutralMinionsKilled.equals(other.neutralMinionsKilled))
-        {
-            return false;
-        }
-        if (this.neutralMinionsKilledEnemyJungle == null)
-        {
-            if (other.neutralMinionsKilledEnemyJungle != null)
-            {
-                return false;
-            }
-        } else if (!this.neutralMinionsKilledEnemyJungle.equals(other.neutralMinionsKilledEnemyJungle))
-        {
-            return false;
-        }
-        if (this.neutralMinionsKilledTeamJungle == null)
-        {
-            if (other.neutralMinionsKilledTeamJungle != null)
-            {
-                return false;
-            }
-        } else if (!this.neutralMinionsKilledTeamJungle.equals(other.neutralMinionsKilledTeamJungle))
-        {
-            return false;
-        }
-        if (this.nodeCapture == null)
-        {
-            if (other.nodeCapture != null)
-            {
-                return false;
-            }
-        } else if (!this.nodeCapture.equals(other.nodeCapture))
-        {
-            return false;
-        }
-        if (this.nodeCaptureAssist == null)
-        {
-            if (other.nodeCaptureAssist != null)
-            {
-                return false;
-            }
-        } else if (!this.nodeCaptureAssist.equals(other.nodeCaptureAssist))
-        {
-            return false;
-        }
-        if (this.nodeNeutralize == null)
-        {
-            if (other.nodeNeutralize != null)
-            {
-                return false;
-            }
-        } else if (!this.nodeNeutralize.equals(other.nodeNeutralize))
-        {
-            return false;
-        }
-        if (this.nodeNeutralizeAssist == null)
-        {
-            if (other.nodeNeutralizeAssist != null)
-            {
-                return false;
-            }
-        } else if (!this.nodeNeutralizeAssist.equals(other.nodeNeutralizeAssist))
-        {
-            return false;
-        }
-        if (this.objectivePlayerScore == null)
-        {
-            if (other.objectivePlayerScore != null)
-            {
-                return false;
-            }
-        } else if (!this.objectivePlayerScore.equals(other.objectivePlayerScore))
-        {
-            return false;
-        }
-        if (this.pentaKills == null)
-        {
-            if (other.pentaKills != null)
-            {
-                return false;
-            }
-        } else if (!this.pentaKills.equals(other.pentaKills))
-        {
-            return false;
-        }
-        if (this.physicalDamageDealt == null)
-        {
-            if (other.physicalDamageDealt != null)
-            {
-                return false;
-            }
-        } else if (!this.physicalDamageDealt.equals(other.physicalDamageDealt))
-        {
-            return false;
-        }
-        if (this.physicalDamageDealtToChampions == null)
-        {
-            if (other.physicalDamageDealtToChampions != null)
-            {
-                return false;
-            }
-        } else if (!this.physicalDamageDealtToChampions.equals(other.physicalDamageDealtToChampions))
-        {
-            return false;
-        }
-        if (this.physicalDamageTaken == null)
-        {
-            if (other.physicalDamageTaken != null)
-            {
-                return false;
-            }
-        } else if (!this.physicalDamageTaken.equals(other.physicalDamageTaken))
-        {
-            return false;
-        }
-        if (this.quadraKills == null)
-        {
-            if (other.quadraKills != null)
-            {
-                return false;
-            }
-        } else if (!this.quadraKills.equals(other.quadraKills))
-        {
-            return false;
-        }
-        if (this.sightWardsBoughtInGame == null)
-        {
-            if (other.sightWardsBoughtInGame != null)
-            {
-                return false;
-            }
-        } else if (!this.sightWardsBoughtInGame.equals(other.sightWardsBoughtInGame))
-        {
-            return false;
-        }
-        if (this.teamObjective == null)
-        {
-            if (other.teamObjective != null)
-            {
-                return false;
-            }
-        } else if (!this.teamObjective.equals(other.teamObjective))
-        {
-            return false;
-        }
-        if (this.totalDamageDealt == null)
-        {
-            if (other.totalDamageDealt != null)
-            {
-                return false;
-            }
-        } else if (!this.totalDamageDealt.equals(other.totalDamageDealt))
-        {
-            return false;
-        }
-        if (this.totalDamageDealtToChampions == null)
-        {
-            if (other.totalDamageDealtToChampions != null)
-            {
-                return false;
-            }
-        } else if (!this.totalDamageDealtToChampions.equals(other.totalDamageDealtToChampions))
-        {
-            return false;
-        }
-        if (this.totalDamageTaken == null)
-        {
-            if (other.totalDamageTaken != null)
-            {
-                return false;
-            }
-        } else if (!this.totalDamageTaken.equals(other.totalDamageTaken))
-        {
-            return false;
-        }
-        if (this.totalHeal == null)
-        {
-            if (other.totalHeal != null)
-            {
-                return false;
-            }
-        } else if (!this.totalHeal.equals(other.totalHeal))
-        {
-            return false;
-        }
-        if (this.totalPlayerScore == null)
-        {
-            if (other.totalPlayerScore != null)
-            {
-                return false;
-            }
-        } else if (!this.totalPlayerScore.equals(other.totalPlayerScore))
-        {
-            return false;
-        }
-        if (this.totalScoreRank == null)
-        {
-            if (other.totalScoreRank != null)
-            {
-                return false;
-            }
-        } else if (!this.totalScoreRank.equals(other.totalScoreRank))
-        {
-            return false;
-        }
-        if (this.totalTimeCrowdControlDealt == null)
-        {
-            if (other.totalTimeCrowdControlDealt != null)
-            {
-                return false;
-            }
-        } else if (!this.totalTimeCrowdControlDealt.equals(other.totalTimeCrowdControlDealt))
-        {
-            return false;
-        }
-        if (this.totalUnitsHealed == null)
-        {
-            if (other.totalUnitsHealed != null)
-            {
-                return false;
-            }
-        } else if (!this.totalUnitsHealed.equals(other.totalUnitsHealed))
-        {
-            return false;
-        }
-        if (this.towerKills == null)
-        {
-            if (other.towerKills != null)
-            {
-                return false;
-            }
-        } else if (!this.towerKills.equals(other.towerKills))
-        {
-            return false;
-        }
-        if (this.tripleKills == null)
-        {
-            if (other.tripleKills != null)
-            {
-                return false;
-            }
-        } else if (!this.tripleKills.equals(other.tripleKills))
-        {
-            return false;
-        }
-        if (this.trueDamageDealt == null)
-        {
-            if (other.trueDamageDealt != null)
-            {
-                return false;
-            }
-        } else if (!this.trueDamageDealt.equals(other.trueDamageDealt))
-        {
-            return false;
-        }
-        if (this.trueDamageDealtToChampions == null)
-        {
-            if (other.trueDamageDealtToChampions != null)
-            {
-                return false;
-            }
-        } else if (!this.trueDamageDealtToChampions.equals(other.trueDamageDealtToChampions))
-        {
-            return false;
-        }
-        if (this.trueDamageTaken == null)
-        {
-            if (other.trueDamageTaken != null)
-            {
-                return false;
-            }
-        } else if (!this.trueDamageTaken.equals(other.trueDamageTaken))
-        {
-            return false;
-        }
-        if (this.unrealKills == null)
-        {
-            if (other.unrealKills != null)
-            {
-                return false;
-            }
-        } else if (!this.unrealKills.equals(other.unrealKills))
-        {
-            return false;
-        }
-        if (this.visionWardsBoughtInGame == null)
-        {
-            if (other.visionWardsBoughtInGame != null)
-            {
-                return false;
-            }
-        } else if (!this.visionWardsBoughtInGame.equals(other.visionWardsBoughtInGame))
-        {
-            return false;
-        }
-        if (this.wardsKilled == null)
-        {
-            if (other.wardsKilled != null)
-            {
-                return false;
-            }
-        } else if (!this.wardsKilled.equals(other.wardsKilled))
-        {
-            return false;
-        }
-        if (this.wardsPlaced == null)
-        {
-            if (other.wardsPlaced != null)
-            {
-                return false;
-            }
-        } else if (!this.wardsPlaced.equals(other.wardsPlaced))
-        {
-            return false;
-        }
-        if (this.winner == null)
-        {
-            if (other.winner != null)
-            {
-                return false;
-            }
-        } else if (!this.winner.equals(other.winner))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * a {@code MapType<String, String>} of all the fields in this class.
@@ -968,7 +326,7 @@ public class ParticipantStats
      */
     public Long getMagicDamageTaken()
     {
-        return this.magicDamageTaken;
+        return this.magicalDamageTaken;
     }
     
     /**
@@ -978,7 +336,7 @@ public class ParticipantStats
      */
     public Long getMinionsKilled()
     {
-        return this.minionsKilled;
+        return this.totalMinionsKilled;
     }
     
     /**
@@ -1218,7 +576,7 @@ public class ParticipantStats
      */
     public Long getTowerKills()
     {
-        return this.towerKills;
+        return this.turretKills;
     }
     
     /**
@@ -1301,76 +659,6 @@ public class ParticipantStats
         return this.wardsPlaced;
     }
     
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.assists == null) ? 0 : this.assists.hashCode());
-        result = (prime * result) + ((this.champLevel == null) ? 0 : this.champLevel.hashCode());
-        result = (prime * result) + ((this.combatPlayerScore == null) ? 0 : this.combatPlayerScore.hashCode());
-        result = (prime * result) + ((this.deaths == null) ? 0 : this.deaths.hashCode());
-        result = (prime * result) + ((this.doubleKills == null) ? 0 : this.doubleKills.hashCode());
-        result = (prime * result) + ((this.firstBloodAssist == null) ? 0 : this.firstBloodAssist.hashCode());
-        result = (prime * result) + ((this.firstBloodKill == null) ? 0 : this.firstBloodKill.hashCode());
-        result = (prime * result) + ((this.firstInhibitorAssist == null) ? 0 : this.firstInhibitorAssist.hashCode());
-        result = (prime * result) + ((this.firstInhibitorKill == null) ? 0 : this.firstInhibitorKill.hashCode());
-        result = (prime * result) + ((this.firstTowerAssist == null) ? 0 : this.firstTowerAssist.hashCode());
-        result = (prime * result) + ((this.firstTowerKill == null) ? 0 : this.firstTowerKill.hashCode());
-        result = (prime * result) + ((this.goldEarned == null) ? 0 : this.goldEarned.hashCode());
-        result = (prime * result) + ((this.goldSpent == null) ? 0 : this.goldSpent.hashCode());
-        result = (prime * result) + ((this.inhibitorKills == null) ? 0 : this.inhibitorKills.hashCode());
-        result = (prime * result) + ((this.item0 == null) ? 0 : this.item0.hashCode());
-        result = (prime * result) + ((this.item1 == null) ? 0 : this.item1.hashCode());
-        result = (prime * result) + ((this.item2 == null) ? 0 : this.item2.hashCode());
-        result = (prime * result) + ((this.item3 == null) ? 0 : this.item3.hashCode());
-        result = (prime * result) + ((this.item4 == null) ? 0 : this.item4.hashCode());
-        result = (prime * result) + ((this.item5 == null) ? 0 : this.item5.hashCode());
-        result = (prime * result) + ((this.item6 == null) ? 0 : this.item6.hashCode());
-        result = (prime * result) + ((this.killingSprees == null) ? 0 : this.killingSprees.hashCode());
-        result = (prime * result) + ((this.kills == null) ? 0 : this.kills.hashCode());
-        result = (prime * result) + ((this.largestCriticalStrike == null) ? 0 : this.largestCriticalStrike.hashCode());
-        result = (prime * result) + ((this.largestKillingSpree == null) ? 0 : this.largestKillingSpree.hashCode());
-        result = (prime * result) + ((this.largestMultiKill == null) ? 0 : this.largestMultiKill.hashCode());
-        result = (prime * result) + ((this.magicDamageDealt == null) ? 0 : this.magicDamageDealt.hashCode());
-        result = (prime * result) + ((this.magicDamageDealtToChampions == null) ? 0 : this.magicDamageDealtToChampions.hashCode());
-        result = (prime * result) + ((this.magicDamageTaken == null) ? 0 : this.magicDamageTaken.hashCode());
-        result = (prime * result) + ((this.minionsKilled == null) ? 0 : this.minionsKilled.hashCode());
-        result = (prime * result) + ((this.neutralMinionsKilled == null) ? 0 : this.neutralMinionsKilled.hashCode());
-        result = (prime * result) + ((this.neutralMinionsKilledEnemyJungle == null) ? 0 : this.neutralMinionsKilledEnemyJungle.hashCode());
-        result = (prime * result) + ((this.neutralMinionsKilledTeamJungle == null) ? 0 : this.neutralMinionsKilledTeamJungle.hashCode());
-        result = (prime * result) + ((this.nodeCapture == null) ? 0 : this.nodeCapture.hashCode());
-        result = (prime * result) + ((this.nodeCaptureAssist == null) ? 0 : this.nodeCaptureAssist.hashCode());
-        result = (prime * result) + ((this.nodeNeutralize == null) ? 0 : this.nodeNeutralize.hashCode());
-        result = (prime * result) + ((this.nodeNeutralizeAssist == null) ? 0 : this.nodeNeutralizeAssist.hashCode());
-        result = (prime * result) + ((this.objectivePlayerScore == null) ? 0 : this.objectivePlayerScore.hashCode());
-        result = (prime * result) + ((this.pentaKills == null) ? 0 : this.pentaKills.hashCode());
-        result = (prime * result) + ((this.physicalDamageDealt == null) ? 0 : this.physicalDamageDealt.hashCode());
-        result = (prime * result) + ((this.physicalDamageDealtToChampions == null) ? 0 : this.physicalDamageDealtToChampions.hashCode());
-        result = (prime * result) + ((this.physicalDamageTaken == null) ? 0 : this.physicalDamageTaken.hashCode());
-        result = (prime * result) + ((this.quadraKills == null) ? 0 : this.quadraKills.hashCode());
-        result = (prime * result) + ((this.sightWardsBoughtInGame == null) ? 0 : this.sightWardsBoughtInGame.hashCode());
-        result = (prime * result) + ((this.teamObjective == null) ? 0 : this.teamObjective.hashCode());
-        result = (prime * result) + ((this.totalDamageDealt == null) ? 0 : this.totalDamageDealt.hashCode());
-        result = (prime * result) + ((this.totalDamageDealtToChampions == null) ? 0 : this.totalDamageDealtToChampions.hashCode());
-        result = (prime * result) + ((this.totalDamageTaken == null) ? 0 : this.totalDamageTaken.hashCode());
-        result = (prime * result) + ((this.totalHeal == null) ? 0 : this.totalHeal.hashCode());
-        result = (prime * result) + ((this.totalPlayerScore == null) ? 0 : this.totalPlayerScore.hashCode());
-        result = (prime * result) + ((this.totalScoreRank == null) ? 0 : this.totalScoreRank.hashCode());
-        result = (prime * result) + ((this.totalTimeCrowdControlDealt == null) ? 0 : this.totalTimeCrowdControlDealt.hashCode());
-        result = (prime * result) + ((this.totalUnitsHealed == null) ? 0 : this.totalUnitsHealed.hashCode());
-        result = (prime * result) + ((this.towerKills == null) ? 0 : this.towerKills.hashCode());
-        result = (prime * result) + ((this.tripleKills == null) ? 0 : this.tripleKills.hashCode());
-        result = (prime * result) + ((this.trueDamageDealt == null) ? 0 : this.trueDamageDealt.hashCode());
-        result = (prime * result) + ((this.trueDamageDealtToChampions == null) ? 0 : this.trueDamageDealtToChampions.hashCode());
-        result = (prime * result) + ((this.trueDamageTaken == null) ? 0 : this.trueDamageTaken.hashCode());
-        result = (prime * result) + ((this.unrealKills == null) ? 0 : this.unrealKills.hashCode());
-        result = (prime * result) + ((this.visionWardsBoughtInGame == null) ? 0 : this.visionWardsBoughtInGame.hashCode());
-        result = (prime * result) + ((this.wardsKilled == null) ? 0 : this.wardsKilled.hashCode());
-        result = (prime * result) + ((this.wardsPlaced == null) ? 0 : this.wardsPlaced.hashCode());
-        result = (prime * result) + ((this.winner == null) ? 0 : this.winner.hashCode());
-        return result;
-    }
     
     /**
      * Id first inhibitor kill.
@@ -1433,13 +721,407 @@ public class ParticipantStats
     }
     
     /**
-     * Checks if is winner.
+     * Checks if is win.
      *
      * @return the boolean
      */
     public Boolean isWinner()
     {
-        return this.winner;
+        return this.win;
+    }
+    
+    public Long getDamageSelfMitigated()
+    {
+        return damageSelfMitigated;
+    }
+    
+    public Long getDamageDealtToTurrets()
+    {
+        return damageDealtToTurrets;
+    }
+    
+    public Long getDamageDealtToObjectives()
+    {
+        return damageDealtToObjectives;
+    }
+    
+    public Long getLongestTimeSpentLiving()
+    {
+        return longestTimeSpentLiving;
+    }
+    
+    public Long getTimeCCingOthers()
+    {
+        return timeCCingOthers;
+    }
+    
+    public Long getVisionScore()
+    {
+        return visionScore;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        ParticipantStats that = (ParticipantStats) o;
+        
+        if ((assists != null) ? !assists.equals(that.assists) : (that.assists != null))
+        {
+            return false;
+        }
+        if ((champLevel != null) ? !champLevel.equals(that.champLevel) : (that.champLevel != null))
+        {
+            return false;
+        }
+        if ((combatPlayerScore != null) ? !combatPlayerScore.equals(that.combatPlayerScore) : (that.combatPlayerScore != null))
+        {
+            return false;
+        }
+        if ((damageSelfMitigated != null) ? !damageSelfMitigated.equals(that.damageSelfMitigated) : (that.damageSelfMitigated != null))
+        {
+            return false;
+        }
+        if ((damageDealtToTurrets != null) ? !damageDealtToTurrets.equals(that.damageDealtToTurrets) : (that.damageDealtToTurrets != null))
+        {
+            return false;
+        }
+        if ((damageDealtToObjectives != null) ? !damageDealtToObjectives.equals(that.damageDealtToObjectives) : (that.damageDealtToObjectives != null))
+        {
+            return false;
+        }
+        if ((deaths != null) ? !deaths.equals(that.deaths) : (that.deaths != null))
+        {
+            return false;
+        }
+        if ((doubleKills != null) ? !doubleKills.equals(that.doubleKills) : (that.doubleKills != null))
+        {
+            return false;
+        }
+        if ((firstBloodAssist != null) ? !firstBloodAssist.equals(that.firstBloodAssist) : (that.firstBloodAssist != null))
+        {
+            return false;
+        }
+        if ((firstBloodKill != null) ? !firstBloodKill.equals(that.firstBloodKill) : (that.firstBloodKill != null))
+        {
+            return false;
+        }
+        if ((firstInhibitorAssist != null) ? !firstInhibitorAssist.equals(that.firstInhibitorAssist) : (that.firstInhibitorAssist != null))
+        {
+            return false;
+        }
+        if ((firstInhibitorKill != null) ? !firstInhibitorKill.equals(that.firstInhibitorKill) : (that.firstInhibitorKill != null))
+        {
+            return false;
+        }
+        if ((firstTowerAssist != null) ? !firstTowerAssist.equals(that.firstTowerAssist) : (that.firstTowerAssist != null))
+        {
+            return false;
+        }
+        if ((firstTowerKill != null) ? !firstTowerKill.equals(that.firstTowerKill) : (that.firstTowerKill != null))
+        {
+            return false;
+        }
+        if ((goldEarned != null) ? !goldEarned.equals(that.goldEarned) : (that.goldEarned != null))
+        {
+            return false;
+        }
+        if ((goldSpent != null) ? !goldSpent.equals(that.goldSpent) : (that.goldSpent != null))
+        {
+            return false;
+        }
+        if ((inhibitorKills != null) ? !inhibitorKills.equals(that.inhibitorKills) : (that.inhibitorKills != null))
+        {
+            return false;
+        }
+        if ((item0 != null) ? !item0.equals(that.item0) : (that.item0 != null))
+        {
+            return false;
+        }
+        if ((item1 != null) ? !item1.equals(that.item1) : (that.item1 != null))
+        {
+            return false;
+        }
+        if ((item2 != null) ? !item2.equals(that.item2) : (that.item2 != null))
+        {
+            return false;
+        }
+        if ((item3 != null) ? !item3.equals(that.item3) : (that.item3 != null))
+        {
+            return false;
+        }
+        if ((item4 != null) ? !item4.equals(that.item4) : (that.item4 != null))
+        {
+            return false;
+        }
+        if ((item5 != null) ? !item5.equals(that.item5) : (that.item5 != null))
+        {
+            return false;
+        }
+        if ((item6 != null) ? !item6.equals(that.item6) : (that.item6 != null))
+        {
+            return false;
+        }
+        if ((killingSprees != null) ? !killingSprees.equals(that.killingSprees) : (that.killingSprees != null))
+        {
+            return false;
+        }
+        if ((kills != null) ? !kills.equals(that.kills) : (that.kills != null))
+        {
+            return false;
+        }
+        if ((largestCriticalStrike != null) ? !largestCriticalStrike.equals(that.largestCriticalStrike) : (that.largestCriticalStrike != null))
+        {
+            return false;
+        }
+        if ((largestKillingSpree != null) ? !largestKillingSpree.equals(that.largestKillingSpree) : (that.largestKillingSpree != null))
+        {
+            return false;
+        }
+        if ((largestMultiKill != null) ? !largestMultiKill.equals(that.largestMultiKill) : (that.largestMultiKill != null))
+        {
+            return false;
+        }
+        if ((longestTimeSpentLiving != null) ? !longestTimeSpentLiving.equals(that.longestTimeSpentLiving) : (that.longestTimeSpentLiving != null))
+        {
+            return false;
+        }
+        if ((magicDamageDealt != null) ? !magicDamageDealt.equals(that.magicDamageDealt) : (that.magicDamageDealt != null))
+        {
+            return false;
+        }
+        if ((magicDamageDealtToChampions != null) ? !magicDamageDealtToChampions.equals(that.magicDamageDealtToChampions) : (that.magicDamageDealtToChampions != null))
+        {
+            return false;
+        }
+        if ((magicalDamageTaken != null) ? !magicalDamageTaken.equals(that.magicalDamageTaken) : (that.magicalDamageTaken != null))
+        {
+            return false;
+        }
+        if ((neutralMinionsKilled != null) ? !neutralMinionsKilled.equals(that.neutralMinionsKilled) : (that.neutralMinionsKilled != null))
+        {
+            return false;
+        }
+        if ((neutralMinionsKilledEnemyJungle != null) ? !neutralMinionsKilledEnemyJungle.equals(that.neutralMinionsKilledEnemyJungle) : (that.neutralMinionsKilledEnemyJungle != null))
+        {
+            return false;
+        }
+        if ((neutralMinionsKilledTeamJungle != null) ? !neutralMinionsKilledTeamJungle.equals(that.neutralMinionsKilledTeamJungle) : (that.neutralMinionsKilledTeamJungle != null))
+        {
+            return false;
+        }
+        if ((nodeCapture != null) ? !nodeCapture.equals(that.nodeCapture) : (that.nodeCapture != null))
+        {
+            return false;
+        }
+        if ((nodeCaptureAssist != null) ? !nodeCaptureAssist.equals(that.nodeCaptureAssist) : (that.nodeCaptureAssist != null))
+        {
+            return false;
+        }
+        if ((nodeNeutralize != null) ? !nodeNeutralize.equals(that.nodeNeutralize) : (that.nodeNeutralize != null))
+        {
+            return false;
+        }
+        if ((nodeNeutralizeAssist != null) ? !nodeNeutralizeAssist.equals(that.nodeNeutralizeAssist) : (that.nodeNeutralizeAssist != null))
+        {
+            return false;
+        }
+        if ((objectivePlayerScore != null) ? !objectivePlayerScore.equals(that.objectivePlayerScore) : (that.objectivePlayerScore != null))
+        {
+            return false;
+        }
+        if ((pentaKills != null) ? !pentaKills.equals(that.pentaKills) : (that.pentaKills != null))
+        {
+            return false;
+        }
+        if ((physicalDamageDealt != null) ? !physicalDamageDealt.equals(that.physicalDamageDealt) : (that.physicalDamageDealt != null))
+        {
+            return false;
+        }
+        if ((physicalDamageDealtToChampions != null) ? !physicalDamageDealtToChampions.equals(that.physicalDamageDealtToChampions) : (that.physicalDamageDealtToChampions != null))
+        {
+            return false;
+        }
+        if ((physicalDamageTaken != null) ? !physicalDamageTaken.equals(that.physicalDamageTaken) : (that.physicalDamageTaken != null))
+        {
+            return false;
+        }
+        if ((quadraKills != null) ? !quadraKills.equals(that.quadraKills) : (that.quadraKills != null))
+        {
+            return false;
+        }
+        if ((sightWardsBoughtInGame != null) ? !sightWardsBoughtInGame.equals(that.sightWardsBoughtInGame) : (that.sightWardsBoughtInGame != null))
+        {
+            return false;
+        }
+        if ((teamObjective != null) ? !teamObjective.equals(that.teamObjective) : (that.teamObjective != null))
+        {
+            return false;
+        }
+        if ((timeCCingOthers != null) ? !timeCCingOthers.equals(that.timeCCingOthers) : (that.timeCCingOthers != null))
+        {
+            return false;
+        }
+        if ((totalDamageDealt != null) ? !totalDamageDealt.equals(that.totalDamageDealt) : (that.totalDamageDealt != null))
+        {
+            return false;
+        }
+        if ((totalDamageDealtToChampions != null) ? !totalDamageDealtToChampions.equals(that.totalDamageDealtToChampions) : (that.totalDamageDealtToChampions != null))
+        {
+            return false;
+        }
+        if ((totalDamageTaken != null) ? !totalDamageTaken.equals(that.totalDamageTaken) : (that.totalDamageTaken != null))
+        {
+            return false;
+        }
+        if ((totalHeal != null) ? !totalHeal.equals(that.totalHeal) : (that.totalHeal != null))
+        {
+            return false;
+        }
+        if ((totalMinionsKilled != null) ? !totalMinionsKilled.equals(that.totalMinionsKilled) : (that.totalMinionsKilled != null))
+        {
+            return false;
+        }
+        if ((totalPlayerScore != null) ? !totalPlayerScore.equals(that.totalPlayerScore) : (that.totalPlayerScore != null))
+        {
+            return false;
+        }
+        if ((totalScoreRank != null) ? !totalScoreRank.equals(that.totalScoreRank) : (that.totalScoreRank != null))
+        {
+            return false;
+        }
+        if ((totalTimeCrowdControlDealt != null) ? !totalTimeCrowdControlDealt.equals(that.totalTimeCrowdControlDealt) : (that.totalTimeCrowdControlDealt != null))
+        {
+            return false;
+        }
+        if ((totalUnitsHealed != null) ? !totalUnitsHealed.equals(that.totalUnitsHealed) : (that.totalUnitsHealed != null))
+        {
+            return false;
+        }
+        if ((turretKills != null) ? !turretKills.equals(that.turretKills) : (that.turretKills != null))
+        {
+            return false;
+        }
+        if ((tripleKills != null) ? !tripleKills.equals(that.tripleKills) : (that.tripleKills != null))
+        {
+            return false;
+        }
+        if ((trueDamageDealt != null) ? !trueDamageDealt.equals(that.trueDamageDealt) : (that.trueDamageDealt != null))
+        {
+            return false;
+        }
+        if ((trueDamageDealtToChampions != null) ? !trueDamageDealtToChampions.equals(that.trueDamageDealtToChampions) : (that.trueDamageDealtToChampions != null))
+        {
+            return false;
+        }
+        if ((trueDamageTaken != null) ? !trueDamageTaken.equals(that.trueDamageTaken) : (that.trueDamageTaken != null))
+        {
+            return false;
+        }
+        if ((unrealKills != null) ? !unrealKills.equals(that.unrealKills) : (that.unrealKills != null))
+        {
+            return false;
+        }
+        if ((visionScore != null) ? !visionScore.equals(that.visionScore) : (that.visionScore != null))
+        {
+            return false;
+        }
+        if ((visionWardsBoughtInGame != null) ? !visionWardsBoughtInGame.equals(that.visionWardsBoughtInGame) : (that.visionWardsBoughtInGame != null))
+        {
+            return false;
+        }
+        if ((wardsKilled != null) ? !wardsKilled.equals(that.wardsKilled) : (that.wardsKilled != null))
+        {
+            return false;
+        }
+        if ((wardsPlaced != null) ? !wardsPlaced.equals(that.wardsPlaced) : (that.wardsPlaced != null))
+        {
+            return false;
+        }
+        return (win != null) ? win.equals(that.win) : (that.win == null);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = assists != null ? assists.hashCode() : 0;
+        result = 31 * result + (champLevel != null ? champLevel.hashCode() : 0);
+        result = 31 * result + (combatPlayerScore != null ? combatPlayerScore.hashCode() : 0);
+        result = 31 * result + (damageSelfMitigated != null ? damageSelfMitigated.hashCode() : 0);
+        result = 31 * result + (damageDealtToTurrets != null ? damageDealtToTurrets.hashCode() : 0);
+        result = 31 * result + (damageDealtToObjectives != null ? damageDealtToObjectives.hashCode() : 0);
+        result = 31 * result + (deaths != null ? deaths.hashCode() : 0);
+        result = 31 * result + (doubleKills != null ? doubleKills.hashCode() : 0);
+        result = 31 * result + (firstBloodAssist != null ? firstBloodAssist.hashCode() : 0);
+        result = 31 * result + (firstBloodKill != null ? firstBloodKill.hashCode() : 0);
+        result = 31 * result + (firstInhibitorAssist != null ? firstInhibitorAssist.hashCode() : 0);
+        result = 31 * result + (firstInhibitorKill != null ? firstInhibitorKill.hashCode() : 0);
+        result = 31 * result + (firstTowerAssist != null ? firstTowerAssist.hashCode() : 0);
+        result = 31 * result + (firstTowerKill != null ? firstTowerKill.hashCode() : 0);
+        result = 31 * result + (goldEarned != null ? goldEarned.hashCode() : 0);
+        result = 31 * result + (goldSpent != null ? goldSpent.hashCode() : 0);
+        result = 31 * result + (inhibitorKills != null ? inhibitorKills.hashCode() : 0);
+        result = 31 * result + (item0 != null ? item0.hashCode() : 0);
+        result = 31 * result + (item1 != null ? item1.hashCode() : 0);
+        result = 31 * result + (item2 != null ? item2.hashCode() : 0);
+        result = 31 * result + (item3 != null ? item3.hashCode() : 0);
+        result = 31 * result + (item4 != null ? item4.hashCode() : 0);
+        result = 31 * result + (item5 != null ? item5.hashCode() : 0);
+        result = 31 * result + (item6 != null ? item6.hashCode() : 0);
+        result = 31 * result + (killingSprees != null ? killingSprees.hashCode() : 0);
+        result = 31 * result + (kills != null ? kills.hashCode() : 0);
+        result = 31 * result + (largestCriticalStrike != null ? largestCriticalStrike.hashCode() : 0);
+        result = 31 * result + (largestKillingSpree != null ? largestKillingSpree.hashCode() : 0);
+        result = 31 * result + (largestMultiKill != null ? largestMultiKill.hashCode() : 0);
+        result = 31 * result + (longestTimeSpentLiving != null ? longestTimeSpentLiving.hashCode() : 0);
+        result = 31 * result + (magicDamageDealt != null ? magicDamageDealt.hashCode() : 0);
+        result = 31 * result + (magicDamageDealtToChampions != null ? magicDamageDealtToChampions.hashCode() : 0);
+        result = 31 * result + (magicalDamageTaken != null ? magicalDamageTaken.hashCode() : 0);
+        result = 31 * result + (neutralMinionsKilled != null ? neutralMinionsKilled.hashCode() : 0);
+        result = 31 * result + (neutralMinionsKilledEnemyJungle != null ? neutralMinionsKilledEnemyJungle.hashCode() : 0);
+        result = 31 * result + (neutralMinionsKilledTeamJungle != null ? neutralMinionsKilledTeamJungle.hashCode() : 0);
+        result = 31 * result + (nodeCapture != null ? nodeCapture.hashCode() : 0);
+        result = 31 * result + (nodeCaptureAssist != null ? nodeCaptureAssist.hashCode() : 0);
+        result = 31 * result + (nodeNeutralize != null ? nodeNeutralize.hashCode() : 0);
+        result = 31 * result + (nodeNeutralizeAssist != null ? nodeNeutralizeAssist.hashCode() : 0);
+        result = 31 * result + (objectivePlayerScore != null ? objectivePlayerScore.hashCode() : 0);
+        result = 31 * result + (pentaKills != null ? pentaKills.hashCode() : 0);
+        result = 31 * result + (physicalDamageDealt != null ? physicalDamageDealt.hashCode() : 0);
+        result = 31 * result + (physicalDamageDealtToChampions != null ? physicalDamageDealtToChampions.hashCode() : 0);
+        result = 31 * result + (physicalDamageTaken != null ? physicalDamageTaken.hashCode() : 0);
+        result = 31 * result + (quadraKills != null ? quadraKills.hashCode() : 0);
+        result = 31 * result + (sightWardsBoughtInGame != null ? sightWardsBoughtInGame.hashCode() : 0);
+        result = 31 * result + (teamObjective != null ? teamObjective.hashCode() : 0);
+        result = 31 * result + (timeCCingOthers != null ? timeCCingOthers.hashCode() : 0);
+        result = 31 * result + (totalDamageDealt != null ? totalDamageDealt.hashCode() : 0);
+        result = 31 * result + (totalDamageDealtToChampions != null ? totalDamageDealtToChampions.hashCode() : 0);
+        result = 31 * result + (totalDamageTaken != null ? totalDamageTaken.hashCode() : 0);
+        result = 31 * result + (totalHeal != null ? totalHeal.hashCode() : 0);
+        result = 31 * result + (totalMinionsKilled != null ? totalMinionsKilled.hashCode() : 0);
+        result = 31 * result + (totalPlayerScore != null ? totalPlayerScore.hashCode() : 0);
+        result = 31 * result + (totalScoreRank != null ? totalScoreRank.hashCode() : 0);
+        result = 31 * result + (totalTimeCrowdControlDealt != null ? totalTimeCrowdControlDealt.hashCode() : 0);
+        result = 31 * result + (totalUnitsHealed != null ? totalUnitsHealed.hashCode() : 0);
+        result = 31 * result + (turretKills != null ? turretKills.hashCode() : 0);
+        result = 31 * result + (tripleKills != null ? tripleKills.hashCode() : 0);
+        result = 31 * result + (trueDamageDealt != null ? trueDamageDealt.hashCode() : 0);
+        result = 31 * result + (trueDamageDealtToChampions != null ? trueDamageDealtToChampions.hashCode() : 0);
+        result = 31 * result + (trueDamageTaken != null ? trueDamageTaken.hashCode() : 0);
+        result = 31 * result + (unrealKills != null ? unrealKills.hashCode() : 0);
+        result = 31 * result + (visionScore != null ? visionScore.hashCode() : 0);
+        result = 31 * result + (visionWardsBoughtInGame != null ? visionWardsBoughtInGame.hashCode() : 0);
+        result = 31 * result + (wardsKilled != null ? wardsKilled.hashCode() : 0);
+        result = 31 * result + (wardsPlaced != null ? wardsPlaced.hashCode() : 0);
+        result = 31 * result + (win != null ? win.hashCode() : 0);
+        return result;
     }
     
     @Override
@@ -1449,6 +1131,9 @@ public class ParticipantStats
                "assists=" + assists +
                ", champLevel=" + champLevel +
                ", combatPlayerScore=" + combatPlayerScore +
+               ", damageSelfMitigated=" + damageSelfMitigated +
+               ", damageDealtToTurrets=" + damageDealtToTurrets +
+               ", damageDealtToObjectives=" + damageDealtToObjectives +
                ", deaths=" + deaths +
                ", doubleKills=" + doubleKills +
                ", firstBloodAssist=" + firstBloodAssist +
@@ -1472,10 +1157,10 @@ public class ParticipantStats
                ", largestCriticalStrike=" + largestCriticalStrike +
                ", largestKillingSpree=" + largestKillingSpree +
                ", largestMultiKill=" + largestMultiKill +
+               ", longestTimeSpentLiving=" + longestTimeSpentLiving +
                ", magicDamageDealt=" + magicDamageDealt +
                ", magicDamageDealtToChampions=" + magicDamageDealtToChampions +
-               ", magicDamageTaken=" + magicDamageTaken +
-               ", minionsKilled=" + minionsKilled +
+               ", magicalDamageTaken=" + magicalDamageTaken +
                ", neutralMinionsKilled=" + neutralMinionsKilled +
                ", neutralMinionsKilledEnemyJungle=" + neutralMinionsKilledEnemyJungle +
                ", neutralMinionsKilledTeamJungle=" + neutralMinionsKilledTeamJungle +
@@ -1491,24 +1176,27 @@ public class ParticipantStats
                ", quadraKills=" + quadraKills +
                ", sightWardsBoughtInGame=" + sightWardsBoughtInGame +
                ", teamObjective=" + teamObjective +
+               ", timeCCingOthers=" + timeCCingOthers +
                ", totalDamageDealt=" + totalDamageDealt +
                ", totalDamageDealtToChampions=" + totalDamageDealtToChampions +
                ", totalDamageTaken=" + totalDamageTaken +
                ", totalHeal=" + totalHeal +
+               ", totalMinionsKilled=" + totalMinionsKilled +
                ", totalPlayerScore=" + totalPlayerScore +
                ", totalScoreRank=" + totalScoreRank +
                ", totalTimeCrowdControlDealt=" + totalTimeCrowdControlDealt +
                ", totalUnitsHealed=" + totalUnitsHealed +
-               ", towerKills=" + towerKills +
+               ", turretKills=" + turretKills +
                ", tripleKills=" + tripleKills +
                ", trueDamageDealt=" + trueDamageDealt +
                ", trueDamageDealtToChampions=" + trueDamageDealtToChampions +
                ", trueDamageTaken=" + trueDamageTaken +
                ", unrealKills=" + unrealKills +
+               ", visionScore=" + visionScore +
                ", visionWardsBoughtInGame=" + visionWardsBoughtInGame +
                ", wardsKilled=" + wardsKilled +
                ", wardsPlaced=" + wardsPlaced +
-               ", winner=" + winner +
+               ", win=" + win +
                '}';
     }
 }

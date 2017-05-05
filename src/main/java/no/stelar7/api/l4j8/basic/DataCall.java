@@ -428,8 +428,8 @@ public final class DataCall
     
     private String baseURL = Constants.REQUEST_URL;
     
-    public static final boolean VERBOSE_DEFAULT = false;
-    private             boolean verbose         = VERBOSE_DEFAULT;
+    public static boolean VERBOSE_DEFAULT = false;
+    private       boolean verbose         = VERBOSE_DEFAULT;
     
     public static final boolean VERBOSE_LIMITING = false;
     
