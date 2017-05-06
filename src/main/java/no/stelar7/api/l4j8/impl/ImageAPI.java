@@ -230,6 +230,24 @@ public final class ImageAPI
     }
     
     /**
+     * Gets summoner spell.
+     *
+     * @param spell   the spell
+     * @param version the version
+     * @return the summoner spell
+     */
+    public String getSummonerSpell(String spell, String version)
+    {
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
+        String cdn           = realm.getCDN();
+        String versionString = version != null ? version : realm.getV();
+        String path          = "img/spell";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + spell + ".png";
+    }
+    
+    /**
      * Gets item.
      *
      * @param id      the id
@@ -374,5 +392,23 @@ public final class ImageAPI
         
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
         return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + "map" + map.getId() + ".png";
+    }
+    
+    /**
+     * Gets map.
+     *
+     * @param map     the map
+     * @param version the version
+     * @return the map
+     */
+    public String getMap(String map, String version)
+    {
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
+        String cdn           = realm.getCDN();
+        String versionString = version != null ? version : realm.getV();
+        String path          = "img/map";
+        
+        // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + "map" + map + ".png";
     }
 }
