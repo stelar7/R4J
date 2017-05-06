@@ -58,12 +58,15 @@ public class MatchListTest
     @Test
     public void testNormalGame()
     {
-        long           id       = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, "Doloress D").getAccountId();
-        MatchReference ref      = api.getRecentMatches(Platform.EUW1, id).get(0);
-        long           gameid   = ref.getGameId();
-        Match          detail   = api.getMatch(Platform.EUW1, gameid);
-        MatchTimeline  timeline = api.getTimeline(Platform.EUW1, gameid);
-        System.out.println();
+        long id = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[2]).getAccountId();
+        
+        List<MatchReference> refs = api.getRecentMatches(Platform.EUW1, id);
+        for (MatchReference ref : refs)
+        {
+            long          gameid   = ref.getGameId();
+            Match         detail   = api.getMatch(Platform.EUW1, gameid);
+            MatchTimeline timeline = api.getTimeline(Platform.EUW1, gameid);
+        }
     }
 }
 

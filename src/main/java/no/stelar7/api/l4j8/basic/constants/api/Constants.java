@@ -77,7 +77,7 @@ public final class Constants
     public static final String REQUEST_URL = PROTOCOL + PLATFORM_PLACEHOLDER + HOST_PLACEHOLDER + SEPARATOR + GAME_PLACEHOLDER + SEPARATOR + SERVICE_PLACEHOLDER + SEPARATOR + VERSION_PLACEHOLDER + SEPARATOR + RESOURCE_PLACEHOLDER;
     
     public static final String[] TEST_TOURNAMENT_CODES = {"EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d"};
-    public static final String[] TEST_SUMMONER_NAMES   = {"stelar7", "NRG Zenon"};
+    public static final String[] TEST_SUMMONER_NAMES   = {"stelar7", "NRG Zenon", "Doloress D"};
     public static final Long[]   TEST_SUMMONER_IDS     = {19613950L};
     public static final Long[]   TEST_ACCOUNT_IDS      = {22401330L};
     public static final int[]    TEST_CHAMPION_IDS     = {89, 50};
