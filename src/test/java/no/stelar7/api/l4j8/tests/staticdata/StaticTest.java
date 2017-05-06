@@ -3,15 +3,14 @@ package no.stelar7.api.l4j8.tests.staticdata;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
-import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
-import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
-import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
-import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
+import no.stelar7.api.l4j8.pojo.staticdata.map.*;
+import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
+import no.stelar7.api.l4j8.pojo.staticdata.profileicon.*;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
-import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
-import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
+import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
+import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.StaticSummonerSpell;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
@@ -28,8 +27,8 @@ public class StaticTest
     {
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL);
         
-        StaticChampionList list = api.getChampions(Platform.EUW1, dataFlags, null, null);
-        Assert.assertTrue("less than 100?", list.getData().size() > 100);
+        Map<Long, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
+        Assert.assertTrue("less than 100?", list.size() > 100);
         
         //list.getData().values().stream().sorted(Comparator.comparing(StaticChampion::getName)).forEach(c -> System.out.format("%s(%s, \"%s\"),%n", c.getName().toUpperCase(Locale.ENGLISH), c.getSummonerId(), c.getName()));
     }
@@ -67,7 +66,7 @@ public class StaticTest
     @Test
     public void testLanguageStrings()
     {
-        LanguageStrings strings = api.getLanguageStrings(Platform.EUW1, null, null);
+        Map<String, String> strings = api.getLanguageStrings(Platform.EUW1, null, null);
     }
     
     @Test
@@ -79,7 +78,8 @@ public class StaticTest
     @Test
     public void testMaps()
     {
-        MapData data = api.getMaps(Platform.EUW1, null, null);
+        Map<String, MapDetails> data = api.getMaps(Platform.EUW1, null, null);
+        System.out.println();
     }
     
     
@@ -88,7 +88,7 @@ public class StaticTest
     {
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
         
-        StaticMasteryList list = api.getMasteries(Platform.EUW1, dataFlags, null, null);
+        Map<Long, StaticMastery> list = api.getMasteries(Platform.EUW1, dataFlags, null, null);
     }
     
     
@@ -105,7 +105,7 @@ public class StaticTest
     @Test
     public void testProfileIcons()
     {
-        ProfileIconData data = api.getProfileIcons(Platform.EUW1, null, null);
+        Map<Long, ProfileIconDetails> data = api.getProfileIcons(Platform.EUW1, null, null);
     }
     
     @Test
@@ -119,7 +119,7 @@ public class StaticTest
     {
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL);
         
-        StaticRuneList list = api.getRunes(Platform.EUW1, dataFlags, null, null);
+        Map<Long, StaticRune> list = api.getRunes(Platform.EUW1, dataFlags, null, null);
     }
     
     
@@ -145,7 +145,7 @@ public class StaticTest
     {
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL);
         
-        StaticSummonerSpellList list = api.getSummonerSpells(Platform.EUW1, dataFlags, null, null);
+        Map<String, StaticSummonerSpell> list = api.getSummonerSpells(Platform.EUW1, dataFlags, null, null);
     }
     
     

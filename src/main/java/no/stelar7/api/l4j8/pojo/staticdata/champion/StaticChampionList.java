@@ -4,11 +4,11 @@ import java.util.*;
 
 public class StaticChampionList
 {
-    private Map<String, StaticChampion> data;
-    private String                      format;
-    private Map<String, String>         keys;
-    private String                      type;
-    private String                      version;
+    private Map<Long, StaticChampion> data;
+    private String                    format;
+    private Map<String, String>       keys;
+    private String                    type;
+    private String                    version;
     
     @Override
     public boolean equals(final Object obj)
@@ -84,7 +84,7 @@ public class StaticChampionList
      *
      * @return the data
      */
-    public Map<String, StaticChampion> getData()
+    public Map<Long, StaticChampion> getData()
     {
         return this.data;
     }

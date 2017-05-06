@@ -168,7 +168,15 @@ public enum GameQueueType
     /**
      * Ranked 3v3 Draft Pick games (Flex Queue)
      */
-    RANKED_FLEX_TT(9);
+    RANKED_FLEX_TT(9),
+    /**
+     * Blood Hunt Assassin games
+     */
+    ASSASSINATE_5X5(600),
+    /**
+     * Darkstar games
+     */
+    DARKSTAR_3X3(610);
     
     private final Integer code;
     private final String  apiname;

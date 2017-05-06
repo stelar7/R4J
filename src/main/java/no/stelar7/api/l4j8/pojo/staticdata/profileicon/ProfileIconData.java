@@ -1,26 +1,16 @@
 package no.stelar7.api.l4j8.pojo.staticdata.profileicon;
 
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BaseStaticData;
+
 import java.util.Map;
 
-public class ProfileIconData
+public class ProfileIconData extends BaseStaticData
 {
-    private Map<String, ProfileIconDetails> data;
-    private String                          version;
-    private String                          type;
+    private Map<Long, ProfileIconDetails> data;
     
-    public Map<String, ProfileIconDetails> getData()
+    public Map<Long, ProfileIconDetails> getData()
     {
         return data;
-    }
-    
-    public String getVersion()
-    {
-        return version;
-    }
-    
-    public String getType()
-    {
-        return type;
     }
     
     @Override
@@ -34,26 +24,21 @@ public class ProfileIconData
         {
             return false;
         }
+        if (!super.equals(o))
+        {
+            return false;
+        }
         
         ProfileIconData that = (ProfileIconData) o;
         
-        if ((data != null) ? !data.equals(that.data) : (that.data != null))
-        {
-            return false;
-        }
-        if ((version != null) ? !version.equals(that.version) : (that.version != null))
-        {
-            return false;
-        }
-        return (type != null) ? type.equals(that.type) : (that.type == null);
+        return (data != null) ? data.equals(that.data) : (that.data == null);
     }
     
     @Override
     public int hashCode()
     {
-        int result = data != null ? data.hashCode() : 0;
-        result = 31 * result + (version != null ? version.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
+        int result = super.hashCode();
+        result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }
     
@@ -63,8 +48,6 @@ public class ProfileIconData
     {
         return "ProfileIconData{" +
                "data=" + data +
-               ", version='" + version + '\'' +
-               ", type='" + type + '\'' +
                '}';
     }
 }

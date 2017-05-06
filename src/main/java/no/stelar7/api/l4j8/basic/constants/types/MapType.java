@@ -16,7 +16,7 @@ public enum MapType
      */
     SUMMONERS_RIFT_AUTUMN_OLD(2, new Rectangle(-269, -83, 14276, 14522)),
     /**
-     * The Proving Grounds Tutorial MapType
+     * The Proving Grounds Tutorial map
      */
     PROVING_GROUNDS(3, new Rectangle(-500, -500, 15000, 15000)),
     /**
@@ -24,7 +24,7 @@ public enum MapType
      */
     TWISTED_TREELINE_OLD(4, new Rectangle(0, 0, 15398, 15398)),
     /**
-     * The Crystal Scar Dominion MapType
+     * The Crystal Scar Dominion map
      */
     CRYSTAL_SCAR(8, new Rectangle(0, 0, 13987, 13987)),
     /**
@@ -36,13 +36,18 @@ public enum MapType
      */
     SUMMONERS_RIFT(11, new Rectangle(-269, -83, 14276, 14522)),
     /**
-     * Howling Abyss ARAM MapType
+     * Howling Abyss ARAM map
      */
     HOWLING_ABYSS(12, new Rectangle(-28, -19, 12849, 12858)),
     /**
-     * Butcher's Bridge ARAM MapType
+     * Butcher's Bridge ARAM map
      */
-    BUTCHERS_BRIDGE(14, new Rectangle(-28, -19, 12849, 12858));
+    BUTCHERS_BRIDGE(14, new Rectangle(-28, -19, 12849, 12858)),
+    /**
+     * Darkstar Map
+     */
+    COSMIC_RUINS(16, new Rectangle(0, 0, 0, 0)),;
+    
     
     private final Integer   mapId;
     private final Rectangle bounds;

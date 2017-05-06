@@ -40,7 +40,19 @@ public enum GameModeType
     /**
      * Nexus Siege games
      */
-    SIEGE,;
+    SIEGE,
+    /**
+     * Blood Hunt Assassin games
+     */
+    ASSASSINATE,
+    /**
+     * All Random Summoner's Rift games
+     */
+    ARSR,
+    /**
+     * Darkstar games
+     */
+    DARKSTAR;
     
     /**
      * Returns a GameModeType from the provided value

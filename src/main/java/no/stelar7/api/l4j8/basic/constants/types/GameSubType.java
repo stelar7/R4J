@@ -107,7 +107,11 @@ public enum GameSubType
     /**
      * Ranked Flex games on Twisted Treeline
      */
-    RANKED_FLEX_TT;
+    RANKED_FLEX_TT,
+    /**
+     * Darkstar games
+     */
+    DARKSTAR;
     
     public static Optional<GameSubType> getFromCode(final String subType)
     {
