@@ -122,8 +122,7 @@ public final class Summoner
     
     public List<MatchReference> getRankedGames()
     {
-        Optional empty = Optional.empty();
-        return MatchAPI.getInstance().getMatchList(platform, accountId, empty, empty, empty, empty, empty, empty, empty);
+        return MatchAPI.getInstance().getMatchList(platform, accountId, null, null, null, null, null, null, null);
     }
     
     public ChampionMastery getChampionMastery(ChampionType type)

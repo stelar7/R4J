@@ -32,7 +32,7 @@ public class ChampionTest
     @Test
     public void testFreeToPlay()
     {
-        List<Champion> champ = api.getChampions(Platform.EUW1, Optional.of(true));
+        List<Champion> champ = api.getChampions(Platform.EUW1, true);
         Assert.assertTrue("count greater than 20?", champ.size() < 20);
         
         champ.sort(Comparator.comparing(Champion::getChampionType));
@@ -45,7 +45,7 @@ public class ChampionTest
     @Test
     public void testChampionList()
     {
-        List<Champion> champ = api.getChampions(Platform.EUW1, Optional.empty());
+        List<Champion> champ = api.getChampions(Platform.EUW1, null);
         Assert.assertTrue("count less than 100?", champ.size() > 100);
     }
 }

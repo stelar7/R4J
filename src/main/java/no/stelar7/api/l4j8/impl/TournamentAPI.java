@@ -34,10 +34,10 @@ public final class TournamentAPI
      * @param tournamentId the tournamentId this game is played on
      * @return a list of tournamentcodes
      */
-    public List<String> generateTournamentCodes(Platform server, final TournamentCodeParameters params, final long tournamentId, Optional<Integer> count)
+    public List<String> generateTournamentCodes(Platform server, final TournamentCodeParameters params, final long tournamentId, Integer count)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withURLParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count.orElseGet(() -> 1)))
+                                                       .withURLParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
                                                        .withURLParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, "")
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)

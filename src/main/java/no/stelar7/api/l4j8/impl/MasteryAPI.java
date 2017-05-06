@@ -50,12 +50,12 @@ public final class MasteryAPI
      * @param count      the amount of champions to get
      * @return A sorted list of ChampionMastery
      */
-    public List<ChampionMastery> getTopChampions(Platform server, long summonerId, Optional<Integer> count)
+    public List<ChampionMastery> getTopChampions(Platform server, long summonerId, Integer count)
     {
         List<ChampionMastery> list = getChampionMasteries(server, summonerId);
         
         return list.stream().sorted(Comparator.comparing(ChampionMastery::getChampionPoints))
-                   .limit(count.orElseGet(() -> 3))
+                   .limit(count != null ? count : 3)
                    .collect(Collectors.toList());
         
     }

@@ -35,19 +35,18 @@ public class MatchListTest
     };
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-    MatchAPI api   = l4j8.getMatchAPI();
-    Optional empty = Optional.empty();
+    MatchAPI api = l4j8.getMatchAPI();
     
     @Test
     public void testMatchAndMatchList()
     {
-        Optional<EnumSet<GameQueueType>> queue     = Optional.of(EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO));
-        Optional<EnumSet<SeasonType>>    season    = Optional.of(EnumSet.of(SeasonType.PRE_SEASON_2017));
-        Optional<List<Integer>>          champs    = Optional.of(Arrays.asList(Constants.TEST_CHAMPION_IDS[0], 99));
-        Optional<Long>                   beginTime = Optional.of(1481108400000L);
+        EnumSet<GameQueueType> queue     = EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
+        EnumSet<SeasonType>    season    = EnumSet.of(SeasonType.PRE_SEASON_2017);
+        List<Integer>          champs    = Arrays.asList(Constants.TEST_CHAMPION_IDS[0], 99);
+        Long                   beginTime = 1481108400000L;
         
         // use begintime instead of season because its broken ATM
-        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, empty, empty, empty, empty, empty, empty);
+        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, null, null, null, null, null, null);
         
         for (MatchReference reference : all)
         {

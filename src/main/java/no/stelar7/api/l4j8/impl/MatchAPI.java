@@ -43,25 +43,46 @@ public final class MatchAPI
      * @return MatchList
      */
     public List<MatchReference> getMatchList(Platform server, long accountId,
-                                             Optional<Long> beginTime, Optional<Long> endTime,
-                                             Optional<Integer> beginIndex, Optional<Integer> endIndex,
-                                             Optional<EnumSet<GameQueueType>> rankedQueues,
-                                             Optional<EnumSet<SeasonType>> seasons,
-                                             Optional<List<Integer>> championIds)
+                                             Long beginTime, Long endTime,
+                                             Integer beginIndex, Integer endIndex,
+                                             Set<GameQueueType> rankedQueues,
+                                             Set<SeasonType> seasons,
+                                             List<Integer> championIds)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
                                                        .withPlatform(server);
         
-        beginIndex.ifPresent(value -> builder.withURLData(Constants.BEGININDEX_PLACEHOLDER_DATA, String.valueOf(value)));
-        endIndex.ifPresent(value -> builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, String.valueOf(value)));
+        if (beginIndex != null)
+        {
+            builder.withURLData(Constants.BEGININDEX_PLACEHOLDER_DATA, beginIndex.toString());
+        }
+        if (endIndex != null)
+        {
+            builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, endIndex.toString());
+        }
         
-        beginTime.ifPresent(value -> builder.withURLData(Constants.BEGINTIME_PLACEHOLDER_DATA, String.valueOf(value)));
-        endTime.ifPresent(value -> builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(value)));
+        if (beginTime != null)
+        {
+            builder.withURLData(Constants.BEGINTIME_PLACEHOLDER_DATA, beginTime.toString());
+        }
+        if (endTime != null)
+        {
+            builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, endTime.toString());
+        }
+        if (rankedQueues != null)
+        {
+            rankedQueues.forEach(flag -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(flag.getValue())));
+        }
+        if (seasons != null)
+        {
+            seasons.forEach(flag -> builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(flag.getValue())));
+        }
+        if (championIds != null)
+        {
+            championIds.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
+        }
         
-        rankedQueues.ifPresent(value -> value.forEach(flag -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(flag.getValue()))));
-        seasons.ifPresent(value -> value.forEach(flag -> builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(flag.getValue()))));
-        championIds.ifPresent(value -> value.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id))));
         
         MatchList list = (MatchList) builder.build();
         return list.getMatches();

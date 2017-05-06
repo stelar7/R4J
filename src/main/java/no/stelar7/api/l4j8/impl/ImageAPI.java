@@ -8,8 +8,6 @@ import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
 
-import java.util.Optional;
-
 public final class ImageAPI
 {
     private static final ImageAPI INSTANCE = new ImageAPI();
@@ -32,11 +30,11 @@ public final class ImageAPI
      * @param version the version
      * @return the profile icon
      */
-    public String getProfileIcon(String iconid, Optional<String> version)
+    public String getProfileIcon(String iconid, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/profileicon";
         
         //http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png
@@ -130,11 +128,11 @@ public final class ImageAPI
      * @param version the version
      * @return the square
      */
-    public String getSquare(StaticChampion champ, Optional<String> version)
+    public String getSquare(StaticChampion champ, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/champion";
         
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
@@ -148,11 +146,11 @@ public final class ImageAPI
      * @param version  the version
      * @return the square
      */
-    public String getSquare(String champKey, Optional<String> version)
+    public String getSquare(String champKey, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/champion";
         
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
@@ -166,11 +164,11 @@ public final class ImageAPI
      * @param version   the version
      * @return the passive
      */
-    public String getPassive(String passiveId, Optional<String> version)
+    public String getPassive(String passiveId, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/passive";
         
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
@@ -184,11 +182,11 @@ public final class ImageAPI
      * @param version the version
      * @return the passive
      */
-    public String getPassive(Passive passive, Optional<String> version)
+    public String getPassive(Passive passive, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/passive";
         
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
@@ -202,11 +200,11 @@ public final class ImageAPI
      * @param version the version
      * @return the ability
      */
-    public String getAbility(StaticChampionSpell spell, Optional<String> version)
+    public String getAbility(StaticChampionSpell spell, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/spell";
         
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
@@ -220,11 +218,11 @@ public final class ImageAPI
      * @param version the version
      * @return the summoner spell
      */
-    public String getSummonerSpell(SummonerSpellType spell, Optional<String> version)
+    public String getSummonerSpell(SummonerSpellType spell, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/spell";
         
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
@@ -238,11 +236,11 @@ public final class ImageAPI
      * @param version the version
      * @return the item
      */
-    public String getItem(String id, Optional<String> version)
+    public String getItem(String id, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/item";
         
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
@@ -257,11 +255,11 @@ public final class ImageAPI
      * @param version the version
      * @return the item
      */
-    public String getItem(Item id, Optional<String> version)
+    public String getItem(Item id, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/item";
         
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
@@ -275,11 +273,11 @@ public final class ImageAPI
      * @param version the version
      * @return the mastery
      */
-    public String getMastery(StaticMastery id, Optional<String> version)
+    public String getMastery(StaticMastery id, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/mastery";
         
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
@@ -293,15 +291,34 @@ public final class ImageAPI
      * @param version the version
      * @return the mastery
      */
-    public String getMastery(String id, Optional<String> version)
+    public String getMastery(String id, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/mastery";
         
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
         return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id + ".png";
+    }
+    
+    
+    /**
+     * Gets the spritesheet an image is taken from
+     *
+     * @param sprite  the sprite field from an image object
+     * @param version the version
+     * @return the spritesheet
+     */
+    public String getSpriteSheet(String sprite, String version)
+    {
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
+        String cdn           = realm.getCDN();
+        String versionString = version != null ? version : realm.getV();
+        String path          = "img/sprite";
+        
+        //  http://ddragon.leagueoflegends.com/cdn/7.8.1/img/sprite/mastery0.png
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + sprite;
     }
     
     /**
@@ -311,11 +328,11 @@ public final class ImageAPI
      * @param version the version
      * @return the rune
      */
-    public String getRune(String id, Optional<String> version)
+    public String getRune(String id, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/rune";
         
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
@@ -329,11 +346,11 @@ public final class ImageAPI
      * @param version the version
      * @return the rune
      */
-    public String getRune(StaticRune rune, Optional<String> version)
+    public String getRune(StaticRune rune, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/rune";
         
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
@@ -348,11 +365,11 @@ public final class ImageAPI
      * @param version the version
      * @return the map
      */
-    public String getMap(MapType map, Optional<String> version)
+    public String getMap(MapType map, String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
-        String versionString = version.orElseGet(realm::getV);
+        String versionString = version != null ? version : realm.getV();
         String path          = "img/map";
         
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png

@@ -30,64 +30,99 @@ public final class StaticAPI
     }
     
     
-    public StaticChampionList getChampions(Platform server, Optional<EnumSet<ChampDataFlags>> champData, Optional<String> version, Optional<String> locale)
+    public StaticChampionList getChampions(Platform server, Set<ChampDataFlags> champData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(false))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPIONS)
                                                        .withPlatform(server);
         
-        champData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.CHAMPLISTDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        
+        champData.forEach(flag -> builder.withURLData(Constants.CHAMPLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (StaticChampionList) builder.build();
     }
     
-    public StaticChampion getChampion(Platform server, int id, Optional<EnumSet<ChampDataFlags>> champData, Optional<String> version, Optional<String> locale)
+    public StaticChampion getChampion(Platform server, int id, Set<ChampDataFlags> champData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPION_BY_ID)
                                                        .withPlatform(server);
         
-        champData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        champData.forEach(flag -> builder.withURLData(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (StaticChampion) builder.build();
     }
     
-    public ItemList getItems(Platform server, Optional<EnumSet<ItemDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public ItemList getItems(Platform server, Set<ItemDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_ITEMS)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        itemData.forEach(flag -> builder.withURLData(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (ItemList) builder.build();
     }
     
-    public Item getItem(Platform server, int id, Optional<EnumSet<ItemDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public Item getItem(Platform server, int id, Set<ItemDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_ITEM_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        itemData.forEach(flag -> builder.withURLData(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (Item) builder.build();
     }
     
-    public LanguageStrings getLanguageStrings(Platform server, Optional<String> version, Optional<String> locale)
+    public LanguageStrings getLanguageStrings(Platform server, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS)
                                                        .withPlatform(server);
         
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (LanguageStrings) builder.build();
     }
@@ -106,49 +141,76 @@ public final class StaticAPI
         return (List<String>) builder.build();
     }
     
-    public MapData getMaps(Platform server, Optional<String> version, Optional<String> locale)
+    public MapData getMaps(Platform server, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MAPS)
                                                        .withPlatform(server);
         
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (MapData) builder.build();
     }
     
-    public StaticMasteryList getMasteries(Platform server, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public StaticMasteryList getMasteries(Platform server, Set<MasteryDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        itemData.forEach(flag -> builder.withURLData(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
+        
         
         return (StaticMasteryList) builder.build();
     }
     
-    public StaticMastery getMastery(Platform server, int id, Optional<EnumSet<MasteryDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public StaticMastery getMastery(Platform server, int id, Set<MasteryDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        itemData.forEach(flag -> builder.withURLData(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (StaticMastery) builder.build();
     }
     
-    public ProfileIconData getProfileIcons(Platform server, Optional<String> version, Optional<String> locale)
+    public ProfileIconData getProfileIcons(Platform server, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_PROFILEICONS)
                                                        .withPlatform(server);
         
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (ProfileIconData) builder.build();
     }
@@ -160,53 +222,84 @@ public final class StaticAPI
         return (Realm) builder.build();
     }
     
-    public StaticRuneList getRunes(Platform server, Optional<EnumSet<RuneDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public StaticRuneList getRunes(Platform server, Set<RuneDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_RUNES)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNELISTDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        itemData.forEach(flag -> builder.withURLData(Constants.RUNELISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (StaticRuneList) builder.build();
     }
     
-    public StaticRune getRune(Platform server, int id, Optional<EnumSet<RuneDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public StaticRune getRune(Platform server, int id, Set<RuneDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_RUNE_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        itemData.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
         
         return (StaticRune) builder.build();
     }
     
     
-    public StaticSummonerSpellList getSummonerSpells(Platform server, Optional<EnumSet<SpellDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public StaticSummonerSpellList getSummonerSpells(Platform server, Set<SpellDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELLS)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        itemData.forEach(flag -> builder.withURLData(Constants.SUMMONERSPELLLIST_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
+        
         
         return (StaticSummonerSpellList) builder.build();
     }
     
-    public StaticSummonerSpell getSummonerSpell(Platform server, int id, Optional<EnumSet<SpellDataFlags>> itemData, Optional<String> version, Optional<String> locale)
+    public StaticSummonerSpell getSummonerSpell(Platform server, int id, Set<SpellDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.ifPresent(value -> value.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue())));
-        version.ifPresent(value -> builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, value));
-        locale.ifPresent(value -> builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, value));
+        
+        itemData.forEach(flag -> builder.withURLData(Constants.SUMMONERSPELL_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
+        
         
         return (StaticSummonerSpell) builder.build();
     }
