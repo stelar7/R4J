@@ -40,13 +40,15 @@ public class MatchListTest
     @Test
     public void testMatchAndMatchList()
     {
-        EnumSet<GameQueueType> queue     = EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
-        EnumSet<SeasonType>    season    = EnumSet.of(SeasonType.PRE_SEASON_2017);
-        List<Integer>          champs    = Arrays.asList(Constants.TEST_CHAMPION_IDS[0], 99);
-        Long                   beginTime = 1481108400000L;
+        GameQueueType queue     = GameQueueType.RANKED_SOLO_5X5;
+        SeasonType    season    = SeasonType.SEASON_2016;
+        Integer       champ     = Constants.TEST_CHAMPION_IDS[0];
+        Long          beginTime = 1481108400000L;
+        
+        no.stelar7.api.l4j8.basic.DataCall.VERBOSE_DEFAULT = true;
         
         // use begintime instead of season because its broken ATM
-        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, null, null, null, null, null, null);
+        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, null, null);
         
         for (MatchReference reference : all)
         {

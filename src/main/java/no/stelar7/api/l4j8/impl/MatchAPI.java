@@ -31,23 +31,23 @@ public final class MatchAPI
      * If beginTime is specified, but not endTime, then endTime is effectively the current time.
      * Note that endTime should be greater than beginTime if both are specified, although there is no maximum limit on their range.
      *
-     * @param server       the platform the account is on
-     * @param accountId    the account to check
-     * @param beginTime    optional filter the games started after this time
-     * @param endTime      optional filter for games started before this time
-     * @param beginIndex   optional filter for skipping the first x games
-     * @param endIndex     optional filter for skipping only showing x games
-     * @param rankedQueues optional filter for selecting the queue (Only ranked queues allowed)
-     * @param seasons      optional filter for selecting the season
-     * @param championIds  optional filter for selecting the champion played
+     * @param server      the platform the account is on
+     * @param accountId   the account to check
+     * @param beginTime   optional filter the games started after this time
+     * @param endTime     optional filter for games started before this time
+     * @param beginIndex  optional filter for skipping the first x games
+     * @param endIndex    optional filter for skipping only showing x games
+     * @param rankedQueue optional filter for selecting the queue (Only ranked queues allowed)
+     * @param season      optional filter for selecting the season
+     * @param championId  optional filter for selecting the champion played
      * @return MatchList
      */
     public List<MatchReference> getMatchList(Platform server, long accountId,
                                              Long beginTime, Long endTime,
                                              Integer beginIndex, Integer endIndex,
-                                             Set<GameQueueType> rankedQueues,
-                                             Set<SeasonType> seasons,
-                                             List<Integer> championIds)
+                                             GameQueueType rankedQueue,
+                                             SeasonType season,
+                                             Integer championId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
@@ -70,17 +70,17 @@ public final class MatchAPI
         {
             builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, endTime.toString());
         }
-        if (rankedQueues != null)
+        if (rankedQueue != null)
         {
-            rankedQueues.forEach(flag -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(flag.getValue())));
+            builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(rankedQueue.getValue()));
         }
-        if (seasons != null)
+        if (season != null)
         {
-            seasons.forEach(flag -> builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(flag.getValue())));
+            builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(season.getValue()));
         }
-        if (championIds != null)
+        if (championId != null)
         {
-            championIds.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
+            builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(championId));
         }
         
         
