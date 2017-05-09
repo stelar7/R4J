@@ -54,12 +54,12 @@ public class Player
         return this.summonerName;
     }
     
-    public Platform getCurrentPlatformId()
+    public Platform getCurrentPlatform()
     {
         return currentPlatformId;
     }
     
-    public Platform getPlatformId()
+    public Platform getPlatform()
     {
         return platformId;
     }

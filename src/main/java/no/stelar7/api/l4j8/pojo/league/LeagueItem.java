@@ -8,7 +8,7 @@ public class LeagueItem
     private Integer    wins;
     private Boolean    veteran;
     private Integer    losses;
-    private String     playerOrTeamId;
+    private Long       playerOrTeamId;
     private String     playerOrTeamName;
     private Boolean    inactive;
     private Boolean    freshBlood;
@@ -233,7 +233,7 @@ public class LeagueItem
      *
      * @return the player or team id
      */
-    public String getSummonerId()
+    public Long getSummonerId()
     {
         return this.playerOrTeamId;
     }
