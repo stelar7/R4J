@@ -60,6 +60,7 @@ public class Item extends BasicData
     public String toString()
     {
         return "Item{" +
+               super.toString() +
                "effect=" + effect +
                '}';
     }

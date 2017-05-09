@@ -30,7 +30,6 @@ public class StaticTest
         Map<Long, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
         Assert.assertTrue("less than 100?", list.size() > 100);
         
-        //list.getData().values().stream().sorted(Comparator.comparing(StaticChampion::getName)).forEach(c -> System.out.format("%s(%s, \"%s\"),%n", c.getName().toUpperCase(Locale.ENGLISH), c.getSummonerId(), c.getName()));
     }
     
     
@@ -40,7 +39,7 @@ public class StaticTest
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL);
         
         StaticChampion list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, null, null);
-        Assert.assertTrue("ok?", list.getId() == Constants.TEST_CHAMPION_IDS[0]);
+        Assert.assertTrue("ok?", list.getId().equals(Constants.TEST_CHAMPION_IDS[0]));
     }
     
     @Test
