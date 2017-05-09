@@ -45,9 +45,9 @@ public final class MatchAPI
     public List<MatchReference> getMatchList(Platform server, long accountId,
                                              Long beginTime, Long endTime,
                                              Integer beginIndex, Integer endIndex,
-                                             GameQueueType rankedQueue,
-                                             SeasonType season,
-                                             Integer championId)
+                                             Set<GameQueueType> rankedQueue,
+                                             Set<SeasonType> season,
+                                             List<Integer> championId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
@@ -72,15 +72,15 @@ public final class MatchAPI
         }
         if (rankedQueue != null)
         {
-            builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(rankedQueue.getValue()));
+            rankedQueue.forEach(queue -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(queue.getValue())));
         }
         if (season != null)
         {
-            builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(season.getValue()));
+            season.forEach(sea -> builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(sea.getValue())));
         }
         if (championId != null)
         {
-            builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(championId));
+            championId.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
         }
         
         
