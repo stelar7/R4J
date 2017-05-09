@@ -141,6 +141,10 @@ public class Player
                ", profileIcon=" + profileIcon +
                ", summonerId=" + summonerId +
                ", summonerName='" + summonerName + '\'' +
+               ", currentPlatformId=" + currentPlatformId +
+               ", platformId=" + platformId +
+               ", accountId=" + accountId +
+               ", currentAccountId=" + currentAccountId +
                '}';
     }
 }
