@@ -104,7 +104,6 @@ public final class Summoner
         return accountId;
     }
     
-    
     public RunePages getRunePages()
     {
         return SummonerAPI.getInstance().getRunes(platform, this.getSummonerId());
@@ -135,7 +134,6 @@ public final class Summoner
         return MasteryAPI.getInstance().getChampionMasteries(platform, id);
     }
     
-    
     public List<LeaguePosition> getLeagueEntry()
     {
         return LeagueAPI.getInstance().getLeaguePosition(platform, id);
@@ -144,6 +142,11 @@ public final class Summoner
     public List<LeagueList> getFullLeague()
     {
         return LeagueAPI.getInstance().getLeague(platform, id);
+    }
+    
+    public Platform getPlatform()
+    {
+        return platform;
     }
     
     @Override
