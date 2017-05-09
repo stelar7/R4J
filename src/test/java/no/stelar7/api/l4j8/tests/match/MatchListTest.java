@@ -45,8 +45,6 @@ public class MatchListTest
         List<Integer>      champ     = Arrays.asList(Constants.TEST_CHAMPION_IDS);
         Long               beginTime = 1481108400000L;
         
-        no.stelar7.api.l4j8.basic.DataCall.VERBOSE_DEFAULT = true;
-        
         // use begintime instead of season because its broken ATM
         List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, null, champ);
         

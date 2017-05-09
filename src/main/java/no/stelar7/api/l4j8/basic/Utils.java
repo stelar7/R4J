@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.basic;
 
 import com.google.gson.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.deserializer.*;
 
@@ -37,6 +38,7 @@ public final class Utils
         builder.registerTypeAdapter(MonsterType.class, new MonsterTypeDeserializer());
         builder.registerTypeAdapter(MonsterSubType.class, new MonsterSubTypeDeserializer());
         builder.registerTypeAdapter(PlayerStatSummaryType.class, new PlayerStatSummaryTypeDeserializer());
+        builder.registerTypeAdapter(Platform.class, new PlatformDeserializer());
         builder.registerTypeAdapter(PointType.class, new PointTypeDeserializer());
         builder.registerTypeAdapter(RoleType.class, new RoleTypeDeserializer());
         builder.registerTypeAdapter(SeasonType.class, new SeasonTypeDeserializer());
