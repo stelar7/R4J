@@ -4,9 +4,8 @@ import java.util.*;
 
 public class StaticMasteryList
 {
-    private Map<Long, StaticMastery> data;
-    private MasteryTree                tree;
-    
+    private Map<Integer, StaticMastery>        data;
+    private Map<String, List<MasteryTreeList>> tree;
     
     
     @Override
@@ -54,7 +53,7 @@ public class StaticMasteryList
      *
      * @return the data
      */
-    public Map<Long, StaticMastery> getData()
+    public Map<Integer, StaticMastery> getData()
     {
         return this.data;
     }
@@ -64,7 +63,7 @@ public class StaticMasteryList
      *
      * @return the tree
      */
-    public MasteryTree getTree()
+    public Map<String, List<MasteryTreeList>> getTree()
     {
         return this.tree;
     }

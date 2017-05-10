@@ -160,7 +160,7 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public Map<Long, StaticMastery> getMasteries(Platform server, Set<MasteryDataFlags> itemData, String version, String locale)
+    public Map<Integer, StaticMastery> getMasteries(Platform server, Set<MasteryDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
@@ -180,7 +180,7 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public MasteryTree getMasteryTree(Platform server, Set<MasteryDataFlags> itemData, String version, String locale)
+    public Map<String, List<MasteryTreeList>> getMasteryTree(Platform server, Set<MasteryDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
@@ -244,7 +244,7 @@ public final class StaticAPI
         return (Realm) builder.build();
     }
     
-    public Map<Long, StaticRune> getRunes(Platform server, Set<RuneDataFlags> itemData, String version, String locale)
+    public Map<Integer, StaticRune> getRunes(Platform server, Set<RuneDataFlags> itemData, String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_RUNES)
                                                        .withPlatform(server);

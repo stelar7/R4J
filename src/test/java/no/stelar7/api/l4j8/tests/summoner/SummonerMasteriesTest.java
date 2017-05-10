@@ -6,6 +6,7 @@ import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -14,10 +15,9 @@ public class SummonerMasteriesTest
     
     public static final Logger LOGGER = Logger.getGlobal();
     
-    private final Consumer<MasteryPages> doAssertions = (MasteryPages pages) ->
+    private final Consumer<List<MasteryPage>> doAssertions = (List<MasteryPage> pages) ->
     {
-        System.out.println(pages);
-        pages.getPages().forEach(page ->
+        pages.forEach(page ->
                                  {
             
                                      Assert.assertNotNull("SpectatorMastery Page does not have an id", page.getId());
@@ -41,9 +41,9 @@ public class SummonerMasteriesTest
     @Test
     public void testMasteryPages()
     {
-        final L4J8   l4j8     = new L4J8(SecretFile.CREDS);
-        SummonerAPI  api      = l4j8.getSummonerAPI();
-        MasteryPages optional = api.getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        final L4J8        l4j8     = new L4J8(SecretFile.CREDS);
+        SummonerAPI       api      = l4j8.getSummonerAPI();
+        List<MasteryPage> optional = api.getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
         doAssertions.accept(optional);
     }
 }

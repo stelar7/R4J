@@ -7,7 +7,7 @@ import java.util.*;
 public class StaticRuneList
 {
     private BasicData             basic;
-    private Map<Long, StaticRune> data;
+    private Map<Integer, StaticRune> data;
     
     
     @Override
@@ -65,7 +65,7 @@ public class StaticRuneList
      *
      * @return the data
      */
-    public Map<Long, StaticRune> getData()
+    public Map<Integer, StaticRune> getData()
     {
         return this.data;
     }

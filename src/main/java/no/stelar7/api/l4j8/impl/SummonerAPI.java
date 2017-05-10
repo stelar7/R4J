@@ -4,8 +4,8 @@ import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
+import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
 import java.util.*;
 
@@ -32,14 +32,14 @@ public final class SummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional MasteryPages
      */
-    public MasteryPages getMasteries(final Platform server, long summonerId)
+    public List<MasteryPage> getMasteries(final Platform server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERIES_BY_ID)
                                                        .withPlatform(server);
         
-        Map<Long, MasteryPages> data = (Map) builder.build();
-        return data.get(summonerId);
+        MasteryPages data = (MasteryPages) builder.build();
+        return data.getPages();
     }
     
     /**
@@ -49,15 +49,15 @@ public final class SummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional RunePages
      */
-    public RunePages getRunes(final Platform server, long summonerId)
+    public List<RunePage> getRunes(final Platform server, long summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
                 .withEndpoint(URLEndpoint.V3_RUNES_BY_ID)
                 .withPlatform(server);
         
-        Map<Long, RunePages> data = (Map) builder.build();
-        return data.get(summonerId);
+        RunePages data = (RunePages) builder.build();
+        return data.getPages();
     }
     
     /**

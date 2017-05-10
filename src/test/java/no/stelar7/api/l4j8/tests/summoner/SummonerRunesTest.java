@@ -6,6 +6,7 @@ import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -14,9 +15,9 @@ public class SummonerRunesTest
     
     public static final Logger LOGGER = Logger.getGlobal();
     
-    private final Consumer<RunePages> doAssertions = (final RunePages pages) ->
+    private final Consumer<List<RunePage>> doAssertions = (final List<RunePage> pages) ->
     {
-        pages.getPages().forEach(page ->
+        pages.forEach(page ->
                                  {
             
                                      Assert.assertNotNull("StaticRune Page does not have an id", page.getId());
@@ -38,9 +39,9 @@ public class SummonerRunesTest
     @Test
     public void testRunePages()
     {
-        final L4J8  l4j8     = new L4J8(SecretFile.CREDS);
-        SummonerAPI api      = l4j8.getSummonerAPI();
-        RunePages   optional = api.getRunes(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        final L4J8     l4j8     = new L4J8(SecretFile.CREDS);
+        SummonerAPI    api      = l4j8.getSummonerAPI();
+        List<RunePage> optional = api.getRunes(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
         doAssertions.accept(optional);
     }
 }

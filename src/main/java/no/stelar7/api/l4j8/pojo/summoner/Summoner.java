@@ -8,11 +8,11 @@ import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPages;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RunePages;
+import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
+import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
 import java.time.*;
-import java.util.*;
+import java.util.List;
 
 public final class Summoner
 {
@@ -104,12 +104,12 @@ public final class Summoner
         return accountId;
     }
     
-    public RunePages getRunePages()
+    public List<RunePage> getRunePages()
     {
         return SummonerAPI.getInstance().getRunes(platform, this.getSummonerId());
     }
     
-    public MasteryPages getMasteryPages()
+    public List<MasteryPage> getMasteryPages()
     {
         return SummonerAPI.getInstance().getMasteries(platform, this.getSummonerId());
     }
