@@ -65,6 +65,7 @@ public final class LeagueAPI
     
     /**
      * Get league entries for a summonerId
+     * Empty if unranked
      *
      * @param server     region to get data from
      * @param summonerId summoner to get data for
@@ -85,6 +86,7 @@ public final class LeagueAPI
     
     /**
      * Get leagues mapped by summoner ID for a given list of summoner IDs.
+     * Empty if unranked
      *
      * @param server     region to get data from
      * @param summonerId summoner to get data for
