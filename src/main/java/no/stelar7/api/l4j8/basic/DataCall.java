@@ -11,6 +11,7 @@ import java.lang.reflect.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.logging.*;
 
@@ -60,6 +61,8 @@ public final class DataCall
             {
                 DataCall.limiter.get(this.dc.platform).acquire();
             }
+            
+            dc.urlHeaders.put("X-Riot-Token", creds.getBaseAPIKey());
             
             final String url = this.getURL();
             if (this.dc.verbose)
@@ -254,8 +257,23 @@ public final class DataCall
             url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.endpoint.getVersion());
             url[0] = url[0].replace(Constants.RESOURCE_PLACEHOLDER, dc.endpoint.getResource());
             dc.urlParams.forEach((k, v) -> url[0] = url[0].replace(k, v));
-            url[0] += "?" + Constants.API_KEY_PLACEHOLDER_DATA + "=" + creds.getBaseAPIKey();
-            dc.urlData.forEach((k, v) -> url[0] = url[0] + "&" + k + "=" + v);
+            
+            boolean first = false;
+            for (Entry<String, String> pair : dc.urlData.entrySet())
+            {
+                char token = first ? '?' : '&';
+                
+                if (!first)
+                {
+                    first = !first;
+                }
+                
+                url[0] += token + pair.getKey() + '=' + pair.getValue();
+            }
+            
+            // url[0] = url[0] + "?api_key=" + apiKey;
+            //dc.urlData.forEach((k, v) -> url[0] = url[0] + "&" + k + "=" + v);
+    
             return url[0];
         }
         
