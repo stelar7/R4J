@@ -45,9 +45,9 @@ public class MatchListTest
         List<Integer>      champ     = Arrays.asList(Constants.TEST_CHAMPION_IDS);
         Long               beginTime = 1481108400000L;
         Long               endTime   = 1483578108812L;
-        
+    
         // use begintime instead of season because its broken ATM
-        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, null, null);
+        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, null, null, null, null, null, null);
         
         for (MatchReference reference : all)
         {

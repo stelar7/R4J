@@ -258,22 +258,22 @@ public final class DataCall
             url[0] = url[0].replace(Constants.RESOURCE_PLACEHOLDER, dc.endpoint.getResource());
             dc.urlParams.forEach((k, v) -> url[0] = url[0].replace(k, v));
             
-            boolean first = false;
+            boolean first = true;
             for (Entry<String, String> pair : dc.urlData.entrySet())
             {
                 char token = first ? '?' : '&';
                 
-                if (!first)
+                if (first)
                 {
                     first = !first;
                 }
                 
-                url[0] += token + pair.getKey() + '=' + pair.getValue();
+                url[0] = url[0] + token + pair.getKey() + '=' + pair.getValue();
             }
             
             // url[0] = url[0] + "?api_key=" + apiKey;
             //dc.urlData.forEach((k, v) -> url[0] = url[0] + "&" + k + "=" + v);
-    
+            
             return url[0];
         }
         
