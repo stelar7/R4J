@@ -67,11 +67,11 @@ public class BurstRateLimiter extends RateLimiter
         long[]  delay = {0};
         int     bias  = 2;
         
-        limits.stream().sorted(Comparator.comparing(RateLimit::getTimeframeInMS)).forEachOrdered(l ->
+        limits.stream().sorted(Comparator.comparing(RateLimit::getTimeframeInMS)).forEachOrdered(limit ->
                                                                                                  {
-                                                                                                     if (callCountInTime.get(l) >= l.getRequests())
+                                                                                                     if (callCountInTime.get(limit) >= limit.getRequests())
                                                                                                      {
-                                                                                                         long newDelay = firstCallInTime.get(l).toEpochMilli() + l.getTimeframeInMS() - now.toEpochMilli();
+                                                                                                         long newDelay = firstCallInTime.get(limit).toEpochMilli() + limit.getTimeframeInMS() - now.toEpochMilli();
                                                                                                          if (newDelay > delay[0])
                                                                                                          {
                                                                                                              delay[0] = newDelay;
@@ -81,7 +81,7 @@ public class BurstRateLimiter extends RateLimiter
         
         if (delay[0] != 0)
         {
-            delay[0] = (Math.round(delay[0] / 1000f) + bias) * 1000L;
+            delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * 1000L);
         }
         
         if (DataCall.VERBOSE_LIMITING)
