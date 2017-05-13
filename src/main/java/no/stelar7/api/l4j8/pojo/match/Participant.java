@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.pojo.match;
 import no.stelar7.api.l4j8.basic.constants.types.SummonerSpellType;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
-import java.util.List;
+import java.util.*;
 
 public class Participant
 {
@@ -47,7 +47,7 @@ public class Participant
      */
     public List<MatchMastery> getMasteries()
     {
-        return this.masteries;
+        return this.masteries != null ? this.masteries : Collections.emptyList();
     }
     
     /**
@@ -67,7 +67,7 @@ public class Participant
      */
     public List<MatchRune> getRunes()
     {
-        return this.runes;
+        return this.runes != null ? this.runes : Collections.emptyList();
     }
     
     
