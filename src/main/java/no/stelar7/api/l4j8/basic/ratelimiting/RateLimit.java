@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.basic.ratelimiting;
 
-import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
 
 public class RateLimit
 {

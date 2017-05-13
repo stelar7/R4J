@@ -13,21 +13,9 @@ import java.util.Map.Entry;
 public class BurstRateLimiter extends RateLimiter
 {
     
-    private volatile Map<RateLimit, Instant> firstCallInTime;
-    private volatile Map<RateLimit, Long>    callCountInTime;
-    
     public BurstRateLimiter(RateLimit... limits)
     {
         super(limits);
-        
-        firstCallInTime = new HashMap<>();
-        callCountInTime = new HashMap<>();
-        
-        for (RateLimit limit : limits)
-        {
-            firstCallInTime.put(limit, Instant.now().minusMillis(limit.getTimeframeInMS()));
-            callCountInTime.put(limit, 0L);
-        }
     }
     
     @Override
