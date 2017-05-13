@@ -226,7 +226,7 @@ public final class DataCall
                 if (con.getResponseCode() == 429)
                 {
                     final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
-                    return new DataCallResponse(con.getResponseCode(), limitType + appLimit.toString());
+                    return new DataCallResponse(con.getResponseCode(), limitType + appLimit.toString() + methodLimit.toString());
                 }
                 
                 InputStream stream = (con.getResponseCode() == 200) ? con.getInputStream() : con.getErrorStream();
