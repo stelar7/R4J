@@ -334,7 +334,7 @@ public class ParticipantStats
      *
      * @return the minions killed
      */
-    public Long getMinionsKilled()
+    public Long getTotalMinionsKilled()
     {
         return this.totalMinionsKilled;
     }
@@ -570,11 +570,11 @@ public class ParticipantStats
     }
     
     /**
-     * Gets the tower kills.
+     * Gets the turret kills.
      *
-     * @return the tower kills
+     * @return the turret kills
      */
-    public Long getTowerKills()
+    public Long getTurretKills()
     {
         return this.turretKills;
     }
@@ -665,7 +665,7 @@ public class ParticipantStats
      *
      * @return the boolean
      */
-    public Boolean idFirstInhibitorKill()
+    public Boolean isFirstInhibitorKill()
     {
         return this.firstInhibitorKill;
     }
