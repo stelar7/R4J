@@ -665,7 +665,7 @@ public class ParticipantStats
      *
      * @return the boolean
      */
-    public Boolean isFirstInhibitorKill()
+    public boolean isFirstInhibitorKill()
     {
         return this.firstInhibitorKill;
     }
@@ -675,7 +675,7 @@ public class ParticipantStats
      *
      * @return the boolean
      */
-    public Boolean isFirstBloodAssist()
+    public boolean isFirstBloodAssist()
     {
         return this.firstBloodAssist;
     }
@@ -685,7 +685,7 @@ public class ParticipantStats
      *
      * @return the boolean
      */
-    public Boolean isFirstBloodKill()
+    public boolean isFirstBloodKill()
     {
         return this.firstBloodKill;
     }
@@ -695,7 +695,7 @@ public class ParticipantStats
      *
      * @return the boolean
      */
-    public Boolean isFirstInhibitorAssist()
+    public boolean isFirstInhibitorAssist()
     {
         return this.firstInhibitorAssist;
     }
@@ -705,7 +705,7 @@ public class ParticipantStats
      *
      * @return the boolean
      */
-    public Boolean isFirstTowerAssist()
+    public boolean isFirstTowerAssist()
     {
         return this.firstTowerAssist;
     }
@@ -715,7 +715,7 @@ public class ParticipantStats
      *
      * @return the boolean
      */
-    public Boolean isFirstTowerKill()
+    public boolean isFirstTowerKill()
     {
         return this.firstTowerKill;
     }
@@ -725,7 +725,7 @@ public class ParticipantStats
      *
      * @return the boolean
      */
-    public Boolean isWinner()
+    public boolean isWinner()
     {
         return this.win;
     }
