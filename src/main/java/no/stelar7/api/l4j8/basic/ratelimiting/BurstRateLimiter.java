@@ -51,6 +51,8 @@ public class BurstRateLimiter extends RateLimiter
     @Override
     public void updatePermitsPerX(Map<Integer, Long> data)
     {
+        semaphore.acquireUninterruptibly();
+        
         for (Entry<Integer, Long> key : data.entrySet())
         {
             limits.stream().filter(l -> l.getTimeframeInMS() / 1000 == key.getKey()).forEach(l ->
@@ -68,13 +70,14 @@ public class BurstRateLimiter extends RateLimiter
                                                                                                  }
                                                                                              });
         }
+        semaphore.release();
     }
     
     private long getDelay()
     {
         Instant now   = Instant.now();
         long[]  delay = {0};
-        int     bias  = 1;
+        int     bias  = 2;
         
         limits.stream().sorted(Comparator.comparing(RateLimit::getTimeframeInMS)).forEachOrdered(l ->
                                                                                                  {

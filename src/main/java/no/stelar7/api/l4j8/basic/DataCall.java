@@ -101,7 +101,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 400)
             {
-                throw new APIResponseException(APIHTTPErrorReason.ERROR400, "API call error.. contact developer to get this fixed ..." + response.getResponseData());
+                throw new APIResponseException(APIHTTPErrorReason.ERROR400, "L4J8 error.. contact developer to get this fixed ..." + response.getResponseData());
             }
             
             if (response.getResponseCode() == 404)
@@ -111,7 +111,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 429)
             {
-                DataCall.LOGGER.log(Level.INFO, "HIT 429");
+                DataCall.LOGGER.log(Level.INFO, String.format("HIT 429! (%s)", response.getResponseData()));
                 return this.build();
             }
             
