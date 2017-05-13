@@ -25,9 +25,9 @@ public class BurstRateLimiter extends RateLimiter
         {
             semaphore.acquireUninterruptibly();
             
-            Thread.sleep(getDelay());
-            
             update();
+            
+            Thread.sleep(getDelay());
             
             semaphore.release();
         } catch (InterruptedException e)
@@ -95,19 +95,19 @@ public class BurstRateLimiter extends RateLimiter
     private void update()
     {
         Instant now = Instant.now();
-        limits.forEach(l ->
+        limits.forEach(limit ->
                        {
-                           if (firstCallInTime.get(l).toEpochMilli() < now.toEpochMilli() - l.getTimeframeInMS())
+                           if ((firstCallInTime.get(limit).toEpochMilli() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
                            {
-                               firstCallInTime.put(l, now);
-                               callCountInTime.put(l, 0L);
+                               firstCallInTime.put(limit, now);
+                               callCountInTime.put(limit, 0L);
                            }
             
-                           callCountInTime.compute(l, (k, v) -> v + 1);
+                           callCountInTime.compute(limit, (k, v) -> v + 1);
             
                            if (DataCall.VERBOSE_LIMITING)
                            {
-                               System.out.println("Calls made: " + callCountInTime.get(l) + " in: " + l.getTimeframeInMS() / 1000);
+                               System.out.println("Calls made: " + callCountInTime.get(limit) + " in: " + limit.getTimeframeInMS() / 1000);
                            }
                        });
     }
