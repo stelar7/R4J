@@ -322,7 +322,7 @@ public class TeamStats
      *
      * @return the boolean
      */
-    public Boolean isFirstBaron()
+    public boolean isFirstBaron()
     {
         return this.firstBaron;
     }
@@ -332,7 +332,7 @@ public class TeamStats
      *
      * @return the boolean
      */
-    public Boolean isFirstBlood()
+    public boolean isFirstBlood()
     {
         return this.firstBlood;
     }
@@ -342,7 +342,7 @@ public class TeamStats
      *
      * @return the boolean
      */
-    public Boolean isFirstDragon()
+    public boolean isFirstDragon()
     {
         return this.firstDragon;
     }
@@ -352,7 +352,7 @@ public class TeamStats
      *
      * @return the boolean
      */
-    public Boolean isFirstInhibitor()
+    public boolean isFirstInhibitor()
     {
         return this.firstInhibitor;
     }
@@ -362,7 +362,7 @@ public class TeamStats
      *
      * @return the boolean
      */
-    public Boolean isFirstTower()
+    public boolean isFirstTower()
     {
         return this.firstTower;
     }
@@ -372,7 +372,7 @@ public class TeamStats
      *
      * @return the boolean
      */
-    public Boolean isFirstRiftHerald()
+    public boolean isFirstRiftHerald()
     {
         return firstRiftHerald;
     }
@@ -382,7 +382,7 @@ public class TeamStats
      *
      * @return the boolean
      */
-    public Boolean isWinner()
+    public boolean isWinner()
     {
         return "Win".equalsIgnoreCase(this.win);
     }
