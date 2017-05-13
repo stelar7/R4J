@@ -194,14 +194,16 @@ public final class DataCall
                 final String limitCount = con.getHeaderField("X-App-Rate-Limit-Count");
                 if (limitCount != null)
                 {
-                    final String[] limits = limitCount.split(",");
+                    final String[]     limits  = limitCount.split(",");
+                    Map<Integer, Long> timeout = new HashMap<>();
                     for (final String limitPair : limits)
                     {
                         final String[] limit = limitPair.split(":");
                         final Long     call  = Long.parseLong(limit[0]);
                         final Integer  time  = Integer.parseInt(limit[1]);
-                        DataCall.appLimit.put(dc.platform, Collections.singletonMap(time, call));
+                        timeout.put(time, call);
                     }
+                    DataCall.appLimit.put(dc.platform, timeout);
                     updateRatelimiter(dc.platform);
                 }
                 
@@ -209,14 +211,16 @@ public final class DataCall
                 final String methodLimitCount = con.getHeaderField("X-Method-Rate-Limit-Count");
                 if (methodLimitCount != null)
                 {
-                    final String[] limits = methodLimitCount.split(",");
+                    final String[]     limits  = methodLimitCount.split(",");
+                    Map<Integer, Long> timeout = new HashMap<>();
                     for (final String limitPair : limits)
                     {
                         final String[] limit = limitPair.split(":");
                         final Long     call  = Long.parseLong(limit[0]);
                         final Integer  time  = Integer.parseInt(limit[1]);
-                        DataCall.methodLimit.put(dc.endpoint, Collections.singletonMap(time, call));
+                        timeout.put(time, call);
                     }
+                    DataCall.methodLimit.put(dc.endpoint, timeout);
                 }
                 
                 if (con.getResponseCode() == 429)
