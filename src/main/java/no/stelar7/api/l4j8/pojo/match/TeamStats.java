@@ -244,66 +244,6 @@ public class TeamStats
     }
     
     /**
-     * Gets the first baron.
-     *
-     * @return the first baron
-     */
-    public Boolean getFirstBaron()
-    {
-        return this.firstBaron;
-    }
-    
-    /**
-     * Gets the first blood.
-     *
-     * @return the first blood
-     */
-    public Boolean getFirstBlood()
-    {
-        return this.firstBlood;
-    }
-    
-    /**
-     * Gets the first dragon.
-     *
-     * @return the first dragon
-     */
-    public Boolean getFirstDragon()
-    {
-        return this.firstDragon;
-    }
-    
-    /**
-     * Gets the first inhibitor.
-     *
-     * @return the first inhibitor
-     */
-    public Boolean getFirstInhibitor()
-    {
-        return this.firstInhibitor;
-    }
-    
-    /**
-     * Flag indicating whether or not the team got the first rift herald kill.
-     *
-     * @return the first rift herald
-     */
-    public Boolean getFirstRiftHerald()
-    {
-        return this.firstRiftHerald;
-    }
-    
-    /**
-     * Gets the first tower.
-     *
-     * @return the first tower
-     */
-    public Boolean getFirstTower()
-    {
-        return this.firstTower;
-    }
-    
-    /**
      * Gets the inhibitor kills.
      *
      * @return the inhibitor kills
@@ -351,16 +291,6 @@ public class TeamStats
     public Integer getVilemawKills()
     {
         return this.vilemawKills;
-    }
-    
-    /**
-     * Gets the winner.
-     *
-     * @return the winner
-     */
-    public String getWin()
-    {
-        return this.win;
     }
     
     @Override
@@ -435,6 +365,16 @@ public class TeamStats
     public Boolean isFirstTower()
     {
         return this.firstTower;
+    }
+    
+    /**
+     * Is first rift herald boolean.
+     *
+     * @return the boolean
+     */
+    public Boolean isFirstRiftHerald()
+    {
+        return firstRiftHerald;
     }
     
     /**
