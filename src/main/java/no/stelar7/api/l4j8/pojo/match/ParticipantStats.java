@@ -15,12 +15,12 @@ public class ParticipantStats
     private Long    damageDealtToObjectives;
     private Long    deaths;
     private Long    doubleKills;
-    private Boolean firstBloodAssist;
-    private Boolean firstBloodKill;
-    private Boolean firstInhibitorAssist;
-    private Boolean firstInhibitorKill;
-    private Boolean firstTowerAssist;
-    private Boolean firstTowerKill;
+    private boolean firstBloodAssist;
+    private boolean firstBloodKill;
+    private boolean firstInhibitorAssist;
+    private boolean firstInhibitorKill;
+    private boolean firstTowerAssist;
+    private boolean firstTowerKill;
     private Long    goldEarned;
     private Long    goldSpent;
     private Long    inhibitorKills;
@@ -75,7 +75,7 @@ public class ParticipantStats
     private Long    visionWardsBoughtInGame;
     private Long    wardsKilled;
     private Long    wardsPlaced;
-    private Boolean win;
+    private boolean win;
     
     
     /**
@@ -774,6 +774,34 @@ public class ParticipantStats
         
         ParticipantStats that = (ParticipantStats) o;
         
+        if (firstBloodAssist != that.firstBloodAssist)
+        {
+            return false;
+        }
+        if (firstBloodKill != that.firstBloodKill)
+        {
+            return false;
+        }
+        if (firstInhibitorAssist != that.firstInhibitorAssist)
+        {
+            return false;
+        }
+        if (firstInhibitorKill != that.firstInhibitorKill)
+        {
+            return false;
+        }
+        if (firstTowerAssist != that.firstTowerAssist)
+        {
+            return false;
+        }
+        if (firstTowerKill != that.firstTowerKill)
+        {
+            return false;
+        }
+        if (win != that.win)
+        {
+            return false;
+        }
         if ((assists != null) ? !assists.equals(that.assists) : (that.assists != null))
         {
             return false;
@@ -803,30 +831,6 @@ public class ParticipantStats
             return false;
         }
         if ((doubleKills != null) ? !doubleKills.equals(that.doubleKills) : (that.doubleKills != null))
-        {
-            return false;
-        }
-        if ((firstBloodAssist != null) ? !firstBloodAssist.equals(that.firstBloodAssist) : (that.firstBloodAssist != null))
-        {
-            return false;
-        }
-        if ((firstBloodKill != null) ? !firstBloodKill.equals(that.firstBloodKill) : (that.firstBloodKill != null))
-        {
-            return false;
-        }
-        if ((firstInhibitorAssist != null) ? !firstInhibitorAssist.equals(that.firstInhibitorAssist) : (that.firstInhibitorAssist != null))
-        {
-            return false;
-        }
-        if ((firstInhibitorKill != null) ? !firstInhibitorKill.equals(that.firstInhibitorKill) : (that.firstInhibitorKill != null))
-        {
-            return false;
-        }
-        if ((firstTowerAssist != null) ? !firstTowerAssist.equals(that.firstTowerAssist) : (that.firstTowerAssist != null))
-        {
-            return false;
-        }
-        if ((firstTowerKill != null) ? !firstTowerKill.equals(that.firstTowerKill) : (that.firstTowerKill != null))
         {
             return false;
         }
@@ -1042,11 +1046,7 @@ public class ParticipantStats
         {
             return false;
         }
-        if ((wardsPlaced != null) ? !wardsPlaced.equals(that.wardsPlaced) : (that.wardsPlaced != null))
-        {
-            return false;
-        }
-        return (win != null) ? win.equals(that.win) : (that.win == null);
+        return (wardsPlaced != null) ? wardsPlaced.equals(that.wardsPlaced) : (that.wardsPlaced == null);
     }
     
     @Override
@@ -1060,12 +1060,12 @@ public class ParticipantStats
         result = 31 * result + (damageDealtToObjectives != null ? damageDealtToObjectives.hashCode() : 0);
         result = 31 * result + (deaths != null ? deaths.hashCode() : 0);
         result = 31 * result + (doubleKills != null ? doubleKills.hashCode() : 0);
-        result = 31 * result + (firstBloodAssist != null ? firstBloodAssist.hashCode() : 0);
-        result = 31 * result + (firstBloodKill != null ? firstBloodKill.hashCode() : 0);
-        result = 31 * result + (firstInhibitorAssist != null ? firstInhibitorAssist.hashCode() : 0);
-        result = 31 * result + (firstInhibitorKill != null ? firstInhibitorKill.hashCode() : 0);
-        result = 31 * result + (firstTowerAssist != null ? firstTowerAssist.hashCode() : 0);
-        result = 31 * result + (firstTowerKill != null ? firstTowerKill.hashCode() : 0);
+        result = 31 * result + (firstBloodAssist ? 1 : 0);
+        result = 31 * result + (firstBloodKill ? 1 : 0);
+        result = 31 * result + (firstInhibitorAssist ? 1 : 0);
+        result = 31 * result + (firstInhibitorKill ? 1 : 0);
+        result = 31 * result + (firstTowerAssist ? 1 : 0);
+        result = 31 * result + (firstTowerKill ? 1 : 0);
         result = 31 * result + (goldEarned != null ? goldEarned.hashCode() : 0);
         result = 31 * result + (goldSpent != null ? goldSpent.hashCode() : 0);
         result = 31 * result + (inhibitorKills != null ? inhibitorKills.hashCode() : 0);
@@ -1120,7 +1120,7 @@ public class ParticipantStats
         result = 31 * result + (visionWardsBoughtInGame != null ? visionWardsBoughtInGame.hashCode() : 0);
         result = 31 * result + (wardsKilled != null ? wardsKilled.hashCode() : 0);
         result = 31 * result + (wardsPlaced != null ? wardsPlaced.hashCode() : 0);
-        result = 31 * result + (win != null ? win.hashCode() : 0);
+        result = 31 * result + (win ? 1 : 0);
         return result;
     }
     

@@ -11,197 +11,19 @@ public class TeamStats
     private Integer              baronKills;
     private Long                 dominionVictoryScore;
     private Integer              dragonKills;
-    private Boolean              firstBaron;
-    private Boolean              firstBlood;
-    private Boolean              firstDragon;
-    private Boolean              firstInhibitor;
-    private Boolean              firstTower;
+    private boolean              firstBaron;
+    private boolean              firstBlood;
+    private boolean              firstDragon;
+    private boolean              firstInhibitor;
+    private boolean              firstTower;
     private Integer              inhibitorKills;
     private TeamType             teamId;
     private Integer              towerKills;
     private Integer              vilemawKills;
     private String               win;
-    private Boolean              firstRiftHerald;
+    private boolean              firstRiftHerald;
     private Integer              riftHeraldKills;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final TeamStats other = (TeamStats) obj;
-        if (this.bans == null)
-        {
-            if (other.bans != null)
-            {
-                return false;
-            }
-        } else if (!this.bans.equals(other.bans))
-        {
-            return false;
-        }
-        if (this.baronKills == null)
-        {
-            if (other.baronKills != null)
-            {
-                return false;
-            }
-        } else if (!this.baronKills.equals(other.baronKills))
-        {
-            return false;
-        }
-        if (this.dominionVictoryScore == null)
-        {
-            if (other.dominionVictoryScore != null)
-            {
-                return false;
-            }
-        } else if (!this.dominionVictoryScore.equals(other.dominionVictoryScore))
-        {
-            return false;
-        }
-        if (this.dragonKills == null)
-        {
-            if (other.dragonKills != null)
-            {
-                return false;
-            }
-        } else if (!this.dragonKills.equals(other.dragonKills))
-        {
-            return false;
-        }
-        if (this.firstBaron == null)
-        {
-            if (other.firstBaron != null)
-            {
-                return false;
-            }
-        } else if (!this.firstBaron.equals(other.firstBaron))
-        {
-            return false;
-        }
-        if (this.firstBlood == null)
-        {
-            if (other.firstBlood != null)
-            {
-                return false;
-            }
-        } else if (!this.firstBlood.equals(other.firstBlood))
-        {
-            return false;
-        }
-        if (this.firstDragon == null)
-        {
-            if (other.firstDragon != null)
-            {
-                return false;
-            }
-        } else if (!this.firstDragon.equals(other.firstDragon))
-        {
-            return false;
-        }
-        if (this.firstInhibitor == null)
-        {
-            if (other.firstInhibitor != null)
-            {
-                return false;
-            }
-        } else if (!this.firstInhibitor.equals(other.firstInhibitor))
-        {
-            return false;
-        }
-        if (this.firstRiftHerald == null)
-        {
-            if (other.firstRiftHerald != null)
-            {
-                return false;
-            }
-        } else if (!this.firstRiftHerald.equals(other.firstRiftHerald))
-        {
-            return false;
-        }
-        if (this.firstTower == null)
-        {
-            if (other.firstTower != null)
-            {
-                return false;
-            }
-        } else if (!this.firstTower.equals(other.firstTower))
-        {
-            return false;
-        }
-        if (this.inhibitorKills == null)
-        {
-            if (other.inhibitorKills != null)
-            {
-                return false;
-            }
-        } else if (!this.inhibitorKills.equals(other.inhibitorKills))
-        {
-            return false;
-        }
-        if (this.riftHeraldKills == null)
-        {
-            if (other.riftHeraldKills != null)
-            {
-                return false;
-            }
-        } else if (!this.riftHeraldKills.equals(other.riftHeraldKills))
-        {
-            return false;
-        }
-        if (this.teamId == null)
-        {
-            if (other.teamId != null)
-            {
-                return false;
-            }
-        } else if (!this.teamId.equals(other.teamId))
-        {
-            return false;
-        }
-        if (this.towerKills == null)
-        {
-            if (other.towerKills != null)
-            {
-                return false;
-            }
-        } else if (!this.towerKills.equals(other.towerKills))
-        {
-            return false;
-        }
-        if (this.vilemawKills == null)
-        {
-            if (other.vilemawKills != null)
-            {
-                return false;
-            }
-        } else if (!this.vilemawKills.equals(other.vilemawKills))
-        {
-            return false;
-        }
-        if (this.win == null)
-        {
-            if (other.win != null)
-            {
-                return false;
-            }
-        } else if (!this.win.equals(other.win))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the bans.
@@ -296,25 +118,100 @@ public class TeamStats
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.bans == null) ? 0 : this.bans.hashCode());
-        result = (prime * result) + ((this.baronKills == null) ? 0 : this.baronKills.hashCode());
-        result = (prime * result) + ((this.dominionVictoryScore == null) ? 0 : this.dominionVictoryScore.hashCode());
-        result = (prime * result) + ((this.dragonKills == null) ? 0 : this.dragonKills.hashCode());
-        result = (prime * result) + ((this.firstBaron == null) ? 0 : this.firstBaron.hashCode());
-        result = (prime * result) + ((this.firstBlood == null) ? 0 : this.firstBlood.hashCode());
-        result = (prime * result) + ((this.firstDragon == null) ? 0 : this.firstDragon.hashCode());
-        result = (prime * result) + ((this.firstInhibitor == null) ? 0 : this.firstInhibitor.hashCode());
-        result = (prime * result) + ((this.firstRiftHerald == null) ? 0 : this.firstRiftHerald.hashCode());
-        result = (prime * result) + ((this.firstTower == null) ? 0 : this.firstTower.hashCode());
-        result = (prime * result) + ((this.inhibitorKills == null) ? 0 : this.inhibitorKills.hashCode());
-        result = (prime * result) + ((this.riftHeraldKills == null) ? 0 : this.riftHeraldKills.hashCode());
-        result = (prime * result) + ((this.teamId == null) ? 0 : this.teamId.hashCode());
-        result = (prime * result) + ((this.towerKills == null) ? 0 : this.towerKills.hashCode());
-        result = (prime * result) + ((this.vilemawKills == null) ? 0 : this.vilemawKills.hashCode());
-        result = (prime * result) + ((this.win == null) ? 0 : this.win.hashCode());
+        int result = bans != null ? bans.hashCode() : 0;
+        result = 31 * result + (baronKills != null ? baronKills.hashCode() : 0);
+        result = 31 * result + (dominionVictoryScore != null ? dominionVictoryScore.hashCode() : 0);
+        result = 31 * result + (dragonKills != null ? dragonKills.hashCode() : 0);
+        result = 31 * result + (firstBaron ? 1 : 0);
+        result = 31 * result + (firstBlood ? 1 : 0);
+        result = 31 * result + (firstDragon ? 1 : 0);
+        result = 31 * result + (firstInhibitor ? 1 : 0);
+        result = 31 * result + (firstTower ? 1 : 0);
+        result = 31 * result + (inhibitorKills != null ? inhibitorKills.hashCode() : 0);
+        result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
+        result = 31 * result + (towerKills != null ? towerKills.hashCode() : 0);
+        result = 31 * result + (vilemawKills != null ? vilemawKills.hashCode() : 0);
+        result = 31 * result + (win != null ? win.hashCode() : 0);
+        result = 31 * result + (firstRiftHerald ? 1 : 0);
+        result = 31 * result + (riftHeraldKills != null ? riftHeraldKills.hashCode() : 0);
         return result;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        TeamStats teamStats = (TeamStats) o;
+        
+        if (firstBaron != teamStats.firstBaron)
+        {
+            return false;
+        }
+        if (firstBlood != teamStats.firstBlood)
+        {
+            return false;
+        }
+        if (firstDragon != teamStats.firstDragon)
+        {
+            return false;
+        }
+        if (firstInhibitor != teamStats.firstInhibitor)
+        {
+            return false;
+        }
+        if (firstTower != teamStats.firstTower)
+        {
+            return false;
+        }
+        if (firstRiftHerald != teamStats.firstRiftHerald)
+        {
+            return false;
+        }
+        if ((bans != null) ? !bans.equals(teamStats.bans) : (teamStats.bans != null))
+        {
+            return false;
+        }
+        if ((baronKills != null) ? !baronKills.equals(teamStats.baronKills) : (teamStats.baronKills != null))
+        {
+            return false;
+        }
+        if ((dominionVictoryScore != null) ? !dominionVictoryScore.equals(teamStats.dominionVictoryScore) : (teamStats.dominionVictoryScore != null))
+        {
+            return false;
+        }
+        if ((dragonKills != null) ? !dragonKills.equals(teamStats.dragonKills) : (teamStats.dragonKills != null))
+        {
+            return false;
+        }
+        if ((inhibitorKills != null) ? !inhibitorKills.equals(teamStats.inhibitorKills) : (teamStats.inhibitorKills != null))
+        {
+            return false;
+        }
+        if (teamId != teamStats.teamId)
+        {
+            return false;
+        }
+        if ((towerKills != null) ? !towerKills.equals(teamStats.towerKills) : (teamStats.towerKills != null))
+        {
+            return false;
+        }
+        if ((vilemawKills != null) ? !vilemawKills.equals(teamStats.vilemawKills) : (teamStats.vilemawKills != null))
+        {
+            return false;
+        }
+        if ((win != null) ? !win.equals(teamStats.win) : (teamStats.win != null))
+        {
+            return false;
+        }
+        return (riftHeraldKills != null) ? riftHeraldKills.equals(teamStats.riftHeraldKills) : (teamStats.riftHeraldKills == null);
     }
     
     /**
