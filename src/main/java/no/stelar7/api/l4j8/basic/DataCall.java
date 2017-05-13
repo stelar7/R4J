@@ -106,6 +106,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 404)
             {
+                DataCall.LOGGER.log(Level.INFO, String.format("No data from url %s %s", url, response.getResponseData()));
                 return null;
             }
             
