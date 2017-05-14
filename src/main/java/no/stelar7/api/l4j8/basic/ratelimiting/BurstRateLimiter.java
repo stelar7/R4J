@@ -65,7 +65,7 @@ public class BurstRateLimiter extends RateLimiter
     {
         Instant now   = Instant.now();
         long[]  delay = {0};
-        int     bias  = 2;
+        int     bias  = 1;
         
         limits.stream().sorted(Comparator.comparing(RateLimit::getTimeframeInMS)).forEachOrdered(limit ->
                                                                                                  {
