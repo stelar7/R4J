@@ -23,14 +23,9 @@ public class BurstRateLimiter extends RateLimiter
     {
         try
         {
-            for (RateLimit limit : limits)
-            {
-                callCountInTime.compute(limit, (k, v) -> v + 1);
-            }
+            update();
             
             Thread.sleep(getDelay());
-            
-            update();
         } catch (InterruptedException e)
         {
             e.printStackTrace();
@@ -103,6 +98,8 @@ public class BurstRateLimiter extends RateLimiter
                 firstCallInTime.put(limit, now);
                 callCountInTime.put(limit, 0L);
             }
+            
+            callCountInTime.compute(limit, (k, v) -> v + 1);
             
             if (DataCall.VERBOSE_LIMITING)
             {
