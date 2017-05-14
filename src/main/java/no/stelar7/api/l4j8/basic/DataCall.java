@@ -452,18 +452,18 @@ public final class DataCall
     
     private String baseURL = Constants.REQUEST_URL;
     
-    public static boolean VERBOSE_DEFAULT = false;
-    private       boolean verbose         = VERBOSE_DEFAULT;
+    public static boolean VERBOSE_DEFAULT  = false;
+    public static boolean VERBOSE_LIMITING = false;
     
-    public static final boolean VERBOSE_LIMITING = false;
+    private boolean verbose = VERBOSE_DEFAULT;
     
+    
+    private static APICredentials creds;
     
     public static DataCallBuilder builder()
     {
         return new DataCallBuilder();
     }
-    
-    private static APICredentials creds;
     
     public static APICredentials getCredentials()
     {

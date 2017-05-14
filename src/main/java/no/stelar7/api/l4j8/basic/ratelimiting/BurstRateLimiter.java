@@ -23,13 +23,14 @@ public class BurstRateLimiter extends RateLimiter
     {
         try
         {
-            semaphore.acquireUninterruptibly();
-            
-            update();
+            for (RateLimit limit : limits)
+            {
+                callCountInTime.compute(limit, (k, v) -> v + 1);
+            }
             
             Thread.sleep(getDelay());
             
-            semaphore.release();
+            update();
         } catch (InterruptedException e)
         {
             e.printStackTrace();
@@ -39,26 +40,26 @@ public class BurstRateLimiter extends RateLimiter
     @Override
     public void updatePermitsPerX(Map<Integer, Long> data)
     {
-        semaphore.acquireUninterruptibly();
-        
         for (Entry<Integer, Long> key : data.entrySet())
         {
-            limits.stream().filter(l -> l.getTimeframeInMS() / 1000 == key.getKey()).forEach(l ->
-                                                                                             {
-                                                                                                 long oldVal = callCountInTime.get(l);
-                                                                                                 long newVal = key.getValue();
-                                                                                                 if (oldVal + 1 < newVal)
-                                                                                                 {
-                                                                                                     callCountInTime.put(l, newVal);
-                    
-                                                                                                     if (DataCall.VERBOSE_LIMITING)
-                                                                                                     {
-                                                                                                         System.out.println("limit " + key + " has changed from " + oldVal + " to " + newVal);
-                                                                                                     }
-                                                                                                 }
-                                                                                             });
+            for (RateLimit l : limits)
+            {
+                if (l.getTimeframeInMS() / 1000 == key.getKey())
+                {
+                    long oldVal = callCountInTime.get(l);
+                    long newVal = key.getValue();
+                    if (oldVal + 1 < newVal)
+                    {
+                        callCountInTime.put(l, newVal);
+                        
+                        if (DataCall.VERBOSE_LIMITING)
+                        {
+                            System.out.println("limit " + key + " has changed from " + oldVal + " to " + newVal);
+                        }
+                    }
+                }
+            }
         }
-        semaphore.release();
     }
     
     private long getDelay()
@@ -67,17 +68,17 @@ public class BurstRateLimiter extends RateLimiter
         long[]  delay = {0};
         int     bias  = 1;
         
-        limits.stream().sorted(Comparator.comparing(RateLimit::getTimeframeInMS)).forEachOrdered(limit ->
-                                                                                                 {
-                                                                                                     if (callCountInTime.get(limit) >= limit.getRequests())
-                                                                                                     {
-                                                                                                         long newDelay = firstCallInTime.get(limit).toEpochMilli() + limit.getTimeframeInMS() - now.toEpochMilli();
-                                                                                                         if (newDelay > delay[0])
-                                                                                                         {
-                                                                                                             delay[0] = newDelay;
-                                                                                                         }
-                                                                                                     }
-                                                                                                 });
+        for (RateLimit limit : limits)
+        {
+            if (callCountInTime.get(limit) >= limit.getRequests())
+            {
+                long newDelay = firstCallInTime.get(limit).toEpochMilli() + limit.getTimeframeInMS() - now.toEpochMilli();
+                if (newDelay > delay[0])
+                {
+                    delay[0] = newDelay;
+                }
+            }
+        }
         
         if (delay[0] != 0)
         {
@@ -95,21 +96,19 @@ public class BurstRateLimiter extends RateLimiter
     private void update()
     {
         Instant now = Instant.now();
-        limits.forEach(limit ->
-                       {
-                           if ((firstCallInTime.get(limit).toEpochMilli() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
-                           {
-                               firstCallInTime.put(limit, now);
-                               callCountInTime.put(limit, 0L);
-                           }
+        for (RateLimit limit : limits)
+        {
+            if ((firstCallInTime.get(limit).toEpochMilli() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
+            {
+                firstCallInTime.put(limit, now);
+                callCountInTime.put(limit, 0L);
+            }
             
-                           callCountInTime.compute(limit, (k, v) -> v + 1);
-            
-                           if (DataCall.VERBOSE_LIMITING)
-                           {
-                               System.out.println("Calls made: " + callCountInTime.get(limit) + " in: " + limit.getTimeframeInMS() / 1000);
-                           }
-                       });
+            if (DataCall.VERBOSE_LIMITING)
+            {
+                System.out.println("Calls made: " + callCountInTime.get(limit) + " in: " + limit.getTimeframeInMS() / 1000);
+            }
+        }
     }
     
 }
