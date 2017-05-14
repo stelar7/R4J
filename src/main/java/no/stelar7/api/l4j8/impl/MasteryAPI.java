@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.ChampionType;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Logger;
@@ -50,7 +51,7 @@ public final class MasteryAPI
      * @param count      the amount of champions to get
      * @return A sorted list of ChampionMastery
      */
-    public List<ChampionMastery> getTopChampions(Platform server, long summonerId, Integer count)
+    public List<ChampionMastery> getTopChampions(Platform server, long summonerId, @Nullable Integer count)
     {
         List<ChampionMastery> list = getChampionMasteries(server, summonerId);
         

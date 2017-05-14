@@ -8,6 +8,8 @@ import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
 
+import javax.annotation.Nullable;
+
 public final class ImageAPI
 {
     private static final ImageAPI INSTANCE = new ImageAPI();
@@ -30,7 +32,7 @@ public final class ImageAPI
      * @param version the version
      * @return the profile icon
      */
-    public String getProfileIcon(String iconid, String version)
+    public String getProfileIcon(String iconid, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -128,7 +130,7 @@ public final class ImageAPI
      * @param version the version
      * @return the square
      */
-    public String getSquare(StaticChampion champ, String version)
+    public String getSquare(StaticChampion champ, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -146,7 +148,7 @@ public final class ImageAPI
      * @param version  the version
      * @return the square
      */
-    public String getSquare(String champKey, String version)
+    public String getSquare(String champKey, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -164,7 +166,7 @@ public final class ImageAPI
      * @param version   the version
      * @return the passive
      */
-    public String getPassive(String passiveId, String version)
+    public String getPassive(String passiveId, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -182,7 +184,7 @@ public final class ImageAPI
      * @param version the version
      * @return the passive
      */
-    public String getPassive(Passive passive, String version)
+    public String getPassive(Passive passive, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -200,7 +202,7 @@ public final class ImageAPI
      * @param version the version
      * @return the ability
      */
-    public String getAbility(StaticChampionSpell spell, String version)
+    public String getAbility(StaticChampionSpell spell, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -218,7 +220,7 @@ public final class ImageAPI
      * @param version the version
      * @return the summoner spell
      */
-    public String getSummonerSpell(SummonerSpellType spell, String version)
+    public String getSummonerSpell(SummonerSpellType spell, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -236,7 +238,7 @@ public final class ImageAPI
      * @param version the version
      * @return the summoner spell
      */
-    public String getSummonerSpell(String spell, String version)
+    public String getSummonerSpell(String spell, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -254,7 +256,7 @@ public final class ImageAPI
      * @param version the version
      * @return the item
      */
-    public String getItem(String id, String version)
+    public String getItem(String id, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -273,7 +275,7 @@ public final class ImageAPI
      * @param version the version
      * @return the item
      */
-    public String getItem(Item id, String version)
+    public String getItem(Item id, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -291,7 +293,7 @@ public final class ImageAPI
      * @param version the version
      * @return the mastery
      */
-    public String getMastery(StaticMastery id, String version)
+    public String getMastery(StaticMastery id, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -309,7 +311,7 @@ public final class ImageAPI
      * @param version the version
      * @return the mastery
      */
-    public String getMastery(String id, String version)
+    public String getMastery(String id, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -328,7 +330,7 @@ public final class ImageAPI
      * @param version the version
      * @return the spritesheet
      */
-    public String getSpriteSheet(String sprite, String version)
+    public String getSpriteSheet(String sprite, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -346,7 +348,7 @@ public final class ImageAPI
      * @param version the version
      * @return the rune
      */
-    public String getRune(String id, String version)
+    public String getRune(String id, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -364,7 +366,7 @@ public final class ImageAPI
      * @param version the version
      * @return the rune
      */
-    public String getRune(StaticRune rune, String version)
+    public String getRune(StaticRune rune, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -383,7 +385,7 @@ public final class ImageAPI
      * @param version the version
      * @return the map
      */
-    public String getMap(MapType map, String version)
+    public String getMap(MapType map, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();
@@ -401,7 +403,7 @@ public final class ImageAPI
      * @param version the version
      * @return the map
      */
-    public String getMap(String map, String version)
+    public String getMap(String map, @Nullable String version)
     {
         Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
         String cdn           = realm.getCDN();

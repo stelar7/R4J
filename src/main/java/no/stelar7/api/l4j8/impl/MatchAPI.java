@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public final class MatchAPI
@@ -43,11 +44,11 @@ public final class MatchAPI
      * @return MatchList
      */
     public List<MatchReference> getMatchList(Platform server, long accountId,
-                                             Long beginTime, Long endTime,
-                                             Integer beginIndex, Integer endIndex,
-                                             Set<GameQueueType> rankedQueue,
-                                             Set<SeasonType> season,
-                                             List<Integer> championId)
+                                             @Nullable Long beginTime, @Nullable Long endTime,
+                                             @Nullable Integer beginIndex, @Nullable Integer endIndex,
+                                             @Nullable Set<GameQueueType> rankedQueue,
+                                             @Nullable Set<SeasonType> season,
+                                             @Nullable List<Integer> championId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)

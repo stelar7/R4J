@@ -13,6 +13,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public final class StaticAPI
@@ -30,7 +31,7 @@ public final class StaticAPI
     }
     
     
-    public Map<Long, StaticChampion> getChampions(Platform server, Set<ChampDataFlags> champData, String version, String locale)
+    public Map<Long, StaticChampion> getChampions(Platform server, Set<ChampDataFlags> champData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPIONS)
@@ -52,7 +53,7 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public StaticChampion getChampion(Platform server, int id, Set<ChampDataFlags> champData, String version, String locale)
+    public StaticChampion getChampion(Platform server, int id, Set<ChampDataFlags> champData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPION_BY_ID)
@@ -72,7 +73,7 @@ public final class StaticAPI
         return (StaticChampion) builder.build();
     }
     
-    public ItemList getItems(Platform server, Set<ItemDataFlags> itemData, String version, String locale)
+    public ItemList getItems(Platform server, Set<ItemDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_ITEMS)
                                                        .withPlatform(server);
@@ -91,7 +92,7 @@ public final class StaticAPI
         return (ItemList) builder.build();
     }
     
-    public Item getItem(Platform server, int id, Set<ItemDataFlags> itemData, String version, String locale)
+    public Item getItem(Platform server, int id, Set<ItemDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_ITEM_BY_ID)
@@ -111,7 +112,7 @@ public final class StaticAPI
         return (Item) builder.build();
     }
     
-    public Map<String, String> getLanguageStrings(Platform server, String version, String locale)
+    public Map<String, String> getLanguageStrings(Platform server, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS)
                                                        .withPlatform(server);
@@ -143,7 +144,7 @@ public final class StaticAPI
         return (List<String>) builder.build();
     }
     
-    public Map<String, MapDetails> getMaps(Platform server, String version, String locale)
+    public Map<String, MapDetails> getMaps(Platform server, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MAPS)
                                                        .withPlatform(server);
@@ -160,7 +161,7 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public Map<Integer, StaticMastery> getMasteries(Platform server, Set<MasteryDataFlags> itemData, String version, String locale)
+    public Map<Integer, StaticMastery> getMasteries(Platform server, Set<MasteryDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
@@ -180,7 +181,7 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public Map<String, List<MasteryTreeList>> getMasteryTree(Platform server, Set<MasteryDataFlags> itemData, String version, String locale)
+    public Map<String, List<MasteryTreeList>> getMasteryTree(Platform server, Set<MasteryDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
@@ -200,7 +201,7 @@ public final class StaticAPI
         return list.getTree();
     }
     
-    public StaticMastery getMastery(Platform server, int id, Set<MasteryDataFlags> itemData, String version, String locale)
+    public StaticMastery getMastery(Platform server, int id, Set<MasteryDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_MASTERY_BY_ID)
@@ -220,7 +221,7 @@ public final class StaticAPI
         return (StaticMastery) builder.build();
     }
     
-    public Map<Long, ProfileIconDetails> getProfileIcons(Platform server, String version, String locale)
+    public Map<Long, ProfileIconDetails> getProfileIcons(Platform server, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_PROFILEICONS)
                                                        .withPlatform(server);
@@ -244,7 +245,7 @@ public final class StaticAPI
         return (Realm) builder.build();
     }
     
-    public Map<Integer, StaticRune> getRunes(Platform server, Set<RuneDataFlags> itemData, String version, String locale)
+    public Map<Integer, StaticRune> getRunes(Platform server, Set<RuneDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_RUNES)
                                                        .withPlatform(server);
@@ -265,7 +266,7 @@ public final class StaticAPI
     }
     
     
-    public StaticRune getRune(Platform server, int id, Set<RuneDataFlags> itemData, String version, String locale)
+    public StaticRune getRune(Platform server, int id, Set<RuneDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_RUNE_BY_ID)
@@ -286,7 +287,7 @@ public final class StaticAPI
     }
     
     
-    public Map<String, StaticSummonerSpell> getSummonerSpells(Platform server, Set<SpellDataFlags> itemData, String version, String locale)
+    public Map<String, StaticSummonerSpell> getSummonerSpells(Platform server, Set<SpellDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELLS)
                                                        .withPlatform(server);
@@ -306,7 +307,7 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public StaticSummonerSpell getSummonerSpell(Platform server, int id, Set<SpellDataFlags> itemData, String version, String locale)
+    public StaticSummonerSpell getSummonerSpell(Platform server, int id, Set<SpellDataFlags> itemData, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID)
