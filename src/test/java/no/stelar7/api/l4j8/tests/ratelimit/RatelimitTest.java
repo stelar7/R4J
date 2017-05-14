@@ -9,8 +9,7 @@ import org.junit.*;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class RatelimitTest
 {
@@ -52,30 +51,19 @@ public class RatelimitTest
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
     @Test
-    public void testRateLimit()
+    public void testRateLimit() throws InterruptedException
     {
-        List<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < 3; i++)
-        {
-            threads.add(new Thread(() ->
-                                   {
-                                       for (int i2 = 0; i2 < 700; i2++)
-                                       {
-                                           Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-                                       }
-                                   }));
-        }
-        threads.forEach(Thread::start);
-        threads.forEach(th ->
+        ExecutorService pool = Executors.newFixedThreadPool(3);
+        pool.submit(() ->
+                    {
+                        for (int i2 = 0; i2 < 700; i2++)
                         {
-                            try
-                            {
-                                th.join();
-                            } catch (InterruptedException e)
-                            {
-                                e.printStackTrace();
-                            }
-                        });
+                            Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+                        }
+                    });
+        
+        pool.shutdown();
+        pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
     }
     
     @Test

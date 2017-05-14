@@ -41,11 +41,11 @@ public class BurstRateLimiter extends RateLimiter
             {
                 if (l.getTimeframeInMS() / 1000 == key.getKey())
                 {
-                    long oldVal = callCountInTime.get(l);
+                    long oldVal = callCountInTime.get(l).get();
                     long newVal = key.getValue();
                     if (oldVal + 1 < newVal)
                     {
-                        callCountInTime.put(l, newVal);
+                        callCountInTime.get(l).set(newVal);
                         
                         if (DataCall.VERBOSE_LIMITING)
                         {
@@ -65,7 +65,7 @@ public class BurstRateLimiter extends RateLimiter
         
         for (RateLimit limit : limits)
         {
-            if (callCountInTime.get(limit) >= limit.getRequests())
+            if (callCountInTime.get(limit).get() >= limit.getRequests())
             {
                 long newDelay = firstCallInTime.get(limit).toEpochMilli() + limit.getTimeframeInMS() - now.toEpochMilli();
                 if (newDelay > delay[0])
@@ -96,10 +96,10 @@ public class BurstRateLimiter extends RateLimiter
             if ((firstCallInTime.get(limit).toEpochMilli() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
             {
                 firstCallInTime.put(limit, now);
-                callCountInTime.put(limit, 0L);
+                callCountInTime.get(limit).set(0);
             }
             
-            callCountInTime.compute(limit, (k, v) -> v + 1);
+            callCountInTime.get(limit).incrementAndGet();
             
             if (DataCall.VERBOSE_LIMITING)
             {

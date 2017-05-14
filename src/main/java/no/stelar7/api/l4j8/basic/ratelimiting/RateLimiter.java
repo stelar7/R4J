@@ -2,13 +2,14 @@ package no.stelar7.api.l4j8.basic.ratelimiting;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class RateLimiter
 {
     
-    protected List<RateLimit> limits;
-    protected Map<RateLimit, Instant> firstCallInTime;
-    protected Map<RateLimit, Long>    callCountInTime;
+    protected List<RateLimit>            limits;
+    protected Map<RateLimit, Instant>    firstCallInTime;
+    protected Map<RateLimit, AtomicLong> callCountInTime;
     
     /**
      * @param limiters the limits to obey
@@ -23,7 +24,7 @@ public abstract class RateLimiter
         for (RateLimit limit : limits)
         {
             firstCallInTime.put(limit, Instant.now());
-            callCountInTime.put(limit, 0L);
+            callCountInTime.put(limit, new AtomicLong(0));
         }
     }
     
@@ -36,7 +37,7 @@ public abstract class RateLimiter
         return firstCallInTime;
     }
     
-    public Map<RateLimit, Long> getCallCountInTime()
+    public Map<RateLimit, AtomicLong> getCallCountInTime()
     {
         return callCountInTime;
     }
