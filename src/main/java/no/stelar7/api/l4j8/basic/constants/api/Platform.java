@@ -8,6 +8,7 @@ public enum Platform
     BR1,
     EUN1,
     EUW1,
+    JP1,
     KR,
     LA1,
     LA2,
