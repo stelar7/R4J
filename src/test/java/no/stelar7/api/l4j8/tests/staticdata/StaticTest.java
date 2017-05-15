@@ -38,7 +38,7 @@ public class StaticTest
     @Test
     public void testChampionSingle()
     {
-        EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL);
+        EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
         
         StaticChampion list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, null, null);
         Assert.assertTrue("ok?", list.getId() == Constants.TEST_CHAMPION_IDS[0]);
@@ -47,7 +47,7 @@ public class StaticTest
     @Test
     public void testItemList()
     {
-        EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL);
+        EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
         
         ItemList list = api.getItems(Platform.EUW1, dataFlags, null, null);
         Assert.assertTrue("less than 100?", list.getData().size() > 100);
@@ -87,7 +87,7 @@ public class StaticTest
     @Test
     public void testMasteryList()
     {
-        EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
+        EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         Map<Integer, StaticMastery> list = api.getMasteries(Platform.EUW1, dataFlags, null, null);
     }
@@ -152,7 +152,7 @@ public class StaticTest
     @Test
     public void testRuneList()
     {
-        EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL);
+        EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
         
         Map<Integer, StaticRune> list = api.getRunes(Platform.EUW1, dataFlags, null, null);
     }

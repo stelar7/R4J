@@ -38,7 +38,7 @@ public final class StaticAPI
                                                        .withPlatform(server);
         
         
-        champData.forEach(flag -> builder.withURLData(Constants.CHAMPLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        champData.forEach(flag -> builder.withURLDataAsSet(Constants.CHAMPLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -59,7 +59,7 @@ public final class StaticAPI
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPION_BY_ID)
                                                        .withPlatform(server);
         
-        champData.forEach(flag -> builder.withURLData(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue()));
+        champData.forEach(flag -> builder.withURLDataAsSet(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -78,7 +78,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_ITEMS)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLData(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -98,7 +98,7 @@ public final class StaticAPI
                                                        .withEndpoint(URLEndpoint.V3_STATIC_ITEM_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLData(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -166,7 +166,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLData(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -186,7 +186,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLData(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -207,7 +207,7 @@ public final class StaticAPI
                                                        .withEndpoint(URLEndpoint.V3_STATIC_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLData(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -250,7 +250,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_RUNES)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLData(Constants.RUNELISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.RUNELISTDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -272,7 +272,7 @@ public final class StaticAPI
                                                        .withEndpoint(URLEndpoint.V3_STATIC_RUNE_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLData(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -292,7 +292,7 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELLS)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLData(Constants.SUMMONERSPELLLIST_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.SUMMONERSPELLLIST_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
@@ -314,7 +314,7 @@ public final class StaticAPI
                                                        .withPlatform(server);
         
         
-        itemData.forEach(flag -> builder.withURLData(Constants.SUMMONERSPELL_PLACEHOLDER_DATA, flag.getValue()));
+        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.SUMMONERSPELL_PLACEHOLDER_DATA, flag.getValue()));
         
         if (version != null)
         {
