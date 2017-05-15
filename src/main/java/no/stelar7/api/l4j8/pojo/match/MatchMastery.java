@@ -2,16 +2,16 @@ package no.stelar7.api.l4j8.pojo.match;
 
 public class MatchMastery
 {
-    private Long masteryId;
-    private Long rank;
+    private long masteryId;
+    private long rank;
     
     
     /**
      * MatchMastery ID
      *
-     * @return Long
+     * @return long
      */
-    public Long getMasteryId()
+    public long getMasteryId()
     {
         return this.masteryId;
     }
@@ -19,9 +19,9 @@ public class MatchMastery
     /**
      * MatchMastery Rank
      *
-     * @return Long
+     * @return long
      */
-    public Long getRank()
+    public long getRank()
     {
         return this.rank;
     }
@@ -40,18 +40,18 @@ public class MatchMastery
         
         MatchMastery that = (MatchMastery) o;
         
-        if ((masteryId != null) ? !masteryId.equals(that.masteryId) : (that.masteryId != null))
+        if (masteryId != that.masteryId)
         {
             return false;
         }
-        return (rank != null) ? rank.equals(that.rank) : (that.rank == null);
+        return rank == that.rank;
     }
     
     @Override
     public int hashCode()
     {
-        int result = masteryId != null ? masteryId.hashCode() : 0;
-        result = 31 * result + (rank != null ? rank.hashCode() : 0);
+        int result = (int) (masteryId ^ (masteryId >>> 32));
+        result = 31 * result + (int) (rank ^ (rank >>> 32));
         return result;
     }
     

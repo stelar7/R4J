@@ -7,7 +7,7 @@ import java.util.Map;
 public class ParticipantTimeline
 {
     private LaneType            lane;
-    private Long                participantId;
+    private long                participantId;
     private Map<String, Double> csDiffPerMinDeltas;
     private Map<String, Double> goldPerMinDeltas;
     private Map<String, Double> xpDiffPerMinDeltas;
@@ -33,7 +33,7 @@ public class ParticipantTimeline
      *
      * @return participant id
      */
-    public Long getParticipantId()
+    public long getParticipantId()
     {
         return participantId;
     }
@@ -161,11 +161,11 @@ public class ParticipantTimeline
         
         ParticipantTimeline that = (ParticipantTimeline) o;
         
-        if (lane != that.lane)
+        if (participantId != that.participantId)
         {
             return false;
         }
-        if ((participantId != null) ? !participantId.equals(that.participantId) : (that.participantId != null))
+        if (lane != that.lane)
         {
             return false;
         }
@@ -204,7 +204,7 @@ public class ParticipantTimeline
     public int hashCode()
     {
         int result = lane != null ? lane.hashCode() : 0;
-        result = 31 * result + (participantId != null ? participantId.hashCode() : 0);
+        result = 31 * result + (int) (participantId ^ (participantId >>> 32));
         result = 31 * result + (csDiffPerMinDeltas != null ? csDiffPerMinDeltas.hashCode() : 0);
         result = 31 * result + (goldPerMinDeltas != null ? goldPerMinDeltas.hashCode() : 0);
         result = 31 * result + (xpDiffPerMinDeltas != null ? xpDiffPerMinDeltas.hashCode() : 0);
@@ -215,7 +215,6 @@ public class ParticipantTimeline
         result = 31 * result + (damageTakenPerMinDeltas != null ? damageTakenPerMinDeltas.hashCode() : 0);
         return result;
     }
-    
     
     @Override
     public String toString()

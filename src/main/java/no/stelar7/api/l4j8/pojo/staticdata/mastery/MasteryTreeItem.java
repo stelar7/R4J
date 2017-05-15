@@ -2,55 +2,16 @@ package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
 public class MasteryTreeItem
 {
-    private Integer masteryId;
-    private String  prereq;
+    private int    masteryId;
+    private String prereq;
     
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MasteryTreeItem other = (MasteryTreeItem) obj;
-        if (this.masteryId == null)
-        {
-            if (other.masteryId != null)
-            {
-                return false;
-            }
-        } else if (!this.masteryId.equals(other.masteryId))
-        {
-            return false;
-        }
-        if (this.prereq == null)
-        {
-            if (other.prereq != null)
-            {
-                return false;
-            }
-        } else if (!this.prereq.equals(other.prereq))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the mastery id.
      *
      * @return the mastery id
      */
-    public Integer getMasteryId()
+    public int getMasteryId()
     {
         return this.masteryId;
     }
@@ -66,12 +27,31 @@ public class MasteryTreeItem
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MasteryTreeItem that = (MasteryTreeItem) o;
+        
+        if (masteryId != that.masteryId)
+        {
+            return false;
+        }
+        return (prereq != null) ? prereq.equals(that.prereq) : (that.prereq == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.masteryId == null) ? 0 : this.masteryId.hashCode());
-        result = (prime * result) + ((this.prereq == null) ? 0 : this.prereq.hashCode());
+        int result = masteryId;
+        result = 31 * result + (prereq != null ? prereq.hashCode() : 0);
         return result;
     }
     

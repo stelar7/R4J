@@ -12,64 +12,6 @@ public class MapDetails
     private String     mapName;
     private List<Long> unpurchasableItemList;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MapDetails other = (MapDetails) obj;
-        if (this.image == null)
-        {
-            if (other.image != null)
-            {
-                return false;
-            }
-        } else if (!this.image.equals(other.image))
-        {
-            return false;
-        }
-        if (this.mapId == null)
-        {
-            if (other.mapId != null)
-            {
-                return false;
-            }
-        } else if (!this.mapId.equals(other.mapId))
-        {
-            return false;
-        }
-        if (this.mapName == null)
-        {
-            if (other.mapName != null)
-            {
-                return false;
-            }
-        } else if (!this.mapName.equals(other.mapName))
-        {
-            return false;
-        }
-        if (this.unpurchasableItemList == null)
-        {
-            if (other.unpurchasableItemList != null)
-            {
-                return false;
-            }
-        } else if (!this.unpurchasableItemList.equals(other.unpurchasableItemList))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the image.
@@ -112,14 +54,41 @@ public class MapDetails
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MapDetails that = (MapDetails) o;
+        
+        if ((image != null) ? !image.equals(that.image) : (that.image != null))
+        {
+            return false;
+        }
+        if (mapId != that.mapId)
+        {
+            return false;
+        }
+        if ((mapName != null) ? !mapName.equals(that.mapName) : (that.mapName != null))
+        {
+            return false;
+        }
+        return (unpurchasableItemList != null) ? unpurchasableItemList.equals(that.unpurchasableItemList) : (that.unpurchasableItemList == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());
-        result = (prime * result) + ((this.mapId == null) ? 0 : this.mapId.hashCode());
-        result = (prime * result) + ((this.mapName == null) ? 0 : this.mapName.hashCode());
-        result = (prime * result) + ((this.unpurchasableItemList == null) ? 0 : this.unpurchasableItemList.hashCode());
+        int result = image != null ? image.hashCode() : 0;
+        result = 31 * result + (mapId != null ? mapId.hashCode() : 0);
+        result = 31 * result + (mapName != null ? mapName.hashCode() : 0);
+        result = 31 * result + (unpurchasableItemList != null ? unpurchasableItemList.hashCode() : 0);
         return result;
     }
     

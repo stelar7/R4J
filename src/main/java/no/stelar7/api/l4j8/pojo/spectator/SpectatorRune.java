@@ -2,16 +2,16 @@ package no.stelar7.api.l4j8.pojo.spectator;
 
 public class SpectatorRune
 {
-    private Integer count;
-    private Long    runeId;
+    private int count;
+    private long    runeId;
     
     
     /**
      * The count of this rune used by the participant
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getCount()
+    public int getCount()
     {
         return this.count;
     }
@@ -19,9 +19,9 @@ public class SpectatorRune
     /**
      * The ID of the rune
      *
-     * @return Long
+     * @return long
      */
-    public Long getRuneId()
+    public long getRuneId()
     {
         return this.runeId;
     }
@@ -38,20 +38,20 @@ public class SpectatorRune
             return false;
         }
         
-        SpectatorRune rune = (SpectatorRune) o;
+        SpectatorRune that = (SpectatorRune) o;
         
-        if ((count != null) ? !count.equals(rune.count) : (rune.count != null))
+        if (count != that.count)
         {
             return false;
         }
-        return (runeId != null) ? runeId.equals(rune.runeId) : (rune.runeId == null);
+        return runeId == that.runeId;
     }
     
     @Override
     public int hashCode()
     {
-        int result = count != null ? count.hashCode() : 0;
-        result = 31 * result + (runeId != null ? runeId.hashCode() : 0);
+        int result = count;
+        result = 31 * result + (int) (runeId ^ (runeId >>> 32));
         return result;
     }
     

@@ -2,76 +2,18 @@ package no.stelar7.api.l4j8.pojo.league;
 
 public class MiniSeries
 {
-    private Integer losses;
-    private String  progress;
-    private Integer target;
-    private Integer wins;
+    private int    losses;
+    private String progress;
+    private int    target;
+    private int    wins;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MiniSeries other = (MiniSeries) obj;
-        if (this.losses == null)
-        {
-            if (other.losses != null)
-            {
-                return false;
-            }
-        } else if (!this.losses.equals(other.losses))
-        {
-            return false;
-        }
-        if (this.progress == null)
-        {
-            if (other.progress != null)
-            {
-                return false;
-            }
-        } else if (!this.progress.equals(other.progress))
-        {
-            return false;
-        }
-        if (this.target == null)
-        {
-            if (other.target != null)
-            {
-                return false;
-            }
-        } else if (!this.target.equals(other.target))
-        {
-            return false;
-        }
-        if (this.wins == null)
-        {
-            if (other.wins != null)
-            {
-                return false;
-            }
-        } else if (!this.wins.equals(other.wins))
-        {
-            return false;
-        }
-        return true;
-    }
-    
+   
     /**
      * Number of current losses in the mini series.
      *
      * @return the losses
      */
-    public Integer getLosses()
+    public int getLosses()
     {
         return this.losses;
     }
@@ -91,7 +33,7 @@ public class MiniSeries
      *
      * @return the target
      */
-    public Integer getTarget()
+    public int getTarget()
     {
         return this.target;
     }
@@ -101,20 +43,47 @@ public class MiniSeries
      *
      * @return the wins
      */
-    public Integer getWins()
+    public int getWins()
     {
         return this.wins;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MiniSeries that = (MiniSeries) o;
+        
+        if (losses != that.losses)
+        {
+            return false;
+        }
+        if (target != that.target)
+        {
+            return false;
+        }
+        if (wins != that.wins)
+        {
+            return false;
+        }
+        return (progress != null) ? progress.equals(that.progress) : (that.progress == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.losses == null) ? 0 : this.losses.hashCode());
-        result = (prime * result) + ((this.progress == null) ? 0 : this.progress.hashCode());
-        result = (prime * result) + ((this.target == null) ? 0 : this.target.hashCode());
-        result = (prime * result) + ((this.wins == null) ? 0 : this.wins.hashCode());
+        int result = losses;
+        result = 31 * result + (progress != null ? progress.hashCode() : 0);
+        result = 31 * result + target;
+        result = 31 * result + wins;
         return result;
     }
     

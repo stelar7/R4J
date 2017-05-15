@@ -9,7 +9,7 @@ public class StaticChampion
     private List<String>              allytips;
     private String                    blurb;
     private List<String>              enemytips;
-    private Integer                   id;
+    private int                       id;
     private Image                     image;
     private Info                      info;
     private String                    key;
@@ -24,195 +24,6 @@ public class StaticChampion
     private List<String>              tags;
     private String                    title;
     
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final StaticChampion other = (StaticChampion) obj;
-        if (this.allytips == null)
-        {
-            if (other.allytips != null)
-            {
-                return false;
-            }
-        } else if (!this.allytips.equals(other.allytips))
-        {
-            return false;
-        }
-        if (this.blurb == null)
-        {
-            if (other.blurb != null)
-            {
-                return false;
-            }
-        } else if (!this.blurb.equals(other.blurb))
-        {
-            return false;
-        }
-        if (this.enemytips == null)
-        {
-            if (other.enemytips != null)
-            {
-                return false;
-            }
-        } else if (!this.enemytips.equals(other.enemytips))
-        {
-            return false;
-        }
-        if (this.id == null)
-        {
-            if (other.id != null)
-            {
-                return false;
-            }
-        } else if (!this.id.equals(other.id))
-        {
-            return false;
-        }
-        if (this.image == null)
-        {
-            if (other.image != null)
-            {
-                return false;
-            }
-        } else if (!this.image.equals(other.image))
-        {
-            return false;
-        }
-        if (this.info == null)
-        {
-            if (other.info != null)
-            {
-                return false;
-            }
-        } else if (!this.info.equals(other.info))
-        {
-            return false;
-        }
-        if (this.key == null)
-        {
-            if (other.key != null)
-            {
-                return false;
-            }
-        } else if (!this.key.equals(other.key))
-        {
-            return false;
-        }
-        if (this.lore == null)
-        {
-            if (other.lore != null)
-            {
-                return false;
-            }
-        } else if (!this.lore.equals(other.lore))
-        {
-            return false;
-        }
-        if (this.name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        } else if (!this.name.equals(other.name))
-        {
-            return false;
-        }
-        if (this.partype == null)
-        {
-            if (other.partype != null)
-            {
-                return false;
-            }
-        } else if (!this.partype.equals(other.partype))
-        {
-            return false;
-        }
-        if (this.passive == null)
-        {
-            if (other.passive != null)
-            {
-                return false;
-            }
-        } else if (!this.passive.equals(other.passive))
-        {
-            return false;
-        }
-        if (this.recommended == null)
-        {
-            if (other.recommended != null)
-            {
-                return false;
-            }
-        } else if (!this.recommended.equals(other.recommended))
-        {
-            return false;
-        }
-        if (this.skins == null)
-        {
-            if (other.skins != null)
-            {
-                return false;
-            }
-        } else if (!this.skins.equals(other.skins))
-        {
-            return false;
-        }
-        if (this.spells == null)
-        {
-            if (other.spells != null)
-            {
-                return false;
-            }
-        } else if (!this.spells.equals(other.spells))
-        {
-            return false;
-        }
-        if (this.stats == null)
-        {
-            if (other.stats != null)
-            {
-                return false;
-            }
-        } else if (!this.stats.equals(other.stats))
-        {
-            return false;
-        }
-        if (this.tags == null)
-        {
-            if (other.tags != null)
-            {
-                return false;
-            }
-        } else if (!this.tags.equals(other.tags))
-        {
-            return false;
-        }
-        if (this.title == null)
-        {
-            if (other.title != null)
-            {
-                return false;
-            }
-        } else if (!this.title.equals(other.title))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the allytips.
@@ -249,7 +60,7 @@ public class StaticChampion
      *
      * @return the id
      */
-    public Integer getId()
+    public int getId()
     {
         return this.id;
     }
@@ -385,27 +196,106 @@ public class StaticChampion
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        StaticChampion that = (StaticChampion) o;
+        
+        if (id != that.id)
+        {
+            return false;
+        }
+        if ((allytips != null) ? !allytips.equals(that.allytips) : (that.allytips != null))
+        {
+            return false;
+        }
+        if ((blurb != null) ? !blurb.equals(that.blurb) : (that.blurb != null))
+        {
+            return false;
+        }
+        if ((enemytips != null) ? !enemytips.equals(that.enemytips) : (that.enemytips != null))
+        {
+            return false;
+        }
+        if ((image != null) ? !image.equals(that.image) : (that.image != null))
+        {
+            return false;
+        }
+        if ((info != null) ? !info.equals(that.info) : (that.info != null))
+        {
+            return false;
+        }
+        if ((key != null) ? !key.equals(that.key) : (that.key != null))
+        {
+            return false;
+        }
+        if ((lore != null) ? !lore.equals(that.lore) : (that.lore != null))
+        {
+            return false;
+        }
+        if ((name != null) ? !name.equals(that.name) : (that.name != null))
+        {
+            return false;
+        }
+        if ((partype != null) ? !partype.equals(that.partype) : (that.partype != null))
+        {
+            return false;
+        }
+        if ((passive != null) ? !passive.equals(that.passive) : (that.passive != null))
+        {
+            return false;
+        }
+        if ((recommended != null) ? !recommended.equals(that.recommended) : (that.recommended != null))
+        {
+            return false;
+        }
+        if ((skins != null) ? !skins.equals(that.skins) : (that.skins != null))
+        {
+            return false;
+        }
+        if ((spells != null) ? !spells.equals(that.spells) : (that.spells != null))
+        {
+            return false;
+        }
+        if ((stats != null) ? !stats.equals(that.stats) : (that.stats != null))
+        {
+            return false;
+        }
+        if ((tags != null) ? !tags.equals(that.tags) : (that.tags != null))
+        {
+            return false;
+        }
+        return (title != null) ? title.equals(that.title) : (that.title == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.allytips == null) ? 0 : this.allytips.hashCode());
-        result = (prime * result) + ((this.blurb == null) ? 0 : this.blurb.hashCode());
-        result = (prime * result) + ((this.enemytips == null) ? 0 : this.enemytips.hashCode());
-        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-        result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());
-        result = (prime * result) + ((this.info == null) ? 0 : this.info.hashCode());
-        result = (prime * result) + ((this.key == null) ? 0 : this.key.hashCode());
-        result = (prime * result) + ((this.lore == null) ? 0 : this.lore.hashCode());
-        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        result = (prime * result) + ((this.partype == null) ? 0 : this.partype.hashCode());
-        result = (prime * result) + ((this.passive == null) ? 0 : this.passive.hashCode());
-        result = (prime * result) + ((this.recommended == null) ? 0 : this.recommended.hashCode());
-        result = (prime * result) + ((this.skins == null) ? 0 : this.skins.hashCode());
-        result = (prime * result) + ((this.spells == null) ? 0 : this.spells.hashCode());
-        result = (prime * result) + ((this.stats == null) ? 0 : this.stats.hashCode());
-        result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
-        result = (prime * result) + ((this.title == null) ? 0 : this.title.hashCode());
+        int result = allytips != null ? allytips.hashCode() : 0;
+        result = 31 * result + (blurb != null ? blurb.hashCode() : 0);
+        result = 31 * result + (enemytips != null ? enemytips.hashCode() : 0);
+        result = 31 * result + id;
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        result = 31 * result + (info != null ? info.hashCode() : 0);
+        result = 31 * result + (key != null ? key.hashCode() : 0);
+        result = 31 * result + (lore != null ? lore.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (partype != null ? partype.hashCode() : 0);
+        result = 31 * result + (passive != null ? passive.hashCode() : 0);
+        result = 31 * result + (recommended != null ? recommended.hashCode() : 0);
+        result = 31 * result + (skins != null ? skins.hashCode() : 0);
+        result = 31 * result + (spells != null ? spells.hashCode() : 0);
+        result = 31 * result + (stats != null ? stats.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
         return result;
     }
     

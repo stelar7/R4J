@@ -5,77 +5,17 @@ import java.util.*;
 public class MasteryPage
 {
     
-    private Boolean       current;
-    private Long          id;
+    private boolean       current;
+    private long          id;
     private List<Mastery> masteries;
-    
-    private String name;
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MasteryPage other = (MasteryPage) obj;
-        if (this.current == null)
-        {
-            if (other.current != null)
-            {
-                return false;
-            }
-        } else if (!this.current.equals(other.current))
-        {
-            return false;
-        }
-        if (this.id == null)
-        {
-            if (other.id != null)
-            {
-                return false;
-            }
-        } else if (!this.id.equals(other.id))
-        {
-            return false;
-        }
-        if (this.masteries == null)
-        {
-            if (other.masteries != null)
-            {
-                return false;
-            }
-        } else if (!this.masteries.equals(other.masteries))
-        {
-            return false;
-        }
-        if (this.name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        } else if (!this.name.equals(other.name))
-        {
-            return false;
-        }
-        return true;
-    }
+    private String        name;
     
     /**
      * The mastery page ID
      *
-     * @return Long
+     * @return long
      */
-    public Long getId()
+    public long getId()
     {
         return this.id;
     }
@@ -100,26 +40,55 @@ public class MasteryPage
         return this.name;
     }
     
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.current == null) ? 0 : this.current.hashCode());
-        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-        result = (prime * result) + ((this.masteries == null) ? 0 : this.masteries.hashCode());
-        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        return result;
-    }
     
     /**
      * Indicates if the mastery page is the current mastery page
      *
-     * @return Boolean
+     * @return boolean
      */
-    public Boolean isCurrent()
+    public boolean isCurrent()
     {
         return this.current;
+    }
+    
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MasteryPage that = (MasteryPage) o;
+        
+        if (current != that.current)
+        {
+            return false;
+        }
+        if (id != that.id)
+        {
+            return false;
+        }
+        if ((masteries != null) ? !masteries.equals(that.masteries) : (that.masteries != null))
+        {
+            return false;
+        }
+        return (name != null) ? name.equals(that.name) : (that.name == null);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = (current ? 1 : 0);
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
     
     @Override

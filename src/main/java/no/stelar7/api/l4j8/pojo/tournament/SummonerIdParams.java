@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SummonerIdParams
 {
-    private final Set<Number> participants;
+    private final Set<Long> participants;
     
     public SummonerIdParams()
     {
@@ -16,47 +16,32 @@ public class SummonerIdParams
         this.participants = new HashSet<>(set);
     }
     
-    public Set<Number> getParticipants()
+    public Set<Long> getParticipants()
     {
         return this.participants;
     }
     
     @Override
-    public boolean equals(final Object obj)
+    public boolean equals(Object o)
     {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final SummonerIdParams other = (SummonerIdParams) obj;
-        if (this.participants == null)
-        {
-            if (other.participants != null)
-            {
-                return false;
-            }
-        } else if (!this.participants.equals(other.participants))
-        {
-            return false;
-        }
-        return true;
+        
+        SummonerIdParams that = (SummonerIdParams) o;
+        
+        return (participants != null) ? participants.equals(that.participants) : (that.participants == null);
     }
     
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.participants == null) ? 0 : this.participants.hashCode());
-        return result;
+        return participants != null ? participants.hashCode() : 0;
     }
     
     @Override

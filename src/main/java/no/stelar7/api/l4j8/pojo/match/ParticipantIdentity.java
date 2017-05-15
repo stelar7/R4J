@@ -2,16 +2,16 @@ package no.stelar7.api.l4j8.pojo.match;
 
 public class ParticipantIdentity
 {
-    private Integer participantId;
-    private Player  player;
+    private int    participantId;
+    private Player player;
     
     
     /**
      * Participant ID
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getParticipantId()
+    public int getParticipantId()
     {
         return this.participantId;
     }
@@ -40,7 +40,7 @@ public class ParticipantIdentity
         
         ParticipantIdentity that = (ParticipantIdentity) o;
         
-        if ((participantId != null) ? !participantId.equals(that.participantId) : (that.participantId != null))
+        if (participantId != that.participantId)
         {
             return false;
         }
@@ -50,7 +50,7 @@ public class ParticipantIdentity
     @Override
     public int hashCode()
     {
-        int result = participantId != null ? participantId.hashCode() : 0;
+        int result = participantId;
         result = 31 * result + (player != null ? player.hashCode() : 0);
         return result;
     }

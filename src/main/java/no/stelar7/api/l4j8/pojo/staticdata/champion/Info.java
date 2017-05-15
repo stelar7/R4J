@@ -2,76 +2,18 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 public class Info
 {
-    private Integer attack;
-    private Integer defense;
-    private Integer difficulty;
-    private Integer magic;
+    private int attack;
+    private int defense;
+    private int difficulty;
+    private int magic;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Info other = (Info) obj;
-        if (this.attack == null)
-        {
-            if (other.attack != null)
-            {
-                return false;
-            }
-        } else if (!this.attack.equals(other.attack))
-        {
-            return false;
-        }
-        if (this.defense == null)
-        {
-            if (other.defense != null)
-            {
-                return false;
-            }
-        } else if (!this.defense.equals(other.defense))
-        {
-            return false;
-        }
-        if (this.difficulty == null)
-        {
-            if (other.difficulty != null)
-            {
-                return false;
-            }
-        } else if (!this.difficulty.equals(other.difficulty))
-        {
-            return false;
-        }
-        if (this.magic == null)
-        {
-            if (other.magic != null)
-            {
-                return false;
-            }
-        } else if (!this.magic.equals(other.magic))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the attack.
      *
      * @return the attack
      */
-    public Integer getAttack()
+    public int getAttack()
     {
         return this.attack;
     }
@@ -81,7 +23,7 @@ public class Info
      *
      * @return the defense
      */
-    public Integer getDefense()
+    public int getDefense()
     {
         return this.defense;
     }
@@ -91,7 +33,7 @@ public class Info
      *
      * @return the difficulty
      */
-    public Integer getDifficulty()
+    public int getDifficulty()
     {
         return this.difficulty;
     }
@@ -101,20 +43,47 @@ public class Info
      *
      * @return the magic
      */
-    public Integer getMagic()
+    public int getMagic()
     {
         return this.magic;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Info info = (Info) o;
+        
+        if (attack != info.attack)
+        {
+            return false;
+        }
+        if (defense != info.defense)
+        {
+            return false;
+        }
+        if (difficulty != info.difficulty)
+        {
+            return false;
+        }
+        return magic == info.magic;
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.attack == null) ? 0 : this.attack.hashCode());
-        result = (prime * result) + ((this.defense == null) ? 0 : this.defense.hashCode());
-        result = (prime * result) + ((this.difficulty == null) ? 0 : this.difficulty.hashCode());
-        result = (prime * result) + ((this.magic == null) ? 0 : this.magic.hashCode());
+        int result = attack;
+        result = 31 * result + defense;
+        result = 31 * result + difficulty;
+        result = 31 * result + magic;
         return result;
     }
     

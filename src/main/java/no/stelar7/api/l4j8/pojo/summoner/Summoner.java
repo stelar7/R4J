@@ -16,20 +16,20 @@ import java.util.List;
 
 public final class Summoner
 {
-    private Integer  profileIconId;
+    private int      profileIconId;
     private String   name;
-    private Integer  summonerLevel;
-    private Long     accountId;
-    private Long     id;
-    private Long     revisionDate;
+    private int      summonerLevel;
+    private long     accountId;
+    private long     id;
+    private long     revisionDate;
     private Platform platform;
     
     /**
      * The Summoners ID
      *
-     * @return Long
+     * @return long
      */
-    public Long getSummonerId()
+    public long getSummonerId()
     {
         return this.id;
     }
@@ -57,9 +57,9 @@ public final class Summoner
     /**
      * ID of the summoner icon associated with the summoner
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getProfileIconId()
+    public int getProfileIconId()
     {
         return this.profileIconId;
     }
@@ -67,9 +67,9 @@ public final class Summoner
     /**
      * Date summoner was last modified specified as epoch milliseconds. The following events will update this timestamp: profile icon change, playing the tutorial or advanced tutorial, finishing a game, summoner name change
      *
-     * @return Long
+     * @return long
      */
-    public Long getRevisionDate()
+    public long getRevisionDate()
     {
         return this.revisionDate;
     }
@@ -87,9 +87,9 @@ public final class Summoner
     /**
      * Summoner level associated with the summoner
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getSummonerLevel()
+    public int getSummonerLevel()
     {
         return this.summonerLevel;
     }
@@ -97,9 +97,9 @@ public final class Summoner
     /**
      * Account ID associated with the summoner
      *
-     * @return Integer
+     * @return int
      */
-    public Long getAccountId()
+    public long getAccountId()
     {
         return accountId;
     }
@@ -163,7 +163,23 @@ public final class Summoner
         
         Summoner summoner = (Summoner) o;
         
-        if ((profileIconId != null) ? !profileIconId.equals(summoner.profileIconId) : (summoner.profileIconId != null))
+        if (profileIconId != summoner.profileIconId)
+        {
+            return false;
+        }
+        if (summonerLevel != summoner.summonerLevel)
+        {
+            return false;
+        }
+        if (accountId != summoner.accountId)
+        {
+            return false;
+        }
+        if (id != summoner.id)
+        {
+            return false;
+        }
+        if (revisionDate != summoner.revisionDate)
         {
             return false;
         }
@@ -171,33 +187,21 @@ public final class Summoner
         {
             return false;
         }
-        if ((summonerLevel != null) ? !summonerLevel.equals(summoner.summonerLevel) : (summoner.summonerLevel != null))
-        {
-            return false;
-        }
-        if ((accountId != null) ? !accountId.equals(summoner.accountId) : (summoner.accountId != null))
-        {
-            return false;
-        }
-        if ((id != null) ? !id.equals(summoner.id) : (summoner.id != null))
-        {
-            return false;
-        }
-        return (revisionDate != null) ? revisionDate.equals(summoner.revisionDate) : (summoner.revisionDate == null);
+        return platform == summoner.platform;
     }
     
     @Override
     public int hashCode()
     {
-        int result = profileIconId != null ? profileIconId.hashCode() : 0;
+        int result = profileIconId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (summonerLevel != null ? summonerLevel.hashCode() : 0);
-        result = 31 * result + (accountId != null ? accountId.hashCode() : 0);
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (revisionDate != null ? revisionDate.hashCode() : 0);
+        result = 31 * result + summonerLevel;
+        result = 31 * result + (int) (accountId ^ (accountId >>> 32));
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + (int) (revisionDate ^ (revisionDate >>> 32));
+        result = 31 * result + (platform != null ? platform.hashCode() : 0);
         return result;
     }
-    
     
     @Override
     public String toString()

@@ -3,10 +3,10 @@ package no.stelar7.api.l4j8.pojo.tournament;
 public class TournamentCallbackSummoner
 {
     private String summonerName;
-    private Long   summonerId;
+    private long   summonerId;
     
     
-    public Long getSummonerId()
+    public long getSummonerId()
     {
         return this.summonerId;
     }
@@ -17,52 +17,32 @@ public class TournamentCallbackSummoner
     }
     
     @Override
-    public int hashCode()
+    public boolean equals(Object o)
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
-        result = (prime * result) + ((this.summonerName == null) ? 0 : this.summonerName.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
+        
+        TournamentCallbackSummoner that = (TournamentCallbackSummoner) o;
+        
+        if (summonerId != that.summonerId)
         {
             return false;
         }
-        final TournamentCallbackSummoner other = (TournamentCallbackSummoner) obj;
-        if (this.summonerId == null)
-        {
-            if (other.summonerId != null)
-            {
-                return false;
-            }
-        } else if (!this.summonerId.equals(other.summonerId))
-        {
-            return false;
-        }
-        if (this.summonerName == null)
-        {
-            if (other.summonerName != null)
-            {
-                return false;
-            }
-        } else if (!this.summonerName.equals(other.summonerName))
-        {
-            return false;
-        }
-        return true;
+        return (summonerName != null) ? summonerName.equals(that.summonerName) : (that.summonerName == null);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = summonerName != null ? summonerName.hashCode() : 0;
+        result = 31 * result + (int) (summonerId ^ (summonerId >>> 32));
+        return result;
     }
     
     @Override

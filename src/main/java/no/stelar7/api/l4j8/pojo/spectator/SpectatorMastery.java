@@ -2,16 +2,16 @@ package no.stelar7.api.l4j8.pojo.spectator;
 
 public class SpectatorMastery
 {
-    private Long    masteryId;
-    private Integer rank;
+    private long masteryId;
+    private int  rank;
     
     
     /**
      * The ID of the mastery
      *
-     * @return Long
+     * @return long
      */
-    public Long getMasteryId()
+    public long getMasteryId()
     {
         return this.masteryId;
     }
@@ -19,9 +19,9 @@ public class SpectatorMastery
     /**
      * The number of points put into this mastery by the user
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getRank()
+    public int getRank()
     {
         return this.rank;
     }
@@ -38,20 +38,20 @@ public class SpectatorMastery
             return false;
         }
         
-        SpectatorMastery mastery = (SpectatorMastery) o;
+        SpectatorMastery that = (SpectatorMastery) o;
         
-        if ((masteryId != null) ? !masteryId.equals(mastery.masteryId) : (mastery.masteryId != null))
+        if (masteryId != that.masteryId)
         {
             return false;
         }
-        return (rank != null) ? rank.equals(mastery.rank) : (mastery.rank == null);
+        return rank == that.rank;
     }
     
     @Override
     public int hashCode()
     {
-        int result = masteryId != null ? masteryId.hashCode() : 0;
-        result = 31 * result + (rank != null ? rank.hashCode() : 0);
+        int result = (int) (masteryId ^ (masteryId >>> 32));
+        result = 31 * result + rank;
         return result;
     }
     

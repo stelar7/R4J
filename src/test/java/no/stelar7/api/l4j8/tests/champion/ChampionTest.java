@@ -19,7 +19,7 @@ public class ChampionTest
     {
         Champion champ = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0]);
         
-        Assert.assertTrue("ChampionType id is not leona?", champ.getId().equals(Constants.TEST_CHAMPION_IDS[0]));
+        Assert.assertTrue("ChampionType id is not leona?", champ.getId() == Constants.TEST_CHAMPION_IDS[0]);
         
         Assert.assertNotNull("active is null", champ.isActive());
         Assert.assertNotNull("botenabled is null", champ.isBotEnabled());

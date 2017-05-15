@@ -6,71 +6,17 @@ import java.util.*;
 
 public class StaticSummonerSpell extends BaseSpellData
 {
-    private Integer      id;
+    private int          id;
     private List<String> modes;
-    private Integer      summonerLevel;
+    private int          summonerLevel;
     
-    
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final StaticSummonerSpell other = (StaticSummonerSpell) obj;
-        
-        if (this.id == null)
-        {
-            if (other.id != null)
-            {
-                return false;
-            }
-        } else if (!this.id.equals(other.id))
-        {
-            return false;
-        }
-        
-        if (this.modes == null)
-        {
-            if (other.modes != null)
-            {
-                return false;
-            }
-        } else if (!this.modes.equals(other.modes))
-        {
-            return false;
-        }
-        
-        if (this.summonerLevel == null)
-        {
-            if (other.summonerLevel != null)
-            {
-                return false;
-            }
-        } else if (!this.summonerLevel.equals(other.summonerLevel))
-        {
-            return false;
-        }
-        
-        return true;
-    }
     
     /**
      * Gets the id.
      *
      * @return the id
      */
-    public Integer getId()
+    public int getId()
     {
         return this.id;
     }
@@ -90,20 +36,43 @@ public class StaticSummonerSpell extends BaseSpellData
      *
      * @return the summoner level
      */
-    public Integer getSummonerLevel()
+    public int getSummonerLevel()
     {
         return this.summonerLevel;
+    }
+    
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        StaticSummonerSpell that = (StaticSummonerSpell) o;
+        
+        if (id != that.id)
+        {
+            return false;
+        }
+        if (summonerLevel != that.summonerLevel)
+        {
+            return false;
+        }
+        return (modes != null) ? modes.equals(that.modes) : (that.modes == null);
     }
     
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-        result = (prime * result) + ((this.modes == null) ? 0 : this.modes.hashCode());
-        result = (prime * result) + ((this.summonerLevel == null) ? 0 : this.summonerLevel.hashCode());
-        result = (prime * result) + super.hashCode();
+        int result = id;
+        result = 31 * result + (modes != null ? modes.hashCode() : 0);
+        result = 31 * result + summonerLevel;
         return result;
     }
     

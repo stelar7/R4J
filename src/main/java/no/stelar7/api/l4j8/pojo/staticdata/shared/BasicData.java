@@ -5,17 +5,17 @@ import java.util.*;
 public class BasicData
 {
     private String               colloq;
-    private Boolean              consumeOnFull;
-    private Boolean              consumed;
-    private Integer              depth;
+    private boolean              consumeOnFull;
+    private boolean              consumed;
+    private int                  depth;
     private String               description;
     private List<String>         from;
     private Gold                 gold;
     private String               group;
-    private Boolean              hideFromAll;
-    private Integer              id;
+    private boolean              hideFromAll;
+    private int                  id;
     private Image                image;
-    private Boolean              inStore;
+    private boolean              inStore;
     private List<String>         into;
     private Map<String, Boolean> maps;
     private String               name;
@@ -23,261 +23,11 @@ public class BasicData
     private String               requiredChampion;
     private MetaData             rune;
     private String               sanitizedDescription;
-    private Integer              specialRecipe;
-    private Integer              stacks;
+    private int                  specialRecipe;
+    private int                  stacks;
     private BasicDataStats       stats;
     private List<String>         tags;
     
-    
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final BasicData other = (BasicData) obj;
-        if (this.colloq == null)
-        {
-            if (other.colloq != null)
-            {
-                return false;
-            }
-        } else if (!this.colloq.equals(other.colloq))
-        {
-            return false;
-        }
-        if (this.consumeOnFull == null)
-        {
-            if (other.consumeOnFull != null)
-            {
-                return false;
-            }
-        } else if (!this.consumeOnFull.equals(other.consumeOnFull))
-        {
-            return false;
-        }
-        if (this.consumed == null)
-        {
-            if (other.consumed != null)
-            {
-                return false;
-            }
-        } else if (!this.consumed.equals(other.consumed))
-        {
-            return false;
-        }
-        if (this.depth == null)
-        {
-            if (other.depth != null)
-            {
-                return false;
-            }
-        } else if (!this.depth.equals(other.depth))
-        {
-            return false;
-        }
-        if (this.description == null)
-        {
-            if (other.description != null)
-            {
-                return false;
-            }
-        } else if (!this.description.equals(other.description))
-        {
-            return false;
-        }
-        if (this.from == null)
-        {
-            if (other.from != null)
-            {
-                return false;
-            }
-        } else if (!this.from.equals(other.from))
-        {
-            return false;
-        }
-        if (this.gold == null)
-        {
-            if (other.gold != null)
-            {
-                return false;
-            }
-        } else if (!this.gold.equals(other.gold))
-        {
-            return false;
-        }
-        if (this.group == null)
-        {
-            if (other.group != null)
-            {
-                return false;
-            }
-        } else if (!this.group.equals(other.group))
-        {
-            return false;
-        }
-        if (this.hideFromAll == null)
-        {
-            if (other.hideFromAll != null)
-            {
-                return false;
-            }
-        } else if (!this.hideFromAll.equals(other.hideFromAll))
-        {
-            return false;
-        }
-        if (this.id == null)
-        {
-            if (other.id != null)
-            {
-                return false;
-            }
-        } else if (!this.id.equals(other.id))
-        {
-            return false;
-        }
-        if (this.image == null)
-        {
-            if (other.image != null)
-            {
-                return false;
-            }
-        } else if (!this.image.equals(other.image))
-        {
-            return false;
-        }
-        if (this.inStore == null)
-        {
-            if (other.inStore != null)
-            {
-                return false;
-            }
-        } else if (!this.inStore.equals(other.inStore))
-        {
-            return false;
-        }
-        if (this.into == null)
-        {
-            if (other.into != null)
-            {
-                return false;
-            }
-        } else if (!this.into.equals(other.into))
-        {
-            return false;
-        }
-        if (this.maps == null)
-        {
-            if (other.maps != null)
-            {
-                return false;
-            }
-        } else if (!this.maps.equals(other.maps))
-        {
-            return false;
-        }
-        if (this.name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        } else if (!this.name.equals(other.name))
-        {
-            return false;
-        }
-        if (this.plaintext == null)
-        {
-            if (other.plaintext != null)
-            {
-                return false;
-            }
-        } else if (!this.plaintext.equals(other.plaintext))
-        {
-            return false;
-        }
-        if (this.requiredChampion == null)
-        {
-            if (other.requiredChampion != null)
-            {
-                return false;
-            }
-        } else if (!this.requiredChampion.equals(other.requiredChampion))
-        {
-            return false;
-        }
-        if (this.rune == null)
-        {
-            if (other.rune != null)
-            {
-                return false;
-            }
-        } else if (!this.rune.equals(other.rune))
-        {
-            return false;
-        }
-        if (this.sanitizedDescription == null)
-        {
-            if (other.sanitizedDescription != null)
-            {
-                return false;
-            }
-        } else if (!this.sanitizedDescription.equals(other.sanitizedDescription))
-        {
-            return false;
-        }
-        if (this.specialRecipe == null)
-        {
-            if (other.specialRecipe != null)
-            {
-                return false;
-            }
-        } else if (!this.specialRecipe.equals(other.specialRecipe))
-        {
-            return false;
-        }
-        if (this.stacks == null)
-        {
-            if (other.stacks != null)
-            {
-                return false;
-            }
-        } else if (!this.stacks.equals(other.stacks))
-        {
-            return false;
-        }
-        if (this.stats == null)
-        {
-            if (other.stats != null)
-            {
-                return false;
-            }
-        } else if (!this.stats.equals(other.stats))
-        {
-            return false;
-        }
-        if (this.tags == null)
-        {
-            if (other.tags != null)
-            {
-                return false;
-            }
-        } else if (!this.tags.equals(other.tags))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the colloq.
@@ -294,7 +44,7 @@ public class BasicData
      *
      * @return the consumed
      */
-    public Boolean getConsumed()
+    public boolean getConsumed()
     {
         return this.consumed;
     }
@@ -304,7 +54,7 @@ public class BasicData
      *
      * @return the consume on full
      */
-    public Boolean getConsumeOnFull()
+    public boolean getConsumeOnFull()
     {
         return this.consumeOnFull;
     }
@@ -314,7 +64,7 @@ public class BasicData
      *
      * @return the depth
      */
-    public Integer getDepth()
+    public int getDepth()
     {
         return this.depth;
     }
@@ -364,7 +114,7 @@ public class BasicData
      *
      * @return the hide from all
      */
-    public Boolean getHideFromAll()
+    public boolean getHideFromAll()
     {
         return this.hideFromAll;
     }
@@ -374,7 +124,7 @@ public class BasicData
      *
      * @return the id
      */
-    public Integer getId()
+    public int getId()
     {
         return this.id;
     }
@@ -394,7 +144,7 @@ public class BasicData
      *
      * @return the in store
      */
-    public Boolean getInStore()
+    public boolean getInStore()
     {
         return this.inStore;
     }
@@ -474,7 +224,7 @@ public class BasicData
      *
      * @return the special recipe
      */
-    public Integer getSpecialRecipe()
+    public int getSpecialRecipe()
     {
         return this.specialRecipe;
     }
@@ -484,7 +234,7 @@ public class BasicData
      *
      * @return the stacks
      */
-    public Integer getStacks()
+    public int getStacks()
     {
         return this.stacks;
     }
@@ -510,33 +260,136 @@ public class BasicData
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        BasicData basicData = (BasicData) o;
+        
+        if (consumeOnFull != basicData.consumeOnFull)
+        {
+            return false;
+        }
+        if (consumed != basicData.consumed)
+        {
+            return false;
+        }
+        if (depth != basicData.depth)
+        {
+            return false;
+        }
+        if (hideFromAll != basicData.hideFromAll)
+        {
+            return false;
+        }
+        if (id != basicData.id)
+        {
+            return false;
+        }
+        if (inStore != basicData.inStore)
+        {
+            return false;
+        }
+        if (specialRecipe != basicData.specialRecipe)
+        {
+            return false;
+        }
+        if (stacks != basicData.stacks)
+        {
+            return false;
+        }
+        if ((colloq != null) ? !colloq.equals(basicData.colloq) : (basicData.colloq != null))
+        {
+            return false;
+        }
+        if ((description != null) ? !description.equals(basicData.description) : (basicData.description != null))
+        {
+            return false;
+        }
+        if ((from != null) ? !from.equals(basicData.from) : (basicData.from != null))
+        {
+            return false;
+        }
+        if ((gold != null) ? !gold.equals(basicData.gold) : (basicData.gold != null))
+        {
+            return false;
+        }
+        if ((group != null) ? !group.equals(basicData.group) : (basicData.group != null))
+        {
+            return false;
+        }
+        if ((image != null) ? !image.equals(basicData.image) : (basicData.image != null))
+        {
+            return false;
+        }
+        if ((into != null) ? !into.equals(basicData.into) : (basicData.into != null))
+        {
+            return false;
+        }
+        if ((maps != null) ? !maps.equals(basicData.maps) : (basicData.maps != null))
+        {
+            return false;
+        }
+        if ((name != null) ? !name.equals(basicData.name) : (basicData.name != null))
+        {
+            return false;
+        }
+        if ((plaintext != null) ? !plaintext.equals(basicData.plaintext) : (basicData.plaintext != null))
+        {
+            return false;
+        }
+        if ((requiredChampion != null) ? !requiredChampion.equals(basicData.requiredChampion) : (basicData.requiredChampion != null))
+        {
+            return false;
+        }
+        if ((rune != null) ? !rune.equals(basicData.rune) : (basicData.rune != null))
+        {
+            return false;
+        }
+        if ((sanitizedDescription != null) ? !sanitizedDescription.equals(basicData.sanitizedDescription) : (basicData.sanitizedDescription != null))
+        {
+            return false;
+        }
+        if ((stats != null) ? !stats.equals(basicData.stats) : (basicData.stats != null))
+        {
+            return false;
+        }
+        return (tags != null) ? tags.equals(basicData.tags) : (basicData.tags == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.colloq == null) ? 0 : this.colloq.hashCode());
-        result = (prime * result) + ((this.consumeOnFull == null) ? 0 : this.consumeOnFull.hashCode());
-        result = (prime * result) + ((this.consumed == null) ? 0 : this.consumed.hashCode());
-        result = (prime * result) + ((this.depth == null) ? 0 : this.depth.hashCode());
-        result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
-        result = (prime * result) + ((this.from == null) ? 0 : this.from.hashCode());
-        result = (prime * result) + ((this.gold == null) ? 0 : this.gold.hashCode());
-        result = (prime * result) + ((this.group == null) ? 0 : this.group.hashCode());
-        result = (prime * result) + ((this.hideFromAll == null) ? 0 : this.hideFromAll.hashCode());
-        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-        result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());
-        result = (prime * result) + ((this.inStore == null) ? 0 : this.inStore.hashCode());
-        result = (prime * result) + ((this.into == null) ? 0 : this.into.hashCode());
-        result = (prime * result) + ((this.maps == null) ? 0 : this.maps.hashCode());
-        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        result = (prime * result) + ((this.plaintext == null) ? 0 : this.plaintext.hashCode());
-        result = (prime * result) + ((this.requiredChampion == null) ? 0 : this.requiredChampion.hashCode());
-        result = (prime * result) + ((this.rune == null) ? 0 : this.rune.hashCode());
-        result = (prime * result) + ((this.sanitizedDescription == null) ? 0 : this.sanitizedDescription.hashCode());
-        result = (prime * result) + ((this.specialRecipe == null) ? 0 : this.specialRecipe.hashCode());
-        result = (prime * result) + ((this.stacks == null) ? 0 : this.stacks.hashCode());
-        result = (prime * result) + ((this.stats == null) ? 0 : this.stats.hashCode());
-        result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
+        int result = colloq != null ? colloq.hashCode() : 0;
+        result = 31 * result + (consumeOnFull ? 1 : 0);
+        result = 31 * result + (consumed ? 1 : 0);
+        result = 31 * result + depth;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (from != null ? from.hashCode() : 0);
+        result = 31 * result + (gold != null ? gold.hashCode() : 0);
+        result = 31 * result + (group != null ? group.hashCode() : 0);
+        result = 31 * result + (hideFromAll ? 1 : 0);
+        result = 31 * result + id;
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        result = 31 * result + (inStore ? 1 : 0);
+        result = 31 * result + (into != null ? into.hashCode() : 0);
+        result = 31 * result + (maps != null ? maps.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (plaintext != null ? plaintext.hashCode() : 0);
+        result = 31 * result + (requiredChampion != null ? requiredChampion.hashCode() : 0);
+        result = 31 * result + (rune != null ? rune.hashCode() : 0);
+        result = 31 * result + (sanitizedDescription != null ? sanitizedDescription.hashCode() : 0);
+        result = 31 * result + specialRecipe;
+        result = 31 * result + stacks;
+        result = 31 * result + (stats != null ? stats.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
         return result;
     }
     

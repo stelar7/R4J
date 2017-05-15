@@ -4,76 +4,18 @@ import java.util.*;
 
 public class MatchList
 {
-    private Integer              endIndex;
-    private Integer              startIndex;
-    private Integer              totalGames;
+    private int                  endIndex;
+    private int                  startIndex;
+    private int                  totalGames;
     private List<MatchReference> matches;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MatchList other = (MatchList) obj;
-        if (this.endIndex == null)
-        {
-            if (other.endIndex != null)
-            {
-                return false;
-            }
-        } else if (!this.endIndex.equals(other.endIndex))
-        {
-            return false;
-        }
-        if (this.matches == null)
-        {
-            if (other.matches != null)
-            {
-                return false;
-            }
-        } else if (!this.matches.equals(other.matches))
-        {
-            return false;
-        }
-        if (this.startIndex == null)
-        {
-            if (other.startIndex != null)
-            {
-                return false;
-            }
-        } else if (!this.startIndex.equals(other.startIndex))
-        {
-            return false;
-        }
-        if (this.totalGames == null)
-        {
-            if (other.totalGames != null)
-            {
-                return false;
-            }
-        } else if (!this.totalGames.equals(other.totalGames))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the end index.
      *
      * @return the end index
      */
-    public Integer getEndIndex()
+    public int getEndIndex()
     {
         return this.endIndex;
     }
@@ -93,7 +35,7 @@ public class MatchList
      *
      * @return the start index
      */
-    public Integer getStartIndex()
+    public int getStartIndex()
     {
         return this.startIndex;
     }
@@ -103,20 +45,47 @@ public class MatchList
      *
      * @return the total games
      */
-    public Integer getTotalGames()
+    public int getTotalGames()
     {
         return this.totalGames;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MatchList matchList = (MatchList) o;
+        
+        if (endIndex != matchList.endIndex)
+        {
+            return false;
+        }
+        if (startIndex != matchList.startIndex)
+        {
+            return false;
+        }
+        if (totalGames != matchList.totalGames)
+        {
+            return false;
+        }
+        return (matches != null) ? matches.equals(matchList.matches) : (matchList.matches == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.endIndex == null) ? 0 : this.endIndex.hashCode());
-        result = (prime * result) + ((this.matches == null) ? 0 : this.matches.hashCode());
-        result = (prime * result) + ((this.startIndex == null) ? 0 : this.startIndex.hashCode());
-        result = (prime * result) + ((this.totalGames == null) ? 0 : this.totalGames.hashCode());
+        int result = endIndex;
+        result = 31 * result + startIndex;
+        result = 31 * result + totalGames;
+        result = 31 * result + (matches != null ? matches.hashCode() : 0);
         return result;
     }
     

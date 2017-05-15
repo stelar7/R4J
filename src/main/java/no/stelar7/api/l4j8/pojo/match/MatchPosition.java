@@ -2,54 +2,16 @@ package no.stelar7.api.l4j8.pojo.match;
 
 public class MatchPosition
 {
-    private Integer x;
-    private Integer y;
+    private int x;
+    private int y;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MatchPosition other = (MatchPosition) obj;
-        if (this.x == null)
-        {
-            if (other.x != null)
-            {
-                return false;
-            }
-        } else if (!this.x.equals(other.x))
-        {
-            return false;
-        }
-        if (this.y == null)
-        {
-            if (other.y != null)
-            {
-                return false;
-            }
-        } else if (!this.y.equals(other.y))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * The X position
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getX()
+    public int getX()
     {
         return this.x;
     }
@@ -57,20 +19,39 @@ public class MatchPosition
     /**
      * The Y position
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getY()
+    public int getY()
     {
         return this.y;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MatchPosition that = (MatchPosition) o;
+        
+        if (x != that.x)
+        {
+            return false;
+        }
+        return y == that.y;
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.x == null) ? 0 : this.x.hashCode());
-        result = (prime * result) + ((this.y == null) ? 0 : this.y.hashCode());
+        int result = x;
+        result = 31 * result + y;
         return result;
     }
     

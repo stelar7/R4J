@@ -7,74 +7,74 @@ import java.util.stream.*;
 public class ParticipantStats
 {
     
-    private Long    assists;
-    private Long    champLevel;
-    private Long    combatPlayerScore;
-    private Long    damageSelfMitigated;
-    private Long    damageDealtToTurrets;
-    private Long    damageDealtToObjectives;
-    private Long    deaths;
-    private Long    doubleKills;
+    private long    assists;
+    private long    champLevel;
+    private long    combatPlayerScore;
+    private long    damageSelfMitigated;
+    private long    damageDealtToTurrets;
+    private long    damageDealtToObjectives;
+    private long    deaths;
+    private long    doubleKills;
     private boolean firstBloodAssist;
     private boolean firstBloodKill;
     private boolean firstInhibitorAssist;
     private boolean firstInhibitorKill;
     private boolean firstTowerAssist;
     private boolean firstTowerKill;
-    private Long    goldEarned;
-    private Long    goldSpent;
-    private Long    inhibitorKills;
-    private Long    item0;
-    private Long    item1;
-    private Long    item2;
-    private Long    item3;
-    private Long    item4;
-    private Long    item5;
-    private Long    item6;
-    private Long    killingSprees;
-    private Long    kills;
-    private Long    largestCriticalStrike;
-    private Long    largestKillingSpree;
-    private Long    largestMultiKill;
-    private Long    longestTimeSpentLiving;
-    private Long    magicDamageDealt;
-    private Long    magicDamageDealtToChampions;
-    private Long    magicalDamageTaken;
-    private Long    neutralMinionsKilled;
-    private Long    neutralMinionsKilledEnemyJungle;
-    private Long    neutralMinionsKilledTeamJungle;
-    private Long    nodeCapture;
-    private Long    nodeCaptureAssist;
-    private Long    nodeNeutralize;
-    private Long    nodeNeutralizeAssist;
-    private Long    objectivePlayerScore;
-    private Long    pentaKills;
-    private Long    physicalDamageDealt;
-    private Long    physicalDamageDealtToChampions;
-    private Long    physicalDamageTaken;
-    private Long    quadraKills;
-    private Long    sightWardsBoughtInGame;
-    private Long    teamObjective;
-    private Long    timeCCingOthers;
-    private Long    totalDamageDealt;
-    private Long    totalDamageDealtToChampions;
-    private Long    totalDamageTaken;
-    private Long    totalHeal;
-    private Long    totalMinionsKilled;
-    private Long    totalPlayerScore;
-    private Long    totalScoreRank;
-    private Long    totalTimeCrowdControlDealt;
-    private Long    totalUnitsHealed;
-    private Long    turretKills;
-    private Long    tripleKills;
-    private Long    trueDamageDealt;
-    private Long    trueDamageDealtToChampions;
-    private Long    trueDamageTaken;
-    private Long    unrealKills;
-    private Long    visionScore;
-    private Long    visionWardsBoughtInGame;
-    private Long    wardsKilled;
-    private Long    wardsPlaced;
+    private long    goldEarned;
+    private long    goldSpent;
+    private long    inhibitorKills;
+    private long    item0;
+    private long    item1;
+    private long    item2;
+    private long    item3;
+    private long    item4;
+    private long    item5;
+    private long    item6;
+    private long    killingSprees;
+    private long    kills;
+    private long    largestCriticalStrike;
+    private long    largestKillingSpree;
+    private long    largestMultiKill;
+    private long    longestTimeSpentLiving;
+    private long    magicDamageDealt;
+    private long    magicDamageDealtToChampions;
+    private long    magicalDamageTaken;
+    private long    neutralMinionsKilled;
+    private long    neutralMinionsKilledEnemyJungle;
+    private long    neutralMinionsKilledTeamJungle;
+    private long    nodeCapture;
+    private long    nodeCaptureAssist;
+    private long    nodeNeutralize;
+    private long    nodeNeutralizeAssist;
+    private long    objectivePlayerScore;
+    private long    pentaKills;
+    private long    physicalDamageDealt;
+    private long    physicalDamageDealtToChampions;
+    private long    physicalDamageTaken;
+    private long    quadraKills;
+    private long    sightWardsBoughtInGame;
+    private long    teamObjective;
+    private long    timeCCingOthers;
+    private long    totalDamageDealt;
+    private long    totalDamageDealtToChampions;
+    private long    totalDamageTaken;
+    private long    totalHeal;
+    private long    totalMinionsKilled;
+    private long    totalPlayerScore;
+    private long    totalScoreRank;
+    private long    totalTimeCrowdControlDealt;
+    private long    totalUnitsHealed;
+    private long    turretKills;
+    private long    tripleKills;
+    private long    trueDamageDealt;
+    private long    trueDamageDealtToChampions;
+    private long    trueDamageTaken;
+    private long    unrealKills;
+    private long    visionScore;
+    private long    visionWardsBoughtInGame;
+    private long    wardsKilled;
+    private long    wardsPlaced;
     private boolean win;
     
     
@@ -104,7 +104,7 @@ public class ParticipantStats
      *
      * @return the assists
      */
-    public Long getAssists()
+    public long getAssists()
     {
         return this.assists;
     }
@@ -114,7 +114,7 @@ public class ParticipantStats
      *
      * @return the champ level
      */
-    public Long getChampLevel()
+    public long getChampLevel()
     {
         return this.champLevel;
     }
@@ -124,7 +124,7 @@ public class ParticipantStats
      *
      * @return the combat player score
      */
-    public Long getCombatPlayerScore()
+    public long getCombatPlayerScore()
     {
         return this.combatPlayerScore;
     }
@@ -134,7 +134,7 @@ public class ParticipantStats
      *
      * @return the deaths
      */
-    public Long getDeaths()
+    public long getDeaths()
     {
         return this.deaths;
     }
@@ -144,7 +144,7 @@ public class ParticipantStats
      *
      * @return the double kills
      */
-    public Long getDoubleKills()
+    public long getDoubleKills()
     {
         return this.doubleKills;
     }
@@ -154,7 +154,7 @@ public class ParticipantStats
      *
      * @return the gold earned
      */
-    public Long getGoldEarned()
+    public long getGoldEarned()
     {
         return this.goldEarned;
     }
@@ -164,7 +164,7 @@ public class ParticipantStats
      *
      * @return the gold spent
      */
-    public Long getGoldSpent()
+    public long getGoldSpent()
     {
         return this.goldSpent;
     }
@@ -174,7 +174,7 @@ public class ParticipantStats
      *
      * @return the inhibitor kills
      */
-    public Long getInhibitorKills()
+    public long getInhibitorKills()
     {
         return this.inhibitorKills;
     }
@@ -184,7 +184,7 @@ public class ParticipantStats
      *
      * @return the item0
      */
-    public Long getItem0()
+    public long getItem0()
     {
         return this.item0;
     }
@@ -194,7 +194,7 @@ public class ParticipantStats
      *
      * @return the item1
      */
-    public Long getItem1()
+    public long getItem1()
     {
         return this.item1;
     }
@@ -204,7 +204,7 @@ public class ParticipantStats
      *
      * @return the item2
      */
-    public Long getItem2()
+    public long getItem2()
     {
         return this.item2;
     }
@@ -214,7 +214,7 @@ public class ParticipantStats
      *
      * @return the item3
      */
-    public Long getItem3()
+    public long getItem3()
     {
         return this.item3;
     }
@@ -224,7 +224,7 @@ public class ParticipantStats
      *
      * @return the item4
      */
-    public Long getItem4()
+    public long getItem4()
     {
         return this.item4;
     }
@@ -234,7 +234,7 @@ public class ParticipantStats
      *
      * @return the item5
      */
-    public Long getItem5()
+    public long getItem5()
     {
         return this.item5;
     }
@@ -244,7 +244,7 @@ public class ParticipantStats
      *
      * @return the item6
      */
-    public Long getItem6()
+    public long getItem6()
     {
         return this.item6;
     }
@@ -254,7 +254,7 @@ public class ParticipantStats
      *
      * @return the killing sprees
      */
-    public Long getKillingSprees()
+    public long getKillingSprees()
     {
         return this.killingSprees;
     }
@@ -264,7 +264,7 @@ public class ParticipantStats
      *
      * @return the kills
      */
-    public Long getKills()
+    public long getKills()
     {
         return this.kills;
     }
@@ -274,7 +274,7 @@ public class ParticipantStats
      *
      * @return the largest critical strike
      */
-    public Long getLargestCriticalStrike()
+    public long getLargestCriticalStrike()
     {
         return this.largestCriticalStrike;
     }
@@ -284,7 +284,7 @@ public class ParticipantStats
      *
      * @return the largest killing spree
      */
-    public Long getLargestKillingSpree()
+    public long getLargestKillingSpree()
     {
         return this.largestKillingSpree;
     }
@@ -294,7 +294,7 @@ public class ParticipantStats
      *
      * @return the largest multi kill
      */
-    public Long getLargestMultiKill()
+    public long getLargestMultiKill()
     {
         return this.largestMultiKill;
     }
@@ -304,7 +304,7 @@ public class ParticipantStats
      *
      * @return the magic damage dealt
      */
-    public Long getMagicDamageDealt()
+    public long getMagicDamageDealt()
     {
         return this.magicDamageDealt;
     }
@@ -314,7 +314,7 @@ public class ParticipantStats
      *
      * @return the magic damage dealt to champions
      */
-    public Long getMagicDamageDealtToChampions()
+    public long getMagicDamageDealtToChampions()
     {
         return this.magicDamageDealtToChampions;
     }
@@ -324,7 +324,7 @@ public class ParticipantStats
      *
      * @return the magic damage taken
      */
-    public Long getMagicDamageTaken()
+    public long getMagicDamageTaken()
     {
         return this.magicalDamageTaken;
     }
@@ -334,7 +334,7 @@ public class ParticipantStats
      *
      * @return the minions killed
      */
-    public Long getTotalMinionsKilled()
+    public long getTotalMinionsKilled()
     {
         return this.totalMinionsKilled;
     }
@@ -344,7 +344,7 @@ public class ParticipantStats
      *
      * @return the neutral minions killed
      */
-    public Long getNeutralMinionsKilled()
+    public long getNeutralMinionsKilled()
     {
         return this.neutralMinionsKilled;
     }
@@ -354,7 +354,7 @@ public class ParticipantStats
      *
      * @return the neutral minions killed enemy jungle
      */
-    public Long getNeutralMinionsKilledEnemyJungle()
+    public long getNeutralMinionsKilledEnemyJungle()
     {
         return this.neutralMinionsKilledEnemyJungle;
     }
@@ -364,7 +364,7 @@ public class ParticipantStats
      *
      * @return the neutral minions killed team jungle
      */
-    public Long getNeutralMinionsKilledTeamJungle()
+    public long getNeutralMinionsKilledTeamJungle()
     {
         return this.neutralMinionsKilledTeamJungle;
     }
@@ -374,7 +374,7 @@ public class ParticipantStats
      *
      * @return the node capture
      */
-    public Long getNodeCapture()
+    public long getNodeCapture()
     {
         return this.nodeCapture;
     }
@@ -384,7 +384,7 @@ public class ParticipantStats
      *
      * @return the node capture assist
      */
-    public Long getNodeCaptureAssist()
+    public long getNodeCaptureAssist()
     {
         return this.nodeCaptureAssist;
     }
@@ -394,7 +394,7 @@ public class ParticipantStats
      *
      * @return the node neutralize
      */
-    public Long getNodeNeutralize()
+    public long getNodeNeutralize()
     {
         return this.nodeNeutralize;
     }
@@ -404,7 +404,7 @@ public class ParticipantStats
      *
      * @return the node neutralize assist
      */
-    public Long getNodeNeutralizeAssist()
+    public long getNodeNeutralizeAssist()
     {
         return this.nodeNeutralizeAssist;
     }
@@ -414,7 +414,7 @@ public class ParticipantStats
      *
      * @return the objective player score
      */
-    public Long getObjectivePlayerScore()
+    public long getObjectivePlayerScore()
     {
         return this.objectivePlayerScore;
     }
@@ -424,7 +424,7 @@ public class ParticipantStats
      *
      * @return the penta kills
      */
-    public Long getPentaKills()
+    public long getPentaKills()
     {
         return this.pentaKills;
     }
@@ -434,7 +434,7 @@ public class ParticipantStats
      *
      * @return the physical damage dealt
      */
-    public Long getPhysicalDamageDealt()
+    public long getPhysicalDamageDealt()
     {
         return this.physicalDamageDealt;
     }
@@ -444,7 +444,7 @@ public class ParticipantStats
      *
      * @return the physical damage dealt to champions
      */
-    public Long getPhysicalDamageDealtToChampions()
+    public long getPhysicalDamageDealtToChampions()
     {
         return this.physicalDamageDealtToChampions;
     }
@@ -454,7 +454,7 @@ public class ParticipantStats
      *
      * @return the physical damage taken
      */
-    public Long getPhysicalDamageTaken()
+    public long getPhysicalDamageTaken()
     {
         return this.physicalDamageTaken;
     }
@@ -464,7 +464,7 @@ public class ParticipantStats
      *
      * @return the quadra kills
      */
-    public Long getQuadraKills()
+    public long getQuadraKills()
     {
         return this.quadraKills;
     }
@@ -474,7 +474,7 @@ public class ParticipantStats
      *
      * @return the sight wards bought in game
      */
-    public Long getSightWardsBoughtInGame()
+    public long getSightWardsBoughtInGame()
     {
         return this.sightWardsBoughtInGame;
     }
@@ -484,7 +484,7 @@ public class ParticipantStats
      *
      * @return the team objective
      */
-    public Long getTeamObjective()
+    public long getTeamObjective()
     {
         return this.teamObjective;
     }
@@ -494,7 +494,7 @@ public class ParticipantStats
      *
      * @return the total damage dealt
      */
-    public Long getTotalDamageDealt()
+    public long getTotalDamageDealt()
     {
         return this.totalDamageDealt;
     }
@@ -504,7 +504,7 @@ public class ParticipantStats
      *
      * @return the total damage dealt to champions
      */
-    public Long getTotalDamageDealtToChampions()
+    public long getTotalDamageDealtToChampions()
     {
         return this.totalDamageDealtToChampions;
     }
@@ -514,7 +514,7 @@ public class ParticipantStats
      *
      * @return the total damage taken
      */
-    public Long getTotalDamageTaken()
+    public long getTotalDamageTaken()
     {
         return this.totalDamageTaken;
     }
@@ -524,7 +524,7 @@ public class ParticipantStats
      *
      * @return the total heal
      */
-    public Long getTotalHeal()
+    public long getTotalHeal()
     {
         return this.totalHeal;
     }
@@ -534,7 +534,7 @@ public class ParticipantStats
      *
      * @return the total player score
      */
-    public Long getTotalPlayerScore()
+    public long getTotalPlayerScore()
     {
         return this.totalPlayerScore;
     }
@@ -544,7 +544,7 @@ public class ParticipantStats
      *
      * @return the total score rank
      */
-    public Long getTotalScoreRank()
+    public long getTotalScoreRank()
     {
         return this.totalScoreRank;
     }
@@ -554,7 +554,7 @@ public class ParticipantStats
      *
      * @return the total time crowd control dealt
      */
-    public Long getTotalTimeCrowdControlDealt()
+    public long getTotalTimeCrowdControlDealt()
     {
         return this.totalTimeCrowdControlDealt;
     }
@@ -564,7 +564,7 @@ public class ParticipantStats
      *
      * @return the total units healed
      */
-    public Long getTotalUnitsHealed()
+    public long getTotalUnitsHealed()
     {
         return this.totalUnitsHealed;
     }
@@ -574,7 +574,7 @@ public class ParticipantStats
      *
      * @return the turret kills
      */
-    public Long getTurretKills()
+    public long getTurretKills()
     {
         return this.turretKills;
     }
@@ -584,7 +584,7 @@ public class ParticipantStats
      *
      * @return the triple kills
      */
-    public Long getTripleKills()
+    public long getTripleKills()
     {
         return this.tripleKills;
     }
@@ -594,7 +594,7 @@ public class ParticipantStats
      *
      * @return the true damage dealt
      */
-    public Long getTrueDamageDealt()
+    public long getTrueDamageDealt()
     {
         return this.trueDamageDealt;
     }
@@ -604,7 +604,7 @@ public class ParticipantStats
      *
      * @return the true damage dealt to champions
      */
-    public Long getTrueDamageDealtToChampions()
+    public long getTrueDamageDealtToChampions()
     {
         return this.trueDamageDealtToChampions;
     }
@@ -614,7 +614,7 @@ public class ParticipantStats
      *
      * @return the true damage taken
      */
-    public Long getTrueDamageTaken()
+    public long getTrueDamageTaken()
     {
         return this.trueDamageTaken;
     }
@@ -624,7 +624,7 @@ public class ParticipantStats
      *
      * @return the unreal kills
      */
-    public Long getUnrealKills()
+    public long getUnrealKills()
     {
         return this.unrealKills;
     }
@@ -634,7 +634,7 @@ public class ParticipantStats
      *
      * @return the vision wards bought in game
      */
-    public Long getVisionWardsBoughtInGame()
+    public long getVisionWardsBoughtInGame()
     {
         return this.visionWardsBoughtInGame;
     }
@@ -644,7 +644,7 @@ public class ParticipantStats
      *
      * @return the wards killed
      */
-    public Long getWardsKilled()
+    public long getWardsKilled()
     {
         return this.wardsKilled;
     }
@@ -654,7 +654,7 @@ public class ParticipantStats
      *
      * @return the wards placed
      */
-    public Long getWardsPlaced()
+    public long getWardsPlaced()
     {
         return this.wardsPlaced;
     }
@@ -730,32 +730,32 @@ public class ParticipantStats
         return this.win;
     }
     
-    public Long getDamageSelfMitigated()
+    public long getDamageSelfMitigated()
     {
         return damageSelfMitigated;
     }
     
-    public Long getDamageDealtToTurrets()
+    public long getDamageDealtToTurrets()
     {
         return damageDealtToTurrets;
     }
     
-    public Long getDamageDealtToObjectives()
+    public long getDamageDealtToObjectives()
     {
         return damageDealtToObjectives;
     }
     
-    public Long getLongestTimeSpentLiving()
+    public long getlongestTimeSpentLiving()
     {
         return longestTimeSpentLiving;
     }
     
-    public Long getTimeCCingOthers()
+    public long getTimeCCingOthers()
     {
         return timeCCingOthers;
     }
     
-    public Long getVisionScore()
+    public long getVisionScore()
     {
         return visionScore;
     }
@@ -774,6 +774,38 @@ public class ParticipantStats
         
         ParticipantStats that = (ParticipantStats) o;
         
+        if (assists != that.assists)
+        {
+            return false;
+        }
+        if (champLevel != that.champLevel)
+        {
+            return false;
+        }
+        if (combatPlayerScore != that.combatPlayerScore)
+        {
+            return false;
+        }
+        if (damageSelfMitigated != that.damageSelfMitigated)
+        {
+            return false;
+        }
+        if (damageDealtToTurrets != that.damageDealtToTurrets)
+        {
+            return false;
+        }
+        if (damageDealtToObjectives != that.damageDealtToObjectives)
+        {
+            return false;
+        }
+        if (deaths != that.deaths)
+        {
+            return false;
+        }
+        if (doubleKills != that.doubleKills)
+        {
+            return false;
+        }
         if (firstBloodAssist != that.firstBloodAssist)
         {
             return false;
@@ -798,328 +830,296 @@ public class ParticipantStats
         {
             return false;
         }
-        if (win != that.win)
+        if (goldEarned != that.goldEarned)
         {
             return false;
         }
-        if ((assists != null) ? !assists.equals(that.assists) : (that.assists != null))
+        if (goldSpent != that.goldSpent)
         {
             return false;
         }
-        if ((champLevel != null) ? !champLevel.equals(that.champLevel) : (that.champLevel != null))
+        if (inhibitorKills != that.inhibitorKills)
         {
             return false;
         }
-        if ((combatPlayerScore != null) ? !combatPlayerScore.equals(that.combatPlayerScore) : (that.combatPlayerScore != null))
+        if (item0 != that.item0)
         {
             return false;
         }
-        if ((damageSelfMitigated != null) ? !damageSelfMitigated.equals(that.damageSelfMitigated) : (that.damageSelfMitigated != null))
+        if (item1 != that.item1)
         {
             return false;
         }
-        if ((damageDealtToTurrets != null) ? !damageDealtToTurrets.equals(that.damageDealtToTurrets) : (that.damageDealtToTurrets != null))
+        if (item2 != that.item2)
         {
             return false;
         }
-        if ((damageDealtToObjectives != null) ? !damageDealtToObjectives.equals(that.damageDealtToObjectives) : (that.damageDealtToObjectives != null))
+        if (item3 != that.item3)
         {
             return false;
         }
-        if ((deaths != null) ? !deaths.equals(that.deaths) : (that.deaths != null))
+        if (item4 != that.item4)
         {
             return false;
         }
-        if ((doubleKills != null) ? !doubleKills.equals(that.doubleKills) : (that.doubleKills != null))
+        if (item5 != that.item5)
         {
             return false;
         }
-        if ((goldEarned != null) ? !goldEarned.equals(that.goldEarned) : (that.goldEarned != null))
+        if (item6 != that.item6)
         {
             return false;
         }
-        if ((goldSpent != null) ? !goldSpent.equals(that.goldSpent) : (that.goldSpent != null))
+        if (killingSprees != that.killingSprees)
         {
             return false;
         }
-        if ((inhibitorKills != null) ? !inhibitorKills.equals(that.inhibitorKills) : (that.inhibitorKills != null))
+        if (kills != that.kills)
         {
             return false;
         }
-        if ((item0 != null) ? !item0.equals(that.item0) : (that.item0 != null))
+        if (largestCriticalStrike != that.largestCriticalStrike)
         {
             return false;
         }
-        if ((item1 != null) ? !item1.equals(that.item1) : (that.item1 != null))
+        if (largestKillingSpree != that.largestKillingSpree)
         {
             return false;
         }
-        if ((item2 != null) ? !item2.equals(that.item2) : (that.item2 != null))
+        if (largestMultiKill != that.largestMultiKill)
         {
             return false;
         }
-        if ((item3 != null) ? !item3.equals(that.item3) : (that.item3 != null))
+        if (longestTimeSpentLiving != that.longestTimeSpentLiving)
         {
             return false;
         }
-        if ((item4 != null) ? !item4.equals(that.item4) : (that.item4 != null))
+        if (magicDamageDealt != that.magicDamageDealt)
         {
             return false;
         }
-        if ((item5 != null) ? !item5.equals(that.item5) : (that.item5 != null))
+        if (magicDamageDealtToChampions != that.magicDamageDealtToChampions)
         {
             return false;
         }
-        if ((item6 != null) ? !item6.equals(that.item6) : (that.item6 != null))
+        if (magicalDamageTaken != that.magicalDamageTaken)
         {
             return false;
         }
-        if ((killingSprees != null) ? !killingSprees.equals(that.killingSprees) : (that.killingSprees != null))
+        if (neutralMinionsKilled != that.neutralMinionsKilled)
         {
             return false;
         }
-        if ((kills != null) ? !kills.equals(that.kills) : (that.kills != null))
+        if (neutralMinionsKilledEnemyJungle != that.neutralMinionsKilledEnemyJungle)
         {
             return false;
         }
-        if ((largestCriticalStrike != null) ? !largestCriticalStrike.equals(that.largestCriticalStrike) : (that.largestCriticalStrike != null))
+        if (neutralMinionsKilledTeamJungle != that.neutralMinionsKilledTeamJungle)
         {
             return false;
         }
-        if ((largestKillingSpree != null) ? !largestKillingSpree.equals(that.largestKillingSpree) : (that.largestKillingSpree != null))
+        if (nodeCapture != that.nodeCapture)
         {
             return false;
         }
-        if ((largestMultiKill != null) ? !largestMultiKill.equals(that.largestMultiKill) : (that.largestMultiKill != null))
+        if (nodeCaptureAssist != that.nodeCaptureAssist)
         {
             return false;
         }
-        if ((longestTimeSpentLiving != null) ? !longestTimeSpentLiving.equals(that.longestTimeSpentLiving) : (that.longestTimeSpentLiving != null))
+        if (nodeNeutralize != that.nodeNeutralize)
         {
             return false;
         }
-        if ((magicDamageDealt != null) ? !magicDamageDealt.equals(that.magicDamageDealt) : (that.magicDamageDealt != null))
+        if (nodeNeutralizeAssist != that.nodeNeutralizeAssist)
         {
             return false;
         }
-        if ((magicDamageDealtToChampions != null) ? !magicDamageDealtToChampions.equals(that.magicDamageDealtToChampions) : (that.magicDamageDealtToChampions != null))
+        if (objectivePlayerScore != that.objectivePlayerScore)
         {
             return false;
         }
-        if ((magicalDamageTaken != null) ? !magicalDamageTaken.equals(that.magicalDamageTaken) : (that.magicalDamageTaken != null))
+        if (pentaKills != that.pentaKills)
         {
             return false;
         }
-        if ((neutralMinionsKilled != null) ? !neutralMinionsKilled.equals(that.neutralMinionsKilled) : (that.neutralMinionsKilled != null))
+        if (physicalDamageDealt != that.physicalDamageDealt)
         {
             return false;
         }
-        if ((neutralMinionsKilledEnemyJungle != null) ? !neutralMinionsKilledEnemyJungle.equals(that.neutralMinionsKilledEnemyJungle) : (that.neutralMinionsKilledEnemyJungle != null))
+        if (physicalDamageDealtToChampions != that.physicalDamageDealtToChampions)
         {
             return false;
         }
-        if ((neutralMinionsKilledTeamJungle != null) ? !neutralMinionsKilledTeamJungle.equals(that.neutralMinionsKilledTeamJungle) : (that.neutralMinionsKilledTeamJungle != null))
+        if (physicalDamageTaken != that.physicalDamageTaken)
         {
             return false;
         }
-        if ((nodeCapture != null) ? !nodeCapture.equals(that.nodeCapture) : (that.nodeCapture != null))
+        if (quadraKills != that.quadraKills)
         {
             return false;
         }
-        if ((nodeCaptureAssist != null) ? !nodeCaptureAssist.equals(that.nodeCaptureAssist) : (that.nodeCaptureAssist != null))
+        if (sightWardsBoughtInGame != that.sightWardsBoughtInGame)
         {
             return false;
         }
-        if ((nodeNeutralize != null) ? !nodeNeutralize.equals(that.nodeNeutralize) : (that.nodeNeutralize != null))
+        if (teamObjective != that.teamObjective)
         {
             return false;
         }
-        if ((nodeNeutralizeAssist != null) ? !nodeNeutralizeAssist.equals(that.nodeNeutralizeAssist) : (that.nodeNeutralizeAssist != null))
+        if (timeCCingOthers != that.timeCCingOthers)
         {
             return false;
         }
-        if ((objectivePlayerScore != null) ? !objectivePlayerScore.equals(that.objectivePlayerScore) : (that.objectivePlayerScore != null))
+        if (totalDamageDealt != that.totalDamageDealt)
         {
             return false;
         }
-        if ((pentaKills != null) ? !pentaKills.equals(that.pentaKills) : (that.pentaKills != null))
+        if (totalDamageDealtToChampions != that.totalDamageDealtToChampions)
         {
             return false;
         }
-        if ((physicalDamageDealt != null) ? !physicalDamageDealt.equals(that.physicalDamageDealt) : (that.physicalDamageDealt != null))
+        if (totalDamageTaken != that.totalDamageTaken)
         {
             return false;
         }
-        if ((physicalDamageDealtToChampions != null) ? !physicalDamageDealtToChampions.equals(that.physicalDamageDealtToChampions) : (that.physicalDamageDealtToChampions != null))
+        if (totalHeal != that.totalHeal)
         {
             return false;
         }
-        if ((physicalDamageTaken != null) ? !physicalDamageTaken.equals(that.physicalDamageTaken) : (that.physicalDamageTaken != null))
+        if (totalMinionsKilled != that.totalMinionsKilled)
         {
             return false;
         }
-        if ((quadraKills != null) ? !quadraKills.equals(that.quadraKills) : (that.quadraKills != null))
+        if (totalPlayerScore != that.totalPlayerScore)
         {
             return false;
         }
-        if ((sightWardsBoughtInGame != null) ? !sightWardsBoughtInGame.equals(that.sightWardsBoughtInGame) : (that.sightWardsBoughtInGame != null))
+        if (totalScoreRank != that.totalScoreRank)
         {
             return false;
         }
-        if ((teamObjective != null) ? !teamObjective.equals(that.teamObjective) : (that.teamObjective != null))
+        if (totalTimeCrowdControlDealt != that.totalTimeCrowdControlDealt)
         {
             return false;
         }
-        if ((timeCCingOthers != null) ? !timeCCingOthers.equals(that.timeCCingOthers) : (that.timeCCingOthers != null))
+        if (totalUnitsHealed != that.totalUnitsHealed)
         {
             return false;
         }
-        if ((totalDamageDealt != null) ? !totalDamageDealt.equals(that.totalDamageDealt) : (that.totalDamageDealt != null))
+        if (turretKills != that.turretKills)
         {
             return false;
         }
-        if ((totalDamageDealtToChampions != null) ? !totalDamageDealtToChampions.equals(that.totalDamageDealtToChampions) : (that.totalDamageDealtToChampions != null))
+        if (tripleKills != that.tripleKills)
         {
             return false;
         }
-        if ((totalDamageTaken != null) ? !totalDamageTaken.equals(that.totalDamageTaken) : (that.totalDamageTaken != null))
+        if (trueDamageDealt != that.trueDamageDealt)
         {
             return false;
         }
-        if ((totalHeal != null) ? !totalHeal.equals(that.totalHeal) : (that.totalHeal != null))
+        if (trueDamageDealtToChampions != that.trueDamageDealtToChampions)
         {
             return false;
         }
-        if ((totalMinionsKilled != null) ? !totalMinionsKilled.equals(that.totalMinionsKilled) : (that.totalMinionsKilled != null))
+        if (trueDamageTaken != that.trueDamageTaken)
         {
             return false;
         }
-        if ((totalPlayerScore != null) ? !totalPlayerScore.equals(that.totalPlayerScore) : (that.totalPlayerScore != null))
+        if (unrealKills != that.unrealKills)
         {
             return false;
         }
-        if ((totalScoreRank != null) ? !totalScoreRank.equals(that.totalScoreRank) : (that.totalScoreRank != null))
+        if (visionScore != that.visionScore)
         {
             return false;
         }
-        if ((totalTimeCrowdControlDealt != null) ? !totalTimeCrowdControlDealt.equals(that.totalTimeCrowdControlDealt) : (that.totalTimeCrowdControlDealt != null))
+        if (visionWardsBoughtInGame != that.visionWardsBoughtInGame)
         {
             return false;
         }
-        if ((totalUnitsHealed != null) ? !totalUnitsHealed.equals(that.totalUnitsHealed) : (that.totalUnitsHealed != null))
+        if (wardsKilled != that.wardsKilled)
         {
             return false;
         }
-        if ((turretKills != null) ? !turretKills.equals(that.turretKills) : (that.turretKills != null))
+        if (wardsPlaced != that.wardsPlaced)
         {
             return false;
         }
-        if ((tripleKills != null) ? !tripleKills.equals(that.tripleKills) : (that.tripleKills != null))
-        {
-            return false;
-        }
-        if ((trueDamageDealt != null) ? !trueDamageDealt.equals(that.trueDamageDealt) : (that.trueDamageDealt != null))
-        {
-            return false;
-        }
-        if ((trueDamageDealtToChampions != null) ? !trueDamageDealtToChampions.equals(that.trueDamageDealtToChampions) : (that.trueDamageDealtToChampions != null))
-        {
-            return false;
-        }
-        if ((trueDamageTaken != null) ? !trueDamageTaken.equals(that.trueDamageTaken) : (that.trueDamageTaken != null))
-        {
-            return false;
-        }
-        if ((unrealKills != null) ? !unrealKills.equals(that.unrealKills) : (that.unrealKills != null))
-        {
-            return false;
-        }
-        if ((visionScore != null) ? !visionScore.equals(that.visionScore) : (that.visionScore != null))
-        {
-            return false;
-        }
-        if ((visionWardsBoughtInGame != null) ? !visionWardsBoughtInGame.equals(that.visionWardsBoughtInGame) : (that.visionWardsBoughtInGame != null))
-        {
-            return false;
-        }
-        if ((wardsKilled != null) ? !wardsKilled.equals(that.wardsKilled) : (that.wardsKilled != null))
-        {
-            return false;
-        }
-        return (wardsPlaced != null) ? wardsPlaced.equals(that.wardsPlaced) : (that.wardsPlaced == null);
+        return win == that.win;
     }
     
     @Override
     public int hashCode()
     {
-        int result = assists != null ? assists.hashCode() : 0;
-        result = 31 * result + (champLevel != null ? champLevel.hashCode() : 0);
-        result = 31 * result + (combatPlayerScore != null ? combatPlayerScore.hashCode() : 0);
-        result = 31 * result + (damageSelfMitigated != null ? damageSelfMitigated.hashCode() : 0);
-        result = 31 * result + (damageDealtToTurrets != null ? damageDealtToTurrets.hashCode() : 0);
-        result = 31 * result + (damageDealtToObjectives != null ? damageDealtToObjectives.hashCode() : 0);
-        result = 31 * result + (deaths != null ? deaths.hashCode() : 0);
-        result = 31 * result + (doubleKills != null ? doubleKills.hashCode() : 0);
+        int result = (int) (assists ^ (assists >>> 32));
+        result = 31 * result + (int) (champLevel ^ (champLevel >>> 32));
+        result = 31 * result + (int) (combatPlayerScore ^ (combatPlayerScore >>> 32));
+        result = 31 * result + (int) (damageSelfMitigated ^ (damageSelfMitigated >>> 32));
+        result = 31 * result + (int) (damageDealtToTurrets ^ (damageDealtToTurrets >>> 32));
+        result = 31 * result + (int) (damageDealtToObjectives ^ (damageDealtToObjectives >>> 32));
+        result = 31 * result + (int) (deaths ^ (deaths >>> 32));
+        result = 31 * result + (int) (doubleKills ^ (doubleKills >>> 32));
         result = 31 * result + (firstBloodAssist ? 1 : 0);
         result = 31 * result + (firstBloodKill ? 1 : 0);
         result = 31 * result + (firstInhibitorAssist ? 1 : 0);
         result = 31 * result + (firstInhibitorKill ? 1 : 0);
         result = 31 * result + (firstTowerAssist ? 1 : 0);
         result = 31 * result + (firstTowerKill ? 1 : 0);
-        result = 31 * result + (goldEarned != null ? goldEarned.hashCode() : 0);
-        result = 31 * result + (goldSpent != null ? goldSpent.hashCode() : 0);
-        result = 31 * result + (inhibitorKills != null ? inhibitorKills.hashCode() : 0);
-        result = 31 * result + (item0 != null ? item0.hashCode() : 0);
-        result = 31 * result + (item1 != null ? item1.hashCode() : 0);
-        result = 31 * result + (item2 != null ? item2.hashCode() : 0);
-        result = 31 * result + (item3 != null ? item3.hashCode() : 0);
-        result = 31 * result + (item4 != null ? item4.hashCode() : 0);
-        result = 31 * result + (item5 != null ? item5.hashCode() : 0);
-        result = 31 * result + (item6 != null ? item6.hashCode() : 0);
-        result = 31 * result + (killingSprees != null ? killingSprees.hashCode() : 0);
-        result = 31 * result + (kills != null ? kills.hashCode() : 0);
-        result = 31 * result + (largestCriticalStrike != null ? largestCriticalStrike.hashCode() : 0);
-        result = 31 * result + (largestKillingSpree != null ? largestKillingSpree.hashCode() : 0);
-        result = 31 * result + (largestMultiKill != null ? largestMultiKill.hashCode() : 0);
-        result = 31 * result + (longestTimeSpentLiving != null ? longestTimeSpentLiving.hashCode() : 0);
-        result = 31 * result + (magicDamageDealt != null ? magicDamageDealt.hashCode() : 0);
-        result = 31 * result + (magicDamageDealtToChampions != null ? magicDamageDealtToChampions.hashCode() : 0);
-        result = 31 * result + (magicalDamageTaken != null ? magicalDamageTaken.hashCode() : 0);
-        result = 31 * result + (neutralMinionsKilled != null ? neutralMinionsKilled.hashCode() : 0);
-        result = 31 * result + (neutralMinionsKilledEnemyJungle != null ? neutralMinionsKilledEnemyJungle.hashCode() : 0);
-        result = 31 * result + (neutralMinionsKilledTeamJungle != null ? neutralMinionsKilledTeamJungle.hashCode() : 0);
-        result = 31 * result + (nodeCapture != null ? nodeCapture.hashCode() : 0);
-        result = 31 * result + (nodeCaptureAssist != null ? nodeCaptureAssist.hashCode() : 0);
-        result = 31 * result + (nodeNeutralize != null ? nodeNeutralize.hashCode() : 0);
-        result = 31 * result + (nodeNeutralizeAssist != null ? nodeNeutralizeAssist.hashCode() : 0);
-        result = 31 * result + (objectivePlayerScore != null ? objectivePlayerScore.hashCode() : 0);
-        result = 31 * result + (pentaKills != null ? pentaKills.hashCode() : 0);
-        result = 31 * result + (physicalDamageDealt != null ? physicalDamageDealt.hashCode() : 0);
-        result = 31 * result + (physicalDamageDealtToChampions != null ? physicalDamageDealtToChampions.hashCode() : 0);
-        result = 31 * result + (physicalDamageTaken != null ? physicalDamageTaken.hashCode() : 0);
-        result = 31 * result + (quadraKills != null ? quadraKills.hashCode() : 0);
-        result = 31 * result + (sightWardsBoughtInGame != null ? sightWardsBoughtInGame.hashCode() : 0);
-        result = 31 * result + (teamObjective != null ? teamObjective.hashCode() : 0);
-        result = 31 * result + (timeCCingOthers != null ? timeCCingOthers.hashCode() : 0);
-        result = 31 * result + (totalDamageDealt != null ? totalDamageDealt.hashCode() : 0);
-        result = 31 * result + (totalDamageDealtToChampions != null ? totalDamageDealtToChampions.hashCode() : 0);
-        result = 31 * result + (totalDamageTaken != null ? totalDamageTaken.hashCode() : 0);
-        result = 31 * result + (totalHeal != null ? totalHeal.hashCode() : 0);
-        result = 31 * result + (totalMinionsKilled != null ? totalMinionsKilled.hashCode() : 0);
-        result = 31 * result + (totalPlayerScore != null ? totalPlayerScore.hashCode() : 0);
-        result = 31 * result + (totalScoreRank != null ? totalScoreRank.hashCode() : 0);
-        result = 31 * result + (totalTimeCrowdControlDealt != null ? totalTimeCrowdControlDealt.hashCode() : 0);
-        result = 31 * result + (totalUnitsHealed != null ? totalUnitsHealed.hashCode() : 0);
-        result = 31 * result + (turretKills != null ? turretKills.hashCode() : 0);
-        result = 31 * result + (tripleKills != null ? tripleKills.hashCode() : 0);
-        result = 31 * result + (trueDamageDealt != null ? trueDamageDealt.hashCode() : 0);
-        result = 31 * result + (trueDamageDealtToChampions != null ? trueDamageDealtToChampions.hashCode() : 0);
-        result = 31 * result + (trueDamageTaken != null ? trueDamageTaken.hashCode() : 0);
-        result = 31 * result + (unrealKills != null ? unrealKills.hashCode() : 0);
-        result = 31 * result + (visionScore != null ? visionScore.hashCode() : 0);
-        result = 31 * result + (visionWardsBoughtInGame != null ? visionWardsBoughtInGame.hashCode() : 0);
-        result = 31 * result + (wardsKilled != null ? wardsKilled.hashCode() : 0);
-        result = 31 * result + (wardsPlaced != null ? wardsPlaced.hashCode() : 0);
+        result = 31 * result + (int) (goldEarned ^ (goldEarned >>> 32));
+        result = 31 * result + (int) (goldSpent ^ (goldSpent >>> 32));
+        result = 31 * result + (int) (inhibitorKills ^ (inhibitorKills >>> 32));
+        result = 31 * result + (int) (item0 ^ (item0 >>> 32));
+        result = 31 * result + (int) (item1 ^ (item1 >>> 32));
+        result = 31 * result + (int) (item2 ^ (item2 >>> 32));
+        result = 31 * result + (int) (item3 ^ (item3 >>> 32));
+        result = 31 * result + (int) (item4 ^ (item4 >>> 32));
+        result = 31 * result + (int) (item5 ^ (item5 >>> 32));
+        result = 31 * result + (int) (item6 ^ (item6 >>> 32));
+        result = 31 * result + (int) (killingSprees ^ (killingSprees >>> 32));
+        result = 31 * result + (int) (kills ^ (kills >>> 32));
+        result = 31 * result + (int) (largestCriticalStrike ^ (largestCriticalStrike >>> 32));
+        result = 31 * result + (int) (largestKillingSpree ^ (largestKillingSpree >>> 32));
+        result = 31 * result + (int) (largestMultiKill ^ (largestMultiKill >>> 32));
+        result = 31 * result + (int) (longestTimeSpentLiving ^ (longestTimeSpentLiving >>> 32));
+        result = 31 * result + (int) (magicDamageDealt ^ (magicDamageDealt >>> 32));
+        result = 31 * result + (int) (magicDamageDealtToChampions ^ (magicDamageDealtToChampions >>> 32));
+        result = 31 * result + (int) (magicalDamageTaken ^ (magicalDamageTaken >>> 32));
+        result = 31 * result + (int) (neutralMinionsKilled ^ (neutralMinionsKilled >>> 32));
+        result = 31 * result + (int) (neutralMinionsKilledEnemyJungle ^ (neutralMinionsKilledEnemyJungle >>> 32));
+        result = 31 * result + (int) (neutralMinionsKilledTeamJungle ^ (neutralMinionsKilledTeamJungle >>> 32));
+        result = 31 * result + (int) (nodeCapture ^ (nodeCapture >>> 32));
+        result = 31 * result + (int) (nodeCaptureAssist ^ (nodeCaptureAssist >>> 32));
+        result = 31 * result + (int) (nodeNeutralize ^ (nodeNeutralize >>> 32));
+        result = 31 * result + (int) (nodeNeutralizeAssist ^ (nodeNeutralizeAssist >>> 32));
+        result = 31 * result + (int) (objectivePlayerScore ^ (objectivePlayerScore >>> 32));
+        result = 31 * result + (int) (pentaKills ^ (pentaKills >>> 32));
+        result = 31 * result + (int) (physicalDamageDealt ^ (physicalDamageDealt >>> 32));
+        result = 31 * result + (int) (physicalDamageDealtToChampions ^ (physicalDamageDealtToChampions >>> 32));
+        result = 31 * result + (int) (physicalDamageTaken ^ (physicalDamageTaken >>> 32));
+        result = 31 * result + (int) (quadraKills ^ (quadraKills >>> 32));
+        result = 31 * result + (int) (sightWardsBoughtInGame ^ (sightWardsBoughtInGame >>> 32));
+        result = 31 * result + (int) (teamObjective ^ (teamObjective >>> 32));
+        result = 31 * result + (int) (timeCCingOthers ^ (timeCCingOthers >>> 32));
+        result = 31 * result + (int) (totalDamageDealt ^ (totalDamageDealt >>> 32));
+        result = 31 * result + (int) (totalDamageDealtToChampions ^ (totalDamageDealtToChampions >>> 32));
+        result = 31 * result + (int) (totalDamageTaken ^ (totalDamageTaken >>> 32));
+        result = 31 * result + (int) (totalHeal ^ (totalHeal >>> 32));
+        result = 31 * result + (int) (totalMinionsKilled ^ (totalMinionsKilled >>> 32));
+        result = 31 * result + (int) (totalPlayerScore ^ (totalPlayerScore >>> 32));
+        result = 31 * result + (int) (totalScoreRank ^ (totalScoreRank >>> 32));
+        result = 31 * result + (int) (totalTimeCrowdControlDealt ^ (totalTimeCrowdControlDealt >>> 32));
+        result = 31 * result + (int) (totalUnitsHealed ^ (totalUnitsHealed >>> 32));
+        result = 31 * result + (int) (turretKills ^ (turretKills >>> 32));
+        result = 31 * result + (int) (tripleKills ^ (tripleKills >>> 32));
+        result = 31 * result + (int) (trueDamageDealt ^ (trueDamageDealt >>> 32));
+        result = 31 * result + (int) (trueDamageDealtToChampions ^ (trueDamageDealtToChampions >>> 32));
+        result = 31 * result + (int) (trueDamageTaken ^ (trueDamageTaken >>> 32));
+        result = 31 * result + (int) (unrealKills ^ (unrealKills >>> 32));
+        result = 31 * result + (int) (visionScore ^ (visionScore >>> 32));
+        result = 31 * result + (int) (visionWardsBoughtInGame ^ (visionWardsBoughtInGame >>> 32));
+        result = 31 * result + (int) (wardsKilled ^ (wardsKilled >>> 32));
+        result = 31 * result + (int) (wardsPlaced ^ (wardsPlaced >>> 32));
         result = 31 * result + (win ? 1 : 0);
         return result;
     }

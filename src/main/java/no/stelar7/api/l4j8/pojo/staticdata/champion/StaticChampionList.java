@@ -10,74 +10,6 @@ public class StaticChampionList
     private String                    type;
     private String                    version;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final StaticChampionList other = (StaticChampionList) obj;
-        if (this.data == null)
-        {
-            if (other.data != null)
-            {
-                return false;
-            }
-        } else if (!this.data.equals(other.data))
-        {
-            return false;
-        }
-        if (this.format == null)
-        {
-            if (other.format != null)
-            {
-                return false;
-            }
-        } else if (!this.format.equals(other.format))
-        {
-            return false;
-        }
-        if (this.keys == null)
-        {
-            if (other.keys != null)
-            {
-                return false;
-            }
-        } else if (!this.keys.equals(other.keys))
-        {
-            return false;
-        }
-        if (this.type == null)
-        {
-            if (other.type != null)
-            {
-                return false;
-            }
-        } else if (!this.type.equals(other.type))
-        {
-            return false;
-        }
-        if (this.version == null)
-        {
-            if (other.version != null)
-            {
-                return false;
-            }
-        } else if (!this.version.equals(other.version))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the data.
@@ -130,15 +62,46 @@ public class StaticChampionList
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        StaticChampionList that = (StaticChampionList) o;
+        
+        if ((data != null) ? !data.equals(that.data) : (that.data != null))
+        {
+            return false;
+        }
+        if ((format != null) ? !format.equals(that.format) : (that.format != null))
+        {
+            return false;
+        }
+        if ((keys != null) ? !keys.equals(that.keys) : (that.keys != null))
+        {
+            return false;
+        }
+        if ((type != null) ? !type.equals(that.type) : (that.type != null))
+        {
+            return false;
+        }
+        return (version != null) ? version.equals(that.version) : (that.version == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
-        result = (prime * result) + ((this.format == null) ? 0 : this.format.hashCode());
-        result = (prime * result) + ((this.keys == null) ? 0 : this.keys.hashCode());
-        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
-        result = (prime * result) + ((this.version == null) ? 0 : this.version.hashCode());
+        int result = data != null ? data.hashCode() : 0;
+        result = 31 * result + (format != null ? format.hashCode() : 0);
+        result = 31 * result + (keys != null ? keys.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         return result;
     }
     

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class MatchTimeline
 {
-    private Long             frameInterval;
+    private long             frameInterval;
     private List<MatchFrame> frames;
     
     
@@ -13,7 +13,7 @@ public class MatchTimeline
      *
      * @return frame interval
      */
-    public Long getFrameInterval()
+    public long getFrameInterval()
     {
         return this.frameInterval;
     }
@@ -42,7 +42,7 @@ public class MatchTimeline
         
         MatchTimeline that = (MatchTimeline) o;
         
-        if ((frameInterval != null) ? !frameInterval.equals(that.frameInterval) : (that.frameInterval != null))
+        if (frameInterval != that.frameInterval)
         {
             return false;
         }
@@ -52,7 +52,7 @@ public class MatchTimeline
     @Override
     public int hashCode()
     {
-        int result = frameInterval != null ? frameInterval.hashCode() : 0;
+        int result = (int) (frameInterval ^ (frameInterval >>> 32));
         result = 31 * result + (frames != null ? frames.hashCode() : 0);
         return result;
     }

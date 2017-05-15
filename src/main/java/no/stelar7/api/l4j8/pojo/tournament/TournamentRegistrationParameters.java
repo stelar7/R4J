@@ -3,9 +3,9 @@ package no.stelar7.api.l4j8.pojo.tournament;
 public class TournamentRegistrationParameters
 {
     private String name;
-    private Long   providerId;
+    private long   providerId;
     
-    public TournamentRegistrationParameters(final Long providerId)
+    public TournamentRegistrationParameters(final long providerId)
     {
         super();
         this.providerId = providerId;
@@ -18,45 +18,6 @@ public class TournamentRegistrationParameters
         this.providerId = providerId2;
     }
     
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final TournamentRegistrationParameters other = (TournamentRegistrationParameters) obj;
-        if (this.name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        } else if (!this.name.equals(other.name))
-        {
-            return false;
-        }
-        if (this.providerId == null)
-        {
-            if (other.providerId != null)
-            {
-                return false;
-            }
-        } else if (!this.providerId.equals(other.providerId))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * The optional name of the tournament.
@@ -78,23 +39,42 @@ public class TournamentRegistrationParameters
      *
      * @return long
      */
-    public Long getProviderId()
+    public long getProviderId()
     {
         return this.providerId;
     }
     
-    public void setProviderId(final Long providerId)
+    public void setProviderId(final long providerId)
     {
         this.providerId = providerId;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        TournamentRegistrationParameters that = (TournamentRegistrationParameters) o;
+        
+        if (providerId != that.providerId)
+        {
+            return false;
+        }
+        return (name != null) ? name.equals(that.name) : (that.name == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        result = (prime * result) + ((this.providerId == null) ? 0 : this.providerId.hashCode());
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (int) (providerId ^ (providerId >>> 32));
         return result;
     }
     

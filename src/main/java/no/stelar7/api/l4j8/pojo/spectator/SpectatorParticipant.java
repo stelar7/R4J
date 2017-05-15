@@ -7,15 +7,15 @@ import java.util.List;
 public class SpectatorParticipant
 {
     private ChampionType           championId;
-    private Long                   profileIconId;
+    private long                   profileIconId;
     private SummonerSpellType      spell1Id;
     private SummonerSpellType      spell2Id;
     private String                 summonerName;
     private TeamType               teamId;
-    private Boolean                bot;
+    private boolean                bot;
     private List<SpectatorMastery> masteries;
     private List<SpectatorRune>    runes;
-    private Long                   summonerId;
+    private long                   summonerId;
     
     /**
      * Gets champion
@@ -32,7 +32,7 @@ public class SpectatorParticipant
      *
      * @return the profile icon id
      */
-    public Long getProfileIconId()
+    public long getProfileIconId()
     {
         return profileIconId;
     }
@@ -60,7 +60,6 @@ public class SpectatorParticipant
     /**
      * Gets summoner name
      *
-     *
      * @return the summoner name
      */
     public String getSummonerName()
@@ -83,7 +82,7 @@ public class SpectatorParticipant
      *
      * @return the bot
      */
-    public Boolean isBot()
+    public boolean isBot()
     {
         return bot;
     }
@@ -113,7 +112,7 @@ public class SpectatorParticipant
      *
      * @return the summoner id
      */
-    public Long getSummonerId()
+    public long getSummonerId()
     {
         return summonerId;
     }
@@ -132,11 +131,19 @@ public class SpectatorParticipant
         
         SpectatorParticipant that = (SpectatorParticipant) o;
         
-        if (championId != that.championId)
+        if (profileIconId != that.profileIconId)
         {
             return false;
         }
-        if ((profileIconId != null) ? !profileIconId.equals(that.profileIconId) : (that.profileIconId != null))
+        if (bot != that.bot)
+        {
+            return false;
+        }
+        if (summonerId != that.summonerId)
+        {
+            return false;
+        }
+        if (championId != that.championId)
         {
             return false;
         }
@@ -156,34 +163,44 @@ public class SpectatorParticipant
         {
             return false;
         }
-        if ((bot != null) ? !bot.equals(that.bot) : (that.bot != null))
-        {
-            return false;
-        }
         if ((masteries != null) ? !masteries.equals(that.masteries) : (that.masteries != null))
         {
             return false;
         }
-        if ((runes != null) ? !runes.equals(that.runes) : (that.runes != null))
-        {
-            return false;
-        }
-        return (summonerId != null) ? summonerId.equals(that.summonerId) : (that.summonerId == null);
+        return (runes != null) ? runes.equals(that.runes) : (that.runes == null);
     }
     
     @Override
     public int hashCode()
     {
         int result = championId != null ? championId.hashCode() : 0;
-        result = 31 * result + (profileIconId != null ? profileIconId.hashCode() : 0);
+        result = 31 * result + (int) (profileIconId ^ (profileIconId >>> 32));
         result = 31 * result + (spell1Id != null ? spell1Id.hashCode() : 0);
         result = 31 * result + (spell2Id != null ? spell2Id.hashCode() : 0);
         result = 31 * result + (summonerName != null ? summonerName.hashCode() : 0);
         result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
-        result = 31 * result + (bot != null ? bot.hashCode() : 0);
+        result = 31 * result + (bot ? 1 : 0);
         result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
         result = 31 * result + (runes != null ? runes.hashCode() : 0);
-        result = 31 * result + (summonerId != null ? summonerId.hashCode() : 0);
+        result = 31 * result + (int) (summonerId ^ (summonerId >>> 32));
         return result;
+    }
+    
+    
+    @Override
+    public String toString()
+    {
+        return "SpectatorParticipant{" +
+               "championId=" + championId +
+               ", profileIconId=" + profileIconId +
+               ", spell1Id=" + spell1Id +
+               ", spell2Id=" + spell2Id +
+               ", summonerName='" + summonerName + '\'' +
+               ", teamId=" + teamId +
+               ", bot=" + bot +
+               ", masteries=" + masteries +
+               ", runes=" + runes +
+               ", summonerId=" + summonerId +
+               '}';
     }
 }

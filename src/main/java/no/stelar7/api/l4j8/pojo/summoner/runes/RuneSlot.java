@@ -3,54 +3,16 @@ package no.stelar7.api.l4j8.pojo.summoner.runes;
 public class RuneSlot
 {
     
-    private Integer runeId;
-    private Integer runeSlotId;
+    private int runeId;
+    private int runeSlotId;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final RuneSlot other = (RuneSlot) obj;
-        if (this.runeId == null)
-        {
-            if (other.runeId != null)
-            {
-                return false;
-            }
-        } else if (!this.runeId.equals(other.runeId))
-        {
-            return false;
-        }
-        if (this.runeSlotId == null)
-        {
-            if (other.runeSlotId != null)
-            {
-                return false;
-            }
-        } else if (!this.runeSlotId.equals(other.runeSlotId))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * SpectatorRune ID associated with the rune slot. For static information correlating to rune IDs, please refer to the LoL Static Data API.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getRuneId()
+    public int getRuneId()
     {
         return this.runeId;
     }
@@ -58,20 +20,39 @@ public class RuneSlot
     /**
      * The SpectatorRune slot ID.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getRuneSlotId()
+    public int getRuneSlotId()
     {
         return this.runeSlotId;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        RuneSlot runeSlot = (RuneSlot) o;
+        
+        if (runeId != runeSlot.runeId)
+        {
+            return false;
+        }
+        return runeSlotId == runeSlot.runeSlotId;
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.runeId == null) ? 0 : this.runeId.hashCode());
-        result = (prime * result) + ((this.runeSlotId == null) ? 0 : this.runeSlotId.hashCode());
+        int result = runeId;
+        result = 31 * result + runeSlotId;
         return result;
     }
     

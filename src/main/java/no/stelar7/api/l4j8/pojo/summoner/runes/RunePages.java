@@ -5,48 +5,8 @@ import java.util.*;
 public class RunePages
 {
     private List<RunePage> pages;
-    private Long           summonerId;
+    private long           summonerId;
     
-    
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final RunePages other = (RunePages) obj;
-        if (this.pages == null)
-        {
-            if (other.pages != null)
-            {
-                return false;
-            }
-        } else if (!this.pages.equals(other.pages))
-        {
-            return false;
-        }
-        if (this.summonerId == null)
-        {
-            if (other.summonerId != null)
-            {
-                return false;
-            }
-        } else if (!this.summonerId.equals(other.summonerId))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Collection of rune pages associated with the summoner.
@@ -63,18 +23,37 @@ public class RunePages
      *
      * @return the summoner id
      */
-    public Long getSummonerId()
+    public long getSummonerId()
     {
         return this.summonerId;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        RunePages runePages = (RunePages) o;
+        
+        if (summonerId != runePages.summonerId)
+        {
+            return false;
+        }
+        return (pages != null) ? pages.equals(runePages.pages) : (runePages.pages == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.pages == null) ? 0 : this.pages.hashCode());
-        result = (prime * result) + ((this.summonerId == null) ? 0 : this.summonerId.hashCode());
+        int result = pages != null ? pages.hashCode() : 0;
+        result = 31 * result + (int) (summonerId ^ (summonerId >>> 32));
         return result;
     }
     

@@ -4,12 +4,12 @@ import java.util.Map;
 
 public class EsportsLeague
 {
-    private Integer             id;
+    private int                 id;
     private String              slug;
     private String              name;
     private String              guid;
     private Object              region;
-    private Integer             drupalId;
+    private int                 drupalId;
     private String              logoUrl;
     private String              createdAt;
     private String              updatedAt;
@@ -95,7 +95,11 @@ public class EsportsLeague
         
         EsportsLeague that = (EsportsLeague) o;
         
-        if ((id != null) ? !id.equals(that.id) : (that.id != null))
+        if (id != that.id)
+        {
+            return false;
+        }
+        if (drupalId != that.drupalId)
         {
             return false;
         }
@@ -112,10 +116,6 @@ public class EsportsLeague
             return false;
         }
         if ((region != null) ? !region.equals(that.region) : (that.region != null))
-        {
-            return false;
-        }
-        if ((drupalId != null) ? !drupalId.equals(that.drupalId) : (that.drupalId != null))
         {
             return false;
         }
@@ -141,12 +141,12 @@ public class EsportsLeague
     @Override
     public int hashCode()
     {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id;
         result = 31 * result + (slug != null ? slug.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (guid != null ? guid.hashCode() : 0);
         result = 31 * result + (region != null ? region.hashCode() : 0);
-        result = 31 * result + (drupalId != null ? drupalId.hashCode() : 0);
+        result = 31 * result + drupalId;
         result = 31 * result + (logoUrl != null ? logoUrl.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
@@ -154,7 +154,6 @@ public class EsportsLeague
         result = 31 * result + (names != null ? names.hashCode() : 0);
         return result;
     }
-    
     
     @Override
     public String toString()

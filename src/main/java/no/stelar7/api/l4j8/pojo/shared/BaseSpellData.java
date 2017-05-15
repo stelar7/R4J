@@ -17,7 +17,7 @@ public class BaseSpellData
     private Image              image;
     private String             key;
     private LevelTip           leveltip;
-    private Integer            maxrank;
+    private int                maxrank;
     private String             name;
     private Object             range;
     private String             rangeBurn;
@@ -142,7 +142,7 @@ public class BaseSpellData
      *
      * @return the maxrank
      */
-    public Integer getMaxrank()
+    public int getMaxrank()
     {
         return this.maxrank;
     }
@@ -169,6 +169,7 @@ public class BaseSpellData
     
     /**
      * Only valid for some spells
+     *
      * @return the range
      */
     public String getRangeAsString()

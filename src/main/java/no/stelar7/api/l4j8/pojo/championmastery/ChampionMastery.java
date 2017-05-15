@@ -6,15 +6,15 @@ import java.time.*;
 
 public class ChampionMastery
 {
-    private Integer      championLevel;
-    private Boolean      chestGranted;
-    private Integer      championPoints;
-    private Long         championPointsSinceLastLevel;
-    private Long         playerId;
-    private Long         championPointsUntilNextLevel;
-    private Integer      tokensEarned;
+    private int          championLevel;
+    private boolean      chestGranted;
+    private int          championPoints;
+    private long         championPointsSinceLastLevel;
+    private long         playerId;
+    private long         championPointsUntilNextLevel;
+    private int          tokensEarned;
     private ChampionType championId;
-    private Long         lastPlayTime;
+    private long         lastPlayTime;
     
     
     /**
@@ -32,7 +32,7 @@ public class ChampionMastery
      *
      * @return the champion level
      */
-    public Integer getChampionLevel()
+    public int getChampionLevel()
     {
         return this.championLevel;
     }
@@ -42,7 +42,7 @@ public class ChampionMastery
      *
      * @return the champion points
      */
-    public Integer getChampionPoints()
+    public int getChampionPoints()
     {
         return this.championPoints;
     }
@@ -52,7 +52,7 @@ public class ChampionMastery
      *
      * @return the champion points since last level
      */
-    public Long getChampionPointsSinceLastLevel()
+    public long getChampionPointsSinceLastLevel()
     {
         return this.championPointsSinceLastLevel;
     }
@@ -62,7 +62,7 @@ public class ChampionMastery
      *
      * @return the champion points until next level
      */
-    public Long getChampionPointsUntilNextLevel()
+    public long getChampionPointsUntilNextLevel()
     {
         return this.championPointsUntilNextLevel;
     }
@@ -72,7 +72,7 @@ public class ChampionMastery
      *
      * @return the chest granted
      */
-    public Boolean getChestGranted()
+    public boolean getChestGranted()
     {
         return this.chestGranted;
     }
@@ -82,7 +82,7 @@ public class ChampionMastery
      *
      * @return the last play time
      */
-    public Long getLastPlayTime()
+    public long getLastPlayTime()
     {
         return this.lastPlayTime;
     }
@@ -102,7 +102,7 @@ public class ChampionMastery
      *
      * @return the player id
      */
-    public Long getSummonerId()
+    public long getSummonerId()
     {
         return this.playerId;
     }
@@ -112,7 +112,7 @@ public class ChampionMastery
      *
      * @return the token count
      */
-    public Integer getTokensEarned()
+    public int getTokensEarned()
     {
         return tokensEarned;
     }
@@ -131,56 +131,55 @@ public class ChampionMastery
         
         ChampionMastery that = (ChampionMastery) o;
         
-        if ((championLevel != null) ? !championLevel.equals(that.championLevel) : (that.championLevel != null))
+        if (championLevel != that.championLevel)
         {
             return false;
         }
-        if ((chestGranted != null) ? !chestGranted.equals(that.chestGranted) : (that.chestGranted != null))
+        if (chestGranted != that.chestGranted)
         {
             return false;
         }
-        if ((championPoints != null) ? !championPoints.equals(that.championPoints) : (that.championPoints != null))
+        if (championPoints != that.championPoints)
         {
             return false;
         }
-        if ((championPointsSinceLastLevel != null) ? !championPointsSinceLastLevel.equals(that.championPointsSinceLastLevel) : (that.championPointsSinceLastLevel != null))
+        if (championPointsSinceLastLevel != that.championPointsSinceLastLevel)
         {
             return false;
         }
-        if ((playerId != null) ? !playerId.equals(that.playerId) : (that.playerId != null))
+        if (playerId != that.playerId)
         {
             return false;
         }
-        if ((championPointsUntilNextLevel != null) ? !championPointsUntilNextLevel.equals(that.championPointsUntilNextLevel) : (that.championPointsUntilNextLevel != null))
+        if (championPointsUntilNextLevel != that.championPointsUntilNextLevel)
         {
             return false;
         }
-        if ((tokensEarned != null) ? !tokensEarned.equals(that.tokensEarned) : (that.tokensEarned != null))
+        if (tokensEarned != that.tokensEarned)
         {
             return false;
         }
-        if ((championId != null) ? !championId.equals(that.championId) : (that.championId != null))
+        if (lastPlayTime != that.lastPlayTime)
         {
             return false;
         }
-        return (lastPlayTime != null) ? lastPlayTime.equals(that.lastPlayTime) : (that.lastPlayTime == null);
+        return championId == that.championId;
     }
     
     @Override
     public int hashCode()
     {
-        int result = championLevel != null ? championLevel.hashCode() : 0;
-        result = 31 * result + (chestGranted != null ? chestGranted.hashCode() : 0);
-        result = 31 * result + (championPoints != null ? championPoints.hashCode() : 0);
-        result = 31 * result + (championPointsSinceLastLevel != null ? championPointsSinceLastLevel.hashCode() : 0);
-        result = 31 * result + (playerId != null ? playerId.hashCode() : 0);
-        result = 31 * result + (championPointsUntilNextLevel != null ? championPointsUntilNextLevel.hashCode() : 0);
-        result = 31 * result + (tokensEarned != null ? tokensEarned.hashCode() : 0);
+        int result = championLevel;
+        result = 31 * result + (chestGranted ? 1 : 0);
+        result = 31 * result + championPoints;
+        result = 31 * result + (int) (championPointsSinceLastLevel ^ (championPointsSinceLastLevel >>> 32));
+        result = 31 * result + (int) (playerId ^ (playerId >>> 32));
+        result = 31 * result + (int) (championPointsUntilNextLevel ^ (championPointsUntilNextLevel >>> 32));
+        result = 31 * result + tokensEarned;
         result = 31 * result + (championId != null ? championId.hashCode() : 0);
-        result = 31 * result + (lastPlayTime != null ? lastPlayTime.hashCode() : 0);
+        result = 31 * result + (int) (lastPlayTime ^ (lastPlayTime >>> 32));
         return result;
     }
-    
     
     @Override
     public String toString()

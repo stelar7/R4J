@@ -6,28 +6,28 @@ import java.util.List;
 
 public class MatchEvent
 {
-    private Integer        afterId;
-    private Integer        beforeId;
+    private int            afterId;
+    private int            beforeId;
     private AscencionType  ascendedType;
     private List<Integer>  assistingParticipantIds;
     private BuildingType   buildingType;
-    private Integer        creatorId;
+    private int            creatorId;
     private EventType      type;
     private EventType      eventType;
-    private Integer        itemId;
-    private Integer        killerId;
+    private int            itemId;
+    private int            killerId;
     private LaneType       laneType;
     private LevelUpType    levelUpType;
     private MonsterType    monsterType;
     private MonsterSubType monsterSubType;
-    private Integer        participantId;
+    private int            participantId;
     private PointType      pointCaptured;
     private MatchPosition  position;
-    private Integer        skillSlot;
+    private int            skillSlot;
     private TeamType       teamId;
-    private Long           timestamp;
+    private long           timestamp;
     private TowerType      towerType;
-    private Integer        victimId;
+    private int            victimId;
     private WardType       wardType;
     
     
@@ -44,7 +44,7 @@ public class MatchEvent
     /**
      * The assisting participant IDs of the event. Only present if relevant.
      *
-     * @return {@code List<Integer>}
+     * @return {@code List<int>}
      */
     public List<Integer> getAssistingParticipantIds()
     {
@@ -65,9 +65,9 @@ public class MatchEvent
     /**
      * The creator ID of the event. Only present if relevant.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getCreatorId()
+    public int getCreatorId()
     {
         return this.creatorId;
     }
@@ -86,9 +86,9 @@ public class MatchEvent
     /**
      * The ending item ID of the event. Only present if relevant.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getItemAfter()
+    public int getItemAfter()
     {
         return this.afterId;
     }
@@ -96,9 +96,9 @@ public class MatchEvent
     /**
      * The starting item ID of the event. Only present if relevant.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getItemBefore()
+    public int getItemBefore()
     {
         return this.beforeId;
     }
@@ -106,9 +106,9 @@ public class MatchEvent
     /**
      * The item ID of the event. Only present if relevant.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getItemId()
+    public int getItemId()
     {
         return this.itemId;
     }
@@ -116,9 +116,9 @@ public class MatchEvent
     /**
      * The killer ID of the event. Only present if relevant. Killer ID 0 indicates a minion.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getKillerId()
+    public int getKillerId()
     {
         return this.killerId;
     }
@@ -156,9 +156,9 @@ public class MatchEvent
     /**
      * The participant ID of the event. Only present if relevant.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getParticipantId()
+    public int getParticipantId()
     {
         return this.participantId;
     }
@@ -186,9 +186,9 @@ public class MatchEvent
     /**
      * The skill slot of the event. Only present if relevant.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getSkillSlot()
+    public int getSkillSlot()
     {
         return this.skillSlot;
     }
@@ -196,7 +196,7 @@ public class MatchEvent
     /**
      * The team ID of the event. Only present if relevant.
      *
-     * @return Integer
+     * @return int
      */
     public TeamType getTeam()
     {
@@ -206,9 +206,9 @@ public class MatchEvent
     /**
      * Represents how many milliseconds into the game the event occurred.
      *
-     * @return Long
+     * @return long
      */
-    public Long getTimestamp()
+    public long getTimestamp()
     {
         return this.timestamp;
     }
@@ -226,9 +226,9 @@ public class MatchEvent
     /**
      * The victim ID of the event. Only present if relevant.
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getVictimId()
+    public int getVictimId()
     {
         return this.victimId;
     }
@@ -257,11 +257,39 @@ public class MatchEvent
         
         MatchEvent that = (MatchEvent) o;
         
-        if ((afterId != null) ? !afterId.equals(that.afterId) : (that.afterId != null))
+        if (afterId != that.afterId)
         {
             return false;
         }
-        if ((beforeId != null) ? !beforeId.equals(that.beforeId) : (that.beforeId != null))
+        if (beforeId != that.beforeId)
+        {
+            return false;
+        }
+        if (creatorId != that.creatorId)
+        {
+            return false;
+        }
+        if (itemId != that.itemId)
+        {
+            return false;
+        }
+        if (killerId != that.killerId)
+        {
+            return false;
+        }
+        if (participantId != that.participantId)
+        {
+            return false;
+        }
+        if (skillSlot != that.skillSlot)
+        {
+            return false;
+        }
+        if (timestamp != that.timestamp)
+        {
+            return false;
+        }
+        if (victimId != that.victimId)
         {
             return false;
         }
@@ -277,19 +305,11 @@ public class MatchEvent
         {
             return false;
         }
-        if ((creatorId != null) ? !creatorId.equals(that.creatorId) : (that.creatorId != null))
-        {
-            return false;
-        }
         if (type != that.type)
         {
             return false;
         }
-        if ((itemId != null) ? !itemId.equals(that.itemId) : (that.itemId != null))
-        {
-            return false;
-        }
-        if ((killerId != null) ? !killerId.equals(that.killerId) : (that.killerId != null))
+        if (eventType != that.eventType)
         {
             return false;
         }
@@ -309,10 +329,6 @@ public class MatchEvent
         {
             return false;
         }
-        if ((participantId != null) ? !participantId.equals(that.participantId) : (that.participantId != null))
-        {
-            return false;
-        }
         if (pointCaptured != that.pointCaptured)
         {
             return false;
@@ -321,23 +337,11 @@ public class MatchEvent
         {
             return false;
         }
-        if ((skillSlot != null) ? !skillSlot.equals(that.skillSlot) : (that.skillSlot != null))
-        {
-            return false;
-        }
         if (teamId != that.teamId)
         {
             return false;
         }
-        if ((timestamp != null) ? !timestamp.equals(that.timestamp) : (that.timestamp != null))
-        {
-            return false;
-        }
         if (towerType != that.towerType)
-        {
-            return false;
-        }
-        if ((victimId != null) ? !victimId.equals(that.victimId) : (that.victimId != null))
         {
             return false;
         }
@@ -347,27 +351,28 @@ public class MatchEvent
     @Override
     public int hashCode()
     {
-        int result = afterId != null ? afterId.hashCode() : 0;
-        result = 31 * result + (beforeId != null ? beforeId.hashCode() : 0);
+        int result = afterId;
+        result = 31 * result + beforeId;
         result = 31 * result + (ascendedType != null ? ascendedType.hashCode() : 0);
         result = 31 * result + (assistingParticipantIds != null ? assistingParticipantIds.hashCode() : 0);
         result = 31 * result + (buildingType != null ? buildingType.hashCode() : 0);
-        result = 31 * result + (creatorId != null ? creatorId.hashCode() : 0);
+        result = 31 * result + creatorId;
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (itemId != null ? itemId.hashCode() : 0);
-        result = 31 * result + (killerId != null ? killerId.hashCode() : 0);
+        result = 31 * result + (eventType != null ? eventType.hashCode() : 0);
+        result = 31 * result + itemId;
+        result = 31 * result + killerId;
         result = 31 * result + (laneType != null ? laneType.hashCode() : 0);
         result = 31 * result + (levelUpType != null ? levelUpType.hashCode() : 0);
         result = 31 * result + (monsterType != null ? monsterType.hashCode() : 0);
         result = 31 * result + (monsterSubType != null ? monsterSubType.hashCode() : 0);
-        result = 31 * result + (participantId != null ? participantId.hashCode() : 0);
+        result = 31 * result + participantId;
         result = 31 * result + (pointCaptured != null ? pointCaptured.hashCode() : 0);
         result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + (skillSlot != null ? skillSlot.hashCode() : 0);
+        result = 31 * result + skillSlot;
         result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
-        result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
+        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
         result = 31 * result + (towerType != null ? towerType.hashCode() : 0);
-        result = 31 * result + (victimId != null ? victimId.hashCode() : 0);
+        result = 31 * result + victimId;
         result = 31 * result + (wardType != null ? wardType.hashCode() : 0);
         return result;
     }

@@ -6,18 +6,18 @@ public class LeaguePosition
 {
     private String        rank;
     private GameQueueType queueType;
-    private Boolean       hotStreak;
+    private boolean       hotStreak;
     private MiniSeries    miniSeries;
-    private Integer       wins;
-    private Boolean       veteran;
-    private Integer       losses;
+    private int           wins;
+    private boolean       veteran;
+    private int           losses;
     private String        playerOrTeamId;
     private String        leagueName;
     private String        playerOrTeamName;
-    private Boolean       inactive;
-    private Boolean       freshBlood;
+    private boolean       inactive;
+    private boolean       freshBlood;
     private String        tier;
-    private Integer       leaguePoints;
+    private int           leaguePoints;
     
     public String getRank()
     {
@@ -29,7 +29,7 @@ public class LeaguePosition
         return queueType;
     }
     
-    public Boolean isHotStreak()
+    public boolean isHotStreak()
     {
         return hotStreak;
     }
@@ -39,22 +39,22 @@ public class LeaguePosition
         return miniSeries;
     }
     
-    public Boolean isInPromos()
+    public boolean isInPromos()
     {
         return miniSeries != null;
     }
     
-    public Integer getWins()
+    public int getWins()
     {
         return wins;
     }
     
-    public Boolean isVeteran()
+    public boolean isVeteran()
     {
         return veteran;
     }
     
-    public Integer getLosses()
+    public int getLosses()
     {
         return losses;
     }
@@ -74,12 +74,12 @@ public class LeaguePosition
         return playerOrTeamName;
     }
     
-    public Boolean isInactive()
+    public boolean isInactive()
     {
         return inactive;
     }
     
-    public Boolean isFreshBlood()
+    public boolean isFreshBlood()
     {
         return freshBlood;
     }
@@ -94,7 +94,7 @@ public class LeaguePosition
         return TierDivisionType.getFromCodes(tier, rank);
     }
     
-    public Integer getLeaguePoints()
+    public int getLeaguePoints()
     {
         return leaguePoints;
     }
@@ -113,6 +113,34 @@ public class LeaguePosition
         
         LeaguePosition that = (LeaguePosition) o;
         
+        if (hotStreak != that.hotStreak)
+        {
+            return false;
+        }
+        if (wins != that.wins)
+        {
+            return false;
+        }
+        if (veteran != that.veteran)
+        {
+            return false;
+        }
+        if (losses != that.losses)
+        {
+            return false;
+        }
+        if (inactive != that.inactive)
+        {
+            return false;
+        }
+        if (freshBlood != that.freshBlood)
+        {
+            return false;
+        }
+        if (leaguePoints != that.leaguePoints)
+        {
+            return false;
+        }
         if ((rank != null) ? !rank.equals(that.rank) : (that.rank != null))
         {
             return false;
@@ -121,23 +149,7 @@ public class LeaguePosition
         {
             return false;
         }
-        if ((hotStreak != null) ? !hotStreak.equals(that.hotStreak) : (that.hotStreak != null))
-        {
-            return false;
-        }
         if ((miniSeries != null) ? !miniSeries.equals(that.miniSeries) : (that.miniSeries != null))
-        {
-            return false;
-        }
-        if ((wins != null) ? !wins.equals(that.wins) : (that.wins != null))
-        {
-            return false;
-        }
-        if ((veteran != null) ? !veteran.equals(that.veteran) : (that.veteran != null))
-        {
-            return false;
-        }
-        if ((losses != null) ? !losses.equals(that.losses) : (that.losses != null))
         {
             return false;
         }
@@ -153,19 +165,7 @@ public class LeaguePosition
         {
             return false;
         }
-        if ((inactive != null) ? !inactive.equals(that.inactive) : (that.inactive != null))
-        {
-            return false;
-        }
-        if ((freshBlood != null) ? !freshBlood.equals(that.freshBlood) : (that.freshBlood != null))
-        {
-            return false;
-        }
-        if ((tier != null) ? !tier.equals(that.tier) : (that.tier != null))
-        {
-            return false;
-        }
-        return (leaguePoints != null) ? leaguePoints.equals(that.leaguePoints) : (that.leaguePoints == null);
+        return (tier != null) ? tier.equals(that.tier) : (that.tier == null);
     }
     
     @Override
@@ -173,18 +173,18 @@ public class LeaguePosition
     {
         int result = rank != null ? rank.hashCode() : 0;
         result = 31 * result + (queueType != null ? queueType.hashCode() : 0);
-        result = 31 * result + (hotStreak != null ? hotStreak.hashCode() : 0);
+        result = 31 * result + (hotStreak ? 1 : 0);
         result = 31 * result + (miniSeries != null ? miniSeries.hashCode() : 0);
-        result = 31 * result + (wins != null ? wins.hashCode() : 0);
-        result = 31 * result + (veteran != null ? veteran.hashCode() : 0);
-        result = 31 * result + (losses != null ? losses.hashCode() : 0);
+        result = 31 * result + wins;
+        result = 31 * result + (veteran ? 1 : 0);
+        result = 31 * result + losses;
         result = 31 * result + (playerOrTeamId != null ? playerOrTeamId.hashCode() : 0);
         result = 31 * result + (leagueName != null ? leagueName.hashCode() : 0);
         result = 31 * result + (playerOrTeamName != null ? playerOrTeamName.hashCode() : 0);
-        result = 31 * result + (inactive != null ? inactive.hashCode() : 0);
-        result = 31 * result + (freshBlood != null ? freshBlood.hashCode() : 0);
+        result = 31 * result + (inactive ? 1 : 0);
+        result = 31 * result + (freshBlood ? 1 : 0);
         result = 31 * result + (tier != null ? tier.hashCode() : 0);
-        result = 31 * result + (leaguePoints != null ? leaguePoints.hashCode() : 0);
+        result = 31 * result + leaguePoints;
         return result;
     }
     

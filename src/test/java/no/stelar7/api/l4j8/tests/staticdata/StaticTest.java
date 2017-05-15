@@ -41,7 +41,7 @@ public class StaticTest
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL);
         
         StaticChampion list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, null, null);
-        Assert.assertTrue("ok?", list.getId().equals(Constants.TEST_CHAMPION_IDS[0]));
+        Assert.assertTrue("ok?", list.getId() == Constants.TEST_CHAMPION_IDS[0]);
     }
     
     @Test
@@ -97,8 +97,8 @@ public class StaticTest
     {
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
         
-        Map<Integer, StaticMastery>        data  = api.getMasteries(Platform.EUW1, dataFlags, null, null);
-        List<MasteryPage>                  pages = SummonerAPI.getInstance().getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
+        Map<Integer, StaticMastery> data  = api.getMasteries(Platform.EUW1, dataFlags, null, null);
+        List<MasteryPage>           pages = SummonerAPI.getInstance().getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
         
         for (MasteryPage page : pages)
         {

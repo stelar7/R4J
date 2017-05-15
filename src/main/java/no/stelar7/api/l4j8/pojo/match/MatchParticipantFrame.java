@@ -3,142 +3,24 @@ package no.stelar7.api.l4j8.pojo.match;
 public class MatchParticipantFrame
 {
     
-    private Integer       totalGold;
-    private Integer       teamScore;
-    private Integer       participantId;
-    private Integer       level;
-    private Integer       currentGold;
-    private Integer       minionsKilled;
-    private Integer       dominionScore;
+    private int           totalGold;
+    private int           teamScore;
+    private int           participantId;
+    private int           level;
+    private int           currentGold;
+    private int           minionsKilled;
+    private int           dominionScore;
     private MatchPosition position;
-    private Integer       xp;
-    private Integer       jungleMinionsKilled;
+    private int           xp;
+    private int           jungleMinionsKilled;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MatchParticipantFrame other = (MatchParticipantFrame) obj;
-        if (this.currentGold == null)
-        {
-            if (other.currentGold != null)
-            {
-                return false;
-            }
-        } else if (!this.currentGold.equals(other.currentGold))
-        {
-            return false;
-        }
-        if (this.dominionScore == null)
-        {
-            if (other.dominionScore != null)
-            {
-                return false;
-            }
-        } else if (!this.dominionScore.equals(other.dominionScore))
-        {
-            return false;
-        }
-        if (this.jungleMinionsKilled == null)
-        {
-            if (other.jungleMinionsKilled != null)
-            {
-                return false;
-            }
-        } else if (!this.jungleMinionsKilled.equals(other.jungleMinionsKilled))
-        {
-            return false;
-        }
-        if (this.level == null)
-        {
-            if (other.level != null)
-            {
-                return false;
-            }
-        } else if (!this.level.equals(other.level))
-        {
-            return false;
-        }
-        if (this.minionsKilled == null)
-        {
-            if (other.minionsKilled != null)
-            {
-                return false;
-            }
-        } else if (!this.minionsKilled.equals(other.minionsKilled))
-        {
-            return false;
-        }
-        if (this.participantId == null)
-        {
-            if (other.participantId != null)
-            {
-                return false;
-            }
-        } else if (!this.participantId.equals(other.participantId))
-        {
-            return false;
-        }
-        if (this.position == null)
-        {
-            if (other.position != null)
-            {
-                return false;
-            }
-        } else if (!this.position.equals(other.position))
-        {
-            return false;
-        }
-        if (this.teamScore == null)
-        {
-            if (other.teamScore != null)
-            {
-                return false;
-            }
-        } else if (!this.teamScore.equals(other.teamScore))
-        {
-            return false;
-        }
-        if (this.totalGold == null)
-        {
-            if (other.totalGold != null)
-            {
-                return false;
-            }
-        } else if (!this.totalGold.equals(other.totalGold))
-        {
-            return false;
-        }
-        if (this.xp == null)
-        {
-            if (other.xp != null)
-            {
-                return false;
-            }
-        } else if (!this.xp.equals(other.xp))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Participant's current gold
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getCurrentGold()
+    public int getCurrentGold()
     {
         return this.currentGold;
     }
@@ -146,9 +28,9 @@ public class MatchParticipantFrame
     /**
      * Dominion score of the participant
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getDominionScore()
+    public int getDominionScore()
     {
         return this.dominionScore;
     }
@@ -156,9 +38,9 @@ public class MatchParticipantFrame
     /**
      * Number of jungle minions killed by participant
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getJungleMinionsKilled()
+    public int getJungleMinionsKilled()
     {
         return this.jungleMinionsKilled;
     }
@@ -166,9 +48,9 @@ public class MatchParticipantFrame
     /**
      * Participant's current level
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getLevel()
+    public int getLevel()
     {
         return this.level;
     }
@@ -176,9 +58,9 @@ public class MatchParticipantFrame
     /**
      * Number of minions killed by participant
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getMinionsKilled()
+    public int getMinionsKilled()
     {
         return this.minionsKilled;
     }
@@ -186,9 +68,9 @@ public class MatchParticipantFrame
     /**
      * Participant ID
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getParticipantId()
+    public int getParticipantId()
     {
         return this.participantId;
     }
@@ -196,7 +78,7 @@ public class MatchParticipantFrame
     /**
      * Participant's position
      *
-     * @return Integer
+     * @return int
      */
     public MatchPosition getPosition()
     {
@@ -206,9 +88,9 @@ public class MatchParticipantFrame
     /**
      * Team score of the participant
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getTeamScore()
+    public int getTeamScore()
     {
         return this.teamScore;
     }
@@ -216,9 +98,9 @@ public class MatchParticipantFrame
     /**
      * Participant's total gold
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getTotalGold()
+    public int getTotalGold()
     {
         return this.totalGold;
     }
@@ -226,28 +108,79 @@ public class MatchParticipantFrame
     /**
      * Experience earned by participant
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getXp()
+    public int getXp()
     {
         return this.xp;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MatchParticipantFrame that = (MatchParticipantFrame) o;
+        
+        if (totalGold != that.totalGold)
+        {
+            return false;
+        }
+        if (teamScore != that.teamScore)
+        {
+            return false;
+        }
+        if (participantId != that.participantId)
+        {
+            return false;
+        }
+        if (level != that.level)
+        {
+            return false;
+        }
+        if (currentGold != that.currentGold)
+        {
+            return false;
+        }
+        if (minionsKilled != that.minionsKilled)
+        {
+            return false;
+        }
+        if (dominionScore != that.dominionScore)
+        {
+            return false;
+        }
+        if (xp != that.xp)
+        {
+            return false;
+        }
+        if (jungleMinionsKilled != that.jungleMinionsKilled)
+        {
+            return false;
+        }
+        return (position != null) ? position.equals(that.position) : (that.position == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.currentGold == null) ? 0 : this.currentGold.hashCode());
-        result = (prime * result) + ((this.dominionScore == null) ? 0 : this.dominionScore.hashCode());
-        result = (prime * result) + ((this.jungleMinionsKilled == null) ? 0 : this.jungleMinionsKilled.hashCode());
-        result = (prime * result) + ((this.level == null) ? 0 : this.level.hashCode());
-        result = (prime * result) + ((this.minionsKilled == null) ? 0 : this.minionsKilled.hashCode());
-        result = (prime * result) + ((this.participantId == null) ? 0 : this.participantId.hashCode());
-        result = (prime * result) + ((this.position == null) ? 0 : this.position.hashCode());
-        result = (prime * result) + ((this.teamScore == null) ? 0 : this.teamScore.hashCode());
-        result = (prime * result) + ((this.totalGold == null) ? 0 : this.totalGold.hashCode());
-        result = (prime * result) + ((this.xp == null) ? 0 : this.xp.hashCode());
+        int result = totalGold;
+        result = 31 * result + teamScore;
+        result = 31 * result + participantId;
+        result = 31 * result + level;
+        result = 31 * result + currentGold;
+        result = 31 * result + minionsKilled;
+        result = 31 * result + dominionScore;
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + xp;
+        result = 31 * result + jungleMinionsKilled;
         return result;
     }
     

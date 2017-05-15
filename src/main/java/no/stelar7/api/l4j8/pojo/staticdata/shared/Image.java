@@ -2,103 +2,14 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 public class Image
 {
-    private String  full;
-    private String  group;
-    private String  sprite;
-    private Integer h;
-    private Integer w;
-    private Integer x;
-    private Integer y;
+    private String full;
+    private String group;
+    private String sprite;
+    private int    h;
+    private int    w;
+    private int    x;
+    private int    y;
     
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Image other = (Image) obj;
-        if (this.full == null)
-        {
-            if (other.full != null)
-            {
-                return false;
-            }
-        } else if (!this.full.equals(other.full))
-        {
-            return false;
-        }
-        if (this.group == null)
-        {
-            if (other.group != null)
-            {
-                return false;
-            }
-        } else if (!this.group.equals(other.group))
-        {
-            return false;
-        }
-        if (this.h == null)
-        {
-            if (other.h != null)
-            {
-                return false;
-            }
-        } else if (!this.h.equals(other.h))
-        {
-            return false;
-        }
-        if (this.sprite == null)
-        {
-            if (other.sprite != null)
-            {
-                return false;
-            }
-        } else if (!this.sprite.equals(other.sprite))
-        {
-            return false;
-        }
-        if (this.w == null)
-        {
-            if (other.w != null)
-            {
-                return false;
-            }
-        } else if (!this.w.equals(other.w))
-        {
-            return false;
-        }
-        if (this.x == null)
-        {
-            if (other.x != null)
-            {
-                return false;
-            }
-        } else if (!this.x.equals(other.x))
-        {
-            return false;
-        }
-        if (this.y == null)
-        {
-            if (other.y != null)
-            {
-                return false;
-            }
-        } else if (!this.y.equals(other.y))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the full.
@@ -125,7 +36,7 @@ public class Image
      *
      * @return the h
      */
-    public Integer getH()
+    public int getH()
     {
         return this.h;
     }
@@ -145,7 +56,7 @@ public class Image
      *
      * @return the w
      */
-    public Integer getW()
+    public int getW()
     {
         return this.w;
     }
@@ -155,7 +66,7 @@ public class Image
      *
      * @return the x
      */
-    public Integer getX()
+    public int getX()
     {
         return this.x;
     }
@@ -165,23 +76,62 @@ public class Image
      *
      * @return the y
      */
-    public Integer getY()
+    public int getY()
     {
         return this.y;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Image image = (Image) o;
+        
+        if (h != image.h)
+        {
+            return false;
+        }
+        if (w != image.w)
+        {
+            return false;
+        }
+        if (x != image.x)
+        {
+            return false;
+        }
+        if (y != image.y)
+        {
+            return false;
+        }
+        if ((full != null) ? !full.equals(image.full) : (image.full != null))
+        {
+            return false;
+        }
+        if ((group != null) ? !group.equals(image.group) : (image.group != null))
+        {
+            return false;
+        }
+        return (sprite != null) ? sprite.equals(image.sprite) : (image.sprite == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.full == null) ? 0 : this.full.hashCode());
-        result = (prime * result) + ((this.group == null) ? 0 : this.group.hashCode());
-        result = (prime * result) + ((this.h == null) ? 0 : this.h.hashCode());
-        result = (prime * result) + ((this.sprite == null) ? 0 : this.sprite.hashCode());
-        result = (prime * result) + ((this.w == null) ? 0 : this.w.hashCode());
-        result = (prime * result) + ((this.x == null) ? 0 : this.x.hashCode());
-        result = (prime * result) + ((this.y == null) ? 0 : this.y.hashCode());
+        int result = full != null ? full.hashCode() : 0;
+        result = 31 * result + (group != null ? group.hashCode() : 0);
+        result = 31 * result + (sprite != null ? sprite.hashCode() : 0);
+        result = 31 * result + h;
+        result = 31 * result + w;
+        result = 31 * result + x;
+        result = 31 * result + y;
         return result;
     }
     

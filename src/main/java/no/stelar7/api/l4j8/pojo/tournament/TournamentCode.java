@@ -8,18 +8,18 @@ import java.util.*;
 public class TournamentCode
 {
     private String                  code;
-    private Long                    id;
+    private long                    id;
     private String                  lobbyName;
     private String                  map;
     private String                  metaData;
     private Set<Long>               participants;
     private String                  password;
     private TournamentPickType      pickType;
-    private Integer                 providerId;
+    private int                     providerId;
     private Platform                region;
     private TournamentSpectatorType spectators;
-    private Integer                 teamSize;
-    private Integer                 tournamentId;
+    private int                     teamSize;
+    private int                     tournamentId;
     
     
     /**
@@ -37,7 +37,7 @@ public class TournamentCode
      *
      * @return long
      */
-    public Long getId()
+    public long getId()
     {
         return this.id;
     }
@@ -107,7 +107,7 @@ public class TournamentCode
      *
      * @return int
      */
-    public Integer getProviderId()
+    public int getProviderId()
     {
         return this.providerId;
     }
@@ -137,7 +137,7 @@ public class TournamentCode
      *
      * @return int
      */
-    public Integer getTeamSize()
+    public int getTeamSize()
     {
         return this.teamSize;
     }
@@ -147,179 +147,93 @@ public class TournamentCode
      *
      * @return int
      */
-    public Integer getTournamentId()
+    public int getTournamentId()
     {
         return this.tournamentId;
     }
     
     @Override
-    public int hashCode()
+    public boolean equals(Object o)
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.code == null) ? 0 : this.code.hashCode());
-        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-        result = (prime * result) + ((this.lobbyName == null) ? 0 : this.lobbyName.hashCode());
-        result = (prime * result) + ((this.map == null) ? 0 : this.map.hashCode());
-        result = (prime * result) + ((this.metaData == null) ? 0 : this.metaData.hashCode());
-        result = (prime * result) + ((this.participants == null) ? 0 : this.participants.hashCode());
-        result = (prime * result) + ((this.password == null) ? 0 : this.password.hashCode());
-        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
-        result = (prime * result) + ((this.providerId == null) ? 0 : this.providerId.hashCode());
-        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
-        result = (prime * result) + ((this.spectators == null) ? 0 : this.spectators.hashCode());
-        result = (prime * result) + ((this.teamSize == null) ? 0 : this.teamSize.hashCode());
-        result = (prime * result) + ((this.tournamentId == null) ? 0 : this.tournamentId.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
+        
+        TournamentCode that = (TournamentCode) o;
+        
+        if (id != that.id)
         {
             return false;
         }
-        final TournamentCode other = (TournamentCode) obj;
-        if (this.code == null)
-        {
-            if (other.code != null)
-            {
-                return false;
-            }
-        } else if (!this.code.equals(other.code))
+        if (providerId != that.providerId)
         {
             return false;
         }
-        if (this.id == null)
-        {
-            if (other.id != null)
-            {
-                return false;
-            }
-        } else if (!this.id.equals(other.id))
+        if (teamSize != that.teamSize)
         {
             return false;
         }
-        if (this.lobbyName == null)
-        {
-            if (other.lobbyName != null)
-            {
-                return false;
-            }
-        } else if (!this.lobbyName.equals(other.lobbyName))
+        if (tournamentId != that.tournamentId)
         {
             return false;
         }
-        if (this.map == null)
-        {
-            if (other.map != null)
-            {
-                return false;
-            }
-        } else if (!this.map.equals(other.map))
+        if ((code != null) ? !code.equals(that.code) : (that.code != null))
         {
             return false;
         }
-        if (this.metaData == null)
-        {
-            if (other.metaData != null)
-            {
-                return false;
-            }
-        } else if (!this.metaData.equals(other.metaData))
+        if ((lobbyName != null) ? !lobbyName.equals(that.lobbyName) : (that.lobbyName != null))
         {
             return false;
         }
-        if (this.participants == null)
-        {
-            if (other.participants != null)
-            {
-                return false;
-            }
-        } else if (!this.participants.equals(other.participants))
+        if ((map != null) ? !map.equals(that.map) : (that.map != null))
         {
             return false;
         }
-        if (this.password == null)
-        {
-            if (other.password != null)
-            {
-                return false;
-            }
-        } else if (!this.password.equals(other.password))
+        if ((metaData != null) ? !metaData.equals(that.metaData) : (that.metaData != null))
         {
             return false;
         }
-        if (this.pickType == null)
-        {
-            if (other.pickType != null)
-            {
-                return false;
-            }
-        } else if (!this.pickType.equals(other.pickType))
+        if ((participants != null) ? !participants.equals(that.participants) : (that.participants != null))
         {
             return false;
         }
-        if (this.providerId == null)
-        {
-            if (other.providerId != null)
-            {
-                return false;
-            }
-        } else if (!this.providerId.equals(other.providerId))
+        if ((password != null) ? !password.equals(that.password) : (that.password != null))
         {
             return false;
         }
-        if (this.region == null)
-        {
-            if (other.region != null)
-            {
-                return false;
-            }
-        } else if (!this.region.equals(other.region))
+        if (pickType != that.pickType)
         {
             return false;
         }
-        if (this.spectators == null)
-        {
-            if (other.spectators != null)
-            {
-                return false;
-            }
-        } else if (!this.spectators.equals(other.spectators))
+        if (region != that.region)
         {
             return false;
         }
-        if (this.teamSize == null)
-        {
-            if (other.teamSize != null)
-            {
-                return false;
-            }
-        } else if (!this.teamSize.equals(other.teamSize))
-        {
-            return false;
-        }
-        if (this.tournamentId == null)
-        {
-            if (other.tournamentId != null)
-            {
-                return false;
-            }
-        } else if (!this.tournamentId.equals(other.tournamentId))
-        {
-            return false;
-        }
-        return true;
+        return spectators == that.spectators;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = code != null ? code.hashCode() : 0;
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + (lobbyName != null ? lobbyName.hashCode() : 0);
+        result = 31 * result + (map != null ? map.hashCode() : 0);
+        result = 31 * result + (metaData != null ? metaData.hashCode() : 0);
+        result = 31 * result + (participants != null ? participants.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (pickType != null ? pickType.hashCode() : 0);
+        result = 31 * result + providerId;
+        result = 31 * result + (region != null ? region.hashCode() : 0);
+        result = 31 * result + (spectators != null ? spectators.hashCode() : 0);
+        result = 31 * result + teamSize;
+        result = 31 * result + tournamentId;
+        return result;
     }
     
     @Override

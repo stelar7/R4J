@@ -9,14 +9,14 @@ public class TournamentCodeParameters
     private String                  metadata;
     private TournamentPickType      pickType;
     private TournamentSpectatorType spectatorType;
-    private Integer                 teamSize;
+    private int                     teamSize;
     
     public TournamentCodeParameters()
     {
         // GSON needs an empty constructor to initialize..
     }
     
-    public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final Integer teamSize)
+    public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final int teamSize)
     {
         this.allowedSummonerIds = new SummonerIdParams(updateParams.getAllowedParticipants());
         this.spectatorType = updateParams.getSpectatorType();
@@ -109,107 +109,62 @@ public class TournamentCodeParameters
      *
      * @return int
      */
-    public Integer getTeamSize()
+    public int getTeamSize()
     {
         return this.teamSize;
     }
     
-    public void setTeamSize(final Integer teamSize)
+    public void setTeamSize(final int teamSize)
     {
         this.teamSize = teamSize;
     }
     
     @Override
-    public boolean equals(final Object obj)
+    public boolean equals(Object o)
     {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
+        
+        TournamentCodeParameters that = (TournamentCodeParameters) o;
+        
+        if (teamSize != that.teamSize)
         {
             return false;
         }
-        final TournamentCodeParameters other = (TournamentCodeParameters) obj;
-        if (this.allowedSummonerIds == null)
-        {
-            if (other.allowedSummonerIds != null)
-            {
-                return false;
-            }
-        } else if (!this.allowedSummonerIds.equals(other.allowedSummonerIds))
+        if ((allowedSummonerIds != null) ? !allowedSummonerIds.equals(that.allowedSummonerIds) : (that.allowedSummonerIds != null))
         {
             return false;
         }
-        if (this.mapType == null)
-        {
-            if (other.mapType != null)
-            {
-                return false;
-            }
-        } else if (!this.mapType.equals(other.mapType))
+        if (mapType != that.mapType)
         {
             return false;
         }
-        if (this.metadata == null)
-        {
-            if (other.metadata != null)
-            {
-                return false;
-            }
-        } else if (!this.metadata.equals(other.metadata))
+        if ((metadata != null) ? !metadata.equals(that.metadata) : (that.metadata != null))
         {
             return false;
         }
-        if (this.pickType == null)
-        {
-            if (other.pickType != null)
-            {
-                return false;
-            }
-        } else if (!this.pickType.equals(other.pickType))
+        if (pickType != that.pickType)
         {
             return false;
         }
-        if (this.spectatorType == null)
-        {
-            if (other.spectatorType != null)
-            {
-                return false;
-            }
-        } else if (!this.spectatorType.equals(other.spectatorType))
-        {
-            return false;
-        }
-        if (this.teamSize == null)
-        {
-            if (other.teamSize != null)
-            {
-                return false;
-            }
-        } else if (!this.teamSize.equals(other.teamSize))
-        {
-            return false;
-        }
-        return true;
+        return spectatorType == that.spectatorType;
     }
-    
     
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.allowedSummonerIds == null) ? 0 : this.allowedSummonerIds.hashCode());
-        result = (prime * result) + ((this.mapType == null) ? 0 : this.mapType.hashCode());
-        result = (prime * result) + ((this.metadata == null) ? 0 : this.metadata.hashCode());
-        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
-        result = (prime * result) + ((this.spectatorType == null) ? 0 : this.spectatorType.hashCode());
-        result = (prime * result) + ((this.teamSize == null) ? 0 : this.teamSize.hashCode());
+        int result = allowedSummonerIds != null ? allowedSummonerIds.hashCode() : 0;
+        result = 31 * result + (mapType != null ? mapType.hashCode() : 0);
+        result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
+        result = 31 * result + (pickType != null ? pickType.hashCode() : 0);
+        result = 31 * result + (spectatorType != null ? spectatorType.hashCode() : 0);
+        result = 31 * result + teamSize;
         return result;
     }
     

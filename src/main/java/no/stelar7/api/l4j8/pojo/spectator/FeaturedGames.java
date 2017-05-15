@@ -4,10 +4,10 @@ import java.util.List;
 
 public class FeaturedGames
 {
-    private Long                    clientRefreshInterval;
+    private long                    clientRefreshInterval;
     private List<SpectatorGameInfo> gameList;
     
-    public Long getClientRefreshInterval()
+    public long getClientRefreshInterval()
     {
         return clientRefreshInterval;
     }
@@ -31,7 +31,7 @@ public class FeaturedGames
         
         FeaturedGames that = (FeaturedGames) o;
         
-        if ((clientRefreshInterval != null) ? !clientRefreshInterval.equals(that.clientRefreshInterval) : (that.clientRefreshInterval != null))
+        if (clientRefreshInterval != that.clientRefreshInterval)
         {
             return false;
         }
@@ -41,11 +41,10 @@ public class FeaturedGames
     @Override
     public int hashCode()
     {
-        int result = clientRefreshInterval != null ? clientRefreshInterval.hashCode() : 0;
+        int result = (int) (clientRefreshInterval ^ (clientRefreshInterval >>> 32));
         result = 31 * result + (gameList != null ? gameList.hashCode() : 0);
         return result;
     }
-    
     
     @Override
     public String toString()

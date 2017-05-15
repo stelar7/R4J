@@ -4,78 +4,19 @@ import java.util.*;
 
 public class Incident
 {
-    private Boolean       active;
+    private boolean       active;
     private String        created_at;
-    private Long          id;
+    private long          id;
     private List<Message> updates;
     
     
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Incident other = (Incident) obj;
-        if (this.active == null)
-        {
-            if (other.active != null)
-            {
-                return false;
-            }
-        } else if (!this.active.equals(other.active))
-        {
-            return false;
-        }
-        if (this.created_at == null)
-        {
-            if (other.created_at != null)
-            {
-                return false;
-            }
-        } else if (!this.created_at.equals(other.created_at))
-        {
-            return false;
-        }
-        if (this.id == null)
-        {
-            if (other.id != null)
-            {
-                return false;
-            }
-        } else if (!this.id.equals(other.id))
-        {
-            return false;
-        }
-        if (this.updates == null)
-        {
-            if (other.updates != null)
-            {
-                return false;
-            }
-        } else if (!this.updates.equals(other.updates))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the active.
      *
      * @return the active
      */
-    public Boolean getActive()
+    public boolean getActive()
     {
         return this.active;
     }
@@ -95,7 +36,7 @@ public class Incident
      *
      * @return the id
      */
-    public Long getId()
+    public long getId()
     {
         return this.id;
     }
@@ -111,14 +52,41 @@ public class Incident
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Incident incident = (Incident) o;
+        
+        if (active != incident.active)
+        {
+            return false;
+        }
+        if (id != incident.id)
+        {
+            return false;
+        }
+        if ((created_at != null) ? !created_at.equals(incident.created_at) : (incident.created_at != null))
+        {
+            return false;
+        }
+        return (updates != null) ? updates.equals(incident.updates) : (incident.updates == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.active == null) ? 0 : this.active.hashCode());
-        result = (prime * result) + ((this.created_at == null) ? 0 : this.created_at.hashCode());
-        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-        result = (prime * result) + ((this.updates == null) ? 0 : this.updates.hashCode());
+        int result = (active ? 1 : 0);
+        result = 31 * result + (created_at != null ? created_at.hashCode() : 0);
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + (updates != null ? updates.hashCode() : 0);
         return result;
     }
     

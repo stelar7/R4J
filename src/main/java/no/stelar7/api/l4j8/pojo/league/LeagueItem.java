@@ -3,145 +3,17 @@ package no.stelar7.api.l4j8.pojo.league;
 public class LeagueItem
 {
     private String     rank;
-    private Boolean    hotStreak;
+    private boolean    hotStreak;
     private MiniSeries miniSeries;
-    private Integer    wins;
-    private Boolean    veteran;
-    private Integer    losses;
-    private Long       playerOrTeamId;
+    private int        wins;
+    private boolean    veteran;
+    private int        losses;
+    private long       playerOrTeamId;
     private String     playerOrTeamName;
-    private Boolean    inactive;
-    private Boolean    freshBlood;
-    private Integer    leaguePoints;
+    private boolean    inactive;
+    private boolean    freshBlood;
+    private int        leaguePoints;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final LeagueItem other = (LeagueItem) obj;
-        if (this.rank == null)
-        {
-            if (other.rank != null)
-            {
-                return false;
-            }
-        } else if (!this.rank.equals(other.rank))
-        {
-            return false;
-        }
-        if (this.freshBlood == null)
-        {
-            if (other.freshBlood != null)
-            {
-                return false;
-            }
-        } else if (!this.freshBlood.equals(other.freshBlood))
-        {
-            return false;
-        }
-        if (this.hotStreak == null)
-        {
-            if (other.hotStreak != null)
-            {
-                return false;
-            }
-        } else if (!this.hotStreak.equals(other.hotStreak))
-        {
-            return false;
-        }
-        if (this.inactive == null)
-        {
-            if (other.inactive != null)
-            {
-                return false;
-            }
-        } else if (!this.inactive.equals(other.inactive))
-        {
-            return false;
-        }
-        if (this.veteran == null)
-        {
-            if (other.veteran != null)
-            {
-                return false;
-            }
-        } else if (!this.veteran.equals(other.veteran))
-        {
-            return false;
-        }
-        if (this.leaguePoints == null)
-        {
-            if (other.leaguePoints != null)
-            {
-                return false;
-            }
-        } else if (!this.leaguePoints.equals(other.leaguePoints))
-        {
-            return false;
-        }
-        if (this.losses == null)
-        {
-            if (other.losses != null)
-            {
-                return false;
-            }
-        } else if (!this.losses.equals(other.losses))
-        {
-            return false;
-        }
-        if (this.miniSeries == null)
-        {
-            if (other.miniSeries != null)
-            {
-                return false;
-            }
-        } else if (!this.miniSeries.equals(other.miniSeries))
-        {
-            return false;
-        }
-        if (this.playerOrTeamId == null)
-        {
-            if (other.playerOrTeamId != null)
-            {
-                return false;
-            }
-        } else if (!this.playerOrTeamId.equals(other.playerOrTeamId))
-        {
-            return false;
-        }
-        if (this.playerOrTeamName == null)
-        {
-            if (other.playerOrTeamName != null)
-            {
-                return false;
-            }
-        } else if (!this.playerOrTeamName.equals(other.playerOrTeamName))
-        {
-            return false;
-        }
-        if (this.wins == null)
-        {
-            if (other.wins != null)
-            {
-                return false;
-            }
-        } else if (!this.wins.equals(other.wins))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * The league rank of the participant.
@@ -158,7 +30,7 @@ public class LeagueItem
      *
      * @return the checks if is fresh blood
      */
-    public Boolean getIsFreshBlood()
+    public boolean getIsFreshBlood()
     {
         return this.freshBlood;
     }
@@ -168,7 +40,7 @@ public class LeagueItem
      *
      * @return the checks if is hot streak
      */
-    public Boolean getIsHotStreak()
+    public boolean getIsHotStreak()
     {
         return this.hotStreak;
     }
@@ -178,7 +50,7 @@ public class LeagueItem
      *
      * @return the checks if is inactive
      */
-    public Boolean getIsInactive()
+    public boolean getIsInactive()
     {
         return this.inactive;
     }
@@ -188,7 +60,7 @@ public class LeagueItem
      *
      * @return the checks if is veteran
      */
-    public Boolean getIsVeteran()
+    public boolean getIsVeteran()
     {
         return this.veteran;
     }
@@ -198,7 +70,7 @@ public class LeagueItem
      *
      * @return the league points
      */
-    public Integer getLeaguePoints()
+    public int getLeaguePoints()
     {
         return this.leaguePoints;
     }
@@ -208,7 +80,7 @@ public class LeagueItem
      *
      * @return the losses
      */
-    public Integer getLosses()
+    public int getLosses()
     {
         return this.losses;
     }
@@ -223,7 +95,7 @@ public class LeagueItem
         return this.miniSeries;
     }
     
-    public Boolean isInPromos()
+    public boolean isInPromos()
     {
         return miniSeries != null;
     }
@@ -233,7 +105,7 @@ public class LeagueItem
      *
      * @return the player or team id
      */
-    public Long getSummonerId()
+    public long getSummonerId()
     {
         return this.playerOrTeamId;
     }
@@ -253,27 +125,82 @@ public class LeagueItem
      *
      * @return the wins
      */
-    public Integer getWins()
+    public int getWins()
     {
         return this.wins;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        LeagueItem that = (LeagueItem) o;
+        
+        if (hotStreak != that.hotStreak)
+        {
+            return false;
+        }
+        if (wins != that.wins)
+        {
+            return false;
+        }
+        if (veteran != that.veteran)
+        {
+            return false;
+        }
+        if (losses != that.losses)
+        {
+            return false;
+        }
+        if (playerOrTeamId != that.playerOrTeamId)
+        {
+            return false;
+        }
+        if (inactive != that.inactive)
+        {
+            return false;
+        }
+        if (freshBlood != that.freshBlood)
+        {
+            return false;
+        }
+        if (leaguePoints != that.leaguePoints)
+        {
+            return false;
+        }
+        if ((rank != null) ? !rank.equals(that.rank) : (that.rank != null))
+        {
+            return false;
+        }
+        if ((miniSeries != null) ? !miniSeries.equals(that.miniSeries) : (that.miniSeries != null))
+        {
+            return false;
+        }
+        return (playerOrTeamName != null) ? playerOrTeamName.equals(that.playerOrTeamName) : (that.playerOrTeamName == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.rank == null) ? 0 : this.rank.hashCode());
-        result = (prime * result) + ((this.freshBlood == null) ? 0 : this.freshBlood.hashCode());
-        result = (prime * result) + ((this.hotStreak == null) ? 0 : this.hotStreak.hashCode());
-        result = (prime * result) + ((this.inactive == null) ? 0 : this.inactive.hashCode());
-        result = (prime * result) + ((this.veteran == null) ? 0 : this.veteran.hashCode());
-        result = (prime * result) + ((this.leaguePoints == null) ? 0 : this.leaguePoints.hashCode());
-        result = (prime * result) + ((this.losses == null) ? 0 : this.losses.hashCode());
-        result = (prime * result) + ((this.miniSeries == null) ? 0 : this.miniSeries.hashCode());
-        result = (prime * result) + ((this.playerOrTeamId == null) ? 0 : this.playerOrTeamId.hashCode());
-        result = (prime * result) + ((this.playerOrTeamName == null) ? 0 : this.playerOrTeamName.hashCode());
-        result = (prime * result) + ((this.wins == null) ? 0 : this.wins.hashCode());
+        int result = rank != null ? rank.hashCode() : 0;
+        result = 31 * result + (hotStreak ? 1 : 0);
+        result = 31 * result + (miniSeries != null ? miniSeries.hashCode() : 0);
+        result = 31 * result + wins;
+        result = 31 * result + (veteran ? 1 : 0);
+        result = 31 * result + losses;
+        result = 31 * result + (int) (playerOrTeamId ^ (playerOrTeamId >>> 32));
+        result = 31 * result + (playerOrTeamName != null ? playerOrTeamName.hashCode() : 0);
+        result = 31 * result + (inactive ? 1 : 0);
+        result = 31 * result + (freshBlood ? 1 : 0);
+        result = 31 * result + leaguePoints;
         return result;
     }
     

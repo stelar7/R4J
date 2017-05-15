@@ -10,120 +10,10 @@ public class Realm
     private String              l;
     private String              lg;
     private Map<String, String> n;
-    private Integer             profileiconmax;
+    private int                 profileiconmax;
     private String              store;
     private String              v;
     
-    
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Realm other = (Realm) obj;
-        if (this.cdn == null)
-        {
-            if (other.cdn != null)
-            {
-                return false;
-            }
-        } else if (!this.cdn.equals(other.cdn))
-        {
-            return false;
-        }
-        if (this.css == null)
-        {
-            if (other.css != null)
-            {
-                return false;
-            }
-        } else if (!this.css.equals(other.css))
-        {
-            return false;
-        }
-        if (this.dd == null)
-        {
-            if (other.dd != null)
-            {
-                return false;
-            }
-        } else if (!this.dd.equals(other.dd))
-        {
-            return false;
-        }
-        if (this.l == null)
-        {
-            if (other.l != null)
-            {
-                return false;
-            }
-        } else if (!this.l.equals(other.l))
-        {
-            return false;
-        }
-        if (this.lg == null)
-        {
-            if (other.lg != null)
-            {
-                return false;
-            }
-        } else if (!this.lg.equals(other.lg))
-        {
-            return false;
-        }
-        if (this.n == null)
-        {
-            if (other.n != null)
-            {
-                return false;
-            }
-        } else if (!this.n.equals(other.n))
-        {
-            return false;
-        }
-        if (this.profileiconmax == null)
-        {
-            if (other.profileiconmax != null)
-            {
-                return false;
-            }
-        } else if (!this.profileiconmax.equals(other.profileiconmax))
-        {
-            return false;
-        }
-        if (this.store == null)
-        {
-            if (other.store != null)
-            {
-                return false;
-            }
-        } else if (!this.store.equals(other.store))
-        {
-            return false;
-        }
-        if (this.v == null)
-        {
-            if (other.v != null)
-            {
-                return false;
-            }
-        } else if (!this.v.equals(other.v))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * The base CDN url.
@@ -190,7 +80,7 @@ public class Realm
      *
      * @return the profileiconmax
      */
-    public Integer getProfileIconMax()
+    public int getProfileIconMax()
     {
         return this.profileiconmax;
     }
@@ -216,19 +106,66 @@ public class Realm
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Realm realm = (Realm) o;
+        
+        if (profileiconmax != realm.profileiconmax)
+        {
+            return false;
+        }
+        if ((cdn != null) ? !cdn.equals(realm.cdn) : (realm.cdn != null))
+        {
+            return false;
+        }
+        if ((css != null) ? !css.equals(realm.css) : (realm.css != null))
+        {
+            return false;
+        }
+        if ((dd != null) ? !dd.equals(realm.dd) : (realm.dd != null))
+        {
+            return false;
+        }
+        if ((l != null) ? !l.equals(realm.l) : (realm.l != null))
+        {
+            return false;
+        }
+        if ((lg != null) ? !lg.equals(realm.lg) : (realm.lg != null))
+        {
+            return false;
+        }
+        if ((n != null) ? !n.equals(realm.n) : (realm.n != null))
+        {
+            return false;
+        }
+        if ((store != null) ? !store.equals(realm.store) : (realm.store != null))
+        {
+            return false;
+        }
+        return (v != null) ? v.equals(realm.v) : (realm.v == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.cdn == null) ? 0 : this.cdn.hashCode());
-        result = (prime * result) + ((this.css == null) ? 0 : this.css.hashCode());
-        result = (prime * result) + ((this.dd == null) ? 0 : this.dd.hashCode());
-        result = (prime * result) + ((this.l == null) ? 0 : this.l.hashCode());
-        result = (prime * result) + ((this.lg == null) ? 0 : this.lg.hashCode());
-        result = (prime * result) + ((this.n == null) ? 0 : this.n.hashCode());
-        result = (prime * result) + ((this.profileiconmax == null) ? 0 : this.profileiconmax.hashCode());
-        result = (prime * result) + ((this.store == null) ? 0 : this.store.hashCode());
-        result = (prime * result) + ((this.v == null) ? 0 : this.v.hashCode());
+        int result = cdn != null ? cdn.hashCode() : 0;
+        result = 31 * result + (css != null ? css.hashCode() : 0);
+        result = 31 * result + (dd != null ? dd.hashCode() : 0);
+        result = 31 * result + (l != null ? l.hashCode() : 0);
+        result = 31 * result + (lg != null ? lg.hashCode() : 0);
+        result = 31 * result + (n != null ? n.hashCode() : 0);
+        result = 31 * result + profileiconmax;
+        result = 31 * result + (store != null ? store.hashCode() : 0);
+        result = 31 * result + (v != null ? v.hashCode() : 0);
         return result;
     }
     

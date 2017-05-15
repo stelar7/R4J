@@ -83,76 +83,43 @@ public class TournamentCodeUpdateParameters
     }
     
     @Override
-    public int hashCode()
+    public boolean equals(Object o)
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.allowedParticipants == null) ? 0 : this.allowedParticipants.hashCode());
-        result = (prime * result) + ((this.mapType == null) ? 0 : this.mapType.hashCode());
-        result = (prime * result) + ((this.pickType == null) ? 0 : this.pickType.hashCode());
-        result = (prime * result) + ((this.spectatorType == null) ? 0 : this.spectatorType.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
+        
+        TournamentCodeUpdateParameters that = (TournamentCodeUpdateParameters) o;
+        
+        if ((allowedParticipants != null) ? !allowedParticipants.equals(that.allowedParticipants) : (that.allowedParticipants != null))
         {
             return false;
         }
-        final TournamentCodeUpdateParameters other = (TournamentCodeUpdateParameters) obj;
-        if (this.allowedParticipants == null)
-        {
-            if (other.allowedParticipants != null)
-            {
-                return false;
-            }
-        } else if (!this.allowedParticipants.equals(other.allowedParticipants))
+        if (mapType != that.mapType)
         {
             return false;
         }
-        if (this.mapType == null)
-        {
-            if (other.mapType != null)
-            {
-                return false;
-            }
-        } else if (!this.mapType.equals(other.mapType))
+        if (pickType != that.pickType)
         {
             return false;
         }
-        if (this.pickType == null)
-        {
-            if (other.pickType != null)
-            {
-                return false;
-            }
-        } else if (!this.pickType.equals(other.pickType))
-        {
-            return false;
-        }
-        if (this.spectatorType == null)
-        {
-            if (other.spectatorType != null)
-            {
-                return false;
-            }
-        } else if (!this.spectatorType.equals(other.spectatorType))
-        {
-            return false;
-        }
-        return true;
+        return spectatorType == that.spectatorType;
     }
     
+    @Override
+    public int hashCode()
+    {
+        int result = allowedParticipants != null ? allowedParticipants.hashCode() : 0;
+        result = 31 * result + (mapType != null ? mapType.hashCode() : 0);
+        result = 31 * result + (pickType != null ? pickType.hashCode() : 0);
+        result = 31 * result + (spectatorType != null ? spectatorType.hashCode() : 0);
+        return result;
+    }
     
     @Override
     public String toString()

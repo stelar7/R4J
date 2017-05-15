@@ -7,169 +7,40 @@ import java.util.*;
 public class StaticRune
 {
     private String               plaintext;
-    private Boolean              hideFromAll;
-    private Boolean              inStore;
+    private boolean              hideFromAll;
+    private boolean              inStore;
     private List<String>         into;
-    private Integer              id;
+    private int                  id;
     private BasicDataStats       stats;
     private String               colloq;
     private Map<String, Boolean> maps;
-    private Integer              specialRecipe;
+    private int                  specialRecipe;
     private Image                image;
     private String               description;
     private List<String>         tags;
     private String               requiredChampion;
     private List<String>         from;
     private String               group;
-    private Boolean              consumeOnFull;
+    private boolean              consumeOnFull;
     private String               name;
-    private Boolean              consumed;
+    private boolean              consumed;
     private String               sanitizedDescription;
-    private Integer              depth;
+    private int                  depth;
     private MetaData             rune;
-    private Integer              stacks;
+    private int                  stacks;
     
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass())
-        {
-            return false;
-        }
-        
-        StaticRune rune1 = (StaticRune) o;
-        
-        if ((plaintext != null) ? !plaintext.equals(rune1.plaintext) : (rune1.plaintext != null))
-        {
-            return false;
-        }
-        if ((hideFromAll != null) ? !hideFromAll.equals(rune1.hideFromAll) : (rune1.hideFromAll != null))
-        {
-            return false;
-        }
-        if ((inStore != null) ? !inStore.equals(rune1.inStore) : (rune1.inStore != null))
-        {
-            return false;
-        }
-        if ((into != null) ? !into.equals(rune1.into) : (rune1.into != null))
-        {
-            return false;
-        }
-        if ((id != null) ? !id.equals(rune1.id) : (rune1.id != null))
-        {
-            return false;
-        }
-        if ((stats != null) ? !stats.equals(rune1.stats) : (rune1.stats != null))
-        {
-            return false;
-        }
-        if ((colloq != null) ? !colloq.equals(rune1.colloq) : (rune1.colloq != null))
-        {
-            return false;
-        }
-        if ((maps != null) ? !maps.equals(rune1.maps) : (rune1.maps != null))
-        {
-            return false;
-        }
-        if ((specialRecipe != null) ? !specialRecipe.equals(rune1.specialRecipe) : (rune1.specialRecipe != null))
-        {
-            return false;
-        }
-        if ((image != null) ? !image.equals(rune1.image) : (rune1.image != null))
-        {
-            return false;
-        }
-        if ((description != null) ? !description.equals(rune1.description) : (rune1.description != null))
-        {
-            return false;
-        }
-        if ((tags != null) ? !tags.equals(rune1.tags) : (rune1.tags != null))
-        {
-            return false;
-        }
-        if ((requiredChampion != null) ? !requiredChampion.equals(rune1.requiredChampion) : (rune1.requiredChampion != null))
-        {
-            return false;
-        }
-        if ((from != null) ? !from.equals(rune1.from) : (rune1.from != null))
-        {
-            return false;
-        }
-        if ((group != null) ? !group.equals(rune1.group) : (rune1.group != null))
-        {
-            return false;
-        }
-        if ((consumeOnFull != null) ? !consumeOnFull.equals(rune1.consumeOnFull) : (rune1.consumeOnFull != null))
-        {
-            return false;
-        }
-        if ((name != null) ? !name.equals(rune1.name) : (rune1.name != null))
-        {
-            return false;
-        }
-        if ((consumed != null) ? !consumed.equals(rune1.consumed) : (rune1.consumed != null))
-        {
-            return false;
-        }
-        if ((sanitizedDescription != null) ? !sanitizedDescription.equals(rune1.sanitizedDescription) : (rune1.sanitizedDescription != null))
-        {
-            return false;
-        }
-        if ((depth != null) ? !depth.equals(rune1.depth) : (rune1.depth != null))
-        {
-            return false;
-        }
-        if ((rune != null) ? !rune.equals(rune1.rune) : (rune1.rune != null))
-        {
-            return false;
-        }
-        return (stacks != null) ? stacks.equals(rune1.stacks) : (rune1.stacks == null);
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        int result = plaintext != null ? plaintext.hashCode() : 0;
-        result = 31 * result + (hideFromAll != null ? hideFromAll.hashCode() : 0);
-        result = 31 * result + (inStore != null ? inStore.hashCode() : 0);
-        result = 31 * result + (into != null ? into.hashCode() : 0);
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (stats != null ? stats.hashCode() : 0);
-        result = 31 * result + (colloq != null ? colloq.hashCode() : 0);
-        result = 31 * result + (maps != null ? maps.hashCode() : 0);
-        result = 31 * result + (specialRecipe != null ? specialRecipe.hashCode() : 0);
-        result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (tags != null ? tags.hashCode() : 0);
-        result = 31 * result + (requiredChampion != null ? requiredChampion.hashCode() : 0);
-        result = 31 * result + (from != null ? from.hashCode() : 0);
-        result = 31 * result + (group != null ? group.hashCode() : 0);
-        result = 31 * result + (consumeOnFull != null ? consumeOnFull.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (consumed != null ? consumed.hashCode() : 0);
-        result = 31 * result + (sanitizedDescription != null ? sanitizedDescription.hashCode() : 0);
-        result = 31 * result + (depth != null ? depth.hashCode() : 0);
-        result = 31 * result + (rune != null ? rune.hashCode() : 0);
-        result = 31 * result + (stacks != null ? stacks.hashCode() : 0);
-        return result;
-    }
     
     public String getPlaintext()
     {
-        
         return plaintext;
     }
     
-    public Boolean getHideFromAll()
+    public boolean getHideFromAll()
     {
         return hideFromAll;
     }
     
-    public Boolean getInStore()
+    public boolean getInStore()
     {
         return inStore;
     }
@@ -179,7 +50,7 @@ public class StaticRune
         return Collections.unmodifiableList(into);
     }
     
-    public Integer getId()
+    public int getId()
     {
         return id;
     }
@@ -194,7 +65,7 @@ public class StaticRune
         return maps;
     }
     
-    public Integer getSpecialRecipe()
+    public int getSpecialRecipe()
     {
         return specialRecipe;
     }
@@ -229,7 +100,7 @@ public class StaticRune
         return group;
     }
     
-    public Boolean getConsumeOnFull()
+    public boolean getConsumeOnFull()
     {
         return consumeOnFull;
     }
@@ -239,7 +110,7 @@ public class StaticRune
         return name;
     }
     
-    public Boolean getConsumed()
+    public boolean getConsumed()
     {
         return consumed;
     }
@@ -249,7 +120,7 @@ public class StaticRune
         return sanitizedDescription;
     }
     
-    public Integer getDepth()
+    public int getDepth()
     {
         return depth;
     }
@@ -259,15 +130,143 @@ public class StaticRune
         return rune;
     }
     
-    public Integer getStacks()
+    public int getStacks()
     {
         return stacks;
     }
     
     public String getColloq()
     {
-        
         return colloq;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        StaticRune that = (StaticRune) o;
+        
+        if (hideFromAll != that.hideFromAll)
+        {
+            return false;
+        }
+        if (inStore != that.inStore)
+        {
+            return false;
+        }
+        if (id != that.id)
+        {
+            return false;
+        }
+        if (specialRecipe != that.specialRecipe)
+        {
+            return false;
+        }
+        if (consumeOnFull != that.consumeOnFull)
+        {
+            return false;
+        }
+        if (consumed != that.consumed)
+        {
+            return false;
+        }
+        if (depth != that.depth)
+        {
+            return false;
+        }
+        if (stacks != that.stacks)
+        {
+            return false;
+        }
+        if ((plaintext != null) ? !plaintext.equals(that.plaintext) : (that.plaintext != null))
+        {
+            return false;
+        }
+        if ((into != null) ? !into.equals(that.into) : (that.into != null))
+        {
+            return false;
+        }
+        if ((stats != null) ? !stats.equals(that.stats) : (that.stats != null))
+        {
+            return false;
+        }
+        if ((colloq != null) ? !colloq.equals(that.colloq) : (that.colloq != null))
+        {
+            return false;
+        }
+        if ((maps != null) ? !maps.equals(that.maps) : (that.maps != null))
+        {
+            return false;
+        }
+        if ((image != null) ? !image.equals(that.image) : (that.image != null))
+        {
+            return false;
+        }
+        if ((description != null) ? !description.equals(that.description) : (that.description != null))
+        {
+            return false;
+        }
+        if ((tags != null) ? !tags.equals(that.tags) : (that.tags != null))
+        {
+            return false;
+        }
+        if ((requiredChampion != null) ? !requiredChampion.equals(that.requiredChampion) : (that.requiredChampion != null))
+        {
+            return false;
+        }
+        if ((from != null) ? !from.equals(that.from) : (that.from != null))
+        {
+            return false;
+        }
+        if ((group != null) ? !group.equals(that.group) : (that.group != null))
+        {
+            return false;
+        }
+        if ((name != null) ? !name.equals(that.name) : (that.name != null))
+        {
+            return false;
+        }
+        if ((sanitizedDescription != null) ? !sanitizedDescription.equals(that.sanitizedDescription) : (that.sanitizedDescription != null))
+        {
+            return false;
+        }
+        return (rune != null) ? rune.equals(that.rune) : (that.rune == null);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = plaintext != null ? plaintext.hashCode() : 0;
+        result = 31 * result + (hideFromAll ? 1 : 0);
+        result = 31 * result + (inStore ? 1 : 0);
+        result = 31 * result + (into != null ? into.hashCode() : 0);
+        result = 31 * result + id;
+        result = 31 * result + (stats != null ? stats.hashCode() : 0);
+        result = 31 * result + (colloq != null ? colloq.hashCode() : 0);
+        result = 31 * result + (maps != null ? maps.hashCode() : 0);
+        result = 31 * result + specialRecipe;
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
+        result = 31 * result + (requiredChampion != null ? requiredChampion.hashCode() : 0);
+        result = 31 * result + (from != null ? from.hashCode() : 0);
+        result = 31 * result + (group != null ? group.hashCode() : 0);
+        result = 31 * result + (consumeOnFull ? 1 : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (consumed ? 1 : 0);
+        result = 31 * result + (sanitizedDescription != null ? sanitizedDescription.hashCode() : 0);
+        result = 31 * result + depth;
+        result = 31 * result + (rune != null ? rune.hashCode() : 0);
+        result = 31 * result + stacks;
+        return result;
     }
     
     @Override

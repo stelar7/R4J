@@ -7,114 +7,14 @@ import java.util.*;
 public class StaticMastery
 {
     private List<String> description;
-    private Integer      id;
+    private int          id;
     private Image        image;
     private String       masteryTree;
     private String       name;
     private String       prereq;
-    private Integer      ranks;
+    private int          ranks;
     private List<String> sanitizedDescription;
     
-    
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final StaticMastery other = (StaticMastery) obj;
-        if (this.description == null)
-        {
-            if (other.description != null)
-            {
-                return false;
-            }
-        } else if (!this.description.equals(other.description))
-        {
-            return false;
-        }
-        if (this.id == null)
-        {
-            if (other.id != null)
-            {
-                return false;
-            }
-        } else if (!this.id.equals(other.id))
-        {
-            return false;
-        }
-        if (this.image == null)
-        {
-            if (other.image != null)
-            {
-                return false;
-            }
-        } else if (!this.image.equals(other.image))
-        {
-            return false;
-        }
-        if (this.masteryTree == null)
-        {
-            if (other.masteryTree != null)
-            {
-                return false;
-            }
-        } else if (!this.masteryTree.equals(other.masteryTree))
-        {
-            return false;
-        }
-        if (this.name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        } else if (!this.name.equals(other.name))
-        {
-            return false;
-        }
-        if (this.prereq == null)
-        {
-            if (other.prereq != null)
-            {
-                return false;
-            }
-        } else if (!this.prereq.equals(other.prereq))
-        {
-            return false;
-        }
-        if (this.ranks == null)
-        {
-            if (other.ranks != null)
-            {
-                return false;
-            }
-        } else if (!this.ranks.equals(other.ranks))
-        {
-            return false;
-        }
-        if (this.sanitizedDescription == null)
-        {
-            if (other.sanitizedDescription != null)
-            {
-                return false;
-            }
-        } else if (!this.sanitizedDescription.equals(other.sanitizedDescription))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the description.
@@ -131,7 +31,7 @@ public class StaticMastery
      *
      * @return the id
      */
-    public Integer getId()
+    public int getId()
     {
         return this.id;
     }
@@ -183,7 +83,7 @@ public class StaticMastery
      *
      * @return the ranks
      */
-    public Integer getRanks()
+    public int getRanks()
     {
         return this.ranks;
     }
@@ -199,18 +99,61 @@ public class StaticMastery
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        StaticMastery that = (StaticMastery) o;
+        
+        if (id != that.id)
+        {
+            return false;
+        }
+        if (ranks != that.ranks)
+        {
+            return false;
+        }
+        if ((description != null) ? !description.equals(that.description) : (that.description != null))
+        {
+            return false;
+        }
+        if ((image != null) ? !image.equals(that.image) : (that.image != null))
+        {
+            return false;
+        }
+        {
+        if ((masteryTree != null) ? !masteryTree.equals(that.masteryTree) : (that.masteryTree != null))
+            return false;
+        }
+        if ((name != null) ? !name.equals(that.name) : (that.name != null))
+        {
+            return false;
+        }
+        if ((prereq != null) ? !prereq.equals(that.prereq) : (that.prereq != null))
+        {
+            return false;
+        }
+        return (sanitizedDescription != null) ? sanitizedDescription.equals(that.sanitizedDescription) : (that.sanitizedDescription == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
-        result = (prime * result) + ((this.id == null) ? 0 : this.id.hashCode());
-        result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());
-        result = (prime * result) + ((this.masteryTree == null) ? 0 : this.masteryTree.hashCode());
-        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        result = (prime * result) + ((this.prereq == null) ? 0 : this.prereq.hashCode());
-        result = (prime * result) + ((this.ranks == null) ? 0 : this.ranks.hashCode());
-        result = (prime * result) + ((this.sanitizedDescription == null) ? 0 : this.sanitizedDescription.hashCode());
+        int result = description != null ? description.hashCode() : 0;
+        result = 31 * result + id;
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        result = 31 * result + (masteryTree != null ? masteryTree.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (prereq != null ? prereq.hashCode() : 0);
+        result = 31 * result + ranks;
+        result = 31 * result + (sanitizedDescription != null ? sanitizedDescription.hashCode() : 0);
         return result;
     }
     

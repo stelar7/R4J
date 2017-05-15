@@ -4,58 +4,9 @@ import java.util.*;
 
 public class MatchFrame
 {
-    private Long                               timestamp;
+    private long                               timestamp;
     private Map<String, MatchParticipantFrame> participantFrames;
     private List<MatchEvent>                   events;
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MatchFrame other = (MatchFrame) obj;
-        if (this.events == null)
-        {
-            if (other.events != null)
-            {
-                return false;
-            }
-        } else if (!this.events.equals(other.events))
-        {
-            return false;
-        }
-        if (this.participantFrames == null)
-        {
-            if (other.participantFrames != null)
-            {
-                return false;
-            }
-        } else if (!this.participantFrames.equals(other.participantFrames))
-        {
-            return false;
-        }
-        if (this.timestamp == null)
-        {
-            if (other.timestamp != null)
-            {
-                return false;
-            }
-        } else if (!this.timestamp.equals(other.timestamp))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * List of events for this frame.
@@ -80,21 +31,44 @@ public class MatchFrame
     /**
      * Represents how many milliseconds into the game the frame occurred.
      *
-     * @return Long
+     * @return long
      */
-    public Long getTimestamp()
+    public long getTimestamp()
     {
         return this.timestamp;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MatchFrame that = (MatchFrame) o;
+        
+        if (timestamp != that.timestamp)
+        {
+            return false;
+        }
+        if ((participantFrames != null) ? !participantFrames.equals(that.participantFrames) : (that.participantFrames != null))
+        {
+            return false;
+        }
+        return (events != null) ? events.equals(that.events) : (that.events == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.events == null) ? 0 : this.events.hashCode());
-        result = (prime * result) + ((this.participantFrames == null) ? 0 : this.participantFrames.hashCode());
-        result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
+        int result = (int) (timestamp ^ (timestamp >>> 32));
+        result = 31 * result + (participantFrames != null ? participantFrames.hashCode() : 0);
+        result = 31 * result + (events != null ? events.hashCode() : 0);
         return result;
     }
     

@@ -5,13 +5,13 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 public class Player
 {
     private String   matchHistoryUri;
-    private Integer  profileIcon;
-    private Long     summonerId;
+    private int      profileIcon;
+    private long     summonerId;
     private String   summonerName;
     private Platform currentPlatformId;
     private Platform platformId;
-    private Long     accountId;
-    private Long     currentAccountId;
+    private long     accountId;
+    private long     currentAccountId;
     
     
     /**
@@ -29,7 +29,7 @@ public class Player
      *
      * @return the profile icon
      */
-    public Integer getProfileIcon()
+    public int getProfileIcon()
     {
         return this.profileIcon;
     }
@@ -39,7 +39,7 @@ public class Player
      *
      * @return the summoner id
      */
-    public Long getSummonerId()
+    public long getSummonerId()
     {
         return this.summonerId;
     }
@@ -64,12 +64,12 @@ public class Player
         return platformId;
     }
     
-    public Long getAccountId()
+    public long getAccountId()
     {
         return accountId;
     }
     
-    public Long getCurrentAccountId()
+    public long getCurrentAccountId()
     {
         return currentAccountId;
     }
@@ -88,19 +88,27 @@ public class Player
         
         Player player = (Player) o;
         
-        if ((matchHistoryUri != null) ? !matchHistoryUri.equals(player.matchHistoryUri) : (player.matchHistoryUri != null))
+        if (profileIcon != player.profileIcon)
         {
             return false;
         }
-        if ((profileIcon != null) ? !profileIcon.equals(player.profileIcon) : (player.profileIcon != null))
+        if (summonerId != player.summonerId)
         {
             return false;
         }
-        if ((summonerId != null) ? !summonerId.equals(player.summonerId) : (player.summonerId != null))
+        if (accountId != player.accountId)
         {
             return false;
         }
-        if ((summonerName != null) ? !summonerName.equals(player.summonerName) : (player.summonerName != null))
+        if (currentAccountId != player.currentAccountId)
+        {
+            return false;
+        }
+        if (matchHistoryUri != null ? !matchHistoryUri.equals(player.matchHistoryUri) : player.matchHistoryUri != null)
+        {
+            return false;
+        }
+        if (summonerName != null ? !summonerName.equals(player.summonerName) : player.summonerName != null)
         {
             return false;
         }
@@ -108,28 +116,20 @@ public class Player
         {
             return false;
         }
-        if (platformId != player.platformId)
-        {
-            return false;
-        }
-        if ((accountId != null) ? !accountId.equals(player.accountId) : (player.accountId != null))
-        {
-            return false;
-        }
-        return (currentAccountId != null) ? currentAccountId.equals(player.currentAccountId) : (player.currentAccountId == null);
+        return platformId == player.platformId;
     }
     
     @Override
     public int hashCode()
     {
         int result = matchHistoryUri != null ? matchHistoryUri.hashCode() : 0;
-        result = 31 * result + (profileIcon != null ? profileIcon.hashCode() : 0);
-        result = 31 * result + (summonerId != null ? summonerId.hashCode() : 0);
+        result = 31 * result + profileIcon;
+        result = 31 * result + (int) (summonerId ^ (summonerId >>> 32));
         result = 31 * result + (summonerName != null ? summonerName.hashCode() : 0);
         result = 31 * result + (currentPlatformId != null ? currentPlatformId.hashCode() : 0);
         result = 31 * result + (platformId != null ? platformId.hashCode() : 0);
-        result = 31 * result + (accountId != null ? accountId.hashCode() : 0);
-        result = 31 * result + (currentAccountId != null ? currentAccountId.hashCode() : 0);
+        result = 31 * result + (int) (accountId ^ (accountId >>> 32));
+        result = 31 * result + (int) (currentAccountId ^ (currentAccountId >>> 32));
         return result;
     }
     

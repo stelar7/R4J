@@ -10,45 +10,6 @@ public class StaticRuneList
     private Map<Integer, StaticRune> data;
     
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final StaticRuneList other = (StaticRuneList) obj;
-        if (this.basic == null)
-        {
-            if (other.basic != null)
-            {
-                return false;
-            }
-        } else if (!this.basic.equals(other.basic))
-        {
-            return false;
-        }
-        if (this.data == null)
-        {
-            if (other.data != null)
-            {
-                return false;
-            }
-        } else if (!this.data.equals(other.data))
-        {
-            return false;
-        }
-        
-        return true;
-    }
     
     /**
      * Gets the basic.
@@ -71,13 +32,31 @@ public class StaticRuneList
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        StaticRuneList that = (StaticRuneList) o;
+        
+        if ((basic != null) ? !basic.equals(that.basic) : (that.basic != null))
+        {
+            return false;
+        }
+        return (data != null) ? data.equals(that.data) : (that.data == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.basic == null) ? 0 : this.basic.hashCode());
-        result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
-        result = (prime * result) + super.hashCode();
+        int result = basic != null ? basic.hashCode() : 0;
+        result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }
     

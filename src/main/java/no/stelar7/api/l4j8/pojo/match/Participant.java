@@ -10,7 +10,7 @@ public class Participant
     private ChampionType        championId;
     private TierType            highestAchievedSeasonTier;
     private List<MatchMastery>  masteries;
-    private Integer             participantId;
+    private int                 participantId;
     private List<MatchRune>     runes;
     private SummonerSpellType   spell1Id;
     private SummonerSpellType   spell2Id;
@@ -22,7 +22,7 @@ public class Participant
     /**
      * ChampionType ID
      *
-     * @return Integer
+     * @return int
      */
     public ChampionType getChampion()
     {
@@ -53,9 +53,9 @@ public class Participant
     /**
      * Participant ID
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getParticipantId()
+    public int getParticipantId()
     {
         return this.participantId;
     }
@@ -74,7 +74,7 @@ public class Participant
     /**
      * First summoner spell ID
      *
-     * @return Long
+     * @return long
      */
     public SummonerSpellType getSpell1()
     {
@@ -85,7 +85,7 @@ public class Participant
     /**
      * Second summoner spell ID
      *
-     * @return Long
+     * @return long
      */
     public SummonerSpellType getSpell2()
     {
@@ -105,7 +105,7 @@ public class Participant
     /**
      * TeamType ID
      *
-     * @return Integer
+     * @return int
      */
     public TeamType getTeam()
     {
@@ -137,6 +137,10 @@ public class Participant
         
         Participant that = (Participant) o;
         
+        if (participantId != that.participantId)
+        {
+            return false;
+        }
         if (championId != that.championId)
         {
             return false;
@@ -146,10 +150,6 @@ public class Participant
             return false;
         }
         if ((masteries != null) ? !masteries.equals(that.masteries) : (that.masteries != null))
-        {
-            return false;
-        }
-        if ((participantId != null) ? !participantId.equals(that.participantId) : (that.participantId != null))
         {
             return false;
         }
@@ -182,7 +182,7 @@ public class Participant
         int result = championId != null ? championId.hashCode() : 0;
         result = 31 * result + (highestAchievedSeasonTier != null ? highestAchievedSeasonTier.hashCode() : 0);
         result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
-        result = 31 * result + (participantId != null ? participantId.hashCode() : 0);
+        result = 31 * result + participantId;
         result = 31 * result + (runes != null ? runes.hashCode() : 0);
         result = 31 * result + (spell1Id != null ? spell1Id.hashCode() : 0);
         result = 31 * result + (spell2Id != null ? spell2Id.hashCode() : 0);

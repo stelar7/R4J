@@ -4,25 +4,25 @@ import java.util.*;
 
 public class TournamentCallback
 {
-    private Long                             startTime;
+    private long                             startTime;
     private List<TournamentCallbackSummoner> winningTeam;
     private List<TournamentCallbackSummoner> losingTeam;
     private String                           shortCode;
     private String                           metaData;
-    private Long                             gameId;
+    private long                             gameId;
     private String                           gameName;
     private String                           gameType;
-    private Integer                          gameMap;
+    private int                              gameMap;
     private String                           gameMode;
     private String                           region;
     
     
-    public Long getGameId()
+    public long getGameId()
     {
         return this.gameId;
     }
     
-    public Integer getGameMap()
+    public int getGameMap()
     {
         return this.gameMap;
     }
@@ -62,7 +62,7 @@ public class TournamentCallback
         return this.shortCode;
     }
     
-    public Long getStartTime()
+    public long getStartTime()
     {
         return this.startTime;
     }
@@ -73,151 +73,77 @@ public class TournamentCallback
     }
     
     @Override
-    public int hashCode()
+    public boolean equals(Object o)
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.gameId == null) ? 0 : this.gameId.hashCode());
-        result = (prime * result) + ((this.gameMap == null) ? 0 : this.gameMap.hashCode());
-        result = (prime * result) + ((this.gameMode == null) ? 0 : this.gameMode.hashCode());
-        result = (prime * result) + ((this.gameName == null) ? 0 : this.gameName.hashCode());
-        result = (prime * result) + ((this.gameType == null) ? 0 : this.gameType.hashCode());
-        result = (prime * result) + ((this.losingTeam == null) ? 0 : this.losingTeam.hashCode());
-        result = (prime * result) + ((this.metaData == null) ? 0 : this.metaData.hashCode());
-        result = (prime * result) + ((this.region == null) ? 0 : this.region.hashCode());
-        result = (prime * result) + ((this.shortCode == null) ? 0 : this.shortCode.hashCode());
-        result = (prime * result) + ((this.startTime == null) ? 0 : this.startTime.hashCode());
-        result = (prime * result) + ((this.winningTeam == null) ? 0 : this.winningTeam.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
+        
+        TournamentCallback that = (TournamentCallback) o;
+        
+        if (startTime != that.startTime)
         {
             return false;
         }
-        final TournamentCallback other = (TournamentCallback) obj;
-        if (this.gameId == null)
-        {
-            if (other.gameId != null)
-            {
-                return false;
-            }
-        } else if (!this.gameId.equals(other.gameId))
+        if (gameId != that.gameId)
         {
             return false;
         }
-        if (this.gameMap == null)
-        {
-            if (other.gameMap != null)
-            {
-                return false;
-            }
-        } else if (!this.gameMap.equals(other.gameMap))
+        if (gameMap != that.gameMap)
         {
             return false;
         }
-        if (this.gameMode == null)
-        {
-            if (other.gameMode != null)
-            {
-                return false;
-            }
-        } else if (!this.gameMode.equals(other.gameMode))
+        if ((winningTeam != null) ? !winningTeam.equals(that.winningTeam) : (that.winningTeam != null))
         {
             return false;
         }
-        if (this.gameName == null)
-        {
-            if (other.gameName != null)
-            {
-                return false;
-            }
-        } else if (!this.gameName.equals(other.gameName))
+        if ((losingTeam != null) ? !losingTeam.equals(that.losingTeam) : (that.losingTeam != null))
         {
             return false;
         }
-        if (this.gameType == null)
-        {
-            if (other.gameType != null)
-            {
-                return false;
-            }
-        } else if (!this.gameType.equals(other.gameType))
+        if ((shortCode != null) ? !shortCode.equals(that.shortCode) : (that.shortCode != null))
         {
             return false;
         }
-        if (this.losingTeam == null)
-        {
-            if (other.losingTeam != null)
-            {
-                return false;
-            }
-        } else if (!this.losingTeam.equals(other.losingTeam))
+        if ((metaData != null) ? !metaData.equals(that.metaData) : (that.metaData != null))
         {
             return false;
         }
-        if (this.metaData == null)
-        {
-            if (other.metaData != null)
-            {
-                return false;
-            }
-        } else if (!this.metaData.equals(other.metaData))
+        if ((gameName != null) ? !gameName.equals(that.gameName) : (that.gameName != null))
         {
             return false;
         }
-        if (this.region == null)
-        {
-            if (other.region != null)
-            {
-                return false;
-            }
-        } else if (!this.region.equals(other.region))
+        if ((gameType != null) ? !gameType.equals(that.gameType) : (that.gameType != null))
         {
             return false;
         }
-        if (this.shortCode == null)
-        {
-            if (other.shortCode != null)
-            {
-                return false;
-            }
-        } else if (!this.shortCode.equals(other.shortCode))
+        if ((gameMode != null) ? !gameMode.equals(that.gameMode) : (that.gameMode != null))
         {
             return false;
         }
-        if (this.startTime == null)
-        {
-            if (other.startTime != null)
-            {
-                return false;
-            }
-        } else if (!this.startTime.equals(other.startTime))
-        {
-            return false;
-        }
-        if (this.winningTeam == null)
-        {
-            if (other.winningTeam != null)
-            {
-                return false;
-            }
-        } else if (!this.winningTeam.equals(other.winningTeam))
-        {
-            return false;
-        }
-        return true;
+        return (region != null) ? region.equals(that.region) : (that.region == null);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = (int) (startTime ^ (startTime >>> 32));
+        result = 31 * result + (winningTeam != null ? winningTeam.hashCode() : 0);
+        result = 31 * result + (losingTeam != null ? losingTeam.hashCode() : 0);
+        result = 31 * result + (shortCode != null ? shortCode.hashCode() : 0);
+        result = 31 * result + (metaData != null ? metaData.hashCode() : 0);
+        result = 31 * result + (int) (gameId ^ (gameId >>> 32));
+        result = 31 * result + (gameName != null ? gameName.hashCode() : 0);
+        result = 31 * result + (gameType != null ? gameType.hashCode() : 0);
+        result = 31 * result + gameMap;
+        result = 31 * result + (gameMode != null ? gameMode.hashCode() : 0);
+        result = 31 * result + (region != null ? region.hashCode() : 0);
+        return result;
     }
     
     @Override

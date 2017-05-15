@@ -5,57 +5,9 @@ import java.util.*;
 public class Block
 {
     private List<BlockItem> items;
-    private Boolean         recMath;
+    private boolean         recMath;
     private String          type;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Block other = (Block) obj;
-        if (this.items == null)
-        {
-            if (other.items != null)
-            {
-                return false;
-            }
-        } else if (!this.items.equals(other.items))
-        {
-            return false;
-        }
-        if (this.recMath == null)
-        {
-            if (other.recMath != null)
-            {
-                return false;
-            }
-        } else if (!this.recMath.equals(other.recMath))
-        {
-            return false;
-        }
-        if (this.type == null)
-        {
-            if (other.type != null)
-            {
-                return false;
-            }
-        } else if (!this.type.equals(other.type))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the items.
@@ -72,7 +24,7 @@ public class Block
      *
      * @return the rec math
      */
-    public Boolean getRecMath()
+    public boolean getRecMath()
     {
         return this.recMath;
     }
@@ -88,13 +40,36 @@ public class Block
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Block block = (Block) o;
+        
+        if (recMath != block.recMath)
+        {
+            return false;
+        }
+        if ((items != null) ? !items.equals(block.items) : (block.items != null))
+        {
+            return false;
+        }
+        return (type != null) ? type.equals(block.type) : (block.type == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.items == null) ? 0 : this.items.hashCode());
-        result = (prime * result) + ((this.recMath == null) ? 0 : this.recMath.hashCode());
-        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+        int result = items != null ? items.hashCode() : 0;
+        result = 31 * result + (recMath ? 1 : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
     

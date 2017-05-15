@@ -18,9 +18,9 @@ public class SummonerTest
     private final Consumer<Summoner> doAssertions = (final Summoner value) ->
     {
         Assert.assertNotNull("Summoner name is NULL", value.getName());
-        Assert.assertNotEquals("Summoner profile icon is NULL", value.getProfileIconId(), (Integer) 0);
-        Assert.assertNotEquals("Summoner revision date is NULL", value.getRevisionDate(), (Long) 0L);
-        Assert.assertNotEquals("Summoner level is NULL", value.getSummonerLevel(), (Integer) 0);
+        Assert.assertNotEquals("Summoner profile icon is NULL", value.getProfileIconId(), 0);
+        Assert.assertNotEquals("Summoner revision date is NULL", value.getRevisionDate(), 0L);
+        Assert.assertNotEquals("Summoner level is NULL", value.getSummonerLevel(), 0);
         Assert.assertNotNull("Summoner revison date DATE is NULL", value.getRevisionDateAsDate());
     };
     

@@ -2,67 +2,17 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 public class MetaData
 {
-    private Boolean isRune;
+    private boolean isRune;
     private String  tier;
     private String  type;
     
-    
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MetaData other = (MetaData) obj;
-        if (this.isRune == null)
-        {
-            if (other.isRune != null)
-            {
-                return false;
-            }
-        } else if (!this.isRune.equals(other.isRune))
-        {
-            return false;
-        }
-        if (this.tier == null)
-        {
-            if (other.tier != null)
-            {
-                return false;
-            }
-        } else if (!this.tier.equals(other.tier))
-        {
-            return false;
-        }
-        if (this.type == null)
-        {
-            if (other.type != null)
-            {
-                return false;
-            }
-        } else if (!this.type.equals(other.type))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the checks if is rune.
      *
      * @return the checks if is rune
      */
-    public Boolean getIsRune()
+    public boolean getIsRune()
     {
         return this.isRune;
     }
@@ -88,13 +38,36 @@ public class MetaData
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MetaData metaData = (MetaData) o;
+        
+        if (isRune != metaData.isRune)
+        {
+            return false;
+        }
+        if ((tier != null) ? !tier.equals(metaData.tier) : (metaData.tier != null))
+        {
+            return false;
+        }
+        return (type != null) ? type.equals(metaData.type) : (metaData.type == null);
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.isRune == null) ? 0 : this.isRune.hashCode());
-        result = (prime * result) + ((this.tier == null) ? 0 : this.tier.hashCode());
-        result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
+        int result = (isRune ? 1 : 0);
+        result = 31 * result + (tier != null ? tier.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
     

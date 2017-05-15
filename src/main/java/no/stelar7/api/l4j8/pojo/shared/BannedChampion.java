@@ -5,52 +5,13 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 public class BannedChampion
 {
     private ChampionType championId;
-    private Integer      pickTurn;
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final BannedChampion other = (BannedChampion) obj;
-        if (this.championId == null)
-        {
-            if (other.championId != null)
-            {
-                return false;
-            }
-        } else if (!this.championId.equals(other.championId))
-        {
-            return false;
-        }
-        if (this.pickTurn == null)
-        {
-            if (other.pickTurn != null)
-            {
-                return false;
-            }
-        } else if (!this.pickTurn.equals(other.pickTurn))
-        {
-            return false;
-        }
-        return true;
-    }
+    private int          pickTurn;
     
     
     /**
      * The ID of the banned champion
      *
-     * @return Long
+     * @return long
      */
     public ChampionType getChampion()
     {
@@ -60,21 +21,39 @@ public class BannedChampion
     /**
      * The turn during which the champion was banned
      *
-     * @return Integer
+     * @return int
      */
-    public Integer getPickTurn()
+    public int getPickTurn()
     {
         return this.pickTurn;
     }
     
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        BannedChampion that = (BannedChampion) o;
+        
+        if (pickTurn != that.pickTurn)
+        {
+            return false;
+        }
+        return championId == that.championId;
+    }
     
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.championId == null) ? 0 : this.championId.hashCode());
-        result = (prime * result) + ((this.pickTurn == null) ? 0 : this.pickTurn.hashCode());
+        int result = championId != null ? championId.hashCode() : 0;
+        result = 31 * result + pickTurn;
         return result;
     }
     

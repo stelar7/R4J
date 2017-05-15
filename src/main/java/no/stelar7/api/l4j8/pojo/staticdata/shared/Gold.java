@@ -2,78 +2,18 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 public class Gold
 {
-    private Integer base;
-    private Boolean purchasable;
-    private Integer sell;
-    private Integer total;
+    private int     base;
+    private boolean purchasable;
+    private int     sell;
+    private int     total;
     
-    
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Gold other = (Gold) obj;
-        if (this.base == null)
-        {
-            if (other.base != null)
-            {
-                return false;
-            }
-        } else if (!this.base.equals(other.base))
-        {
-            return false;
-        }
-        if (this.purchasable == null)
-        {
-            if (other.purchasable != null)
-            {
-                return false;
-            }
-        } else if (!this.purchasable.equals(other.purchasable))
-        {
-            return false;
-        }
-        if (this.sell == null)
-        {
-            if (other.sell != null)
-            {
-                return false;
-            }
-        } else if (!this.sell.equals(other.sell))
-        {
-            return false;
-        }
-        if (this.total == null)
-        {
-            if (other.total != null)
-            {
-                return false;
-            }
-        } else if (!this.total.equals(other.total))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the base.
      *
      * @return the base
      */
-    public Integer getBase()
+    public int getBase()
     {
         return this.base;
     }
@@ -83,7 +23,7 @@ public class Gold
      *
      * @return the purchasable
      */
-    public Boolean getPurchasable()
+    public boolean getPurchasable()
     {
         return this.purchasable;
     }
@@ -93,7 +33,7 @@ public class Gold
      *
      * @return the sell
      */
-    public Integer getSell()
+    public int getSell()
     {
         return this.sell;
     }
@@ -103,20 +43,47 @@ public class Gold
      *
      * @return the total
      */
-    public Integer getTotal()
+    public int getTotal()
     {
         return this.total;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Gold gold = (Gold) o;
+        
+        if (base != gold.base)
+        {
+            return false;
+        }
+        if (purchasable != gold.purchasable)
+        {
+            return false;
+        }
+        if (sell != gold.sell)
+        {
+            return false;
+        }
+        return total == gold.total;
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.base == null) ? 0 : this.base.hashCode());
-        result = (prime * result) + ((this.purchasable == null) ? 0 : this.purchasable.hashCode());
-        result = (prime * result) + ((this.sell == null) ? 0 : this.sell.hashCode());
-        result = (prime * result) + ((this.total == null) ? 0 : this.total.hashCode());
+        int result = base;
+        result = 31 * result + (purchasable ? 1 : 0);
+        result = 31 * result + sell;
+        result = 31 * result + total;
         return result;
     }
     

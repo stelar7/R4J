@@ -9,112 +9,13 @@ import java.time.*;
 public class MatchReference
 {
     private LaneType      lane;
-    private Long          gameId;
+    private long          gameId;
     private ChampionType  champion;
     private Platform      platformId;
-    private Long          timestamp;
+    private long          timestamp;
     private GameQueueType queue;
     private RoleType      role;
     private SeasonType    season;
-    
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final MatchReference other = (MatchReference) obj;
-        if (this.champion == null)
-        {
-            if (other.champion != null)
-            {
-                return false;
-            }
-        } else if (!this.champion.equals(other.champion))
-        {
-            return false;
-        }
-        if (this.lane == null)
-        {
-            if (other.lane != null)
-            {
-                return false;
-            }
-        } else if (!this.lane.equals(other.lane))
-        {
-            return false;
-        }
-        if (this.gameId == null)
-        {
-            if (other.gameId != null)
-            {
-                return false;
-            }
-        } else if (!this.gameId.equals(other.gameId))
-        {
-            return false;
-        }
-        if (this.platformId == null)
-        {
-            if (other.platformId != null)
-            {
-                return false;
-            }
-        } else if (!this.platformId.equals(other.platformId))
-        {
-            return false;
-        }
-        if (this.queue == null)
-        {
-            if (other.queue != null)
-            {
-                return false;
-            }
-        } else if (!this.queue.equals(other.queue))
-        {
-            return false;
-        }
-        if (this.role == null)
-        {
-            if (other.role != null)
-            {
-                return false;
-            }
-        } else if (!this.role.equals(other.role))
-        {
-            return false;
-        }
-        if (this.season == null)
-        {
-            if (other.season != null)
-            {
-                return false;
-            }
-        } else if (!this.season.equals(other.season))
-        {
-            return false;
-        }
-        if (this.timestamp == null)
-        {
-            if (other.timestamp != null)
-            {
-                return false;
-            }
-        } else if (!this.timestamp.equals(other.timestamp))
-        {
-            return false;
-        }
-        return true;
-    }
     
     
     public Match getFullMatch()
@@ -130,7 +31,7 @@ public class MatchReference
     /**
      * ChampionType ID associated with game.
      *
-     * @return Long
+     * @return long
      */
     public ChampionType getChampion()
     {
@@ -150,9 +51,9 @@ public class MatchReference
     /**
      * Match ID.
      *
-     * @return Long
+     * @return long
      */
-    public Long getGameId()
+    public long getGameId()
     {
         return this.gameId;
     }
@@ -201,9 +102,9 @@ public class MatchReference
     /**
      * Timestamp
      *
-     * @return Long
+     * @return long
      */
-    public Long getTimestamp()
+    public long getTimestamp()
     {
         return this.timestamp;
     }
@@ -214,18 +115,61 @@ public class MatchReference
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        MatchReference that = (MatchReference) o;
+        
+        if (gameId != that.gameId)
+        {
+            return false;
+        }
+        if (timestamp != that.timestamp)
+        {
+            return false;
+        }
+        if (lane != that.lane)
+        {
+            return false;
+        }
+        if (champion != that.champion)
+        {
+            return false;
+        }
+        if (platformId != that.platformId)
+        {
+            return false;
+        }
+        if (queue != that.queue)
+        {
+            return false;
+        }
+        if (role != that.role)
+        {
+            return false;
+        }
+        return season == that.season;
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.champion == null) ? 0 : this.champion.hashCode());
-        result = (prime * result) + ((this.lane == null) ? 0 : this.lane.hashCode());
-        result = (prime * result) + ((this.gameId == null) ? 0 : this.gameId.hashCode());
-        result = (prime * result) + ((this.platformId == null) ? 0 : this.platformId.hashCode());
-        result = (prime * result) + ((this.queue == null) ? 0 : this.queue.hashCode());
-        result = (prime * result) + ((this.role == null) ? 0 : this.role.hashCode());
-        result = (prime * result) + ((this.season == null) ? 0 : this.season.hashCode());
-        result = (prime * result) + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
+        int result = lane != null ? lane.hashCode() : 0;
+        result = 31 * result + (int) (gameId ^ (gameId >>> 32));
+        result = 31 * result + (champion != null ? champion.hashCode() : 0);
+        result = 31 * result + (platformId != null ? platformId.hashCode() : 0);
+        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
+        result = 31 * result + (queue != null ? queue.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (season != null ? season.hashCode() : 0);
         return result;
     }
     

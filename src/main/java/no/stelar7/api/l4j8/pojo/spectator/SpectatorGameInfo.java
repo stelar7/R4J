@@ -10,11 +10,11 @@ import java.util.*;
 public class SpectatorGameInfo
 {
     private List<BannedChampion>       bannedChampions;
-    private Long                       gameId;
-    private Long                       gameLength;
+    private long                       gameId;
+    private long                       gameLength;
     private GameModeType               gameMode;
     private GameQueueType              gameQueueConfigId;
-    private Long                       gameStartTime;
+    private long                       gameStartTime;
     private GameType                   gameType;
     private MapType                    mapId;
     private Observer                   observers;
@@ -35,9 +35,9 @@ public class SpectatorGameInfo
     /**
      * The ID of the game
      *
-     * @return Long
+     * @return long
      */
-    public Long getGameId()
+    public long getGameId()
     {
         return this.gameId;
     }
@@ -45,9 +45,9 @@ public class SpectatorGameInfo
     /**
      * The amount of time in seconds that has passed since the game started
      *
-     * @return Long
+     * @return long
      */
-    public Long getGameLength()
+    public long getGameLength()
     {
         return this.gameLength;
     }
@@ -66,7 +66,7 @@ public class SpectatorGameInfo
     /**
      * The queue type
      *
-     * @return Long
+     * @return long
      */
     public GameQueueType getGameQueueConfig()
     {
@@ -96,7 +96,7 @@ public class SpectatorGameInfo
     /**
      * The ID of the map
      *
-     * @return Long
+     * @return long
      */
     public MapType getMap()
     {
@@ -148,15 +148,19 @@ public class SpectatorGameInfo
         
         SpectatorGameInfo that = (SpectatorGameInfo) o;
         
+        if (gameId != that.gameId)
+        {
+            return false;
+        }
+        if (gameLength != that.gameLength)
+        {
+            return false;
+        }
+        if (gameStartTime != that.gameStartTime)
+        {
+            return false;
+        }
         if ((bannedChampions != null) ? !bannedChampions.equals(that.bannedChampions) : (that.bannedChampions != null))
-        {
-            return false;
-        }
-        if ((gameId != null) ? !gameId.equals(that.gameId) : (that.gameId != null))
-        {
-            return false;
-        }
-        if ((gameLength != null) ? !gameLength.equals(that.gameLength) : (that.gameLength != null))
         {
             return false;
         }
@@ -165,10 +169,6 @@ public class SpectatorGameInfo
             return false;
         }
         if (gameQueueConfigId != that.gameQueueConfigId)
-        {
-            return false;
-        }
-        if ((gameStartTime != null) ? !gameStartTime.equals(that.gameStartTime) : (that.gameStartTime != null))
         {
             return false;
         }
@@ -195,11 +195,11 @@ public class SpectatorGameInfo
     public int hashCode()
     {
         int result = bannedChampions != null ? bannedChampions.hashCode() : 0;
-        result = 31 * result + (gameId != null ? gameId.hashCode() : 0);
-        result = 31 * result + (gameLength != null ? gameLength.hashCode() : 0);
+        result = 31 * result + (int) (gameId ^ (gameId >>> 32));
+        result = 31 * result + (int) (gameLength ^ (gameLength >>> 32));
         result = 31 * result + (gameMode != null ? gameMode.hashCode() : 0);
         result = 31 * result + (gameQueueConfigId != null ? gameQueueConfigId.hashCode() : 0);
-        result = 31 * result + (gameStartTime != null ? gameStartTime.hashCode() : 0);
+        result = 31 * result + (int) (gameStartTime ^ (gameStartTime >>> 32));
         result = 31 * result + (gameType != null ? gameType.hashCode() : 0);
         result = 31 * result + (mapId != null ? mapId.hashCode() : 0);
         result = 31 * result + (observers != null ? observers.hashCode() : 0);
@@ -207,7 +207,6 @@ public class SpectatorGameInfo
         result = 31 * result + (platformId != null ? platformId.hashCode() : 0);
         return result;
     }
-    
     
     @Override
     public String toString()

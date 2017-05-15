@@ -11,7 +11,7 @@ public class Match
 {
     private SeasonType                seasonId;
     private GameQueueType             queueId;
-    private Long                      gameId;
+    private long                      gameId;
     private List<ParticipantIdentity> participantIdentities;
     private String                    gameVersion;
     private Platform                  platformId;
@@ -20,8 +20,8 @@ public class Match
     private GameType                  gameType;
     private List<TeamStats>           teams;
     private List<Participant>         participants;
-    private Long                      gameCreation;
-    private Long                      gameDuration;
+    private long                      gameCreation;
+    private long                      gameDuration;
     
     
     /**
@@ -37,7 +37,7 @@ public class Match
     /**
      * Match map ID
      *
-     * @return Integer
+     * @return int
      */
     public MapType getMap()
     {
@@ -57,9 +57,9 @@ public class Match
     /**
      * Match duration
      *
-     * @return Long
+     * @return long
      */
-    public Long getMatchDuration()
+    public long getMatchDuration()
     {
         return this.gameDuration;
     }
@@ -67,9 +67,9 @@ public class Match
     /**
      * ID of the match
      *
-     * @return Long
+     * @return long
      */
-    public Long getMatchId()
+    public long getMatchId()
     {
         return this.gameId;
     }
@@ -124,11 +124,11 @@ public class Match
         return this.participants;
     }
     
-    public Participant getParticipant(Integer participantId)
+    public Participant getParticipant(int participantId)
     {
         for (Participant participant : participants)
         {
-            if (participant.getParticipantId().equals(participantId))
+            if (participant.getParticipantId() == participantId)
             {
                 return participant;
             }
@@ -136,11 +136,11 @@ public class Match
         return null;
     }
     
-    public ParticipantIdentity getParticipantIdentity(Integer participantId)
+    public ParticipantIdentity getParticipantIdentity(int participantId)
     {
         for (ParticipantIdentity participant : participantIdentities)
         {
-            if (participant.getParticipantId().equals(participantId))
+            if (participant.getParticipantId() == participantId)
             {
                 return participant;
             }
@@ -148,16 +148,16 @@ public class Match
         return null;
     }
     
-    public Participant getParticipantFromSummonerId(Long summonerId)
+    public Participant getParticipantFromSummonerId(long summonerId)
     {
         for (ParticipantIdentity identity : participantIdentities)
         {
-            if (identity.getPlayer().getSummonerId().equals(summonerId))
+            if (identity.getPlayer().getSummonerId() == summonerId)
             {
                 // return participants.get(participantIdentities.getParticipantId());
                 for (Participant participant : participants)
                 {
-                    if (participant.getParticipantId().equals(identity.getParticipantId()))
+                    if (participant.getParticipantId() == identity.getParticipantId())
                     {
                         return participant;
                     }
@@ -167,7 +167,7 @@ public class Match
         return null;
     }
     
-    public Boolean didWin(Participant participant)
+    public boolean didWin(Participant participant)
     {
         for (TeamStats team : teams)
         {
@@ -179,7 +179,7 @@ public class Match
         return false;
     }
     
-    public ParticipantIdentity getLaneOpponentIdentity(Long summonerId)
+    public ParticipantIdentity getLaneOpponentIdentity(long summonerId)
     {
         Participant par  = getParticipantFromSummonerId(summonerId);
         LaneType    lane = par.getTimeline().getLane();
@@ -188,7 +188,7 @@ public class Match
         
         for (Participant participant : participants)
         {
-            if (participant.getParticipantId().equals(par.getParticipantId()))
+            if (participant.getParticipantId() == par.getParticipantId())
             {
                 continue;
             }
@@ -265,15 +265,23 @@ public class Match
         
         Match match = (Match) o;
         
+        if (gameId != match.gameId)
+        {
+            return false;
+        }
+        if (gameCreation != match.gameCreation)
+        {
+            return false;
+        }
+        if (gameDuration != match.gameDuration)
+        {
+            return false;
+        }
         if (seasonId != match.seasonId)
         {
             return false;
         }
         if (queueId != match.queueId)
-        {
-            return false;
-        }
-        if ((gameId != null) ? !gameId.equals(match.gameId) : (match.gameId != null))
         {
             return false;
         }
@@ -305,15 +313,7 @@ public class Match
         {
             return false;
         }
-        if ((participants != null) ? !participants.equals(match.participants) : (match.participants != null))
-        {
-            return false;
-        }
-        if ((gameCreation != null) ? !gameCreation.equals(match.gameCreation) : (match.gameCreation != null))
-        {
-            return false;
-        }
-        return (gameDuration != null) ? gameDuration.equals(match.gameDuration) : (match.gameDuration == null);
+        return (participants != null) ? participants.equals(match.participants) : (match.participants == null);
     }
     
     @Override
@@ -321,7 +321,7 @@ public class Match
     {
         int result = seasonId != null ? seasonId.hashCode() : 0;
         result = 31 * result + (queueId != null ? queueId.hashCode() : 0);
-        result = 31 * result + (gameId != null ? gameId.hashCode() : 0);
+        result = 31 * result + (int) (gameId ^ (gameId >>> 32));
         result = 31 * result + (participantIdentities != null ? participantIdentities.hashCode() : 0);
         result = 31 * result + (gameVersion != null ? gameVersion.hashCode() : 0);
         result = 31 * result + (platformId != null ? platformId.hashCode() : 0);
@@ -330,8 +330,8 @@ public class Match
         result = 31 * result + (gameType != null ? gameType.hashCode() : 0);
         result = 31 * result + (teams != null ? teams.hashCode() : 0);
         result = 31 * result + (participants != null ? participants.hashCode() : 0);
-        result = 31 * result + (gameCreation != null ? gameCreation.hashCode() : 0);
-        result = 31 * result + (gameDuration != null ? gameDuration.hashCode() : 0);
+        result = 31 * result + (int) (gameCreation ^ (gameCreation >>> 32));
+        result = 31 * result + (int) (gameDuration ^ (gameDuration >>> 32));
         return result;
     }
     
