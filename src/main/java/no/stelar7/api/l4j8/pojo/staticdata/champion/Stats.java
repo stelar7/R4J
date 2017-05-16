@@ -2,252 +2,34 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 public class Stats
 {
-    private Double armor;
-    private Double armorperlevel;
-    private Double attackdamage;
-    private Double attackdamageperlevel;
-    private Double attackrange;
-    private Double attackspeedoffset;
-    private Double attackspeedperlevel;
-    private Double crit;
-    private Double critperlevel;
-    private Double hp;
-    private Double hpperlevel;
-    private Double hpregen;
-    private Double hpregenperlevel;
-    private Double movespeed;
-    private Double mp;
-    private Double mpperlevel;
-    private Double mpregen;
-    private Double mpregenperlevel;
-    private Double spellblock;
-    private Double spellblockperlevel;
+    private double armor;
+    private double armorperlevel;
+    private double attackdamage;
+    private double attackdamageperlevel;
+    private double attackrange;
+    private double attackspeedoffset;
+    private double attackspeedperlevel;
+    private double crit;
+    private double critperlevel;
+    private double hp;
+    private double hpperlevel;
+    private double hpregen;
+    private double hpregenperlevel;
+    private double movespeed;
+    private double mp;
+    private double mpperlevel;
+    private double mpregen;
+    private double mpregenperlevel;
+    private double spellblock;
+    private double spellblockperlevel;
     
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final Stats other = (Stats) obj;
-        if (this.armor == null)
-        {
-            if (other.armor != null)
-            {
-                return false;
-            }
-        } else if (!this.armor.equals(other.armor))
-        {
-            return false;
-        }
-        if (this.armorperlevel == null)
-        {
-            if (other.armorperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.armorperlevel.equals(other.armorperlevel))
-        {
-            return false;
-        }
-        if (this.attackdamage == null)
-        {
-            if (other.attackdamage != null)
-            {
-                return false;
-            }
-        } else if (!this.attackdamage.equals(other.attackdamage))
-        {
-            return false;
-        }
-        if (this.attackdamageperlevel == null)
-        {
-            if (other.attackdamageperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.attackdamageperlevel.equals(other.attackdamageperlevel))
-        {
-            return false;
-        }
-        if (this.attackrange == null)
-        {
-            if (other.attackrange != null)
-            {
-                return false;
-            }
-        } else if (!this.attackrange.equals(other.attackrange))
-        {
-            return false;
-        }
-        if (this.attackspeedoffset == null)
-        {
-            if (other.attackspeedoffset != null)
-            {
-                return false;
-            }
-        } else if (!this.attackspeedoffset.equals(other.attackspeedoffset))
-        {
-            return false;
-        }
-        if (this.attackspeedperlevel == null)
-        {
-            if (other.attackspeedperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.attackspeedperlevel.equals(other.attackspeedperlevel))
-        {
-            return false;
-        }
-        if (this.crit == null)
-        {
-            if (other.crit != null)
-            {
-                return false;
-            }
-        } else if (!this.crit.equals(other.crit))
-        {
-            return false;
-        }
-        if (this.critperlevel == null)
-        {
-            if (other.critperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.critperlevel.equals(other.critperlevel))
-        {
-            return false;
-        }
-        if (this.hp == null)
-        {
-            if (other.hp != null)
-            {
-                return false;
-            }
-        } else if (!this.hp.equals(other.hp))
-        {
-            return false;
-        }
-        if (this.hpperlevel == null)
-        {
-            if (other.hpperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.hpperlevel.equals(other.hpperlevel))
-        {
-            return false;
-        }
-        if (this.hpregen == null)
-        {
-            if (other.hpregen != null)
-            {
-                return false;
-            }
-        } else if (!this.hpregen.equals(other.hpregen))
-        {
-            return false;
-        }
-        if (this.hpregenperlevel == null)
-        {
-            if (other.hpregenperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.hpregenperlevel.equals(other.hpregenperlevel))
-        {
-            return false;
-        }
-        if (this.movespeed == null)
-        {
-            if (other.movespeed != null)
-            {
-                return false;
-            }
-        } else if (!this.movespeed.equals(other.movespeed))
-        {
-            return false;
-        }
-        if (this.mp == null)
-        {
-            if (other.mp != null)
-            {
-                return false;
-            }
-        } else if (!this.mp.equals(other.mp))
-        {
-            return false;
-        }
-        if (this.mpperlevel == null)
-        {
-            if (other.mpperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.mpperlevel.equals(other.mpperlevel))
-        {
-            return false;
-        }
-        if (this.mpregen == null)
-        {
-            if (other.mpregen != null)
-            {
-                return false;
-            }
-        } else if (!this.mpregen.equals(other.mpregen))
-        {
-            return false;
-        }
-        if (this.mpregenperlevel == null)
-        {
-            if (other.mpregenperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.mpregenperlevel.equals(other.mpregenperlevel))
-        {
-            return false;
-        }
-        if (this.spellblock == null)
-        {
-            if (other.spellblock != null)
-            {
-                return false;
-            }
-        } else if (!this.spellblock.equals(other.spellblock))
-        {
-            return false;
-        }
-        if (this.spellblockperlevel == null)
-        {
-            if (other.spellblockperlevel != null)
-            {
-                return false;
-            }
-        } else if (!this.spellblockperlevel.equals(other.spellblockperlevel))
-        {
-            return false;
-        }
-        return true;
-    }
     
     /**
      * Gets the armor.
      *
      * @return the armor
      */
-    public Double getArmor()
+    public double getArmor()
     {
         return this.armor;
     }
@@ -257,7 +39,7 @@ public class Stats
      *
      * @return the armorperlevel
      */
-    public Double getArmorperlevel()
+    public double getArmorperlevel()
     {
         return this.armorperlevel;
     }
@@ -267,7 +49,7 @@ public class Stats
      *
      * @return the attackdamage
      */
-    public Double getAttackdamage()
+    public double getAttackdamage()
     {
         return this.attackdamage;
     }
@@ -277,7 +59,7 @@ public class Stats
      *
      * @return the attackdamageperlevel
      */
-    public Double getAttackdamageperlevel()
+    public double getAttackdamageperlevel()
     {
         return this.attackdamageperlevel;
     }
@@ -287,7 +69,7 @@ public class Stats
      *
      * @return the attackrange
      */
-    public Double getAttackrange()
+    public double getAttackrange()
     {
         return this.attackrange;
     }
@@ -297,7 +79,7 @@ public class Stats
      *
      * @return the attackspeedoffset
      */
-    public Double getAttackspeedoffset()
+    public double getAttackspeedoffset()
     {
         return this.attackspeedoffset;
     }
@@ -307,7 +89,7 @@ public class Stats
      *
      * @return the attackspeedperlevel
      */
-    public Double getAttackspeedperlevel()
+    public double getAttackspeedperlevel()
     {
         return this.attackspeedperlevel;
     }
@@ -317,7 +99,7 @@ public class Stats
      *
      * @return the crit
      */
-    public Double getCrit()
+    public double getCrit()
     {
         return this.crit;
     }
@@ -327,7 +109,7 @@ public class Stats
      *
      * @return the critperlevel
      */
-    public Double getCritperlevel()
+    public double getCritperlevel()
     {
         return this.critperlevel;
     }
@@ -337,7 +119,7 @@ public class Stats
      *
      * @return the hp
      */
-    public Double getHp()
+    public double getHp()
     {
         return this.hp;
     }
@@ -347,7 +129,7 @@ public class Stats
      *
      * @return the hpperlevel
      */
-    public Double getHpperlevel()
+    public double getHpperlevel()
     {
         return this.hpperlevel;
     }
@@ -357,7 +139,7 @@ public class Stats
      *
      * @return the hpregen
      */
-    public Double getHpregen()
+    public double getHpregen()
     {
         return this.hpregen;
     }
@@ -367,7 +149,7 @@ public class Stats
      *
      * @return the hpregenperlevel
      */
-    public Double getHpregenperlevel()
+    public double getHpregenperlevel()
     {
         return this.hpregenperlevel;
     }
@@ -377,7 +159,7 @@ public class Stats
      *
      * @return the movespeed
      */
-    public Double getMovespeed()
+    public double getMovespeed()
     {
         return this.movespeed;
     }
@@ -387,7 +169,7 @@ public class Stats
      *
      * @return the mp
      */
-    public Double getMp()
+    public double getMp()
     {
         return this.mp;
     }
@@ -397,7 +179,7 @@ public class Stats
      *
      * @return the mpperlevel
      */
-    public Double getMpperlevel()
+    public double getMpperlevel()
     {
         return this.mpperlevel;
     }
@@ -407,7 +189,7 @@ public class Stats
      *
      * @return the mpregen
      */
-    public Double getMpregen()
+    public double getMpregen()
     {
         return this.mpregen;
     }
@@ -417,7 +199,7 @@ public class Stats
      *
      * @return the mpregenperlevel
      */
-    public Double getMpregenperlevel()
+    public double getMpregenperlevel()
     {
         return this.mpregenperlevel;
     }
@@ -427,7 +209,7 @@ public class Stats
      *
      * @return the spellblock
      */
-    public Double getSpellblock()
+    public double getSpellblock()
     {
         return this.spellblock;
     }
@@ -437,36 +219,149 @@ public class Stats
      *
      * @return the spellblockperlevel
      */
-    public Double getSpellblockperlevel()
+    public double getSpellblockperlevel()
     {
         return this.spellblockperlevel;
     }
     
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        Stats stats = (Stats) o;
+        
+        if (Double.compare(stats.armor, armor) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.armorperlevel, armorperlevel) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.attackdamage, attackdamage) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.attackdamageperlevel, attackdamageperlevel) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.attackrange, attackrange) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.attackspeedoffset, attackspeedoffset) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.attackspeedperlevel, attackspeedperlevel) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.crit, crit) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.critperlevel, critperlevel) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.hp, hp) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.hpperlevel, hpperlevel) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.hpregen, hpregen) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.hpregenperlevel, hpregenperlevel) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.movespeed, movespeed) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.mp, mp) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.mpperlevel, mpperlevel) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.mpregen, mpregen) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.mpregenperlevel, mpregenperlevel) != 0)
+        {
+            return false;
+        }
+        if (Double.compare(stats.spellblock, spellblock) != 0)
+        {
+            return false;
+        }
+        return Double.compare(stats.spellblockperlevel, spellblockperlevel) == 0;
+    }
+    
+    @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.armor == null) ? 0 : this.armor.hashCode());
-        result = (prime * result) + ((this.armorperlevel == null) ? 0 : this.armorperlevel.hashCode());
-        result = (prime * result) + ((this.attackdamage == null) ? 0 : this.attackdamage.hashCode());
-        result = (prime * result) + ((this.attackdamageperlevel == null) ? 0 : this.attackdamageperlevel.hashCode());
-        result = (prime * result) + ((this.attackrange == null) ? 0 : this.attackrange.hashCode());
-        result = (prime * result) + ((this.attackspeedoffset == null) ? 0 : this.attackspeedoffset.hashCode());
-        result = (prime * result) + ((this.attackspeedperlevel == null) ? 0 : this.attackspeedperlevel.hashCode());
-        result = (prime * result) + ((this.crit == null) ? 0 : this.crit.hashCode());
-        result = (prime * result) + ((this.critperlevel == null) ? 0 : this.critperlevel.hashCode());
-        result = (prime * result) + ((this.hp == null) ? 0 : this.hp.hashCode());
-        result = (prime * result) + ((this.hpperlevel == null) ? 0 : this.hpperlevel.hashCode());
-        result = (prime * result) + ((this.hpregen == null) ? 0 : this.hpregen.hashCode());
-        result = (prime * result) + ((this.hpregenperlevel == null) ? 0 : this.hpregenperlevel.hashCode());
-        result = (prime * result) + ((this.movespeed == null) ? 0 : this.movespeed.hashCode());
-        result = (prime * result) + ((this.mp == null) ? 0 : this.mp.hashCode());
-        result = (prime * result) + ((this.mpperlevel == null) ? 0 : this.mpperlevel.hashCode());
-        result = (prime * result) + ((this.mpregen == null) ? 0 : this.mpregen.hashCode());
-        result = (prime * result) + ((this.mpregenperlevel == null) ? 0 : this.mpregenperlevel.hashCode());
-        result = (prime * result) + ((this.spellblock == null) ? 0 : this.spellblock.hashCode());
-        result = (prime * result) + ((this.spellblockperlevel == null) ? 0 : this.spellblockperlevel.hashCode());
+        int  result;
+        long temp;
+        temp = Double.doubleToLongBits(armor);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(armorperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(attackdamage);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(attackdamageperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(attackrange);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(attackspeedoffset);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(attackspeedperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(crit);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(critperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(hp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(hpperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(hpregen);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(hpregenperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(movespeed);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(mp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(mpperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(mpregen);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(mpregenperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(spellblock);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(spellblockperlevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
     

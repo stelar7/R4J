@@ -2,72 +2,723 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 public class BasicDataStats
 {
-    private Double FlatArmorMod;
-    private Double FlatAttackSpeedMod;
-    private Double FlatBlockMod;
-    private Double FlatCritChanceMod;
-    private Double FlatCritDamageMod;
-    private Double FlatEXPBonus;
-    private Double FlatEnergyPoolMod;
-    private Double FlatEnergyRegenMod;
-    private Double FlatHPPoolMod;
-    private Double FlatHPRegenMod;
-    private Double FlatMPPoolMod;
-    private Double FlatMPRegenMod;
-    private Double FlatMagicDamageMod;
-    private Double FlatMovementSpeedMod;
-    private Double FlatPhysicalDamageMod;
-    private Double FlatSpellBlockMod;
-    private Double PercentArmorMod;
-    private Double PercentAttackSpeedMod;
-    private Double PercentBlockMod;
-    private Double PercentCritChanceMod;
-    private Double PercentCritDamageMod;
-    private Double PercentDodgeMod;
-    private Double PercentEXPBonus;
-    private Double PercentHPPoolMod;
-    private Double PercentHPRegenMod;
-    private Double PercentLifeStealMod;
-    private Double PercentMPPoolMod;
-    private Double PercentMPRegenMod;
-    private Double PercentMagicDamageMod;
-    private Double PercentMovementSpeedMod;
-    private Double PercentPhysicalDamageMod;
-    private Double PercentSpellBlockMod;
-    private Double PercentSpellVampMod;
-    private Double rFlatArmorModPerLevel;
-    private Double rFlatArmorPenetrationMod;
-    private Double rFlatArmorPenetrationModPerLevel;
-    private Double rFlatCritChanceModPerLevel;
-    private Double rFlatCritDamageModPerLevel;
-    private Double rFlatDodgeMod;
-    private Double rFlatDodgeModPerLevel;
-    private Double rFlatEnergyModPerLevel;
-    private Double rFlatEnergyRegenModPerLevel;
-    private Double rFlatGoldPer10Mod;
-    private Double rFlatHPModPerLevel;
-    private Double rFlatHPRegenModPerLevel;
-    private Double rFlatMPModPerLevel;
-    private Double rFlatMPRegenModPerLevel;
-    private Double rFlatMagicDamageModPerLevel;
-    private Double rFlatMagicPenetrationMod;
-    private Double rFlatMagicPenetrationModPerLevel;
-    private Double rFlatMovementSpeedModPerLevel;
-    private Double rFlatPhysicalDamageModPerLevel;
-    private Double rFlatSpellBlockModPerLevel;
-    private Double rFlatTimeDeadMod;
-    private Double rFlatTimeDeadModPerLevel;
-    private Double rPercentArmorPenetrationMod;
-    private Double rPercentArmorPenetrationModPerLevel;
-    private Double rPercentAttackSpeedModPerLevel;
-    private Double rPercentCooldownMod;
-    private Double rPercentCooldownModPerLevel;
-    private Double rPercentMagicPenetrationMod;
-    private Double rPercentMagicPenetrationModPerLevel;
-    private Double rPercentMovementSpeedModPerLevel;
-    private Double rPercentTimeDeadMod;
-    private Double rPercentTimeDeadModPerLevel;
+    private double FlatArmorMod;
+    private double FlatAttackSpeedMod;
+    private double FlatBlockMod;
+    private double FlatCritChanceMod;
+    private double FlatCritDamageMod;
+    private double FlatEXPBonus;
+    private double FlatEnergyPoolMod;
+    private double FlatEnergyRegenMod;
+    private double FlatHPPoolMod;
+    private double FlatHPRegenMod;
+    private double FlatMPPoolMod;
+    private double FlatMPRegenMod;
+    private double FlatMagicDamageMod;
+    private double FlatMovementSpeedMod;
+    private double FlatPhysicalDamageMod;
+    private double FlatSpellBlockMod;
+    private double PercentArmorMod;
+    private double PercentAttackSpeedMod;
+    private double PercentBlockMod;
+    private double PercentCritChanceMod;
+    private double PercentCritDamageMod;
+    private double PercentDodgeMod;
+    private double PercentEXPBonus;
+    private double PercentHPPoolMod;
+    private double PercentHPRegenMod;
+    private double PercentLifeStealMod;
+    private double PercentMPPoolMod;
+    private double PercentMPRegenMod;
+    private double PercentMagicDamageMod;
+    private double PercentMovementSpeedMod;
+    private double PercentPhysicalDamageMod;
+    private double PercentSpellBlockMod;
+    private double PercentSpellVampMod;
+    private double rFlatArmorModPerLevel;
+    private double rFlatArmorPenetrationMod;
+    private double rFlatArmorPenetrationModPerLevel;
+    private double rFlatCritChanceModPerLevel;
+    private double rFlatCritDamageModPerLevel;
+    private double rFlatDodgeMod;
+    private double rFlatDodgeModPerLevel;
+    private double rFlatEnergyModPerLevel;
+    private double rFlatEnergyRegenModPerLevel;
+    private double rFlatGoldPer10Mod;
+    private double rFlatHPModPerLevel;
+    private double rFlatHPRegenModPerLevel;
+    private double rFlatMPModPerLevel;
+    private double rFlatMPRegenModPerLevel;
+    private double rFlatMagicDamageModPerLevel;
+    private double rFlatMagicPenetrationMod;
+    private double rFlatMagicPenetrationModPerLevel;
+    private double rFlatMovementSpeedModPerLevel;
+    private double rFlatPhysicalDamageModPerLevel;
+    private double rFlatSpellBlockModPerLevel;
+    private double rFlatTimeDeadMod;
+    private double rFlatTimeDeadModPerLevel;
+    private double rPercentArmorPenetrationMod;
+    private double rPercentArmorPenetrationModPerLevel;
+    private double rPercentAttackSpeedModPerLevel;
+    private double rPercentCooldownMod;
+    private double rPercentCooldownModPerLevel;
+    private double rPercentMagicPenetrationMod;
+    private double rPercentMagicPenetrationModPerLevel;
+    private double rPercentMovementSpeedModPerLevel;
+    private double rPercentTimeDeadMod;
+    private double rPercentTimeDeadModPerLevel;
     
+    
+   
+    /**
+     * Gets the flat armor mod.
+     *
+     * @return the flat armor mod
+     */
+    public double getFlatArmorMod()
+    {
+        return this.FlatArmorMod;
+    }
+    
+    /**
+     * Gets the flat attack speed mod.
+     *
+     * @return the flat attack speed mod
+     */
+    public double getFlatAttackSpeedMod()
+    {
+        return this.FlatAttackSpeedMod;
+    }
+    
+    /**
+     * Gets the flat block mod.
+     *
+     * @return the flat block mod
+     */
+    public double getFlatBlockMod()
+    {
+        return this.FlatBlockMod;
+    }
+    
+    /**
+     * Gets the flat crit chance mod.
+     *
+     * @return the flat crit chance mod
+     */
+    public double getFlatCritChanceMod()
+    {
+        return this.FlatCritChanceMod;
+    }
+    
+    /**
+     * Gets the flat crit damage mod.
+     *
+     * @return the flat crit damage mod
+     */
+    public double getFlatCritDamageMod()
+    {
+        return this.FlatCritDamageMod;
+    }
+    
+    /**
+     * Gets the flat energy pool mod.
+     *
+     * @return the flat energy pool mod
+     */
+    public double getFlatEnergyPoolMod()
+    {
+        return this.FlatEnergyPoolMod;
+    }
+    
+    /**
+     * Gets the flat energy regen mod.
+     *
+     * @return the flat energy regen mod
+     */
+    public double getFlatEnergyRegenMod()
+    {
+        return this.FlatEnergyRegenMod;
+    }
+    
+    /**
+     * Gets the flat exp bonus.
+     *
+     * @return the flat exp bonus
+     */
+    public double getFlatEXPBonus()
+    {
+        return this.FlatEXPBonus;
+    }
+    
+    /**
+     * Gets the flat hp pool mod.
+     *
+     * @return the flat hp pool mod
+     */
+    public double getFlatHPPoolMod()
+    {
+        return this.FlatHPPoolMod;
+    }
+    
+    /**
+     * Gets the flat hp regen mod.
+     *
+     * @return the flat hp regen mod
+     */
+    public double getFlatHPRegenMod()
+    {
+        return this.FlatHPRegenMod;
+    }
+    
+    /**
+     * Gets the flat magic damage mod.
+     *
+     * @return the flat magic damage mod
+     */
+    public double getFlatMagicDamageMod()
+    {
+        return this.FlatMagicDamageMod;
+    }
+    
+    /**
+     * Gets the flat movement speed mod.
+     *
+     * @return the flat movement speed mod
+     */
+    public double getFlatMovementSpeedMod()
+    {
+        return this.FlatMovementSpeedMod;
+    }
+    
+    /**
+     * Gets the flat mp pool mod.
+     *
+     * @return the flat mp pool mod
+     */
+    public double getFlatMPPoolMod()
+    {
+        return this.FlatMPPoolMod;
+    }
+    
+    /**
+     * Gets the flat mp regen mod.
+     *
+     * @return the flat mp regen mod
+     */
+    public double getFlatMPRegenMod()
+    {
+        return this.FlatMPRegenMod;
+    }
+    
+    /**
+     * Gets the flat physical damage mod.
+     *
+     * @return the flat physical damage mod
+     */
+    public double getFlatPhysicalDamageMod()
+    {
+        return this.FlatPhysicalDamageMod;
+    }
+    
+    /**
+     * Gets the flat spell block mod.
+     *
+     * @return the flat spell block mod
+     */
+    public double getFlatSpellBlockMod()
+    {
+        return this.FlatSpellBlockMod;
+    }
+    
+    /**
+     * Gets the percent armor mod.
+     *
+     * @return the percent armor mod
+     */
+    public double getPercentArmorMod()
+    {
+        return this.PercentArmorMod;
+    }
+    
+    /**
+     * Gets the percent attack speed mod.
+     *
+     * @return the percent attack speed mod
+     */
+    public double getPercentAttackSpeedMod()
+    {
+        return this.PercentAttackSpeedMod;
+    }
+    
+    /**
+     * Gets the percent block mod.
+     *
+     * @return the percent block mod
+     */
+    public double getPercentBlockMod()
+    {
+        return this.PercentBlockMod;
+    }
+    
+    /**
+     * Gets the percent crit chance mod.
+     *
+     * @return the percent crit chance mod
+     */
+    public double getPercentCritChanceMod()
+    {
+        return this.PercentCritChanceMod;
+    }
+    
+    /**
+     * Gets the percent crit damage mod.
+     *
+     * @return the percent crit damage mod
+     */
+    public double getPercentCritDamageMod()
+    {
+        return this.PercentCritDamageMod;
+    }
+    
+    /**
+     * Gets the percent dodge mod.
+     *
+     * @return the percent dodge mod
+     */
+    public double getPercentDodgeMod()
+    {
+        return this.PercentDodgeMod;
+    }
+    
+    /**
+     * Gets the percent exp bonus.
+     *
+     * @return the percent exp bonus
+     */
+    public double getPercentEXPBonus()
+    {
+        return this.PercentEXPBonus;
+    }
+    
+    /**
+     * Gets the percent hp pool mod.
+     *
+     * @return the percent hp pool mod
+     */
+    public double getPercentHPPoolMod()
+    {
+        return this.PercentHPPoolMod;
+    }
+    
+    /**
+     * Gets the percent hp regen mod.
+     *
+     * @return the percent hp regen mod
+     */
+    public double getPercentHPRegenMod()
+    {
+        return this.PercentHPRegenMod;
+    }
+    
+    /**
+     * Gets the percent life steal mod.
+     *
+     * @return the percent life steal mod
+     */
+    public double getPercentLifeStealMod()
+    {
+        return this.PercentLifeStealMod;
+    }
+    
+    /**
+     * Gets the percent magic damage mod.
+     *
+     * @return the percent magic damage mod
+     */
+    public double getPercentMagicDamageMod()
+    {
+        return this.PercentMagicDamageMod;
+    }
+    
+    /**
+     * Gets the percent movement speed mod.
+     *
+     * @return the percent movement speed mod
+     */
+    public double getPercentMovementSpeedMod()
+    {
+        return this.PercentMovementSpeedMod;
+    }
+    
+    /**
+     * Gets the percent mp pool mod.
+     *
+     * @return the percent mp pool mod
+     */
+    public double getPercentMPPoolMod()
+    {
+        return this.PercentMPPoolMod;
+    }
+    
+    /**
+     * Gets the percent mp regen mod.
+     *
+     * @return the percent mp regen mod
+     */
+    public double getPercentMPRegenMod()
+    {
+        return this.PercentMPRegenMod;
+    }
+    
+    /**
+     * Gets the percent physical damage mod.
+     *
+     * @return the percent physical damage mod
+     */
+    public double getPercentPhysicalDamageMod()
+    {
+        return this.PercentPhysicalDamageMod;
+    }
+    
+    /**
+     * Gets the percent spell block mod.
+     *
+     * @return the percent spell block mod
+     */
+    public double getPercentSpellBlockMod()
+    {
+        return this.PercentSpellBlockMod;
+    }
+    
+    /**
+     * Gets the percent spell vamp mod.
+     *
+     * @return the percent spell vamp mod
+     */
+    public double getPercentSpellVampMod()
+    {
+        return this.PercentSpellVampMod;
+    }
+    
+    /**
+     * Gets the r flat armor mod per level.
+     *
+     * @return the r flat armor mod per level
+     */
+    public double getrFlatArmorModPerLevel()
+    {
+        return this.rFlatArmorModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat armor penetration mod.
+     *
+     * @return the r flat armor penetration mod
+     */
+    public double getrFlatArmorPenetrationMod()
+    {
+        return this.rFlatArmorPenetrationMod;
+    }
+    
+    /**
+     * Gets the r flat armor penetration mod per level.
+     *
+     * @return the r flat armor penetration mod per level
+     */
+    public double getrFlatArmorPenetrationModPerLevel()
+    {
+        return this.rFlatArmorPenetrationModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat crit chance mod per level.
+     *
+     * @return the r flat crit chance mod per level
+     */
+    public double getrFlatCritChanceModPerLevel()
+    {
+        return this.rFlatCritChanceModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat crit damage mod per level.
+     *
+     * @return the r flat crit damage mod per level
+     */
+    public double getrFlatCritDamageModPerLevel()
+    {
+        return this.rFlatCritDamageModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat dodge mod.
+     *
+     * @return the r flat dodge mod
+     */
+    public double getrFlatDodgeMod()
+    {
+        return this.rFlatDodgeMod;
+    }
+    
+    /**
+     * Gets the r flat dodge mod per level.
+     *
+     * @return the r flat dodge mod per level
+     */
+    public double getrFlatDodgeModPerLevel()
+    {
+        return this.rFlatDodgeModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat energy mod per level.
+     *
+     * @return the r flat energy mod per level
+     */
+    public double getrFlatEnergyModPerLevel()
+    {
+        return this.rFlatEnergyModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat energy regen mod per level.
+     *
+     * @return the r flat energy regen mod per level
+     */
+    public double getrFlatEnergyRegenModPerLevel()
+    {
+        return this.rFlatEnergyRegenModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat gold per10 mod.
+     *
+     * @return the r flat gold per10 mod
+     */
+    public double getrFlatGoldPer10Mod()
+    {
+        return this.rFlatGoldPer10Mod;
+    }
+    
+    /**
+     * Gets the r flat hp mod per level.
+     *
+     * @return the r flat hp mod per level
+     */
+    public double getrFlatHPModPerLevel()
+    {
+        return this.rFlatHPModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat hp regen mod per level.
+     *
+     * @return the r flat hp regen mod per level
+     */
+    public double getrFlatHPRegenModPerLevel()
+    {
+        return this.rFlatHPRegenModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat magic damage mod per level.
+     *
+     * @return the r flat magic damage mod per level
+     */
+    public double getrFlatMagicDamageModPerLevel()
+    {
+        return this.rFlatMagicDamageModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat magic penetration mod.
+     *
+     * @return the r flat magic penetration mod
+     */
+    public double getrFlatMagicPenetrationMod()
+    {
+        return this.rFlatMagicPenetrationMod;
+    }
+    
+    /**
+     * Gets the r flat magic penetration mod per level.
+     *
+     * @return the r flat magic penetration mod per level
+     */
+    public double getrFlatMagicPenetrationModPerLevel()
+    {
+        return this.rFlatMagicPenetrationModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat movement speed mod per level.
+     *
+     * @return the r flat movement speed mod per level
+     */
+    public double getrFlatMovementSpeedModPerLevel()
+    {
+        return this.rFlatMovementSpeedModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat mp mod per level.
+     *
+     * @return the r flat mp mod per level
+     */
+    public double getrFlatMPModPerLevel()
+    {
+        return this.rFlatMPModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat mp regen mod per level.
+     *
+     * @return the r flat mp regen mod per level
+     */
+    public double getrFlatMPRegenModPerLevel()
+    {
+        return this.rFlatMPRegenModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat physical damage mod per level.
+     *
+     * @return the r flat physical damage mod per level
+     */
+    public double getrFlatPhysicalDamageModPerLevel()
+    {
+        return this.rFlatPhysicalDamageModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat spell block mod per level.
+     *
+     * @return the r flat spell block mod per level
+     */
+    public double getrFlatSpellBlockModPerLevel()
+    {
+        return this.rFlatSpellBlockModPerLevel;
+    }
+    
+    /**
+     * Gets the r flat time dead mod.
+     *
+     * @return the r flat time dead mod
+     */
+    public double getrFlatTimeDeadMod()
+    {
+        return this.rFlatTimeDeadMod;
+    }
+    
+    /**
+     * Gets the r flat time dead mod per level.
+     *
+     * @return the r flat time dead mod per level
+     */
+    public double getrFlatTimeDeadModPerLevel()
+    {
+        return this.rFlatTimeDeadModPerLevel;
+    }
+    
+    /**
+     * Gets the r percent armor penetration mod.
+     *
+     * @return the r percent armor penetration mod
+     */
+    public double getrPercentArmorPenetrationMod()
+    {
+        return this.rPercentArmorPenetrationMod;
+    }
+    
+    /**
+     * Gets the r percent armor penetration mod per level.
+     *
+     * @return the r percent armor penetration mod per level
+     */
+    public double getrPercentArmorPenetrationModPerLevel()
+    {
+        return this.rPercentArmorPenetrationModPerLevel;
+    }
+    
+    /**
+     * Gets the r percent attack speed mod per level.
+     *
+     * @return the r percent attack speed mod per level
+     */
+    public double getrPercentAttackSpeedModPerLevel()
+    {
+        return this.rPercentAttackSpeedModPerLevel;
+    }
+    
+    /**
+     * Gets the r percent cooldown mod.
+     *
+     * @return the r percent cooldown mod
+     */
+    public double getrPercentCooldownMod()
+    {
+        return this.rPercentCooldownMod;
+    }
+    
+    /**
+     * Gets the r percent cooldown mod per level.
+     *
+     * @return the r percent cooldown mod per level
+     */
+    public double getrPercentCooldownModPerLevel()
+    {
+        return this.rPercentCooldownModPerLevel;
+    }
+    
+    /**
+     * Gets the r percent magic penetration mod.
+     *
+     * @return the r percent magic penetration mod
+     */
+    public double getrPercentMagicPenetrationMod()
+    {
+        return this.rPercentMagicPenetrationMod;
+    }
+    
+    /**
+     * Gets the r percent magic penetration mod per level.
+     *
+     * @return the r percent magic penetration mod per level
+     */
+    public double getrPercentMagicPenetrationModPerLevel()
+    {
+        return this.rPercentMagicPenetrationModPerLevel;
+    }
+    
+    /**
+     * Gets the r percent movement speed mod per level.
+     *
+     * @return the r percent movement speed mod per level
+     */
+    public double getrPercentMovementSpeedModPerLevel()
+    {
+        return this.rPercentMovementSpeedModPerLevel;
+    }
+    
+    /**
+     * Gets the r percent time dead mod.
+     *
+     * @return the r percent time dead mod
+     */
+    public double getrPercentTimeDeadMod()
+    {
+        return this.rPercentTimeDeadMod;
+    }
+    
+    /**
+     * Gets the r percent time dead mod per level.
+     *
+     * @return the r percent time dead mod per level
+     */
+    public double getrPercentTimeDeadModPerLevel()
+    {
+        return this.rPercentTimeDeadModPerLevel;
+    }
     
     @Override
     public boolean equals(Object o)
@@ -83,984 +734,401 @@ public class BasicDataStats
         
         BasicDataStats that = (BasicDataStats) o;
         
-        if ((FlatArmorMod != null) ? !FlatArmorMod.equals(that.FlatArmorMod) : (that.FlatArmorMod != null))
+        if (Double.compare(that.FlatArmorMod, FlatArmorMod) != 0)
         {
             return false;
         }
-        if ((FlatAttackSpeedMod != null) ? !FlatAttackSpeedMod.equals(that.FlatAttackSpeedMod) : (that.FlatAttackSpeedMod != null))
+        if (Double.compare(that.FlatAttackSpeedMod, FlatAttackSpeedMod) != 0)
         {
             return false;
         }
-        if ((FlatBlockMod != null) ? !FlatBlockMod.equals(that.FlatBlockMod) : (that.FlatBlockMod != null))
+        if (Double.compare(that.FlatBlockMod, FlatBlockMod) != 0)
         {
             return false;
         }
-        if ((FlatCritChanceMod != null) ? !FlatCritChanceMod.equals(that.FlatCritChanceMod) : (that.FlatCritChanceMod != null))
+        if (Double.compare(that.FlatCritChanceMod, FlatCritChanceMod) != 0)
         {
             return false;
         }
-        if ((FlatCritDamageMod != null) ? !FlatCritDamageMod.equals(that.FlatCritDamageMod) : (that.FlatCritDamageMod != null))
+        if (Double.compare(that.FlatCritDamageMod, FlatCritDamageMod) != 0)
         {
             return false;
         }
-        if ((FlatEXPBonus != null) ? !FlatEXPBonus.equals(that.FlatEXPBonus) : (that.FlatEXPBonus != null))
+        if (Double.compare(that.FlatEXPBonus, FlatEXPBonus) != 0)
         {
             return false;
         }
-        if ((FlatEnergyPoolMod != null) ? !FlatEnergyPoolMod.equals(that.FlatEnergyPoolMod) : (that.FlatEnergyPoolMod != null))
+        if (Double.compare(that.FlatEnergyPoolMod, FlatEnergyPoolMod) != 0)
         {
             return false;
         }
-        if ((FlatEnergyRegenMod != null) ? !FlatEnergyRegenMod.equals(that.FlatEnergyRegenMod) : (that.FlatEnergyRegenMod != null))
+        if (Double.compare(that.FlatEnergyRegenMod, FlatEnergyRegenMod) != 0)
         {
             return false;
         }
-        if ((FlatHPPoolMod != null) ? !FlatHPPoolMod.equals(that.FlatHPPoolMod) : (that.FlatHPPoolMod != null))
+        if (Double.compare(that.FlatHPPoolMod, FlatHPPoolMod) != 0)
         {
             return false;
         }
-        if ((FlatHPRegenMod != null) ? !FlatHPRegenMod.equals(that.FlatHPRegenMod) : (that.FlatHPRegenMod != null))
+        if (Double.compare(that.FlatHPRegenMod, FlatHPRegenMod) != 0)
         {
             return false;
         }
-        if ((FlatMPPoolMod != null) ? !FlatMPPoolMod.equals(that.FlatMPPoolMod) : (that.FlatMPPoolMod != null))
+        if (Double.compare(that.FlatMPPoolMod, FlatMPPoolMod) != 0)
         {
             return false;
         }
-        if ((FlatMPRegenMod != null) ? !FlatMPRegenMod.equals(that.FlatMPRegenMod) : (that.FlatMPRegenMod != null))
+        if (Double.compare(that.FlatMPRegenMod, FlatMPRegenMod) != 0)
         {
             return false;
         }
-        if ((FlatMagicDamageMod != null) ? !FlatMagicDamageMod.equals(that.FlatMagicDamageMod) : (that.FlatMagicDamageMod != null))
+        if (Double.compare(that.FlatMagicDamageMod, FlatMagicDamageMod) != 0)
         {
             return false;
         }
-        if ((FlatMovementSpeedMod != null) ? !FlatMovementSpeedMod.equals(that.FlatMovementSpeedMod) : (that.FlatMovementSpeedMod != null))
+        if (Double.compare(that.FlatMovementSpeedMod, FlatMovementSpeedMod) != 0)
         {
             return false;
         }
-        if ((FlatPhysicalDamageMod != null) ? !FlatPhysicalDamageMod.equals(that.FlatPhysicalDamageMod) : (that.FlatPhysicalDamageMod != null))
+        if (Double.compare(that.FlatPhysicalDamageMod, FlatPhysicalDamageMod) != 0)
         {
             return false;
         }
-        if ((FlatSpellBlockMod != null) ? !FlatSpellBlockMod.equals(that.FlatSpellBlockMod) : (that.FlatSpellBlockMod != null))
+        if (Double.compare(that.FlatSpellBlockMod, FlatSpellBlockMod) != 0)
         {
             return false;
         }
-        if ((PercentArmorMod != null) ? !PercentArmorMod.equals(that.PercentArmorMod) : (that.PercentArmorMod != null))
+        if (Double.compare(that.PercentArmorMod, PercentArmorMod) != 0)
         {
             return false;
         }
-        if ((PercentAttackSpeedMod != null) ? !PercentAttackSpeedMod.equals(that.PercentAttackSpeedMod) : (that.PercentAttackSpeedMod != null))
+        if (Double.compare(that.PercentAttackSpeedMod, PercentAttackSpeedMod) != 0)
         {
             return false;
         }
-        if ((PercentBlockMod != null) ? !PercentBlockMod.equals(that.PercentBlockMod) : (that.PercentBlockMod != null))
+        if (Double.compare(that.PercentBlockMod, PercentBlockMod) != 0)
         {
             return false;
         }
-        if ((PercentCritChanceMod != null) ? !PercentCritChanceMod.equals(that.PercentCritChanceMod) : (that.PercentCritChanceMod != null))
+        if (Double.compare(that.PercentCritChanceMod, PercentCritChanceMod) != 0)
         {
             return false;
         }
-        if ((PercentCritDamageMod != null) ? !PercentCritDamageMod.equals(that.PercentCritDamageMod) : (that.PercentCritDamageMod != null))
+        if (Double.compare(that.PercentCritDamageMod, PercentCritDamageMod) != 0)
         {
             return false;
         }
-        if ((PercentDodgeMod != null) ? !PercentDodgeMod.equals(that.PercentDodgeMod) : (that.PercentDodgeMod != null))
+        if (Double.compare(that.PercentDodgeMod, PercentDodgeMod) != 0)
         {
             return false;
         }
-        if ((PercentEXPBonus != null) ? !PercentEXPBonus.equals(that.PercentEXPBonus) : (that.PercentEXPBonus != null))
+        if (Double.compare(that.PercentEXPBonus, PercentEXPBonus) != 0)
         {
             return false;
         }
-        if ((PercentHPPoolMod != null) ? !PercentHPPoolMod.equals(that.PercentHPPoolMod) : (that.PercentHPPoolMod != null))
+        if (Double.compare(that.PercentHPPoolMod, PercentHPPoolMod) != 0)
         {
             return false;
         }
-        if ((PercentHPRegenMod != null) ? !PercentHPRegenMod.equals(that.PercentHPRegenMod) : (that.PercentHPRegenMod != null))
+        if (Double.compare(that.PercentHPRegenMod, PercentHPRegenMod) != 0)
         {
             return false;
         }
-        if ((PercentLifeStealMod != null) ? !PercentLifeStealMod.equals(that.PercentLifeStealMod) : (that.PercentLifeStealMod != null))
+        if (Double.compare(that.PercentLifeStealMod, PercentLifeStealMod) != 0)
         {
             return false;
         }
-        if ((PercentMPPoolMod != null) ? !PercentMPPoolMod.equals(that.PercentMPPoolMod) : (that.PercentMPPoolMod != null))
+        if (Double.compare(that.PercentMPPoolMod, PercentMPPoolMod) != 0)
         {
             return false;
         }
-        if ((PercentMPRegenMod != null) ? !PercentMPRegenMod.equals(that.PercentMPRegenMod) : (that.PercentMPRegenMod != null))
+        if (Double.compare(that.PercentMPRegenMod, PercentMPRegenMod) != 0)
         {
             return false;
         }
-        if ((PercentMagicDamageMod != null) ? !PercentMagicDamageMod.equals(that.PercentMagicDamageMod) : (that.PercentMagicDamageMod != null))
+        if (Double.compare(that.PercentMagicDamageMod, PercentMagicDamageMod) != 0)
         {
             return false;
         }
-        if ((PercentMovementSpeedMod != null) ? !PercentMovementSpeedMod.equals(that.PercentMovementSpeedMod) : (that.PercentMovementSpeedMod != null))
+        if (Double.compare(that.PercentMovementSpeedMod, PercentMovementSpeedMod) != 0)
         {
             return false;
         }
-        if ((PercentPhysicalDamageMod != null) ? !PercentPhysicalDamageMod.equals(that.PercentPhysicalDamageMod) : (that.PercentPhysicalDamageMod != null))
+        if (Double.compare(that.PercentPhysicalDamageMod, PercentPhysicalDamageMod) != 0)
         {
             return false;
         }
-        if ((PercentSpellBlockMod != null) ? !PercentSpellBlockMod.equals(that.PercentSpellBlockMod) : (that.PercentSpellBlockMod != null))
+        if (Double.compare(that.PercentSpellBlockMod, PercentSpellBlockMod) != 0)
         {
             return false;
         }
-        if ((PercentSpellVampMod != null) ? !PercentSpellVampMod.equals(that.PercentSpellVampMod) : (that.PercentSpellVampMod != null))
+        if (Double.compare(that.PercentSpellVampMod, PercentSpellVampMod) != 0)
         {
             return false;
         }
-        if ((rFlatArmorModPerLevel != null) ? !rFlatArmorModPerLevel.equals(that.rFlatArmorModPerLevel) : (that.rFlatArmorModPerLevel != null))
+        if (Double.compare(that.rFlatArmorModPerLevel, rFlatArmorModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatArmorPenetrationMod != null) ? !rFlatArmorPenetrationMod.equals(that.rFlatArmorPenetrationMod) : (that.rFlatArmorPenetrationMod != null))
+        if (Double.compare(that.rFlatArmorPenetrationMod, rFlatArmorPenetrationMod) != 0)
         {
             return false;
         }
-        if ((rFlatArmorPenetrationModPerLevel != null) ? !rFlatArmorPenetrationModPerLevel.equals(that.rFlatArmorPenetrationModPerLevel) : (that.rFlatArmorPenetrationModPerLevel != null))
+        if (Double.compare(that.rFlatArmorPenetrationModPerLevel, rFlatArmorPenetrationModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatCritChanceModPerLevel != null) ? !rFlatCritChanceModPerLevel.equals(that.rFlatCritChanceModPerLevel) : (that.rFlatCritChanceModPerLevel != null))
+        if (Double.compare(that.rFlatCritChanceModPerLevel, rFlatCritChanceModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatCritDamageModPerLevel != null) ? !rFlatCritDamageModPerLevel.equals(that.rFlatCritDamageModPerLevel) : (that.rFlatCritDamageModPerLevel != null))
+        if (Double.compare(that.rFlatCritDamageModPerLevel, rFlatCritDamageModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatDodgeMod != null) ? !rFlatDodgeMod.equals(that.rFlatDodgeMod) : (that.rFlatDodgeMod != null))
+        if (Double.compare(that.rFlatDodgeMod, rFlatDodgeMod) != 0)
         {
             return false;
         }
-        if ((rFlatDodgeModPerLevel != null) ? !rFlatDodgeModPerLevel.equals(that.rFlatDodgeModPerLevel) : (that.rFlatDodgeModPerLevel != null))
+        if (Double.compare(that.rFlatDodgeModPerLevel, rFlatDodgeModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatEnergyModPerLevel != null) ? !rFlatEnergyModPerLevel.equals(that.rFlatEnergyModPerLevel) : (that.rFlatEnergyModPerLevel != null))
+        if (Double.compare(that.rFlatEnergyModPerLevel, rFlatEnergyModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatEnergyRegenModPerLevel != null) ? !rFlatEnergyRegenModPerLevel.equals(that.rFlatEnergyRegenModPerLevel) : (that.rFlatEnergyRegenModPerLevel != null))
+        if (Double.compare(that.rFlatEnergyRegenModPerLevel, rFlatEnergyRegenModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatGoldPer10Mod != null) ? !rFlatGoldPer10Mod.equals(that.rFlatGoldPer10Mod) : (that.rFlatGoldPer10Mod != null))
+        if (Double.compare(that.rFlatGoldPer10Mod, rFlatGoldPer10Mod) != 0)
         {
             return false;
         }
-        if ((rFlatHPModPerLevel != null) ? !rFlatHPModPerLevel.equals(that.rFlatHPModPerLevel) : (that.rFlatHPModPerLevel != null))
+        if (Double.compare(that.rFlatHPModPerLevel, rFlatHPModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatHPRegenModPerLevel != null) ? !rFlatHPRegenModPerLevel.equals(that.rFlatHPRegenModPerLevel) : (that.rFlatHPRegenModPerLevel != null))
+        if (Double.compare(that.rFlatHPRegenModPerLevel, rFlatHPRegenModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatMPModPerLevel != null) ? !rFlatMPModPerLevel.equals(that.rFlatMPModPerLevel) : (that.rFlatMPModPerLevel != null))
+        if (Double.compare(that.rFlatMPModPerLevel, rFlatMPModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatMPRegenModPerLevel != null) ? !rFlatMPRegenModPerLevel.equals(that.rFlatMPRegenModPerLevel) : (that.rFlatMPRegenModPerLevel != null))
+        if (Double.compare(that.rFlatMPRegenModPerLevel, rFlatMPRegenModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatMagicDamageModPerLevel != null) ? !rFlatMagicDamageModPerLevel.equals(that.rFlatMagicDamageModPerLevel) : (that.rFlatMagicDamageModPerLevel != null))
+        if (Double.compare(that.rFlatMagicDamageModPerLevel, rFlatMagicDamageModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatMagicPenetrationMod != null) ? !rFlatMagicPenetrationMod.equals(that.rFlatMagicPenetrationMod) : (that.rFlatMagicPenetrationMod != null))
+        if (Double.compare(that.rFlatMagicPenetrationMod, rFlatMagicPenetrationMod) != 0)
         {
             return false;
         }
-        if ((rFlatMagicPenetrationModPerLevel != null) ? !rFlatMagicPenetrationModPerLevel.equals(that.rFlatMagicPenetrationModPerLevel) : (that.rFlatMagicPenetrationModPerLevel != null))
+        if (Double.compare(that.rFlatMagicPenetrationModPerLevel, rFlatMagicPenetrationModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatMovementSpeedModPerLevel != null) ? !rFlatMovementSpeedModPerLevel.equals(that.rFlatMovementSpeedModPerLevel) : (that.rFlatMovementSpeedModPerLevel != null))
+        if (Double.compare(that.rFlatMovementSpeedModPerLevel, rFlatMovementSpeedModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatPhysicalDamageModPerLevel != null) ? !rFlatPhysicalDamageModPerLevel.equals(that.rFlatPhysicalDamageModPerLevel) : (that.rFlatPhysicalDamageModPerLevel != null))
+        if (Double.compare(that.rFlatPhysicalDamageModPerLevel, rFlatPhysicalDamageModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatSpellBlockModPerLevel != null) ? !rFlatSpellBlockModPerLevel.equals(that.rFlatSpellBlockModPerLevel) : (that.rFlatSpellBlockModPerLevel != null))
+        if (Double.compare(that.rFlatSpellBlockModPerLevel, rFlatSpellBlockModPerLevel) != 0)
         {
             return false;
         }
-        if ((rFlatTimeDeadMod != null) ? !rFlatTimeDeadMod.equals(that.rFlatTimeDeadMod) : (that.rFlatTimeDeadMod != null))
+        if (Double.compare(that.rFlatTimeDeadMod, rFlatTimeDeadMod) != 0)
         {
             return false;
         }
-        if ((rFlatTimeDeadModPerLevel != null) ? !rFlatTimeDeadModPerLevel.equals(that.rFlatTimeDeadModPerLevel) : (that.rFlatTimeDeadModPerLevel != null))
+        if (Double.compare(that.rFlatTimeDeadModPerLevel, rFlatTimeDeadModPerLevel) != 0)
         {
             return false;
         }
-        if ((rPercentArmorPenetrationMod != null) ? !rPercentArmorPenetrationMod.equals(that.rPercentArmorPenetrationMod) : (that.rPercentArmorPenetrationMod != null))
+        if (Double.compare(that.rPercentArmorPenetrationMod, rPercentArmorPenetrationMod) != 0)
         {
             return false;
         }
-        if ((rPercentArmorPenetrationModPerLevel != null) ? !rPercentArmorPenetrationModPerLevel.equals(that.rPercentArmorPenetrationModPerLevel) : (that.rPercentArmorPenetrationModPerLevel != null))
+        if (Double.compare(that.rPercentArmorPenetrationModPerLevel, rPercentArmorPenetrationModPerLevel) != 0)
         {
             return false;
         }
-        if ((rPercentAttackSpeedModPerLevel != null) ? !rPercentAttackSpeedModPerLevel.equals(that.rPercentAttackSpeedModPerLevel) : (that.rPercentAttackSpeedModPerLevel != null))
+        if (Double.compare(that.rPercentAttackSpeedModPerLevel, rPercentAttackSpeedModPerLevel) != 0)
         {
             return false;
         }
-        if ((rPercentCooldownMod != null) ? !rPercentCooldownMod.equals(that.rPercentCooldownMod) : (that.rPercentCooldownMod != null))
+        if (Double.compare(that.rPercentCooldownMod, rPercentCooldownMod) != 0)
         {
             return false;
         }
-        if ((rPercentCooldownModPerLevel != null) ? !rPercentCooldownModPerLevel.equals(that.rPercentCooldownModPerLevel) : (that.rPercentCooldownModPerLevel != null))
+        if (Double.compare(that.rPercentCooldownModPerLevel, rPercentCooldownModPerLevel) != 0)
         {
             return false;
         }
-        if ((rPercentMagicPenetrationMod != null) ? !rPercentMagicPenetrationMod.equals(that.rPercentMagicPenetrationMod) : (that.rPercentMagicPenetrationMod != null))
+        if (Double.compare(that.rPercentMagicPenetrationMod, rPercentMagicPenetrationMod) != 0)
         {
             return false;
         }
-        if ((rPercentMagicPenetrationModPerLevel != null) ? !rPercentMagicPenetrationModPerLevel.equals(that.rPercentMagicPenetrationModPerLevel) : (that.rPercentMagicPenetrationModPerLevel != null))
+        if (Double.compare(that.rPercentMagicPenetrationModPerLevel, rPercentMagicPenetrationModPerLevel) != 0)
         {
             return false;
         }
-        if ((rPercentMovementSpeedModPerLevel != null) ? !rPercentMovementSpeedModPerLevel.equals(that.rPercentMovementSpeedModPerLevel) : (that.rPercentMovementSpeedModPerLevel != null))
+        if (Double.compare(that.rPercentMovementSpeedModPerLevel, rPercentMovementSpeedModPerLevel) != 0)
         {
             return false;
         }
-        if ((rPercentTimeDeadMod != null) ? !rPercentTimeDeadMod.equals(that.rPercentTimeDeadMod) : (that.rPercentTimeDeadMod != null))
+        if (Double.compare(that.rPercentTimeDeadMod, rPercentTimeDeadMod) != 0)
         {
             return false;
         }
-        return (rPercentTimeDeadModPerLevel != null) ? rPercentTimeDeadModPerLevel.equals(that.rPercentTimeDeadModPerLevel) : (that.rPercentTimeDeadModPerLevel == null);
+        return Double.compare(that.rPercentTimeDeadModPerLevel, rPercentTimeDeadModPerLevel) == 0;
     }
     
     @Override
     public int hashCode()
     {
-        int result = FlatArmorMod != null ? FlatArmorMod.hashCode() : 0;
-        result = 31 * result + (FlatAttackSpeedMod != null ? FlatAttackSpeedMod.hashCode() : 0);
-        result = 31 * result + (FlatBlockMod != null ? FlatBlockMod.hashCode() : 0);
-        result = 31 * result + (FlatCritChanceMod != null ? FlatCritChanceMod.hashCode() : 0);
-        result = 31 * result + (FlatCritDamageMod != null ? FlatCritDamageMod.hashCode() : 0);
-        result = 31 * result + (FlatEXPBonus != null ? FlatEXPBonus.hashCode() : 0);
-        result = 31 * result + (FlatEnergyPoolMod != null ? FlatEnergyPoolMod.hashCode() : 0);
-        result = 31 * result + (FlatEnergyRegenMod != null ? FlatEnergyRegenMod.hashCode() : 0);
-        result = 31 * result + (FlatHPPoolMod != null ? FlatHPPoolMod.hashCode() : 0);
-        result = 31 * result + (FlatHPRegenMod != null ? FlatHPRegenMod.hashCode() : 0);
-        result = 31 * result + (FlatMPPoolMod != null ? FlatMPPoolMod.hashCode() : 0);
-        result = 31 * result + (FlatMPRegenMod != null ? FlatMPRegenMod.hashCode() : 0);
-        result = 31 * result + (FlatMagicDamageMod != null ? FlatMagicDamageMod.hashCode() : 0);
-        result = 31 * result + (FlatMovementSpeedMod != null ? FlatMovementSpeedMod.hashCode() : 0);
-        result = 31 * result + (FlatPhysicalDamageMod != null ? FlatPhysicalDamageMod.hashCode() : 0);
-        result = 31 * result + (FlatSpellBlockMod != null ? FlatSpellBlockMod.hashCode() : 0);
-        result = 31 * result + (PercentArmorMod != null ? PercentArmorMod.hashCode() : 0);
-        result = 31 * result + (PercentAttackSpeedMod != null ? PercentAttackSpeedMod.hashCode() : 0);
-        result = 31 * result + (PercentBlockMod != null ? PercentBlockMod.hashCode() : 0);
-        result = 31 * result + (PercentCritChanceMod != null ? PercentCritChanceMod.hashCode() : 0);
-        result = 31 * result + (PercentCritDamageMod != null ? PercentCritDamageMod.hashCode() : 0);
-        result = 31 * result + (PercentDodgeMod != null ? PercentDodgeMod.hashCode() : 0);
-        result = 31 * result + (PercentEXPBonus != null ? PercentEXPBonus.hashCode() : 0);
-        result = 31 * result + (PercentHPPoolMod != null ? PercentHPPoolMod.hashCode() : 0);
-        result = 31 * result + (PercentHPRegenMod != null ? PercentHPRegenMod.hashCode() : 0);
-        result = 31 * result + (PercentLifeStealMod != null ? PercentLifeStealMod.hashCode() : 0);
-        result = 31 * result + (PercentMPPoolMod != null ? PercentMPPoolMod.hashCode() : 0);
-        result = 31 * result + (PercentMPRegenMod != null ? PercentMPRegenMod.hashCode() : 0);
-        result = 31 * result + (PercentMagicDamageMod != null ? PercentMagicDamageMod.hashCode() : 0);
-        result = 31 * result + (PercentMovementSpeedMod != null ? PercentMovementSpeedMod.hashCode() : 0);
-        result = 31 * result + (PercentPhysicalDamageMod != null ? PercentPhysicalDamageMod.hashCode() : 0);
-        result = 31 * result + (PercentSpellBlockMod != null ? PercentSpellBlockMod.hashCode() : 0);
-        result = 31 * result + (PercentSpellVampMod != null ? PercentSpellVampMod.hashCode() : 0);
-        result = 31 * result + (rFlatArmorModPerLevel != null ? rFlatArmorModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatArmorPenetrationMod != null ? rFlatArmorPenetrationMod.hashCode() : 0);
-        result = 31 * result + (rFlatArmorPenetrationModPerLevel != null ? rFlatArmorPenetrationModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatCritChanceModPerLevel != null ? rFlatCritChanceModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatCritDamageModPerLevel != null ? rFlatCritDamageModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatDodgeMod != null ? rFlatDodgeMod.hashCode() : 0);
-        result = 31 * result + (rFlatDodgeModPerLevel != null ? rFlatDodgeModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatEnergyModPerLevel != null ? rFlatEnergyModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatEnergyRegenModPerLevel != null ? rFlatEnergyRegenModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatGoldPer10Mod != null ? rFlatGoldPer10Mod.hashCode() : 0);
-        result = 31 * result + (rFlatHPModPerLevel != null ? rFlatHPModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatHPRegenModPerLevel != null ? rFlatHPRegenModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatMPModPerLevel != null ? rFlatMPModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatMPRegenModPerLevel != null ? rFlatMPRegenModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatMagicDamageModPerLevel != null ? rFlatMagicDamageModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatMagicPenetrationMod != null ? rFlatMagicPenetrationMod.hashCode() : 0);
-        result = 31 * result + (rFlatMagicPenetrationModPerLevel != null ? rFlatMagicPenetrationModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatMovementSpeedModPerLevel != null ? rFlatMovementSpeedModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatPhysicalDamageModPerLevel != null ? rFlatPhysicalDamageModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatSpellBlockModPerLevel != null ? rFlatSpellBlockModPerLevel.hashCode() : 0);
-        result = 31 * result + (rFlatTimeDeadMod != null ? rFlatTimeDeadMod.hashCode() : 0);
-        result = 31 * result + (rFlatTimeDeadModPerLevel != null ? rFlatTimeDeadModPerLevel.hashCode() : 0);
-        result = 31 * result + (rPercentArmorPenetrationMod != null ? rPercentArmorPenetrationMod.hashCode() : 0);
-        result = 31 * result + (rPercentArmorPenetrationModPerLevel != null ? rPercentArmorPenetrationModPerLevel.hashCode() : 0);
-        result = 31 * result + (rPercentAttackSpeedModPerLevel != null ? rPercentAttackSpeedModPerLevel.hashCode() : 0);
-        result = 31 * result + (rPercentCooldownMod != null ? rPercentCooldownMod.hashCode() : 0);
-        result = 31 * result + (rPercentCooldownModPerLevel != null ? rPercentCooldownModPerLevel.hashCode() : 0);
-        result = 31 * result + (rPercentMagicPenetrationMod != null ? rPercentMagicPenetrationMod.hashCode() : 0);
-        result = 31 * result + (rPercentMagicPenetrationModPerLevel != null ? rPercentMagicPenetrationModPerLevel.hashCode() : 0);
-        result = 31 * result + (rPercentMovementSpeedModPerLevel != null ? rPercentMovementSpeedModPerLevel.hashCode() : 0);
-        result = 31 * result + (rPercentTimeDeadMod != null ? rPercentTimeDeadMod.hashCode() : 0);
-        result = 31 * result + (rPercentTimeDeadModPerLevel != null ? rPercentTimeDeadModPerLevel.hashCode() : 0);
+        int  result;
+        long temp;
+        temp = Double.doubleToLongBits(FlatArmorMod);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatAttackSpeedMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatBlockMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatCritChanceMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatCritDamageMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatEXPBonus);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatEnergyPoolMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatEnergyRegenMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatHPPoolMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatHPRegenMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatMPPoolMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatMPRegenMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatMagicDamageMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatMovementSpeedMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatPhysicalDamageMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(FlatSpellBlockMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentArmorMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentAttackSpeedMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentBlockMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentCritChanceMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentCritDamageMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentDodgeMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentEXPBonus);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentHPPoolMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentHPRegenMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentLifeStealMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentMPPoolMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentMPRegenMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentMagicDamageMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentMovementSpeedMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentPhysicalDamageMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentSpellBlockMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(PercentSpellVampMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatArmorModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatArmorPenetrationMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatArmorPenetrationModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatCritChanceModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatCritDamageModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatDodgeMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatDodgeModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatEnergyModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatEnergyRegenModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatGoldPer10Mod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatHPModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatHPRegenModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatMPModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatMPRegenModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatMagicDamageModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatMagicPenetrationMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatMagicPenetrationModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatMovementSpeedModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatPhysicalDamageModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatSpellBlockModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatTimeDeadMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rFlatTimeDeadModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentArmorPenetrationMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentArmorPenetrationModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentAttackSpeedModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentCooldownMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentCooldownModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentMagicPenetrationMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentMagicPenetrationModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentMovementSpeedModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentTimeDeadMod);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rPercentTimeDeadModPerLevel);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
-    }
-    
-    /**
-     * Gets the flat armor mod.
-     *
-     * @return the flat armor mod
-     */
-    public Double getFlatArmorMod()
-    {
-        return this.FlatArmorMod;
-    }
-    
-    /**
-     * Gets the flat attack speed mod.
-     *
-     * @return the flat attack speed mod
-     */
-    public Double getFlatAttackSpeedMod()
-    {
-        return this.FlatAttackSpeedMod;
-    }
-    
-    /**
-     * Gets the flat block mod.
-     *
-     * @return the flat block mod
-     */
-    public Double getFlatBlockMod()
-    {
-        return this.FlatBlockMod;
-    }
-    
-    /**
-     * Gets the flat crit chance mod.
-     *
-     * @return the flat crit chance mod
-     */
-    public Double getFlatCritChanceMod()
-    {
-        return this.FlatCritChanceMod;
-    }
-    
-    /**
-     * Gets the flat crit damage mod.
-     *
-     * @return the flat crit damage mod
-     */
-    public Double getFlatCritDamageMod()
-    {
-        return this.FlatCritDamageMod;
-    }
-    
-    /**
-     * Gets the flat energy pool mod.
-     *
-     * @return the flat energy pool mod
-     */
-    public Double getFlatEnergyPoolMod()
-    {
-        return this.FlatEnergyPoolMod;
-    }
-    
-    /**
-     * Gets the flat energy regen mod.
-     *
-     * @return the flat energy regen mod
-     */
-    public Double getFlatEnergyRegenMod()
-    {
-        return this.FlatEnergyRegenMod;
-    }
-    
-    /**
-     * Gets the flat exp bonus.
-     *
-     * @return the flat exp bonus
-     */
-    public Double getFlatEXPBonus()
-    {
-        return this.FlatEXPBonus;
-    }
-    
-    /**
-     * Gets the flat hp pool mod.
-     *
-     * @return the flat hp pool mod
-     */
-    public Double getFlatHPPoolMod()
-    {
-        return this.FlatHPPoolMod;
-    }
-    
-    /**
-     * Gets the flat hp regen mod.
-     *
-     * @return the flat hp regen mod
-     */
-    public Double getFlatHPRegenMod()
-    {
-        return this.FlatHPRegenMod;
-    }
-    
-    /**
-     * Gets the flat magic damage mod.
-     *
-     * @return the flat magic damage mod
-     */
-    public Double getFlatMagicDamageMod()
-    {
-        return this.FlatMagicDamageMod;
-    }
-    
-    /**
-     * Gets the flat movement speed mod.
-     *
-     * @return the flat movement speed mod
-     */
-    public Double getFlatMovementSpeedMod()
-    {
-        return this.FlatMovementSpeedMod;
-    }
-    
-    /**
-     * Gets the flat mp pool mod.
-     *
-     * @return the flat mp pool mod
-     */
-    public Double getFlatMPPoolMod()
-    {
-        return this.FlatMPPoolMod;
-    }
-    
-    /**
-     * Gets the flat mp regen mod.
-     *
-     * @return the flat mp regen mod
-     */
-    public Double getFlatMPRegenMod()
-    {
-        return this.FlatMPRegenMod;
-    }
-    
-    /**
-     * Gets the flat physical damage mod.
-     *
-     * @return the flat physical damage mod
-     */
-    public Double getFlatPhysicalDamageMod()
-    {
-        return this.FlatPhysicalDamageMod;
-    }
-    
-    /**
-     * Gets the flat spell block mod.
-     *
-     * @return the flat spell block mod
-     */
-    public Double getFlatSpellBlockMod()
-    {
-        return this.FlatSpellBlockMod;
-    }
-    
-    /**
-     * Gets the percent armor mod.
-     *
-     * @return the percent armor mod
-     */
-    public Double getPercentArmorMod()
-    {
-        return this.PercentArmorMod;
-    }
-    
-    /**
-     * Gets the percent attack speed mod.
-     *
-     * @return the percent attack speed mod
-     */
-    public Double getPercentAttackSpeedMod()
-    {
-        return this.PercentAttackSpeedMod;
-    }
-    
-    /**
-     * Gets the percent block mod.
-     *
-     * @return the percent block mod
-     */
-    public Double getPercentBlockMod()
-    {
-        return this.PercentBlockMod;
-    }
-    
-    /**
-     * Gets the percent crit chance mod.
-     *
-     * @return the percent crit chance mod
-     */
-    public Double getPercentCritChanceMod()
-    {
-        return this.PercentCritChanceMod;
-    }
-    
-    /**
-     * Gets the percent crit damage mod.
-     *
-     * @return the percent crit damage mod
-     */
-    public Double getPercentCritDamageMod()
-    {
-        return this.PercentCritDamageMod;
-    }
-    
-    /**
-     * Gets the percent dodge mod.
-     *
-     * @return the percent dodge mod
-     */
-    public Double getPercentDodgeMod()
-    {
-        return this.PercentDodgeMod;
-    }
-    
-    /**
-     * Gets the percent exp bonus.
-     *
-     * @return the percent exp bonus
-     */
-    public Double getPercentEXPBonus()
-    {
-        return this.PercentEXPBonus;
-    }
-    
-    /**
-     * Gets the percent hp pool mod.
-     *
-     * @return the percent hp pool mod
-     */
-    public Double getPercentHPPoolMod()
-    {
-        return this.PercentHPPoolMod;
-    }
-    
-    /**
-     * Gets the percent hp regen mod.
-     *
-     * @return the percent hp regen mod
-     */
-    public Double getPercentHPRegenMod()
-    {
-        return this.PercentHPRegenMod;
-    }
-    
-    /**
-     * Gets the percent life steal mod.
-     *
-     * @return the percent life steal mod
-     */
-    public Double getPercentLifeStealMod()
-    {
-        return this.PercentLifeStealMod;
-    }
-    
-    /**
-     * Gets the percent magic damage mod.
-     *
-     * @return the percent magic damage mod
-     */
-    public Double getPercentMagicDamageMod()
-    {
-        return this.PercentMagicDamageMod;
-    }
-    
-    /**
-     * Gets the percent movement speed mod.
-     *
-     * @return the percent movement speed mod
-     */
-    public Double getPercentMovementSpeedMod()
-    {
-        return this.PercentMovementSpeedMod;
-    }
-    
-    /**
-     * Gets the percent mp pool mod.
-     *
-     * @return the percent mp pool mod
-     */
-    public Double getPercentMPPoolMod()
-    {
-        return this.PercentMPPoolMod;
-    }
-    
-    /**
-     * Gets the percent mp regen mod.
-     *
-     * @return the percent mp regen mod
-     */
-    public Double getPercentMPRegenMod()
-    {
-        return this.PercentMPRegenMod;
-    }
-    
-    /**
-     * Gets the percent physical damage mod.
-     *
-     * @return the percent physical damage mod
-     */
-    public Double getPercentPhysicalDamageMod()
-    {
-        return this.PercentPhysicalDamageMod;
-    }
-    
-    /**
-     * Gets the percent spell block mod.
-     *
-     * @return the percent spell block mod
-     */
-    public Double getPercentSpellBlockMod()
-    {
-        return this.PercentSpellBlockMod;
-    }
-    
-    /**
-     * Gets the percent spell vamp mod.
-     *
-     * @return the percent spell vamp mod
-     */
-    public Double getPercentSpellVampMod()
-    {
-        return this.PercentSpellVampMod;
-    }
-    
-    /**
-     * Gets the r flat armor mod per level.
-     *
-     * @return the r flat armor mod per level
-     */
-    public Double getrFlatArmorModPerLevel()
-    {
-        return this.rFlatArmorModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat armor penetration mod.
-     *
-     * @return the r flat armor penetration mod
-     */
-    public Double getrFlatArmorPenetrationMod()
-    {
-        return this.rFlatArmorPenetrationMod;
-    }
-    
-    /**
-     * Gets the r flat armor penetration mod per level.
-     *
-     * @return the r flat armor penetration mod per level
-     */
-    public Double getrFlatArmorPenetrationModPerLevel()
-    {
-        return this.rFlatArmorPenetrationModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat crit chance mod per level.
-     *
-     * @return the r flat crit chance mod per level
-     */
-    public Double getrFlatCritChanceModPerLevel()
-    {
-        return this.rFlatCritChanceModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat crit damage mod per level.
-     *
-     * @return the r flat crit damage mod per level
-     */
-    public Double getrFlatCritDamageModPerLevel()
-    {
-        return this.rFlatCritDamageModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat dodge mod.
-     *
-     * @return the r flat dodge mod
-     */
-    public Double getrFlatDodgeMod()
-    {
-        return this.rFlatDodgeMod;
-    }
-    
-    /**
-     * Gets the r flat dodge mod per level.
-     *
-     * @return the r flat dodge mod per level
-     */
-    public Double getrFlatDodgeModPerLevel()
-    {
-        return this.rFlatDodgeModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat energy mod per level.
-     *
-     * @return the r flat energy mod per level
-     */
-    public Double getrFlatEnergyModPerLevel()
-    {
-        return this.rFlatEnergyModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat energy regen mod per level.
-     *
-     * @return the r flat energy regen mod per level
-     */
-    public Double getrFlatEnergyRegenModPerLevel()
-    {
-        return this.rFlatEnergyRegenModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat gold per10 mod.
-     *
-     * @return the r flat gold per10 mod
-     */
-    public Double getrFlatGoldPer10Mod()
-    {
-        return this.rFlatGoldPer10Mod;
-    }
-    
-    /**
-     * Gets the r flat hp mod per level.
-     *
-     * @return the r flat hp mod per level
-     */
-    public Double getrFlatHPModPerLevel()
-    {
-        return this.rFlatHPModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat hp regen mod per level.
-     *
-     * @return the r flat hp regen mod per level
-     */
-    public Double getrFlatHPRegenModPerLevel()
-    {
-        return this.rFlatHPRegenModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat magic damage mod per level.
-     *
-     * @return the r flat magic damage mod per level
-     */
-    public Double getrFlatMagicDamageModPerLevel()
-    {
-        return this.rFlatMagicDamageModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat magic penetration mod.
-     *
-     * @return the r flat magic penetration mod
-     */
-    public Double getrFlatMagicPenetrationMod()
-    {
-        return this.rFlatMagicPenetrationMod;
-    }
-    
-    /**
-     * Gets the r flat magic penetration mod per level.
-     *
-     * @return the r flat magic penetration mod per level
-     */
-    public Double getrFlatMagicPenetrationModPerLevel()
-    {
-        return this.rFlatMagicPenetrationModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat movement speed mod per level.
-     *
-     * @return the r flat movement speed mod per level
-     */
-    public Double getrFlatMovementSpeedModPerLevel()
-    {
-        return this.rFlatMovementSpeedModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat mp mod per level.
-     *
-     * @return the r flat mp mod per level
-     */
-    public Double getrFlatMPModPerLevel()
-    {
-        return this.rFlatMPModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat mp regen mod per level.
-     *
-     * @return the r flat mp regen mod per level
-     */
-    public Double getrFlatMPRegenModPerLevel()
-    {
-        return this.rFlatMPRegenModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat physical damage mod per level.
-     *
-     * @return the r flat physical damage mod per level
-     */
-    public Double getrFlatPhysicalDamageModPerLevel()
-    {
-        return this.rFlatPhysicalDamageModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat spell block mod per level.
-     *
-     * @return the r flat spell block mod per level
-     */
-    public Double getrFlatSpellBlockModPerLevel()
-    {
-        return this.rFlatSpellBlockModPerLevel;
-    }
-    
-    /**
-     * Gets the r flat time dead mod.
-     *
-     * @return the r flat time dead mod
-     */
-    public Double getrFlatTimeDeadMod()
-    {
-        return this.rFlatTimeDeadMod;
-    }
-    
-    /**
-     * Gets the r flat time dead mod per level.
-     *
-     * @return the r flat time dead mod per level
-     */
-    public Double getrFlatTimeDeadModPerLevel()
-    {
-        return this.rFlatTimeDeadModPerLevel;
-    }
-    
-    /**
-     * Gets the r percent armor penetration mod.
-     *
-     * @return the r percent armor penetration mod
-     */
-    public Double getrPercentArmorPenetrationMod()
-    {
-        return this.rPercentArmorPenetrationMod;
-    }
-    
-    /**
-     * Gets the r percent armor penetration mod per level.
-     *
-     * @return the r percent armor penetration mod per level
-     */
-    public Double getrPercentArmorPenetrationModPerLevel()
-    {
-        return this.rPercentArmorPenetrationModPerLevel;
-    }
-    
-    /**
-     * Gets the r percent attack speed mod per level.
-     *
-     * @return the r percent attack speed mod per level
-     */
-    public Double getrPercentAttackSpeedModPerLevel()
-    {
-        return this.rPercentAttackSpeedModPerLevel;
-    }
-    
-    /**
-     * Gets the r percent cooldown mod.
-     *
-     * @return the r percent cooldown mod
-     */
-    public Double getrPercentCooldownMod()
-    {
-        return this.rPercentCooldownMod;
-    }
-    
-    /**
-     * Gets the r percent cooldown mod per level.
-     *
-     * @return the r percent cooldown mod per level
-     */
-    public Double getrPercentCooldownModPerLevel()
-    {
-        return this.rPercentCooldownModPerLevel;
-    }
-    
-    /**
-     * Gets the r percent magic penetration mod.
-     *
-     * @return the r percent magic penetration mod
-     */
-    public Double getrPercentMagicPenetrationMod()
-    {
-        return this.rPercentMagicPenetrationMod;
-    }
-    
-    /**
-     * Gets the r percent magic penetration mod per level.
-     *
-     * @return the r percent magic penetration mod per level
-     */
-    public Double getrPercentMagicPenetrationModPerLevel()
-    {
-        return this.rPercentMagicPenetrationModPerLevel;
-    }
-    
-    /**
-     * Gets the r percent movement speed mod per level.
-     *
-     * @return the r percent movement speed mod per level
-     */
-    public Double getrPercentMovementSpeedModPerLevel()
-    {
-        return this.rPercentMovementSpeedModPerLevel;
-    }
-    
-    /**
-     * Gets the r percent time dead mod.
-     *
-     * @return the r percent time dead mod
-     */
-    public Double getrPercentTimeDeadMod()
-    {
-        return this.rPercentTimeDeadMod;
-    }
-    
-    /**
-     * Gets the r percent time dead mod per level.
-     *
-     * @return the r percent time dead mod per level
-     */
-    public Double getrPercentTimeDeadModPerLevel()
-    {
-        return this.rPercentTimeDeadModPerLevel;
     }
     
     @Override
