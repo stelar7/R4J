@@ -2,8 +2,8 @@ package no.stelar7.api.l4j8.pojo.match;
 
 public class MatchRune
 {
-    private long rank;
-    private long runeId;
+    private int rank;
+    private int runeId;
     
     
     /**
@@ -11,7 +11,7 @@ public class MatchRune
      *
      * @return the rank
      */
-    public long getRank()
+    public int getRank()
     {
         return this.rank;
     }
@@ -21,7 +21,7 @@ public class MatchRune
      *
      * @return the rune id
      */
-    public long getRuneId()
+    public int getRuneId()
     {
         return this.runeId;
     }
@@ -50,8 +50,8 @@ public class MatchRune
     @Override
     public int hashCode()
     {
-        int result = (int) (rank ^ (rank >>> 32));
-        result = 31 * result + (int) (runeId ^ (runeId >>> 32));
+        int result = rank;
+        result = 31 * result + runeId;
         return result;
     }
     
