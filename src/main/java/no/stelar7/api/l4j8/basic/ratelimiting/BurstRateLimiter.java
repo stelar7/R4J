@@ -45,7 +45,7 @@ public class BurstRateLimiter extends RateLimiter
                     long newVal = key.getValue();
                     if (oldVal + 1 < newVal)
                     {
-                        callCountInTime.get(l).set(newVal + 1);
+                        callCountInTime.get(l).set(newVal);
                         
                         if (DataCall.VERBOSE_LIMITING)
                         {
