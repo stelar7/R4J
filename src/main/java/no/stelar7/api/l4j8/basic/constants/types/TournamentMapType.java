@@ -13,7 +13,7 @@ public enum TournamentMapType
      * The Crystal Scar Dominion Map
      * Dominion is gone...
      */
-    @Deprecated CRYSTAL_SCAR(8),
+    CRYSTAL_SCAR(8),
     /**
      * Twisted Treeline Current Version
      */

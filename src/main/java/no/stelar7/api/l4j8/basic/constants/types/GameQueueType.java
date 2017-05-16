@@ -28,11 +28,11 @@ public enum GameQueueType
     /**
      * Ranked Premade 5v5 games
      */
-    @Deprecated RANKED_PREMADE_5X5(6),
+    RANKED_PREMADE_5X5(6),
     /**
      * Ranked Premade 3v3 games
      */
-    @Deprecated RANKED_PREMADE_3X3(9),
+    RANKED_PREMADE_3X3(9),
     /**
      * Ranked TeamType 3v3 games
      */
@@ -52,7 +52,7 @@ public enum GameQueueType
     /**
      * Historical Summoner's Rift Coop vs AI games
      */
-    @Deprecated BOT_5X5(7),
+    BOT_5X5(7),
     /**
      * Dominion Coop vs AI games
      */

@@ -52,7 +52,6 @@ public enum SummonerSpellType
     /**
      * Reveals a small area of the map for your team for 5 seconds.
      */
-    @Deprecated
     CLAIRVOYANCE(2, "SummonerClairvoyance"),
     /**
      * Shields your champion for 115-455 (depending on champion level) for 2 seconds.
@@ -65,12 +64,10 @@ public enum SummonerSpellType
     /**
      * Allied Turret: Grants massive regeneration for 8 seconds. Enemy Turret: Reduces damage dealt by 80% for 8 seconds.
      */
-    @Deprecated
     GARRISON(17, "SummonerOdinGarrison"),
     /**
      * Instantly revives your champion at your team's Summoner Platform and increases their Movement Speed for a short duration.
      */
-    @Deprecated
     REVIVE(10, "SummonerRevive");
     
     private final Integer id;
