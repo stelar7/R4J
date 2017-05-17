@@ -112,7 +112,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 429)
             {
-                DataCall.LOGGER.log(Level.INFO, String.format("HIT 429! (%s)", response.getResponseData()));
+                DataCall.LOGGER.log(Level.INFO, response.getResponseData());
                 return this.build();
             }
             
@@ -227,7 +227,7 @@ public final class DataCall
                 if (con.getResponseCode() == 429)
                 {
                     final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
-                    String       reason    = String.format("%s %s %s %s %s%n", limitType, appLimit.toString(), methodLimit.toString(), limiter.get(dc.platform).getFirstCallInTime(), limiter.get(dc.platform).getCallCountInTime());
+                    String       reason    = String.format("%s%n%s%n%s%n%s%n", limitType, appLimit, methodLimit, limiter.get(dc.platform));
                     return new DataCallResponse(con.getResponseCode(), reason);
                 }
                 

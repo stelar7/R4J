@@ -46,4 +46,15 @@ public abstract class RateLimiter
     {
         return limits;
     }
+    
+    
+    @Override
+    public String toString()
+    {
+        return "RateLimiter{" +
+               "limits=" + limits +
+               ", firstCallInTime=" + firstCallInTime +
+               ", callCountInTime=" + callCountInTime +
+               '}';
+    }
 }
