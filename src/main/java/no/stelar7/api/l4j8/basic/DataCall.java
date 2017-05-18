@@ -113,6 +113,24 @@ public final class DataCall
             if (response.getResponseCode() == 429)
             {
                 DataCall.LOGGER.log(Level.INFO, response.getResponseData());
+                
+                if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()))
+                {
+                    try
+                    {
+                        int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
+                        if (attempts > 3)
+                        {
+                            throw new APIResponseException(APIHTTPErrorReason.ERROR429, response.getResponseData());
+                        }
+                        Thread.sleep(1000);
+                        return this.build(attempts);
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                
                 return this.build();
             }
             
@@ -226,8 +244,8 @@ public final class DataCall
                 
                 if (con.getResponseCode() == 429)
                 {
-                    final String limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")).getReason();
-                    String       reason    = String.format("%s%n%s%n%s%n%s%n%s%n", limitType, appLimit, methodLimit, limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
+                    final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
+                    String              reason    = String.format("%s%n%s%n%s%n%s%n%s%n", limitType.getReason(), appLimit, methodLimit, limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
                     return new DataCallResponse(con.getResponseCode(), reason);
                 }
                 
