@@ -101,7 +101,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 400)
             {
-                throw new APIResponseException(APIHTTPErrorReason.ERROR400, "L4J8 error.. contact developer to get this fixed ..." + response.getResponseData());
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_400, "L4J8 error.. contact developer to get this fixed ..." + response.getResponseData());
             }
             
             if (response.getResponseCode() == 404)
@@ -124,7 +124,7 @@ public final class DataCall
                         int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
                         if (attempts > 3)
                         {
-                            throw new APIResponseException(APIHTTPErrorReason.ERROR429, response.getResponseData());
+                            throw new APIResponseException(APIHTTPErrorReason.ERROR_429, response.getResponseData());
                         }
                         
                         System.err.format("Service ratelimit reached (%s / 3 times), waiting 1 second and retrying%n", attempts);
@@ -138,8 +138,7 @@ public final class DataCall
                 
                 return this.build();
             }
-            
-            
+    
             if (response.getResponseCode() >= 500)
             {
                 System.err.println("Server error, retrying");
@@ -147,7 +146,7 @@ public final class DataCall
                 int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
                 if (attempts > 3)
                 {
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR500, response.getResponseData());
+                    throw new APIResponseException(APIHTTPErrorReason.ERROR_500, response.getResponseData());
                 }
                 
                 return this.build(attempts);
@@ -268,9 +267,8 @@ public final class DataCall
             } catch (final IOException e)
             {
                 DataCall.LOGGER.log(Level.WARNING, e.getMessage(), e);
+                return new DataCallResponse(APIHTTPErrorReason.ERROR_599.getCode(), APIHTTPErrorReason.ERROR_599.getReason());
             }
-            
-            throw new APINoValidResponseException("Reached end of getResponse, without a valid response!!");
         }
         
         /**
