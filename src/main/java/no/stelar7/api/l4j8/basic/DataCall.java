@@ -67,13 +67,13 @@ public final class DataCall
             final String url = this.getURL();
             if (this.dc.verbose)
             {
-                System.out.println(url);
+                System.err.println(url);
             }
             
             final DataCallResponse response = this.getResponse(url);
             if (this.dc.verbose)
             {
-                System.out.println(response);
+                System.err.println(response);
             }
             
             if ((response.getResponseCode() == 200) || (response.getResponseCode() == 204))
@@ -106,7 +106,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 404)
             {
-                System.out.println(String.format("No data from url %s %s", url, response.getResponseData()));
+                System.err.println(String.format("No data from url %s %s", url, response.getResponseData()));
                 return null;
             }
             
@@ -114,7 +114,7 @@ public final class DataCall
             {
                 if (VERBOSE_DEFAULT)
                 {
-                    System.out.println(response.getResponseData());
+                    System.err.println(response.getResponseData());
                 }
                 
                 if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()))
@@ -127,7 +127,7 @@ public final class DataCall
                             throw new APIResponseException(APIHTTPErrorReason.ERROR429, response.getResponseData());
                         }
                         
-                        System.out.format("Service ratelimit reached (%s / 3 times), waiting 1 second and retrying%n", attempts);
+                        System.err.format("Service ratelimit reached (%s / 3 times), waiting 1 second and retrying%n", attempts);
                         Thread.sleep(1000);
                         return this.build(attempts);
                     } catch (InterruptedException e)
@@ -142,7 +142,7 @@ public final class DataCall
             
             if (response.getResponseCode() >= 500)
             {
-                System.out.println("Server error, retrying");
+                System.err.println("Server error, retrying");
                 
                 int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
                 if (attempts > 3)
@@ -189,12 +189,12 @@ public final class DataCall
                 
                 if (this.dc.verbose)
                 {
-                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url));
-                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod()));
-                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData));
-                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", ""));
+                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url));
+                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod()));
+                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData));
+                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", ""));
                     
-                    con.getRequestProperties().forEach((key, value) -> System.out.println(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    con.getRequestProperties().forEach((key, value) -> System.err.println(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
                 
                 if (!this.dc.postData.isEmpty())
@@ -210,8 +210,8 @@ public final class DataCall
                 
                 if (this.dc.verbose)
                 {
-                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
-                    con.getHeaderFields().forEach((key, value) -> System.out.println(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
+                    con.getHeaderFields().forEach((key, value) -> System.err.println(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
                 
                 
