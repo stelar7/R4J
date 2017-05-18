@@ -112,7 +112,10 @@ public final class DataCall
             
             if (response.getResponseCode() == 429)
             {
-                System.out.println(response.getResponseData());
+                if (VERBOSE_DEFAULT)
+                {
+                    System.out.println(response.getResponseData());
+                }
                 
                 if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()))
                 {
@@ -123,6 +126,8 @@ public final class DataCall
                         {
                             throw new APIResponseException(APIHTTPErrorReason.ERROR429, response.getResponseData());
                         }
+                        
+                        System.out.format("Service ratelimit reached (%s / 3 times), waiting 1 second and retrying%n", attempts);
                         Thread.sleep(1000);
                         return this.build(attempts);
                     } catch (InterruptedException e)
