@@ -106,13 +106,13 @@ public final class DataCall
             
             if (response.getResponseCode() == 404)
             {
-                DataCall.LOGGER.log(Level.INFO, String.format("No data from url %s %s", url, response.getResponseData()));
+                System.out.println(String.format("No data from url %s %s", url, response.getResponseData()));
                 return null;
             }
             
             if (response.getResponseCode() == 429)
             {
-                DataCall.LOGGER.log(Level.INFO, response.getResponseData());
+                System.out.println(response.getResponseData());
                 
                 if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()))
                 {
@@ -137,7 +137,7 @@ public final class DataCall
             
             if (response.getResponseCode() >= 500)
             {
-                DataCall.LOGGER.log(Level.INFO, "Server error, retrying");
+                System.out.println("Server error, retrying");
                 
                 int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
                 if (attempts > 3)
@@ -184,11 +184,12 @@ public final class DataCall
                 
                 if (this.dc.verbose)
                 {
-                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url));
-                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod()));
-                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData));
-                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", ""));
-                    con.getRequestProperties().forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url));
+                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod()));
+                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData));
+                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", ""));
+                    
+                    con.getRequestProperties().forEach((key, value) -> System.out.println(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
                 
                 if (!this.dc.postData.isEmpty())
@@ -204,8 +205,8 @@ public final class DataCall
                 
                 if (this.dc.verbose)
                 {
-                    DataCall.LOGGER.log(Level.INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
-                    con.getHeaderFields().forEach((key, value) -> DataCall.LOGGER.log(Level.INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    System.out.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
+                    con.getHeaderFields().forEach((key, value) -> System.out.println(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
                 }
                 
                 
