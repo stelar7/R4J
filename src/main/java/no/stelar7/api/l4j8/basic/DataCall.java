@@ -106,7 +106,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 404)
             {
-                System.err.println(String.format("No data from url %s %s", url, response.getResponseData()));
+                System.err.format("No data from url %s %s", url, response.getResponseData());
                 return null;
             }
             
@@ -138,7 +138,7 @@ public final class DataCall
                 
                 return this.build();
             }
-    
+            
             if (response.getResponseCode() >= 500)
             {
                 System.err.println("Server error, retrying");
@@ -188,12 +188,12 @@ public final class DataCall
                 
                 if (this.dc.verbose)
                 {
-                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url));
-                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod()));
-                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData));
-                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", ""));
+                    System.err.format(Constants.VERBOSE_STRING_FORMAT, "URL", url);
+                    System.err.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod());
+                    System.err.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.dc.postData);
+                    System.err.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", "");
                     
-                    con.getRequestProperties().forEach((key, value) -> System.err.println(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    con.getRequestProperties().forEach((key, value) -> System.err.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value));
                 }
                 
                 if (!this.dc.postData.isEmpty())
@@ -209,8 +209,8 @@ public final class DataCall
                 
                 if (this.dc.verbose)
                 {
-                    System.err.println(String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
-                    con.getHeaderFields().forEach((key, value) -> System.err.println(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+                    System.err.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", "");
+                    con.getHeaderFields().forEach((key, value) -> System.err.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value));
                 }
                 
                 
