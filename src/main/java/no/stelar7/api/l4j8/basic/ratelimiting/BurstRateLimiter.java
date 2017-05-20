@@ -49,7 +49,7 @@ public class BurstRateLimiter extends RateLimiter
                         
                         if (DataCall.VERBOSE_LIMITING)
                         {
-                            System.out.println("limit " + key + " has changed from " + oldVal + " to " + newVal);
+                            System.err.println("limit " + key + " has changed from " + oldVal + " to " + newVal);
                         }
                     }
                 }
@@ -91,7 +91,7 @@ public class BurstRateLimiter extends RateLimiter
         
         if (DataCall.VERBOSE_LIMITING)
         {
-            System.out.println("Sleeping for: " + delay[0]);
+            System.err.println("Sleeping for: " + delay[0]);
         }
         
         return delay[0];
@@ -112,7 +112,7 @@ public class BurstRateLimiter extends RateLimiter
             
             if (DataCall.VERBOSE_LIMITING)
             {
-                System.out.println("Calls made: " + callCountInTime.get(limit) + " in: " + limit.getTimeframeInMS() / 1000);
+                System.err.println("Calls made: " + callCountInTime.get(limit) + " in: " + limit.getTimeframeInMS() / 1000);
             }
         }
     }
