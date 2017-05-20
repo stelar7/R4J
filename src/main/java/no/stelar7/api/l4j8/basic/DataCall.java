@@ -141,7 +141,10 @@ public final class DataCall
             
             if (response.getResponseCode() >= 500)
             {
-                System.err.println("Server error, retrying");
+                if (VERBOSE_DEFAULT)
+                {
+                    System.err.println("Server error, retrying");
+                }
                 
                 int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
                 if (attempts > 3)
@@ -478,7 +481,6 @@ public final class DataCall
     public static boolean VERBOSE_LIMITING = false;
     
     private boolean verbose = VERBOSE_DEFAULT;
-    
     
     private static APICredentials creds;
     
