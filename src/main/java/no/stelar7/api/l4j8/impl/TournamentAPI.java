@@ -7,12 +7,18 @@ import no.stelar7.api.l4j8.pojo.match.Match;
 import no.stelar7.api.l4j8.pojo.tournament.*;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
 
 public final class TournamentAPI
 {
     
     private static final TournamentAPI INSTANCE = new TournamentAPI();
+    private boolean useStub;
+    
+    public void useStub(boolean useStub)
+    {
+        this.useStub = useStub;
+    }
     
     public static TournamentAPI getInstance()
     {
@@ -45,6 +51,11 @@ public final class TournamentAPI
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
                                                        .withPlatform(server);
+        
+        if (useStub)
+        {
+            builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_CODES);
+        }
         
         return (List<String>) builder.build();
     }
@@ -101,6 +112,11 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES_BY_CODE)
                                                        .withPlatform(server);
         
+        if (useStub)
+        {
+            throw new IllegalArgumentException("This method is not useable with the stub API");
+        }
+        
         return (TournamentCode) builder.build();
     }
     
@@ -117,6 +133,12 @@ public final class TournamentAPI
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_LOBBY_EVENTS)
                                                        .withPlatform(server);
+        
+        if (useStub)
+        {
+            builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_LOBBY_EVENTS);
+        }
+        
         
         LobbyEventWrapper lew = (LobbyEventWrapper) builder.build();
         return lew.getEventList();
@@ -141,6 +163,12 @@ public final class TournamentAPI
                                                        .withRequestMethod(Constants.METHOD_POST)
                                                        .withPlatform(server);
         
+        
+        if (useStub)
+        {
+            builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_PROVIDER);
+        }
+        
         return (Long) builder.build();
     }
     
@@ -158,6 +186,12 @@ public final class TournamentAPI
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
                                                        .withPlatform(server);
+        
+        if (useStub)
+        {
+            builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_TOURNAMENT);
+        }
+        
         
         return (Long) builder.build();
     }
@@ -177,6 +211,11 @@ public final class TournamentAPI
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_PUT)
                                                        .withPlatform(server);
+        
+        if (useStub)
+        {
+            throw new IllegalArgumentException("This method is not useable with the stub API");
+        }
         
         builder.build();
     }
