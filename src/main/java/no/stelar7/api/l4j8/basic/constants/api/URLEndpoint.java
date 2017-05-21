@@ -145,9 +145,9 @@ public enum URLEndpoint
     // POST lol/tournament/v3/providers Creates a tournament provider and returns its ID.
     // POST lol/tournament/v3/tournaments Creates a tournament and returns its ID.
     V3_TOURNAMENT_STUB_CODES("lol", "tournament-stub", "v3", "codes", new TypeToken<List<String>>() {}.getType()),
-    V3_TOURNAMENT_STUB_LOBBY_EVENTS("lol", "tournamentstub", "v3", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
-    V3_TOURNAMENT_STUB_PROVIDER("lol", "tournamentstub", "v3", "providers", Integer.class),
-    V3_TOURNAMENT_STUB_TOURNAMENT("lol", "tournamentstub", "v3", "tournaments", Integer.class);
+    V3_TOURNAMENT_STUB_LOBBY_EVENTS("lol", "tournament-stub", "v3", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
+    V3_TOURNAMENT_STUB_PROVIDER("lol", "tournament-stub", "v3", "providers", Integer.class),
+    V3_TOURNAMENT_STUB_TOURNAMENT("lol", "tournament-stub", "v3", "tournaments", Integer.class);
     
     
     private final String game;
