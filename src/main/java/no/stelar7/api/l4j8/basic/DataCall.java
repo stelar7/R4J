@@ -106,7 +106,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 404)
             {
-                System.err.format("No data from url %s %s", url, response.getResponseData());
+                System.err.format("No data from url %s %s%n", url, response.getResponseData());
                 return null;
             }
             
