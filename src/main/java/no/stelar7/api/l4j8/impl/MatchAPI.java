@@ -86,6 +86,12 @@ public final class MatchAPI
         
         
         MatchList list = (MatchList) builder.build();
+        
+        if (list == null)
+        {
+            return Collections.emptyList();
+        }
+        
         return list.getMatches();
     }
     
@@ -103,6 +109,12 @@ public final class MatchAPI
                                                        .withPlatform(server);
         
         MatchList list = (MatchList) builder.build();
+        
+        if (list == null)
+        {
+            return Collections.emptyList();
+        }
+        
         return list.getMatches();
     }
     
