@@ -29,8 +29,8 @@ System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getPlaye
 List<MatchRune>    runes     = self.getRunes();
 List<MatchMastery> masteries = self.getMasteries();
         
-StaticRuneList    runeData      = api.getStaticAPI().getRunes(Platform.EUW1, Optional.of(EnumSet.of(RuneDataFlags.ALL)), Optional.empty(), Optional.empty());
-StaticMasteryList masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, Optional.of(EnumSet.of(MasteryDataFlags.ALL)), Optional.empty(), Optional.empty());
+StaticRuneList    runeData      = api.getStaticAPI().getRunes(Platform.EUW1, EnumSet.of(RuneDataFlags.ALL), null, null);
+StaticMasteryList masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, EnumSet.of(MasteryDataFlags.ALL), null, null);
         
 System.out.format("%nThey used the following runes:");
         
