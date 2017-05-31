@@ -4,11 +4,11 @@ import java.util.*;
 
 public class StaticChampionList
 {
-    private Map<Long, StaticChampion> data;
-    private String                    format;
-    private Map<String, String>       keys;
-    private String                    type;
-    private String                    version;
+    private Map<Integer, StaticChampion> data;
+    private String                       format;
+    private Map<String, String>          keys;
+    private String                       type;
+    private String                       version;
     
     
     /**
@@ -16,7 +16,7 @@ public class StaticChampionList
      *
      * @return the data
      */
-    public Map<Long, StaticChampion> getData()
+    public Map<Integer, StaticChampion> getData()
     {
         return this.data;
     }

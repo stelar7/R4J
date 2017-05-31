@@ -26,7 +26,6 @@ public final class Utils
         // Register enum types with GSON
         builder.registerTypeAdapter(AscencionType.class, new AscencionTypeDeserializer());
         builder.registerTypeAdapter(BuildingType.class, new BuildingTypeDeserializer());
-        builder.registerTypeAdapter(ChampionType.class, new ChampionTypeDeserializer());
         builder.registerTypeAdapter(EventType.class, new EventTypeDeserializer());
         builder.registerTypeAdapter(GameModeType.class, new GameModeTypeDeserializer());
         builder.registerTypeAdapter(GameQueueType.class, new GameQueueTypeDeserializer());

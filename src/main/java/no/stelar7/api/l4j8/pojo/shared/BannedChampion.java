@@ -1,11 +1,12 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.impl.StaticAPI;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 public class BannedChampion
 {
-    private ChampionType championId;
-    private int          pickTurn;
+    private int championId;
+    private int pickTurn;
     
     
     /**
@@ -13,9 +14,9 @@ public class BannedChampion
      *
      * @return long
      */
-    public ChampionType getChampion()
+    public StaticChampion getChampion()
     {
-        return this.championId;
+        return StaticAPI.getCache().getChampion(this.championId);
     }
     
     /**
@@ -52,7 +53,7 @@ public class BannedChampion
     @Override
     public int hashCode()
     {
-        int result = championId != null ? championId.hashCode() : 0;
+        int result = championId;
         result = 31 * result + pickTurn;
         return result;
     }

@@ -3,13 +3,12 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.basic.constants.types.ChampionType;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
-import no.stelar7.api.l4j8.pojo.summoner.runes.*;
+import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 
 import java.time.*;
 import java.util.List;
@@ -124,9 +123,9 @@ public final class Summoner
         return MatchAPI.getInstance().getMatchList(platform, accountId, null, null, null, null, null, null, null);
     }
     
-    public ChampionMastery getChampionMastery(ChampionType type)
+    public ChampionMastery getChampionMastery(int championId)
     {
-        return MasteryAPI.getInstance().getChampionMastery(platform, id, type.getId());
+        return MasteryAPI.getInstance().getChampionMastery(platform, id, championId);
     }
     
     public List<ChampionMastery> getChampionMasteries()

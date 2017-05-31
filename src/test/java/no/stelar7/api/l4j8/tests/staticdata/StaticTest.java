@@ -29,7 +29,7 @@ public class StaticTest
     {
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL);
         
-        Map<Long, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
+        Map<Integer, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
         Assert.assertTrue("less than 100?", list.size() > 100);
         
     }

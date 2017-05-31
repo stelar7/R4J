@@ -1,34 +1,35 @@
 package no.stelar7.api.l4j8.pojo.championmastery;
 
-import no.stelar7.api.l4j8.basic.constants.types.ChampionType;
+import no.stelar7.api.l4j8.impl.StaticAPI;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.time.*;
 
 public class ChampionMastery
 {
-    private int          championLevel;
-    private boolean      chestGranted;
-    private int          championPoints;
-    private long         championPointsSinceLastLevel;
-    private long         playerId;
-    private long         championPointsUntilNextLevel;
-    private int          tokensEarned;
-    private ChampionType championId;
-    private long         lastPlayTime;
+    private int     championLevel;
+    private boolean chestGranted;
+    private int     championPoints;
+    private long    championPointsSinceLastLevel;
+    private long    playerId;
+    private long    championPointsUntilNextLevel;
+    private int     tokensEarned;
+    private int     championId;
+    private long    lastPlayTime;
     
     
     /**
-     * ChampionType ID for this entry.
+     * StaticChampion for this entry.
      *
      * @return the champion id
      */
-    public ChampionType getChampion()
+    public StaticChampion getChampion()
     {
-        return this.championId;
+        return StaticAPI.getCache().getChampion(this.championId);
     }
     
     /**
-     * ChampionType level for specified player and champion combination.
+     * Level for specified player and champion combination.
      *
      * @return the champion level
      */
@@ -176,7 +177,7 @@ public class ChampionMastery
         result = 31 * result + (int) (playerId ^ (playerId >>> 32));
         result = 31 * result + (int) (championPointsUntilNextLevel ^ (championPointsUntilNextLevel >>> 32));
         result = 31 * result + tokensEarned;
-        result = 31 * result + (championId != null ? championId.hashCode() : 0);
+        result = 31 * result + championId;
         result = 31 * result + (int) (lastPlayTime ^ (lastPlayTime >>> 32));
         return result;
     }

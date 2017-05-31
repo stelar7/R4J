@@ -1,25 +1,26 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
-import no.stelar7.api.l4j8.basic.constants.types.ChampionType;
+import no.stelar7.api.l4j8.impl.StaticAPI;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 public class Champion
 {
     
-    private boolean      active;
-    private boolean      botEnabled;
-    private boolean      botMmEnabled;
-    private boolean      freeToPlay;
-    private boolean      rankedPlayEnabled;
-    private ChampionType id;
+    private boolean active;
+    private boolean botEnabled;
+    private boolean botMmEnabled;
+    private boolean freeToPlay;
+    private boolean rankedPlayEnabled;
+    private int     id;
     
     public int getId()
     {
-        return this.id.getId();
+        return this.id;
     }
     
-    public ChampionType getChampionType()
+    public StaticChampion getChampion()
     {
-        return this.id;
+        return StaticAPI.getCache().getChampion(this.id);
     }
     
     public boolean isActive()
@@ -92,14 +93,14 @@ public class Champion
         result = 31 * result + (botMmEnabled ? 1 : 0);
         result = 31 * result + (freeToPlay ? 1 : 0);
         result = 31 * result + (rankedPlayEnabled ? 1 : 0);
-        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
     
     @Override
     public String toString()
     {
-        return "ChampionType{" +
+        return "Champion{" +
                "active=" + active +
                ", botEnabled=" + botEnabled +
                ", botMmEnabled=" + botMmEnabled +

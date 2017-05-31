@@ -302,9 +302,6 @@ public final class DataCall
                 url[0] = url[0] + token + pair.getKey() + '=' + pair.getValue();
             }
             
-            // url[0] = url[0] + "?api_key=" + apiKey;
-            //dc.urlData.forEach((k, v) -> url[0] = url[0] + "&" + k + "=" + v);
-            
             return url[0];
         }
         
@@ -477,10 +474,11 @@ public final class DataCall
     
     private String baseURL = Constants.REQUEST_URL;
     
-    public static boolean VERBOSE_DEFAULT  = false;
-    public static boolean VERBOSE_LIMITING = false;
+    public static boolean VERBOSE_DEBUGGING = false;
+    public static boolean VERBOSE_LIMITING  = false;
+    public static boolean VERBOSE_DEFAULT   = false;
     
-    private boolean verbose = VERBOSE_DEFAULT;
+    private boolean verbose = false;
     
     private static APICredentials creds;
     

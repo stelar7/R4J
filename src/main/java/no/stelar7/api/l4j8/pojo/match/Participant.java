@@ -1,13 +1,14 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.basic.constants.types.SummonerSpellType;
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.impl.StaticAPI;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.util.*;
 
 public class Participant
 {
-    private ChampionType        championId;
+    private int                 championId;
     private TierType            highestAchievedSeasonTier;
     private List<MatchMastery>  masteries;
     private int                 participantId;
@@ -20,13 +21,13 @@ public class Participant
     
     
     /**
-     * ChampionType ID
+     * StaticChampion
      *
-     * @return int
+     * @return StaticChampion
      */
-    public ChampionType getChampion()
+    public StaticChampion getChampion()
     {
-        return this.championId;
+        return StaticAPI.getCache().getChampion(this.championId);
     }
     
     /**
@@ -179,7 +180,7 @@ public class Participant
     @Override
     public int hashCode()
     {
-        int result = championId != null ? championId.hashCode() : 0;
+        int result = championId;
         result = 31 * result + (highestAchievedSeasonTier != null ? highestAchievedSeasonTier.hashCode() : 0);
         result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
         result = 31 * result + participantId;

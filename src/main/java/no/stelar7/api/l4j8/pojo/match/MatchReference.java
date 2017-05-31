@@ -2,7 +2,8 @@ package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.impl.MatchAPI;
+import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.time.*;
 
@@ -10,7 +11,7 @@ public class MatchReference
 {
     private LaneType      lane;
     private long          gameId;
-    private ChampionType  champion;
+    private int           champion;
     private Platform      platformId;
     private long          timestamp;
     private GameQueueType queue;
@@ -29,13 +30,13 @@ public class MatchReference
     }
     
     /**
-     * ChampionType ID associated with game.
+     * champion associated with game.
      *
-     * @return long
+     * @return StaticChampion
      */
-    public ChampionType getChampion()
+    public StaticChampion getChampion()
     {
-        return this.champion;
+        return StaticAPI.getCache().getChampion(this.champion);
     }
     
     /**
@@ -164,7 +165,7 @@ public class MatchReference
     {
         int result = lane != null ? lane.hashCode() : 0;
         result = 31 * result + (int) (gameId ^ (gameId >>> 32));
-        result = 31 * result + (champion != null ? champion.hashCode() : 0);
+        result = 31 * result + champion;
         result = 31 * result + (platformId != null ? platformId.hashCode() : 0);
         result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
         result = 31 * result + (queue != null ? queue.hashCode() : 0);

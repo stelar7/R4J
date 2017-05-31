@@ -1,12 +1,14 @@
 package no.stelar7.api.l4j8.pojo.spectator;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.impl.StaticAPI;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.util.List;
 
 public class SpectatorParticipant
 {
-    private ChampionType           championId;
+    private int                    championId;
     private long                   profileIconId;
     private SummonerSpellType      spell1Id;
     private SummonerSpellType      spell2Id;
@@ -22,9 +24,9 @@ public class SpectatorParticipant
      *
      * @return the champion
      */
-    public ChampionType getChampion()
+    public StaticChampion getChampion()
     {
-        return championId;
+        return StaticAPI.getCache().getChampion(this.championId);
     }
     
     /**
@@ -173,7 +175,7 @@ public class SpectatorParticipant
     @Override
     public int hashCode()
     {
-        int result = championId != null ? championId.hashCode() : 0;
+        int result = championId;
         result = 31 * result + (int) (profileIconId ^ (profileIconId >>> 32));
         result = 31 * result + (spell1Id != null ? spell1Id.hashCode() : 0);
         result = 31 * result + (spell2Id != null ? spell2Id.hashCode() : 0);
