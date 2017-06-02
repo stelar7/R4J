@@ -2,26 +2,26 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 public class Stats
 {
-    private double armor;
-    private double armorperlevel;
-    private double attackdamage;
-    private double attackdamageperlevel;
-    private double attackrange;
-    private double attackspeedoffset;
-    private double attackspeedperlevel;
-    private double crit;
-    private double critperlevel;
-    private double hp;
-    private double hpperlevel;
-    private double hpregen;
-    private double hpregenperlevel;
-    private double movespeed;
-    private double mp;
-    private double mpperlevel;
-    private double mpregen;
-    private double mpregenperlevel;
-    private double spellblock;
-    private double spellblockperlevel;
+    private float armor;
+    private float armorperlevel;
+    private float attackdamage;
+    private float attackdamageperlevel;
+    private float attackrange;
+    private float attackspeedoffset;
+    private float attackspeedperlevel;
+    private float crit;
+    private float critperlevel;
+    private float hp;
+    private float hpperlevel;
+    private float hpregen;
+    private float hpregenperlevel;
+    private float movespeed;
+    private float mp;
+    private float mpperlevel;
+    private float mpregen;
+    private float mpregenperlevel;
+    private float spellblock;
+    private float spellblockperlevel;
     
     
     /**
@@ -29,7 +29,7 @@ public class Stats
      *
      * @return the armor
      */
-    public double getArmor()
+    public float getArmor()
     {
         return this.armor;
     }
@@ -39,7 +39,7 @@ public class Stats
      *
      * @return the armorperlevel
      */
-    public double getArmorperlevel()
+    public float getArmorperlevel()
     {
         return this.armorperlevel;
     }
@@ -49,7 +49,7 @@ public class Stats
      *
      * @return the attackdamage
      */
-    public double getAttackdamage()
+    public float getAttackdamage()
     {
         return this.attackdamage;
     }
@@ -59,7 +59,7 @@ public class Stats
      *
      * @return the attackdamageperlevel
      */
-    public double getAttackdamageperlevel()
+    public float getAttackdamageperlevel()
     {
         return this.attackdamageperlevel;
     }
@@ -69,7 +69,7 @@ public class Stats
      *
      * @return the attackrange
      */
-    public double getAttackrange()
+    public float getAttackrange()
     {
         return this.attackrange;
     }
@@ -79,7 +79,7 @@ public class Stats
      *
      * @return the attackspeedoffset
      */
-    public double getAttackspeedoffset()
+    public float getAttackspeedoffset()
     {
         return this.attackspeedoffset;
     }
@@ -89,7 +89,7 @@ public class Stats
      *
      * @return the attackspeedperlevel
      */
-    public double getAttackspeedperlevel()
+    public float getAttackspeedperlevel()
     {
         return this.attackspeedperlevel;
     }
@@ -99,7 +99,7 @@ public class Stats
      *
      * @return the crit
      */
-    public double getCrit()
+    public float getCrit()
     {
         return this.crit;
     }
@@ -109,7 +109,7 @@ public class Stats
      *
      * @return the critperlevel
      */
-    public double getCritperlevel()
+    public float getCritperlevel()
     {
         return this.critperlevel;
     }
@@ -119,7 +119,7 @@ public class Stats
      *
      * @return the hp
      */
-    public double getHp()
+    public float getHp()
     {
         return this.hp;
     }
@@ -129,7 +129,7 @@ public class Stats
      *
      * @return the hpperlevel
      */
-    public double getHpperlevel()
+    public float getHpperlevel()
     {
         return this.hpperlevel;
     }
@@ -139,7 +139,7 @@ public class Stats
      *
      * @return the hpregen
      */
-    public double getHpregen()
+    public float getHpregen()
     {
         return this.hpregen;
     }
@@ -149,7 +149,7 @@ public class Stats
      *
      * @return the hpregenperlevel
      */
-    public double getHpregenperlevel()
+    public float getHpregenperlevel()
     {
         return this.hpregenperlevel;
     }
@@ -159,7 +159,7 @@ public class Stats
      *
      * @return the movespeed
      */
-    public double getMovespeed()
+    public float getMovespeed()
     {
         return this.movespeed;
     }
@@ -169,7 +169,7 @@ public class Stats
      *
      * @return the mp
      */
-    public double getMp()
+    public float getMp()
     {
         return this.mp;
     }
@@ -179,7 +179,7 @@ public class Stats
      *
      * @return the mpperlevel
      */
-    public double getMpperlevel()
+    public float getMpperlevel()
     {
         return this.mpperlevel;
     }
@@ -189,7 +189,7 @@ public class Stats
      *
      * @return the mpregen
      */
-    public double getMpregen()
+    public float getMpregen()
     {
         return this.mpregen;
     }
@@ -199,7 +199,7 @@ public class Stats
      *
      * @return the mpregenperlevel
      */
-    public double getMpregenperlevel()
+    public float getMpregenperlevel()
     {
         return this.mpregenperlevel;
     }
@@ -209,7 +209,7 @@ public class Stats
      *
      * @return the spellblock
      */
-    public double getSpellblock()
+    public float getSpellblock()
     {
         return this.spellblock;
     }
@@ -219,7 +219,7 @@ public class Stats
      *
      * @return the spellblockperlevel
      */
-    public double getSpellblockperlevel()
+    public float getSpellblockperlevel()
     {
         return this.spellblockperlevel;
     }
@@ -238,132 +238,111 @@ public class Stats
         
         Stats stats = (Stats) o;
         
-        if (Double.compare(stats.armor, armor) != 0)
+        if (Float.compare(stats.armor, armor) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.armorperlevel, armorperlevel) != 0)
+        if (Float.compare(stats.armorperlevel, armorperlevel) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.attackdamage, attackdamage) != 0)
+        if (Float.compare(stats.attackdamage, attackdamage) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.attackdamageperlevel, attackdamageperlevel) != 0)
+        if (Float.compare(stats.attackdamageperlevel, attackdamageperlevel) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.attackrange, attackrange) != 0)
+        if (Float.compare(stats.attackrange, attackrange) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.attackspeedoffset, attackspeedoffset) != 0)
+        if (Float.compare(stats.attackspeedoffset, attackspeedoffset) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.attackspeedperlevel, attackspeedperlevel) != 0)
+        if (Float.compare(stats.attackspeedperlevel, attackspeedperlevel) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.crit, crit) != 0)
+        if (Float.compare(stats.crit, crit) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.critperlevel, critperlevel) != 0)
+        if (Float.compare(stats.critperlevel, critperlevel) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.hp, hp) != 0)
+        if (Float.compare(stats.hp, hp) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.hpperlevel, hpperlevel) != 0)
+        if (Float.compare(stats.hpperlevel, hpperlevel) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.hpregen, hpregen) != 0)
+        if (Float.compare(stats.hpregen, hpregen) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.hpregenperlevel, hpregenperlevel) != 0)
+        if (Float.compare(stats.hpregenperlevel, hpregenperlevel) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.movespeed, movespeed) != 0)
+        if (Float.compare(stats.movespeed, movespeed) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.mp, mp) != 0)
+        if (Float.compare(stats.mp, mp) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.mpperlevel, mpperlevel) != 0)
+        if (Float.compare(stats.mpperlevel, mpperlevel) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.mpregen, mpregen) != 0)
+        if (Float.compare(stats.mpregen, mpregen) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.mpregenperlevel, mpregenperlevel) != 0)
+        if (Float.compare(stats.mpregenperlevel, mpregenperlevel) != 0)
         {
             return false;
         }
-        if (Double.compare(stats.spellblock, spellblock) != 0)
+        if (Float.compare(stats.spellblock, spellblock) != 0)
         {
             return false;
         }
-        return Double.compare(stats.spellblockperlevel, spellblockperlevel) == 0;
+        return Float.compare(stats.spellblockperlevel, spellblockperlevel) == 0;
     }
     
     @Override
     public int hashCode()
     {
-        int  result;
-        long temp;
-        temp = Double.doubleToLongBits(armor);
-        result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(armorperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(attackdamage);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(attackdamageperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(attackrange);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(attackspeedoffset);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(attackspeedperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(crit);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(critperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(hp);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(hpperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(hpregen);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(hpregenperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(movespeed);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(mp);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(mpperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(mpregen);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(mpregenperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(spellblock);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(spellblockperlevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        int result = armor != +0.0f ? Float.floatToIntBits(armor) : 0;
+        result = 31 * result + (armorperlevel != +0.0f ? Float.floatToIntBits(armorperlevel) : 0);
+        result = 31 * result + (attackdamage != +0.0f ? Float.floatToIntBits(attackdamage) : 0);
+        result = 31 * result + (attackdamageperlevel != +0.0f ? Float.floatToIntBits(attackdamageperlevel) : 0);
+        result = 31 * result + (attackrange != +0.0f ? Float.floatToIntBits(attackrange) : 0);
+        result = 31 * result + (attackspeedoffset != +0.0f ? Float.floatToIntBits(attackspeedoffset) : 0);
+        result = 31 * result + (attackspeedperlevel != +0.0f ? Float.floatToIntBits(attackspeedperlevel) : 0);
+        result = 31 * result + (crit != +0.0f ? Float.floatToIntBits(crit) : 0);
+        result = 31 * result + (critperlevel != +0.0f ? Float.floatToIntBits(critperlevel) : 0);
+        result = 31 * result + (hp != +0.0f ? Float.floatToIntBits(hp) : 0);
+        result = 31 * result + (hpperlevel != +0.0f ? Float.floatToIntBits(hpperlevel) : 0);
+        result = 31 * result + (hpregen != +0.0f ? Float.floatToIntBits(hpregen) : 0);
+        result = 31 * result + (hpregenperlevel != +0.0f ? Float.floatToIntBits(hpregenperlevel) : 0);
+        result = 31 * result + (movespeed != +0.0f ? Float.floatToIntBits(movespeed) : 0);
+        result = 31 * result + (mp != +0.0f ? Float.floatToIntBits(mp) : 0);
+        result = 31 * result + (mpperlevel != +0.0f ? Float.floatToIntBits(mpperlevel) : 0);
+        result = 31 * result + (mpregen != +0.0f ? Float.floatToIntBits(mpregen) : 0);
+        result = 31 * result + (mpregenperlevel != +0.0f ? Float.floatToIntBits(mpregenperlevel) : 0);
+        result = 31 * result + (spellblock != +0.0f ? Float.floatToIntBits(spellblock) : 0);
+        result = 31 * result + (spellblockperlevel != +0.0f ? Float.floatToIntBits(spellblockperlevel) : 0);
         return result;
     }
+    
     
     @Override
     public String toString()

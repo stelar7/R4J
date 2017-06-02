@@ -11,7 +11,7 @@ public class StaticRune
     private boolean              inStore;
     private List<String>         into;
     private int                  id;
-    private BasicDataStats       stats;
+    private RuneStats            stats;
     private String               colloq;
     private Map<String, Boolean> maps;
     private int                  specialRecipe;
@@ -55,7 +55,7 @@ public class StaticRune
         return id;
     }
     
-    public BasicDataStats getStats()
+    public RuneStats getStats()
     {
         return stats;
     }

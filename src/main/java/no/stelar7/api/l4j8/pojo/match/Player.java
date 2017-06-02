@@ -104,11 +104,11 @@ public class Player
         {
             return false;
         }
-        if (matchHistoryUri != null ? !matchHistoryUri.equals(player.matchHistoryUri) : player.matchHistoryUri != null)
+        if ((matchHistoryUri != null) ? !matchHistoryUri.equals(player.matchHistoryUri) : (player.matchHistoryUri != null))
         {
             return false;
         }
-        if (summonerName != null ? !summonerName.equals(player.summonerName) : player.summonerName != null)
+        if ((summonerName != null) ? !summonerName.equals(player.summonerName) : (player.summonerName != null))
         {
             return false;
         }

@@ -27,7 +27,7 @@ public class StaticTest
     @Test
     public void testChampionList()
     {
-        EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL);
+        EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
         
         Map<Integer, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
         Assert.assertTrue("less than 100?", list.size() > 100);
@@ -57,7 +57,7 @@ public class StaticTest
     @Test
     public void testItemSingle()
     {
-        EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL);
+        EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
         
         Item list = api.getItem(Platform.EUW1, 1018, dataFlags, null, null);
         Assert.assertTrue("ok?", list.getId() == 1018);
@@ -95,7 +95,7 @@ public class StaticTest
     @Test
     public void testMasteryTreeish()
     {
-        EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
+        EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         Map<Integer, StaticMastery> data  = api.getMasteries(Platform.EUW1, dataFlags, null, null);
         List<MasteryPage>           pages = SummonerAPI.getInstance().getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
@@ -130,7 +130,7 @@ public class StaticTest
     @Test
     public void testMasterySingle()
     {
-        EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
+        EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
         
@@ -161,7 +161,7 @@ public class StaticTest
     @Test
     public void testRuneSingle()
     {
-        EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL);
+        EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
         
         StaticRune rune = api.getRune(Platform.EUW1, 5023, dataFlags, null, null);
         
@@ -178,7 +178,7 @@ public class StaticTest
     @Test
     public void testSummonerSpellList()
     {
-        EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL);
+        EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
         
         Map<String, StaticSummonerSpell> list = api.getSummonerSpells(Platform.EUW1, dataFlags, null, null);
     }
@@ -187,7 +187,7 @@ public class StaticTest
     @Test
     public void testSummonerSpellSingle()
     {
-        EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL);
+        EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
         
         StaticSummonerSpell list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, null, null);
         

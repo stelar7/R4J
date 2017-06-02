@@ -10,8 +10,9 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Constants
 {
-    public static final String API_KEY_PLACEHOLDER_DATA           = "api_key";
-    public static final String FREE_TO_PLAY_PLACEHOLDER_DATA      = "freeToPlay";
+    public static final String API_KEY_PLACEHOLDER_DATA      = "api_key";
+    public static final String FREE_TO_PLAY_PLACEHOLDER_DATA = "freeToPlay";
+    /*
     public static final String CHAMPDATA_PLACEHOLDER_DATA         = "champData";
     public static final String CHAMPLISTDATA_PLACEHOLDER_DATA     = "champListData";
     public static final String ITEMDATA_PLACEHOLDER_DATA          = "itemData";
@@ -22,18 +23,31 @@ public final class Constants
     public static final String RUNELISTDATA_PLACEHOLDER_DATA      = "runeListData";
     public static final String SUMMONERSPELL_PLACEHOLDER_DATA     = "spellData";
     public static final String SUMMONERSPELLLIST_PLACEHOLDER_DATA = "spellListData";
-    public static final String VERSION_PLACEHOLDER_DATA           = "version";
-    public static final String LOCALE_PLACEHOLDER_DATA            = "locale";
-    public static final String QUEUE_PLACEHOLDER_DATA             = "queue";
-    public static final String SEASON_PLACEHOLDER_DATA            = "season";
-    public static final String ENDTIME_PLACEHOLDER_DATA           = "endTime";
-    public static final String ENDINDEX_PLACEHOLDER_DATA          = "endIndex";
-    public static final String BEGINTIME_PLACEHOLDER_DATA         = "beginTime";
-    public static final String BEGININDEX_PLACEHOLDER_DATA        = "beginIndex";
-    public static final String CHAMPION_PLACEHOLDER_DATA          = "champion";
-    public static final String TIMELINE_PLACEHOLDER_DATA          = "includeTimeline";
-    public static final String COUNT_PLACEHOLDER_DATA             = "count";
-    public static final String TYPE_PLACEHOLDER_DATA              = "type";
+    */
+    
+    public static final String CHAMPDATA_PLACEHOLDER_DATA         = "tags";
+    public static final String CHAMPLISTDATA_PLACEHOLDER_DATA     = "tags";
+    public static final String ITEMDATA_PLACEHOLDER_DATA          = "tags";
+    public static final String ITEMLISTDATA_PLACEHOLDER_DATA      = "tags";
+    public static final String MASTERYLISTDATA_PLACEHOLDER_DATA   = "tags";
+    public static final String MASTERYDATA_PLACEHOLDER_DATA       = "tags";
+    public static final String RUNEDATA_PLACEHOLDER_DATA          = "tags";
+    public static final String RUNELISTDATA_PLACEHOLDER_DATA      = "tags";
+    public static final String SUMMONERSPELL_PLACEHOLDER_DATA     = "tags";
+    public static final String SUMMONERSPELLLIST_PLACEHOLDER_DATA = "tags";
+    
+    public static final String VERSION_PLACEHOLDER_DATA    = "version";
+    public static final String LOCALE_PLACEHOLDER_DATA     = "locale";
+    public static final String QUEUE_PLACEHOLDER_DATA      = "queue";
+    public static final String SEASON_PLACEHOLDER_DATA     = "season";
+    public static final String ENDTIME_PLACEHOLDER_DATA    = "endTime";
+    public static final String ENDINDEX_PLACEHOLDER_DATA   = "endIndex";
+    public static final String BEGINTIME_PLACEHOLDER_DATA  = "beginTime";
+    public static final String BEGININDEX_PLACEHOLDER_DATA = "beginIndex";
+    public static final String CHAMPION_PLACEHOLDER_DATA   = "champion";
+    public static final String TIMELINE_PLACEHOLDER_DATA   = "includeTimeline";
+    public static final String COUNT_PLACEHOLDER_DATA      = "count";
+    public static final String TYPE_PLACEHOLDER_DATA       = "type";
     
     public static final String TOURNAMENT_CODE_PLACEHOLDER = "{tournamentCode}";
     public static final String PLATFORM_ID_PLACEHOLDER     = "{platformId}";

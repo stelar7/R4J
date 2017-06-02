@@ -84,7 +84,7 @@ public class MasteryPage
     @Override
     public int hashCode()
     {
-        int result = (current ? 1 : 0);
+        int result = current ? 1 : 0;
         result = 31 * result + (int) (id ^ (id >>> 32));
         result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);

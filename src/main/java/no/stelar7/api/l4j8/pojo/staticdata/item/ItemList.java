@@ -1,13 +1,10 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
-
 import java.util.*;
 
 public class ItemList
 {
     
-    private BasicData         basic;
     private Map<String, Item> data;
     private List<Group>       groups;
     private List<ItemTree>    tree;
@@ -28,16 +25,6 @@ public class ItemList
             return false;
         }
         final ItemList other = (ItemList) obj;
-        if (this.basic == null)
-        {
-            if (other.basic != null)
-            {
-                return false;
-            }
-        } else if (!this.basic.equals(other.basic))
-        {
-            return false;
-        }
         if (this.data == null)
         {
             if (other.data != null)
@@ -70,16 +57,6 @@ public class ItemList
         }
         
         return true;
-    }
-    
-    /**
-     * Gets the basic.
-     *
-     * @return the basic
-     */
-    public BasicData getBasic()
-    {
-        return this.basic;
     }
     
     /**
@@ -117,7 +94,6 @@ public class ItemList
     {
         final int prime  = 31;
         int       result = 1;
-        result = (prime * result) + ((this.basic == null) ? 0 : this.basic.hashCode());
         result = (prime * result) + ((this.data == null) ? 0 : this.data.hashCode());
         result = (prime * result) + ((this.groups == null) ? 0 : this.groups.hashCode());
         result = (prime * result) + ((this.tree == null) ? 0 : this.tree.hashCode());
@@ -129,8 +105,7 @@ public class ItemList
     public String toString()
     {
         return "ItemList{" +
-               "basic=" + basic +
-               ", data=" + data +
+               "data=" + data +
                ", groups=" + groups +
                ", tree=" + tree +
                '}';

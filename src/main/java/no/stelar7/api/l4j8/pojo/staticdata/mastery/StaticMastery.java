@@ -128,8 +128,8 @@ public class StaticMastery
         {
             return false;
         }
-        {
         if ((masteryTree != null) ? !masteryTree.equals(that.masteryTree) : (that.masteryTree != null))
+        {
             return false;
         }
         if ((name != null) ? !name.equals(that.name) : (that.name != null))

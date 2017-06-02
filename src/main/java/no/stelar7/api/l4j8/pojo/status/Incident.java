@@ -83,7 +83,7 @@ public class Incident
     @Override
     public int hashCode()
     {
-        int result = (active ? 1 : 0);
+        int result = active ? 1 : 0;
         result = 31 * result + (created_at != null ? created_at.hashCode() : 0);
         result = 31 * result + (int) (id ^ (id >>> 32));
         result = 31 * result + (updates != null ? updates.hashCode() : 0);

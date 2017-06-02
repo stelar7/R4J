@@ -65,7 +65,7 @@ public class MetaData
     @Override
     public int hashCode()
     {
-        int result = (isRune ? 1 : 0);
+        int result = isRune ? 1 : 0;
         result = 31 * result + (tier != null ? tier.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;

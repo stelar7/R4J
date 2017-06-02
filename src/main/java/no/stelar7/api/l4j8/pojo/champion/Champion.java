@@ -88,7 +88,7 @@ public class Champion
     @Override
     public int hashCode()
     {
-        int result = (active ? 1 : 0);
+        int result = active ? 1 : 0;
         result = 31 * result + (botEnabled ? 1 : 0);
         result = 31 * result + (botMmEnabled ? 1 : 0);
         result = 31 * result + (freeToPlay ? 1 : 0);

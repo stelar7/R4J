@@ -108,8 +108,8 @@ public class Recommended
         {
             return false;
         }
-        {
         if ((map != null) ? !map.equals(that.map) : (that.map != null))
+        {
             return false;
         }
         if ((mode != null) ? !mode.equals(that.mode) : (that.mode != null))

@@ -34,7 +34,7 @@ public class FeaturedTournamentWrapper
         
         FeaturedTournamentWrapper that = (FeaturedTournamentWrapper) o;
         
-        if (featuredTournamentOption != null ? !featuredTournamentOption.equals(that.featuredTournamentOption) : that.featuredTournamentOption != null)
+        if ((featuredTournamentOption != null) ? !featuredTournamentOption.equals(that.featuredTournamentOption) : (that.featuredTournamentOption != null))
         {
             return false;
         }
