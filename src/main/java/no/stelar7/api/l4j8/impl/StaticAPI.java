@@ -69,14 +69,19 @@ public final class StaticAPI
         // Hide public constructor
     }
     
-    public Map<Integer, StaticChampion> getChampions(Platform server, Set<ChampDataFlags> champData, @Nullable String version, @Nullable String locale)
+    public Map<Integer, StaticChampion> getChampions(Platform server, @Nullable Set<ChampDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPIONS)
                                                        .withPlatform(server);
         
-        
-        champData.forEach(flag -> builder.withURLDataAsSet(Constants.CHAMPLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.CHAMPLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.CHAMPLISTDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
         
         if (version != null)
         {
@@ -91,13 +96,19 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public StaticChampion getChampion(Platform server, int id, Set<ChampDataFlags> champData, @Nullable String version, @Nullable String locale)
+    public StaticChampion getChampion(Platform server, int id, @Nullable Set<ChampDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_CHAMPION_BY_ID)
                                                        .withPlatform(server);
         
-        champData.forEach(flag -> builder.withURLDataAsSet(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.CHAMPDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
         
         if (version != null)
         {
@@ -111,12 +122,18 @@ public final class StaticAPI
         return (StaticChampion) builder.build();
     }
     
-    public ItemList getItems(Platform server, Set<ItemDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public ItemList getItems(Platform server, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_ITEMS)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
         
         if (version != null)
         {
@@ -130,13 +147,19 @@ public final class StaticAPI
         return (ItemList) builder.build();
     }
     
-    public Item getItem(Platform server, int id, Set<ItemDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public Item getItem(Platform server, int id, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_ITEM_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.ITEMDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
         
         if (version != null)
         {
@@ -199,12 +222,19 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public Map<Integer, StaticMastery> getMasteries(Platform server, Set<MasteryDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public Map<Integer, StaticMastery> getMasteries(Platform server, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
+        
         
         if (version != null)
         {
@@ -219,12 +249,18 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public Map<String, List<MasteryTreeList>> getMasteryTree(Platform server, Set<MasteryDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public Map<String, List<MasteryTreeList>> getMasteryTree(Platform server, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
         
         if (version != null)
         {
@@ -239,13 +275,19 @@ public final class StaticAPI
         return list.getTree();
     }
     
-    public StaticMastery getMastery(Platform server, int id, Set<MasteryDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public StaticMastery getMastery(Platform server, int id, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.MASTERYDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
         
         if (version != null)
         {
@@ -283,12 +325,19 @@ public final class StaticAPI
         return (Realm) builder.build();
     }
     
-    public Map<Integer, StaticRune> getRunes(Platform server, Set<RuneDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public Map<Integer, StaticRune> getRunes(Platform server, @Nullable Set<RuneDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_RUNES)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.RUNELISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.RUNELISTDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.RUNELISTDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
         
         if (version != null)
         {
@@ -304,13 +353,19 @@ public final class StaticAPI
     }
     
     
-    public StaticRune getRune(Platform server, int id, Set<RuneDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public StaticRune getRune(Platform server, int id, @Nullable Set<RuneDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_RUNE_BY_ID)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.RUNEDATA_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.RUNEDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
         
         if (version != null)
         {
@@ -325,12 +380,20 @@ public final class StaticAPI
     }
     
     
-    public Map<String, StaticSummonerSpell> getSummonerSpells(Platform server, Set<SpellDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public Map<String, StaticSummonerSpell> getSummonerSpells(Platform server, @Nullable Set<SpellDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELLS)
                                                        .withPlatform(server);
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.SUMMONERSPELLLIST_PLACEHOLDER_DATA, flag.getValue()));
+        
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.SUMMONERSPELLLIST_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.SUMMONERSPELLLIST_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
+        
         
         if (version != null)
         {
@@ -345,14 +408,21 @@ public final class StaticAPI
         return list.getData();
     }
     
-    public StaticSummonerSpell getSummonerSpell(Platform server, int id, Set<SpellDataFlags> itemData, @Nullable String version, @Nullable String locale)
+    public StaticSummonerSpell getSummonerSpell(Platform server, int id, @Nullable Set<SpellDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
                                                        .withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID)
                                                        .withPlatform(server);
         
         
-        itemData.forEach(flag -> builder.withURLDataAsSet(Constants.SUMMONERSPELL_PLACEHOLDER_DATA, flag.getValue()));
+        if (dataFlags != null)
+        {
+            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.SUMMONERSPELL_PLACEHOLDER_DATA, flag.getValue()));
+        } else
+        {
+            builder.withURLDataAsSet(Constants.SUMMONERSPELL_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
+        }
+        
         
         if (version != null)
         {

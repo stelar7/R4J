@@ -128,11 +128,29 @@ public class StaticTest
     
     
     @Test
-    public void testMasterySingle()
+    public void testMasterySingleMultipleFlags()
     {
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
+        
+        Assert.assertTrue("ok?", list.getId() == 6131);
+    }
+    
+    @Test
+    public void testMasterySingleOneFlag()
+    {
+        EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
+        
+        StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
+        
+        Assert.assertTrue("ok?", list.getId() == 6131);
+    }
+    
+    @Test
+    public void testMasterySingleNoFlags()
+    {
+        StaticMastery list = api.getMastery(Platform.EUW1, 6131, null, null, null);
         
         Assert.assertTrue("ok?", list.getId() == 6131);
     }
