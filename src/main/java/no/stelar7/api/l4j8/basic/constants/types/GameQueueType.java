@@ -74,7 +74,7 @@ public enum GameQueueType
      */
     BOT_TT_3X3(52),
     /**
-     * TeamType Builder games
+     * Team Builder games
      */
     GROUP_FINDER_5X5(61),
     /**
