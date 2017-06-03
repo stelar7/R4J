@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import no.stelar7.api.l4j8.impl.StaticAPI;
+import no.stelar7.api.l4j8.basic.cache.StaticCache;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 public class BannedChampion
@@ -16,7 +16,7 @@ public class BannedChampion
      */
     public StaticChampion getChampion()
     {
-        return StaticAPI.getCache().getChampion(this.championId);
+        return StaticCache.getInstance().getChampion(this.championId);
     }
     
     /**

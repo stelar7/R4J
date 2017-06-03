@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
+import no.stelar7.api.l4j8.basic.cache.StaticCache;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 
@@ -91,7 +92,7 @@ public final class MasteryAPI
                 
                 Field champ = mastery.getClass().getDeclaredField("championId");
                 champ.setAccessible(true);
-                champ.set(mastery, StaticAPI.getCache().getChampion(championId));
+                champ.set(mastery, StaticCache.getInstance().getChampion(championId));
                 
                 Field level = mastery.getClass().getDeclaredField("championLevel");
                 level.setAccessible(true);

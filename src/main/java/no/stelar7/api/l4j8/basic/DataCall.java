@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.basic;
 
 
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
@@ -17,7 +18,6 @@ import java.util.logging.*;
 
 public final class DataCall
 {
-    
     
     public static class DataCallBuilder
     {
@@ -59,7 +59,20 @@ public final class DataCall
             
             if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
             {
+                if (VERBOSE_LIMITING)
+                {
+                    System.err.println("Call to limited endpoint!");
+                    System.err.println(this.dc.endpoint.name());
+                }
+                
                 DataCall.limiter.get(this.dc.platform).acquire();
+            } else
+            {
+                if (VERBOSE_LIMITING)
+                {
+                    System.err.println("Call to unlimited endpoint!");
+                    System.err.println(this.dc.endpoint.name());
+                }
             }
             
             dc.urlHeaders.put("X-Riot-Token", creds.getBaseAPIKey());
@@ -117,14 +130,16 @@ public final class DataCall
                     System.err.println(response.getResponseData());
                 }
                 
-                if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()))
+                if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
                 {
                     try
                     {
-                        int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
-                        if (attempts > 3)
+                        int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
+                        if (attempts > 2)
                         {
-                            throw new APIResponseException(APIHTTPErrorReason.ERROR_429, response.getResponseData());
+                            System.err.println("Service ratelimit reached too many times, waiting 7 second and retrying");
+                            Thread.sleep(7000);
+                            return this.build(attempts);
                         }
                         
                         System.err.format("Service ratelimit reached (%s / 3 times), waiting 1 second and retrying%n", attempts);
@@ -474,6 +489,7 @@ public final class DataCall
     
     private String baseURL = Constants.REQUEST_URL;
     
+    
     public static boolean VERBOSE_DEBUGGING = false;
     public static boolean VERBOSE_LIMITING  = false;
     public static boolean VERBOSE_DEFAULT   = false;
@@ -481,6 +497,7 @@ public final class DataCall
     private boolean verbose = false;
     
     private static APICredentials creds;
+    private static CacheProvider cache = CacheProvider.EMPTY;
     
     public static DataCallBuilder builder()
     {
@@ -490,6 +507,16 @@ public final class DataCall
     public static APICredentials getCredentials()
     {
         return DataCall.creds;
+    }
+    
+    public static CacheProvider getCacheProvider()
+    {
+        return cache;
+    }
+    
+    public static void setCacheProvider(SQLCache provider)
+    {
+        cache = provider;
     }
     
     public static void setCredentials(final APICredentials creds)

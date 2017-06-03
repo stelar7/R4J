@@ -31,7 +31,7 @@ public enum TierType
      *
      * @return String
      */
-    public String getCode()
+    public String getValue()
     {
         return this.name();
     }

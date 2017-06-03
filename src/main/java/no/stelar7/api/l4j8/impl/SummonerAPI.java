@@ -1,13 +1,13 @@
 package no.stelar7.api.l4j8.impl;
 
+import no.stelar7.api.l4j8.basic.*;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
 import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
-import java.util.*;
+import java.util.List;
 
 public final class SummonerAPI
 {
@@ -74,7 +74,9 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ID)
                 .withPlatform(server);
         
-        return (Summoner) builder.build();
+        Summoner summoner = (Summoner) builder.build();
+        DataCall.getCacheProvider().store(Summoner.class, summoner);
+        return summoner;
     }
     
     /**
@@ -91,7 +93,9 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_NAME)
                 .withPlatform(server);
         
-        return (Summoner) builder.build();
+        Summoner summoner = (Summoner) builder.build();
+        DataCall.getCacheProvider().store(Summoner.class, summoner);
+        return summoner;
     }
     
     /**
@@ -108,6 +112,8 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
-        return (Summoner) builder.build();
+        Summoner summoner = (Summoner) builder.build();
+        DataCall.getCacheProvider().store(Summoner.class, summoner);
+        return summoner;
     }
 }

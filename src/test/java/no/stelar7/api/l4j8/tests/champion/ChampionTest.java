@@ -45,7 +45,7 @@ public class ChampionTest
     @Test
     public void testChampionList()
     {
-        List<Champion> champ = api.getChampions(Platform.EUW1, null);
+        List<Champion> champ = api.getChampions(Platform.EUW1, false);
         Assert.assertTrue("count less than 100?", champ.size() > 100);
     }
 }

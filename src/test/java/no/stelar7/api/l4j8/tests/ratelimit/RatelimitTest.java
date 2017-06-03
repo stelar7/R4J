@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.tests.ratelimit;
 
+import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
@@ -53,10 +54,10 @@ public class RatelimitTest
     @Test
     public void testRateLimit() throws InterruptedException
     {
-        ExecutorService pool = Executors.newFixedThreadPool(3);
+        ExecutorService pool = Executors.newFixedThreadPool(8);
         pool.submit(() ->
                     {
-                        for (int i2 = 0; i2 < 700; i2++)
+                        for (int i2 = 0; i2 < 70; i2++)
                         {
                             Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
                         }
@@ -90,6 +91,7 @@ public class RatelimitTest
     @Test
     public void testRateLimitStatic()
     {
+        DataCall.VERBOSE_DEFAULT = true;
         for (int i = 0; i < 30; i++)
         {
             Realm ignore = l4j8.getStaticAPI().getRealm(Platform.EUW1);

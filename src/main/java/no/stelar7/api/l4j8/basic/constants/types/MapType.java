@@ -73,4 +73,15 @@ public enum MapType
         return this.mapId;
     }
     
+    
+    /**
+     * Used internaly in the api...
+     *
+     * @return the value
+     */
+    public int getValue()
+    {
+        return getId();
+    }
+    
 }

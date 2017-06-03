@@ -65,6 +65,17 @@ public enum GameModeType
         return Stream.of(GameModeType.values()).filter(t -> t.name().equalsIgnoreCase(gameMode)).findFirst();
     }
     
+    
+    /**
+     * Used internaly in the api...
+     *
+     * @return the value
+     */
+    public String getValue()
+    {
+        return this.name();
+    }
+    
     /**
      * The value used to map strings to objects
      *

@@ -21,7 +21,7 @@ public enum TeamType
         return Stream.of(TeamType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
     }
     
-    public Integer getCode()
+    public Integer getValue()
     {
         return this.code;
     }

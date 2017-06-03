@@ -43,6 +43,11 @@ public enum LaneType
         return Stream.of(LaneType.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }
     
+    public String getValue()
+    {
+        return this.name();
+    }
+    
     /**
      * The value used to map strings to objects
      *

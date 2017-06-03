@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.championmastery;
 
-import no.stelar7.api.l4j8.impl.StaticAPI;
+import no.stelar7.api.l4j8.basic.cache.StaticCache;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.time.*;
@@ -25,7 +25,7 @@ public class ChampionMastery
      */
     public StaticChampion getChampion()
     {
-        return StaticAPI.getCache().getChampion(this.championId);
+        return StaticCache.getInstance().getChampion(this.championId);
     }
     
     /**

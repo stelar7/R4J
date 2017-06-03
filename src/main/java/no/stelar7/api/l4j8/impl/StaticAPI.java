@@ -1,6 +1,5 @@
 package no.stelar7.api.l4j8.impl;
 
-import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
@@ -20,44 +19,6 @@ import java.util.*;
 public final class StaticAPI
 {
     private static final StaticAPI INSTANCE = new StaticAPI();
-    private static final APICache  cache    = new APICache();
-    
-    public static APICache getCache()
-    {
-        return cache;
-    }
-    
-    
-    public static class APICache
-    {
-        private final Map<Integer, StaticChampion> championCache = new HashMap<>();
-        
-        
-        public StaticChampion getChampion(int champion)
-        {
-            if (championCache.isEmpty())
-            {
-                if (DataCall.VERBOSE_DEBUGGING)
-                {
-                    System.out.println("Champion Cache is empty, pulling data");
-                }
-                
-                championCache.putAll(StaticAPI.getInstance().getChampions(Platform.EUW1, EnumSet.of(ChampDataFlags.ALL), null, null));
-                
-                if (DataCall.VERBOSE_DEBUGGING)
-                {
-                    System.out.format("Data pulled, now contains %s items%n", championCache.size());
-                }
-            }
-            
-            if (DataCall.VERBOSE_DEBUGGING)
-            {
-                System.out.println("Loading data from champion cache: " + champion);
-            }
-            return championCache.computeIfAbsent(champion, id -> StaticAPI.getInstance().getChampion(Platform.EUW1, id, EnumSet.of(ChampDataFlags.ALL), null, null));
-        }
-    }
-    
     
     public static StaticAPI getInstance()
     {

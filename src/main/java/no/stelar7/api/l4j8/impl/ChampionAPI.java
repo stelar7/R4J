@@ -20,14 +20,14 @@ public final class ChampionAPI
         // Hide public constructor
     }
     
-    public List<Champion> getChampions(Platform server, Boolean freeToPlay)
+    public List<Champion> getChampions(Platform server, boolean freeToPlay)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPIONS)
                                                        .withPlatform(server);
-        if (freeToPlay != null)
+        if (freeToPlay)
         {
-            builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, freeToPlay.toString());
+            builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, "true");
         }
         
         ChampionList cl = (ChampionList) builder.build();

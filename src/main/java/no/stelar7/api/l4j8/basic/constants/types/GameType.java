@@ -29,6 +29,17 @@ public enum GameType
         return Stream.of(GameType.values()).filter(t -> t.name().equalsIgnoreCase(gameType)).findFirst();
     }
     
+    
+    /**
+     * Used internaly in the api...
+     *
+     * @return the value
+     */
+    public String getValue()
+    {
+        return this.name();
+    }
+    
     /**
      * The value used to map strings to objects
      *

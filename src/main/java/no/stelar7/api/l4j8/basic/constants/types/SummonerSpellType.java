@@ -92,7 +92,7 @@ public enum SummonerSpellType
      */
     public static Optional<SummonerSpellType> getFromCode(final String type)
     {
-        return Stream.of(SummonerSpellType.values()).filter(t -> t.getId().equals(Integer.valueOf(type))).findFirst();
+        return Stream.of(SummonerSpellType.values()).filter(t -> t.getValue().equals(Integer.valueOf(type))).findFirst();
     }
     
     /**
@@ -100,7 +100,7 @@ public enum SummonerSpellType
      *
      * @return the id
      */
-    public Integer getId()
+    public Integer getValue()
     {
         return this.id;
     }
