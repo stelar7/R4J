@@ -241,7 +241,7 @@ public class StaticTest
         {
             StaticChampionSpell s = iter.next();
             
-            if (s.getTooltip() == null)
+            if (s.getSanitizedTooltip() == null || s.getSanitizedTooltip().length() < 50)
             {
                 errors.add(String.format("%s - %s", getFromSublist(s, container), s.getName()));
                 iter.remove();
