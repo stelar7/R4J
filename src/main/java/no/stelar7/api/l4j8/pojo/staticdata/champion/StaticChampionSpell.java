@@ -15,47 +15,31 @@ public class StaticChampionSpell extends BaseSpellData
     }
     
     @Override
-    public boolean equals(final Object obj)
+    public boolean equals(Object o)
     {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final StaticChampionSpell other = (StaticChampionSpell) obj;
-        if (super.equals(other))
-        {
-            return false;
-        }
-        if (this.altimages == null)
-        {
-            if (other.altimages != null)
-            {
-                return false;
-            }
-        } else if (!this.altimages.equals(other.altimages))
+        if (!super.equals(o))
         {
             return false;
         }
         
-        return true;
+        StaticChampionSpell that = (StaticChampionSpell) o;
+    
+        return (altimages != null) ? altimages.equals(that.altimages) : (that.altimages == null);
     }
     
     @Override
     public int hashCode()
     {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.altimages == null) ? 0 : this.altimages.hashCode());
-        result = (prime * result) + super.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + (altimages != null ? altimages.hashCode() : 0);
         return result;
     }
-    
 }

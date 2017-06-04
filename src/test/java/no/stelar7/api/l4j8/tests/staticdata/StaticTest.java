@@ -4,10 +4,10 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.basic.exceptions.APIDataNotParseableException;
 import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapDetails;
-import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconDetails;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
@@ -17,6 +17,8 @@ import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.regex.*;
 
 public class StaticTest
 {
@@ -31,9 +33,7 @@ public class StaticTest
         
         Map<Integer, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
         Assert.assertTrue("less than 100?", list.size() > 100);
-        
     }
-    
     
     @Test
     public void testChampionSingle()
@@ -218,4 +218,72 @@ public class StaticTest
     {
         List<String> data = api.getVersions(Platform.EUW1);
     }
+    
+    @Test
+    public void testStaticDataIntegrety()
+    {
+        EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
+        
+        Map<Integer, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
+        Assert.assertTrue("less than 100?", list.size() > 100);
+        
+        Pattern pat = Pattern.compile("(\\{\\{ .*? }})");
+        
+        Map<String, List<StaticChampionSpell>> container = new HashMap<>();
+        List<StaticChampionSpell>              spells    = new ArrayList<>();
+        list.forEach((k, v) -> container.put(v.getName(), v.getSpells()));
+        list.forEach((k, v) -> spells.addAll(v.getSpells()));
+        
+        List<String> errors = new ArrayList<>();
+        
+        errors.add("Missing Tooltip:");
+        for (Iterator<StaticChampionSpell> iter = spells.iterator(); iter.hasNext(); )
+        {
+            StaticChampionSpell s = iter.next();
+            
+            if (s.getTooltip() == null)
+            {
+                errors.add(String.format("%s - %s", getFromSublist(s, container), s.getName()));
+                iter.remove();
+            }
+        }
+        errors.add("");
+        errors.add("Missing Variables: ");
+        for (StaticChampionSpell s : spells)
+        {
+            Set<String>  vars   = new HashSet<>();
+            StringJoiner sb     = new StringJoiner(", ");
+            String       better = s.getSanitizedTooltip(18, s.getMaxRank());
+            Matcher      m      = pat.matcher(better);
+            
+            if (better.contains("{"))
+            {
+                while (m.find())
+                {
+                    vars.add(m.group().replace("{{ ", "").replace(" }}", ""));
+                }
+                
+                List<String> varSort = new ArrayList<>(vars);
+                varSort.sort(String::compareTo);
+                varSort.forEach(sb::add);
+                errors.add(String.format("%s - %s: %s", getFromSublist(s, container), s.getName(), sb.toString()));
+            }
+        }
+        errors.forEach(System.out::println);
+        
+        Assert.assertTrue("Static data contains errors", errors.isEmpty());
+    }
+    
+    private String getFromSublist(StaticChampionSpell find, Map<String, List<StaticChampionSpell>> data)
+    {
+        for (Entry<String, List<StaticChampionSpell>> entry : data.entrySet())
+        {
+            if (entry.getValue().contains(find))
+            {
+                return entry.getKey();
+            }
+        }
+        return "no data found?????";
+    }
+    
 }
