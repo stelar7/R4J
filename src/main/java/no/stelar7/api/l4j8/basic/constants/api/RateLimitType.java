@@ -8,7 +8,7 @@ public enum RateLimitType
 {
     LIMIT_USER("application", "Application ratelimit reached"),
     LIMIT_SERVICE("service", "Service ratelimit reached"),
-    LIMIT_METHOD("method", "Service ratelimit reached"),
+    LIMIT_METHOD("method", "Method ratelimit reached"),
     LIMIT_UNDERLYING("", "Underlying service limit reached");
     
     private final String value;

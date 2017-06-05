@@ -32,18 +32,6 @@ public final class DataCall
         }
         
         /**
-         * Print out as much data as possible about this call
-         *
-         * @param flag true if verbose
-         * @return this
-         */
-        public DataCallBuilder asVerbose(final boolean flag)
-        {
-            this.dc.verbose = flag;
-            return this;
-        }
-        
-        /**
          * Puts together all the data, and then returns an object representing the JSON from the call
          *
          * @param retrys the amount of retries already done (should not be passed in!)
@@ -78,13 +66,13 @@ public final class DataCall
             dc.urlHeaders.put("X-Riot-Token", creds.getBaseAPIKey());
             
             final String url = this.getURL();
-            if (this.dc.verbose)
+            if (VERBOSE_DEFAULT)
             {
                 System.err.println(url);
             }
             
             final DataCallResponse response = this.getResponse(url);
-            if (this.dc.verbose)
+            if (VERBOSE_DEFAULT)
             {
                 System.err.println(response);
             }
@@ -204,7 +192,7 @@ public final class DataCall
                 
                 con.setRequestMethod(this.dc.requestMethod);
                 
-                if (this.dc.verbose)
+                if (VERBOSE_DEFAULT)
                 {
                     System.err.format(Constants.VERBOSE_STRING_FORMAT, "URL", url);
                     System.err.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod());
@@ -225,7 +213,7 @@ public final class DataCall
                 
                 con.connect();
                 
-                if (this.dc.verbose)
+                if (VERBOSE_DEFAULT)
                 {
                     System.err.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", "");
                     con.getHeaderFields().forEach((key, value) -> System.err.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value));
@@ -493,8 +481,6 @@ public final class DataCall
     public static boolean VERBOSE_DEBUGGING = false;
     public static boolean VERBOSE_LIMITING  = false;
     public static boolean VERBOSE_DEFAULT   = false;
-    
-    private boolean verbose = false;
     
     private static APICredentials creds;
     private static CacheProvider cache = CacheProvider.EMPTY;

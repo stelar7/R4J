@@ -2,7 +2,7 @@ package no.stelar7.api.l4j8.tests.ratelimit;
 
 import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -65,6 +65,15 @@ public class RatelimitTest
         
         pool.shutdown();
         pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+    }
+    
+    @Test
+    public void testStaticRatelimt()
+    {
+        for (int i = 0; i < 500; i++)
+        {
+            l4j8.getStaticAPI().getLanguages(Platform.EUW1);
+        }
     }
     
     @Test
