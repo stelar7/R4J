@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.basic.ratelimiting;
 
 
 import no.stelar7.api.l4j8.basic.DataCall;
+import no.stelar7.api.l4j8.basic.constants.api.LogLevel;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -47,7 +48,7 @@ public class BurstRateLimiter extends RateLimiter
                     {
                         callCountInTime.get(l).set(newVal);
                         
-                        if (DataCall.VERBOSE_LIMITING)
+                        if (DataCall.logLevel.ordinal() > LogLevel.DEBUG.ordinal())
                         {
                             System.err.println("limit " + key + " has changed from " + oldVal + " to " + newVal);
                         }
@@ -89,7 +90,7 @@ public class BurstRateLimiter extends RateLimiter
             delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias));
         }
         
-        if (DataCall.VERBOSE_LIMITING)
+        if (DataCall.logLevel.ordinal() > LogLevel.DEBUG.ordinal())
         {
             System.err.println("Sleeping for: " + delay[0]);
         }
@@ -110,7 +111,7 @@ public class BurstRateLimiter extends RateLimiter
             
             callCountInTime.get(limit).incrementAndGet();
             
-            if (DataCall.VERBOSE_LIMITING)
+            if (DataCall.logLevel.ordinal() > LogLevel.DEBUG.ordinal())
             {
                 System.err.println("Calls made: " + callCountInTime.get(limit) + " in: " + limit.getTimeframeInMS() / 1000);
             }

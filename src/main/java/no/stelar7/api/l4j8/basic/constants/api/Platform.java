@@ -52,7 +52,19 @@ public enum Platform
     /**
      * PBE platform.
      */
-    PBE1;
+    PBE1,
+    /**
+     * Americas platform.
+     */
+    AMERICAS,
+    /**
+     * Europe platform.
+     */
+    EUROPE,
+    /**
+     * Asia platform.
+     */
+    ASIA;
     
     /**
      * Returns a Platform from the provided code

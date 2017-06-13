@@ -46,28 +46,51 @@ public enum MapType
     /**
      * Darkstar Map
      */
-    COSMIC_RUINS(16, new Rectangle(0, 0, 0, 0)),;
+    COSMIC_RUINS(16, new Rectangle(20, 20, 6970, 6970)),;
     
     
     private final Integer   mapId;
     private final Rectangle bounds;
     
+    
+    /**
+     * Constructor for MapType
+     *
+     * @param code   the mapId
+     * @param bounds adjusted bounds where avaliable, otherwise mapbounds
+     */
     MapType(final Integer code, final Rectangle bounds)
     {
         this.mapId = code;
         this.bounds = bounds;
     }
     
+    /**
+     * Gets from code.
+     *
+     * @param mapId the map id
+     * @return the from code
+     */
     public static Optional<MapType> getFromCode(final String mapId)
     {
         return Stream.of(MapType.values()).filter(t -> t.mapId.equals(Integer.valueOf(mapId))).findFirst();
     }
     
+    /**
+     * Gets bounds.
+     *
+     * @return the bounds
+     */
     public Rectangle getBounds()
     {
         return this.bounds;
     }
     
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Integer getId()
     {
         return this.mapId;

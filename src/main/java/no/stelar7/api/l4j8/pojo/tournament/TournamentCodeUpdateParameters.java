@@ -11,7 +11,7 @@ public class TournamentCodeUpdateParameters
     private TournamentPickType      pickType;
     private TournamentSpectatorType spectatorType;
     
-    public TournamentCodeUpdateParameters(final Set<Long> allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)
+    public TournamentCodeUpdateParameters(final List<Long> allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)
     {
         super();
         this.mapType = map;
