@@ -56,6 +56,18 @@ public class MatchListTest
         }
     }
     
+    @Test
+    public void testMatchlistSeasons()
+    {
+        Set<SeasonType> sixList      = EnumSet.of(SeasonType.SEASON_2016);
+        Set<SeasonType> preSevenList = EnumSet.of(SeasonType.PRE_SEASON_2017);
+        Set<SeasonType> sevenList    = EnumSet.of(SeasonType.SEASON_2017);
+        
+        List<MatchReference> twosix   = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, sixList, null);
+        List<MatchReference> preseven = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, preSevenList, null);
+        List<MatchReference> twoseven = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, sevenList, null);
+    }
+    
     
     @Test
     public void testMatch()
@@ -67,9 +79,9 @@ public class MatchListTest
     @Test
     public void testNormalGame()
     {
-        long id = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[2]).getAccountId();
-        
+        long                 id   = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[1]).getAccountId();
         List<MatchReference> refs = api.getRecentMatches(Platform.EUW1, id);
+        
         for (MatchReference ref : refs)
         {
             long          gameid   = ref.getGameId();

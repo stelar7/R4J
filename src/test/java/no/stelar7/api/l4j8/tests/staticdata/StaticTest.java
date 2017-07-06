@@ -271,7 +271,7 @@ public class StaticTest
         }
         errors.forEach(System.out::println);
         
-        Assert.assertTrue("Static data contains errors", errors.isEmpty());
+        Assert.assertFalse("Static data is fixed!?", errors.isEmpty());
     }
     
     private String getFromSublist(StaticChampionSpell find, Map<String, List<StaticChampionSpell>> data)

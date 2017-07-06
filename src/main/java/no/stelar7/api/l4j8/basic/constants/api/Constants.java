@@ -12,18 +12,6 @@ public final class Constants
 {
     public static final String API_KEY_PLACEHOLDER_DATA      = "api_key";
     public static final String FREE_TO_PLAY_PLACEHOLDER_DATA = "freeToPlay";
-    /*
-    public static final String CHAMPDATA_PLACEHOLDER_DATA         = "champData";
-    public static final String CHAMPLISTDATA_PLACEHOLDER_DATA     = "champListData";
-    public static final String ITEMDATA_PLACEHOLDER_DATA          = "itemData";
-    public static final String ITEMLISTDATA_PLACEHOLDER_DATA      = "itemListData";
-    public static final String MASTERYLISTDATA_PLACEHOLDER_DATA   = "masteryListData";
-    public static final String MASTERYDATA_PLACEHOLDER_DATA       = "masteryData";
-    public static final String RUNEDATA_PLACEHOLDER_DATA          = "runeData";
-    public static final String RUNELISTDATA_PLACEHOLDER_DATA      = "runeListData";
-    public static final String SUMMONERSPELL_PLACEHOLDER_DATA     = "spellData";
-    public static final String SUMMONERSPELLLIST_PLACEHOLDER_DATA = "spellListData";
-    */
     
     public static final String CHAMPDATA_PLACEHOLDER_DATA         = "tags";
     public static final String CHAMPLISTDATA_PLACEHOLDER_DATA     = "tags";
@@ -91,16 +79,18 @@ public final class Constants
     public static final String REQUEST_URL = PROTOCOL + PLATFORM_PLACEHOLDER + HOST_PLACEHOLDER + SEPARATOR + GAME_PLACEHOLDER + SEPARATOR + SERVICE_PLACEHOLDER + SEPARATOR + VERSION_PLACEHOLDER + SEPARATOR + RESOURCE_PLACEHOLDER;
     
     public static final String[]  TEST_TOURNAMENT_CODES = {"EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d"};
-    public static final String[]  TEST_SUMMONER_NAMES   = {"stelar7", "güslüm mürses"};
+    public static final String[]  TEST_SUMMONER_NAMES   = {"stelar7", "相当猥琐"};
     public static final Long[]    TEST_SUMMONER_IDS     = {19613950L};
     public static final Long[]    TEST_ACCOUNT_IDS      = {22401330L};
     public static final Integer[] TEST_CHAMPION_IDS     = {89, 50};
     
-    public static final RateLimit DEV_KEY_LIMIT_10  = new RateLimit(10, 10, TimeUnit.SECONDS);
-    public static final RateLimit DEV_KEY_LIMIT_600 = new RateLimit(500, 10, TimeUnit.MINUTES);
+    public static final RateLimit OLD_DEV_KEY_LIMIT_10  = new RateLimit(10, 10, TimeUnit.SECONDS);
+    public static final RateLimit OLD_DEV_KEY_LIMIT_600 = new RateLimit(500, 10, TimeUnit.MINUTES);
+    public static final RateLimit OLD_PROD_KEY_LIMIT_10  = new RateLimit(3_000, 10, TimeUnit.SECONDS);
+    public static final RateLimit OLD_PROD_KEY_LIMIT_600 = new RateLimit(180_000, 10, TimeUnit.MINUTES);
     
-    public static final RateLimit PROD_KEY_LIMIT_10  = new RateLimit(3_000, 10, TimeUnit.SECONDS);
-    public static final RateLimit PROD_KEY_LIMIT_600 = new RateLimit(180_000, 10, TimeUnit.MINUTES);
+    public static final RateLimit DEV_KEY_LIMIT_20  = new RateLimit(20, 1, TimeUnit.SECONDS);
+    public static final RateLimit DEV_KEY_LIMIT_100 = new RateLimit(100, 2, TimeUnit.MINUTES);
     
     private Constants()
     {

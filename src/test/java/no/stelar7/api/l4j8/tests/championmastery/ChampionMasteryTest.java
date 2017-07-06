@@ -45,9 +45,10 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMastery()
     {
-        ChampionMastery mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
-        doAssertions.accept(mastery);
+        ChampionMastery mastery;
         
+        mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[0]);
+        doAssertions.accept(mastery);
         mastery = api.getChampionMastery(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0], Constants.TEST_CHAMPION_IDS[1]);
         doAssertions.accept(mastery);
     }

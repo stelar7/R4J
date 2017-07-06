@@ -517,7 +517,7 @@ public final class DataCall
     
     static
     {
-        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(Constants.DEV_KEY_LIMIT_10, Constants.DEV_KEY_LIMIT_600)));
+        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(Constants.DEV_KEY_LIMIT_20, Constants.DEV_KEY_LIMIT_100)));
     }
     
 }

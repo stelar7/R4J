@@ -1,7 +1,6 @@
 package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
-import no.stelar7.api.l4j8.basic.cache.StaticCache;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 
@@ -9,7 +8,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Logger;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 public final class MasteryAPI
 {
@@ -92,7 +91,7 @@ public final class MasteryAPI
                 
                 Field champ = mastery.getClass().getDeclaredField("championId");
                 champ.setAccessible(true);
-                champ.set(mastery, StaticCache.getInstance().getChampion(championId));
+                champ.set(mastery, championId);
                 
                 Field level = mastery.getClass().getDeclaredField("championLevel");
                 level.setAccessible(true);
