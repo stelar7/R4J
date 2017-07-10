@@ -3,6 +3,11 @@
 ##### L4J8 isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
 
 
+## How do I download?
+
+For maven / gradle / sbt / leiningen:  [Jitpack](https://jitpack.io/#stelar7/L4J8/)
+ 
+ 
 ## How do I async?
 Wrap the method-call in `CompletableFuture`
 
@@ -16,8 +21,3 @@ private void handleSummonerCallback(Summoner u)
 ```
 
 [A more concrete example here](https://github.com/stelar7/L4J8/blob/master/src/test/java/no/stelar7/api/l4j8/tests/async/AsyncTest.java)
-
-
-## How do I download?
-
-For maven / gradle / sbt / leiningen:  [Jitpack](https://jitpack.io/#stelar7/L4J8/) 
