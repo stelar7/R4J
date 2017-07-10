@@ -6,6 +6,15 @@
 
 Check out one of the many [tests](https://github.com/stelar7/L4J8/tree/master/src/test/java/no/stelar7/api/l4j8/tests), as they provide good examples.
 
+##### What features does it have?
+
+| Type           | Supported |
+| :------------: | :-------: |
+| V3?            | Yes!      |
+| Rate-limiting? | Yes!      |
+| Cache?         | Soon!     |
+
+
 ## How do I download?
 
 For maven / gradle / sbt / leiningen:  [Jitpack](https://jitpack.io/#stelar7/L4J8/)
