@@ -80,12 +80,12 @@ public final class Constants
     
     public static final String[]  TEST_TOURNAMENT_CODES = {"EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d"};
     public static final String[]  TEST_SUMMONER_NAMES   = {"stelar7", "相当猥琐"};
-    public static final Long[]    TEST_SUMMONER_IDS     = {19613950L};
-    public static final Long[]    TEST_ACCOUNT_IDS      = {22401330L};
+    public static final Long[]    TEST_SUMMONER_IDS     = {19613950L, 24582364L};
+    public static final Long[]    TEST_ACCOUNT_IDS      = {22401330L, 29061584L};
     public static final Integer[] TEST_CHAMPION_IDS     = {89, 50};
     
-    public static final RateLimit OLD_DEV_KEY_LIMIT_10  = new RateLimit(10, 10, TimeUnit.SECONDS);
-    public static final RateLimit OLD_DEV_KEY_LIMIT_600 = new RateLimit(500, 10, TimeUnit.MINUTES);
+    public static final RateLimit OLD_DEV_KEY_LIMIT_10   = new RateLimit(10, 10, TimeUnit.SECONDS);
+    public static final RateLimit OLD_DEV_KEY_LIMIT_600  = new RateLimit(500, 10, TimeUnit.MINUTES);
     public static final RateLimit OLD_PROD_KEY_LIMIT_10  = new RateLimit(3_000, 10, TimeUnit.SECONDS);
     public static final RateLimit OLD_PROD_KEY_LIMIT_600 = new RateLimit(180_000, 10, TimeUnit.MINUTES);
     
