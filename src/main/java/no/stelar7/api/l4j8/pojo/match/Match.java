@@ -169,14 +169,7 @@ public class Match
     
     public boolean didWin(Participant participant)
     {
-        for (TeamStats team : teams)
-        {
-            if (participant.getTeam().equals(team.getTeamType()))
-            {
-                return team.isWinner();
-            }
-        }
-        return false;
+        return getTeamStats(participant.getTeam()).isWinner();
     }
     
     public ParticipantIdentity getLaneOpponentIdentity(long summonerId)
@@ -235,9 +228,9 @@ public class Match
      *
      * @return {@code List<TeamType>}
      */
-    public List<TeamStats> getTeamStats()
+    public TeamStats getTeamStats(TeamType team)
     {
-        return this.teams;
+        return this.teams.stream().filter(t -> t.getTeamType() == team).findFirst().get();
     }
     
     /**

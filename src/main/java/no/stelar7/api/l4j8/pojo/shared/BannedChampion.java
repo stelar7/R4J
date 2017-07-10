@@ -10,13 +10,24 @@ public class BannedChampion
     
     
     /**
-     * The ID of the banned champion
+     * The banned champion
      *
-     * @return long
+     * @return StaticChampion
      */
     public StaticChampion getChampion()
     {
         return StaticCache.getInstance().getChampion(this.championId);
+    }
+    
+    /**
+     * The ID of the banned champion
+     * -1 if they did not ban
+     *
+     * @return long
+     */
+    public int getChampionId()
+    {
+        return this.championId;
     }
     
     /**

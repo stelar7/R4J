@@ -27,6 +27,11 @@ public final class StaticCache
     
     public StaticChampion getChampion(int champion)
     {
+        if (champion == -1)
+        {
+            return null;
+        }
+        
         if (championCache.isEmpty())
         {
             if (DataCall.logLevel.ordinal() > LogLevel.EXTENDED_INFO.ordinal())

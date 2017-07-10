@@ -82,21 +82,7 @@ public final class DataCall
                 final Object returnType = this.dc.endpoint.getType();
                 Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
                 
-                try
-                {
-                    if (dtoobj instanceof Summoner)
-                    {
-                        Summoner sum = (Summoner) dtoobj;
-                        Field    f   = sum.getClass().getDeclaredField("platform");
-                        f.setAccessible(true);
-                        f.set(sum, this.dc.platform);
-                    }
-                } catch (NoSuchFieldException | IllegalAccessException e)
-                {
-                    e.printStackTrace();
-                }
-                
-                return dtoobj;
+                return process(dtoobj);
             }
             
             
@@ -164,6 +150,26 @@ public final class DataCall
             DataCall.LOGGER.log(Level.WARNING, "Response Code:" + response.getResponseCode());
             DataCall.LOGGER.log(Level.WARNING, "Response Data:" + response.getResponseData());
             throw new APINoValidResponseException(response.getResponseData());
+        }
+        
+        private Object process(Object dtoobj)
+        {
+            try
+            {
+                if (dtoobj instanceof Summoner)
+                {
+                    Summoner sum = (Summoner) dtoobj;
+                    Field    f   = sum.getClass().getDeclaredField("platform");
+                    f.setAccessible(true);
+                    f.set(sum, this.dc.platform);
+                }
+                
+            } catch (NoSuchFieldException | IllegalAccessException e)
+            {
+                e.printStackTrace();
+            }
+            
+            return dtoobj;
         }
         
         

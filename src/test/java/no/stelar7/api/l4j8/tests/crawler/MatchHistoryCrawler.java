@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.tests.crawler;
 
 import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.types.TeamType;
 import no.stelar7.api.l4j8.basic.exceptions.APIEnumNotUpToDateException;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.match.*;
@@ -343,8 +344,9 @@ public class MatchHistoryCrawler
     
     private void insertTeamData(long matchid, Match match) throws SQLException
     {
-        for (TeamStats team : match.getTeamStats())
+        for (TeamType type : TeamType.values())
         {
+            TeamStats team = match.getTeamStats(type);
             tsInsertStatement.setLong(1, matchid);
             tsInsertStatement.setLong(2, team.getTeamType().getValue());
             tsInsertStatement.setBoolean(3, team.isFirstBlood());

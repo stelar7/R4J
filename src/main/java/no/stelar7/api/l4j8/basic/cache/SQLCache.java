@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.cache;
 
+import no.stelar7.api.l4j8.basic.constants.types.TeamType;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 
@@ -305,8 +306,9 @@ public abstract class SQLCache extends CacheProvider
     
     protected void insertMatchTeamData(long matchId, Match match) throws SQLException
     {
-        for (TeamStats stats : match.getTeamStats())
+        for (TeamType type : TeamType.values())
         {
+            TeamStats           stats      = match.getTeamStats(type);
             Map<String, Object> insertData = classFieldsToMap(stats);
             insertData.put("matchId", matchId);
             
