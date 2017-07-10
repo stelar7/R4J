@@ -48,7 +48,7 @@ public class BurstRateLimiter extends RateLimiter
                     {
                         callCountInTime.get(l).set(newVal);
                         
-                        if (DataCall.logLevel.ordinal() > LogLevel.DEBUG.ordinal())
+                        if (DataCall.logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
                         {
                             System.err.println("limit " + key + " has changed from " + oldVal + " to " + newVal);
                         }
@@ -90,7 +90,7 @@ public class BurstRateLimiter extends RateLimiter
             delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias));
         }
         
-        if (DataCall.logLevel.ordinal() > LogLevel.DEBUG.ordinal())
+        if (DataCall.logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
         {
             System.err.println("Sleeping for: " + delay[0]);
         }
@@ -111,7 +111,7 @@ public class BurstRateLimiter extends RateLimiter
             
             callCountInTime.get(limit).incrementAndGet();
             
-            if (DataCall.logLevel.ordinal() > LogLevel.DEBUG.ordinal())
+            if (DataCall.logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
             {
                 System.err.println("Calls made: " + callCountInTime.get(limit) + " in: " + limit.getTimeframeInMS() / 1000);
             }

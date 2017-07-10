@@ -118,7 +118,7 @@ public abstract class SQLCache extends CacheProvider
         insertMatchTeamData(matchId, match);
         for (Participant participant : match.getParticipants())
         {
-            Player p = match.getParticipantIdentity(participant.getParticipantId()).getPlayer();
+            Player p = match.getParticipantIdentityFromParticipantId(participant.getParticipantId()).getPlayer();
             
             long sum = insertMatchSummoner(p);
             long par = insertMatchParticipant(matchId, participant);

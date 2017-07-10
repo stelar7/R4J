@@ -124,7 +124,7 @@ public class Match
         return this.participants;
     }
     
-    public Participant getParticipant(int participantId)
+    public Participant getParticipantFromParticipantId(int participantId)
     {
         for (Participant participant : participants)
         {
@@ -136,7 +136,7 @@ public class Match
         return null;
     }
     
-    public ParticipantIdentity getParticipantIdentity(int participantId)
+    public ParticipantIdentity getParticipantIdentityFromParticipantId(int participantId)
     {
         for (ParticipantIdentity participant : participantIdentities)
         {
@@ -148,22 +148,42 @@ public class Match
         return null;
     }
     
-    public Participant getParticipantFromSummonerId(long summonerId)
+    /**
+     * Returns the participantidentity that has this summonerid, or null if it cant be determined
+     *
+     * @param summonerId the id to check
+     * @return ParticipantIdentity
+     */
+    public ParticipantIdentity getParticipantIdentityFromSummonerId(long summonerId)
     {
         for (ParticipantIdentity identity : participantIdentities)
         {
             if (identity.getPlayer().getSummonerId() == summonerId)
             {
-                // return participants.get(participantIdentities.getParticipantId());
-                for (Participant participant : participants)
-                {
-                    if (participant.getParticipantId() == identity.getParticipantId())
-                    {
-                        return participant;
-                    }
-                }
+                return identity;
             }
         }
+        return null;
+    }
+    
+    /**
+     * Returns the participant that has this summonerid, or null if it cant be determined
+     *
+     * @param summonerId the id to check
+     * @return Participant
+     */
+    public Participant getParticipantFromSummonerId(long summonerId)
+    {
+        ParticipantIdentity id = getParticipantIdentityFromSummonerId(summonerId);
+        
+        for (Participant participant : participants)
+        {
+            if (participant.getParticipantId() == id.getParticipantId())
+            {
+                return participant;
+            }
+        }
+        
         return null;
     }
     
@@ -172,16 +192,20 @@ public class Match
         return getTeamStats(participant.getTeam()).isWinner();
     }
     
-    public ParticipantIdentity getLaneOpponentIdentity(long summonerId)
+    /**
+     * Returns your lane opponent based on role and lane, or null if it cant be determined
+     *
+     * @param self the participant to find the opponent of
+     * @return ParticipantIdentity
+     */
+    public ParticipantIdentity getLaneOpponentIdentity(Participant self)
     {
-        Participant par  = getParticipantFromSummonerId(summonerId);
-        LaneType    lane = par.getTimeline().getLane();
-        RoleType    role = par.getTimeline().getRole();
-        
+        LaneType selfLane = self.getTimeline().getLane();
+        RoleType selfRole = self.getTimeline().getRole();
         
         for (Participant participant : participants)
         {
-            if (participant.getParticipantId() == par.getParticipantId())
+            if (participant.getParticipantId() == self.getParticipantId())
             {
                 continue;
             }
@@ -189,12 +213,9 @@ public class Match
             LaneType otherLane = participant.getTimeline().getLane();
             RoleType otherRole = participant.getTimeline().getRole();
             
-            if (lane.equals(otherLane))
+            if (selfLane == otherLane && selfRole == otherRole)
             {
-                if (role.equals(otherRole))
-                {
-                    return getParticipantIdentity(participant.getParticipantId());
-                }
+                return getParticipantIdentityFromParticipantId(participant.getParticipantId());
             }
         }
         

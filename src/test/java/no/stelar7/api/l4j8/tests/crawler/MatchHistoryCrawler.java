@@ -142,7 +142,7 @@ public class MatchHistoryCrawler
                 
                 for (Participant participant : match.getParticipants())
                 {
-                    Player p             = match.getParticipantIdentity(participant.getParticipantId()).getPlayer();
+                    Player p             = match.getParticipantIdentityFromParticipantId(participant.getParticipantId()).getPlayer();
                     long   summonerid    = insertSummoner(p);
                     long   participantid = insertParticipant(matchid, participant);
                     insertParticipantIdentity(participantid, summonerid);

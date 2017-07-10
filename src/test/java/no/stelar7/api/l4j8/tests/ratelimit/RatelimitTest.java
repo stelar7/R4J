@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.tests.ratelimit;
 
+import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.ratelimiting.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
@@ -73,6 +75,23 @@ public class RatelimitTest
         {
             l4j8.getStaticAPI().getLanguages(Platform.EUW1);
         }
+    }
+    
+    @Test
+    public void testCustomRatelimit()
+    {
+        int permits = 1;
+        int time    = 5;
+        DataCall.logLevel = LogLevel.DEBUG;
+        
+        final L4J8 test = new L4J8(SecretFile.CREDS, new BurstRateLimiter(new RateLimit(permits, time, TimeUnit.SECONDS)));
+        
+        for (int i2 = 0; i2 < 70; i2++)
+        {
+            Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+        }
+        
+        Assert.assertTrue("it works!", permits * (time - 1) >= stopwatch.runtime(TimeUnit.SECONDS));
     }
     
     @Test

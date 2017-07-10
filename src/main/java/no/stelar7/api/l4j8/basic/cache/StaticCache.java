@@ -34,20 +34,20 @@ public final class StaticCache
         
         if (championCache.isEmpty())
         {
-            if (DataCall.logLevel.ordinal() > LogLevel.EXTENDED_INFO.ordinal())
+            if (DataCall.logLevel.ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
             {
                 System.out.println("Champion Cache is empty, pulling data");
             }
             
             championCache.putAll(StaticAPI.getInstance().getChampions(Platform.EUW1, EnumSet.of(ChampDataFlags.ALL), null, null));
             
-            if (DataCall.logLevel.ordinal() > LogLevel.EXTENDED_INFO.ordinal())
+            if (DataCall.logLevel.ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
             {
                 System.out.format("Data pulled, now contains %s items%n", championCache.size());
             }
         }
         
-        if (DataCall.logLevel.ordinal() > LogLevel.EXTENDED_INFO.ordinal())
+        if (DataCall.logLevel.ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
         {
             System.out.println("Loading data from champion cache: " + champion);
         }

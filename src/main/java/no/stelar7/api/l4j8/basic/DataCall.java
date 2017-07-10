@@ -47,7 +47,7 @@ public final class DataCall
             
             if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
             {
-                if (logLevel.ordinal() > LogLevel.INFO.ordinal())
+                if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
                 {
                     System.err.println("Call to limited endpoint!");
                     System.err.println(this.dc.endpoint.name());
@@ -56,7 +56,7 @@ public final class DataCall
                 DataCall.limiter.get(this.dc.platform).acquire();
             } else
             {
-                if (logLevel.ordinal() > LogLevel.INFO.ordinal())
+                if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
                 {
                     System.err.println("Call to unlimited endpoint!");
                     System.err.println(this.dc.endpoint.name());
@@ -66,13 +66,13 @@ public final class DataCall
             dc.urlHeaders.put("X-Riot-Token", creds.getBaseAPIKey());
             
             final String url = this.getURL();
-            if (logLevel.ordinal() > LogLevel.DEBUG.ordinal())
+            if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
             {
                 System.err.println(url);
             }
             
             final DataCallResponse response = this.getResponse(url);
-            if (logLevel.ordinal() > LogLevel.DEBUG.ordinal())
+            if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
             {
                 System.err.println(response);
             }
@@ -93,7 +93,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 404)
             {
-                if (logLevel.ordinal() > LogLevel.INFO.ordinal())
+                if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
                 {
                     System.err.format("No data from url %s %s%n", url, response.getResponseData());
                 }
@@ -102,7 +102,7 @@ public final class DataCall
             
             if (response.getResponseCode() == 429)
             {
-                if (logLevel.ordinal() > LogLevel.DEBUG.ordinal())
+                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
                 {
                     System.err.println(response.getResponseData());
                 }
@@ -133,7 +133,7 @@ public final class DataCall
             
             if (response.getResponseCode() >= 500)
             {
-                if (logLevel.ordinal() > LogLevel.INFO.ordinal())
+                if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
                 {
                     System.err.println("Server error, retrying");
                 }
@@ -201,7 +201,7 @@ public final class DataCall
                 
                 con.setRequestMethod(this.dc.requestMethod);
                 
-                if (logLevel.ordinal() > LogLevel.EXTENDED_INFO.ordinal())
+                if (logLevel.ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
                 {
                     System.err.format(Constants.VERBOSE_STRING_FORMAT, "URL", url);
                     System.err.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod());
@@ -222,7 +222,7 @@ public final class DataCall
                 
                 con.connect();
                 
-                if (logLevel.ordinal() > LogLevel.EXTENDED_INFO.ordinal())
+                if (logLevel.ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
                 {
                     System.err.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", "");
                     con.getHeaderFields().forEach((key, value) -> System.err.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value));
