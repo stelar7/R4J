@@ -25,15 +25,14 @@ public class AsyncTest
         MatchAPI    mapi = l4j8.getMatchAPI();
         
         CompletableFuture spinner = CompletableFuture.allOf(
-                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
-                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
-                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0])).thenAccept(this::handleSummonerCallback),
-                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
-                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0])).thenAccept(this::handleSummonerCallback),
-                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
-                
                 supplyAsync(() -> mapi.getRecentMatches(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleMatchCallback),
                 
+                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
+                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
+                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0])).thenAccept(this::handleSummonerCallback),
+                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
+                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0])).thenAccept(this::handleSummonerCallback),
+                supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
                 supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0])).thenAccept(this::handleSummonerCallback),
                 supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback),
                 supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0])).thenAccept(this::handleSummonerCallback),
