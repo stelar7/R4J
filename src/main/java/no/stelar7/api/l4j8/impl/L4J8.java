@@ -18,7 +18,6 @@ public class L4J8
     public L4J8(final APICredentials creds, RateLimiter... limiter)
     {
         DataCall.setCredentials(creds);
-        DataCall.setRatelimiter(limiter);
     }
     
     /**
@@ -56,9 +55,9 @@ public class L4J8
      *
      * @return the tournament api
      */
-    public TournamentAPI getTournamentAPI()
+    public TournamentAPI getTournamentAPI(boolean useStub)
     {
-        return TournamentAPI.getInstance();
+        return TournamentAPI.getInstance(useStub);
     }
     
     /**

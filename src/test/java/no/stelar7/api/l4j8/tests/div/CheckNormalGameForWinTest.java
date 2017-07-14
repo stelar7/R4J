@@ -5,7 +5,7 @@ import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.*;
 
@@ -15,6 +15,7 @@ public class CheckNormalGameForWinTest
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
     @Test
+    @Ignore
     public void testFindSelfInNormalGame()
     {
         Summoner             dev  = l4j8.getSummonerAPI().getSummonerByName(Platform.NA1, "devitgg");
@@ -50,6 +51,7 @@ public class CheckNormalGameForWinTest
     
     
     @Test
+    @Ignore
     public void testFindSelfAfterNormalGame()
     {
         Summoner dev = l4j8.getSummonerAPI().getSummonerByName(Platform.NA1, "devitgg");

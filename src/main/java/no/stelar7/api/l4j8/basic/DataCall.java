@@ -13,6 +13,7 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.logging.*;
 
@@ -26,9 +27,9 @@ public final class DataCall
         private final BiFunction<String, String, String> merge      = (o, n) -> o + "," + n;
         private final BiFunction<String, String, String> mergeAsSet = (o, n) -> o + n;
         
-        private static void updateRatelimiter(Platform server)
+        private static void updateRatelimiter(Enum server)
         {
-            DataCall.limiter.get(server).updatePermitsPerX(appLimit.get(server));
+            DataCall.limiter.get(server).updatePermitsPerX(callData.get(server));
         }
         
         /**
@@ -45,15 +46,25 @@ public final class DataCall
                 throw new APIUnsupportedAction("No API Creds set!");
             }
             
+            if (DataCall.limiter.get(this.dc.endpoint) != null)
+            {
+                DataCall.limiter.get(this.dc.endpoint).acquire();
+            }
+            
+            
             if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
             {
                 if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
                 {
-                    System.err.println("Call to limited endpoint!");
+                    System.err.println("Call to platform limited endpoint!");
                     System.err.println(this.dc.endpoint.name());
                 }
                 
-                DataCall.limiter.get(this.dc.platform).acquire();
+                if (DataCall.limiter.get(this.dc.platform) != null)
+                {
+                    DataCall.limiter.get(this.dc.platform).acquire();
+                }
+                
             } else
             {
                 if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
@@ -88,7 +99,20 @@ public final class DataCall
             
             if (response.getResponseCode() == 400)
             {
+                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
+                {
+                    System.err.println(url);
+                }
                 throw new APIResponseException(APIHTTPErrorReason.ERROR_400, "L4J8 error.. contact developer to get this fixed ..." + response.getResponseData());
+            }
+            
+            if (response.getResponseCode() == 403)
+            {
+                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
+                {
+                    System.err.println(url);
+                }
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_403, "Your Api key is invalid! If you just regenerated it, wait a few seconds, then try again. " + response.getResponseData());
             }
             
             if (response.getResponseCode() == 404)
@@ -229,43 +253,33 @@ public final class DataCall
                 }
                 
                 
-                // Log this for future use(?)
-                final String limitCount = con.getHeaderField("X-App-Rate-Limit-Count");
-                if (limitCount != null)
+                String appA    = con.getHeaderField("X-App-Rate-Limit");
+                String appB    = con.getHeaderField("X-App-Rate-Limit-Count");
+                String methodA = con.getHeaderField("X-Method-Rate-Limit");
+                String methodB = con.getHeaderField("X-Method-Rate-Limit-Count");
+                
+                if (appA != null)
                 {
-                    final String[]     limits  = limitCount.split(",");
-                    Map<Integer, Long> timeout = new HashMap<>();
-                    for (final String limitPair : limits)
-                    {
-                        final String[] limit = limitPair.split(":");
-                        final Long     call  = Long.parseLong(limit[0]);
-                        final Integer  time  = Integer.parseInt(limit[1]);
-                        timeout.put(time, call);
-                    }
-                    DataCall.appLimit.put(dc.platform, timeout);
-                    updateRatelimiter(dc.platform);
+                    createRatelimiterIfMissing(appA, dc.platform);
+                    saveHeaderRateLimit(appB, dc.platform);
+                } else
+                {
+                    System.err.println("Header 'X-App-Rate-Limit' missing from call: " + getURL());
                 }
                 
-                // Log this for future use(?)
-                final String methodLimitCount = con.getHeaderField("X-Method-Rate-Limit-Count");
-                if (methodLimitCount != null)
+                if (methodA != null)
                 {
-                    final String[]     limits  = methodLimitCount.split(",");
-                    Map<Integer, Long> timeout = new HashMap<>();
-                    for (final String limitPair : limits)
-                    {
-                        final String[] limit = limitPair.split(":");
-                        final Long     call  = Long.parseLong(limit[0]);
-                        final Integer  time  = Integer.parseInt(limit[1]);
-                        timeout.put(time, call);
-                    }
-                    DataCall.methodLimit.put(dc.endpoint, timeout);
+                    createRatelimiterIfMissing(methodA, dc.endpoint);
+                    saveHeaderRateLimit(methodB, dc.endpoint);
+                } else
+                {
+                    System.err.println("Header 'X-Method-Rate-Limit' missing from call: " + getURL());
                 }
                 
                 if (con.getResponseCode() == 429)
                 {
                     final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
-                    String              reason    = String.format("%s%n%s%n%s%n%s%n%s%n", limitType.getReason(), appLimit, methodLimit, limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
+                    String              reason    = String.format("%s%n%s%n%s%n%s%n", limitType.getReason(), callData, limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
                     return new DataCallResponse(con.getResponseCode(), reason);
                 }
                 
@@ -285,6 +299,54 @@ public final class DataCall
                 return new DataCallResponse(APIHTTPErrorReason.ERROR_599.getCode(), APIHTTPErrorReason.ERROR_599.getReason());
             }
         }
+        
+        private Map<Integer, Integer> parseLimitFromHeader(String headerValue)
+        {
+            final String[]        limits  = headerValue.split(",");
+            Map<Integer, Integer> timeout = new HashMap<>();
+            for (final String limitPair : limits)
+            {
+                final String[] limit = limitPair.split(":");
+                final Integer  call  = Integer.parseInt(limit[0]);
+                final Integer  time  = Integer.parseInt(limit[1]);
+                timeout.put(time, call);
+            }
+            
+            return timeout;
+        }
+        
+        private void createRatelimiterIfMissing(String limitCount, Enum type)
+        {
+            DataCall.limiter.computeIfAbsent(type, (Enum key) -> createLimiter(key, limitCount));
+        }
+        
+        public RateLimiter createLimiter(Enum key, String limitCount)
+        {
+            // X-App-Rate-Limit    : [100:120,20:1]
+            Map<Integer, Integer> timeout = parseLimitFromHeader(limitCount);
+            
+            List<RateLimit> limits = new ArrayList<>();
+            for (Entry<Integer, Integer> entry : timeout.entrySet())
+            {
+                limits.add(new RateLimit(entry.getValue(), entry.getKey(), TimeUnit.SECONDS));
+            }
+            
+            if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
+            {
+                System.err.println("Creating Missing Ratelimit For " + key);
+                System.err.println(limits);
+            }
+            
+            return new BurstRateLimiter(limits.toArray(new RateLimit[limits.size()]));
+        }
+        
+        private void saveHeaderRateLimit(String limitCount, Enum type)
+        {
+            Map<Integer, Integer> timeout = parseLimitFromHeader(limitCount);
+            DataCall.callData.put(type, timeout);
+            updateRatelimiter(type);
+        }
+        
         
         /**
          * Generates the URL to use for the call.
@@ -465,31 +527,28 @@ public final class DataCall
         }
     }
     
+    
     private static final Logger LOGGER = Logger.getGlobal();
     
-    private static final EnumMap<Platform, RateLimiter> limiter = new EnumMap<>(Platform.class);
+    private static final Map<Enum, RateLimiter>           limiter  = new HashMap<>();
+    private static final Map<Enum, Map<Integer, Integer>> callData = new HashMap<>();
     
     private final Map<String, String> urlParams  = new TreeMap<>();
     private final Map<String, String> urlData    = new TreeMap<>();
     private final Map<String, String> urlHeaders = new TreeMap<>();
     
-    // How many calls our app has made in a timeframe, MapType<Timeframe, CallCount>
-    private static final Map<Platform, Map<Integer, Long>>    appLimit    = new TreeMap<>();
-    private static final Map<URLEndpoint, Map<Integer, Long>> methodLimit = new TreeMap<>();
-    
-    
+    private String baseURL       = Constants.REQUEST_URL;
     private String requestMethod = "GET";
     private String postData      = "";
     
     private Platform    platform;
     private URLEndpoint endpoint;
     
-    private String baseURL = Constants.REQUEST_URL;
-    
-    public static LogLevel logLevel = LogLevel.NONE;
     
     private static APICredentials creds;
     private static CacheProvider cache = CacheProvider.EMPTY;
+    
+    public static LogLevel logLevel = LogLevel.NONE;
     
     public static DataCallBuilder builder()
     {
@@ -506,7 +565,7 @@ public final class DataCall
         return cache;
     }
     
-    public static void setCacheProvider(SQLCache provider)
+    public static void setCacheProvider(CacheProvider provider)
     {
         cache = provider;
     }
@@ -514,16 +573,6 @@ public final class DataCall
     public static void setCredentials(final APICredentials creds)
     {
         DataCall.creds = creds;
-    }
-    
-    public static void setRatelimiter(RateLimiter... limiters)
-    {
-        Arrays.stream(limiters).forEach(l -> Arrays.stream(Platform.values()).forEach(p -> DataCall.limiter.put(p, l)));
-    }
-    
-    static
-    {
-        Arrays.stream(Platform.values()).forEach(s -> DataCall.limiter.put(s, new BurstRateLimiter(Constants.DEV_KEY_LIMIT_20, Constants.DEV_KEY_LIMIT_100)));
     }
     
 }

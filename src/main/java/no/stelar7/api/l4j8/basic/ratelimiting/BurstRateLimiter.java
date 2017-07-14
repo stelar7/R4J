@@ -34,9 +34,9 @@ public class BurstRateLimiter extends RateLimiter
     }
     
     @Override
-    public void updatePermitsPerX(Map<Integer, Long> data)
+    public void updatePermitsPerX(Map<Integer, Integer> data)
     {
-        for (Entry<Integer, Long> key : data.entrySet())
+        for (Entry<Integer, Integer> key : data.entrySet())
         {
             for (RateLimit l : limits)
             {
@@ -68,10 +68,16 @@ public class BurstRateLimiter extends RateLimiter
         for (RateLimit limit : limits)
         {
             long actual = callCountInTime.get(limit).get();
-            if (actual >= limit.getRequests())
+            if (actual >= limit.getPermits())
             {
                 
-                int newBias = (int) Math.floorDiv(actual, limit.getRequests());
+                if (DataCall.logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
+                {
+                    System.err.println("Calls made in the time frame: " + actual);
+                    System.err.println("Limit for the time frame: " + limit.getPermits());
+                }
+                
+                int newBias = (int) Math.floorDiv(actual, limit.getPermits());
                 if (newBias > multiplicativeBias)
                 {
                     multiplicativeBias = newBias;

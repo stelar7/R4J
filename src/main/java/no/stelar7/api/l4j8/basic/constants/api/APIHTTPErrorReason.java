@@ -6,10 +6,11 @@ public enum APIHTTPErrorReason
     ERROR_429(429, "Rate Limit Exceeded"),
     ERROR_400(400, "Generic Client Error"),
     ERROR_500(500, "Generic Server Error"),
-    ERROR_599(599, "Read Timed Out");
+    ERROR_599(599, "Read Timed Out"),
+    ERROR_403(403, "Invalid API key");
     
-    int    code;
-    String reason;
+    private int    code;
+    private String reason;
     
     APIHTTPErrorReason(int code, String reason)
     {
