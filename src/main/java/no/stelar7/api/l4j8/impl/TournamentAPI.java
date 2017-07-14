@@ -12,7 +12,9 @@ import java.util.List;
 public final class TournamentAPI
 {
     
-    private static final TournamentAPI INSTANCE = new TournamentAPI();
+    private static final TournamentAPI INSTANCE      = new TournamentAPI(false);
+    private static final TournamentAPI INSTANCE_STUB = new TournamentAPI(true);
+    
     private boolean useStub;
     
     public void useStub(boolean useStub)
@@ -20,14 +22,14 @@ public final class TournamentAPI
         this.useStub = useStub;
     }
     
-    public static TournamentAPI getInstance()
+    public static TournamentAPI getInstance(boolean useStub)
     {
-        return TournamentAPI.INSTANCE;
+        return useStub ? INSTANCE_STUB : INSTANCE;
     }
     
-    private TournamentAPI()
+    private TournamentAPI(boolean useStub)
     {
-        // Hide public constructor
+        this.useStub = useStub;
     }
     
     

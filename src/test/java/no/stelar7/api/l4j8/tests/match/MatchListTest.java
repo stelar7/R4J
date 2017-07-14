@@ -38,6 +38,7 @@ public class MatchListTest
     MatchAPI api = l4j8.getMatchAPI();
     
     @Test
+    @Ignore
     public void testMatchAndMatchList()
     {
         Set<GameQueueType> queue     = EnumSet.of(GameQueueType.RANKED_SOLO_5X5);
@@ -77,6 +78,7 @@ public class MatchListTest
     }
     
     @Test
+    @Ignore
     public void testNormalGame()
     {
         long                 id   = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[1]).getAccountId();

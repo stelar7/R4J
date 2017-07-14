@@ -17,7 +17,7 @@ public class TournamentTest
 {
     
     public static final Logger        LOGGER = Logger.getGlobal();
-    final               TournamentAPI api    = new L4J8(SecretFile.CREDS).getTournamentAPI();
+    final               TournamentAPI api    = new L4J8(SecretFile.CREDS).getTournamentAPI(false);
     
     
     @Test

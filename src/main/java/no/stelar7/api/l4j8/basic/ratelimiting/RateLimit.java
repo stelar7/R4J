@@ -4,18 +4,18 @@ import java.util.concurrent.TimeUnit;
 
 public class RateLimit
 {
-    private int  requests;
+    private int  permits;
     private long delayInMs;
     
     public RateLimit(final int permits, final int time, final TimeUnit unit)
     {
-        requests = permits;
+        this.permits = permits;
         delayInMs = unit.toMillis(time);
     }
     
-    public int getRequests()
+    public int getPermits()
     {
-        return requests;
+        return permits;
     }
     
     public long getTimeframeInMS()
@@ -28,7 +28,7 @@ public class RateLimit
     public String toString()
     {
         return "RateLimit{" +
-               "requests=" + requests +
+               "permits=" + permits +
                ", delayInMs=" + delayInMs +
                '}';
     }

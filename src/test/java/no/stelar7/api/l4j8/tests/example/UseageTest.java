@@ -1,6 +1,5 @@
 package no.stelar7.api.l4j8.tests.example;
 
-import no.stelar7.api.l4j8.basic.APICredentials;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.basic.constants.types.TierDivisionType;
@@ -11,6 +10,7 @@ import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.Test;
 
 import java.util.*;
@@ -20,7 +20,7 @@ public class UseageTest
     @Test
     public void testUseage()
     {
-        L4J8 api = new L4J8(new APICredentials("key", ""));
+        L4J8 api = new L4J8(SecretFile.CREDS);
         
         Summoner             stelar7        = api.getSummonerAPI().getSummonerByName(Platform.EUW1, "stelar7");
         List<MatchReference> games          = stelar7.getRankedGames();

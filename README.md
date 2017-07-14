@@ -10,9 +10,9 @@ Check out one of the many [tests](https://github.com/stelar7/L4J8/tree/master/sr
 
 | Type           | Supported |
 | :------------: | :-------: |
-| V3?            | Yes!      |
-| Rate-limiting? | Yes!      |
-| Cache?         | Soon!     |
+| V3 compatible?            | Yes!      |
+| Rate-limiting? | Set dynamically based on your key!      |
+| Cache?         | Working on it!     |
 
 
 ## How do I download?
