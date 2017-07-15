@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.pojo.league;
 
+import no.stelar7.api.l4j8.basic.constants.types.*;
+
 public class LeagueItem
 {
     private String     rank;
@@ -14,6 +16,16 @@ public class LeagueItem
     private boolean    freshBlood;
     private int        leaguePoints;
     
+    /**
+     * Takes in a Tier, and returns the TierDivisionType created from it.
+     *
+     * @param tier the Tier to use for construction
+     * @return TierDivisionType
+     */
+    public TierDivisionType getTierDivisionType(TierType tier)
+    {
+        return TierDivisionType.getFromCodes(tier.getValue(), rank);
+    }
     
     /**
      * The league rank of the participant.

@@ -69,8 +69,8 @@ public class UseageTest
         List<LeagueList> fullLeague = stelar7.getFullLeague();
         for (LeagueList leagueList : fullLeague)
         {
-            LeagueItem       position     = leagueList.getEntries().stream().filter(s -> s.getSummonerId() == stelar7.getSummonerId()).findFirst().get();
-            TierDivisionType tierDivision = TierDivisionType.getFromCodes(leagueList.getTier().getValue(), position.getRank());
+            LeagueItem       position     = leagueList.getLeagueItem(stelar7.getSummonerId());
+            TierDivisionType tierDivision = leagueList.getTierDivisionType(stelar7.getSummonerId());
             
             System.out.format("%n%s (%s):%n", leagueList.getLeagueName(), leagueList.getQueueType());
             System.out.format("There are %s players in the league%n", leagueList.getEntries().size());

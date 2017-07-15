@@ -12,6 +12,33 @@ public class LeagueList
     private GameQueueType    queue;
     private TierType         tier;
     
+    
+    /**
+     * Takes in a summonerId, and returns the TierDivisionType created from it.
+     * Returns UNRANKED if the id is not found
+     *
+     * @param id the id to use for construction
+     * @return TierDivisionType
+     */
+    public TierDivisionType getTierDivisionType(long id)
+    {
+        LeagueItem pos = getLeagueItem(id);
+        
+        return pos == null ? TierDivisionType.UNRANKED : pos.getTierDivisionType(tier);
+    }
+    
+    /**
+     * Takes in a summonerId, and returns the LeagueItem found in the list.
+     * Returns null if not found
+     *
+     * @param id the Tier to use for construction
+     * @return LeagueItem
+     */
+    public LeagueItem getLeagueItem(long id)
+    {
+        return entries.stream().filter(s -> s.getSummonerId() == id).findFirst().orElse(null);
+    }
+    
     @Override
     public boolean equals(final Object obj)
     {
