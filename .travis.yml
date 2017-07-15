@@ -10,8 +10,6 @@ deploy:
   provider: releases
   skip_cleanup: true
   file: l4j8/*.jar
+  file_glob: true
   user: $GIT_USER
   password: $GIT_PASS
-  on:
-    tags: true
-    all_branches: true
