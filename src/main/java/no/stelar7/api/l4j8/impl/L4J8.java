@@ -53,6 +53,7 @@ public class L4J8
     /**
      * Gets tournament api.
      *
+     * @param useStub if true, returns the -stub instance
      * @return the tournament api
      */
     public TournamentAPI getTournamentAPI(boolean useStub)

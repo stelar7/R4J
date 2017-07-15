@@ -244,10 +244,12 @@ public class Match
         return this.seasonId;
     }
     
+    
     /**
      * TeamType information
      *
-     * @return {@code List<TeamType>}
+     * @param team the team to get info about
+     * @return {@code TeamStats}
      */
     public TeamStats getTeamStats(TeamType team)
     {
