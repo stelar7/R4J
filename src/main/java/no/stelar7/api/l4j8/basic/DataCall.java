@@ -54,7 +54,7 @@ public final class DataCall
             
             if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
             {
-                if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
+                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
                 {
                     System.err.println("Call to platform limited endpoint!");
                     System.err.println(this.dc.endpoint.name());
@@ -67,7 +67,7 @@ public final class DataCall
                 
             } else
             {
-                if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
+                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
                 {
                     System.err.println("Call to unlimited endpoint!");
                     System.err.println(this.dc.endpoint.name());
