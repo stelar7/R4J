@@ -10,7 +10,9 @@ deploy:
   -
     on:
       branch: release
+      repo: stelar7/L4J8
     provider: github
     skip_cleanup: true
     file: target/*.jar
-    api_key: $GITHUB_API_KEY
+    user: $GIT_USER
+    password: $GIT_PASS
