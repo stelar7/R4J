@@ -19,6 +19,9 @@ Check out one of the many [tests](https://github.com/stelar7/L4J8/tree/master/sr
 
 For maven / gradle / sbt / leiningen:  [Jitpack](https://jitpack.io/#stelar7/L4J8/)  
 For a JAR file: [Releases](https://github.com/stelar7/L4J8/releases/)
+
+##### Javadoc?
+[Click here](http://stelar7.no/l4j8)
  
  
 ## How do I async?

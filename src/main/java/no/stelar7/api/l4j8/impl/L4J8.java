@@ -1,7 +1,6 @@
 package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.*;
-import no.stelar7.api.l4j8.basic.ratelimiting.RateLimiter;
 
 /**
  * The base class for calling anything from this api wrapper
@@ -13,7 +12,6 @@ public class L4J8
      * Constructor for the L4J8 class.
      *
      * @param creds   the API credentials used for the API (your token)
-     * @param limiter the limiter
      */
     public L4J8(final APICredentials creds)
     {
