@@ -15,7 +15,7 @@ public class L4J8
      * @param creds   the API credentials used for the API (your token)
      * @param limiter the limiter
      */
-    public L4J8(final APICredentials creds, RateLimiter... limiter)
+    public L4J8(final APICredentials creds)
     {
         DataCall.setCredentials(creds);
     }
