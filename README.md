@@ -17,7 +17,8 @@ Check out one of the many [tests](https://github.com/stelar7/L4J8/tree/master/sr
 
 ## How do I download?
 
-For maven / gradle / sbt / leiningen:  [Jitpack](https://jitpack.io/#stelar7/L4J8/)
+For maven / gradle / sbt / leiningen:  [Jitpack](https://jitpack.io/#stelar7/L4J8/)  
+For a JAR file: [Releases](https://github.com/stelar7/L4J8/releases/)
  
  
 ## How do I async?
