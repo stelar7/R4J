@@ -11,9 +11,8 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: fQuJUI30qMle57PqDYBYeNTC5B8ijDI3k4iSzTooc3pxqUluCVp+RYjyoE2AAGpJctVAzVlrjjT+rxlvrkn017DeyBucHkFqmnRA0u62K4AxU+PxvFBc8XlRSZLjh+lYZ6A4cvJaVMIRRGu9TIIue9xvelAqiiQzzzqLdDGxZwJCsgxRDPCpJw6/NCjoBeitJzhwLzrDHU/VsJAbpcyzq1z3qRCwfMaOk9AAAVUMZTpwlexuiA2JvjMjCHq+OcSmbsNX9rObinMB2LuV41cJPxq8QZTbUX4bvigBdcjiUi+AqbSMN9hjtU4WpX3S+YW9E2QXYMp6cLtpRVMO423uwbAwAnbraf6NGgCON+Y3+6HjOmPCrMyCUt5z074CmuEGA/NJ42ZYnVosDvW/D5Jwb75Ra+I+KT7phy0qPLlQ0QAHxiDfR4fglR9k/Kt/z01kJlX0JSnpUOC5km2UusAmc2OvrXvo1ecE6Nb74sYxHfwoHpkwFz4DLd+Wbig78i4BAvIC8hiDxFTANgr06DyPTp+n79/THn0ucoBPiocuSOuATlKoHcXtV57eubfMjMArgc9LmKROY4ezBaGGK/WxMowZoHOIyQSWcRMAHX6ld2HhJmWkrlI2eAFiywDQDSnjrwRIf4tAxzHoRmZASv8aQMtQffkSZiV4+CHoCFkxuS0=
-  file:
-  - "/home/travis/.m2/repository/no/stelar7/api/l4j8/0.0.1-SNAPSHOT/l4j8-0.0.1-SNAPSHOT.jar"
-  - "/home/travis/.m2/repository/no/stelar7/api/l4j8/0.0.1-SNAPSHOT/l4j8-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
+  file: "*/*.jar"
+  file_glob: true
   on:
     repo: stelar7/L4J8
     tags: true
