@@ -1,0 +1,16 @@
+language: java
+jdk: oraclejdk8
+install: true
+script: ./mvnw clean install
+cache:
+  directories:
+    - $HOME/.m2
+
+deploy:
+  -
+    on:
+      branch: release
+    provider: github
+    skip_cleanup: true
+    file: target/*.jar
+    api_key: $GITHUB_API_KEY

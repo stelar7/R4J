@@ -94,11 +94,7 @@ public class BurstRateLimiter extends RateLimiter
         if (delay[0] != 0)
         {
             delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias));
-        }
-        
-        if (DataCall.logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
-        {
-            System.err.println("Sleeping for: " + delay[0]);
+            System.err.println("Limit hit! Sleeping for: " + delay[0]);
         }
         
         return delay[0];
