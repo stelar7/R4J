@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic;
 
 
-import no.stelar7.api.l4j8.basic.cache.*;
+import no.stelar7.api.l4j8.basic.cache.CacheProvider;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
@@ -554,7 +554,17 @@ public final class DataCall
     private static APICredentials creds;
     private static CacheProvider cache = CacheProvider.EMPTY;
     
-    public static LogLevel logLevel = LogLevel.NONE;
+    private static LogLevel logLevel = LogLevel.NONE;
+    
+    public static void setLogLevel(LogLevel level)
+    {
+        DataCall.logLevel = level;
+    }
+    
+    public static LogLevel getLogLevel()
+    {
+        return DataCall.logLevel;
+    }
     
     public static DataCallBuilder builder()
     {
