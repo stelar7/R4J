@@ -5,7 +5,8 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.MatchAPI;
 
 import java.time.*;
-import java.util.*;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class Match
 {
@@ -57,11 +58,11 @@ public class Match
     /**
      * Match duration
      *
-     * @return long
+     * @return Duration
      */
-    public long getMatchDuration()
+    public Duration getMatchDuration()
     {
-        return this.gameDuration;
+        return Duration.of(this.gameDuration, ChronoUnit.SECONDS);
     }
     
     /**
