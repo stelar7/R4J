@@ -7,12 +7,10 @@ cache:
     - $HOME/.m2
 
 deploy:
-  -
-    on:
-      branch: release
-      repo: stelar7/L4J8
-    provider: github
-    skip_cleanup: true
-    file: target/*.jar
-    user: $GIT_USER
-    password: $GIT_PASS
+  provider: releases
+  skip_cleanup: true
+  file: l4j8/*.jar
+  user: $GIT_USER
+  password: $GIT_PASS
+  on:
+    tags: true
