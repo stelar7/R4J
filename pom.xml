@@ -26,8 +26,6 @@
             <artifactId>jsr305</artifactId>
             <version>LATEST</version>
         </dependency>
-
-        <!-- Temp for chache testing -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -61,6 +59,17 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <encoding>utf8</encoding>
+                    <docencoding>utf8</docencoding>
+                    <charset>utf8</charset>
                 </configuration>
             </plugin>
         </plugins>
