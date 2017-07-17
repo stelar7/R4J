@@ -1,6 +1,5 @@
 package no.stelar7.api.l4j8.impl;
 
-import com.sun.istack.internal.NotNull;
 import no.stelar7.api.l4j8.basic.*;
 
 /**
@@ -14,7 +13,7 @@ public class L4J8
      *
      * @param creds the API credentials used for the API (your token)
      */
-    public L4J8(@NotNull final APICredentials creds)
+    public L4J8(final APICredentials creds)
     {
         DataCall.setCredentials(creds);
     }
