@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unchecked")
 public class MatchHistoryCrawler
 {
     

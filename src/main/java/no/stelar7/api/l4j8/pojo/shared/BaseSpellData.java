@@ -162,6 +162,7 @@ public class BaseSpellData
      *
      * @return the range
      */
+    @SuppressWarnings("unchecked")
     public List<Integer> getRangeAsList()
     {
         return (this.range instanceof List) ? (List<Integer>) this.range : null;

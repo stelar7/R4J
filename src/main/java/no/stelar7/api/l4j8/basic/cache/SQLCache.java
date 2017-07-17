@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.Map.Entry;
 
+@SuppressWarnings("unchecked")
 public abstract class SQLCache extends CacheProvider
 {
     protected Connection connection = null;
@@ -32,6 +33,7 @@ public abstract class SQLCache extends CacheProvider
     
     protected abstract String createInsertStatement(String table, Map<String, Object> values);
     
+    @SuppressWarnings("unchecked")
     private Map<String, Object> classFieldsToMap(Object obj)
     {
         try
@@ -168,7 +170,7 @@ public abstract class SQLCache extends CacheProvider
             for (Entry<String, Object> entry : insertData.entrySet())
             {
                 int                 typeKey  = getTimelineType(entry.getKey());
-                Map<String, String> typeData = (Map) entry.getValue();
+                Map<String, String> typeData = (Map<String, String>) entry.getValue();
                 
                 for (Entry<String, String> timeData : typeData.entrySet())
                 {

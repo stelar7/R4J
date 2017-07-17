@@ -9,6 +9,7 @@ import no.stelar7.api.l4j8.pojo.tournament.*;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public final class TournamentAPI
 {
     

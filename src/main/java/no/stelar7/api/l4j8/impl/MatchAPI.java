@@ -9,6 +9,7 @@ import no.stelar7.api.l4j8.pojo.match.*;
 import javax.annotation.Nullable;
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public final class MatchAPI
 {
     private static final MatchAPI INSTANCE = new MatchAPI();

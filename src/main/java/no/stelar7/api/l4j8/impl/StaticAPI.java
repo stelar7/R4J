@@ -16,6 +16,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
 import javax.annotation.Nullable;
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public final class StaticAPI
 {
     private static final StaticAPI INSTANCE = new StaticAPI();

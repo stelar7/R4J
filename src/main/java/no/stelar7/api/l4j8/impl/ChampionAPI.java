@@ -7,6 +7,7 @@ import no.stelar7.api.l4j8.pojo.champion.*;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public final class ChampionAPI
 {
     private static final ChampionAPI INSTANCE = new ChampionAPI();

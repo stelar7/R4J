@@ -9,6 +9,7 @@ import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public final class SummonerAPI
 {
     

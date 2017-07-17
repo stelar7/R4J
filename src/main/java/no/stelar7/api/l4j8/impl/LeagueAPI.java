@@ -8,6 +8,7 @@ import no.stelar7.api.l4j8.pojo.league.*;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public final class LeagueAPI
 {
     private static final LeagueAPI INSTANCE = new LeagueAPI();
