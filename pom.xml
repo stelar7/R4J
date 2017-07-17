@@ -15,6 +15,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>LATEST</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -25,11 +26,13 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>6.0.4</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
