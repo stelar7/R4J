@@ -60,33 +60,37 @@ public class BurstRateLimiter extends RateLimiter
     
     private long getDelay()
     {
-        Instant now                = Instant.now();
-        long[]  delay              = {0};
         int     bias               = 1;
         int     multiplicativeBias = 1;
+        Instant now                = Instant.now();
+        long[]  delay              = {overloadTimer * 1000};
+        overloadTimer = 0;
         
-        for (RateLimit limit : limits)
+        if (delay[0] == 0)
         {
-            long actual = callCountInTime.get(limit).get();
-            if (actual >= limit.getPermits())
+            for (RateLimit limit : limits)
             {
-                
-                if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
+                long actual = callCountInTime.get(limit).get();
+                if (actual >= limit.getPermits())
                 {
-                    System.err.println("Calls made in the time frame: " + actual);
-                    System.err.println("Limit for the time frame: " + limit.getPermits());
-                }
-                
-                int newBias = (int) Math.floorDiv(actual, limit.getPermits());
-                if (newBias > multiplicativeBias)
-                {
-                    multiplicativeBias = newBias;
-                }
-                
-                long newDelay = firstCallInTime.get(limit).toEpochMilli() + limit.getTimeframeInMS() - now.toEpochMilli();
-                if (newDelay > delay[0])
-                {
-                    delay[0] = newDelay;
+                    
+                    if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
+                    {
+                        System.err.println("Calls made in the time frame: " + actual);
+                        System.err.println("Limit for the time frame: " + limit.getPermits());
+                    }
+                    
+                    int newBias = (int) Math.floorDiv(actual, limit.getPermits());
+                    if (newBias > multiplicativeBias)
+                    {
+                        multiplicativeBias = newBias;
+                    }
+                    
+                    long newDelay = firstCallInTime.get(limit).toEpochMilli() + limit.getTimeframeInMS() - now.toEpochMilli();
+                    if (newDelay > delay[0])
+                    {
+                        delay[0] = newDelay;
+                    }
                 }
             }
         }

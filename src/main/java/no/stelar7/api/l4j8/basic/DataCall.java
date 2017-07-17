@@ -287,6 +287,12 @@ public final class DataCall
                 {
                     final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
                     String              reason    = String.format("%s%n%s%n%s%n%s%n", limitType.getReason(), callData, limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
+                    
+                    if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
+                    {
+                        DataCall.limiter.get(this.dc.platform).updateSleep(con.getHeaderField("Retry-After"));
+                    }
+                    
                     return new DataCallResponse(con.getResponseCode(), reason);
                 }
                 

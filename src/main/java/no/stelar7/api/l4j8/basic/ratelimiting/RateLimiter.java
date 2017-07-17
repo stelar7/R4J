@@ -1,5 +1,8 @@
 package no.stelar7.api.l4j8.basic.ratelimiting;
 
+import no.stelar7.api.l4j8.basic.DataCall;
+import no.stelar7.api.l4j8.basic.constants.api.LogLevel;
+
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -10,6 +13,8 @@ public abstract class RateLimiter
     protected List<RateLimit>            limits;
     protected Map<RateLimit, Instant>    firstCallInTime;
     protected Map<RateLimit, AtomicLong> callCountInTime;
+    
+    protected int overloadTimer;
     
     /**
      * @param limiters the limits to obey
@@ -56,5 +61,22 @@ public abstract class RateLimiter
                ", firstCallInTime=" + firstCallInTime +
                ", callCountInTime=" + callCountInTime +
                '}';
+    }
+    
+    public void updateSleep(String sleep)
+    {
+        try
+        {
+            overloadTimer = Integer.parseInt(sleep);
+            
+            if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
+            {
+                System.err.println("Forcing next sleep to be atleast: " + overloadTimer + " seconds");
+            }
+            
+        } catch (NumberFormatException e)
+        {
+            overloadTimer = 5;
+        }
     }
 }
