@@ -7,7 +7,7 @@ import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
 import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
-import java.util.List;
+import java.util.*;
 
 public final class SummonerAPI
 {
@@ -38,8 +38,16 @@ public final class SummonerAPI
                                                        .withEndpoint(URLEndpoint.V3_MASTERIES_BY_ID)
                                                        .withPlatform(server);
         
-        MasteryPages data = (MasteryPages) builder.build();
-        return data.getPages();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERIES_BY_ID, server, summonerId);
+        if (chl.isPresent())
+        {
+            return (List<MasteryPage>) chl.get();
+        }
+        
+        MasteryPages list = (MasteryPages) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERIES_BY_ID, list.getPages());
+        return list.getPages();
     }
     
     /**
@@ -56,8 +64,15 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_RUNES_BY_ID)
                 .withPlatform(server);
         
-        RunePages data = (RunePages) builder.build();
-        return data.getPages();
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_RUNES_BY_ID, server, summonerId);
+        if (chl.isPresent())
+        {
+            return (List<RunePage>) chl.get();
+        }
+        
+        RunePages list = (RunePages) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_RUNES_BY_ID, list.getPages());
+        return list.getPages();
     }
     
     /**
@@ -74,8 +89,15 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ID)
                 .withPlatform(server);
         
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_ID, server, summonerId);
+        if (chl.isPresent())
+        {
+            return (Summoner) chl.get();
+        }
+        
         Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(Summoner.class, summoner);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ID, summoner);
         return summoner;
     }
     
@@ -93,8 +115,15 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_NAME)
                 .withPlatform(server);
         
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_NAME, server, summonerName);
+        if (chl.isPresent())
+        {
+            return (Summoner) chl.get();
+        }
+        
         Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(Summoner.class, summoner);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_NAME, summoner);
         return summoner;
     }
     
@@ -112,8 +141,14 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, server, accountId);
+        if (chl.isPresent())
+        {
+            return (Summoner) chl.get();
+        }
+        
         Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(Summoner.class, summoner);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoner);
         return summoner;
     }
 }

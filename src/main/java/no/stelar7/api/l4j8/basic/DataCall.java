@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.basic;
 
 
+import com.sun.istack.internal.*;
 import no.stelar7.api.l4j8.basic.cache.CacheProvider;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
@@ -581,12 +582,12 @@ public final class DataCall
         return cache;
     }
     
-    public static void setCacheProvider(CacheProvider provider)
+    public static void setCacheProvider(@Nullable CacheProvider provider)
     {
-        cache = provider;
+        cache = provider == null ? CacheProvider.EMPTY : provider;
     }
     
-    public static void setCredentials(final APICredentials creds)
+    public static void setCredentials(@NotNull final APICredentials creds)
     {
         DataCall.creds = creds;
     }

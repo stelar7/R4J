@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.impl;
 
+import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
@@ -39,7 +40,16 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_SCORE)
                                                        .withPlatform(server);
         
-        return (Integer) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_SCORE, server, summonerId);
+        if (chl.isPresent())
+        {
+            return (Integer) chl.get();
+        }
+        
+        Integer list = (Integer) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list);
+        return list;
     }
     
     /**
@@ -77,6 +87,13 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
         
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_BY_CHAMPION, server, summonerId, championId);
+        if (chl.isPresent())
+        {
+            return (ChampionMastery) chl.get();
+        }
+        
         ChampionMastery mastery = (ChampionMastery) builder.build();
         
         if (mastery == null)
@@ -102,6 +119,7 @@ public final class MasteryAPI
             }
         }
         
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery);
         return mastery;
     }
     
@@ -120,7 +138,16 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
-        return (List<ChampionMastery>) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_BY_ID, server, summonerId);
+        if (chl.isPresent())
+        {
+            return (List<ChampionMastery>) chl.get();
+        }
+        
+        List<ChampionMastery> list = (List<ChampionMastery>) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list);
+        return list;
     }
     
 }

@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.cache;
 
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.basic.constants.types.TeamType;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
@@ -97,11 +98,11 @@ public abstract class SQLCache extends CacheProvider
     }
     
     @Override
-    public void store(Type returnType, Object dtoobj)
+    public void store(URLEndpoint returnType, Object dtoobj)
     {
         try
         {
-            if ("no.stelar7.api.l4j8.pojo.match.Match".equals(returnType.getTypeName()))
+            if (returnType.equals(URLEndpoint.V3_MATCH))
             {
                 storeMatch((Match) dtoobj);
             }

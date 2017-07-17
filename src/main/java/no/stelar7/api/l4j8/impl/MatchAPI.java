@@ -86,6 +86,12 @@ public final class MatchAPI
         }
         
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
+        if (chl.isPresent())
+        {
+            return (List<MatchReference>) chl.get();
+        }
+        
         MatchList list = (MatchList) builder.build();
         
         if (list == null)
@@ -93,6 +99,7 @@ public final class MatchAPI
             return Collections.emptyList();
         }
         
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches());
         return list.getMatches();
     }
     
@@ -109,6 +116,13 @@ public final class MatchAPI
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST_RECENT)
                                                        .withPlatform(server);
         
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST_RECENT, server, accountId);
+        if (chl.isPresent())
+        {
+            return (List<MatchReference>) chl.get();
+        }
+        
         MatchList list = (MatchList) builder.build();
         
         if (list == null)
@@ -116,6 +130,7 @@ public final class MatchAPI
             return Collections.emptyList();
         }
         
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST_RECENT, list.getMatches());
         return list.getMatches();
     }
     
@@ -132,9 +147,15 @@ public final class MatchAPI
                                                        .withEndpoint(URLEndpoint.V3_MATCH)
                                                        .withPlatform(server);
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
+        if (chl.isPresent())
+        {
+            return (Match) chl.get();
+        }
+        
         
         Match match = (Match) builder.build();
-        DataCall.getCacheProvider().store(Match.class, match);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match);
         return match;
     }
     
@@ -152,6 +173,14 @@ public final class MatchAPI
                                                        .withEndpoint(URLEndpoint.V3_TIMELINE)
                                                        .withPlatform(server);
         
-        return (MatchTimeline) builder.build();
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_TIMELINE, server, matchId);
+        if (chl.isPresent())
+        {
+            return (MatchTimeline) chl.get();
+        }
+        
+        MatchTimeline timeline = (MatchTimeline) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline);
+        return timeline;
     }
 }

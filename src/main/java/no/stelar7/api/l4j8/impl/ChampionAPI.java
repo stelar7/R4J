@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.impl;
 
+import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.champion.*;
@@ -30,7 +31,15 @@ public final class ChampionAPI
             builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, "true");
         }
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPIONS, server);
+        if (chl.isPresent())
+        {
+            return (List<Champion>) chl.get();
+        }
+        
+        
         ChampionList cl = (ChampionList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions());
         return cl.getChampions();
     }
     
@@ -42,7 +51,15 @@ public final class ChampionAPI
                                                        .withEndpoint(URLEndpoint.V3_CHAMPIONS_BY_ID)
                                                        .withPlatform(server);
         
-        return (Champion) builder.build();
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPIONS_BY_ID, server, id);
+        if (chl.isPresent())
+        {
+            return (Champion) chl.get();
+        }
+        
+        Champion ch = (Champion) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS_BY_ID, ch);
+        return ch;
     }
     
 }

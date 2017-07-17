@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.impl;
 
+import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.spectator.*;
 
-import java.util.List;
+import java.util.*;
 
 public final class SpectatorAPI
 {
@@ -33,7 +34,14 @@ public final class SpectatorAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SPECTATOR_FEATURED, server);
+        if (chl.isPresent())
+        {
+            return (List<SpectatorGameInfo>) chl.get();
+        }
+        
         FeaturedGames fg = (FeaturedGames) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg.getGameList());
         return fg.getGameList();
         
     }
@@ -51,6 +59,15 @@ public final class SpectatorAPI
                                                        .withEndpoint(URLEndpoint.V3_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         
-        return (SpectatorGameInfo) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SPECTATOR_CURRENT, server);
+        if (chl.isPresent())
+        {
+            return (SpectatorGameInfo) chl.get();
+        }
+        
+        SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg);
+        return fg;
     }
 }

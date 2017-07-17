@@ -1,8 +1,11 @@
 package no.stelar7.api.l4j8.impl;
 
+import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.status.ShardStatus;
+
+import java.util.Optional;
 
 public final class StatusAPI
 {
@@ -23,7 +26,15 @@ public final class StatusAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SHARD_STATUS)
                                                        .withPlatform(server);
         
-        return (ShardStatus) builder.build();
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SHARD_STATUS, server);
+        if (chl.isPresent())
+        {
+            return (ShardStatus) chl.get();
+        }
+        
+        ShardStatus list = (ShardStatus) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SHARD_STATUS, list);
+        return list;
     }
     
 }

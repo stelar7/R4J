@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.impl;
 
+import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.DataCall.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.constants.types.GameQueueType;
 import no.stelar7.api.l4j8.pojo.league.*;
 
 import java.util.*;
@@ -38,8 +39,15 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE_MASTER)
                                                        .withPlatform(server);
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_MASTER, server, queue);
+        if (chl.isPresent())
+        {
+            return (LeagueList) chl.get();
+        }
         
-        return (LeagueList) builder.build();
+        LeagueList list = (LeagueList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_MASTER, list);
+        return list;
     }
     
     
@@ -58,7 +66,16 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
         
-        return (LeagueList) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_CHALLENGER, server, queue);
+        if (chl.isPresent())
+        {
+            return (LeagueList) chl.get();
+        }
+        
+        LeagueList list = (LeagueList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_CHALLENGER, list);
+        return list;
         
     }
     
@@ -79,8 +96,15 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE_ENTRY)
                                                        .withPlatform(server);
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_ENTRY, server, summonerId);
+        if (chl.isPresent())
+        {
+            return (List<LeaguePosition>) chl.get();
+        }
         
-        return (List<LeaguePosition>) builder.build();
+        List<LeaguePosition> list = (List<LeaguePosition>) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list);
+        return list;
     }
     
     
@@ -99,6 +123,14 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE)
                                                        .withPlatform(server);
         
-        return (List<LeagueList>) builder.build();
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE, server, summonerId);
+        if (chl.isPresent())
+        {
+            return (List<LeagueList>) chl.get();
+        }
+        
+        List<LeagueList> list = (List<LeagueList>) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list);
+        return list;
     }
 }

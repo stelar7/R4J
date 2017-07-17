@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.basic.cache;
 
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+
 import java.sql.*;
 import java.util.*;
 
@@ -267,4 +269,9 @@ public class MySQLCache extends SQLCache
         return String.format(statement, table, keys.toString(), values.toString());
     }
     
+    @Override
+    public Optional<Object> get(URLEndpoint type, Object... data)
+    {
+        return Optional.empty();
+    }
 }
