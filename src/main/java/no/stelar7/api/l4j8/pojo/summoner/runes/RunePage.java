@@ -23,6 +23,8 @@ public class RunePage
     
     /**
      * The rune page name
+     * 
+     * Not returned for summoners on the Korean server (Legal reasons)
      *
      * @return String
      */

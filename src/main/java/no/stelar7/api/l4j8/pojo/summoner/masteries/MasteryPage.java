@@ -33,6 +33,8 @@ public class MasteryPage
     /**
      * The mastery page name
      *
+     * Not returned for summoners on the Korean server (Legal reasons)
+     *
      * @return String
      */
     public String getName()
