@@ -22,7 +22,7 @@ public class MatchReference
     
     public Match getFullMatch()
     {
-        return MatchAPI.getInstance().getMatch(platformId, gameId);
+        return MatchAPI.getInstance().getMatch(platformId, gameId, null);
     }
     
     public MatchTimeline getTimeline()

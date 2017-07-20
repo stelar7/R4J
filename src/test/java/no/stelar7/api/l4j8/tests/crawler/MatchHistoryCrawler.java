@@ -165,12 +165,12 @@ public class MatchHistoryCrawler
     
     private Match getMatch(Long key, Platform value) throws InterruptedException
     {
-        Match match = api.getMatchAPI().getMatch(value, key);
+        Match match = api.getMatchAPI().getMatch(value, key, null);
         
         if (match == null)
         {
             Thread.sleep(5000);
-            match = api.getMatchAPI().getMatch(value, key);
+            match = api.getMatchAPI().getMatch(value, key, null);
             if (match == null)
             {
                 return null;

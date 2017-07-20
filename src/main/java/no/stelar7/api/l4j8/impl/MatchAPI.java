@@ -138,15 +138,23 @@ public final class MatchAPI
     /**
      * Returns the match data from a match id
      *
-     * @param server  the platform the match was played on
-     * @param matchId the id to check
+     * @param server       the platform the match was played on
+     * @param matchId      the id to check
+     * @param forAccountId optional accountId to add the participantIdentity about
      * @return Match
      */
-    public Match getMatch(Platform server, long matchId)
+    public Match getMatch(Platform server, long matchId, @Nullable Long forAccountId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V3_MATCH)
                                                        .withPlatform(server);
+        
+        
+        if (forAccountId != null)
+        {
+            builder.withURLData(Constants.URL_PARAM_FOR_ACCOUNT_ID, forAccountId.toString());
+        }
+        
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
         if (chl.isPresent())

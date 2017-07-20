@@ -1,10 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
 
-import no.stelar7.api.l4j8.basic.ratelimiting.RateLimit;
-
-import java.util.concurrent.TimeUnit;
-
 /**
  * This class lists all the String constants in use in the project
  */
@@ -63,6 +59,7 @@ public final class Constants
     public static final String URL_PARAM_DATA_BY_ID          = "dataById";
     public static final String URL_PARAM_VERSION             = "version";
     public static final String URL_PARAM_LOCALE              = "locale";
+    public static final String URL_PARAM_FOR_ACCOUNT_ID      = "forAccountId";
     
     public static final String X_RIOT_TOKEN_HEADER_KEY = "X-Riot-Token";
     
@@ -78,19 +75,13 @@ public final class Constants
     
     public static final String REQUEST_URL = PROTOCOL + PLATFORM_PLACEHOLDER + HOST_PLACEHOLDER + SEPARATOR + GAME_PLACEHOLDER + SEPARATOR + SERVICE_PLACEHOLDER + SEPARATOR + VERSION_PLACEHOLDER + SEPARATOR + RESOURCE_PLACEHOLDER;
     
-    public static final String[]  TEST_TOURNAMENT_CODES = {"EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d"};
-    public static final String[]  TEST_SUMMONER_NAMES   = {"stelar7", "相当猥琐"};
-    public static final Long[]    TEST_SUMMONER_IDS     = {19613950L, 24582364L};
-    public static final Long[]    TEST_ACCOUNT_IDS      = {22401330L, 29061584L};
-    public static final Integer[] TEST_CHAMPION_IDS     = {89, 50};
-    
-    public static final RateLimit OLD_DEV_KEY_LIMIT_10   = new RateLimit(10, 10, TimeUnit.SECONDS);
-    public static final RateLimit OLD_DEV_KEY_LIMIT_600  = new RateLimit(500, 10, TimeUnit.MINUTES);
-    public static final RateLimit OLD_PROD_KEY_LIMIT_10  = new RateLimit(3_000, 10, TimeUnit.SECONDS);
-    public static final RateLimit OLD_PROD_KEY_LIMIT_600 = new RateLimit(180_000, 10, TimeUnit.MINUTES);
-    
-    public static final RateLimit DEV_KEY_LIMIT_20  = new RateLimit(20, 1, TimeUnit.SECONDS);
-    public static final RateLimit DEV_KEY_LIMIT_100 = new RateLimit(100, 2, TimeUnit.MINUTES);
+    public static final String[]   TEST_TOURNAMENT_CODES = {"EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d"};
+    public static final String[]   TEST_SUMMONER_NAMES   = {"stelar7", "相当猥琐"};
+    public static final Long[]     TEST_SUMMONER_IDS     = {19613950L, 24582364L};
+    public static final Long[]     TEST_ACCOUNT_IDS      = {22401330L, 29061584L, 200009481L};
+    public static final Platform[] TEST_PLATFORM         = {Platform.EUW1, Platform.EUW1, Platform.OC1};
+    public static final Integer[]  TEST_CHAMPION_IDS     = {89, 50};
+    public static final Long[]     TEST_MATCH_ID         = {180100577L};
     
     private Constants()
     {

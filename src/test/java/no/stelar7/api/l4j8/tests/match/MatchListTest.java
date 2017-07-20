@@ -52,7 +52,7 @@ public class MatchListTest
         
         for (MatchReference reference : all)
         {
-            Match         detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
+            Match         detail   = api.getMatch(reference.getPlatform(), reference.getGameId(), null);
             MatchTimeline timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
         }
     }
@@ -73,9 +73,21 @@ public class MatchListTest
     @Test
     public void testMatch()
     {
-        Match detail = api.getMatch(Platform.EUW1, 3181744482L);
+        Match detail = api.getMatch(Platform.EUW1, 3181744482L, null);
         System.out.println();
     }
+    
+    
+    @Test
+    public void testHasOneParticipantInformation()
+    {
+        Match m          = l4j8.getMatchAPI().getMatch(Constants.TEST_PLATFORM[2], Constants.TEST_MATCH_ID[0], Constants.TEST_ACCOUNT_IDS[2]);
+        long  identities = m.getParticipantIdentities().stream().map(ParticipantIdentity::getPlayer).filter(Objects::nonNull).count();
+        
+        Assert.assertTrue("Missing / Too many identities?", identities == 1);
+        
+    }
+    
     
     @Test
     @Ignore
@@ -87,7 +99,7 @@ public class MatchListTest
         for (MatchReference ref : refs)
         {
             long          gameid   = ref.getGameId();
-            Match         detail   = api.getMatch(Platform.EUW1, gameid);
+            Match         detail   = api.getMatch(Platform.EUW1, gameid, null);
             MatchTimeline timeline = api.getTimeline(Platform.EUW1, gameid);
         }
     }
