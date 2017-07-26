@@ -38,7 +38,6 @@ public final class TournamentAPI
      * Generates a list of tournamentCodes to use for adding players to games.
      * You should only use a code per match.
      *
-     * @param server       the server the games are played on
      * @param count        the amount of codes to generate (default: 1)
      * @param params       the TournamentCodeParameters for the games played with this code
      * @param tournamentId the tournamentId this game is played on
@@ -66,7 +65,6 @@ public final class TournamentAPI
     /**
      * A list of all games played with this tournament code.
      *
-     * @param server         the server the games are played on
      * @param tournamentCode The tournament code of the match
      * @return a list of matchIds played with this code
      */
@@ -105,7 +103,6 @@ public final class TournamentAPI
     /**
      * Get info about a specified tournament
      *
-     * @param server         the server the games are played on
      * @param tournamentCode The tournament code of the match
      * @return TournamentCode
      */
@@ -127,7 +124,6 @@ public final class TournamentAPI
     /**
      * Get info about what happened in the lobby.
      *
-     * @param server         the server the games are played on
      * @param tournamentCode The tournament code of the match
      * @return Lobby events
      */
@@ -155,7 +151,6 @@ public final class TournamentAPI
      * The id will always be the same for a given URL and Server.
      * I.E. Passing http://website.com and EUW will ALWAYS return the same code.
      *
-     * @param server the server the games are played on
      * @param params the provider definition
      * @return provider id
      */
@@ -179,7 +174,6 @@ public final class TournamentAPI
     /**
      * Returns a TournamentId used to refer to this tournament later on.
      *
-     * @param server the server the games are played on
      * @param params the tournament definition
      * @return the id
      */
@@ -203,7 +197,6 @@ public final class TournamentAPI
     /**
      * Update the data for the tournamet code
      *
-     * @param server         the server the games are played on
      * @param params         the tournament definition
      * @param tournamentCode The tournament code of the match
      */
