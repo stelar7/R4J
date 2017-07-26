@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.exceptions.APIUnsupportedActionException;
 
 public class TournamentCodeParameters
 {
@@ -24,6 +25,12 @@ public class TournamentCodeParameters
         this.mapType = updateParams.getMapType();
         this.metadata = metadata;
         this.teamSize = teamSize;
+        
+        
+        if ((getTeamSize() > 1) && (getTeamSize() < 6) && ((getTeamSize() % 2) == 0))
+        {
+            throw new APIUnsupportedActionException("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size) (" + teamSize / 2 + " != " + getAllowedSummonerIds().getParticipants().size());
+        }
     }
     
     /**

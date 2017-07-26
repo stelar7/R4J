@@ -26,7 +26,7 @@ public class APICredentials
                 this.tournamentApiKey = key;
                 break;
             default:
-                throw new APIUnsupportedAction(String.format("%s is not a valid choice for APICredentials", type));
+                throw new APIUnsupportedActionException(String.format("%s is not a valid choice for APICredentials", type));
         }
     }
     
@@ -51,7 +51,7 @@ public class APICredentials
     {
         if (this.baseApiKey == null)
         {
-            throw new APIUnsupportedAction("API key not set!");
+            throw new APIUnsupportedActionException("API key not set!");
         }
         return this.baseApiKey;
     }
@@ -65,7 +65,7 @@ public class APICredentials
     {
         if (this.tournamentApiKey == null)
         {
-            throw new APIUnsupportedAction("TOURNAMENT key not set!");
+            throw new APIUnsupportedActionException("TOURNAMENT key not set!");
         }
         return this.tournamentApiKey;
     }

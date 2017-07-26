@@ -44,7 +44,7 @@ public final class DataCall
         {
             if (DataCall.creds == null)
             {
-                throw new APIUnsupportedAction("No API Creds set!");
+                throw new APIUnsupportedActionException("No API Creds set!");
             }
             
             if (DataCall.limiter.get(this.dc.endpoint) != null)
