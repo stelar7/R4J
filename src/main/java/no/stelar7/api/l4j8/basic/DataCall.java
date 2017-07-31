@@ -151,6 +151,11 @@ public final class DataCall
                     {
                         e.printStackTrace();
                     }
+                } else
+                {
+                    System.err.println(response.getResponseData());
+                    System.err.println("429 ratelimit hit! Please do not restart your application to refresh the timer!");
+                    System.err.println("This isnt supposed to happen unless you restarted your app before the last limit was hit!");
                 }
                 
                 return this.build();
@@ -286,7 +291,7 @@ public final class DataCall
                 if (con.getResponseCode() == 429)
                 {
                     final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
-                    String              reason    = String.format("%s%n%s%n%s%n%s%n", limitType.getReason(), callData, limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
+                    String              reason    = String.format("%s%n%s%n%s%n", limitType.getReason(), limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
                     
                     if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
                     {

@@ -1,6 +1,5 @@
 package no.stelar7.api.l4j8.tests.async;
 
-import no.stelar7.api.l4j8.basic.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
@@ -24,8 +23,6 @@ public class AsyncTest
     {
         SummonerAPI sapi = l4j8.getSummonerAPI();
         MatchAPI    mapi = l4j8.getMatchAPI();
-        
-        DataCall.setLogLevel(LogLevel.DEBUG);
         
         List<CompletableFuture> futures = new ArrayList<>();
 
