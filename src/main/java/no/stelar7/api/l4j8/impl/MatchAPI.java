@@ -156,7 +156,7 @@ public final class MatchAPI
         }
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId, forAccountId);
         if (chl.isPresent())
         {
             return (Match) chl.get();
