@@ -161,8 +161,7 @@ public final class MatchAPI
         {
             return (Match) chl.get();
         }
-        
-        
+    
         Match match = (Match) builder.build();
         DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match);
         return match;

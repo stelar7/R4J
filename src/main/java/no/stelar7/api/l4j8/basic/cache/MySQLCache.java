@@ -372,6 +372,13 @@ public class MySQLCache extends SQLCache
         }
     }
     
+    
+    @Override
+    protected String createTruncateStatemtent(String table)
+    {
+        return "SET FOREIGN_KEY_CHECKS=0; TRUNCATE TABLE " + table + "; SET FOREIGN_KEY_CHECKS=1;";
+    }
+    
     @Override
     protected String createInsertStatement(String table, Map<String, Object> data)
     {
@@ -408,9 +415,7 @@ public class MySQLCache extends SQLCache
                          }
                      });
         
-        String returnData = String.format(statement, table, keys.toString(), values.toString());
-        
-        return returnData;
+        return String.format(statement, table, keys.toString(), values.toString());
     }
     
     private String addSurroundingQuotes(String in)

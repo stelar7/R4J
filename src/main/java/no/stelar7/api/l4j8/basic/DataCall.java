@@ -42,6 +42,7 @@ public final class DataCall
          */
         public Object build(int... retrys)
         {
+            System.out.println("made call to " + dc.endpoint);
             if (DataCall.creds == null)
             {
                 throw new APIUnsupportedActionException("No API Creds set!");

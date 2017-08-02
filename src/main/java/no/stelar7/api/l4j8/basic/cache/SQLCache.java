@@ -34,6 +34,32 @@ public abstract class SQLCache extends CacheProvider
     
     protected abstract String createInsertStatement(String table, Map<String, Object> values);
     
+    protected abstract String createTruncateStatemtent(String table);
+    
+    @Override
+    public void clear(URLEndpoint type)
+    {
+        try
+        {
+            switch (type)
+            {
+                case V3_SUMMONER_BY_ACCOUNT:
+                case V3_SUMMONER_BY_NAME:
+                case V3_SUMMONER_BY_ID:
+                    connection.createStatement().executeUpdate(createTruncateStatemtent("summoners"));
+                    break;
+                case V3_MATCH:
+                    connection.createStatement().executeUpdate(createTruncateStatemtent("matches"));
+                    break;
+                default:
+                    break;
+            }
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
     private Map<String, Integer> getIdAndField(String table, String field) throws SQLException
     {
         try (ResultSet rlist = connection.createStatement().executeQuery("SELECT * FROM " + table))
@@ -172,7 +198,7 @@ public abstract class SQLCache extends CacheProvider
     }
     
     @Override
-    public Optional<Object> get(URLEndpoint returnType, Object... data)
+    public Optional<?> get(URLEndpoint returnType, Object... data)
     {
         if (returnType.equals(URLEndpoint.V3_MATCH))
         {
@@ -192,22 +218,7 @@ public abstract class SQLCache extends CacheProvider
     //<editor-fold desc="Match">
     private Optional<Object> getMatch(Platform server, long matchid, Long foraccount)
     {
-        return Optional.empty();
-    }
-    
-    private boolean hasMatch(Platform server, long matchid)
-    {
-        boolean found = false;
-        
-        try (ResultSet rs = connection.createStatement().executeQuery("select * from matches where `gameid` = " + matchid + " and `platformid` like \"" + server.toString() + "\""))
-        {
-            found = rs.next();
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-        
-        return found;
+        throw new UnsupportedOperationException("Call to unimplemented method");
     }
     
     private Map<String, Integer>                       databaseTimelineTime;
@@ -217,11 +228,6 @@ public abstract class SQLCache extends CacheProvider
     
     private void storeMatch(Match match) throws SQLException
     {
-        if (hasMatch(match.getPlatform(), match.getMatchId()))
-        {
-            return;
-        }
-        
         long matchId = insertMatch(match);
         insertMatchTeamData(matchId, match);
         for (Participant participant : match.getParticipants())
