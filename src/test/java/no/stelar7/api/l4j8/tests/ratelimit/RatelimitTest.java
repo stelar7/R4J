@@ -71,8 +71,7 @@ public class RatelimitTest
     public void testRatelimit()
     {
         final L4J8 test = new L4J8(SecretFile.CREDS);
-        
-        for (int i2 = 0; i2 < 30; i2++)
+        for (int i2 = 0; i2 < 120; i2++)
         {
             Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
         }

@@ -42,145 +42,113 @@ public final class DataCall
          */
         public Object build(int... retrys)
         {
-            System.out.println("made call to " + dc.endpoint);
+            dc.urlHeaders.put("X-Riot-Token", creds.getBaseAPIKey());
+            final String url = this.getURL();
+            if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
+            {
+                System.err.format("Trying url: %s%n", url);
+            }
+            
+            
             if (DataCall.creds == null)
             {
                 throw new APIUnsupportedActionException("No API Creds set!");
             }
             
-            if (DataCall.limiter.get(this.dc.endpoint) != null)
-            {
-                DataCall.limiter.get(this.dc.endpoint).acquire();
-            }
+            // method limit
+            applyLimit(this.dc.endpoint);
+            // app limit
+            applyLimit(this.dc.platform);
             
-            
-            if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
-            {
-                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
-                {
-                    System.err.println("Call to platform limited endpoint!");
-                    System.err.println(this.dc.endpoint.name());
-                }
-                
-                if (DataCall.limiter.get(this.dc.platform) != null)
-                {
-                    DataCall.limiter.get(this.dc.platform).acquire();
-                }
-                
-            } else
-            {
-                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
-                {
-                    System.err.println("Call to unlimited endpoint!");
-                    System.err.println(this.dc.endpoint.name());
-                }
-            }
-            
-            dc.urlHeaders.put("X-Riot-Token", creds.getBaseAPIKey());
-            
-            final String url = this.getURL();
-            if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
-            {
-                System.err.println(url);
-            }
             
             final DataCallResponse response = this.getResponse(url);
-            if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
+            if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
             {
                 System.err.println(response);
             }
             
-            if ((response.getResponseCode() == 200) || (response.getResponseCode() == 204))
+            switch (response.getResponseCode())
             {
-                final Object returnType = this.dc.endpoint.getType();
-                Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
-                
-                return process(dtoobj);
-            }
-            
-            
-            if (response.getResponseCode() == 400)
-            {
-                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
+                case 200:
+                case 204:
                 {
-                    System.err.println(url);
-                }
-                throw new APIResponseException(APIHTTPErrorReason.ERROR_400, "L4J8 error.. contact developer to get this fixed ..." + response.getResponseData());
-            }
-            
-            if (response.getResponseCode() == 403)
-            {
-                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
-                {
-                    System.err.println(url);
-                }
-                throw new APIResponseException(APIHTTPErrorReason.ERROR_403, "Your Api key is invalid! If you just regenerated it, wait a few seconds, then try again. " + response.getResponseData());
-            }
-            
-            if (response.getResponseCode() == 404)
-            {
-                if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
-                {
-                    System.err.format("No data from url %s %s%n", url, response.getResponseData());
-                }
-                return null;
-            }
-            
-            if (response.getResponseCode() == 429)
-            {
-                if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
-                {
-                    System.err.println(response.getResponseData());
+                    final Object returnType = this.dc.endpoint.getType();
+                    Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
+                    
+                    return process(dtoobj);
                 }
                 
-                if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
+                case 403:
                 {
+                    throw new APIResponseException(APIHTTPErrorReason.ERROR_403, "Your Api key is invalid! If you just regenerated it, wait a few seconds, then try again. " + response.getResponseData());
+                }
+                
+                case 404:
+                {
+                    throw new APIResponseException(APIHTTPErrorReason.ERROR_400, "L4J8 error.. contact developer to get this fixed ..." + response.getResponseData());
+                }
+                
+                case 429:
                     try
                     {
-                        int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
-                        if (attempts > 2)
+                        if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
                         {
-                            System.err.println("Service ratelimit reached too many times, waiting 7 second and retrying");
-                            Thread.sleep(7000);
+                            int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
+                            if (attempts > 2)
+                            {
+                                System.err.println("Service ratelimit reached too many times, waiting 10 second and retrying");
+                                Thread.sleep(10000);
+                                return this.build(attempts);
+                            }
+                            
+                            System.err.format("Service ratelimit reached (%s / 3 times), waiting 1 second and retrying%n", attempts);
+                            Thread.sleep(1000);
                             return this.build(attempts);
+                        } else
+                        {
+                            System.err.println(response.getResponseData());
+                            System.err.println("429 ratelimit hit! Please do not restart your application to refresh the timer!");
+                            System.err.println("This isnt supposed to happen unless you restarted your app before the last limit was hit!");
                         }
                         
-                        System.err.format("Service ratelimit reached (%s / 3 times), waiting 1 second and retrying%n", attempts);
-                        Thread.sleep(1000);
-                        return this.build(attempts);
+                        return this.build();
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
+                        break;
                     }
-                } else
+                
+                case 500:
+                case 502:
+                case 503:
+                case 504:
                 {
-                    System.err.println(response.getResponseData());
-                    System.err.println("429 ratelimit hit! Please do not restart your application to refresh the timer!");
-                    System.err.println("This isnt supposed to happen unless you restarted your app before the last limit was hit!");
+                    int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
+                    if (attempts > 3)
+                    {
+                        throw new APIResponseException(APIHTTPErrorReason.ERROR_500, response.getResponseData());
+                    }
+                    
+                    return this.build(attempts);
                 }
                 
-                return this.build();
-            }
-            
-            if (response.getResponseCode() >= 500)
-            {
-                if (logLevel.ordinal() >= LogLevel.INFO.ordinal())
+                default:
                 {
-                    System.err.println("Server error, retrying");
+                    break;
                 }
-                
-                int attempts = (retrys != null && retrys.length == 1) ? retrys[0]++ : 1;
-                if (attempts > 3)
-                {
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_500, response.getResponseData());
-                }
-                
-                return this.build(attempts);
             }
             
             DataCall.LOGGER.log(Level.WARNING, "Response Code:" + response.getResponseCode());
             DataCall.LOGGER.log(Level.WARNING, "Response Data:" + response.getResponseData());
             throw new APINoValidResponseException(response.getResponseData());
+        }
+        
+        private void applyLimit(Enum en)
+        {
+            if (DataCall.limiter.get(en) != null)
+            {
+                DataCall.limiter.get(en).acquire();
+            }
         }
         
         private Object process(Object dtoobj)
@@ -201,6 +169,7 @@ public final class DataCall
             }
             
             return dtoobj;
+            
         }
         
         
@@ -265,44 +234,57 @@ public final class DataCall
                 String methodA = con.getHeaderField("X-Method-Rate-Limit");
                 String methodB = con.getHeaderField("X-Method-Rate-Limit-Count");
                 
+                if (appA == null && logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
+                {
+                    System.err.println("Header 'X-App-Rate-Limit' missing from call: " + getURL());
+                }
+                
                 if (appA != null)
                 {
                     createRatelimiterIfMissing(appA, dc.platform);
                     saveHeaderRateLimit(appB, dc.platform);
-                } else
+                }
+                
+                if (methodA != null && logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
                 {
-                    if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
-                    {
-                        System.err.println("Header 'X-App-Rate-Limit' missing from call: " + getURL());
-                    }
+                    System.err.println("Header 'X-Method-Rate-Limit' missing from call: " + getURL());
                 }
                 
                 if (methodA != null)
                 {
                     createRatelimiterIfMissing(methodA, dc.endpoint);
                     saveHeaderRateLimit(methodB, dc.endpoint);
-                } else
-                {
-                    if (logLevel.ordinal() >= LogLevel.DEBUG.ordinal())
-                    {
-                        System.err.println("Header 'X-Method-Rate-Limit' missing from call: " + getURL());
-                    }
                 }
+                
                 
                 if (con.getResponseCode() == 429)
                 {
                     final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
-                    String              reason    = String.format("%s%n%s%n%s%n", limitType.getReason(), limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
+                    String              reason    = String.format("%s%n%s%n%s", limitType.getReason(), limiter.get(dc.platform).getCallCountInTime(), limiter.get(dc.platform).getFirstCallInTime());
                     
-                    if (!this.dc.endpoint.name().startsWith("V3_STATIC"))
+                    if (limitType == RateLimitType.LIMIT_METHOD)
                     {
-                        DataCall.limiter.get(this.dc.platform).updateSleep(con.getHeaderField("Retry-After"));
+                        RateLimiter limter = DataCall.limiter.get(this.dc.endpoint);
+                        limter.updateSleep(con.getHeaderField("Retry-After"));
+                        limter.resetCalls();
+                    }
+                    
+                    if (limitType == RateLimitType.LIMIT_USER)
+                    {
+                        RateLimiter limter = DataCall.limiter.get(this.dc.platform);
+                        limter.updateSleep(con.getHeaderField("Retry-After"));
+                        limter.resetCalls();
                     }
                     
                     return new DataCallResponse(con.getResponseCode(), reason);
                 }
                 
                 InputStream stream = (con.getResponseCode() == 200) ? con.getInputStream() : con.getErrorStream();
+                
+                if (stream == null)
+                {
+                    return new DataCallResponse(APIHTTPErrorReason.ERROR_500.getCode(), APIHTTPErrorReason.ERROR_500.getReason());
+                }
                 
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)))
                 {
@@ -539,10 +521,10 @@ public final class DataCall
         @Override
         public String toString()
         {
-            return "DataCallResponse{" +
-                   "responseCode=" + responseCode +
-                   ", responseData='" + responseData + '\'' +
-                   '}';
+            return "DataCallResponse" +
+                   "\n{" +
+                   "\n\tresponseCode=" + responseCode +
+                   "\n\tresponseData=\n\t" + responseData + "\n\n}";
         }
     }
     

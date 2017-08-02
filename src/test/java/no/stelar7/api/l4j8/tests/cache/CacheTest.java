@@ -22,7 +22,7 @@ public class CacheTest
     {
         DataCall.setCacheProvider(CacheProvider.MEMORY);
         MatchReference ref = l4j8.getMatchAPI().getRecentMatches(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]).get(0);
-    
+        
         System.out.println("Starting timer");
         
         long start = stopwatch.runtime(TimeUnit.MICROSECONDS);
@@ -42,11 +42,11 @@ public class CacheTest
         }
         System.out.println("10x memory fetch time: " + (stopwatch.runtime(TimeUnit.MICROSECONDS) - start) + "µs");
         System.out.println();
-    
+        
         System.out.println("clearing cache");
         System.out.println();
         DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
-    
+        
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         for (int i = 0; i < 10; i++)
         {
@@ -54,7 +54,6 @@ public class CacheTest
         }
         System.out.println("10x memory fetch time: " + (stopwatch.runtime(TimeUnit.MICROSECONDS) - start) + "µs");
         System.out.println();
-        
         
         
         DataCall.setCacheProvider(CacheProvider.EMPTY);
@@ -65,7 +64,7 @@ public class CacheTest
     {
         DataCall.setCacheProvider(MySQLCache.create("", 3306, "l4j8test", "root", ""));
         MatchReference ref = l4j8.getMatchAPI().getRecentMatches(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]).get(0);
-    
+        
         System.out.println("Starting timer");
         
         long start = stopwatch.runtime(TimeUnit.MICROSECONDS);
@@ -85,12 +84,12 @@ public class CacheTest
         }
         System.out.println("10x memory fetch time: " + (stopwatch.runtime(TimeUnit.MILLISECONDS) - start) + "µs");
         System.out.println();
-    
-    
+        
+        
         System.out.println("clearing cache");
         System.out.println();
         DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
-    
+        
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         for (int i = 0; i < 10; i++)
         {
@@ -98,8 +97,8 @@ public class CacheTest
         }
         System.out.println("10x memory fetch time: " + (stopwatch.runtime(TimeUnit.MICROSECONDS) - start) + "µs");
         System.out.println();
-    
-    
+        
+        
         DataCall.setCacheProvider(CacheProvider.EMPTY);
     }
     
@@ -107,7 +106,7 @@ public class CacheTest
     @After
     public void clearCacheProvider()
     {
-        System.out.println("emptying cache provider");
+        System.out.println("disabling cache");
         DataCall.setCacheProvider(CacheProvider.EMPTY);
     }
     

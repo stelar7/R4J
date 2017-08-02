@@ -2,12 +2,12 @@ package no.stelar7.api.l4j8.basic.constants.api;
 
 public enum APIHTTPErrorReason
 {
+    ERROR_400(400, "Generic Client Error"),
+    ERROR_403(403, "Invalid API key"),
     ERROR_404(404, "Not Found"),
     ERROR_429(429, "Rate Limit Exceeded"),
-    ERROR_400(400, "Generic Client Error"),
     ERROR_500(500, "Generic Server Error"),
-    ERROR_599(599, "Read Timed Out"),
-    ERROR_403(403, "Invalid API key");
+    ERROR_599(599, "Read Timed Out");
     
     private int    code;
     private String reason;

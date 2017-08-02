@@ -98,7 +98,7 @@ public class BurstRateLimiter extends RateLimiter
         if (delay[0] != 0)
         {
             delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias));
-            System.err.println("Ratelimited activated! Sleeping for: " + delay[0]);
+            System.err.format("Ratelimited activated! Sleeping for: %s%n", delay[0]);
         }
         
         return delay[0];

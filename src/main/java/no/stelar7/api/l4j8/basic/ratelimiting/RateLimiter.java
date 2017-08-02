@@ -79,4 +79,13 @@ public abstract class RateLimiter
             overloadTimer = 5;
         }
     }
+    
+    public void resetCalls()
+    {
+        for (RateLimit limit : limits)
+        {
+            firstCallInTime.put(limit, Instant.now().minusMillis(limit.getTimeframeInMS()));
+            callCountInTime.get(limit).set(0);
+        }
+    }
 }
