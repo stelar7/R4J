@@ -2,7 +2,6 @@ package no.stelar7.api.l4j8.tests.ratelimit;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
-import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
@@ -101,12 +100,17 @@ public class RatelimitTest
     @Test
     public void testRateLimitStatic()
     {
+        Platform plat = Platform.values()[0];
         for (int i = 0; i < 30; i++)
         {
-            Realm ignore = l4j8.getStaticAPI().getRealm(Platform.EUW1);
+            l4j8.getStaticAPI().getRealm(plat);
+            l4j8.getStaticAPI().getVersions(plat);
+            l4j8.getStaticAPI().getLanguages(plat);
+            if (i % 9 == 0)
+            {
+                plat = Platform.values()[plat.ordinal() + 1];
+            }
             System.out.format("call no. %s Total time: %sms%n", i + 1, stopwatch.runtime(TimeUnit.MILLISECONDS));
         }
-        
-        Assert.assertTrue("limited?", 10 >= stopwatch.runtime(TimeUnit.SECONDS));
     }
 }

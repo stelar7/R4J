@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.impl;
 
-import no.stelar7.api.l4j8.basic.*;
+import no.stelar7.api.l4j8.basic.APICredentials;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 
 /**
  * The base class for calling anything from this api wrapper

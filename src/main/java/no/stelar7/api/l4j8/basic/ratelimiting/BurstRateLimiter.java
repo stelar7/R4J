@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.ratelimiting;
 
 
-import no.stelar7.api.l4j8.basic.DataCall;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.LogLevel;
 
 import java.time.Instant;
