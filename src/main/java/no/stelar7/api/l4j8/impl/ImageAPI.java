@@ -25,6 +25,16 @@ public final class ImageAPI
     }
     
     
+    private String buildImageURL(@Nullable String version, String path, String file)
+    {
+        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
+        String cdn           = realm.getCDN();
+        String versionString = version != null ? version : realm.getV();
+        
+        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + file;
+    }
+    
+    
     /**
      * Gets profile icon.
      *
@@ -34,13 +44,8 @@ public final class ImageAPI
      */
     public String getProfileIcon(String iconid, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/profileicon";
-        
         //http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + iconid + ".png";
+        return buildImageURL(version, "img/profileicon", iconid + ".png");
     }
     
     /**
@@ -65,12 +70,8 @@ public final class ImageAPI
      */
     public String getSplashArt(String championId, int skinNum)
     {
-        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn   = realm.getCDN();
-        String path  = "img/champion/splash";
-        
         // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
-        return cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + championId + "_" + skinNum + ".png";
+        return buildImageURL(null, "img/champion/splash", championId + "_" + skinNum + ".png");
     }
     
     /**
@@ -81,12 +82,8 @@ public final class ImageAPI
      */
     public String getSplashArt(Skin skin)
     {
-        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn   = realm.getCDN();
-        String path  = "img/champion/splash";
-        
         // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
-        return cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + skin.getId() + "_" + skin.getNum() + ".png";
+        return buildImageURL(null, "img/champion/splash", skin.getId() + "_" + skin.getNum() + ".png");
     }
     
     /**
@@ -98,12 +95,8 @@ public final class ImageAPI
      */
     public String getLoadingScreenArt(String championId, int skinNum)
     {
-        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn   = realm.getCDN();
-        String path  = "img/champion/loading";
-        
         // http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
-        return cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + championId + "_" + skinNum + ".png";
+        return buildImageURL(null, "img/champion/loading", championId + "_" + skinNum + ".png");
     }
     
     /**
@@ -114,12 +107,8 @@ public final class ImageAPI
      */
     public String getLoadingScreenArt(Skin skin)
     {
-        Realm  realm = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn   = realm.getCDN();
-        String path  = "img/champion/loading";
-        
         // http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
-        return cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + skin.getId() + "_" + skin.getNum() + ".png";
+        return buildImageURL(null, "img/champion/loading", skin.getId() + "_" + skin.getNum() + ".png");
     }
     
     
@@ -132,13 +121,8 @@ public final class ImageAPI
      */
     public String getSquare(StaticChampion champ, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/champion";
-        
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + champ.getImage().getFull();
+        return buildImageURL(version, "img/champion", champ.getImage().getFull());
     }
     
     /**
@@ -150,13 +134,8 @@ public final class ImageAPI
      */
     public String getSquare(String champKey, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/champion";
-        
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + champKey + ".png";
+        return buildImageURL(version, "img/champion", champKey + ".png");
     }
     
     /**
@@ -168,13 +147,8 @@ public final class ImageAPI
      */
     public String getPassive(String passiveId, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/passive";
-        
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + passiveId + ".png";
+        return buildImageURL(version, "img/passive", passiveId + ".png");
     }
     
     /**
@@ -186,13 +160,8 @@ public final class ImageAPI
      */
     public String getPassive(Passive passive, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/passive";
-        
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + passive.getImage().getFull();
+        return buildImageURL(version, "img/passive", passive.getImage().getFull());
     }
     
     /**
@@ -204,13 +173,8 @@ public final class ImageAPI
      */
     public String getAbility(StaticChampionSpell spell, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/spell";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + spell.getImage().getFull();
+        return buildImageURL(version, "img/spell", spell.getImage().getFull());
     }
     
     /**
@@ -222,13 +186,8 @@ public final class ImageAPI
      */
     public String getSummonerSpell(SummonerSpellType spell, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/spell";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + spell.getApiName() + ".png";
+        return buildImageURL(version, "img/spell", spell.getApiName() + ".png");
     }
     
     /**
@@ -240,13 +199,8 @@ public final class ImageAPI
      */
     public String getSummonerSpell(String spell, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/spell";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + spell + ".png";
+        return buildImageURL(version, "img/spell", spell + ".png");
     }
     
     /**
@@ -258,13 +212,8 @@ public final class ImageAPI
      */
     public String getItem(String id, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/item";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id + ".png";
+        return buildImageURL(version, "img/item", id + ".png");
     }
     
     
@@ -277,13 +226,8 @@ public final class ImageAPI
      */
     public String getItem(Item id, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/item";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id.getImage().getFull();
+        return buildImageURL(version, "img/item", id.getImage().getFull());
     }
     
     /**
@@ -295,13 +239,8 @@ public final class ImageAPI
      */
     public String getMastery(StaticMastery id, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/mastery";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id.getImage().getFull();
+        return buildImageURL(version, "img/mastery", id.getImage().getFull());
     }
     
     /**
@@ -313,13 +252,8 @@ public final class ImageAPI
      */
     public String getMastery(String id, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/mastery";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id + ".png";
+        return buildImageURL(version, "img/mastery", id + ".png");
     }
     
     
@@ -332,13 +266,8 @@ public final class ImageAPI
      */
     public String getSpriteSheet(String sprite, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/sprite";
-        
         //  http://ddragon.leagueoflegends.com/cdn/7.8.1/img/sprite/mastery0.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + sprite;
+        return buildImageURL(version, "img/sprite", sprite);
     }
     
     /**
@@ -350,13 +279,8 @@ public final class ImageAPI
      */
     public String getRune(String id, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/rune";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + id + ".png";
+        return buildImageURL(version, "img/rune", id + ".png");
     }
     
     /**
@@ -368,13 +292,8 @@ public final class ImageAPI
      */
     public String getRune(StaticRune rune, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/rune";
-        
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + rune.getImage().getFull();
+        return buildImageURL(version, "img/rune", rune.getImage().getFull());
     }
     
     
@@ -387,13 +306,8 @@ public final class ImageAPI
      */
     public String getMap(MapType map, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/map";
-        
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + "map" + map.getId() + ".png";
+        return buildImageURL(version, "img/map", map.getId() + ".png");
     }
     
     /**
@@ -405,12 +319,7 @@ public final class ImageAPI
      */
     public String getMap(String map, @Nullable String version)
     {
-        Realm  realm         = StaticAPI.getInstance().getRealm(Platform.EUW1);
-        String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        String path          = "img/map";
-        
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + "map" + map + ".png";
+        return buildImageURL(version, "img/map", map + ".png");
     }
 }

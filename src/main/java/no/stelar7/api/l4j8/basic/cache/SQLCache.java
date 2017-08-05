@@ -16,8 +16,9 @@ public abstract class SQLCache extends CacheProvider
 {
     protected Connection connection = null;
     
-    public SQLCache()
+    public SQLCache(long timeToLive)
     {
+        super(timeToLive);
         try
         {
             setupConnection();
@@ -35,6 +36,12 @@ public abstract class SQLCache extends CacheProvider
     protected abstract String createInsertStatement(String table, Map<String, Object> values);
     
     protected abstract String createTruncateStatemtent(String table);
+    
+    @Override
+    public void clearOldCache()
+    {
+        /**/
+    }
     
     @Override
     public void clear(URLEndpoint type)

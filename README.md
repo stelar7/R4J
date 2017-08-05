@@ -37,3 +37,8 @@ private void handleSummonerCallback(Summoner u)
 ```
 
 [A more concrete example here](https://github.com/stelar7/L4J8/blob/master/src/test/java/no/stelar7/api/l4j8/tests/async/AsyncTest.java)
+
+
+#### TODO:
+Add more cache providers  
+Add ddragon as an alternative to static-data

@@ -11,14 +11,19 @@ public class MySQLCache extends SQLCache
     private static String username;
     private static String password;
     
-    public static MySQLCache create(String host, int port, String database, String username, String password)
+    public MySQLCache(long timeToLive)
+    {
+        super(timeToLive);
+    }
+    
+    public static MySQLCache create(String host, int port, String database, String username, String password, long timeToLive)
     {
         MySQLCache.host = host;
         MySQLCache.port = port;
         MySQLCache.database = database;
         MySQLCache.username = username;
         MySQLCache.password = password;
-        return new MySQLCache();
+        return new MySQLCache(timeToLive);
     }
     
     @Override
