@@ -10,8 +10,6 @@ public class TieredCacheProvider extends CacheProvider
     
     public TieredCacheProvider(CacheProvider... provs)
     {
-        super(-1);
-        
         providers.addAll(Arrays.asList(provs));
     }
     
@@ -63,5 +61,16 @@ public class TieredCacheProvider extends CacheProvider
     public void clearOldCache()
     {
         providers.forEach(CacheProvider::clearOldCache);
+    }
+    
+    @Override
+    public long getSize()
+    {
+        long size = 0;
+        for (CacheProvider provider : providers)
+        {
+            size += provider.getSize();
+        }
+        return size;
     }
 }

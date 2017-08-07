@@ -23,7 +23,7 @@ public final class DataCall
     private URLEndpoint endpoint;
     
     private static APICredentials creds;
-    private static CacheProvider cache    = CacheProvider.EMPTY;
+    private static CacheProvider cache    = CacheProvider.EmptyProvider.INSTANCE;
     private static LogLevel      logLevel = LogLevel.NONE;
     
     
@@ -100,7 +100,7 @@ public final class DataCall
     
     public static void setCacheProvider(@Nullable CacheProvider provider)
     {
-        cache = provider == null ? CacheProvider.EMPTY : provider;
+        cache = provider == null ? CacheProvider.EmptyProvider.INSTANCE : provider;
     }
     
     public static void setCredentials(final APICredentials creds)
