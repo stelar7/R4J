@@ -27,6 +27,13 @@ public class CacheTest
         doCacheStuff();
     }
     
+    @Test
+    public void testTieredMemoryCache() throws InterruptedException
+    {
+        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(5), new MemoryCacheProvider(20)));
+        doCacheStuff();
+    }
+    
     @After
     public void clearCacheProvider()
     {
@@ -43,18 +50,18 @@ public class CacheTest
         
         long start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         ref.getFullMatch();
-        System.out.println("1x url fetch time: " + (stopwatch.runtime(TimeUnit.MICROSECONDS) - start) + "µs");
+        System.out.printf("1x url fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         ref.getFullMatch();
-        System.out.println("1x memory fetch time: " + (stopwatch.runtime(TimeUnit.MICROSECONDS) - start) + "µs");
+        System.out.printf("1x memory fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         for (int i = 0; i < 10; i++)
         {
             ref.getFullMatch();
         }
-        System.out.println("10x memory fetch time: " + (stopwatch.runtime(TimeUnit.MICROSECONDS) - start) + "µs");
+        System.out.printf("10x memory fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         System.out.println();
         
         System.out.println("clearing cache");
@@ -63,14 +70,14 @@ public class CacheTest
         
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         ref.getFullMatch();
-        System.out.println("1x url fetch time: " + (stopwatch.runtime(TimeUnit.MICROSECONDS) - start) + "µs");
+        System.out.printf("1x url fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         for (int i = 0; i < 10; i++)
         {
             ref.getFullMatch();
         }
-        System.out.println("10x memory fetch time: " + (stopwatch.runtime(TimeUnit.MICROSECONDS) - start) + "µs");
+        System.out.printf("10x memory fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         System.out.println();
         
         System.out.println("Fetching 3 aditional matches");
@@ -78,20 +85,22 @@ public class CacheTest
         recents.get(2).getFullMatch();
         recents.get(3).getFullMatch();
         
-        System.out.println("Cache size: " + DataCall.getCacheProvider().getSize());
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize());
         
         System.out.println("Waiting for cache timeout");
-        TimeUnit.SECONDS.sleep(DataCall.getCacheProvider().getTimeToLive() - stopwatch.runtime(TimeUnit.SECONDS));
+        TimeUnit.SECONDS.sleep(5);
         
-        System.out.println("Cache size: " + DataCall.getCacheProvider().getSize());
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize());
         
         System.out.println("Re-fetching cached items");
+        start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         recents.get(0).getFullMatch();
         recents.get(1).getFullMatch();
         recents.get(2).getFullMatch();
         recents.get(3).getFullMatch();
+        System.out.printf("4x fetches took: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         
-        System.out.println("Cache size: " + DataCall.getCacheProvider().getSize());
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize());
         System.out.println();
     }
     

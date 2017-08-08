@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests.spectator;
 
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
@@ -17,8 +17,6 @@ public class CurrentGameTest
     {
         
         Assert.assertNotNull("bannedchampion is null", currentGame.getBannedChampions());
-        Assert.assertNotNull("gameid is null", currentGame.getGameId());
-        Assert.assertNotNull("gamelength is null", currentGame.getGameLength());
         Assert.assertNotNull("gamemode is null", currentGame.getGameMode());
         Assert.assertNotNull("gamequeuecongifid is null", currentGame.getGameQueueConfig());
         Assert.assertNotNull("gamestarttime is null", currentGame.getGameStartTimeAsDate());
@@ -34,7 +32,7 @@ public class CurrentGameTest
     {
         final L4J8   l4j8 = new L4J8(SecretFile.CREDS);
         SpectatorAPI api  = l4j8.getSpectatorAPI();
-        
+    
         // Get a game in progess
         final List<SpectatorGameInfo> game = api.getFeaturedGames(Platform.EUW1);
         
@@ -45,5 +43,16 @@ public class CurrentGameTest
         // Get game info
         final SpectatorGameInfo currentGame = api.getCurrentGame(Platform.EUW1, sum.getSummonerId());
         doAssertions.accept(currentGame);
+    }
+    
+    @Test
+    public void testCurrentlyNotInGame()
+    {
+        final L4J8   l4j8 = new L4J8(SecretFile.CREDS);
+        SpectatorAPI api  = l4j8.getSpectatorAPI();
+        
+        SpectatorGameInfo game = api.getCurrentGame(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        
+        System.out.format("%s is %sin game", Constants.TEST_SUMMONER_NAMES[0], game != null ? "" : "not ");
     }
 }

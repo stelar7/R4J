@@ -41,6 +41,13 @@ public class MemoryCacheProvider extends CacheProvider
         }
     }
     
+    
+    @Override
+    public void update(URLEndpoint type, Object obj)
+    {
+        store(type, obj);
+    }
+    
     @Override
     public Optional<?> get(URLEndpoint type, Object... data)
     {
@@ -84,6 +91,12 @@ public class MemoryCacheProvider extends CacheProvider
     {
         clearOldCache(summoners);
         clearOldCache(matches);
+    }
+    
+    @Override
+    public long getTimeToLive()
+    {
+        return timeToLive;
     }
     
     @Override

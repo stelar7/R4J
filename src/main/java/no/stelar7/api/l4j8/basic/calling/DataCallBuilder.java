@@ -22,7 +22,6 @@ public class DataCallBuilder
     private static final BiFunction<String, String, String> MERGE        = (o, n) -> o + "," + n;
     private static final BiFunction<String, String, String> MERGE_AS_SET = (o, n) -> o + n;
     
-    private String BASE_URL      = Constants.REQUEST_URL;
     private String requestMethod = "GET";
     private String postData      = "";
     
@@ -64,30 +63,30 @@ public class DataCallBuilder
             System.err.println(response);
         }
         
-        switch (response.getResponseCode())
+        try
         {
-            case 200:
-            case 204:
+            switch (response.getResponseCode())
             {
-                final Object returnType = this.dc.getEndpoint().getType();
-                Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
-                
-                return process(dtoobj);
-            }
-            
-            case 403:
-            {
-                throw new APIResponseException(APIHTTPErrorReason.ERROR_403, "Your Api key is invalid! If you just regenerated it, wait a few seconds, then try again. " + response.getResponseData());
-            }
-            
-            case 404:
-            {
-                throw new APIResponseException(APIHTTPErrorReason.ERROR_400, "L4J8 error.. contact developer to get this fixed ..." + response.getResponseData());
-            }
-            
-            case 429:
-                try
+                case 200:
+                case 204:
                 {
+                    final Object returnType = this.dc.getEndpoint().getType();
+                    Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
+                    
+                    return process(dtoobj);
+                }
+                
+                case 403:
+                {
+                    throw new APIResponseException(APIHTTPErrorReason.ERROR_403, "Your Api key is invalid! If you just regenerated it, wait a few seconds, then try again. " + response.getResponseData());
+                }
+                
+                case 404:
+                {
+                    return null;
+                }
+                
+                case 429:
                     if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
                     {
                         int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
@@ -109,30 +108,33 @@ public class DataCallBuilder
                     }
                     
                     return this.build();
-                } catch (InterruptedException e)
+                
+                case 500:
+                case 502:
+                case 503:
+                case 504:
                 {
-                    e.printStackTrace();
-                    break;
-                }
-            
-            case 500:
-            case 502:
-            case 503:
-            case 504:
-            {
-                int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
-                if (attempts > 3)
-                {
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_500, response.getResponseData());
+                    int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
+                    System.err.format("Server error, waiting 1 second and retrying%n");
+                    Thread.sleep(1000);
+                    
+                    if (attempts > 3)
+                    {
+                        throw new APIResponseException(APIHTTPErrorReason.ERROR_500, response.getResponseData());
+                    }
+                    
+                    return this.build(attempts);
                 }
                 
-                return this.build(attempts);
+                default:
+                {
+                    break;
+                }
             }
             
-            default:
-            {
-                break;
-            }
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
         }
         
         System.err.println("Response Code:" + response.getResponseCode());
@@ -268,7 +270,6 @@ public class DataCallBuilder
                 
                 if (limitType == RateLimitType.LIMIT_METHOD)
                 {
-                    // TODO
                     RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getEndpoint());
                     limter.updateSleep(con.getHeaderField("Retry-After"));
                     limter.resetCalls();
@@ -328,15 +329,6 @@ public class DataCallBuilder
         DataCall.getCallData().put(platform, parent);
         
         updateRatelimiter(platform, endpoint);
-        
-        /*
-          private void saveHeaderRateLimit(String limitCount, Enum type)
-    {
-        Map<Integer, Integer> timeout = parseLimitFromHeader(limitCount);
-        DataCall.getCallData().put(type, timeout);
-        updateRatelimiter(type);
-    }
-         */
     }
     
     private Map<Integer, Integer> parseLimitFromHeader(String headerValue)
@@ -382,7 +374,7 @@ public class DataCallBuilder
      */
     private String getURL()
     {
-        String[] url = {BASE_URL};
+        String[] url = {dc.getProxy()};
         url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString());
         url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.getEndpoint().getGame());
         url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.getEndpoint().getService());
@@ -511,7 +503,7 @@ public class DataCallBuilder
     
     public DataCallBuilder withURL(String url)
     {
-        this.BASE_URL = url;
+        dc.setProxy(url);
         return this;
     }
     

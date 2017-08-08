@@ -16,6 +16,15 @@ public abstract class CacheProvider
      */
     public abstract void store(URLEndpoint type, Object obj);
     
+    
+    /**
+     * Updates the TTL for this object
+     *
+     * @param type the endpoint to store the cache in
+     * @param obj  the object to store
+     */
+    public abstract void update(URLEndpoint type, Object obj);
+    
     /**
      * Returns data from the cache if found, otherwise Optional.empty();
      *
@@ -41,10 +50,12 @@ public abstract class CacheProvider
     private   ScheduledFuture<?> clearTask;
     protected long               timeToLive;
     
-    public long getTimeToLive()
-    {
-        return timeToLive;
-    }
+    /**
+     * Returns the time in seconds the items are alloweed to live in the cache
+     *
+     * @return long
+     */
+    public abstract long getTimeToLive();
     
     /**
      * Returns the count of items in the cache
@@ -85,7 +96,11 @@ public abstract class CacheProvider
         }
         
         @Override
-        public void store(URLEndpoint clazz, Object obj) { /*void cache*/}
+        public void store(URLEndpoint clazz, Object obj) {/*void cache*/}
+        
+        @Override
+        public void update(URLEndpoint type, Object obj)
+        {/*void cache*/}
         
         @Override
         public Optional<?> get(URLEndpoint type, Object... data)
@@ -95,12 +110,18 @@ public abstract class CacheProvider
         
         @Override
         public void clear(URLEndpoint type)
-        {/*void*/}
+        {/*void cache*/}
         
         @Override
         public void clearOldCache()
-        {/*void*/}
-        
+        {/*void cache*/}
+    
+        @Override
+        public long getTimeToLive()
+        {
+            return 0;
+        }
+    
         @Override
         public long getSize()
         {

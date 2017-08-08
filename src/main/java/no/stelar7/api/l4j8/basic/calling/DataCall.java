@@ -15,16 +15,17 @@ public final class DataCall
     private static final Map<Enum, Map<Enum, RateLimiter>>           limiter  = new HashMap<>();
     private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
     
+    private static APICredentials creds;
+    private static CacheProvider cache    = CacheProvider.EmptyProvider.INSTANCE;
+    private static LogLevel      logLevel = LogLevel.NONE;
+    
     private final Map<String, String> urlParams  = new TreeMap<>();
     private final Map<String, String> urlData    = new TreeMap<>();
     private final Map<String, String> urlHeaders = new TreeMap<>();
     
     private Platform    platform;
     private URLEndpoint endpoint;
-    
-    private static APICredentials creds;
-    private static CacheProvider cache    = CacheProvider.EmptyProvider.INSTANCE;
-    private static LogLevel      logLevel = LogLevel.NONE;
+    private static String urlProxy = Constants.REQUEST_URL;
     
     
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter()
@@ -98,6 +99,24 @@ public final class DataCall
         return cache;
     }
     
+    /**
+     * Takes in a proxy for the api.
+     * The URL should contain the parts:
+     * {platform}
+     * {game}
+     * {service}
+     * {version}
+     * {resource}
+     * <p>
+     * The default is https://{platform}.api.riotgames.com/{game}/{service}/{version}/{resource}
+     *
+     * @param proxy the url
+     */
+    public static void setProxy(@Nullable String proxy)
+    {
+        urlProxy = proxy == null ? Constants.REQUEST_URL : proxy;
+    }
+    
     public static void setCacheProvider(@Nullable CacheProvider provider)
     {
         cache = provider == null ? CacheProvider.EmptyProvider.INSTANCE : provider;
@@ -108,4 +127,8 @@ public final class DataCall
         DataCall.creds = creds;
     }
     
+    public String getProxy()
+    {
+        return urlProxy;
+    }
 }

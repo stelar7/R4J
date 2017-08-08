@@ -48,10 +48,12 @@ public final class SpectatorAPI
     
     /**
      * The response object contains the CurrentGame of the summoner.
+     * <p>
+     * returns null if not in game
      *
      * @param server     the region to execute against
      * @param summonerId the summonerId
-     * @return Optional FeaturedGames
+     * @return SpectatorGameInfo
      */
     public SpectatorGameInfo getCurrentGame(Platform server, long summonerId)
     {

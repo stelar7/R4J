@@ -6,7 +6,7 @@ import java.util.*;
 
 public class TieredCacheProvider extends CacheProvider
 {
-    List<CacheProvider> providers = new LinkedList<>();
+    private final List<CacheProvider> providers = new LinkedList<>();
     
     public TieredCacheProvider(CacheProvider... provs)
     {
@@ -15,9 +15,15 @@ public class TieredCacheProvider extends CacheProvider
     
     
     @Override
-    public void store(URLEndpoint clazz, Object obj)
+    public void store(URLEndpoint type, Object obj)
     {
-        providers.forEach(p -> p.store(clazz, obj));
+        providers.forEach(p -> p.store(type, obj));
+    }
+    
+    @Override
+    public void update(URLEndpoint type, Object obj)
+    {
+        providers.forEach(p -> p.update(type, obj));
     }
     
     @Override
@@ -40,14 +46,24 @@ public class TieredCacheProvider extends CacheProvider
     
     private void restoreCache(CacheProvider stoppingPoint, URLEndpoint type, Object obj)
     {
+        
+        boolean inTheFuture = false;
+        
         for (CacheProvider provider : providers)
         {
             if (provider.equals(stoppingPoint))
             {
-                return;
+                inTheFuture = true;
             }
             
-            provider.store(type, obj);
+            
+            if (!inTheFuture)
+            {
+                provider.store(type, obj);
+            } else
+            {
+                provider.update(type, obj);
+            }
         }
     }
     
@@ -61,6 +77,12 @@ public class TieredCacheProvider extends CacheProvider
     public void clearOldCache()
     {
         providers.forEach(CacheProvider::clearOldCache);
+    }
+    
+    @Override
+    public long getTimeToLive()
+    {
+        return providers.stream().mapToLong(CacheProvider::getTimeToLive).sum();
     }
     
     @Override
