@@ -27,7 +27,7 @@ public class DataCallBuilder
     
     private static void updateRatelimiter(Enum server, Enum endpoint)
     {
-        DataCall.getLimiter().get(server).get(endpoint).updatePermitsPerX(DataCall.getCallData().get(server).get(endpoint));
+        DataCall.getLimiter().get(server).get(endpoint).updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint));
     }
     
     /**
@@ -78,7 +78,10 @@ public class DataCallBuilder
                 
                 case 403:
                 {
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_403, "Your Api key is invalid! If you just regenerated it, wait a few seconds, then try again. " + response.getResponseData());
+                    String reasonText = "Your Api key is invalid!\n";
+                    reasonText += "You may be trying to call a endpoint you dont have access to\n";
+                    reasonText += "or if you just regenerated it; wait a few seconds, then try again\n";
+                    throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
                 }
                 
                 case 404:
@@ -310,12 +313,17 @@ public class DataCallBuilder
     private void createRatelimiterIfMissing(String methodA, Enum platform, Enum endpoint)
     {
         Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
-        child.computeIfAbsent(endpoint, f -> createLimiter(f, methodA));
+        
+        RateLimiter oldLimit   = child.getOrDefault(endpoint, createLimiter(endpoint, methodA));
+        RateLimiter newerLimit = createLimiter(endpoint, methodA);
+        
+        if (!oldLimit.equals(newerLimit))
+        {
+            child.put(endpoint, newerLimit);
+        }
+        
         DataCall.getLimiter().put(platform, child);
         
-        /*
-        DataCall.limiter.computeIfAbsent(type, (Enum key) -> createLimiter(key, limitCount));
-        */
     }
     
     private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
@@ -348,7 +356,6 @@ public class DataCallBuilder
     
     public RateLimiter createLimiter(Enum key, String limitCount)
     {
-        // X-App-Rate-Limit    : [100:120,20:1]
         Map<Integer, Integer> timeout = parseLimitFromHeader(limitCount);
         
         List<RateLimit> limits = new ArrayList<>();
@@ -500,11 +507,4 @@ public class DataCallBuilder
         this.dc.getUrlParams().merge(key, value, MERGE);
         return this;
     }
-    
-    public DataCallBuilder withURL(String url)
-    {
-        dc.setProxy(url);
-        return this;
-    }
-    
 }

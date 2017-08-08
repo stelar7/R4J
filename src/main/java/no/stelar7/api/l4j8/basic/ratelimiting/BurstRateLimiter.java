@@ -34,7 +34,7 @@ public class BurstRateLimiter extends RateLimiter
     }
     
     @Override
-    public void updatePermitsPerX(Map<Integer, Integer> data)
+    public void updatePermitsTakenPerX(Map<Integer, Integer> data)
     {
         for (Entry<Integer, Integer> key : data.entrySet())
         {

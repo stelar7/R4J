@@ -33,9 +33,36 @@ public abstract class RateLimiter
         }
     }
     
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        RateLimiter that = (RateLimiter) o;
+        
+        return limits != null ? limits.equals(that.limits) : (that.limits == null);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = limits != null ? limits.hashCode() : 0;
+        result = 31 * result + (firstCallInTime != null ? firstCallInTime.hashCode() : 0);
+        result = 31 * result + (callCountInTime != null ? callCountInTime.hashCode() : 0);
+        result = 31 * result + overloadTimer;
+        return result;
+    }
+    
     public abstract void acquire();
     
-    public abstract void updatePermitsPerX(Map<Integer, Integer> data);
+    public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data);
     
     public Map<RateLimit, Instant> getFirstCallInTime()
     {
