@@ -50,27 +50,29 @@ public class RatelimitTest
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
     @Test
-    public void testRateLimit() throws InterruptedException
+    public void testRateLimitThreaded()
     {
-        ExecutorService pool = Executors.newFixedThreadPool(8);
-        pool.submit(() ->
-                    {
-                        for (int i2 = 0; i2 < 30; i2++)
-                        {
-                            Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-                        }
-                    });
-        
-        pool.shutdown();
-        pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+        try
+        {
+            ExecutorService pool = Executors.newFixedThreadPool(8);
+            for (int i2 = 0; i2 < 130; i2++)
+            {
+                pool.execute(() -> l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]));
+            }
+            pool.shutdown();
+            pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
     }
     
     
     @Test
-    public void testRatelimit()
+    public void testRateLimit()
     {
         final L4J8 test = new L4J8(SecretFile.CREDS);
-        for (int i2 = 0; i2 < 120; i2++)
+        for (int i2 = 0; i2 < 130; i2++)
         {
             Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
         }

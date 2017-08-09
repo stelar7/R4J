@@ -23,6 +23,35 @@ public class RateLimit
         return delayInMs;
     }
     
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        
+        RateLimit rateLimit = (RateLimit) o;
+        
+        if (permits != rateLimit.permits)
+        {
+            return false;
+        }
+        
+        return delayInMs == rateLimit.delayInMs;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = permits;
+        result = 31 * result + (int) (delayInMs ^ (delayInMs >>> 32));
+        return result;
+    }
     
     @Override
     public String toString()

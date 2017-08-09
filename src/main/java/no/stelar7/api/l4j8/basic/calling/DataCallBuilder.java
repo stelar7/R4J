@@ -35,7 +35,6 @@ public class DataCallBuilder
      *
      * @param retrys the amount of retries already done (should not be passed in!)
      * @return an object generated from the requested JSON
-     * @throws APINoValidResponseException if the request failed in some fashion
      */
     public Object build(int... retrys)
     {
@@ -63,81 +62,55 @@ public class DataCallBuilder
             System.err.println(response);
         }
         
-        try
+        switch (response.getResponseCode())
         {
-            switch (response.getResponseCode())
+            case 200:
+            case 204:
             {
-                case 200:
-                case 204:
-                {
-                    final Object returnType = this.dc.getEndpoint().getType();
-                    Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
-                    
-                    return process(dtoobj);
-                }
+                final Object returnType = this.dc.getEndpoint().getType();
+                Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
                 
-                case 403:
-                {
-                    String reasonText = "Your Api key is invalid!\n";
-                    reasonText += "You may be trying to call a endpoint you dont have access to\n";
-                    reasonText += "or if you just regenerated it; wait a few seconds, then try again\n";
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
-                }
-                
-                case 404:
-                {
-                    return null;
-                }
-                
-                case 429:
-                    if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
-                    {
-                        int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
-                        if (attempts > 2)
-                        {
-                            System.err.println("Service ratelimit reached too many times, waiting 10 second and retrying");
-                            Thread.sleep(10000);
-                            return this.build(attempts);
-                        }
-                        
-                        System.err.format("Service ratelimit reached (%s / 3 times), waiting 1 second and retrying%n", attempts);
-                        Thread.sleep(1000);
-                        return this.build(attempts);
-                    } else
-                    {
-                        System.err.println(response.getResponseData());
-                        System.err.println("429 ratelimit hit! Please do not restart your application to refresh the timer!");
-                        System.err.println("This isnt supposed to happen unless you restarted your app before the last limit was hit!");
-                    }
-                    
-                    return this.build();
-                
-                case 500:
-                case 502:
-                case 503:
-                case 504:
-                {
-                    int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
-                    System.err.format("Server error, waiting 1 second and retrying%n");
-                    Thread.sleep(1000);
-                    
-                    if (attempts > 3)
-                    {
-                        throw new APIResponseException(APIHTTPErrorReason.ERROR_500, response.getResponseData());
-                    }
-                    
-                    return this.build(attempts);
-                }
-                
-                default:
-                {
-                    break;
-                }
+                return process(dtoobj);
             }
             
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
+            case 403:
+            {
+                String reasonText = "Your Api key is invalid!\n";
+                reasonText += "You may be trying to call a endpoint you dont have access to\n";
+                reasonText += "or if you just regenerated it; wait a few seconds, then try again\n";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
+            }
+            
+            case 404:
+            {
+                return null;
+            }
+            
+            case 429:
+                if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
+                {
+                    return sleepAndRetry(retrys, "Ratelimit reached too many times, waiting 10 second and retrying", "Ratelimit reached (%s / 3 times), waiting 1 second and retrying%n");
+                } else
+                {
+                    System.err.println(response.getResponseData());
+                    System.err.println("429 ratelimit hit! Please do not restart your application to refresh the timer!");
+                    System.err.println("This isnt supposed to happen unless you restarted your app before the last limit was hit!");
+                }
+                
+                return this.build();
+            
+            case 500:
+            case 502:
+            case 503:
+            case 504:
+            {
+                return sleepAndRetry(retrys, "Server error, waiting 10 second and retrying", "Server error (%s / 3 times), waiting 1 second and retrying%n");
+            }
+            
+            default:
+            {
+                break;
+            }
         }
         
         System.err.println("Response Code:" + response.getResponseCode());
@@ -145,8 +118,39 @@ public class DataCallBuilder
         throw new APINoValidResponseException(response.getResponseData());
     }
     
+    private Object sleepAndRetry(int[] retrys, String shortMessage, String longMessage)
+    {
+        try
+        {
+            int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
+            
+            if (attempts > 5)
+            {
+                System.err.println("Error! too many times!");
+                return null;
+            }
+            
+            
+            if (attempts > 2)
+            {
+                System.err.println(shortMessage);
+                Thread.sleep(10000);
+                return this.build(attempts);
+            }
+            
+            System.err.format(longMessage, attempts);
+            Thread.sleep(1000);
+            return this.build(attempts);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     
     // TODO
+    
     private void applyLimit(Enum platform, Enum endpoint)
     {
         Map<Enum, RateLimiter> limits = DataCall.getLimiter().get(platform);
@@ -314,17 +318,16 @@ public class DataCallBuilder
     {
         Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
         
-        RateLimiter oldLimit   = child.getOrDefault(endpoint, createLimiter(endpoint, methodA));
+        RateLimiter oldLimit   = child.get(endpoint);
         RateLimiter newerLimit = createLimiter(endpoint, methodA);
         
-        if (!oldLimit.equals(newerLimit))
+        if (!newerLimit.equals(oldLimit))
         {
             newerLimit.mergeFrom(oldLimit);
             child.put(endpoint, newerLimit);
         }
         
         DataCall.getLimiter().put(platform, child);
-        
     }
     
     private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
