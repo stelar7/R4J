@@ -115,4 +115,11 @@ public abstract class RateLimiter
             callCountInTime.get(limit).set(0);
         }
     }
+    
+    public void mergeFrom(RateLimiter oldLimit)
+    {
+        this.callCountInTime = oldLimit.getCallCountInTime();
+        this.firstCallInTime = oldLimit.getFirstCallInTime();
+        this.overloadTimer = oldLimit.overloadTimer;
+    }
 }

@@ -319,6 +319,7 @@ public class DataCallBuilder
         
         if (!oldLimit.equals(newerLimit))
         {
+            newerLimit.mergeFrom(oldLimit);
             child.put(endpoint, newerLimit);
         }
         
