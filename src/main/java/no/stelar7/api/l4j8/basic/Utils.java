@@ -7,8 +7,11 @@ import no.stelar7.api.l4j8.basic.deserializer.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.Locale;
 import java.util.logging.*;
+import java.util.regex.Pattern;
 
 public final class Utils
 {
@@ -60,8 +63,10 @@ public final class Utils
     {
         try
         {
-            final String stripped  = data.replaceAll("\\s+", "");
-            final String lowercase = stripped.toLowerCase(Locale.ENGLISH);
+            final Pattern pattern    = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+            final String  stripped   = data.replaceAll("\\s+", "");
+            final String  normalized = Normalizer.normalize(stripped, Form.NFD);
+            final String  lowercase  = pattern.matcher(normalized).replaceAll("").toLowerCase(Locale.ENGLISH);
             return URLEncoder.encode(lowercase, "UTF-8");
         } catch (final UnsupportedEncodingException e)
         {

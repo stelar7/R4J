@@ -76,10 +76,10 @@ public final class Constants
     public static final String REQUEST_URL = PROTOCOL + PLATFORM_PLACEHOLDER + HOST_PLACEHOLDER + SEPARATOR + GAME_PLACEHOLDER + SEPARATOR + SERVICE_PLACEHOLDER + SEPARATOR + VERSION_PLACEHOLDER + SEPARATOR + RESOURCE_PLACEHOLDER;
     
     public static final String[]   TEST_TOURNAMENT_CODES = {"EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d"};
-    public static final String[]   TEST_SUMMONER_NAMES   = {"stelar7", "相当猥琐"};
+    public static final String[]   TEST_SUMMONER_NAMES   = {"stelar7", "相当猥琐", "RİVEN BANLAMAA"};
     public static final Long[]     TEST_SUMMONER_IDS     = {19613950L, 24582364L};
-    public static final Long[]     TEST_ACCOUNT_IDS      = {22401330L, 29061584L, 200009481L};
-    public static final Platform[] TEST_PLATFORM         = {Platform.EUW1, Platform.EUW1, Platform.OC1};
+    public static final Long[]     TEST_ACCOUNT_IDS      = {22401330L, 29061584L};
+    public static final Platform[] TEST_PLATFORM         = {Platform.EUW1, Platform.EUW1, Platform.TR1};
     public static final Integer[]  TEST_CHAMPION_IDS     = {89, 50};
     public static final Long[]     TEST_MATCH_ID         = {180100577L};
     

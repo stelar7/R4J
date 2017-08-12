@@ -30,18 +30,21 @@ public class SummonerTest
     @Test
     public void testById()
     {
-        Summoner optional = api.getSummonerById(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
-        doAssertions.accept(optional);
+        for (int i = 0; i < Constants.TEST_SUMMONER_IDS.length; i++)
+        {
+            Summoner optional = api.getSummonerById(Constants.TEST_PLATFORM[i], Constants.TEST_SUMMONER_IDS[i]);
+            doAssertions.accept(optional);
+        }
     }
     
     @Test
     public void testByName()
     {
-        Summoner optional = api.getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[0]);
-        doAssertions.accept(optional);
-        
-        optional = api.getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[1]);
-        doAssertions.accept(optional);
+        for (int i = 0; i < Constants.TEST_SUMMONER_NAMES.length; i++)
+        {
+            Summoner optional = api.getSummonerByName(Constants.TEST_PLATFORM[i], Constants.TEST_SUMMONER_NAMES[i]);
+            doAssertions.accept(optional);
+        }
     }
     
     @Test
