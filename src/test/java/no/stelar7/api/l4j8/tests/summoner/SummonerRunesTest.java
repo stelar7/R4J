@@ -8,27 +8,19 @@ import org.junit.*;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 public class SummonerRunesTest
 {
-    
-    public static final Logger LOGGER = Logger.getGlobal();
     
     private final Consumer<List<RunePage>> doAssertions = (final List<RunePage> pages) ->
     {
         pages.forEach(page ->
                       {
-            
-                          Assert.assertNotNull("StaticRune Page does not have an id", page.getId());
                           Assert.assertNotNull("StaticRune Page does not have a name", page.getName());
                           Assert.assertNotNull("StaticRune Page does not contain any slots", page.getSlots());
-                          Assert.assertNotNull("Unable to determine current StaticRune page", page.isCurrent());
             
                           page.getSlots().forEach((final RuneSlot slot) ->
                                                   {
-                                                      Assert.assertNotNull("StaticRune slot does not have a slot id", slot.getRuneSlotId());
-                                                      Assert.assertNotNull("StaticRune slot does not have a rune id", slot.getRuneId());
                                                       Assert.assertNotEquals("StaticRune slot does not have a valid id", slot.getRuneSlotId(), 0);
                                                       Assert.assertNotEquals("StaticRune slot does not have a valid rune id", slot.getRuneId(), 0);
                                                   });

@@ -8,11 +8,9 @@ import no.stelar7.api.l4j8.basic.deserializer.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Locale;
-import java.util.logging.*;
 
 public final class Utils
 {
-    private static final Logger LOGGER = Logger.getGlobal();
     private static final Gson gson;
     
     private Utils()
@@ -60,8 +58,6 @@ public final class Utils
     {
         try
         {
-            
-            
             final String stripped = data.replaceAll("\\s+", "");
             final String result   = stripped.replace("\u0130", "i").toLowerCase(Locale.ENGLISH);
             
@@ -69,7 +65,7 @@ public final class Utils
             return URLEncoder.encode(result, "UTF-8");
         } catch (final UnsupportedEncodingException e)
         {
-            Utils.LOGGER.log(Level.WARNING, e.getMessage(), e);
+            e.printStackTrace();
         }
         return null;
     }

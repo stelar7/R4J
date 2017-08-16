@@ -8,12 +8,9 @@ import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 public class SummonerTest
 {
-    
-    private static final Logger LOGGER = Logger.getGlobal();
     
     private final Consumer<Summoner> doAssertions = (final Summoner value) ->
     {
