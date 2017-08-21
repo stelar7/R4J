@@ -111,7 +111,11 @@ public enum GameSubType
     /**
      * Darkstar games
      */
-    DARKSTAR;
+    DARKSTAR,
+    /**
+     * Invasion games
+     */
+    STARGUARDIAN;
     
     public static Optional<GameSubType> getFromCode(final String subType)
     {

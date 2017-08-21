@@ -46,7 +46,11 @@ public enum MapType
     /**
      * Darkstar Map
      */
-    COSMIC_RUINS(16, new Rectangle(20, 20, 6970, 6970)),;
+    COSMIC_RUINS(16, new Rectangle(20, 20, 6970, 6970)),
+    /**
+     * Invasion map
+     */
+    VALORAN_CITY_PARK(18, new Rectangle(0, 0, 28767, 28767));
     
     
     private final Integer   mapId;

@@ -176,7 +176,19 @@ public enum GameQueueType
     /**
      * Darkstar games
      */
-    DARKSTAR_3X3(610);
+    DARKSTAR_3X3(610),
+    /**
+     * Invasion games
+     */
+    INVASION_NORMAL(980),
+    @Deprecated
+    INVASION_NORMAL_2(981),
+    @Deprecated
+    INVASION_NORMAL_3(982),
+    /**
+     * Invasion games
+     */
+    INVASION_ONSLAUGHT(990);
     
     private final Integer code;
     private final String  apiname;

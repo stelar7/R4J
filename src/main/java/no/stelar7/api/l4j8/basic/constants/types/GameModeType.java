@@ -52,7 +52,11 @@ public enum GameModeType
     /**
      * Darkstar games
      */
-    DARKSTAR;
+    DARKSTAR,
+    /**
+     * Invasion mode
+     */
+    STARGUARDIAN;
     
     /**
      * Returns a GameModeType from the provided value
