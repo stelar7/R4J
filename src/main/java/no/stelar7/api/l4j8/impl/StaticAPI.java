@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.impl;
 
-import no.stelar7.api.l4j8.basic.calling.DataCallBuilder;
+import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
@@ -54,7 +54,15 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_CHAMPIONS, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return (Map<Integer, StaticChampion>) chl.get();
+        }
+        
         StaticChampionList list = (StaticChampionList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPIONS, list);
+        
         return list.getData();
     }
     
@@ -81,7 +89,17 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
-        return (StaticChampion) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, server, id, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return (StaticChampion) chl.get();
+        }
+        
+        StaticChampion list = (StaticChampion) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, list);
+        
+        return list;
     }
     
     public ItemList getItems(Platform server, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -106,7 +124,18 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
-        return (ItemList) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_ITEMS, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return (ItemList) chl.get();
+        }
+        
+        ItemList list = (ItemList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEMS, list);
+        
+        return list;
+        
     }
     
     public Item getItem(Platform server, int id, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -132,7 +161,17 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
-        return (Item) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_ITEM_BY_ID, id, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return (Item) chl.get();
+        }
+        
+        Item list = (Item) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, list);
+        
+        return list;
     }
     
     public Map<String, String> getLanguageStrings(Platform server, @Nullable String version, @Nullable String locale)
@@ -149,8 +188,19 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, server, version, locale);
+        if (chl.isPresent())
+        {
+            return ((LanguageStrings) chl.get()).getData();
+        }
+        
         LanguageStrings list = (LanguageStrings) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, list);
+        
         return list.getData();
+        
+        
     }
     
     /**
@@ -164,7 +214,18 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_LANGUAGES)
                                                        .withPlatform(server);
         
-        return (List<String>) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGES, server);
+        if (chl.isPresent())
+        {
+            return (List<String>) chl.get();
+        }
+        
+        List<String> list = (List<String>) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGES, list);
+        
+        
+        return list;
     }
     
     public Map<String, MapDetails> getMaps(Platform server, @Nullable String version, @Nullable String locale)
@@ -180,7 +241,16 @@ public final class StaticAPI
         {
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
+        
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MAPS, server, version, locale);
+        if (chl.isPresent())
+        {
+            return ((MapData) chl.get()).getData();
+        }
+        
         MapData list = (MapData) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MAPS, list);
         return list.getData();
     }
     
@@ -207,7 +277,16 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MASTERIES, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return ((StaticMasteryList) chl.get()).getData();
+        }
+        
         StaticMasteryList list = (StaticMasteryList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list);
+        
         return list.getData();
     }
     
@@ -233,7 +312,16 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MASTERIES, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return ((StaticMasteryList) chl.get()).getTree();
+        }
+        
         StaticMasteryList list = (StaticMasteryList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list);
+        
         return list.getTree();
     }
     
@@ -260,7 +348,15 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
-        return (StaticMastery) builder.build();
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MASTERY_BY_ID, server, id, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return (StaticMastery) chl.get();
+        }
+        
+        StaticMastery list = (StaticMastery) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, list);
+        return list;
     }
     
     public Map<Long, ProfileIconDetails> getProfileIcons(Platform server, @Nullable String version, @Nullable String locale)
@@ -276,7 +372,16 @@ public final class StaticAPI
         {
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_PROFILEICONS, server, version, locale);
+        if (chl.isPresent())
+        {
+            return ((ProfileIconData) chl.get()).getData();
+        }
+        
         ProfileIconData list = (ProfileIconData) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PROFILEICONS, list);
+        
         return list.getData();
     }
     
@@ -284,7 +389,17 @@ public final class StaticAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_REALMS)
                                                        .withPlatform(server);
-        return (Realm) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_REALMS, server);
+        if (chl.isPresent())
+        {
+            return (Realm) chl.get();
+        }
+        
+        Realm list = (Realm) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_REALMS, list);
+        
+        return list;
     }
     
     public Map<Integer, StaticRune> getRunes(Platform server, @Nullable Set<RuneDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -310,7 +425,15 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_RUNES, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return ((StaticRuneList) chl.get()).getData();
+        }
+        
         StaticRuneList list = (StaticRuneList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNES, list);
         return list.getData();
     }
     
@@ -338,7 +461,15 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
-        return (StaticRune) builder.build();
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_RUNE_BY_ID, server, id, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return (StaticRune) chl.get();
+        }
+        
+        StaticRune list = (StaticRune) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNE_BY_ID, list);
+        return list;
     }
     
     
@@ -366,7 +497,14 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_SUMMONER_SPELLS, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return ((StaticSummonerSpellList) chl.get()).getData();
+        }
+        
         StaticSummonerSpellList list = (StaticSummonerSpellList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELLS, list);
         return list.getData();
     }
     
@@ -395,8 +533,15 @@ public final class StaticAPI
             builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
         }
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, server, id, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            return (StaticSummonerSpell) chl.get();
+        }
         
-        return (StaticSummonerSpell) builder.build();
+        StaticSummonerSpell list = (StaticSummonerSpell) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, list);
+        return list;
     }
     
     
@@ -405,7 +550,16 @@ public final class StaticAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_VERSIONS)
                                                        .withPlatform(server);
         
-        return (List<String>) builder.build();
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_VERSIONS, server);
+        if (chl.isPresent())
+        {
+            return (List<String>) chl.get();
+        }
+        
+        List<String> list = (List<String>) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_VERSIONS, list);
+        return list;
     }
     
 }

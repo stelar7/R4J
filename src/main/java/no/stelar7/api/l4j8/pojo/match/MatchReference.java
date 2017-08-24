@@ -1,9 +1,8 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.basic.cache.StaticCache;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.impl.MatchAPI;
+import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.time.*;
@@ -37,7 +36,7 @@ public class MatchReference
      */
     public StaticChampion getChampion()
     {
-        return StaticCache.getInstance().getChampion(this.champion);
+        return StaticAPI.getInstance().getChampion(Platform.EUW1, this.champion, null, null, null);
     }
     
     /**

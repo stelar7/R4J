@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
-import no.stelar7.api.l4j8.basic.cache.StaticCache;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.impl.StaticAPI;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 public class Champion
@@ -20,7 +21,7 @@ public class Champion
     
     public StaticChampion getChampion()
     {
-        return StaticCache.getInstance().getChampion(this.id);
+        return StaticAPI.getInstance().getChampion(Platform.EUW1, this.id, null, null, null);
     }
     
     public boolean isActive()
