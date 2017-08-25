@@ -155,7 +155,6 @@ public final class MatchAPI
      *
      * @param server       the platform the match was played on
      * @param matchId      the id to check
-     * @param forAccountId optional accountId to add the participantIdentity about
      * @return Match
      */
     public Match getMatch(Platform server, long matchId)
