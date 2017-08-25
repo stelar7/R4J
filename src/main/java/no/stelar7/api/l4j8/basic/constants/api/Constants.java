@@ -77,8 +77,8 @@ public final class Constants
     
     public static final String[]   TEST_TOURNAMENT_CODES = {"EUW0418b-b9423c92-5733-4d1b-aff2-215229f96e8d"};
     public static final String[]   TEST_SUMMONER_NAMES   = {"stelar7", "相当猥琐", "RİVEN BANLAMAA", "Elyäkâla", "Integra"};
-    public static final Long[]     TEST_SUMMONER_IDS     = {19613950L, 24582364L};
-    public static final Long[]     TEST_ACCOUNT_IDS      = {22401330L, 29061584L};
+    public static final Long[]     TEST_SUMMONER_IDS     = {19613950L, 24582364L, 2692974L, 29345177L, 241486L};
+    public static final Long[]     TEST_ACCOUNT_IDS      = {22401330L, 29061584L, 200621342L, 32974539L, 247212L};
     public static final Platform[] TEST_PLATFORM         = {Platform.EUW1, Platform.EUW1, Platform.TR1, Platform.EUW1, Platform.EUW1};
     public static final Integer[]  TEST_CHAMPION_IDS     = {89, 50};
     public static final Long[]     TEST_MATCH_ID         = {180100577L};

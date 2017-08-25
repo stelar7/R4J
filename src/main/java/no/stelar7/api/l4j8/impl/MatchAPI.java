@@ -28,10 +28,14 @@ public final class MatchAPI
      * <p>
      * A number of optional parameters are provided for filtering.
      * It is up to the caller to ensure that the combination of filter parameters provided is valid for the requested account, otherwise, no matches may be returned.
-     * Note that if either beginIndex or endIndex are specified, then both must be specified and endIndex must be greater than beginIndex.
-     * If endTime is specified, but not beginTime, then beginTime is effectively the start of the account's match history.
-     * If beginTime is specified, but not endTime, then endTime is effectively the current time.
-     * Note that endTime should be greater than beginTime if both are specified, although there is no maximum limit on their range.
+     * If beginIndex is specified, but not endIndex, then endIndex defaults to beginIndex+50.
+     * If endIndex is specified, but not beginIndex, then beginIndex defaults to 0.
+     * If both are specified, then endIndex must be greater than beginIndex.
+     * The maximum range allowed is 50, otherwise a 400 error code is returned.
+     * If beginTime is specified, but not endTime, then these parameters are ignored.
+     * If endTime is specified, but not beginTime, then beginTime defaults to the start of the account's match history.
+     * If both are specified, then endTime should be greater than beginTime.
+     * The maximum time range allowed is one week, otherwise a 400 error code is returned.
      *
      * @param server      the platform the account is on
      * @param accountId   the account to check
@@ -39,7 +43,7 @@ public final class MatchAPI
      * @param endTime     optional filter for games started before this time
      * @param beginIndex  optional filter for skipping the first x games
      * @param endIndex    optional filter for skipping only showing x games
-     * @param rankedQueue optional filter for selecting the queue (Only ranked queues allowed)
+     * @param rankedQueue optional filter for selecting the queue
      * @param season      optional filter for selecting the season
      * @param championId  optional filter for selecting the champion played
      * @return MatchList
@@ -55,12 +59,18 @@ public final class MatchAPI
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
                                                        .withPlatform(server);
         
+        
         if (beginIndex != null)
         {
             builder.withURLData(Constants.BEGININDEX_PLACEHOLDER_DATA, beginIndex.toString());
         }
         if (endIndex != null)
         {
+            if ((beginIndex != null ? beginIndex : 0) + 50 - endIndex < 0)
+            {
+                throw new IllegalArgumentException("begin-endindex out of range! (difference between beginIndex and endIndex is more than 50)");
+            }
+            
             builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, endIndex.toString());
         }
         
@@ -70,6 +80,12 @@ public final class MatchAPI
         }
         if (endTime != null)
         {
+            
+            if ((beginTime != null ? beginTime : 0) + 604800000 - endTime < 0)
+            {
+                throw new IllegalArgumentException("begin-endtime out of range! (difference between beginTime and endTime is more than one week)");
+            }
+            
             builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, endTime.toString());
         }
         if (rankedQueue != null)
@@ -142,25 +158,20 @@ public final class MatchAPI
      * @param forAccountId optional accountId to add the participantIdentity about
      * @return Match
      */
-    public Match getMatch(Platform server, long matchId, @Nullable Long forAccountId)
+    public Match getMatch(Platform server, long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V3_MATCH)
                                                        .withPlatform(server);
         
         
-        if (forAccountId != null)
-        {
-            builder.withURLData(Constants.URL_PARAM_FOR_ACCOUNT_ID, forAccountId.toString());
-        }
         
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId, forAccountId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
         if (chl.isPresent())
         {
             return (Match) chl.get();
         }
-    
+        
         Match match = (Match) builder.build();
         DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match);
         return match;

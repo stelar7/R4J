@@ -21,7 +21,7 @@ public class MatchReference
     
     public Match getFullMatch()
     {
-        return MatchAPI.getInstance().getMatch(platformId, gameId, null);
+        return MatchAPI.getInstance().getMatch(platformId, gameId);
     }
     
     public MatchTimeline getTimeline()

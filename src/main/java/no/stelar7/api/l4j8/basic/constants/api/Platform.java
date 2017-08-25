@@ -1,70 +1,81 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 public enum Platform
 {
     /**
+     * Unknown platform, used for bots in participant identities
+     */
+    UNKNOWN(""),
+    /**
      * BR platform.
      */
-    BR1,
+    BR1("BR1"),
     /**
      * EUNE platform.
      */
-    EUN1,
+    EUN1("EUN1"),
     /**
      * EUW platform.
      */
-    EUW1,
+    EUW1("EUW1"),
     /**
      * JP platform.
      */
-    JP1,
+    JP1("JP1"),
     /**
      * KR platform.
      */
-    KR,
+    KR("KR"),
     /**
      * LAN platform.
      */
-    LA1,
+    LA1("LA1"),
     /**
      * LAS platform.
      */
-    LA2,
+    LA2("LA2"),
     /**
      * NA platform.
      */
-    NA1,
+    NA1("NA1", "NA"),
     /**
      * OC platform.
      */
-    OC1,
+    OC1("OC1"),
     /**
      * TR platform.
      */
-    TR1,
+    TR1("TR1"),
     /**
      * RU platform.
      */
-    RU,
+    RU("RU"),
     /**
      * PBE platform.
      */
-    PBE1,
+    PBE1("PBE1"),
     /**
      * Americas platform.
      */
-    AMERICAS,
+    AMERICAS("AMERICAS"),
     /**
      * Europe platform.
      */
-    EUROPE,
+    EUROPE("EUROPE"),
     /**
      * Asia platform.
      */
-    ASIA;
+    ASIA("ASIA");
+    
+    private String[] keys;
+    
+    Platform(String... s)
+    {
+        this.keys = s;
+    }
     
     /**
      * Returns a Platform from the provided code
@@ -74,7 +85,7 @@ public enum Platform
      */
     public static Optional<Platform> getFromCode(final String code)
     {
-        return Stream.of(Platform.values()).filter(t -> t.name().equals(code)).findFirst();
+        return Stream.of(Platform.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }
     
     
@@ -85,12 +96,12 @@ public enum Platform
      */
     public String getValue()
     {
-        return this.name();
+        return this.keys[0];
     }
     
     @Override
     public String toString()
     {
-        return this.name().toLowerCase(Locale.ENGLISH);
+        return this.keys[0].toLowerCase(Locale.ENGLISH);
     }
 }

@@ -14,8 +14,6 @@ public class MatchListTest
 {
     private final Consumer<MatchReference> doAssertions = (final MatchReference match) ->
     {
-        Assert.assertNotNull("matchId is null", match.getGameId());
-        Assert.assertNotNull("timestamp is null", match.getTimestamp());
         Assert.assertNotNull("lane is null", match.getLane());
         Assert.assertNotNull("platform is null", match.getPlatform());
         Assert.assertNotNull("queue is null", match.getQueue());
@@ -41,18 +39,19 @@ public class MatchListTest
     @Ignore
     public void testMatchAndMatchList()
     {
-        Set<GameQueueType> queue     = EnumSet.of(GameQueueType.RANKED_SOLO_5X5);
-        Set<SeasonType>    season    = EnumSet.of(SeasonType.SEASON_2016);
-        List<Integer>      champ     = Arrays.asList(Constants.TEST_CHAMPION_IDS);
-        Long               beginTime = 1481108400000L;
-        Long               endTime   = 1483578108812L;
+        Set<GameQueueType> queue      = EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
+        Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2017);
+        List<Integer>      champ      = null;//Arrays.asList(Constants.TEST_CHAMPION_IDS);
+        Long               beginTime  = null;//1481108400000L; // start of season 2017
+        Long               endTime    = null;//beginTime + 604800000; // 604800000 is one week in ms
+        Integer            beginIndex = null;//0;
+        Integer            endIndex   = null;//50;
         
-        // use begintime instead of season because its broken ATM
-        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, null, null, null, null, null, null);
+        List<MatchReference> all = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], beginTime, endTime, beginIndex, endIndex, queue, season, champ);
         
         for (MatchReference reference : all)
         {
-            Match         detail   = api.getMatch(reference.getPlatform(), reference.getGameId(), null);
+            Match         detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
             MatchTimeline timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
         }
     }
@@ -73,36 +72,9 @@ public class MatchListTest
     @Test
     public void testMatch()
     {
-        Match detail = api.getMatch(Platform.EUW1, 3181744482L, null);
-        System.out.println();
+        Match detail = api.getMatch(Platform.EUW1, Constants.TEST_MATCH_ID[0]);
     }
     
-    
-    @Test
-    public void testHasOneParticipantInformation()
-    {
-        Match m          = l4j8.getMatchAPI().getMatch(Constants.TEST_PLATFORM[2], Constants.TEST_MATCH_ID[0], Constants.TEST_ACCOUNT_IDS[2]);
-        long  identities = m.getParticipantIdentities().stream().map(ParticipantIdentity::getPlayer).filter(Objects::nonNull).count();
-        
-        Assert.assertTrue("Missing / Too many identities?", identities == 1);
-        
-    }
-    
-    
-    @Test
-    @Ignore
-    public void testNormalGame()
-    {
-        long                 id   = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, Constants.TEST_SUMMONER_NAMES[1]).getAccountId();
-        List<MatchReference> refs = api.getRecentMatches(Platform.EUW1, id);
-        
-        for (MatchReference ref : refs)
-        {
-            long          gameid   = ref.getGameId();
-            Match         detail   = api.getMatch(Platform.EUW1, gameid, null);
-            MatchTimeline timeline = api.getTimeline(Platform.EUW1, gameid);
-        }
-    }
 }
 
 

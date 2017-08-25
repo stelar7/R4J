@@ -102,6 +102,10 @@ public enum GameQueueType
      */
     URF_5X5(76),
     /**
+     * One for All (Mirror mode)
+     */
+    ONE_FOR_ALL_MIRROR(78),
+    /**
      * Ultra Rapid Fire games played against AI games
      */
     BOT_URF_5X5(83),
@@ -150,6 +154,10 @@ public enum GameQueueType
      */
     DEFINITELY_NOT_DOMINION_5X5(317),
     /**
+     * All Random URF games
+     */
+    ALL_RANDOM_URF(318),
+    /**
      * Normal 5v5 Draft Pick games (Dynamic Queue)
      */
     TEAM_BUILDER_DRAFT_UNRANKED_5X5(400),
@@ -161,6 +169,10 @@ public enum GameQueueType
      * Ranked 5v5 Draft Pick games (Flex Queue)
      */
     TEAM_BUILDER_RANKED_SOLO(420),
+    /**
+     * Normal 5v5 Blind Pick games
+     */
+    NORMAL_5V5_BLIND_PICK(430),
     /**
      * Ranked 5v5 Draft Pick games (Flex Queue)
      */

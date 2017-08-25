@@ -6,6 +6,10 @@ import java.util.stream.*;
 public enum SummonerSpellType
 {
     /**
+     * Used for bots that didn't know how to use summoners
+     */
+    UNKNOWN(0, "UNKNOWN"),
+    /**
      * Removes all disables and summoner spell debuffs affecting your champion and lowers the duration of incoming disables by 65% for 3 seconds.
      */
     CLEANSE(1, "SummonerBoost"),

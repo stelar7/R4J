@@ -21,12 +21,6 @@ public class ChampionTest
         
         Assert.assertTrue("Championid is not leona?", champ.getId() == Constants.TEST_CHAMPION_IDS[0]);
         
-        Assert.assertNotNull("active is null", champ.isActive());
-        Assert.assertNotNull("botenabled is null", champ.isBotEnabled());
-        Assert.assertNotNull("botmmenabled is null", champ.isBotMmEnabled());
-        Assert.assertNotNull("rankedplay is null", champ.isRankedPlayEnabled());
-        
-        
     }
     
     @Test
