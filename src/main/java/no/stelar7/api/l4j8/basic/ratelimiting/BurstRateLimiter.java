@@ -119,7 +119,7 @@ public class BurstRateLimiter extends RateLimiter
             
             if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
             {
-                System.err.println("Calls made: " + callCountInTime.get(limit) + " in: " + limit.getTimeframeInMS() / 1000);
+                System.err.println(limit + " Calls made: " + callCountInTime.get(limit));
             }
         }
     }

@@ -258,7 +258,7 @@ public class DataCallBuilder
                 saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
             }
             
-            if (methodA != null && DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
+            if (methodA == null && DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
             {
                 System.err.println("Header 'X-Method-Rate-Limit' missing from call: " + getURL());
             }
@@ -319,12 +319,18 @@ public class DataCallBuilder
         Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
         
         RateLimiter oldLimit   = child.get(endpoint);
-        RateLimiter newerLimit = createLimiter(endpoint, methodA);
+        RateLimiter newerLimit = createLimiter(methodA);
         
         if (!newerLimit.equals(oldLimit))
         {
             newerLimit.mergeFrom(oldLimit);
             child.put(endpoint, newerLimit);
+            
+            if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
+            {
+                System.err.println("Updating Ratelimit For " + endpoint);
+                System.err.println(newerLimit.getLimits());
+            }
         }
         
         DataCall.getLimiter().put(platform, child);
@@ -358,7 +364,7 @@ public class DataCallBuilder
         return timeout;
     }
     
-    public RateLimiter createLimiter(Enum key, String limitCount)
+    public RateLimiter createLimiter(String limitCount)
     {
         Map<Integer, Integer> timeout = parseLimitFromHeader(limitCount);
         
@@ -366,12 +372,6 @@ public class DataCallBuilder
         for (Entry<Integer, Integer> entry : timeout.entrySet())
         {
             limits.add(new RateLimit(entry.getValue(), entry.getKey(), TimeUnit.SECONDS));
-        }
-        
-        if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
-        {
-            System.err.println("Creating Missing Ratelimit For " + key);
-            System.err.println(limits);
         }
         
         return new BurstRateLimiter(limits.toArray(new RateLimit[limits.size()]));

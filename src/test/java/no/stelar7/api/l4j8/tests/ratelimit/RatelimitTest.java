@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.tests.ratelimit;
 
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
@@ -57,7 +58,7 @@ public class RatelimitTest
             ExecutorService pool = Executors.newFixedThreadPool(8);
             for (int i2 = 0; i2 < 130; i2++)
             {
-                pool.execute(() -> l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]));
+                pool.execute(() -> l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]));
             }
             pool.shutdown();
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
@@ -74,29 +75,17 @@ public class RatelimitTest
         final L4J8 test = new L4J8(SecretFile.CREDS);
         for (int i2 = 0; i2 < 130; i2++)
         {
-            Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+            Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]);
         }
     }
     
     @Test
     public void testRateLimitWithSleep() throws InterruptedException
     {
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        TimeUnit.SECONDS.sleep(3);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        TimeUnit.SECONDS.sleep(7);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]);
+        TimeUnit.SECONDS.sleep(10);
+        l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]);
     }
     
     @Test
