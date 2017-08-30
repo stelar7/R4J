@@ -4,7 +4,7 @@ public enum ChampDataFlags
 {
     ALL("all"),
     ALLYTIPS("allytips"),
-    ALTIMAGES("altimages"),
+    //ALTIMAGES("altimages"),
     BLURB("blurb"),
     ENEMYTIPS("enemytips"),
     IMAGE("image"),
