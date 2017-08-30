@@ -24,7 +24,7 @@ public final class MatchAPI
     }
     
     /**
-     * Returns a list of the accounts ranked games
+     * Returns a list of the accounts games
      * <p>
      * A number of optional parameters are provided for filtering.
      * It is up to the caller to ensure that the combination of filter parameters provided is valid for the requested account, otherwise, no matches may be returned.
@@ -101,12 +101,12 @@ public final class MatchAPI
             championId.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
         }
         
-        
+      /*
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
         if (chl.isPresent())
         {
             return (List<MatchReference>) chl.get();
-        }
+        }*/
         
         MatchList list = (MatchList) builder.build();
         
@@ -115,7 +115,7 @@ public final class MatchAPI
             return Collections.emptyList();
         }
         
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches());
+        // DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches());
         return list.getMatches();
     }
     
@@ -132,12 +132,14 @@ public final class MatchAPI
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST_RECENT)
                                                        .withPlatform(server);
         
-        
+    
+        /*
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST_RECENT, server, accountId);
         if (chl.isPresent())
         {
             return (List<MatchReference>) chl.get();
         }
+        */
         
         MatchList list = (MatchList) builder.build();
         
@@ -146,15 +148,15 @@ public final class MatchAPI
             return Collections.emptyList();
         }
         
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST_RECENT, list.getMatches());
+       // DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST_RECENT, list.getMatches());
         return list.getMatches();
     }
     
     /**
      * Returns the match data from a match id
      *
-     * @param server       the platform the match was played on
-     * @param matchId      the id to check
+     * @param server  the platform the match was played on
+     * @param matchId the id to check
      * @return Match
      */
     public Match getMatch(Platform server, long matchId)
@@ -162,7 +164,6 @@ public final class MatchAPI
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V3_MATCH)
                                                        .withPlatform(server);
-        
         
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
