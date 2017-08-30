@@ -48,7 +48,7 @@ public final class MasteryAPI
         }
         
         Integer list = (Integer) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list, server, summonerId);
         return list;
     }
     
@@ -119,7 +119,7 @@ public final class MasteryAPI
             }
         }
         
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery, server, summonerId, championId);
         return mastery;
     }
     
@@ -146,7 +146,7 @@ public final class MasteryAPI
         }
         
         List<ChampionMastery> list = (List<ChampionMastery>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list, server, summonerId);
         return list;
     }
     

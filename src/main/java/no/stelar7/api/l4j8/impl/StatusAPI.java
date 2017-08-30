@@ -32,7 +32,7 @@ public final class StatusAPI
         }
         
         ShardStatus list = (ShardStatus) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SHARD_STATUS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SHARD_STATUS, list, server);
         return list;
     }
     

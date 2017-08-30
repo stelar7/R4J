@@ -120,11 +120,18 @@ public class FileSystemCacheProvider extends CacheProvider
     }
     
     @Override
-    public void clear(URLEndpoint type)
+    public void clear(URLEndpoint type, Object... filter)
     {
         try
         {
-            Files.walk(home.resolve(type.toString())).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+            Path pathToWalk = home.resolve(type.toString());
+            
+            for (Object o : filter)
+            {
+                pathToWalk = pathToWalk.resolve(o.toString());
+            }
+            
+            Files.walk(pathToWalk).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
         } catch (IOException e)
         {
             e.printStackTrace();

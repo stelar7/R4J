@@ -41,7 +41,7 @@ public final class SpectatorAPI
         }
         
         FeaturedGames fg = (FeaturedGames) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg.getGameList());
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg.getGameList(), server);
         return fg.getGameList();
         
     }
@@ -69,7 +69,7 @@ public final class SpectatorAPI
         }
         
         SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg, server);
         return fg;
     }
 }

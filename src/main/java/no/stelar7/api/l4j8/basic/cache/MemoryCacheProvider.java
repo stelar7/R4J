@@ -69,8 +69,9 @@ public class MemoryCacheProvider extends CacheProvider
     }
     
     @Override
-    public void clear(URLEndpoint type)
+    public void clear(URLEndpoint type, Object... filter)
     {
+        // TODO: respect filter
         switch (type)
         {
             case V3_SUMMONER_BY_ACCOUNT:

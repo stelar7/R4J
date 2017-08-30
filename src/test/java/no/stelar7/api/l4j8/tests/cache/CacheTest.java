@@ -47,6 +47,17 @@ public class CacheTest
     }
     
     @Test
+    public void testCacheStuff() throws InterruptedException
+    {
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getLeagueAPI().getLeague(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getLeagueAPI().getLeague(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+    }
+    
+    @Test
     public void testTieredMemoryCache() throws InterruptedException
     {
         DataCall.setLogLevel(LogLevel.DEBUG);

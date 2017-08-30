@@ -72,9 +72,9 @@ public class TieredCacheProvider extends CacheProvider
     }
     
     @Override
-    public void clear(URLEndpoint type)
+    public void clear(URLEndpoint type, Object... filter)
     {
-        providers.forEach(p -> p.clear(type));
+        providers.forEach(p -> p.clear(type, filter));
     }
     
     @Override

@@ -173,7 +173,7 @@ public final class MatchAPI
         }
         
         Match match = (Match) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, server);
         return match;
     }
     
@@ -198,7 +198,7 @@ public final class MatchAPI
         }
         
         MatchTimeline timeline = (MatchTimeline) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline, matchId, server);
         return timeline;
     }
 }

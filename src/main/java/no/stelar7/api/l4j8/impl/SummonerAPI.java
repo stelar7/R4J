@@ -47,7 +47,7 @@ public final class SummonerAPI
         }
         
         MasteryPages list = (MasteryPages) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERIES_BY_ID, list.getPages());
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERIES_BY_ID, list.getPages(), server, summonerId);
         return list.getPages();
     }
     
@@ -72,7 +72,7 @@ public final class SummonerAPI
         }
         
         RunePages list = (RunePages) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_RUNES_BY_ID, list.getPages());
+        DataCall.getCacheProvider().store(URLEndpoint.V3_RUNES_BY_ID, list.getPages(), server, summonerId);
         return list.getPages();
     }
     
@@ -98,7 +98,7 @@ public final class SummonerAPI
         }
         
         Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ID, summoner);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ID, summoner, summonerId, server);
         return summoner;
     }
     
@@ -124,7 +124,7 @@ public final class SummonerAPI
         }
         
         Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_NAME, summoner);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_NAME, summoner, summonerName, server);
         return summoner;
     }
     
@@ -149,7 +149,7 @@ public final class SummonerAPI
         }
         
         Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoner);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoner, accountId, server);
         return summoner;
     }
 }

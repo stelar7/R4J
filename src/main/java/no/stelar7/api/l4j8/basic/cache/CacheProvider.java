@@ -39,7 +39,7 @@ public abstract class CacheProvider
      *
      * @param type the endpoint
      */
-    public abstract void clear(URLEndpoint type);
+    public abstract void clear(URLEndpoint type, Object... filter);
     
     /**
      * Removes any old items frcm the cache
@@ -109,19 +109,19 @@ public abstract class CacheProvider
         }
         
         @Override
-        public void clear(URLEndpoint type)
+        public void clear(URLEndpoint type, Object... filter)
         {/*void cache*/}
         
         @Override
         public void clearOldCache()
         {/*void cache*/}
-    
+        
         @Override
         public long getTimeToLive()
         {
             return 0;
         }
-    
+        
         @Override
         public long getSize()
         {

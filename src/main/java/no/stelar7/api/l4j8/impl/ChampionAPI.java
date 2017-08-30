@@ -39,7 +39,7 @@ public final class ChampionAPI
         
         
         ChampionList cl = (ChampionList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions());
+        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), server);
         return cl.getChampions();
     }
     
@@ -58,7 +58,7 @@ public final class ChampionAPI
         }
         
         Champion ch = (Champion) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS_BY_ID, ch);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS_BY_ID, ch, server, id);
         return ch;
     }
     
