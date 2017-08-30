@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.summoner.runes;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class RunePages
+public class RunePages  implements Serializable
 {
     private List<RunePage> pages;
     private long           summonerId;

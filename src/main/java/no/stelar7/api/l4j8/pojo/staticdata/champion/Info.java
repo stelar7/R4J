@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-public class Info
+import java.io.Serializable;
+
+public class Info  implements Serializable
 {
     private int attack;
     private int defense;

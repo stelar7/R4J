@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ItemList
+public class ItemList  implements Serializable
 {
     
     private Map<String, Item> data;

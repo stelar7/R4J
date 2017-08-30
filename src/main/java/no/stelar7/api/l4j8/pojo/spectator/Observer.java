@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.spectator;
 
-public class Observer
+import java.io.Serializable;
+
+public class Observer implements Serializable
 {
     private String encryptionKey;
     

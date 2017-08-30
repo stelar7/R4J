@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class ItemTree
+public class ItemTree  implements Serializable
 {
     private String       header;
     private List<String> tags;

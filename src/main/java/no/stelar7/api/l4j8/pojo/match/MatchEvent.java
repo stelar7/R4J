@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MatchEvent
+public class MatchEvent implements Serializable
 {
     private int            afterId;
     private int            beforeId;

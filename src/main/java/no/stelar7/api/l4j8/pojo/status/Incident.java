@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class Incident
+public class Incident  implements Serializable
 {
     private boolean       active;
     private String        created_at;

@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class StaticChampion
+public class StaticChampion  implements Serializable
 {
     private List<String>              allytips;
     private String                    blurb;

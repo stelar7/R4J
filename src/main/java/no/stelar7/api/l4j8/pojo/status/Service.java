@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class Service
+public class Service  implements Serializable
 {
     private String         name;
     private String         slug;

@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class MatchList
+public class MatchList implements Serializable
 {
     private int                  endIndex;
     private int                  startIndex;

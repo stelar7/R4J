@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.match;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class MatchFrame
+public class MatchFrame implements Serializable
 {
     private long                               timestamp;
     private Map<String, MatchParticipantFrame> participantFrames;

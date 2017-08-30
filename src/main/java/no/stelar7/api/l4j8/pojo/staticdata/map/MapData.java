@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.pojo.staticdata.map;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BaseStaticData;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Map;
 
-public class MapData extends BaseStaticData
+public class MapData extends BaseStaticData  implements Serializable
 {
     private Map<String, MapDetails> data;
     

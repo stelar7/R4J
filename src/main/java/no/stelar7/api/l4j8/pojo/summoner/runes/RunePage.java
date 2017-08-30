@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.summoner.runes;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class RunePage
+public class RunePage  implements Serializable
 {
     
     private boolean        current;

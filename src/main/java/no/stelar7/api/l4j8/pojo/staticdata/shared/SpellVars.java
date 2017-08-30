@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class SpellVars
+public class SpellVars  implements Serializable
 {
     private List<Double> coeff;
     private String       dyn;

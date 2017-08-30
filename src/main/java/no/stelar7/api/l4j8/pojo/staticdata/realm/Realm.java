@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.realm;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Map;
 
-public class Realm
+public class Realm  implements Serializable
 {
     private String              cdn;
     private String              css;

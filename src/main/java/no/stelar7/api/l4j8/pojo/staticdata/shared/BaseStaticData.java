@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
-public class BaseStaticData
+import java.io.Serializable;
+
+public class BaseStaticData  implements Serializable
 {
     private String type;
     private String version;

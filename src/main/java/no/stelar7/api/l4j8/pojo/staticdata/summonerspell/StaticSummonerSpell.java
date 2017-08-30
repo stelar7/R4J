@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 
-import no.stelar7.api.l4j8.pojo.shared.*;
+import no.stelar7.api.l4j8.pojo.shared.BaseSpellData;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class StaticSummonerSpell extends BaseSpellData
+public class StaticSummonerSpell extends BaseSpellData  implements Serializable
 {
     private int          id;
     private List<String> modes;

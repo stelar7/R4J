@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class ChampionList
+public class ChampionList implements Serializable
 {
     private List<Champion> champions;
     

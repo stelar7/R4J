@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.pojo.shared;
 
 import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class BaseSpellData
+public class BaseSpellData implements Serializable
 {
     private List<Double>       cooldown;
     private String             cooldownBurn;

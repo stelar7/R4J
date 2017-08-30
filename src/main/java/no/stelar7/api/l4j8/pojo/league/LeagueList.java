@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.pojo.league;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class LeagueList
+public class LeagueList implements Serializable
 {
     
     private List<LeagueItem> entries;

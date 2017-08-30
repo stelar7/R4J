@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class LevelTip
+public class LevelTip  implements Serializable
 {
     private List<String> effect;
     private List<String> label;

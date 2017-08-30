@@ -2,12 +2,13 @@ package no.stelar7.api.l4j8.pojo.spectator;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.pojo.shared.*;
+import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
-public class SpectatorGameInfo
+public class SpectatorGameInfo implements Serializable
 {
     private List<BannedChampion>       bannedChampions;
     private long                       gameId;

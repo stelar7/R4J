@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.item;
 
 import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Item
+public class Item  implements Serializable
 {
     private Map<String, String>  effect;
     private String               colloq;

@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-public class Translation
+import java.io.Serializable;
+
+public class Translation  implements Serializable
 {
     private String content;
     private String locale;

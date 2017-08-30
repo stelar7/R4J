@@ -3,9 +3,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.map;
 import no.stelar7.api.l4j8.basic.constants.types.MapType;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class MapDetails
+public class MapDetails  implements Serializable
 {
     private Image      image;
     private MapType    mapId;

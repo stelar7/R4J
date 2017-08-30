@@ -3,7 +3,9 @@ package no.stelar7.api.l4j8.pojo.tournament;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.exceptions.APIUnsupportedActionException;
 
-public class TournamentCodeParameters
+import java.io.Serializable;
+
+public class TournamentCodeParameters  implements Serializable
 {
     private SummonerIdParams        allowedSummonerIds;
     private TournamentMapType       mapType;

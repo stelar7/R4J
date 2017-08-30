@@ -1,11 +1,12 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import no.stelar7.api.l4j8.pojo.shared.*;
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import no.stelar7.api.l4j8.pojo.shared.BaseSpellData;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class StaticChampionSpell extends BaseSpellData
+public class StaticChampionSpell extends BaseSpellData  implements Serializable
 {
     private List<Image> altimages;
     

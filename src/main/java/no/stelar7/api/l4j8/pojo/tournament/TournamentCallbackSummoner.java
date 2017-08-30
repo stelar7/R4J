@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-public class TournamentCallbackSummoner
+import java.io.Serializable;
+
+public class TournamentCallbackSummoner  implements Serializable
 {
     private String summonerName;
     private long   summonerId;

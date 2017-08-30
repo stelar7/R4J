@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-public class TournamentRegistrationParameters
+import java.io.Serializable;
+
+public class TournamentRegistrationParameters implements Serializable
 {
     private String name;
     private long   providerId;

@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.spectator;
 
-public class SpectatorMastery
+import java.io.Serializable;
+
+public class SpectatorMastery implements Serializable
 {
     private long masteryId;
     private int  rank;

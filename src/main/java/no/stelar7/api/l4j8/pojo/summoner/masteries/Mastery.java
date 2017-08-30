@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
-public class Mastery
+import java.io.Serializable;
+
+public class Mastery  implements Serializable
 {
     private int id;
     private int rank;

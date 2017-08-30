@@ -1,11 +1,12 @@
 package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.types.TeamType;
-import no.stelar7.api.l4j8.pojo.shared.*;
+import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class TeamStats
+public class TeamStats implements Serializable
 {
     private List<BannedChampion> bans;
     private int                  baronKills;

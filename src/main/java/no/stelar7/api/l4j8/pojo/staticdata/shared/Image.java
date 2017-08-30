@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
-public class Image
+import java.io.Serializable;
+
+public class Image  implements Serializable
 {
     private String full;
     private String group;

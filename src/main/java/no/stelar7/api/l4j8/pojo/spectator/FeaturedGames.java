@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.spectator;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class FeaturedGames
+public class FeaturedGames implements Serializable
 {
     private long                    clientRefreshInterval;
     private List<SpectatorGameInfo> gameList;

@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
-public class Gold
+import java.io.Serializable;
+
+public class Gold  implements Serializable
 {
     private int     base;
     private boolean purchasable;

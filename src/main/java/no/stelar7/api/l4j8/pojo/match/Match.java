@@ -4,11 +4,12 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.MatchAPI;
 
+import java.io.Serializable;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class Match
+public class Match implements Serializable
 {
     private SeasonType                seasonId;
     private GameQueueType             queueId;

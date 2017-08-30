@@ -5,9 +5,10 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
+import java.io.Serializable;
 import java.time.*;
 
-public class MatchReference
+public class MatchReference implements Serializable
 {
     private LaneType      lane;
     private long          gameId;

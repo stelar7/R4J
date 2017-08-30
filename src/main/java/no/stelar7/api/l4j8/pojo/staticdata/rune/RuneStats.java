@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.rune;
 
-public class RuneStats
+import java.io.Serializable;
+
+public class RuneStats  implements Serializable
 {
     private float FlatArmorMod;
     private float FlatArmorModPerLevel;

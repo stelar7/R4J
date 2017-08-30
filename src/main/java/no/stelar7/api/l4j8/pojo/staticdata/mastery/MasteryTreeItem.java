@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
-public class MasteryTreeItem
+import java.io.Serializable;
+
+public class MasteryTreeItem implements Serializable
 {
     private int    masteryId;
     private String prereq;

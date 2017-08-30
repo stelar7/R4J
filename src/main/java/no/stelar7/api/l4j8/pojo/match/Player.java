@@ -2,7 +2,9 @@ package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 
-public class Player
+import java.io.Serializable;
+
+public class Player implements Serializable
 {
     private String   matchHistoryUri;
     private int      profileIcon;

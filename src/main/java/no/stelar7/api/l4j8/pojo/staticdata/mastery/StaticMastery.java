@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class StaticMastery
+public class StaticMastery  implements Serializable
 {
     private List<String> description;
     private int          id;

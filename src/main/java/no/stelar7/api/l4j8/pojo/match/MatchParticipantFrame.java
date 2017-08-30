@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-public class MatchParticipantFrame
+import java.io.Serializable;
+
+public class MatchParticipantFrame implements Serializable
 {
     
     private int           totalGold;

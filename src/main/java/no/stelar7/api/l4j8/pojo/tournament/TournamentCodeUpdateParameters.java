@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class TournamentCodeUpdateParameters
+public class TournamentCodeUpdateParameters  implements Serializable
 {
     private Set<Long>               allowedParticipants;
     private TournamentMapType       mapType;

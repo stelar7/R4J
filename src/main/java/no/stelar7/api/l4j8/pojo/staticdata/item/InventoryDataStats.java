@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.item;
 
-public class InventoryDataStats
+import java.io.Serializable;
+
+public class InventoryDataStats  implements Serializable
 {
     private float FlatArmorMod;
     private float FlatAttackSpeedMod;

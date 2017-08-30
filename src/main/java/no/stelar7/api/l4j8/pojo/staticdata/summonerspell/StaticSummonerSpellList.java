@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Map;
 
-public class StaticSummonerSpellList
+public class StaticSummonerSpellList  implements Serializable
 {
     private Map<String, StaticSummonerSpell> data;
     

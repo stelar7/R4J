@@ -5,9 +5,10 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.StaticAPI;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SpectatorParticipant
+public class SpectatorParticipant implements Serializable
 {
     private int                    championId;
     private long                   profileIconId;

@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Map;
 
-public class StaticChampionList
+public class StaticChampionList  implements Serializable
 {
     private Map<Integer, StaticChampion> data;
     private String                       format;

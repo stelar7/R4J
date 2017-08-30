@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class TournamentCallback
+public class TournamentCallback  implements Serializable
 {
     private long                             startTime;
     private List<TournamentCallbackSummoner> winningTeam;

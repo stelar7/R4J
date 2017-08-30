@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-public class Stats
+import java.io.Serializable;
+
+public class Stats  implements Serializable
 {
     private float armor;
     private float armorperlevel;

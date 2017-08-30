@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-public class BlockItem
+import java.io.Serializable;
+
+public class BlockItem  implements Serializable
 {
     private int count;
     private int id;

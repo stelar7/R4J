@@ -2,7 +2,9 @@ package no.stelar7.api.l4j8.pojo.staticdata.profileicon;
 
 import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-public class ProfileIconDetails
+import java.io.Serializable;
+
+public class ProfileIconDetails  implements Serializable
 {
     private Image  image;
     private String id;

@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
-public class MetaData
+import java.io.Serializable;
+
+public class MetaData  implements Serializable
 {
     private boolean isRune;
     private String  tier;

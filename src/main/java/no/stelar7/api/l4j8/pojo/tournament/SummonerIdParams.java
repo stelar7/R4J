@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class SummonerIdParams
+public class SummonerIdParams  implements Serializable
 {
     private final Set<Long> participants;
     

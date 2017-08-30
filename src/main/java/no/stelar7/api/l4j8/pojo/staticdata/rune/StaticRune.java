@@ -2,9 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.rune;
 
 import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class StaticRune
+public class StaticRune  implements Serializable
 {
     private String               plaintext;
     private boolean              hideFromAll;

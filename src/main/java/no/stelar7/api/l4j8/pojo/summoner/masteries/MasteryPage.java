@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class MasteryPage
+public class MasteryPage  implements Serializable
 {
     
     private boolean       current;

@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.pojo.match;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.logging.*;
-import java.util.stream.*;
+import java.util.stream.Stream;
 
-public class ParticipantStats
+public class ParticipantStats implements Serializable
 {
     
     private long    assists;

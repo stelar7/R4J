@@ -2,7 +2,9 @@ package no.stelar7.api.l4j8.pojo.league;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
-public class LeagueItem
+import java.io.Serializable;
+
+public class LeagueItem implements Serializable
 {
     private String     rank;
     private boolean    hotStreak;

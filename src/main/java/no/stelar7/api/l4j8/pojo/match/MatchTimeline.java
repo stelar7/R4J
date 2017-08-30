@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class MatchTimeline
+public class MatchTimeline implements Serializable
 {
     private long             frameInterval;
     private List<MatchFrame> frames;

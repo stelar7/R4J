@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.status;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class ShardStatus
+public class ShardStatus  implements Serializable
 {
     private String        hostname;
     private List<String>  locales;

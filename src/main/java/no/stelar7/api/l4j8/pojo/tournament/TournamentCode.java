@@ -3,9 +3,10 @@ package no.stelar7.api.l4j8.pojo.tournament;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Set;
 
-public class TournamentCode
+public class TournamentCode  implements Serializable
 {
     private String                  code;
     private long                    id;

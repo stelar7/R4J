@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.summoner.runes;
 
-public class RuneSlot
+import java.io.Serializable;
+
+public class RuneSlot implements Serializable
 {
     
     private int runeId;

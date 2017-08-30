@@ -1,10 +1,11 @@
 package no.stelar7.api.l4j8.pojo.staticdata.language;
 
-import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
+import no.stelar7.api.l4j8.pojo.staticdata.shared.BaseStaticData;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Map;
 
-public class LanguageStrings extends BaseStaticData
+public class LanguageStrings extends BaseStaticData  implements Serializable
 {
     private Map<String, String> data;
     

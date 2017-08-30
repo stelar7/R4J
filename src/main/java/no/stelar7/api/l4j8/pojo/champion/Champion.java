@@ -4,7 +4,9 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.StaticAPI;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
-public class Champion
+import java.io.Serializable;
+
+public class Champion implements Serializable
 {
     
     private boolean active;

@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.mastery;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class MasteryTreeList
+public class MasteryTreeList implements Serializable
 {
     private List<MasteryTreeItem> masteryTreeItems;
     

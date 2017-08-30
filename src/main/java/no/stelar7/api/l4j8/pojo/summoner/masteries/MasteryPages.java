@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class MasteryPages
+public class MasteryPages  implements Serializable
 {
     private List<MasteryPage> pages;
     private long              summonerId;

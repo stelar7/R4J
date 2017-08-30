@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-public class Skin
+import java.io.Serializable;
+
+public class Skin  implements Serializable
 {
     private int    id;
     private String name;

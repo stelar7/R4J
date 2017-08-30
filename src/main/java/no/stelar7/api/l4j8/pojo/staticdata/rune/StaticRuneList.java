@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.rune;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class StaticRuneList
+public class StaticRuneList  implements Serializable
 {
     private Map<Integer, StaticRune> data;
     

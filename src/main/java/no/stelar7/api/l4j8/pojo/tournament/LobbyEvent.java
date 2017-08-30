@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.tournament;
 
-public class LobbyEvent
+import java.io.Serializable;
+
+public class LobbyEvent  implements Serializable
 {
     private String eventType;
     private String summonerId;

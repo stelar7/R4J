@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class Block
+public class Block implements Serializable
 {
     private List<BlockItem> items;
     private boolean         recMath;

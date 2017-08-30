@@ -10,10 +10,11 @@ import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
 import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.List;
 
-public final class Summoner
+public final class Summoner  implements Serializable
 {
     private int      profileIconId;
     private String   name;

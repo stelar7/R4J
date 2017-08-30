@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-public class MatchRune
+import java.io.Serializable;
+
+public class MatchRune implements Serializable
 {
     private int rank;
     private int runeId;
