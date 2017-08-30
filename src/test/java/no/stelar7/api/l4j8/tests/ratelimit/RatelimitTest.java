@@ -91,7 +91,7 @@ public class RatelimitTest
     @Test
     public void testRateLimitStatic()
     {
-        Platform plat = Platform.values()[0];
+        Platform plat = Platform.values()[1];
         for (int i = 0; i < 30; i++)
         {
             l4j8.getStaticAPI().getRealm(plat);

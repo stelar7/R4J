@@ -4,9 +4,11 @@ package no.stelar7.api.l4j8.basic.ratelimiting;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.LogLevel;
 
-import java.time.Instant;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Burst ratelimiter will use as many calls as possible, then wait when it reaches the limit
@@ -98,7 +100,8 @@ public class BurstRateLimiter extends RateLimiter
         if (delay[0] != 0)
         {
             delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias));
-            System.err.format("Ratelimited activated! Sleeping for: %s%n", delay[0]);
+            Duration dur = Duration.of(delay[0], ChronoUnit.MILLIS);
+            System.err.format("Ratelimited activated! Sleeping for: %s%n", dur);
         }
         
         return delay[0];
