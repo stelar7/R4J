@@ -3,13 +3,14 @@ package no.stelar7.api.l4j8.tests.cache;
 import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.flags.ChampDataFlags;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 import org.junit.rules.Stopwatch;
 
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class CacheTest
@@ -27,10 +28,29 @@ public class CacheTest
         doCacheStuff();
     }
     
+    
+    @Test
+    public void testFileSystemCache() throws InterruptedException
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        doCacheStuff();
+    }
+    
+    @Test
+    public void testStaticDataCache() throws InterruptedException
+    {
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
+        l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
+        l4j8.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
+    }
+    
     @Test
     public void testTieredMemoryCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(5), new MemoryCacheProvider(20)));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(1), new FileSystemCacheProvider()));
         doCacheStuff();
     }
     
@@ -54,19 +74,19 @@ public class CacheTest
         
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         ref.getFullMatch();
-        System.out.printf("1x memory fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("1x cache fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         for (int i = 0; i < 10; i++)
         {
             ref.getFullMatch();
         }
-        System.out.printf("10x memory fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("10x cache fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         System.out.println();
         
         System.out.println("clearing cache");
         System.out.println();
-        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
+        //DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
         
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         ref.getFullMatch();
@@ -77,7 +97,7 @@ public class CacheTest
         {
             ref.getFullMatch();
         }
-        System.out.printf("10x memory fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("10x cache fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
         System.out.println();
         
         System.out.println("Fetching 3 aditional matches");
