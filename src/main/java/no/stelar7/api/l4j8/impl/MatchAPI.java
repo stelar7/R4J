@@ -148,7 +148,7 @@ public final class MatchAPI
             return Collections.emptyList();
         }
         
-       // DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST_RECENT, list.getMatches());
+        // DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST_RECENT, list.getMatches());
         return list.getMatches();
     }
     
@@ -166,7 +166,7 @@ public final class MatchAPI
                                                        .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, matchId, server);
         if (chl.isPresent())
         {
             return (Match) chl.get();
@@ -191,7 +191,7 @@ public final class MatchAPI
                                                        .withEndpoint(URLEndpoint.V3_TIMELINE)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_TIMELINE, server, matchId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_TIMELINE, matchId, server);
         if (chl.isPresent())
         {
             return (MatchTimeline) chl.get();

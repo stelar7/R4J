@@ -91,7 +91,7 @@ public final class SummonerAPI
                 .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_ID, server, summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_ID, summonerId, server);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -117,7 +117,7 @@ public final class SummonerAPI
                 .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_NAME, server, summonerName);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_NAME, summonerName, server);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -142,7 +142,7 @@ public final class SummonerAPI
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, server, accountId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, accountId, server);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
