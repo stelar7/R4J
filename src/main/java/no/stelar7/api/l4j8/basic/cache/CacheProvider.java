@@ -37,7 +37,8 @@ public abstract class CacheProvider
     /**
      * Empties the entire cache for that endpoint
      *
-     * @param type the endpoint
+     * @param type   the endpoint
+     * @param filter optional filter to clear specific data
      */
     public abstract void clear(URLEndpoint type, Object... filter);
     
