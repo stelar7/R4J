@@ -14,7 +14,7 @@ public abstract class CacheProvider
      * @param type the endpoint to store the cache in
      * @param obj  the object to store
      */
-    public abstract void store(URLEndpoint type, Object obj);
+    public abstract void store(URLEndpoint type, Object... obj);
     
     
     /**
@@ -23,7 +23,7 @@ public abstract class CacheProvider
      * @param type the endpoint to store the cache in
      * @param obj  the object to store
      */
-    public abstract void update(URLEndpoint type, Object obj);
+    public abstract void update(URLEndpoint type, Object... obj);
     
     /**
      * Returns data from the cache if found, otherwise Optional.empty();
@@ -86,7 +86,7 @@ public abstract class CacheProvider
         }
     }
     
-    public static class EmptyProvider extends CacheProvider
+    public static final class EmptyProvider extends CacheProvider
     {
         public static final EmptyProvider INSTANCE = new EmptyProvider();
         
@@ -96,10 +96,10 @@ public abstract class CacheProvider
         }
         
         @Override
-        public void store(URLEndpoint clazz, Object obj) {/*void cache*/}
+        public void store(URLEndpoint clazz, Object... obj) {/*void cache*/}
         
         @Override
-        public void update(URLEndpoint type, Object obj)
+        public void update(URLEndpoint type, Object... obj)
         {/*void cache*/}
         
         @Override

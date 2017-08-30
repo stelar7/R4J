@@ -15,13 +15,13 @@ public class TieredCacheProvider extends CacheProvider
     
     
     @Override
-    public void store(URLEndpoint type, Object obj)
+    public void store(URLEndpoint type, Object... obj)
     {
         providers.forEach(p -> p.store(type, obj));
     }
     
     @Override
-    public void update(URLEndpoint type, Object obj)
+    public void update(URLEndpoint type, Object... obj)
     {
         providers.forEach(p -> p.update(type, obj));
     }
@@ -62,7 +62,11 @@ public class TieredCacheProvider extends CacheProvider
                 provider.store(type, obj);
             } else
             {
-                provider.update(type, obj);
+                // Only update if its not an infinite store
+                if (provider.getTimeToLive() > 0)
+                {
+                    provider.update(type, obj);
+                }
             }
         }
     }

@@ -24,17 +24,17 @@ public class MemoryCacheProvider extends CacheProvider
     }
     
     @Override
-    public void store(URLEndpoint type, Object obj)
+    public void store(URLEndpoint type, Object... obj)
     {
         switch (type)
         {
             case V3_SUMMONER_BY_ACCOUNT:
             case V3_SUMMONER_BY_NAME:
             case V3_SUMMONER_BY_ID:
-                summoners.put((Summoner) obj, LocalDateTime.now());
+                summoners.put((Summoner) obj[0], LocalDateTime.now());
                 break;
             case V3_MATCH:
-                matches.put((Match) obj, LocalDateTime.now());
+                matches.put((Match) obj[0], LocalDateTime.now());
                 break;
             default:
                 break;
@@ -43,7 +43,7 @@ public class MemoryCacheProvider extends CacheProvider
     
     
     @Override
-    public void update(URLEndpoint type, Object obj)
+    public void update(URLEndpoint type, Object... obj)
     {
         store(type, obj);
     }
@@ -54,13 +54,13 @@ public class MemoryCacheProvider extends CacheProvider
         switch (type)
         {
             case V3_SUMMONER_BY_ACCOUNT:
-                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[0])).filter(s -> data[1].equals(s.getAccountId())).findFirst();
+                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[1])).filter(s -> data[0].equals(s.getAccountId())).findFirst();
             case V3_SUMMONER_BY_NAME:
-                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[0])).filter(s -> data[1].equals(s.getName())).findFirst();
+                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[1])).filter(s -> data[0].equals(s.getName())).findFirst();
             case V3_SUMMONER_BY_ID:
-                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[0])).filter(s -> data[1].equals(s.getSummonerId())).findFirst();
+                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[1])).filter(s -> data[0].equals(s.getSummonerId())).findFirst();
             case V3_MATCH:
-                return matches.keySet().stream().filter(m -> m.getPlatform().equals(data[0])).filter(m -> data[1].equals(m.getMatchId())).findFirst();
+                return matches.keySet().stream().filter(m -> m.getPlatform().equals(data[1])).filter(m -> data[0].equals(m.getMatchId())).findFirst();
             default:
                 break;
         }
