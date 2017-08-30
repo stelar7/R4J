@@ -57,11 +57,11 @@ public final class StaticAPI
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_CHAMPIONS, server, dataFlags, version, locale);
         if (chl.isPresent())
         {
-            return (Map<Integer, StaticChampion>) chl.get();
+            return ((StaticChampionList) chl.get()).getData();
         }
         
         StaticChampionList list = (StaticChampionList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPIONS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPIONS, list, server, dataFlags, version, locale);
         
         return list.getData();
     }
@@ -97,7 +97,7 @@ public final class StaticAPI
         }
         
         StaticChampion list = (StaticChampion) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, list, server, id, dataFlags, version, locale);
         
         return list;
     }
@@ -132,7 +132,7 @@ public final class StaticAPI
         }
         
         ItemList list = (ItemList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEMS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEMS, list, server, dataFlags, version, locale);
         
         return list;
         
@@ -169,7 +169,7 @@ public final class StaticAPI
         }
         
         Item list = (Item) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, list, server, id, dataFlags, version, locale);
         
         return list;
     }
@@ -196,7 +196,7 @@ public final class StaticAPI
         }
         
         LanguageStrings list = (LanguageStrings) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, list, server, version, locale);
         
         return list.getData();
         
@@ -222,7 +222,7 @@ public final class StaticAPI
         }
         
         List<String> list = (List<String>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGES, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGES, list, server);
         
         
         return list;
@@ -250,7 +250,7 @@ public final class StaticAPI
         }
         
         MapData list = (MapData) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MAPS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MAPS, list, server, version, locale);
         return list.getData();
     }
     
@@ -285,7 +285,7 @@ public final class StaticAPI
         }
         
         StaticMasteryList list = (StaticMasteryList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list, server, dataFlags, version, locale);
         
         return list.getData();
     }
@@ -320,7 +320,7 @@ public final class StaticAPI
         }
         
         StaticMasteryList list = (StaticMasteryList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list, server, dataFlags, version, locale);
         
         return list.getTree();
     }
@@ -355,7 +355,7 @@ public final class StaticAPI
         }
         
         StaticMastery list = (StaticMastery) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, list, server, id, dataFlags, version, locale);
         return list;
     }
     
@@ -380,7 +380,7 @@ public final class StaticAPI
         }
         
         ProfileIconData list = (ProfileIconData) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PROFILEICONS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PROFILEICONS, list, server, version, locale);
         
         return list.getData();
     }
@@ -397,7 +397,7 @@ public final class StaticAPI
         }
         
         Realm list = (Realm) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_REALMS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_REALMS, list, server);
         
         return list;
     }
@@ -433,7 +433,7 @@ public final class StaticAPI
         }
         
         StaticRuneList list = (StaticRuneList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNES, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNES, list, server, dataFlags, version, locale);
         return list.getData();
     }
     
@@ -468,7 +468,7 @@ public final class StaticAPI
         }
         
         StaticRune list = (StaticRune) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNE_BY_ID, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNE_BY_ID, list, server, id, dataFlags, version, locale);
         return list;
     }
     
@@ -504,7 +504,7 @@ public final class StaticAPI
         }
         
         StaticSummonerSpellList list = (StaticSummonerSpellList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELLS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELLS, list, server, dataFlags, version, locale);
         return list.getData();
     }
     
@@ -540,7 +540,7 @@ public final class StaticAPI
         }
         
         StaticSummonerSpell list = (StaticSummonerSpell) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, list, server, dataFlags, version, locale);
         return list;
     }
     
@@ -558,7 +558,7 @@ public final class StaticAPI
         }
         
         List<String> list = (List<String>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_VERSIONS, list);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_VERSIONS, list, server);
         return list;
     }
     
