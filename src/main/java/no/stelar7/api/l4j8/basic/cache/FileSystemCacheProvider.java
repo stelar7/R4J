@@ -3,7 +3,6 @@ package no.stelar7.api.l4j8.basic.cache;
 import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.nio.file.*;
 import java.util.*;
 
@@ -34,33 +33,6 @@ public class FileSystemCacheProvider extends CacheProvider
             e.printStackTrace();
         }
     }
-    
-    private Path pathToFile(Path parent, Object file) throws NoSuchFieldException, IllegalAccessException
-    {
-        try
-        {
-            Field f = file.getClass().getDeclaredField("id");
-            f.setAccessible(true);
-            Object obj = f.get(file);
-            return parent.resolve(obj.toString());
-        } catch (NoSuchFieldException e)
-        {
-            try
-            {
-                Field f  = file.getClass().getDeclaredField("gameId");
-                Field f2 = file.getClass().getDeclaredField("platformId");
-                f.setAccessible(true);
-                f2.setAccessible(true);
-                Object game     = f.get(file);
-                Object platform = f2.get(file);
-                return parent.resolve(platform.toString()).resolve(game.toString());
-            } catch (NoSuchFieldException e2)
-            {
-                return parent.resolve(String.valueOf(file.hashCode()));
-            }
-        }
-    }
-    
     
     private void writeObject(Path path, Object obj) throws IOException
     {
