@@ -173,7 +173,7 @@ public final class MatchAPI
         }
         
         Match match = (Match) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, server);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, matchId, server);
         return match;
     }
     

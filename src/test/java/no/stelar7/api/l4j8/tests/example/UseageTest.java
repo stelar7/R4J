@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.tests.example;
 
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.basic.constants.types.TierDivisionType;
 import no.stelar7.api.l4j8.impl.L4J8;
@@ -21,6 +23,8 @@ public class UseageTest
     public void testUseage()
     {
         L4J8 api = new L4J8(SecretFile.CREDS);
+        DataCall.setLogLevel(LogLevel.INFO);
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         Summoner             stelar7        = api.getSummonerAPI().getSummonerByName(Platform.EUW1, "stelar7");
         List<MatchReference> games          = stelar7.getRankedGames();
@@ -37,8 +41,8 @@ public class UseageTest
         Participant self   = match.getParticipantFromSummonerId(stelar7.getSummonerId());
         boolean     didWin = match.didWin(self);
         System.out.format("They %s that game%n", didWin ? "won" : "lost");
-        
-        
+    
+    
         ParticipantIdentity opponentIdentity = match.getLaneOpponentIdentity(self);
         Participant         opponent         = match.getParticipantFromParticipantId(opponentIdentity.getParticipantId());
         
