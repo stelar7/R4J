@@ -40,6 +40,18 @@ public class MatchReference implements Serializable
         return StaticAPI.getInstance().getChampion(Platform.EUW1, this.champion, null, null, null);
     }
     
+    
+    /**
+     * championid associated with game.
+     *
+     * @return int
+     */
+    public int getChampionId()
+    {
+        return this.champion;
+    }
+    
+    
     /**
      * LaneType associated with game
      *
