@@ -53,7 +53,7 @@ public final class MatchAPI
                                              @Nullable Integer beginIndex, @Nullable Integer endIndex,
                                              @Nullable Set<GameQueueType> rankedQueue,
                                              @Nullable Set<SeasonType> season,
-                                             @Nullable List<Integer> championId)
+                                             @Nullable Set<Integer> championId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
@@ -101,12 +101,12 @@ public final class MatchAPI
             championId.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
         }
         
-      /*
+        
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
         if (chl.isPresent())
         {
             return (List<MatchReference>) chl.get();
-        }*/
+        }
         
         MatchList list = (MatchList) builder.build();
         
@@ -115,42 +115,10 @@ public final class MatchAPI
             return Collections.emptyList();
         }
         
-        // DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches());
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches());
         return list.getMatches();
     }
     
-    /**
-     * A list of the accounts most recent games (includes normal games)
-     *
-     * @param server    the platform the account is on ATM
-     * @param accountId the account to check
-     * @return MatchList
-     */
-    public List<MatchReference> getRecentMatches(Platform server, long accountId)
-    {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
-                                                       .withEndpoint(URLEndpoint.V3_MATCHLIST_RECENT)
-                                                       .withPlatform(server);
-        
-    
-        /*
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST_RECENT, server, accountId);
-        if (chl.isPresent())
-        {
-            return (List<MatchReference>) chl.get();
-        }
-        */
-        
-        MatchList list = (MatchList) builder.build();
-        
-        if (list == null)
-        {
-            return Collections.emptyList();
-        }
-        
-        // DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST_RECENT, list.getMatches());
-        return list.getMatches();
-    }
     
     /**
      * Returns the match data from a match id
