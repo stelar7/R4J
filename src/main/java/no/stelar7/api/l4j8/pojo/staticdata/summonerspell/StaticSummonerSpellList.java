@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class StaticSummonerSpellList  implements Serializable
 {
-    private Map<String, StaticSummonerSpell> data;
+    private Map<Integer, StaticSummonerSpell> data;
     
     
     
@@ -45,7 +45,7 @@ public class StaticSummonerSpellList  implements Serializable
      *
      * @return the data
      */
-    public Map<String, StaticSummonerSpell> getData()
+    public Map<Integer, StaticSummonerSpell> getData()
     {
         return this.data;
     }

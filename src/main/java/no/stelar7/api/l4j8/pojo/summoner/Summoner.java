@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.time.*;
 import java.util.List;
 
-public final class Summoner  implements Serializable
+public final class Summoner implements Serializable
 {
     private int      profileIconId;
     private String   name;
@@ -114,12 +114,13 @@ public final class Summoner  implements Serializable
         return SummonerAPI.getInstance().getMasteries(platform, this.getSummonerId());
     }
     
-    public List<MatchReference> getRecentGames()
-    {
-        return MatchAPI.getInstance().getRecentMatches(platform, accountId);
-    }
-    
-    public List<MatchReference> getRankedGames()
+    /**
+     * makes a call to matchlist. because of how the API is designed, this call only returns some of the games.
+     * To get the full data, call the list on a loop
+     *
+     * @return List<MatchReference>
+     */
+    public List<MatchReference> getGames()
     {
         return MatchAPI.getInstance().getMatchList(platform, accountId, null, null, null, null, null, null, null);
     }

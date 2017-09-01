@@ -3,12 +3,12 @@ package no.stelar7.api.l4j8.pojo.staticdata.item;
 import java.io.Serializable;
 import java.util.*;
 
-public class ItemList  implements Serializable
+public class ItemList implements Serializable
 {
     
-    private Map<String, Item> data;
-    private List<Group>       groups;
-    private List<ItemTree>    tree;
+    private Map<Integer, Item> data;
+    private List<Group>        groups;
+    private List<ItemTree>     tree;
     
     @Override
     public boolean equals(final Object obj)
@@ -65,7 +65,7 @@ public class ItemList  implements Serializable
      *
      * @return the data
      */
-    public Map<String, Item> getData()
+    public Map<Integer, Item> getData()
     {
         return this.data;
     }
