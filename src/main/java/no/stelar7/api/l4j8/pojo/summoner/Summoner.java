@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 import no.stelar7.api.l4j8.basic.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
@@ -12,7 +13,7 @@ import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 
 import java.io.Serializable;
 import java.time.*;
-import java.util.List;
+import java.util.*;
 
 public final class Summoner implements Serializable
 {
@@ -115,36 +116,86 @@ public final class Summoner implements Serializable
     }
     
     /**
-     * makes a call to matchlist. because of how the API is designed, this call only returns some of the games.
-     * To get the full data, call the list on a loop
+     * This method has the same function as
+     * <p>
+     * {@link MatchAPI#getMatchList(no.stelar7.api.l4j8.basic.constants.api.Platform, long, Long, Long, Integer, Integer, java.util.Set, java.util.Set, java.util.Set)}
+     * <p>
+     * but with the accountId and platform already set
      *
-     * @return List<MatchReference>
+     * @param beginTime  optional filter the games started after this time
+     * @param endTime    optional filter for games started before this time
+     * @param beginIndex optional filter for skipping the first x games
+     * @param endIndex   optional filter for skipping only showing x games
+     * @param queueTypes optional filter for selecting the queue
+     * @param seasons    optional filter for selecting the season
+     * @param championId optional filter for selecting the champion played
+     * @return {@code List<MatchReference>}
      */
-    public List<MatchReference> getGames()
+    public List<MatchReference> getGames(Long beginTime, Long endTime, Integer beginIndex, Integer endIndex, Set<GameQueueType> queueTypes, Set<SeasonType> seasons, Set<Integer> championId)
     {
-        return MatchAPI.getInstance().getMatchList(platform, accountId, null, null, null, null, null, null, null);
+        return MatchAPI.getInstance().getMatchList(platform, accountId, beginTime, endTime, beginIndex, endIndex, queueTypes, seasons, championId);
     }
     
+    /**
+     * This method has the same function as
+     * <p>
+     * {@link no.stelar7.api.l4j8.impl.MasteryAPI#getChampionMastery(no.stelar7.api.l4j8.basic.constants.api.Platform, long, int)}
+     * <p>
+     * but with the id and platform already set
+     * <p>
+     *
+     * @param championId the championId
+     * @return ChampionMastery
+     */
     public ChampionMastery getChampionMastery(int championId)
     {
         return MasteryAPI.getInstance().getChampionMastery(platform, id, championId);
     }
     
+    /**
+     * This method has the same function as
+     * <p>
+     * {@link no.stelar7.api.l4j8.impl.MasteryAPI#getChampionMasteries(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
+     * <p>
+     * but with the id and platform already set
+     * @return {@code List<ChampionMastery> }
+     */
     public List<ChampionMastery> getChampionMasteries()
     {
         return MasteryAPI.getInstance().getChampionMasteries(platform, id);
     }
     
+    /**
+     * This method has the same function as
+     * <p>
+     * {@link no.stelar7.api.l4j8.impl.LeagueAPI#getLeaguePosition(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
+     * <p>
+     * but with the id and platform already set
+     * @return {@code List<LeaguePosition>}
+     */
     public List<LeaguePosition> getLeagueEntry()
     {
         return LeagueAPI.getInstance().getLeaguePosition(platform, id);
     }
     
+    /**
+     * This method has the same function as
+     * <p>
+     * {@link no.stelar7.api.l4j8.impl.LeagueAPI#getLeague(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
+     * <p>
+     * but with the id and platform already set
+     * @return {@code List<LeagueList> }
+     */
     public List<LeagueList> getFullLeague()
     {
         return LeagueAPI.getInstance().getLeague(platform, id);
     }
     
+    /**
+     * Platform this summoner is on
+     *
+     * @return Platform
+     */
     public Platform getPlatform()
     {
         return platform;
