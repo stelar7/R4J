@@ -32,7 +32,7 @@ public class CacheTest
     @Test
     public void testFileSystemCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         doCacheStuff();
     }
     
@@ -40,7 +40,7 @@ public class CacheTest
     public void testStaticDataCache() throws InterruptedException
     {
         DataCall.setLogLevel(LogLevel.DEBUG);
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
         l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
         l4j8.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
@@ -50,18 +50,23 @@ public class CacheTest
     public void testCacheStuff() throws InterruptedException
     {
         DataCall.setLogLevel(LogLevel.DEBUG);
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
         l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
         l4j8.getLeagueAPI().getLeague(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
         l4j8.getLeagueAPI().getLeague(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        
+        Thread.sleep(6000);
+        
+        l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
     }
     
     @Test
     public void testTieredMemoryCache() throws InterruptedException
     {
         DataCall.setLogLevel(LogLevel.DEBUG);
-        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(1), new FileSystemCacheProvider()));
+        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(1), new FileSystemCacheProvider(null, -1)));
         doCacheStuff();
     }
     

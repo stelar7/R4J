@@ -40,7 +40,7 @@ public class StaticTest
     @Test
     public void testChampionSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
@@ -63,7 +63,7 @@ public class StaticTest
     @Test
     public void testItemSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
@@ -140,7 +140,7 @@ public class StaticTest
     @Test
     public void testMasterySingleMultipleFlags()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
         DataCall.setLogLevel(LogLevel.DEBUG);
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
@@ -192,7 +192,7 @@ public class StaticTest
     @Test
     public void testRuneSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
         DataCall.setLogLevel(LogLevel.DEBUG);
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
         
@@ -221,7 +221,7 @@ public class StaticTest
     @Test
     public void testSummonerSpellSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);

@@ -78,7 +78,7 @@ public class TieredCacheProvider extends CacheProvider
     }
     
     @Override
-    public void clearOldCache()
+    protected void clearOldCache()
     {
         providers.forEach(CacheProvider::clearOldCache);
     }

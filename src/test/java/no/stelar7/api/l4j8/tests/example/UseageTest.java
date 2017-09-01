@@ -24,7 +24,7 @@ public class UseageTest
     {
         L4J8 api = new L4J8(SecretFile.CREDS);
         DataCall.setLogLevel(LogLevel.INFO);
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
         
         
         // Fetch _ALL_ games

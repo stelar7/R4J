@@ -4,12 +4,20 @@ import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 
 import java.io.*;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.time.*;
 import java.util.*;
 
 public class FileSystemCacheProvider extends CacheProvider
 {
     
-    private final Path home = Paths.get(".", "l4j8cache").normalize();
+    private final Path home;
+    
+    public FileSystemCacheProvider(Path pathToFiles, int ttl)
+    {
+        setTimeToLive(ttl);
+        home = pathToFiles != null ? pathToFiles : Paths.get(".", "l4j8cache").normalize();
+    }
     
     @Override
     public void store(URLEndpoint type, Object... obj)
@@ -111,22 +119,53 @@ public class FileSystemCacheProvider extends CacheProvider
     }
     
     @Override
-    public void clearOldCache()
+    protected void clearOldCache()
     {
-        // TODO
+        try
+        {
+            Files.walk(home).sorted(Comparator.reverseOrder()).forEach(p -> {
+                try
+                {
+                    BasicFileAttributes attributes = Files.readAttributes(p, BasicFileAttributes.class);
+                    long                life       = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() - attributes.lastAccessTime().toInstant().toEpochMilli();
+                    if (timeToLive < life)
+                    {
+                        // no point in deleting the folders..
+                        if (Files.isDirectory(p))
+                        {
+                            return;
+                        }
+                        
+                        Files.deleteIfExists(p);
+                    }
+                    
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
     
     @Override
     public long getTimeToLive()
     {
-        // TODO
-        return 0;
+        return timeToLive;
     }
     
     @Override
     public long getSize()
     {
-        // TODO
-        return 0;
+        try
+        {
+            return Files.size(home);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }

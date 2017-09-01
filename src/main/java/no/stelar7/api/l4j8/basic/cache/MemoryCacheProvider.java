@@ -88,7 +88,7 @@ public class MemoryCacheProvider extends CacheProvider
     }
     
     @Override
-    public void clearOldCache()
+    protected void clearOldCache()
     {
         clearOldCache(summoners);
         clearOldCache(matches);

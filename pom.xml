@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.stelar7</groupId>
     <artifactId>l4j8</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.6</version>
     <name>League of Legends 4 Java 8</name>
     <description>A Java8 version of L4J</description>
     <properties>

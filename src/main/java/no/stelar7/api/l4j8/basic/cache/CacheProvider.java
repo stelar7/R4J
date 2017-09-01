@@ -45,7 +45,7 @@ public abstract class CacheProvider
     /**
      * Removes any old items frcm the cache
      */
-    public abstract void clearOldCache();
+    abstract void clearOldCache();
     
     private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
     private   ScheduledFuture<?> clearTask;
@@ -59,7 +59,7 @@ public abstract class CacheProvider
     public abstract long getTimeToLive();
     
     /**
-     * Returns the count of items in the cache
+     * Returns the count of items in the cache (or the size in bytes)
      *
      * @return long
      */
