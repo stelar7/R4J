@@ -25,13 +25,19 @@ public class AsyncTest
         MatchAPI    mapi = l4j8.getMatchAPI();
         
         List<CompletableFuture> futures = new ArrayList<>();
-
+        
         for (int i = 0; i < 100; i++)
         {
-            futures.add(supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleSummonerCallback));
+            futures.add(
+                    supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1]))
+                            .thenAccept(this::handleSummonerCallback)
+                       );
         }
-
-        futures.add(supplyAsync(() -> mapi.getRecentMatches(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1])).thenAccept(this::handleMatchCallback));
+        
+        futures.add(
+                supplyAsync(() -> mapi.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1], null, null, null, null, null, null, null))
+                        .thenAccept(this::handleMatchCallback)
+                   );
         CompletableFuture spinner = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
         spinner.join();
     }

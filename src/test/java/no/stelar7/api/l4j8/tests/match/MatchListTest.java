@@ -41,7 +41,7 @@ public class MatchListTest
     {
         Set<GameQueueType> queue      = EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2017);
-        List<Integer>      champ      = null;//Arrays.asList(Constants.TEST_CHAMPION_IDS);
+        Set<Integer>       champ      = null;//Arrays.asList(Constants.TEST_CHAMPION_IDS);
         Long               beginTime  = null;//1481108400000L; // start of season 2017
         Long               endTime    = null;//beginTime + 604800000; // 604800000 is one week in ms
         Integer            beginIndex = null;//0;

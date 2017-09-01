@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.tests.staticdata;
 
+import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.basic.exceptions.APIDataNotParseableException;
@@ -38,9 +40,13 @@ public class StaticTest
     @Test
     public void testChampionSingle()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
         
         StaticChampion list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, null, null);
+        list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, null, null);
         Assert.assertTrue("ok?", list.getId() == Constants.TEST_CHAMPION_IDS[0]);
     }
     
@@ -57,9 +63,13 @@ public class StaticTest
     @Test
     public void testItemSingle()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
         
         Item list = api.getItem(Platform.EUW1, 1018, dataFlags, null, null);
+        list = api.getItem(Platform.EUW1, 1018, dataFlags, null, null);
         Assert.assertTrue("ok?", list.getId() == 1018);
     }
     
@@ -130,9 +140,12 @@ public class StaticTest
     @Test
     public void testMasterySingleMultipleFlags()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
+        list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
         
         Assert.assertTrue("ok?", list.getId() == 6131);
     }
@@ -179,9 +192,12 @@ public class StaticTest
     @Test
     public void testRuneSingle()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
         
         StaticRune rune = api.getRune(Platform.EUW1, 5023, dataFlags, null, null);
+        rune = api.getRune(Platform.EUW1, 5023, dataFlags, null, null);
         
         Assert.assertTrue("missing id?", rune.getId() == 5023);
         Assert.assertTrue("missing stats?", rune.getStats() != null);
@@ -198,16 +214,20 @@ public class StaticTest
     {
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
         
-        Map<String, StaticSummonerSpell> list = api.getSummonerSpells(Platform.EUW1, dataFlags, null, null);
+        Map<Integer, StaticSummonerSpell> list = api.getSummonerSpells(Platform.EUW1, dataFlags, null, null);
     }
     
     
     @Test
     public void testSummonerSpellSingle()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
         
         StaticSummonerSpell list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, null, null);
+        list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, null, null);
         
         Assert.assertTrue("ok?", list.getId() == 21);
     }

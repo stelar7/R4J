@@ -26,9 +26,19 @@ public class UseageTest
         DataCall.setLogLevel(LogLevel.INFO);
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Summoner             stelar7        = api.getSummonerAPI().getSummonerByName(Platform.EUW1, "stelar7");
-        List<MatchReference> games          = stelar7.getRankedGames();
-        MatchReference       mostRecentGame = games.get(0);
+        
+        // Fetch _ALL_ games
+        List<MatchReference> all     = new ArrayList<>();
+        int                  x       = 0;
+        Summoner             stelar7 = api.getSummonerAPI().getSummonerByName(Platform.EUW1, "stelar7");
+        List<MatchReference> some    = stelar7.getGames(null, null, x, null, null, null, null);
+        while (!some.isEmpty())
+        {
+            all.addAll(some);
+            some = api.getMatchAPI().getMatchList(stelar7.getPlatform(), stelar7.getAccountId(), null, null, (x = x + 100), null, null, null, null);
+        }
+        
+        MatchReference mostRecentGame = all.get(0);
         
         Match         match    = mostRecentGame.getFullMatch();
         MatchTimeline timeline = mostRecentGame.getTimeline();
@@ -41,8 +51,8 @@ public class UseageTest
         Participant self   = match.getParticipantFromSummonerId(stelar7.getSummonerId());
         boolean     didWin = match.didWin(self);
         System.out.format("They %s that game%n", didWin ? "won" : "lost");
-    
-    
+        
+        
         ParticipantIdentity opponentIdentity = match.getLaneOpponentIdentity(self);
         Participant         opponent         = match.getParticipantFromParticipantId(opponentIdentity.getParticipantId());
         

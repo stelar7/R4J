@@ -74,7 +74,7 @@ public class CacheTest
     
     private void doCacheStuff() throws InterruptedException
     {
-        List<MatchReference> recents = l4j8.getMatchAPI().getRecentMatches(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
+        List<MatchReference> recents = l4j8.getMatchAPI().getMatchList(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, null, null);
         MatchReference       ref     = recents.get(0);
         
         System.out.println("Starting timer");

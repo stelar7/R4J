@@ -19,7 +19,7 @@ public class CheckNormalGameForWinTest
     public void testFindSelfInNormalGame()
     {
         Summoner             dev  = l4j8.getSummonerAPI().getSummonerByName(Platform.NA1, "devitgg");
-        List<MatchReference> refs = l4j8.getMatchAPI().getRecentMatches(Platform.NA1, dev.getAccountId());
+        List<MatchReference> refs = l4j8.getMatchAPI().getMatchList(Platform.NA1, dev.getAccountId(), null, null, null, null, null, null, null);
         
         for (MatchReference current : refs)
         {
@@ -67,7 +67,7 @@ public class CheckNormalGameForWinTest
             }
         }
         
-        List<MatchReference> refs = l4j8.getMatchAPI().getRecentMatches(Platform.NA1, dev.getAccountId());
+        List<MatchReference> refs = l4j8.getMatchAPI().getMatchList(Platform.NA1, dev.getAccountId(), null, null, null, null, null, null, null);
         
         for (MatchReference current : refs)
         {
