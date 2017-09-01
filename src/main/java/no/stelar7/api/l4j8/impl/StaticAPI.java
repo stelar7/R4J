@@ -96,6 +96,14 @@ public final class StaticAPI
             return (StaticChampion) chl.get();
         }
         
+        chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_CHAMPIONS, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            Map<Integer, StaticChampion> dataMap = ((StaticChampionList) chl.get()).getData();
+            dataMap.forEach((k, v) -> DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, v, server, k, dataFlags, version, locale));
+            return dataMap.get(id);
+        }
+        
         StaticChampion list = (StaticChampion) builder.build();
         DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, list, server, id, dataFlags, version, locale);
         
@@ -162,11 +170,20 @@ public final class StaticAPI
         }
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_ITEM_BY_ID, id, server, dataFlags, version, locale);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_ITEM_BY_ID, server, id, dataFlags, version, locale);
         if (chl.isPresent())
         {
             return (Item) chl.get();
         }
+        
+        chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_ITEMS, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            Map<Integer, Item> dataMap = ((ItemList) chl.get()).getData();
+            dataMap.forEach((k, v) -> DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, v, server, k, dataFlags, version, locale));
+            return dataMap.get(id);
+        }
+        
         
         Item list = (Item) builder.build();
         DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, list, server, id, dataFlags, version, locale);
@@ -354,6 +371,15 @@ public final class StaticAPI
             return (StaticMastery) chl.get();
         }
         
+        chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MASTERIES, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            Map<Integer, StaticMastery> dataMap = ((StaticMasteryList) chl.get()).getData();
+            dataMap.forEach((k, v) -> DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, v, server, k, dataFlags, version, locale));
+            return dataMap.get(id);
+        }
+        
+        
         StaticMastery list = (StaticMastery) builder.build();
         DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, list, server, id, dataFlags, version, locale);
         return list;
@@ -467,13 +493,21 @@ public final class StaticAPI
             return (StaticRune) chl.get();
         }
         
+        chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_RUNES, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            Map<Integer, StaticRune> dataMap = ((StaticRuneList) chl.get()).getData();
+            dataMap.forEach((k, v) -> DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNE_BY_ID, v, server, k, dataFlags, version, locale));
+            return dataMap.get(id);
+        }
+        
         StaticRune list = (StaticRune) builder.build();
         DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNE_BY_ID, list, server, id, dataFlags, version, locale);
         return list;
     }
     
     
-    public Map<String, StaticSummonerSpell> getSummonerSpells(Platform server, @Nullable Set<SpellDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
+    public Map<Integer, StaticSummonerSpell> getSummonerSpells(Platform server, @Nullable Set<SpellDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_SUMMONER_SPELLS)
                                                        .withPlatform(server);
@@ -539,8 +573,17 @@ public final class StaticAPI
             return (StaticSummonerSpell) chl.get();
         }
         
+        chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_SUMMONER_SPELLS, server, dataFlags, version, locale);
+        if (chl.isPresent())
+        {
+            Map<Integer, StaticSummonerSpell> dataMap = ((StaticSummonerSpellList) chl.get()).getData();
+            dataMap.forEach((k, v) -> DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, v, server, k, dataFlags, version, locale));
+            return dataMap.get(id);
+        }
+        
+        
         StaticSummonerSpell list = (StaticSummonerSpell) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, list, server, dataFlags, version, locale);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, list, server, id, dataFlags, version, locale);
         return list;
     }
     
