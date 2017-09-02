@@ -23,7 +23,7 @@ public class Participant implements Serializable
     
     
     /**
-     * StaticChampion
+     * returns a StaticChampion from the id
      *
      * @return StaticChampion
      */
@@ -31,6 +31,17 @@ public class Participant implements Serializable
     {
         return StaticAPI.getInstance().getChampion(Platform.EUW1, this.championId, null, null, null);
     }
+    
+    /**
+     * returns the id of the champion played by this participant
+     *
+     * @return int
+     */
+    public int getChampionId()
+    {
+        return championId;
+    }
+    
     
     /**
      * Highest ranked tier achieved for the previous season, if any, otherwise null. Used to display border in game loading screen. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE, UNRANKED)
