@@ -72,7 +72,7 @@ public enum GameQueueType
     /**
      * Twisted Treeline Coop vs AI games
      */
-    BOT_TT_3X3(52),
+    BOT_3X3_BEGINNER(52),
     /**
      * Team Builder games
      */
@@ -189,6 +189,10 @@ public enum GameQueueType
      * Darkstar games
      */
     DARKSTAR_3X3(610),
+    /**
+     * BOT 3x3 games
+     */
+    BOT_3X3_INTERMEDIATE(800),
     /**
      * Invasion games
      */
