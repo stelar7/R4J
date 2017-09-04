@@ -31,6 +31,9 @@ public class StaticTest
     @Test
     public void testChampionList()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
         
         Map<Integer, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
@@ -40,19 +43,21 @@ public class StaticTest
     @Test
     public void testChampionSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
         
         StaticChampion list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, null, null);
-        list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, null, null);
         Assert.assertTrue("ok?", list.getId() == Constants.TEST_CHAMPION_IDS[0]);
     }
     
     @Test
     public void testItemList()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
         
         ItemList list = api.getItems(Platform.EUW1, dataFlags, null, null);
@@ -63,13 +68,12 @@ public class StaticTest
     @Test
     public void testItemSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
         
         Item list = api.getItem(Platform.EUW1, 1018, dataFlags, null, null);
-        list = api.getItem(Platform.EUW1, 1018, dataFlags, null, null);
         Assert.assertTrue("ok?", list.getId() == 1018);
     }
     
@@ -77,26 +81,37 @@ public class StaticTest
     @Test
     public void testLanguageStrings()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         Map<String, String> strings = api.getLanguageStrings(Platform.EUW1, null, null);
     }
     
     @Test
     public void testLanguages()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         List<String> strings = api.getLanguages(Platform.EUW1);
     }
     
     @Test
     public void testMaps()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         Map<String, MapDetails> data = api.getMaps(Platform.EUW1, null, null);
-        System.out.println();
     }
     
     
     @Test
     public void testMasteryList()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         Map<Integer, StaticMastery> list = api.getMasteries(Platform.EUW1, dataFlags, null, null);
@@ -105,6 +120,9 @@ public class StaticTest
     @Test
     public void testMasteryTreeish()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         Map<Integer, StaticMastery> data  = api.getMasteries(Platform.EUW1, dataFlags, null, null);
@@ -140,49 +158,61 @@ public class StaticTest
     @Test
     public void testMasterySingleMultipleFlags()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
-        list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
-        
         Assert.assertTrue("ok?", list.getId() == 6131);
     }
     
     @Test
     public void testMasterySingleOneFlag()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
-        
         Assert.assertTrue("ok?", list.getId() == 6131);
     }
     
     @Test
     public void testMasterySingleNoFlags()
     {
-        StaticMastery list = api.getMastery(Platform.EUW1, 6131, null, null, null);
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
         
+        StaticMastery list = api.getMastery(Platform.EUW1, 6131, null, null, null);
         Assert.assertTrue("ok?", list.getId() == 6131);
     }
     
     @Test
     public void testProfileIcons()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         Map<Long, ProfileIconDetails> data = api.getProfileIcons(Platform.EUW1, null, null);
     }
     
     @Test
     public void testRealms()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         Realm data = api.getRealm(Platform.EUW1);
     }
     
     @Test
     public void testRuneList()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
         
         Map<Integer, StaticRune> list = api.getRunes(Platform.EUW1, dataFlags, null, null);
@@ -192,12 +222,12 @@ public class StaticTest
     @Test
     public void testRuneSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
         
         StaticRune rune = api.getRune(Platform.EUW1, 5023, dataFlags, null, null);
-        rune = api.getRune(Platform.EUW1, 5023, dataFlags, null, null);
         
         Assert.assertTrue("missing id?", rune.getId() == 5023);
         Assert.assertTrue("missing stats?", rune.getStats() != null);
@@ -212,6 +242,9 @@ public class StaticTest
     @Test
     public void testSummonerSpellList()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
         
         Map<Integer, StaticSummonerSpell> list = api.getSummonerSpells(Platform.EUW1, dataFlags, null, null);
@@ -221,14 +254,12 @@ public class StaticTest
     @Test
     public void testSummonerSpellSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null,-1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
         
         StaticSummonerSpell list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, null, null);
-        list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, null, null);
-        
         Assert.assertTrue("ok?", list.getId() == 21);
     }
     
@@ -236,12 +267,18 @@ public class StaticTest
     @Test
     public void testVersions()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         List<String> data = api.getVersions(Platform.EUW1);
     }
     
     @Test
     public void testStaticDataIntegrety()
     {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
         
         Map<Integer, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);

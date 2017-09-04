@@ -466,7 +466,7 @@ public class DataCallBuilder
      * @param server the server to make the call to
      * @return this
      */
-    public DataCallBuilder withPlatform(final Platform server)
+    public DataCallBuilder withPlatform(final Enum server)
     {
         this.dc.setPlatform(server);
         return this;

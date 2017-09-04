@@ -56,19 +56,8 @@ public enum Platform
     /**
      * PBE platform.
      */
-    PBE1("PBE1"),
-    /**
-     * Americas platform.
-     */
-    AMERICAS("AMERICAS"),
-    /**
-     * Europe platform.
-     */
-    EUROPE("EUROPE"),
-    /**
-     * Asia platform.
-     */
-    ASIA("ASIA");
+    PBE1("PBE1");
+    
     
     private String[] keys;
     

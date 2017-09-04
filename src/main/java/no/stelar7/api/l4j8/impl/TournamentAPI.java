@@ -52,7 +52,7 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
-                                                       .withPlatform(Platform.AMERICAS);
+                                                       .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
         {
@@ -73,7 +73,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCHLIST)
-                                                       .withPlatform(Platform.AMERICAS);
+                                                       .withPlatform(ServicePlatform.AMERICAS);
         
         
         return (List<Long>) builder.build();
@@ -111,7 +111,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES_BY_CODE)
-                                                       .withPlatform(Platform.AMERICAS);
+                                                       .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
         {
@@ -132,7 +132,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_LOBBY_EVENTS)
-                                                       .withPlatform(Platform.AMERICAS);
+                                                       .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
         {
@@ -160,7 +160,7 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_PROVIDER)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
-                                                       .withPlatform(Platform.AMERICAS);
+                                                       .withPlatform(ServicePlatform.AMERICAS);
         
         
         if (useStub)
@@ -183,7 +183,7 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_TOURNAMENT)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
-                                                       .withPlatform(Platform.AMERICAS);
+                                                       .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
         {
@@ -207,7 +207,7 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_PUT)
-                                                       .withPlatform(Platform.AMERICAS);
+                                                       .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
         {

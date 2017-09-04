@@ -23,7 +23,7 @@ public final class DataCall
     private final Map<String, String> urlData    = new TreeMap<>();
     private final Map<String, String> urlHeaders = new TreeMap<>();
     
-    private Platform    platform;
+    private Enum        platform;
     private URLEndpoint endpoint;
     private static String urlProxy = Constants.REQUEST_URL;
     
@@ -54,7 +54,7 @@ public final class DataCall
         return urlHeaders;
     }
     
-    public Platform getPlatform()
+    public Enum getPlatform()
     {
         return platform;
     }
@@ -64,7 +64,7 @@ public final class DataCall
         return endpoint;
     }
     
-    public void setPlatform(Platform platform)
+    public void setPlatform(Enum platform)
     {
         this.platform = platform;
     }

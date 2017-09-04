@@ -1,34 +1,11 @@
 package no.stelar7.api.l4j8.basic;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.exceptions.*;
+import no.stelar7.api.l4j8.basic.exceptions.APIUnsupportedActionException;
 
 public class APICredentials
 {
     private String baseApiKey;
     private String tournamentApiKey;
-    
-    /**
-     * Instantiates the APICredentials
-     *
-     * @param key  the key to use
-     * @param type the type of key
-     */
-    
-    public APICredentials(final String key, final APIType type)
-    {
-        switch (type)
-        {
-            case NORMAL:
-                this.baseApiKey = key;
-                break;
-            case TOURNAMENT:
-                this.tournamentApiKey = key;
-                break;
-            default:
-                throw new APIUnsupportedActionException(String.format("%s is not a valid choice for APICredentials", type));
-        }
-    }
     
     /**
      * Instantiates new API credentials.
