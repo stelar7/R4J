@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.rune;
 
 import java.io.Serializable;
 
-public class RuneStats  implements Serializable
+public class RuneStats implements Serializable
 {
+    private static final long serialVersionUID = -3778815976462606609L;
+    
     private float FlatArmorMod;
     private float FlatArmorModPerLevel;
     private float FlatArmorPenetrationMod;

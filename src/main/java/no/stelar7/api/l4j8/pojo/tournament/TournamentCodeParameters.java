@@ -5,8 +5,10 @@ import no.stelar7.api.l4j8.basic.exceptions.APIUnsupportedActionException;
 
 import java.io.Serializable;
 
-public class TournamentCodeParameters  implements Serializable
+public class TournamentCodeParameters implements Serializable
 {
+    private static final long serialVersionUID = 6366533149651958130L;
+    
     private SummonerIdParams        allowedSummonerIds;
     private TournamentMapType       mapType;
     private String                  metadata;

@@ -7,6 +7,8 @@ import java.util.List;
 
 public class MatchEvent implements Serializable
 {
+    private static final long serialVersionUID = 5385878555903938057L;
+    
     private int            afterId;
     private int            beforeId;
     private AscencionType  ascendedType;

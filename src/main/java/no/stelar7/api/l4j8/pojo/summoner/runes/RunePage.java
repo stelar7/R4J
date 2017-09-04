@@ -3,8 +3,9 @@ package no.stelar7.api.l4j8.pojo.summoner.runes;
 import java.io.Serializable;
 import java.util.*;
 
-public class RunePage  implements Serializable
+public class RunePage implements Serializable
 {
+    private static final long serialVersionUID = -8805220492009143221L;
     
     private boolean        current;
     private long           id;
@@ -24,7 +25,7 @@ public class RunePage  implements Serializable
     
     /**
      * The rune page name
-     * 
+     * <p>
      * Not returned for summoners on the Korean server (Legal reasons)
      *
      * @return String

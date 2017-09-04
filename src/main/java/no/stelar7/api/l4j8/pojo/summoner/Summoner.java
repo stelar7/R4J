@@ -17,6 +17,8 @@ import java.util.*;
 
 public final class Summoner implements Serializable
 {
+    private static final long serialVersionUID = 7941348691314302772L;
+    
     private int      profileIconId;
     private String   name;
     private int      summonerLevel;
@@ -158,6 +160,7 @@ public final class Summoner implements Serializable
      * {@link no.stelar7.api.l4j8.impl.MasteryAPI#getChampionMasteries(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
      * <p>
      * but with the id and platform already set
+     *
      * @return {@code List<ChampionMastery> }
      */
     public List<ChampionMastery> getChampionMasteries()
@@ -171,6 +174,7 @@ public final class Summoner implements Serializable
      * {@link no.stelar7.api.l4j8.impl.LeagueAPI#getLeaguePosition(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
      * <p>
      * but with the id and platform already set
+     *
      * @return {@code List<LeaguePosition>}
      */
     public List<LeaguePosition> getLeagueEntry()
@@ -184,6 +188,7 @@ public final class Summoner implements Serializable
      * {@link no.stelar7.api.l4j8.impl.LeagueAPI#getLeague(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
      * <p>
      * but with the id and platform already set
+     *
      * @return {@code List<LeagueList> }
      */
     public List<LeagueList> getFullLeague()

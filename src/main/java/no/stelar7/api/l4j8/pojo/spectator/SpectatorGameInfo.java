@@ -10,6 +10,8 @@ import java.util.*;
 
 public class SpectatorGameInfo implements Serializable
 {
+    private static final long serialVersionUID = -5466430258379033702L;
+    
     private List<BannedChampion>       bannedChampions;
     private long                       gameId;
     private long                       gameLength;

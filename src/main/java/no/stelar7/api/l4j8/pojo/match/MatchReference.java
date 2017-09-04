@@ -10,6 +10,8 @@ import java.time.*;
 
 public class MatchReference implements Serializable
 {
+    private static final long serialVersionUID = 8945820538850500552L;
+    
     private LaneType      lane;
     private long          gameId;
     private int           champion;

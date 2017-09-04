@@ -6,8 +6,10 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.io.Serializable;
 import java.util.Set;
 
-public class TournamentCode  implements Serializable
+public class TournamentCode implements Serializable
 {
+    private static final long serialVersionUID = 5463341008783194897L;
+    
     private String                  code;
     private long                    id;
     private String                  lobbyName;

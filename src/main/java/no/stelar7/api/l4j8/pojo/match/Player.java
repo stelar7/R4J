@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class Player implements Serializable
 {
+    private static final long serialVersionUID = -2121986473110048417L;
+    
     private String   matchHistoryUri;
     private int      profileIcon;
     private long     summonerId;

@@ -2,11 +2,12 @@ package no.stelar7.api.l4j8.pojo.staticdata.profileicon;
 
 import no.stelar7.api.l4j8.pojo.staticdata.shared.BaseStaticData;
 
-import java.io.Serializable;
 import java.util.Map;
 
-public class ProfileIconData extends BaseStaticData  implements Serializable
+public class ProfileIconData extends BaseStaticData
 {
+    private static final long serialVersionUID = 5125741045029057092L;
+    
     private Map<Long, ProfileIconDetails> data;
     
     public Map<Long, ProfileIconDetails> getData()

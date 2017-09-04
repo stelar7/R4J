@@ -2,12 +2,13 @@ package no.stelar7.api.l4j8.pojo.status;
 
 import java.io.Serializable;
 
-public class Translation  implements Serializable
+public class Translation implements Serializable
 {
+    private static final long serialVersionUID = 3394393594073368289L;
+    
     private String content;
     private String locale;
     private String heading;
-    
     
     
     @Override

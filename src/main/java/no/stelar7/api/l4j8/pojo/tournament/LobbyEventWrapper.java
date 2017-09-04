@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.tournament;
 import java.io.Serializable;
 import java.util.List;
 
-public class LobbyEventWrapper  implements Serializable
+public class LobbyEventWrapper implements Serializable
 {
+    private static final long serialVersionUID = 536995135599115414L;
+    
     private List<LobbyEvent> eventList;
     
     @Override

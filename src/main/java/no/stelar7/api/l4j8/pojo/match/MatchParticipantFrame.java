@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class MatchParticipantFrame implements Serializable
 {
+    private static final long serialVersionUID = -5104567744427910673L;
     
     private int           totalGold;
     private int           teamScore;

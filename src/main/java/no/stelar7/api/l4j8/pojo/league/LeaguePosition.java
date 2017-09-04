@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class LeaguePosition implements Serializable
 {
+    private static final long serialVersionUID = -895051155625969402L;
+    
     private String        rank;
     private GameQueueType queueType;
     private boolean       hotStreak;

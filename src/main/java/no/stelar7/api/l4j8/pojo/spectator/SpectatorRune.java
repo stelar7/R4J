@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 public class SpectatorRune implements Serializable
 {
-    private int count;
-    private long    runeId;
+    private static final long serialVersionUID = -1496030363294922396L;
+    
+    private int  count;
+    private long runeId;
     
     
     /**

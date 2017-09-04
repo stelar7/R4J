@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.item;
 
 import java.io.Serializable;
 
-public class InventoryDataStats  implements Serializable
+public class InventoryDataStats implements Serializable
 {
+    private static final long serialVersionUID = 420709117265668274L;
+    
     private float FlatArmorMod;
     private float FlatAttackSpeedMod;
     private float FlatBlockMod;

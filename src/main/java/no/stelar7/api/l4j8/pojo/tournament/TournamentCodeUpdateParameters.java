@@ -5,8 +5,10 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class TournamentCodeUpdateParameters  implements Serializable
+public class TournamentCodeUpdateParameters implements Serializable
 {
+    private static final long serialVersionUID = 614195923641043920L;
+    
     private Set<Long>               allowedParticipants;
     private TournamentMapType       mapType;
     private TournamentPickType      pickType;

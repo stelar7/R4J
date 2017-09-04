@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class LeagueItem implements Serializable
 {
+    private static final long serialVersionUID = -6639741183354914597L;
+    
     private String     rank;
     private boolean    hotStreak;
     private MiniSeries miniSeries;

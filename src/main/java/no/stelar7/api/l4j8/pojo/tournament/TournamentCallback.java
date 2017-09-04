@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.tournament;
 import java.io.Serializable;
 import java.util.List;
 
-public class TournamentCallback  implements Serializable
+public class TournamentCallback implements Serializable
 {
+    private static final long serialVersionUID = 1224859743037788003L;
+    
     private long                             startTime;
     private List<TournamentCallbackSummoner> winningTeam;
     private List<TournamentCallbackSummoner> losingTeam;

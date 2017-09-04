@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 public class ParticipantStats implements Serializable
 {
+    private static final long serialVersionUID = -2910190875533332744L;
     
     private long    assists;
     private long    champLevel;

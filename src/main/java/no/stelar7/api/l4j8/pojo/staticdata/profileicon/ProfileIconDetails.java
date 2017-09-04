@@ -4,8 +4,10 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
 import java.io.Serializable;
 
-public class ProfileIconDetails  implements Serializable
+public class ProfileIconDetails implements Serializable
 {
+    private static final long serialVersionUID = -6764573978585697793L;
+    
     private Image  image;
     private String id;
     

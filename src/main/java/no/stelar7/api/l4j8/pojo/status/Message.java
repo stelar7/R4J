@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.status;
 import java.io.Serializable;
 import java.util.List;
 
-public class Message  implements Serializable
+public class Message implements Serializable
 {
+    private static final long serialVersionUID = -7432141392779902242L;
+    
     private String            author;
     private String            content;
     private String            created_at;
@@ -12,7 +14,6 @@ public class Message  implements Serializable
     private String            severity;
     private String            updated_at;
     private List<Translation> translations;
-    
     
     
     @Override

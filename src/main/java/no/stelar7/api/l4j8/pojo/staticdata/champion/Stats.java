@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 import java.io.Serializable;
 
-public class Stats  implements Serializable
+public class Stats implements Serializable
 {
+    private static final long serialVersionUID = 8763100806023208221L;
+    
     private float armor;
     private float armorperlevel;
     private float attackdamage;

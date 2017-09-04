@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class MasteryTreeItem implements Serializable
 {
+    private static final long serialVersionUID = 3955045796477384883L;
+    
     private int    masteryId;
     private String prereq;
     

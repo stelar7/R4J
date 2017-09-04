@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 import java.io.Serializable;
 import java.util.List;
 
-public class Recommended  implements Serializable
+public class Recommended implements Serializable
 {
+    private static final long serialVersionUID = 500189566452842151L;
+    
     private List<Block> blocks;
     private String      champion;
     private String      map;

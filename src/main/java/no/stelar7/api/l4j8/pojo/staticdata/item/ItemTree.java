@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.item;
 import java.io.Serializable;
 import java.util.List;
 
-public class ItemTree  implements Serializable
+public class ItemTree implements Serializable
 {
+    private static final long serialVersionUID = 1596861484491451508L;
+    
     private String       header;
     private List<String> tags;
     

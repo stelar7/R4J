@@ -3,8 +3,9 @@ package no.stelar7.api.l4j8.pojo.summoner.masteries;
 import java.io.Serializable;
 import java.util.*;
 
-public class MasteryPage  implements Serializable
+public class MasteryPage implements Serializable
 {
+    private static final long serialVersionUID = -4822469294112461581L;
     
     private boolean       current;
     private long          id;
@@ -33,7 +34,7 @@ public class MasteryPage  implements Serializable
     
     /**
      * The mastery page name
-     *
+     * <p>
      * Not returned for summoners on the Korean server (Legal reasons)
      *
      * @return String

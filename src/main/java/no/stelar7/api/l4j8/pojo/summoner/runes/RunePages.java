@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.summoner.runes;
 import java.io.Serializable;
 import java.util.List;
 
-public class RunePages  implements Serializable
+public class RunePages implements Serializable
 {
+    private static final long serialVersionUID = -8711723597988842927L;
+    
     private List<RunePage> pages;
     private long           summonerId;
     

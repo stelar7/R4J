@@ -7,6 +7,7 @@ import java.util.List;
 
 public class LeagueList implements Serializable
 {
+    private static final long serialVersionUID = -5998948570024210475L;
     
     private List<LeagueItem> entries;
     private String           name;

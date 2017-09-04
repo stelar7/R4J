@@ -2,11 +2,12 @@ package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 
 import no.stelar7.api.l4j8.pojo.shared.BaseSpellData;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class StaticSummonerSpell extends BaseSpellData  implements Serializable
+public class StaticSummonerSpell extends BaseSpellData
 {
+    private static final long serialVersionUID = 6564283228389342174L;
+    
     private int          id;
     private List<String> modes;
     private int          summonerLevel;

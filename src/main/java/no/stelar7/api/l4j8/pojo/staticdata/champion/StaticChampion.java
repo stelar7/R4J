@@ -5,8 +5,10 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 import java.io.Serializable;
 import java.util.List;
 
-public class StaticChampion  implements Serializable
+public class StaticChampion implements Serializable
 {
+    private static final long serialVersionUID = -5036593383951582883L;
+    
     private List<String>              allytips;
     private String                    blurb;
     private List<String>              enemytips;

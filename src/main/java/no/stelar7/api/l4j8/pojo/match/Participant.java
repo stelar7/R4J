@@ -10,6 +10,8 @@ import java.util.*;
 
 public class Participant implements Serializable
 {
+    private static final long serialVersionUID = 4416173192578454833L;
+    
     private int                 championId;
     private TierType            highestAchievedSeasonTier;
     private List<MatchMastery>  masteries;

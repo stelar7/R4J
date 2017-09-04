@@ -5,6 +5,8 @@ import java.util.List;
 
 public class MatchTimeline implements Serializable
 {
+    private static final long serialVersionUID = -5614060612188013016L;
+    
     private long             frameInterval;
     private List<MatchFrame> frames;
     

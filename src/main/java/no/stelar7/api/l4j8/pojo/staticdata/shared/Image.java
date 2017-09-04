@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 import java.io.Serializable;
 
-public class Image  implements Serializable
+public class Image implements Serializable
 {
+    private static final long serialVersionUID = 4836185346156791918L;
+    
     private String full;
     private String group;
     private String sprite;

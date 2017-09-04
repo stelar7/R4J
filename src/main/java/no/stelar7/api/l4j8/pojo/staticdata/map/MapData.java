@@ -2,11 +2,12 @@ package no.stelar7.api.l4j8.pojo.staticdata.map;
 
 import no.stelar7.api.l4j8.pojo.staticdata.shared.BaseStaticData;
 
-import java.io.Serializable;
 import java.util.Map;
 
-public class MapData extends BaseStaticData  implements Serializable
+public class MapData extends BaseStaticData
 {
+    private static final long serialVersionUID = 6338742347984604023L;
+    
     private Map<String, MapDetails> data;
     
     @Override

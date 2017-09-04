@@ -3,11 +3,12 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 import no.stelar7.api.l4j8.pojo.shared.BaseSpellData;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class StaticChampionSpell extends BaseSpellData  implements Serializable
+public class StaticChampionSpell extends BaseSpellData
 {
+    private static final long serialVersionUID = 3332883769496451613L;
+    
     private List<Image> altimages;
     
     public List<Image> getAltImages()
@@ -32,7 +33,7 @@ public class StaticChampionSpell extends BaseSpellData  implements Serializable
         }
         
         StaticChampionSpell that = (StaticChampionSpell) o;
-    
+        
         return (altimages != null) ? altimages.equals(that.altimages) : (that.altimages == null);
     }
     

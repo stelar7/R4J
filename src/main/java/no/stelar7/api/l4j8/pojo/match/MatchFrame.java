@@ -5,6 +5,8 @@ import java.util.*;
 
 public class MatchFrame implements Serializable
 {
+    private static final long serialVersionUID = 9214624443412276664L;
+    
     private long                               timestamp;
     private Map<String, MatchParticipantFrame> participantFrames;
     private List<MatchEvent>                   events;

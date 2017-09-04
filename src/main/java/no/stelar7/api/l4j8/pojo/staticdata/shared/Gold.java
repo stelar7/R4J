@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 import java.io.Serializable;
 
-public class Gold  implements Serializable
+public class Gold implements Serializable
 {
+    private static final long serialVersionUID = -7870414403107823868L;
+    
     private int     base;
     private boolean purchasable;
     private int     sell;

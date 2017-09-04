@@ -5,6 +5,8 @@ import java.util.List;
 
 public class ChampionList implements Serializable
 {
+    private static final long serialVersionUID = -8590769549392641157L;
+    
     private List<Champion> champions;
     
     @Override

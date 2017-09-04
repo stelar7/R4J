@@ -4,8 +4,10 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 
 import java.io.Serializable;
 
-public class ProviderRegistrationParameters  implements Serializable
+public class ProviderRegistrationParameters implements Serializable
 {
+    private static final long serialVersionUID = 7896252954178900155L;
+    
     private Platform region;
     private String   url;
     

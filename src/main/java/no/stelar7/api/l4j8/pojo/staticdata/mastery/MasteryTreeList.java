@@ -5,6 +5,8 @@ import java.util.List;
 
 public class MasteryTreeList implements Serializable
 {
+    private static final long serialVersionUID = 2322598625564961550L;
+    
     private List<MasteryTreeItem> masteryTreeItems;
     
     @Override

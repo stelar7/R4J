@@ -4,8 +4,10 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 
 import java.io.Serializable;
 
-public class Passive  implements Serializable
+public class Passive implements Serializable
 {
+    private static final long serialVersionUID = -1431514724519691319L;
+    
     private String description;
     private Image  image;
     private String name;

@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 import java.io.Serializable;
 
-public class MetaData  implements Serializable
+public class MetaData implements Serializable
 {
+    private static final long serialVersionUID = 6882105003422963719L;
+    
     private boolean isRune;
     private String  tier;
     private String  type;

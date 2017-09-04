@@ -10,6 +10,8 @@ import java.util.List;
 
 public class SpectatorParticipant implements Serializable
 {
+    private static final long serialVersionUID = -4280093223886492229L;
+    
     private int                    championId;
     private long                   profileIconId;
     private SummonerSpellType      spell1Id;

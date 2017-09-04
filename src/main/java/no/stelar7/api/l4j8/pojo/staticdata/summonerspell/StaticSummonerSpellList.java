@@ -3,12 +3,11 @@ package no.stelar7.api.l4j8.pojo.staticdata.summonerspell;
 import java.io.Serializable;
 import java.util.Map;
 
-public class StaticSummonerSpellList  implements Serializable
+public class StaticSummonerSpellList implements Serializable
 {
+    private static final long serialVersionUID = -9207694968560326878L;
+    
     private Map<Integer, StaticSummonerSpell> data;
-    
-    
-    
     
     @Override
     public boolean equals(final Object obj)

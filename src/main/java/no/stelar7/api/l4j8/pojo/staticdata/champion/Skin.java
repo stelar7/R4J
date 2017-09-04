@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 import java.io.Serializable;
 
-public class Skin  implements Serializable
+public class Skin implements Serializable
 {
+    private static final long serialVersionUID = 6490718203654409943L;
+    
     private int    id;
     private String name;
     private int    num;

@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.status;
 import java.io.Serializable;
 import java.util.List;
 
-public class ShardStatus  implements Serializable
+public class ShardStatus implements Serializable
 {
+    private static final long serialVersionUID = -409392794592018967L;
+    
     private String        hostname;
     private List<String>  locales;
     private String        name;

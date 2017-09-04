@@ -5,8 +5,10 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 import java.io.Serializable;
 import java.util.List;
 
-public class StaticMastery  implements Serializable
+public class StaticMastery implements Serializable
 {
+    private static final long serialVersionUID = -2913618253144483204L;
+    
     private List<String> description;
     private int          id;
     private Image        image;

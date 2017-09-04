@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class SpectatorMastery implements Serializable
 {
+    private static final long serialVersionUID = -659069564329942304L;
+    
     private long masteryId;
     private int  rank;
     

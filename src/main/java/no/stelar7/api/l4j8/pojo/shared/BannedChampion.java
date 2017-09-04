@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class BannedChampion implements Serializable
 {
+    private static final long serialVersionUID = 8871188449594133998L;
+    
     private int championId;
     private int pickTurn;
     

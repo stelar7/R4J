@@ -8,6 +8,8 @@ import java.util.List;
 
 public class TeamStats implements Serializable
 {
+    private static final long serialVersionUID = -8718660324316598418L;
+    
     private List<BannedChampion> bans;
     private int                  baronKills;
     private long                 dominionVictoryScore;

@@ -5,8 +5,10 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class Item  implements Serializable
+public class Item implements Serializable
 {
+    private static final long serialVersionUID = 7919515074046086833L;
+    
     private Map<String, String>  effect;
     private String               colloq;
     private boolean              consumeOnFull;

@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 import java.io.Serializable;
 
-public class LobbyEvent  implements Serializable
+public class LobbyEvent implements Serializable
 {
+    private static final long serialVersionUID = -3513933527957781405L;
+    
     private String eventType;
     private String summonerId;
     private String timestamp;

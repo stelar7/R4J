@@ -9,6 +9,8 @@ import java.time.*;
 
 public class ChampionMastery implements Serializable
 {
+    private static final long serialVersionUID = -5579938213777731266L;
+    
     private int     championLevel;
     private boolean chestGranted;
     private int     championPoints;

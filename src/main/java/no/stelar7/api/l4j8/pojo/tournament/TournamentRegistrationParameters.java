@@ -4,20 +4,20 @@ import java.io.Serializable;
 
 public class TournamentRegistrationParameters implements Serializable
 {
+    private static final long serialVersionUID = 3489947085635831943L;
+    
     private String name;
     private long   providerId;
     
     public TournamentRegistrationParameters(final long providerId)
     {
-        super();
-        this.providerId = providerId;
+        this("", providerId);
     }
     
-    public TournamentRegistrationParameters(final String name, final long providerId2)
+    public TournamentRegistrationParameters(final String name, final long providerId)
     {
-        super();
         this.name = name;
-        this.providerId = providerId2;
+        this.providerId = providerId;
     }
     
     

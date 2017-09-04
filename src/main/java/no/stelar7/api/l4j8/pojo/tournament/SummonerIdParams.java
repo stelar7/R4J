@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.tournament;
 import java.io.Serializable;
 import java.util.*;
 
-public class SummonerIdParams  implements Serializable
+public class SummonerIdParams implements Serializable
 {
+    private static final long serialVersionUID = -4545674020366401552L;
+    
     private final Set<Long> participants;
     
     public SummonerIdParams()

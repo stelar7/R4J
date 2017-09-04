@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.summoner.masteries;
 import java.io.Serializable;
 import java.util.List;
 
-public class MasteryPages  implements Serializable
+public class MasteryPages implements Serializable
 {
+    private static final long serialVersionUID = 5353200565516366710L;
+    
     private List<MasteryPage> pages;
     private long              summonerId;
     

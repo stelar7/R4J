@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Observer implements Serializable
 {
+    private static final long serialVersionUID = 8943260294113294522L;
+    
     private String encryptionKey;
     
     @Override

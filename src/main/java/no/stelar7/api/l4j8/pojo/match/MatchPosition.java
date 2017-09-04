@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class MatchPosition implements Serializable
 {
+    private static final long serialVersionUID = 7605395081863390628L;
+    
     private int x;
     private int y;
     

@@ -7,7 +7,9 @@ import java.util.List;
 
 public class BaseSpellData implements Serializable
 {
-    private List<Double>       cooldown;
+    private static final long serialVersionUID = 1347663708477953635L;
+    
+    private List<Double> cooldown;
     private String             cooldownBurn;
     private List<Integer>      cost;
     private String             costBurn;

@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 public class MiniSeries implements Serializable
 {
+    private static final long serialVersionUID = 6390959392928565281L;
+    
     private int    losses;
     private String progress;
     private int    target;
     private int    wins;
     
-   
+    
     /**
      * Number of current losses in the mini series.
      *

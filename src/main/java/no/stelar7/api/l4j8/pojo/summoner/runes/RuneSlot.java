@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class RuneSlot implements Serializable
 {
+    private static final long serialVersionUID = -4856044178332521435L;
     
     private int runeId;
     private int runeSlotId;

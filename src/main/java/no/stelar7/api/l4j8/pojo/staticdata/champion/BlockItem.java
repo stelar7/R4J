@@ -2,8 +2,11 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 import java.io.Serializable;
 
-public class BlockItem  implements Serializable
+public class BlockItem implements Serializable
 {
+    
+    private static final long serialVersionUID = -7656361974613593574L;
+    
     private int count;
     private int id;
     

@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.tournament;
 
 import java.io.Serializable;
 
-public class TournamentCallbackSummoner  implements Serializable
+public class TournamentCallbackSummoner implements Serializable
 {
+    private static final long serialVersionUID = 1937499754440856714L;
+    
     private String summonerName;
     private long   summonerId;
     

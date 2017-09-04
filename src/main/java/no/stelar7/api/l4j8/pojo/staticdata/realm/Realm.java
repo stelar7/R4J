@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.realm;
 import java.io.Serializable;
 import java.util.Map;
 
-public class Realm  implements Serializable
+public class Realm implements Serializable
 {
+    private static final long serialVersionUID = 1694748171988521471L;
+    
     private String              cdn;
     private String              css;
     private String              dd;

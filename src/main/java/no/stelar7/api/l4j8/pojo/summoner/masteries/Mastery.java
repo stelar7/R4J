@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.summoner.masteries;
 
 import java.io.Serializable;
 
-public class Mastery  implements Serializable
+public class Mastery implements Serializable
 {
+    private static final long serialVersionUID = 4080793113482631140L;
+    
     private int id;
     private int rank;
     

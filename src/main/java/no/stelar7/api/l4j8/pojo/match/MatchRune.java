@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class MatchRune implements Serializable
 {
+    private static final long serialVersionUID = 1824034309985371514L;
+    
     private int rank;
     private int runeId;
     

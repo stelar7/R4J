@@ -5,8 +5,10 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class StaticRune  implements Serializable
+public class StaticRune implements Serializable
 {
+    private static final long serialVersionUID = -8678427377728607929L;
+    
     private String               plaintext;
     private boolean              hideFromAll;
     private boolean              inStore;

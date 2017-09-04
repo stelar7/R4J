@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ParticipantIdentity implements Serializable
 {
+    private static final long serialVersionUID = 1762488869710744332L;
+    
     private int    participantId;
     private Player player;
     

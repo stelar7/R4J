@@ -5,6 +5,8 @@ import java.util.List;
 
 public class MatchList implements Serializable
 {
+    private static final long serialVersionUID = -7351268441697208067L;
+    
     private int                  endIndex;
     private int                  startIndex;
     private int                  totalGames;

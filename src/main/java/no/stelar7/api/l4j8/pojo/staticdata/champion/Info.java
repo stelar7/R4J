@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.champion;
 
 import java.io.Serializable;
 
-public class Info  implements Serializable
+public class Info implements Serializable
 {
+    private static final long serialVersionUID = -6152240607837015048L;
+    
     private int attack;
     private int defense;
     private int difficulty;

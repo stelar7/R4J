@@ -3,8 +3,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.rune;
 import java.io.Serializable;
 import java.util.Map;
 
-public class StaticRuneList  implements Serializable
+public class StaticRuneList implements Serializable
 {
+    private static final long serialVersionUID = -1837520049667698339L;
+    
     private Map<Integer, StaticRune> data;
     
     

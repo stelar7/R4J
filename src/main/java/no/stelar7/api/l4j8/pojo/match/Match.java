@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Match implements Serializable
 {
+    private static final long serialVersionUID = -2199053222630714286L;
+    
     private SeasonType                seasonId;
     private GameQueueType             queueId;
     private long                      gameId;

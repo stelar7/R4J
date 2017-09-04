@@ -6,8 +6,10 @@ import no.stelar7.api.l4j8.pojo.staticdata.shared.Image;
 import java.io.Serializable;
 import java.util.*;
 
-public class MapDetails  implements Serializable
+public class MapDetails implements Serializable
 {
+    private static final long serialVersionUID = -3919670965437484875L;
+    
     private Image      image;
     private MapType    mapId;
     private String     mapName;

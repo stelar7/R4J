@@ -3,13 +3,14 @@ package no.stelar7.api.l4j8.pojo.status;
 import java.io.Serializable;
 import java.util.List;
 
-public class Service  implements Serializable
+public class Service implements Serializable
 {
+    private static final long serialVersionUID = 5480375457016576866L;
+    
     private String         name;
     private String         slug;
     private String         status;
     private List<Incident> incidents;
-    
     
     
     @Override

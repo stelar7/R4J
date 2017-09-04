@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class Champion implements Serializable
 {
+    private static final long serialVersionUID = -7281036336269299149L;
     
     private boolean active;
     private boolean botEnabled;

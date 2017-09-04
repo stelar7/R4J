@@ -5,6 +5,7 @@ import java.util.*;
 
 public class ItemList implements Serializable
 {
+    private static final long serialVersionUID = 6556282881416448579L;
     
     private Map<Integer, Item> data;
     private List<Group>        groups;

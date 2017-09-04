@@ -5,6 +5,8 @@ import java.util.List;
 
 public class FeaturedGames implements Serializable
 {
+    private static final long serialVersionUID = -4396115183530070664L;
+    
     private long                    clientRefreshInterval;
     private List<SpectatorGameInfo> gameList;
     

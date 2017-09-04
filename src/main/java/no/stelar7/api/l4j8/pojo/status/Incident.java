@@ -3,13 +3,14 @@ package no.stelar7.api.l4j8.pojo.status;
 import java.io.Serializable;
 import java.util.List;
 
-public class Incident  implements Serializable
+public class Incident implements Serializable
 {
+    private static final long serialVersionUID = -8823262961963183465L;
+    
     private boolean       active;
     private String        created_at;
     private long          id;
     private List<Message> updates;
-    
     
     
     /**

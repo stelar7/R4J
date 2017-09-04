@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class ParticipantTimeline implements Serializable
 {
+    private static final long serialVersionUID = -3577088635621988014L;
+    
     private LaneType            lane;
     private long                participantId;
     private Map<String, Double> csDiffPerMinDeltas;

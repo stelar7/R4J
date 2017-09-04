@@ -2,8 +2,10 @@ package no.stelar7.api.l4j8.pojo.staticdata.item;
 
 import java.io.Serializable;
 
-public class Group  implements Serializable
+public class Group implements Serializable
 {
+    private static final long serialVersionUID = 231461349259911869L;
+    
     private String MaxGroupOwnable;
     private String key;
     

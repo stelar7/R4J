@@ -2,12 +2,12 @@ package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 import java.io.Serializable;
 
-public class BaseStaticData  implements Serializable
+public class BaseStaticData implements Serializable
 {
+    private static final long serialVersionUID = 3861893407107172040L;
+    
     private String type;
     private String version;
-    
-    
     
     @Override
     public boolean equals(final Object obj)

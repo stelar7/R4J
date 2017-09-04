@@ -2,11 +2,12 @@ package no.stelar7.api.l4j8.pojo.staticdata.language;
 
 import no.stelar7.api.l4j8.pojo.staticdata.shared.BaseStaticData;
 
-import java.io.Serializable;
 import java.util.Map;
 
-public class LanguageStrings extends BaseStaticData  implements Serializable
+public class LanguageStrings extends BaseStaticData
 {
+    private static final long serialVersionUID = -1930488558119931986L;
+    
     private Map<String, String> data;
     
     @Override

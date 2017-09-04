@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Block implements Serializable
 {
+    private static final long serialVersionUID = -2065008460415100602L;
+    
     private List<BlockItem> items;
     private boolean         recMath;
     private String          type;
