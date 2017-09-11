@@ -60,19 +60,19 @@ public enum GameQueueType
     /**
      * Summoner's Rift Coop vs AI Intro Bot games
      */
-    BOT_5X5_INTRO(31),
+    BOT_5X5_INTRO_OLD(31),
     /**
      * Summoner's Rift Coop vs AI Beginner Bot games
      */
-    BOT_5X5_BEGINNER(32),
+    BOT_5X5_BEGINNER_OLD(32),
     /**
      * Historical Summoner's Rift Coop vs AI Intermediate Bot games
      */
-    BOT_5X5_INTERMEDIATE(33),
+    BOT_5X5_INTERMEDIATE_OLD(33),
     /**
      * Twisted Treeline Coop vs AI games
      */
-    BOT_3X3_BEGINNER(52),
+    BOT_3X3_BEGINNER_OLD(52),
     /**
      * Team Builder games
      */
@@ -80,7 +80,7 @@ public enum GameQueueType
     /**
      * ARAM games
      */
-    ARAM_5X5(65),
+    ARAM_5X5_OLD(65),
     /**
      * One for All games
      */
@@ -96,7 +96,7 @@ public enum GameQueueType
     /**
      * Summoner's Rift 6x6 Hexakill games
      */
-    SR_6X6(75),
+    HEXAKILL_6X6_SR(75),
     /**
      * Ultra Rapid Fire games
      */
@@ -158,6 +158,10 @@ public enum GameQueueType
      */
     ALL_RANDOM_URF(318),
     /**
+     * All Random Summoner's Rift games
+     */
+    ARAM_5X5(325),
+    /**
      * Normal 5v5 Draft Pick games (Dynamic Queue)
      */
     TEAM_BUILDER_DRAFT_UNRANKED_5X5(400),
@@ -178,9 +182,17 @@ public enum GameQueueType
      */
     RANKED_FLEX_SR(440),
     /**
+     * ARAM games
+     */
+    ARAM(450),
+    /**
+     * Normal 3v3 Blind Pick Twisted Treeline games
+     */
+    NORMAL_3X3_BLIND_PICK(460),
+    /**
      * Ranked 3v3 Draft Pick games (Flex Queue)
      */
-    RANKED_FLEX_TT(9),
+    RANKED_FLEX_TT(470),
     /**
      * Blood Hunt Assassin games
      */
@@ -194,13 +206,29 @@ public enum GameQueueType
      */
     BOT_3X3_INTERMEDIATE(800),
     /**
+     * BOT 3x3 games
+     */
+    BOT_3X3_INTRO(810),
+    /**
+     * BOT 3x3 games
+     */
+    BOT_3X3_BEGINNER(820),
+    /**
+     * BOT 5x5 games
+     */
+    BOT_5X5_INTRO(830),
+    /**
+     * BOT 5x5 games
+     */
+    BOT_5X5_BEGINNER(840),
+    /**
+     * BOT 5x5 games
+     */
+    BOT_5X5_INTERMEDIATE(850),
+    /**
      * Invasion games
      */
     INVASION_NORMAL(980),
-    @Deprecated
-    INVASION_NORMAL_2(981),
-    @Deprecated
-    INVASION_NORMAL_3(982),
     /**
      * Invasion games
      */

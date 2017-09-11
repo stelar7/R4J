@@ -8,7 +8,6 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Burst ratelimiter will use as many calls as possible, then wait when it reaches the limit
