@@ -83,7 +83,7 @@ public class MatchListTest
     @Test
     public void testMatch()
     {
-        Match detail = api.getMatch(Platform.EUW1, 3314431930L);
+        Match detail = api.getMatch(Platform.EUW1, 3207706966L);
         System.out.println();
     }
     

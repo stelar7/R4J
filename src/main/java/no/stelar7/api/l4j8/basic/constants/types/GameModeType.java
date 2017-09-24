@@ -60,8 +60,11 @@ public enum GameModeType
     /**
      * URF mode
      */
-    URF;
-    ;
+    URF,
+    /**
+     * Doombots mode
+     */
+    DOOMBOTSTEEMO;
     
     /**
      * Returns a GameModeType from the provided value
