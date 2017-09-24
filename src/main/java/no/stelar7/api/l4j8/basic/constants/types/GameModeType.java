@@ -56,7 +56,12 @@ public enum GameModeType
     /**
      * Invasion mode
      */
-    STARGUARDIAN;
+    STARGUARDIAN,
+    /**
+     * URF mode
+     */
+    URF;
+    ;
     
     /**
      * Returns a GameModeType from the provided value

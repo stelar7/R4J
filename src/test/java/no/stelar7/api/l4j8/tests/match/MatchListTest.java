@@ -42,8 +42,8 @@ public class MatchListTest
         Set<GameQueueType> queue      = EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2017);
         Set<Integer>       champ      = null;//Arrays.asList(Constants.TEST_CHAMPION_IDS);
-        Long               beginTime  = null;//1481108400000L; // start of season 2017
-        Long               endTime    = null;//beginTime + 604800000; // 604800000 is one week in ms
+        Long               beginTime  = null;//LocalDateTime.now().withHour(0).toEpochSecond(ZoneOffset.UTC) * 1000;//1481108400000L; // start of season 2017
+        Long               endTime    = null;//LocalDateTime.now().withHour(0).plusWeeks(1).toEpochSecond(ZoneOffset.UTC) * 1000; // 604800000 is one week in ms
         Integer            beginIndex = null;//0;
         Integer            endIndex   = null;//50;
         
@@ -53,6 +53,17 @@ public class MatchListTest
         {
             Match         detail   = api.getMatch(reference.getPlatform(), reference.getGameId());
             MatchTimeline timeline = api.getTimeline(reference.getPlatform(), reference.getGameId());
+        }
+    }
+    
+    
+    @Test
+    public void testMatchlistAll()
+    {
+        for (int i = 0; i < Constants.TEST_ACCOUNT_IDS.length; i++)
+        {
+            List<MatchReference> twosix = api.getMatchList(Constants.TEST_PLATFORM[i], Constants.TEST_ACCOUNT_IDS[i], null, null, null, null, null, null, null);
+            System.out.println(twosix);
         }
     }
     
@@ -72,7 +83,8 @@ public class MatchListTest
     @Test
     public void testMatch()
     {
-        Match detail = api.getMatch(Platform.EUW1, Constants.TEST_MATCH_ID[0]);
+        Match detail = api.getMatch(Platform.EUW1, 3314431930L);
+        System.out.println();
     }
     
 }
