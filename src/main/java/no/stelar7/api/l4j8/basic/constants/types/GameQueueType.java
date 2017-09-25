@@ -12,11 +12,11 @@ public enum GameQueueType
     /**
      * Normal 3v3 games
      */
-    NORMAL_3X3(8),
+    NORMAL_3X3_BLIND_PICK_OLD(8),
     /**
      * Normal 5v5 Blind Pick games
      */
-    NORMAL_5X5_BLIND(2),
+    NORMAL_5X5_BLIND_PICK_OLD(2),
     /**
      * Normal 5v5 Draft Pick games
      */
@@ -148,7 +148,7 @@ public enum GameQueueType
     /**
      * Nexux Siege games
      */
-    SIEGE(315),
+    NEXUS_SIEGE_OLD(315),
     /**
      * Definitely Not Dominion games
      */
@@ -225,6 +225,10 @@ public enum GameQueueType
      * BOT 5x5 games
      */
     BOT_5X5_INTERMEDIATE(850),
+    /**
+     * Nexus Siege games
+     */
+    NEXUS_SIEGE(940),
     /**
      * Invasion games
      */
