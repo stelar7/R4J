@@ -102,7 +102,7 @@ public final class MatchAPI
         }
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, accountId, server, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
         if (chl.isPresent())
         {
             return (List<MatchReference>) chl.get();
@@ -115,7 +115,7 @@ public final class MatchAPI
             return Collections.emptyList();
         }
         
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches());
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches(), accountId, server, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
         return list.getMatches();
     }
     
