@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.impl;
 
+import com.sun.istack.internal.Nullable;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
@@ -7,8 +8,6 @@ import no.stelar7.api.l4j8.pojo.staticdata.item.Item;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
-
-import javax.annotation.Nullable;
 
 public final class ImageAPI
 {

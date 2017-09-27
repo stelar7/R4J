@@ -1,7 +1,10 @@
 package no.stelar7.api.l4j8.tests.match;
 
+import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.utils.LazyList;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -62,8 +65,22 @@ public class MatchListTest
     {
         for (int i = 0; i < Constants.TEST_ACCOUNT_IDS.length; i++)
         {
-            List<MatchReference> twosix = api.getMatchList(Constants.TEST_PLATFORM[i], Constants.TEST_ACCOUNT_IDS[i], null, null, null, null, null, null, null);
-            System.out.println(twosix);
+            List<MatchReference> list = api.getMatchList(Constants.TEST_PLATFORM[i], Constants.TEST_ACCOUNT_IDS[i], null, null, null, null, null, null, null);
+            Assert.assertTrue("api didnt load data?!", !list.isEmpty());
+        }
+    }
+    
+    @Test
+    public void testMatchlistAllLazy()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        
+        for (int i = 0; i < Constants.TEST_ACCOUNT_IDS.length; i++)
+        {
+            List<MatchReference> list = api.getMatchList(Constants.TEST_PLATFORM[i], Constants.TEST_ACCOUNT_IDS[i]);
+            Assert.assertTrue("LazyList loaded data?!", list.isEmpty());
+            list.get(51);
+            Assert.assertTrue("LazyList didnt load data?!", !list.isEmpty());
         }
     }
     
@@ -87,6 +104,16 @@ public class MatchListTest
         System.out.println();
     }
     
+    @Test
+    public void testLL()
+    {
+        LazyList<MatchReference> refs = new LazyList<>(50, (prevValue) -> api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, prevValue, prevValue + 50, null, null, null));
+        
+        for (MatchReference ref : refs)
+        {
+            System.out.println(ref);
+        }
+    }
 }
 
 

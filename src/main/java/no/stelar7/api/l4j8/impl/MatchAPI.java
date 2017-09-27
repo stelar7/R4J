@@ -1,11 +1,12 @@
 package no.stelar7.api.l4j8.impl;
 
+import com.sun.istack.internal.Nullable;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.utils.LazyList;
 import no.stelar7.api.l4j8.pojo.match.*;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 @SuppressWarnings("unchecked")
@@ -117,6 +118,21 @@ public final class MatchAPI
         
         DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches(), accountId, server, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
         return list.getMatches();
+    }
+    
+    /**
+     * Returns a list of all games avaliable in the api
+     * This list is updated lazily!
+     * To get all the items, either iterate the list once, or get(Integer.MAX_VALUE)
+     *
+     * @param server    the platform the account is on
+     * @param accountId the account to check
+     * @return {@code List<MatchReference>}
+     */
+    public List<MatchReference> getMatchList(Platform server, long accountId)
+    {
+        int increment = 50;
+        return new LazyList<>(increment, prevValue -> getMatchList(server, accountId, null, null, prevValue, prevValue + increment, null, null, null));
     }
     
     

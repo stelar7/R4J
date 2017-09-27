@@ -1,7 +1,5 @@
 package no.stelar7.api.l4j8.basic.exceptions;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
-
 public class APIResponseException extends RuntimeException
 {
     

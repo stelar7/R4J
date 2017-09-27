@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.impl.SummonerAPI;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.Serializable;
 
@@ -56,6 +58,11 @@ public class Player implements Serializable
     public String getSummonerName()
     {
         return this.summonerName;
+    }
+    
+    public Summoner getSummoner()
+    {
+        return SummonerAPI.getInstance().getSummonerByAccount(currentPlatformId, currentAccountId);
     }
     
     public Platform getCurrentPlatform()

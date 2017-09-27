@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.pojo.summoner;
 
 
-import no.stelar7.api.l4j8.basic.Utils;
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
