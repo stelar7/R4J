@@ -139,6 +139,18 @@ public final class Summoner implements Serializable
     }
     
     /**
+     * Returns a list of all games avaliable in the api
+     * This list is updated lazily!
+     * To get all the items, either iterate the list once, or get(Integer.MAX_VALUE)
+     *
+     * @return {@code List<MatchReference>}
+     */
+    public List<MatchReference> getGames()
+    {
+        return MatchAPI.getInstance().getMatchList(platform, accountId);
+    }
+    
+    /**
      * This method has the same function as
      * <p>
      * {@link no.stelar7.api.l4j8.impl.MasteryAPI#getChampionMastery(no.stelar7.api.l4j8.basic.constants.api.Platform, long, int)}

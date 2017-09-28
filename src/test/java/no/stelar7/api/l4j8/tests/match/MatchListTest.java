@@ -4,7 +4,6 @@ import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.basic.utils.LazyList;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -39,7 +38,6 @@ public class MatchListTest
     MatchAPI api = l4j8.getMatchAPI();
     
     @Test
-    @Ignore
     public void testMatchAndMatchList()
     {
         Set<GameQueueType> queue      = EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
@@ -105,9 +103,9 @@ public class MatchListTest
     }
     
     @Test
-    public void testLL()
+    public void testLazyList()
     {
-        LazyList<MatchReference> refs = new LazyList<>(50, (prevValue) -> api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, prevValue, prevValue + 50, null, null, null));
+        List<MatchReference> refs = SummonerAPI.getInstance().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]).getGames();
         
         for (MatchReference ref : refs)
         {
