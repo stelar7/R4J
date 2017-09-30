@@ -4,6 +4,7 @@ import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.utils.LazyList;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -105,13 +106,12 @@ public class MatchListTest
     @Test
     public void testLazyList()
     {
-        List<MatchReference> refs = SummonerAPI.getInstance().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]).getGames();
-        
-        for (MatchReference ref : refs)
-        {
-            System.out.println(ref);
-        }
+        LazyList<MatchReference> refs = SummonerAPI.getInstance().getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]).getGames();
+        Assert.assertTrue("LazyList is populated?", refs.isEmpty());
+        refs.loadFully();
+        Assert.assertTrue("LazyList is not populated?", !refs.isEmpty());
     }
+    
 }
 
 

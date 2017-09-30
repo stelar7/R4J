@@ -129,7 +129,7 @@ public final class MatchAPI
      * @param accountId the account to check
      * @return {@code List<MatchReference>}
      */
-    public List<MatchReference> getMatchList(Platform server, long accountId)
+    public LazyList<MatchReference> getMatchList(Platform server, long accountId)
     {
         int increment = 50;
         return new LazyList<>(increment, prevValue -> getMatchList(server, accountId, null, null, prevValue, prevValue + increment, null, null, null));

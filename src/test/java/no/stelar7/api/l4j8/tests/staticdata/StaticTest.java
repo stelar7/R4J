@@ -73,8 +73,8 @@ public class StaticTest
         
         EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
         
-        Item list = api.getItem(Platform.EUW1, 1018, dataFlags, null, null);
-        Assert.assertTrue("ok?", list.getId() == 1018);
+        Item list = api.getItem(Platform.EUW1, 3147, dataFlags, null, null);
+        Assert.assertTrue("ok?", list.getId() == 3147);
     }
     
     

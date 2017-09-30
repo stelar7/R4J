@@ -20,14 +20,25 @@ public class LazyList<T> extends ArrayList<T>
         this.increment = increment;
     }
     
-    public boolean loadMoreData()
+    public void loadFully()
+    {
+        while (hasMore)
+        {
+            hasMore = loadMoreData();
+        }
+    }
+    
+    /**
+     * @return true if has more data
+     */
+    private boolean loadMoreData()
     {
         List<T> more = makerOfMoreData.apply(lastValue);
         lastValue += increment;
         
         if (more.isEmpty())
         {
-            return (hasMore = false);
+            return false;
         }
         
         this.addAll(more);
@@ -82,7 +93,7 @@ public class LazyList<T> extends ArrayList<T>
         {
             return false;
         }
-        return (makerOfMoreData != null) ? makerOfMoreData.equals(lazyList.makerOfMoreData) : (lazyList.makerOfMoreData == null);
+        return hasMore == lazyList.hasMore;
     }
     
     @Override
@@ -91,7 +102,7 @@ public class LazyList<T> extends ArrayList<T>
         int result = super.hashCode();
         result = 31 * result + lastValue;
         result = 31 * result + increment;
-        result = 31 * result + (makerOfMoreData != null ? makerOfMoreData.hashCode() : 0);
+        result = 31 * result + (hasMore ? 1 : 0);
         return result;
     }
     
@@ -111,7 +122,7 @@ public class LazyList<T> extends ArrayList<T>
         {
             this.index = startIndex;
             
-            while (startIndex >= size && LazyList.this.loadMoreData())
+            while (startIndex >= size && (hasMore = LazyList.this.loadMoreData()))
             {
                 size = size();
             }
@@ -125,7 +136,8 @@ public class LazyList<T> extends ArrayList<T>
                 return true;
             }
             
-            if (loadMoreData())
+            hasMore = loadMoreData();
+            if (hasMore)
             {
                 size = size();
                 return true;

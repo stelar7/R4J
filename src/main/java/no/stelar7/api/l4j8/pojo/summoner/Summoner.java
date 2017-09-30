@@ -145,7 +145,7 @@ public final class Summoner implements Serializable
      *
      * @return {@code List<MatchReference>}
      */
-    public List<MatchReference> getGames()
+    public LazyList<MatchReference> getGames()
     {
         return MatchAPI.getInstance().getMatchList(platform, accountId);
     }
