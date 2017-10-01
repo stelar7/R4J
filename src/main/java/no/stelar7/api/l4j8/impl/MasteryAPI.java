@@ -1,10 +1,10 @@
 package no.stelar7.api.l4j8.impl;
 
-import com.sun.istack.internal.Nullable;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Logger;

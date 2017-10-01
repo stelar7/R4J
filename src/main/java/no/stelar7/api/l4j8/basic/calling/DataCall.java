@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.basic.calling;
 
 
-import com.sun.istack.internal.Nullable;
 import no.stelar7.api.l4j8.basic.APICredentials;
 import no.stelar7.api.l4j8.basic.cache.CacheProvider;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.RateLimiter;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public final class DataCall

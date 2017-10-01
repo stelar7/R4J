@@ -1,9 +1,6 @@
 package no.stelar7.api.l4j8.pojo.match;
 
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.impl.StaticAPI;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.io.Serializable;
 import java.util.*;
@@ -23,16 +20,6 @@ public class Participant implements Serializable
     private TeamType            teamId;
     private ParticipantTimeline timeline;
     
-    
-    /**
-     * returns a StaticChampion from the id
-     *
-     * @return StaticChampion
-     */
-    public StaticChampion getChampion()
-    {
-        return StaticAPI.getInstance().getChampion(Platform.EUW1, this.championId, null, null, null);
-    }
     
     /**
      * returns the id of the champion played by this participant

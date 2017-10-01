@@ -3,12 +3,12 @@ package no.stelar7.api.l4j8.tests.example;
 import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.constants.flags.*;
-import no.stelar7.api.l4j8.basic.constants.types.TierDivisionType;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
@@ -25,7 +25,11 @@ public class UseageTest
         L4J8 api = new L4J8(SecretFile.CREDS);
         DataCall.setLogLevel(LogLevel.INFO);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCHLIST);
         
+        Map<Integer, StaticRune>     runeData      = api.getStaticAPI().getRunes(Platform.EUW1, null, null, null);
+        Map<Integer, StaticMastery>  masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, null, null, null);
+        Map<Integer, StaticChampion> championData  = api.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
         
         Summoner             stelar7        = api.getSummonerAPI().getSummonerByName(Platform.EUW1, "stelar7");
         List<MatchReference> some           = stelar7.getGames(null, null, null, null, null, null, null);
@@ -37,18 +41,17 @@ public class UseageTest
         List<MatchRune>    runes      = self.getRunes();
         List<MatchMastery> masteries  = self.getMasteries();
         List<LeagueList>   fullLeague = stelar7.getFullLeague();
-        ChampionMastery    mastery    = stelar7.getChampionMastery(mostRecentGame.getChampion().getId());
+        StaticChampion     champion   = championData.get(mostRecentGame.getChampionId());
+    
+        ChampionMastery mastery = stelar7.getChampionMastery(champion.getId());
         
         boolean didWin = match.didWin(self);
         
         ParticipantIdentity opponentIdentity = match.getLaneOpponentIdentity(self);
         Participant         opponent         = match.getParticipantFromParticipantId(opponentIdentity.getParticipantId());
+        StaticChampion      opponentChampion = championData.get(opponent.getChampionId());
         
-        Map<Integer, StaticRune>    runeData      = api.getStaticAPI().getRunes(Platform.EUW1, EnumSet.of(RuneDataFlags.ALL), null, null);
-        Map<Integer, StaticMastery> masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, EnumSet.of(MasteryDataFlags.ALL), null, null);
-        
-        
-        System.out.format("Player '%s' played their latest game as '%s'%n", stelar7.getName(), mostRecentGame.getChampion().getName());
+        System.out.format("Player '%s' played their latest game as '%s'%n", stelar7.getName(), champion.getName());
         
         System.out.format("They have a masteryscore of %s on that champion%n", mastery.getChampionPoints());
         
@@ -56,7 +59,7 @@ public class UseageTest
         
         System.out.format("They %s that game%n", didWin ? "won" : "lost");
         
-        System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getPlayer().getSummonerName(), opponent.getChampion().getName());
+        System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getPlayer().getSummonerName(), opponentChampion.getName());
         
         System.out.format("%nThey used the following runes:%n");
         for (MatchRune rune : runes)

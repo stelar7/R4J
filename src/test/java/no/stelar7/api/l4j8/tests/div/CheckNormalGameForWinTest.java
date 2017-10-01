@@ -29,7 +29,7 @@ public class CheckNormalGameForWinTest
             
             for (Participant participant : fullGame.getParticipants())
             {
-                if (participant.getChampion().getId() == current.getChampion().getId())
+                if (participant.getChampionId() == current.getChampionId())
                 {
                     candidates.add(participant);
                 }
@@ -77,7 +77,7 @@ public class CheckNormalGameForWinTest
             
             for (Participant participant : fullGame.getParticipants())
             {
-                if (participant.getChampion().getId() == current.getChampion().getId())
+                if (participant.getChampionId() == current.getChampionId())
                 {
                     candidates.add(participant);
                 }

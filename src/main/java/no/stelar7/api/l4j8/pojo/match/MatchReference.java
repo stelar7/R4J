@@ -2,8 +2,7 @@ package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.impl.*;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
+import no.stelar7.api.l4j8.impl.MatchAPI;
 
 import java.io.Serializable;
 import java.time.*;
@@ -31,17 +30,6 @@ public class MatchReference implements Serializable
     {
         return MatchAPI.getInstance().getTimeline(platformId, gameId);
     }
-    
-    /**
-     * champion associated with game.
-     *
-     * @return StaticChampion
-     */
-    public StaticChampion getChampion()
-    {
-        return StaticAPI.getInstance().getChampion(Platform.EUW1, this.champion, null, null, null);
-    }
-    
     
     /**
      * championid associated with game.

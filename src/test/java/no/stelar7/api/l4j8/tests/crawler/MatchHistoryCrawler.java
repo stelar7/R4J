@@ -7,6 +7,7 @@ import no.stelar7.api.l4j8.basic.exceptions.APIEnumNotUpToDateException;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.tests.SecretFile;
 
 import java.sql.*;
@@ -38,7 +39,10 @@ public class MatchHistoryCrawler
     private PreparedStatement rInsertStatement;
     private PreparedStatement psInsertStatement;
     
-    // TODO: make this use the new cache system, when its finished
+    private Map<Integer, StaticChampion> championMap;
+    
+    
+    // TODO: make this use the new mysql cache system, when its finished
     
     private MatchHistoryCrawler() throws SQLException, InterruptedException
     {
@@ -119,6 +123,9 @@ public class MatchHistoryCrawler
         mmInsertStatement = sql.getConnection().prepareStatement(M_INSERT, Statement.RETURN_GENERATED_KEYS);
         rInsertStatement = sql.getConnection().prepareStatement(R_INSERT, Statement.RETURN_GENERATED_KEYS);
         psInsertStatement = sql.getConnection().prepareStatement(PS_INSERT, Statement.RETURN_GENERATED_KEYS);
+        
+        championMap = api.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
+        
     }
     
     private void insertMatches(List<Pair<Long, Platform>> dataset)
@@ -326,7 +333,7 @@ public class MatchHistoryCrawler
     {
         pInsertStatement.setLong(1, matchid);
         pInsertStatement.setLong(2, participant.getParticipantId());
-        pInsertStatement.setLong(3, participant.getChampion().getId());
+        pInsertStatement.setLong(3, participant.getChampionId());
         pInsertStatement.setLong(4, participant.getSpell1().getValue());
         pInsertStatement.setLong(5, participant.getSpell2().getValue());
         pInsertStatement.setString(6, participant.getTimeline().getRole().name());
@@ -347,7 +354,7 @@ public class MatchHistoryCrawler
     {
         for (TeamType type : TeamType.values())
         {
-            TeamStats team = match.getTeamStats(type);
+            TeamStats team = match.getTeamStats(type).get(0);
             tsInsertStatement.setLong(1, matchid);
             tsInsertStatement.setLong(2, team.getTeamType().getValue());
             tsInsertStatement.setBoolean(3, team.isFirstBlood());
@@ -367,7 +374,7 @@ public class MatchHistoryCrawler
             {
                 tbInsertStatement.setLong(1, matchid);
                 tbInsertStatement.setLong(2, team.getTeamType().getValue());
-                tbInsertStatement.setLong(3, ban.getChampion().getId());
+                tbInsertStatement.setLong(3, ban.getChampionId());
                 tbInsertStatement.setLong(4, ban.getPickTurn());
                 tbInsertStatement.executeUpdate();
             }

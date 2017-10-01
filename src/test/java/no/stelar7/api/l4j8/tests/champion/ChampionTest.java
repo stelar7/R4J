@@ -32,7 +32,7 @@ public class ChampionTest
         champ.sort(Comparator.comparing(Champion::getId));
         for (Champion champion : champ)
         {
-            System.out.format("%s: %s%n", champion.getChampion().getId(), champion.getChampion().getName());
+            System.out.format("%s%n", champion.getId());
         }
     }
     

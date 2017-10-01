@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.*;
 
 public class Match implements Serializable
 {
@@ -193,7 +194,7 @@ public class Match implements Serializable
     
     public boolean didWin(Participant participant)
     {
-        return getTeamStats(participant.getTeam()).isWinner();
+        return getTeamStats(participant.getTeam()).get(0).isWinner();
     }
     
     /**
@@ -255,9 +256,10 @@ public class Match implements Serializable
      * @param team the team to get info about
      * @return {@code TeamStats}
      */
-    public TeamStats getTeamStats(TeamType team)
+    public List<TeamStats> getTeamStats(TeamType... team)
     {
-        return this.teams.stream().filter(t -> t.getTeamType() == team).findFirst().get();
+        List<TeamType> types = Stream.of(team).collect(Collectors.toList());
+        return this.teams.stream().filter(t -> types.contains(t.getTeamType())).collect(Collectors.toList());
     }
     
     /**

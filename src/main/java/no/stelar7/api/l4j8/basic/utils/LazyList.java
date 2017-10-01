@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.utils;
 
-import com.sun.istack.internal.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Function;
 
@@ -45,22 +45,21 @@ public class LazyList<T> extends ArrayList<T>
         return true;
     }
     
-    
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<T> iterator()
     {
         return new LazyListIterator(-1);
     }
     
-    @NotNull
+    @Nonnull
     @Override
     public ListIterator<T> listIterator()
     {
         return new LazyListIterator(-1);
     }
     
-    @NotNull
+    @Nonnull
     @Override
     public ListIterator<T> listIterator(int index)
     {

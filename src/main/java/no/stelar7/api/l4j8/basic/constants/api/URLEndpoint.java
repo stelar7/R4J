@@ -99,7 +99,6 @@ public enum URLEndpoint
     //    lol/match/v3/timelines/by-match/{matchId}
     V3_MATCH("lol", "match", "v3", "matches/" + Constants.MATCH_ID_PLACEHOLDER, Match.class),
     V3_MATCHLIST("lol", "match", "v3", "matchlists/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, MatchList.class),
-    V3_MATCHLIST_RECENT("lol", "match", "v3", "matchlists/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER + "/recent", MatchList.class),
     V3_TIMELINE("lol", "match", "v3", "timelines/by-match/" + Constants.MATCH_ID_PLACEHOLDER, MatchTimeline.class),
     
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}

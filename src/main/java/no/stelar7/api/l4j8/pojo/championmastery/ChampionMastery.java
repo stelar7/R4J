@@ -1,9 +1,5 @@
 package no.stelar7.api.l4j8.pojo.championmastery;
 
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.impl.StaticAPI;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
-
 import java.io.Serializable;
 import java.time.*;
 
@@ -23,13 +19,13 @@ public class ChampionMastery implements Serializable
     
     
     /**
-     * StaticChampion for this entry.
+     * The id of the champion
      *
-     * @return the champion id
+     * @return int
      */
-    public StaticChampion getChampion()
+    public int getChampionId()
     {
-        return StaticAPI.getInstance().getChampion(Platform.EUW1, this.championId, null, null, null);
+        return championId;
     }
     
     /**

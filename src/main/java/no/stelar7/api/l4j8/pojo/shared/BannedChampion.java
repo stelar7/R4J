@@ -1,9 +1,5 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.impl.StaticAPI;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
-
 import java.io.Serializable;
 
 public class BannedChampion implements Serializable
@@ -13,16 +9,6 @@ public class BannedChampion implements Serializable
     private int championId;
     private int pickTurn;
     
-    
-    /**
-     * The banned champion
-     *
-     * @return StaticChampion
-     */
-    public StaticChampion getChampion()
-    {
-        return StaticAPI.getInstance().getChampion(Platform.EUW1, this.championId, null, null, null);
-    }
     
     /**
      * The ID of the banned champion

@@ -1,9 +1,5 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.impl.StaticAPI;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
-
 import java.io.Serializable;
 
 public class Champion implements Serializable
@@ -20,11 +16,6 @@ public class Champion implements Serializable
     public int getId()
     {
         return this.id;
-    }
-    
-    public StaticChampion getChampion()
-    {
-        return StaticAPI.getInstance().getChampion(Platform.EUW1, this.id, null, null, null);
     }
     
     public boolean isActive()

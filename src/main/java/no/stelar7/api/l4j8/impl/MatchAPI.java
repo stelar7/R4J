@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.impl;
 
-import com.sun.istack.internal.Nullable;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.utils.LazyList;
 import no.stelar7.api.l4j8.pojo.match.*;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 @SuppressWarnings("unchecked")

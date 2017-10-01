@@ -90,16 +90,16 @@ public class MatchListTest
         Set<SeasonType> preSevenList = EnumSet.of(SeasonType.PRE_SEASON_2017);
         Set<SeasonType> sevenList    = EnumSet.of(SeasonType.SEASON_2017);
         
-        List<MatchReference> twosix   = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, sixList, null);
-        List<MatchReference> preseven = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, preSevenList, null);
-        List<MatchReference> twoseven = api.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, sevenList, null);
+        List<MatchReference> twosix   = api.getMatchList(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, sixList, null);
+        List<MatchReference> preseven = api.getMatchList(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, preSevenList, null);
+        List<MatchReference> twoseven = api.getMatchList(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, sevenList, null);
     }
     
     
     @Test
     public void testMatch()
     {
-        Match detail = api.getMatch(Platform.EUW1, 3207706966L);
+        Match detail = api.getMatch(Platform.EUW1, Constants.TEST_MATCH_ID[0]);
         System.out.println();
     }
     
