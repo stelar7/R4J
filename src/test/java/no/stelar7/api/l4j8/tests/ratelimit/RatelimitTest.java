@@ -97,7 +97,7 @@ public class RatelimitTest
             l4j8.getStaticAPI().getLanguages(plat);
             if (i % 9 == 0)
             {
-                  plat = Platform.values()[plat.ordinal() + 1];
+                plat = Platform.values()[plat.ordinal() + 1];
             }
             System.out.format("call no. %s Total time: %sms%n", i + 1, stopwatch.runtime(TimeUnit.MILLISECONDS));
         }
