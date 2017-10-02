@@ -1,6 +1,5 @@
 package no.stelar7.api.l4j8.tests.ratelimit;
 
-import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
@@ -82,7 +81,6 @@ public class RatelimitTest
     @Test
     public void testRateLimitWithSleep() throws InterruptedException
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
         l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]);
         TimeUnit.SECONDS.sleep(10);
         l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]);
@@ -99,7 +97,7 @@ public class RatelimitTest
             l4j8.getStaticAPI().getLanguages(plat);
             if (i % 9 == 0)
             {
-                plat = Platform.values()[plat.ordinal() + 1];
+                  plat = Platform.values()[plat.ordinal() + 1];
             }
             System.out.format("call no. %s Total time: %sms%n", i + 1, stopwatch.runtime(TimeUnit.MILLISECONDS));
         }

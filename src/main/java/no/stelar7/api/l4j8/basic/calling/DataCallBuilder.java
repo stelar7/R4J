@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.basic.calling;
 
-import no.stelar7.api.l4j8.basic.utils.Utils;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
+import no.stelar7.api.l4j8.basic.utils.Utils;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;
@@ -50,14 +50,14 @@ public class DataCallBuilder
             System.err.format("Trying url: %s%n", url);
         }
         
-        // method limit
-        applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
         // app limit
         applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
+        // method limit
+        applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
         
         
         final DataCallResponse response = this.getResponse(url);
-        if (DataCall.getLogLevel().ordinal() >= LogLevel.INFO.ordinal())
+        if (DataCall.getLogLevel().ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
         {
             System.err.println(response);
         }
@@ -92,6 +92,7 @@ public class DataCallBuilder
                     return sleepAndRetry(retrys, "Ratelimit reached too many times, waiting 10 second and retrying", "Ratelimit reached (%s / 3 times), waiting 1 second and retrying%n");
                 } else
                 {
+                    System.err.println();
                     System.err.println(response.getResponseData());
                     System.err.println("429 ratelimit hit! Please do not restart your application to refresh the timer!");
                     System.err.println("This isnt supposed to happen unless you restarted your app before the last limit was hit!");
@@ -273,7 +274,17 @@ public class DataCallBuilder
             if (con.getResponseCode() == 429)
             {
                 final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
-                String              reason    = String.format("%s%n%s", limitType.getReason(), DataCall.getLimiter().get(dc.getPlatform()));
+                
+                StringBuilder valueList = new StringBuilder();
+                DataCall.getLimiter().get(dc.getPlatform()).forEach((key, value) -> {
+                    valueList.append(key);
+                    valueList.append("=");
+                    valueList.append(value.getCallCountInTime());
+                    valueList.append("\n");
+                });
+                
+                String reasonString = String.format("%s%n%s", limitType.getReason(), valueList.toString().trim());
+                String reason       = String.format("%s%n", reasonString);
                 
                 if (limitType == RateLimitType.LIMIT_METHOD)
                 {

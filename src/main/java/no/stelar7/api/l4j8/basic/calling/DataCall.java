@@ -16,8 +16,10 @@ public final class DataCall
     private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
     
     private static APICredentials creds;
-    private static CacheProvider cache    = CacheProvider.EmptyProvider.INSTANCE;
-    private static LogLevel      logLevel = LogLevel.NONE;
+    private static CacheProvider cache          = CacheProvider.EmptyProvider.INSTANCE;
+    private static LogLevel      logLevel       = LogLevel.NONE;
+    private static int           callStackSkip  = 5;
+    private static int           callStackLimit = 5;
     
     private final Map<String, String> urlParams  = new TreeMap<>();
     private final Map<String, String> urlData    = new TreeMap<>();
@@ -130,5 +132,26 @@ public final class DataCall
     public String getProxy()
     {
         return urlProxy;
+    }
+    
+    
+    public static int getCallStackSkip()
+    {
+        return callStackSkip;
+    }
+    
+    public static void setCallStackSkip(int callStackSkip)
+    {
+        DataCall.callStackSkip = callStackSkip;
+    }
+    
+    public static int getCallStackLimit()
+    {
+        return callStackLimit;
+    }
+    
+    public static void setCallStackLimit(int callStackLimit)
+    {
+        DataCall.callStackLimit = callStackLimit;
     }
 }

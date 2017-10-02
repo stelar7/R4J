@@ -6,7 +6,7 @@ import no.stelar7.api.l4j8.basic.constants.api.LogLevel;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
@@ -26,8 +26,25 @@ public class BurstRateLimiter extends RateLimiter
         try
         {
             update();
+            long sleepTime = getDelay();
             
-            Thread.sleep(getDelay());
+            if (sleepTime != 0)
+            {
+                Duration dur = Duration.of(sleepTime, ChronoUnit.MILLIS);
+                System.err.format("Ratelimited activated! Sleeping for: %s%n", dur);
+                
+                if (DataCall.getLogLevel().ordinal() >= LogLevel.INFO.ordinal())
+                {
+                    int skip  = DataCall.getCallStackSkip();
+                    int limit = DataCall.getCallStackLimit();
+                    System.err.println();
+                    System.err.println("Callstack:");
+                    Arrays.stream(Thread.currentThread().getStackTrace()).skip(skip).limit(limit).forEachOrdered(System.err::println);
+                }
+            }
+            
+            
+            Thread.sleep(sleepTime);
         } catch (InterruptedException e)
         {
             e.printStackTrace();
@@ -99,8 +116,6 @@ public class BurstRateLimiter extends RateLimiter
         if (delay[0] != 0)
         {
             delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias));
-            Duration dur = Duration.of(delay[0], ChronoUnit.MILLIS);
-            System.err.format("Ratelimited activated! Sleeping for: %s%n", dur);
         }
         
         return delay[0];
