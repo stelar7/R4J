@@ -15,9 +15,9 @@ Check out one of the many [tests](https://github.com/stelar7/L4J8/tree/master/sr
 
 | Cache           | Supported |
 | :------------: | :-------: |
-| Summoner            | Yes!      |
-| Match            | Yes!      |
-| The rest...         | Not yet :(     |
+| Memory            | Yes!      |
+| FileSystem            | Yes!      |
+| SQL         | Not yet :(     |
 
 
 ## How do I download?
