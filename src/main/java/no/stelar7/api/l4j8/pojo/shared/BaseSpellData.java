@@ -3,13 +3,13 @@ package no.stelar7.api.l4j8.pojo.shared;
 import no.stelar7.api.l4j8.pojo.staticdata.shared.*;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 public class BaseSpellData implements Serializable
 {
     private static final long serialVersionUID = 1347663708477953635L;
     
-    private List<Double> cooldown;
+    private List<Double>       cooldown;
     private String             cooldownBurn;
     private List<Integer>      cost;
     private String             costBurn;
@@ -166,19 +166,9 @@ public class BaseSpellData implements Serializable
      * @return the range
      */
     @SuppressWarnings("unchecked")
-    public List<Integer> getRangeAsList()
+    public List<Integer> getRange()
     {
-        return (this.range instanceof List) ? (List<Integer>) this.range : null;
-    }
-    
-    /**
-     * Only valid for some spells
-     *
-     * @return the range
-     */
-    public String getRangeAsString()
-    {
-        return (this.range instanceof String) ? (String) this.range : null;
+        return (this.range instanceof List) ? (List<Integer>) this.range : Collections.singletonList(Integer.parseInt((String) range));
     }
     
     /**
@@ -208,7 +198,7 @@ public class BaseSpellData implements Serializable
      */
     public String getSanitizedDescription()
     {
-        return this.sanitizedDescription;
+        return this.sanitizedDescription != null ? sanitizedDescription : sanitize(description);
     }
     
     /**
@@ -218,17 +208,25 @@ public class BaseSpellData implements Serializable
      */
     public String getSanitizedTooltip()
     {
-        return this.sanitizedTooltip;
+        return this.sanitizedTooltip != null ? this.sanitizedTooltip : sanitize(tooltip);
     }
     
     public String getSanitizedTooltip(final int champLevel, final int spellLevel)
     {
-        return this.replaceVariables(this.sanitizedTooltip, champLevel, spellLevel);
+        return this.replaceVariables(getSanitizedTooltip(), champLevel, spellLevel);
     }
     
     public String getTooltip(final int champLevel, final int spellLevel)
     {
         return this.replaceVariables(this.tooltip, champLevel, spellLevel);
+    }
+    
+    private String sanitize(String inData)
+    {
+        String outData = inData;
+        outData = outData.replaceAll("<br>", "\n");
+        outData = outData.replaceAll("<.+?>", "");
+        return outData;
     }
     
     private String replaceVariables(String text, final int clevel, final int slevel)

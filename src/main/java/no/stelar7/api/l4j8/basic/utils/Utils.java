@@ -46,7 +46,7 @@ public final class Utils
         builder.registerTypeAdapter(TournamentSpectatorType.class, new TournamentSpectatorTypeDeserializer());
         builder.registerTypeAdapter(TowerType.class, new TowerTypeDeserializer());
         builder.registerTypeAdapter(WardType.class, new WardTypeDeserializer());
-        gson = builder.create();
+        gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
     }
     
     public static Gson getGson()

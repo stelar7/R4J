@@ -1,17 +1,17 @@
 package no.stelar7.api.l4j8.pojo.staticdata.shared;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 public class SpellVars implements Serializable
 {
     private static final long serialVersionUID = -8372973077273055306L;
     
-    private List<Double> coeff;
-    private String       dyn;
-    private String       key;
-    private String       link;
-    private String       ranksWith;
+    private Object coeff;
+    private String dyn;
+    private String key;
+    private String link;
+    private String ranksWith;
     
     
     @Override
@@ -90,7 +90,7 @@ public class SpellVars implements Serializable
      */
     public List<Double> getCoeff()
     {
-        return this.coeff;
+        return this.coeff instanceof List ? (List<Double>) this.coeff : Collections.singletonList((Double) coeff);
     }
     
     /**
