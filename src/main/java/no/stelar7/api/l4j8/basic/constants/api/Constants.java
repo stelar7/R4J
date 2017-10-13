@@ -37,6 +37,7 @@ public final class Constants
     public static final String PLATFORM_ID_PLACEHOLDER     = "{platformId}";
     public static final String SUMMONER_ID_PLACEHOLDER     = "{summonerId}";
     public static final String SUMMONER_IDS_PLACEHOLDER    = "{summonerIds}";
+    public static final String LEAGUE_ID_PLACEHOLDER       = "{leagueId}";
     public static final String ACCOUNT_ID_PLACEHOLDER      = "{accountId}";
     public static final String SUMMONER_NAME_PLACEHOLDER   = "{summonerName}";
     public static final String CHAMPION_ID_PLACEHOLDER     = "{championId}";

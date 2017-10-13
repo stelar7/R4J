@@ -109,28 +109,27 @@ public final class LeagueAPI
     
     
     /**
-     * Get leagues mapped by summoner ID for a given list of summoner IDs.
-     * Empty if unranked
+     * Get league from its ID.
      *
-     * @param server     region to get data from
-     * @param summonerId summoner to get data for
+     * @param server   region to get data from
+     * @param leagueId league to get data for
      * @return LeagueList
      */
-    public List<LeagueList> getLeague(Platform server, long summonerId)
+    public LeagueList getLeague(Platform server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+                                                       .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(leagueId))
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE, summonerId, server);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE, leagueId, server);
         if (chl.isPresent())
         {
-            return (List<LeagueList>) chl.get();
+            return (LeagueList) chl.get();
         }
         
-        List<LeagueList> list = (List<LeagueList>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list, summonerId, server);
+        LeagueList list = (LeagueList) builder.build();
+        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list, leagueId, server);
         return list;
     }
 }

@@ -195,20 +195,6 @@ public final class Summoner implements Serializable
     }
     
     /**
-     * This method has the same function as
-     * <p>
-     * {@link no.stelar7.api.l4j8.impl.LeagueAPI#getLeague(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
-     * <p>
-     * but with the id and platform already set
-     *
-     * @return {@code List<LeagueList> }
-     */
-    public List<LeagueList> getFullLeague()
-    {
-        return LeagueAPI.getInstance().getLeague(platform, id);
-    }
-    
-    /**
      * Platform this summoner is on
      *
      * @return Platform

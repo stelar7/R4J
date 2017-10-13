@@ -22,6 +22,7 @@ public class LeaguePosition implements Serializable
     private boolean       freshBlood;
     private String        tier;
     private int           leaguePoints;
+    private String        leagueId;
     
     public String getRank()
     {
@@ -169,7 +170,11 @@ public class LeaguePosition implements Serializable
         {
             return false;
         }
-        return (tier != null) ? tier.equals(that.tier) : (that.tier == null);
+        if ((tier != null) ? !tier.equals(that.tier) : (that.tier != null))
+        {
+            return false;
+        }
+        return (leagueId != null) ? leagueId.equals(that.leagueId) : (that.leagueId == null);
     }
     
     @Override
@@ -189,7 +194,14 @@ public class LeaguePosition implements Serializable
         result = 31 * result + (freshBlood ? 1 : 0);
         result = 31 * result + (tier != null ? tier.hashCode() : 0);
         result = 31 * result + leaguePoints;
+        result = 31 * result + (leagueId != null ? leagueId.hashCode() : 0);
         return result;
+    }
+    
+    public String getLeagueId()
+    {
+        
+        return leagueId;
     }
     
     @Override

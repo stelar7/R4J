@@ -33,9 +33,4 @@ public class LeagueTest
         List<LeaguePosition> data = api.getLeaguePosition(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
     }
     
-    @Test
-    public void testLeague()
-    {
-        List<LeagueList> data = api.getLeague(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
-    }
 }

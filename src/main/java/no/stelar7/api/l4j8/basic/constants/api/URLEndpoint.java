@@ -105,7 +105,7 @@ public enum URLEndpoint
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}/entry
     // api/lol/{region}/v2.5/league/challenger
     // api/lol/{region}/v2.5/league/master
-    V3_LEAGUE("lol", "league", "v3", "leagues/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeagueList>>() {}.getType()),
+    V3_LEAGUE("lol", "league", "v3", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
     V3_LEAGUE_ENTRY("lol", "league", "v3", "positions/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeaguePosition>>() {}.getType()),
     V3_LEAGUE_CHALLENGER("lol", "league", "v3", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V3_LEAGUE_MASTER("lol", "league", "v3", "masterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),

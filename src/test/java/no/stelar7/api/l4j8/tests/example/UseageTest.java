@@ -3,10 +3,8 @@ package no.stelar7.api.l4j8.tests.example;
 import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
-import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
@@ -40,7 +38,6 @@ public class UseageTest
         
         List<MatchRune>    runes      = self.getRunes();
         List<MatchMastery> masteries  = self.getMasteries();
-        List<LeagueList>   fullLeague = stelar7.getFullLeague();
         StaticChampion     champion   = championData.get(mostRecentGame.getChampionId());
     
         ChampionMastery mastery = stelar7.getChampionMastery(champion.getId());
@@ -74,20 +71,7 @@ public class UseageTest
             String name = masteriesData.get(matchMastery.getMasteryId()).getName();
             System.out.format("Name: '%-45s' Level: %s%n", name, matchMastery.getRank());
         }
-        
-        
-        for (LeagueList leagueList : fullLeague)
-        {
-            LeagueItem       position     = leagueList.getLeagueItem(stelar7.getSummonerId());
-            TierDivisionType tierDivision = leagueList.getTierDivisionType(stelar7.getSummonerId());
-            
-            System.out.format("%n%s (%s):%n", leagueList.getLeagueName(), leagueList.getQueueType());
-            System.out.format("There are %s players in the league%n", leagueList.getEntries().size());
-            
-            System.out.format("They currently in %s%n", tierDivision);
-            System.out.format("They are%sin a promo to %s%n", position.isInPromos() ? "" : " not ", tierDivision.getNext());
-            System.out.format("They have %sLP%n", position.getLeaguePoints());
-        }
+    
     }
     
     /*
@@ -117,17 +101,6 @@ public class UseageTest
     Name: 'Merciless                                    ' Level: 5
     Name: 'Dangerous Game                               ' Level: 1
 
-    Poppy's Templars (RANKED_SOLO_5X5):
-    There are 202 players in the league
-    They currently in GOLD_II
-    They are not in a promo to GOLD_I
-    They have 34LP
-
-    Soraka's Sentinels (RANKED_FLEX_SR):
-    There are 200 players in the league
-    They currently in SILVER_V
-    They are not in a promo to SILVER_IV
-    They have 0LP
      
      *
      */

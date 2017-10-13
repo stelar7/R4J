@@ -13,6 +13,7 @@ public class LeagueList implements Serializable
     private String           name;
     private GameQueueType    queue;
     private TierType         tier;
+    private String           leagueId;
     
     
     /**
@@ -42,62 +43,47 @@ public class LeagueList implements Serializable
     }
     
     @Override
-    public boolean equals(final Object obj)
+    public boolean equals(Object o)
     {
-        if (this == obj)
+        if (this == o)
         {
             return true;
         }
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
-        if (this.getClass() != obj.getClass())
+        
+        LeagueList that = (LeagueList) o;
+        
+        if ((entries != null) ? !entries.equals(that.entries) : (that.entries != null))
         {
             return false;
         }
-        final LeagueList other = (LeagueList) obj;
-        if (this.entries == null)
-        {
-            if (other.entries != null)
-            {
-                return false;
-            }
-        } else if (!this.entries.equals(other.entries))
+        if ((name != null) ? !name.equals(that.name) : (that.name != null))
         {
             return false;
         }
-        if (this.name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        } else if (!this.name.equals(other.name))
+        if (queue != that.queue)
         {
             return false;
         }
-        if (this.queue == null)
-        {
-            if (other.queue != null)
-            {
-                return false;
-            }
-        } else if (!this.queue.equals(other.queue))
+        if (tier != that.tier)
         {
             return false;
         }
-        if (this.tier == null)
-        {
-            if (other.tier != null)
-            {
-                return false;
-            }
-        } else if (!this.tier.equals(other.tier))
-        {
-            return false;
-        }
-        return true;
+        return (leagueId != null) ? leagueId.equals(that.leagueId) : (that.leagueId == null);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int result = entries != null ? entries.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (queue != null ? queue.hashCode() : 0);
+        result = 31 * result + (tier != null ? tier.hashCode() : 0);
+        result = 31 * result + (leagueId != null ? leagueId.hashCode() : 0);
+        return result;
     }
     
     /**
@@ -120,6 +106,16 @@ public class LeagueList implements Serializable
         return this.name;
     }
     
+    /**
+     * ID of the league
+     *
+     * @return String
+     */
+    public String getLeagueId()
+    {
+        return leagueId;
+    }
+    
     
     /**
      * The league's queue type. (Legal values: RANKED_SOLO_5x5, RANKED_TEAM_3x3, RANKED_TEAM_5x5)
@@ -139,18 +135,6 @@ public class LeagueList implements Serializable
     public TierType getTier()
     {
         return this.tier;
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        final int prime  = 31;
-        int       result = 1;
-        result = (prime * result) + ((this.entries == null) ? 0 : this.entries.hashCode());
-        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        result = (prime * result) + ((this.queue == null) ? 0 : this.queue.hashCode());
-        result = (prime * result) + ((this.tier == null) ? 0 : this.tier.hashCode());
-        return result;
     }
     
     @Override
