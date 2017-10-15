@@ -144,17 +144,18 @@ public final class ImageAPI
         return buildImageURL(version, "img/champion", champKey + ".png", region);
     }
     
+    
     /**
-     * Gets passive.
+     * Gets ability.
      *
-     * @param passiveId the passive id
+     * @param imageFull the spell.getImage().getFull()
      * @param version   the version
-     * @return the passive
+     * @return the ability
      */
-    public String getPassive(String passiveId, @Nullable String version, @Nullable Platform region)
+    public String getPassive(String imageFull, @Nullable String version, @Nullable Platform region)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
-        return buildImageURL(version, "img/passive", passiveId + ".png", region);
+        return buildImageURL(version, "img/passive", imageFull, region);
     }
     
     /**
