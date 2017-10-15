@@ -184,6 +184,19 @@ public final class ImageAPI
     }
     
     /**
+     * Gets ability.
+     *
+     * @param imageFull the spell.getImage().getFull()
+     * @param version   the version
+     * @return the ability
+     */
+    public String getAbility(String imageFull, @Nullable String version, @Nullable Platform region)
+    {
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
+        return buildImageURL(version, "img/spell", imageFull, region);
+    }
+    
+    /**
      * Gets summoner spell.
      *
      * @param spell   the spell
