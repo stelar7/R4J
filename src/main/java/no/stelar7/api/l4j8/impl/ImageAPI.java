@@ -37,7 +37,8 @@ public final class ImageAPI
         String cdn           = realm.getCDN();
         String versionString = version != null ? version : realm.getV();
         
-        return cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + file;
+        String preReplace = cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + file;
+        return preReplace.replace(" ", "%20");
     }
     
     
@@ -168,7 +169,7 @@ public final class ImageAPI
     public String getPassive(Passive passive, @Nullable String version, @Nullable Platform region)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
-        return buildImageURL(version, "img/passive", passive.getImage().getFull(), region);
+        return getPassive(passive.getImage().getFull(), version, region);
     }
     
     /**
