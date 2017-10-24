@@ -230,6 +230,14 @@ public enum GameQueueType
      */
     NEXUS_SIEGE(940),
     /**
+     * Doom Bots w/ difficulty voting
+     */
+    NIGHTMARE_BOT_5X5_VOTE(950),
+    /**
+     * Doom Bots games
+     */
+    NIGHTMARE_BOT_5X5(960),
+    /**
      * Invasion games
      */
     INVASION_NORMAL(980),
