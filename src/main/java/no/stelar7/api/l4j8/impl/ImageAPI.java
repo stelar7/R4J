@@ -328,7 +328,7 @@ public final class ImageAPI
     public String getMap(MapType map, @Nullable String version, @Nullable Platform region)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
-        return buildImageURL(version, "img/map", map.getId() + ".png", region);
+        return buildImageURL(version, "img/map", "map" + map.getId() + ".png", region);
     }
     
     /**

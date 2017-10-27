@@ -23,8 +23,7 @@ public class UseageTest
         L4J8 api = new L4J8(SecretFile.CREDS);
         DataCall.setLogLevel(LogLevel.INFO);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
-        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCHLIST);
-        
+    
         Map<Integer, StaticRune>     runeData      = api.getStaticAPI().getRunes(Platform.EUW1, null, null, null);
         Map<Integer, StaticMastery>  masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, null, null, null);
         Map<Integer, StaticChampion> championData  = api.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
