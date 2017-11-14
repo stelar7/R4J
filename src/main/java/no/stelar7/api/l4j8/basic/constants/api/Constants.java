@@ -82,7 +82,7 @@ public final class Constants
     public static final Long[]     TEST_ACCOUNT_IDS      = {22401330L, 29061584L, 200621342L, 32974539L, 247212L};
     public static final Platform[] TEST_PLATFORM         = {Platform.EUW1, Platform.EUW1, Platform.TR1, Platform.EUW1, Platform.EUW1};
     public static final Integer[]  TEST_CHAMPION_IDS     = {89, 50};
-    public static final Long[]     TEST_MATCH_ID         = {180100577L};
+    public static final Long[]     TEST_MATCH_ID         = {180100577L, 3418383387L};
     
     private Constants()
     {

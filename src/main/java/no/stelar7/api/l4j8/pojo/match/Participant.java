@@ -44,7 +44,7 @@ public class Participant implements Serializable
     
     
     /**
-     * List of mastery information
+     * List of mastery information, returns null on newer games
      *
      * @return {@code List<MatchMastery>}
      */
@@ -64,7 +64,7 @@ public class Participant implements Serializable
     }
     
     /**
-     * List of rune information
+     * List of rune information, returns null on newer games
      *
      * @return {@code List<MatchRune>}
      */
@@ -140,11 +140,11 @@ public class Participant implements Serializable
         
         Participant that = (Participant) o;
         
-        if (participantId != that.participantId)
+        if (championId != that.championId)
         {
             return false;
         }
-        if (championId != that.championId)
+        if (participantId != that.participantId)
         {
             return false;
         }
@@ -200,7 +200,7 @@ public class Participant implements Serializable
     {
         return "Participant{" +
                "championId=" + championId +
-               ", highestAchievedSeasonTier='" + highestAchievedSeasonTier + '\'' +
+               ", highestAchievedSeasonTier=" + highestAchievedSeasonTier +
                ", masteries=" + masteries +
                ", participantId=" + participantId +
                ", runes=" + runes +

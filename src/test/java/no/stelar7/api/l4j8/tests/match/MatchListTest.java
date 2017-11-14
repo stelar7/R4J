@@ -99,7 +99,9 @@ public class MatchListTest
     @Test
     public void testMatch()
     {
-        Match detail = api.getMatch(Platform.EUW1, Constants.TEST_MATCH_ID[0]);
+        Match detail = api.getMatch(Constants.TEST_PLATFORM[0], Constants.TEST_MATCH_ID[0]);
+        System.out.println();
+        Match detail2 = api.getMatch(Constants.TEST_PLATFORM[0], Constants.TEST_MATCH_ID[1]);
         System.out.println();
     }
     

@@ -16,6 +16,7 @@ public class SpectatorParticipant implements Serializable
     private String                 summonerName;
     private TeamType               teamId;
     private boolean                bot;
+    private SpectatorPerks         perks;
     private List<SpectatorMastery> masteries;
     private List<SpectatorRune>    runes;
     private long                   summonerId;
@@ -90,24 +91,15 @@ public class SpectatorParticipant implements Serializable
         return bot;
     }
     
-    /**
-     * Gets masterie (Not preset if gotten from the FeaturedGames method)
-     *
-     * @return the masteries
-     */
-    public List<SpectatorMastery> getMasteries()
-    {
-        return masteries;
-    }
     
     /**
-     * Gets runes (Not preset if gotten from the FeaturedGames method)
+     * Gets perks, not present on older games
      *
-     * @return the runes
+     * @return the perks
      */
-    public List<SpectatorRune> getRunes()
+    public SpectatorPerks getPerks()
     {
-        return runes;
+        return perks;
     }
     
     /**
@@ -118,6 +110,26 @@ public class SpectatorParticipant implements Serializable
     public long getSummonerId()
     {
         return summonerId;
+    }
+    
+    /**
+     * Gets masteries, not present on newer games
+     *
+     * @return the masteries
+     */
+    public List<SpectatorMastery> getMasteries()
+    {
+        return masteries;
+    }
+    
+    /**
+     * Gets runes, not present on newer games
+     *
+     * @return the runes
+     */
+    public List<SpectatorRune> getRunes()
+    {
+        return runes;
     }
     
     @Override
@@ -134,6 +146,10 @@ public class SpectatorParticipant implements Serializable
         
         SpectatorParticipant that = (SpectatorParticipant) o;
         
+        if (championId != that.championId)
+        {
+            return false;
+        }
         if (profileIconId != that.profileIconId)
         {
             return false;
@@ -146,10 +162,6 @@ public class SpectatorParticipant implements Serializable
         {
             return false;
         }
-        if (championId != that.championId)
-        {
-            return false;
-        }
         if (spell1Id != that.spell1Id)
         {
             return false;
@@ -158,11 +170,15 @@ public class SpectatorParticipant implements Serializable
         {
             return false;
         }
+        if (teamId != that.teamId)
+        {
+            return false;
+        }
         if ((summonerName != null) ? !summonerName.equals(that.summonerName) : (that.summonerName != null))
         {
             return false;
         }
-        if (teamId != that.teamId)
+        if ((perks != null) ? !perks.equals(that.perks) : (that.perks != null))
         {
             return false;
         }
@@ -183,12 +199,12 @@ public class SpectatorParticipant implements Serializable
         result = 31 * result + (summonerName != null ? summonerName.hashCode() : 0);
         result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
         result = 31 * result + (bot ? 1 : 0);
+        result = 31 * result + (perks != null ? perks.hashCode() : 0);
         result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
         result = 31 * result + (runes != null ? runes.hashCode() : 0);
         result = 31 * result + (int) (summonerId ^ (summonerId >>> 32));
         return result;
     }
-    
     
     @Override
     public String toString()
@@ -201,6 +217,7 @@ public class SpectatorParticipant implements Serializable
                ", summonerName='" + summonerName + '\'' +
                ", teamId=" + teamId +
                ", bot=" + bot +
+               ", perks=" + perks +
                ", masteries=" + masteries +
                ", runes=" + runes +
                ", summonerId=" + summonerId +

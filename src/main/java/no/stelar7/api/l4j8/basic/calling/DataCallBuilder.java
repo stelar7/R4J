@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.calling;
 
+import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
@@ -67,8 +68,16 @@ public class DataCallBuilder
             case 200:
             case 204:
             {
+                String returnValue = response.getResponseData();
+                
                 final Object returnType = this.dc.getEndpoint().getType();
-                Object       dtoobj     = Utils.getGson().fromJson(response.getResponseData(), (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
+                
+                if (this.dc.getEndpoint() == URLEndpoint.V3_MATCH)
+                {
+                    returnValue = postProcess(returnValue);
+                }
+                
+                Object dtoobj = Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
                 
                 return process(dtoobj);
             }
@@ -117,6 +126,52 @@ public class DataCallBuilder
         System.err.println("Response Code:" + response.getResponseCode());
         System.err.println("Response Data:" + response.getResponseData());
         throw new APINoValidResponseException(response.getResponseData());
+    }
+    
+    private String postProcess(String returnValue)
+    {
+        JsonObject element = (JsonObject) new JsonParser().parse(returnValue);
+        
+        JsonArray participants = element.getAsJsonArray("participants");
+        for (JsonElement participant : participants)
+        {
+            JsonObject stats = participant.getAsJsonObject().getAsJsonObject("stats");
+            if (!stats.has("perkPrimaryStyle"))
+            {
+                return returnValue;
+            }
+            
+            JsonObject mPerk = new JsonObject();
+            JsonArray  array = new JsonArray();
+            
+            for (int i = 0; i < 6; i++)
+            {
+                JsonObject perk = new JsonObject();
+                
+                perk.add("perkId", stats.get("perk" + i));
+                perk.add("perkVar1", stats.get("perk" + i + "Var1"));
+                perk.add("perkVar2", stats.get("perk" + i + "Var2"));
+                perk.add("perkVar3", stats.get("perk" + i + "Var3"));
+                array.add(perk);
+                
+                stats.remove("perk" + i);
+                stats.remove("perk" + i + "Var1");
+                stats.remove("perk" + i + "Var2");
+                stats.remove("perk" + i + "Var3");
+            }
+            
+            mPerk.add("perks", array);
+            mPerk.add("perkPrimaryStyle", stats.get("perkPrimaryStyle"));
+            mPerk.add("perkSubStyle", stats.get("perkSubStyle"));
+            
+            stats.remove("perkPrimaryStyle");
+            stats.remove("perkSubStyle");
+            
+            stats.add("perks", mPerk);
+        }
+        
+        return Utils.getGson().toJson(element);
+        
     }
     
     private Object sleepAndRetry(int[] retrys, String shortMessage, String longMessage)

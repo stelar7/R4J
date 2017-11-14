@@ -2,3 +2,4 @@ target/
 javadoc/
 \.*/
 SecretFile.java
+*.iml

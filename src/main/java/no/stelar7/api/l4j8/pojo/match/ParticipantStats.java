@@ -9,75 +9,76 @@ public class ParticipantStats implements Serializable
 {
     private static final long serialVersionUID = -2910190875533332744L;
     
-    private long    assists;
-    private long    champLevel;
-    private long    combatPlayerScore;
-    private long    damageSelfMitigated;
-    private long    damageDealtToTurrets;
-    private long    damageDealtToObjectives;
-    private long    deaths;
-    private long    doubleKills;
-    private boolean firstBloodAssist;
-    private boolean firstBloodKill;
-    private boolean firstInhibitorAssist;
-    private boolean firstInhibitorKill;
-    private boolean firstTowerAssist;
-    private boolean firstTowerKill;
-    private long    goldEarned;
-    private long    goldSpent;
-    private long    inhibitorKills;
-    private long    item0;
-    private long    item1;
-    private long    item2;
-    private long    item3;
-    private long    item4;
-    private long    item5;
-    private long    item6;
-    private long    killingSprees;
-    private long    kills;
-    private long    largestCriticalStrike;
-    private long    largestKillingSpree;
-    private long    largestMultiKill;
-    private long    longestTimeSpentLiving;
-    private long    magicDamageDealt;
-    private long    magicDamageDealtToChampions;
-    private long    magicalDamageTaken;
-    private long    neutralMinionsKilled;
-    private long    neutralMinionsKilledEnemyJungle;
-    private long    neutralMinionsKilledTeamJungle;
-    private long    nodeCapture;
-    private long    nodeCaptureAssist;
-    private long    nodeNeutralize;
-    private long    nodeNeutralizeAssist;
-    private long    objectivePlayerScore;
-    private long    pentaKills;
-    private long    physicalDamageDealt;
-    private long    physicalDamageDealtToChampions;
-    private long    physicalDamageTaken;
-    private long    quadraKills;
-    private long    sightWardsBoughtInGame;
-    private long    teamObjective;
-    private long    timeCCingOthers;
-    private long    totalDamageDealt;
-    private long    totalDamageDealtToChampions;
-    private long    totalDamageTaken;
-    private long    totalHeal;
-    private long    totalMinionsKilled;
-    private long    totalPlayerScore;
-    private long    totalScoreRank;
-    private long    totalTimeCrowdControlDealt;
-    private long    totalUnitsHealed;
-    private long    turretKills;
-    private long    tripleKills;
-    private long    trueDamageDealt;
-    private long    trueDamageDealtToChampions;
-    private long    trueDamageTaken;
-    private long    unrealKills;
-    private long    visionScore;
-    private long    visionWardsBoughtInGame;
-    private long    wardsKilled;
-    private long    wardsPlaced;
-    private boolean win;
+    private long       assists;
+    private long       champLevel;
+    private long       combatPlayerScore;
+    private long       damageSelfMitigated;
+    private long       damageDealtToTurrets;
+    private long       damageDealtToObjectives;
+    private long       deaths;
+    private long       doubleKills;
+    private boolean    firstBloodAssist;
+    private boolean    firstBloodKill;
+    private boolean    firstInhibitorAssist;
+    private boolean    firstInhibitorKill;
+    private boolean    firstTowerAssist;
+    private boolean    firstTowerKill;
+    private long       goldEarned;
+    private long       goldSpent;
+    private long       inhibitorKills;
+    private long       item0;
+    private long       item1;
+    private long       item2;
+    private long       item3;
+    private long       item4;
+    private long       item5;
+    private long       item6;
+    private long       killingSprees;
+    private long       kills;
+    private long       largestCriticalStrike;
+    private long       largestKillingSpree;
+    private long       largestMultiKill;
+    private long       longestTimeSpentLiving;
+    private long       magicDamageDealt;
+    private long       magicDamageDealtToChampions;
+    private long       magicalDamageTaken;
+    private long       neutralMinionsKilled;
+    private long       neutralMinionsKilledEnemyJungle;
+    private long       neutralMinionsKilledTeamJungle;
+    private long       nodeCapture;
+    private long       nodeCaptureAssist;
+    private long       nodeNeutralize;
+    private long       nodeNeutralizeAssist;
+    private long       objectivePlayerScore;
+    private long       pentaKills;
+    private long       physicalDamageDealt;
+    private long       physicalDamageDealtToChampions;
+    private long       physicalDamageTaken;
+    private long       quadraKills;
+    private long       sightWardsBoughtInGame;
+    private long       teamObjective;
+    private long       timeCCingOthers;
+    private long       totalDamageDealt;
+    private long       totalDamageDealtToChampions;
+    private long       totalDamageTaken;
+    private long       totalHeal;
+    private long       totalMinionsKilled;
+    private long       totalPlayerScore;
+    private long       totalScoreRank;
+    private long       totalTimeCrowdControlDealt;
+    private long       totalUnitsHealed;
+    private long       turretKills;
+    private long       tripleKills;
+    private long       trueDamageDealt;
+    private long       trueDamageDealtToChampions;
+    private long       trueDamageTaken;
+    private long       unrealKills;
+    private long       visionScore;
+    private long       visionWardsBoughtInGame;
+    private long       wardsKilled;
+    private long       wardsPlaced;
+    private boolean    win;
+    private MatchPerks perks;
     
     
     /**
@@ -122,10 +123,21 @@ public class ParticipantStats implements Serializable
     }
     
     /**
+     * Gets the match perks, returns null on older games
+     *
+     * @return {@code List<MatchPerk>}
+     */
+    public MatchPerks getPerks()
+    {
+        return perks;
+    }
+    
+    /**
      * Gets the combat player score.
      *
      * @return the combat player score
      */
+    
     public long getCombatPlayerScore()
     {
         return this.combatPlayerScore;
@@ -763,6 +775,83 @@ public class ParticipantStats implements Serializable
     }
     
     @Override
+    public String toString()
+    {
+        return "ParticipantStats{" +
+               "assists=" + assists +
+               ", champLevel=" + champLevel +
+               ", combatPlayerScore=" + combatPlayerScore +
+               ", damageSelfMitigated=" + damageSelfMitigated +
+               ", damageDealtToTurrets=" + damageDealtToTurrets +
+               ", damageDealtToObjectives=" + damageDealtToObjectives +
+               ", deaths=" + deaths +
+               ", doubleKills=" + doubleKills +
+               ", firstBloodAssist=" + firstBloodAssist +
+               ", firstBloodKill=" + firstBloodKill +
+               ", firstInhibitorAssist=" + firstInhibitorAssist +
+               ", firstInhibitorKill=" + firstInhibitorKill +
+               ", firstTowerAssist=" + firstTowerAssist +
+               ", firstTowerKill=" + firstTowerKill +
+               ", goldEarned=" + goldEarned +
+               ", goldSpent=" + goldSpent +
+               ", inhibitorKills=" + inhibitorKills +
+               ", item0=" + item0 +
+               ", item1=" + item1 +
+               ", item2=" + item2 +
+               ", item3=" + item3 +
+               ", item4=" + item4 +
+               ", item5=" + item5 +
+               ", item6=" + item6 +
+               ", killingSprees=" + killingSprees +
+               ", kills=" + kills +
+               ", largestCriticalStrike=" + largestCriticalStrike +
+               ", largestKillingSpree=" + largestKillingSpree +
+               ", largestMultiKill=" + largestMultiKill +
+               ", longestTimeSpentLiving=" + longestTimeSpentLiving +
+               ", magicDamageDealt=" + magicDamageDealt +
+               ", magicDamageDealtToChampions=" + magicDamageDealtToChampions +
+               ", magicalDamageTaken=" + magicalDamageTaken +
+               ", neutralMinionsKilled=" + neutralMinionsKilled +
+               ", neutralMinionsKilledEnemyJungle=" + neutralMinionsKilledEnemyJungle +
+               ", neutralMinionsKilledTeamJungle=" + neutralMinionsKilledTeamJungle +
+               ", nodeCapture=" + nodeCapture +
+               ", nodeCaptureAssist=" + nodeCaptureAssist +
+               ", nodeNeutralize=" + nodeNeutralize +
+               ", nodeNeutralizeAssist=" + nodeNeutralizeAssist +
+               ", objectivePlayerScore=" + objectivePlayerScore +
+               ", pentaKills=" + pentaKills +
+               ", physicalDamageDealt=" + physicalDamageDealt +
+               ", physicalDamageDealtToChampions=" + physicalDamageDealtToChampions +
+               ", physicalDamageTaken=" + physicalDamageTaken +
+               ", quadraKills=" + quadraKills +
+               ", sightWardsBoughtInGame=" + sightWardsBoughtInGame +
+               ", teamObjective=" + teamObjective +
+               ", timeCCingOthers=" + timeCCingOthers +
+               ", totalDamageDealt=" + totalDamageDealt +
+               ", totalDamageDealtToChampions=" + totalDamageDealtToChampions +
+               ", totalDamageTaken=" + totalDamageTaken +
+               ", totalHeal=" + totalHeal +
+               ", totalMinionsKilled=" + totalMinionsKilled +
+               ", totalPlayerScore=" + totalPlayerScore +
+               ", totalScoreRank=" + totalScoreRank +
+               ", totalTimeCrowdControlDealt=" + totalTimeCrowdControlDealt +
+               ", totalUnitsHealed=" + totalUnitsHealed +
+               ", turretKills=" + turretKills +
+               ", tripleKills=" + tripleKills +
+               ", trueDamageDealt=" + trueDamageDealt +
+               ", trueDamageDealtToChampions=" + trueDamageDealtToChampions +
+               ", trueDamageTaken=" + trueDamageTaken +
+               ", unrealKills=" + unrealKills +
+               ", visionScore=" + visionScore +
+               ", visionWardsBoughtInGame=" + visionWardsBoughtInGame +
+               ", wardsKilled=" + wardsKilled +
+               ", wardsPlaced=" + wardsPlaced +
+               ", win=" + win +
+               ", perks=" + perks +
+               '}';
+    }
+    
+    @Override
     public boolean equals(Object o)
     {
         if (this == o)
@@ -1048,7 +1137,11 @@ public class ParticipantStats implements Serializable
         {
             return false;
         }
-        return win == that.win;
+        if (win != that.win)
+        {
+            return false;
+        }
+        return (perks != null) ? perks.equals(that.perks) : (that.perks == null);
     }
     
     @Override
@@ -1123,82 +1216,7 @@ public class ParticipantStats implements Serializable
         result = 31 * result + (int) (wardsKilled ^ (wardsKilled >>> 32));
         result = 31 * result + (int) (wardsPlaced ^ (wardsPlaced >>> 32));
         result = 31 * result + (win ? 1 : 0);
+        result = 31 * result + (perks != null ? perks.hashCode() : 0);
         return result;
-    }
-    
-    @Override
-    public String toString()
-    {
-        return "ParticipantStats{" +
-               "assists=" + assists +
-               ", champLevel=" + champLevel +
-               ", combatPlayerScore=" + combatPlayerScore +
-               ", damageSelfMitigated=" + damageSelfMitigated +
-               ", damageDealtToTurrets=" + damageDealtToTurrets +
-               ", damageDealtToObjectives=" + damageDealtToObjectives +
-               ", deaths=" + deaths +
-               ", doubleKills=" + doubleKills +
-               ", firstBloodAssist=" + firstBloodAssist +
-               ", firstBloodKill=" + firstBloodKill +
-               ", firstInhibitorAssist=" + firstInhibitorAssist +
-               ", firstInhibitorKill=" + firstInhibitorKill +
-               ", firstTowerAssist=" + firstTowerAssist +
-               ", firstTowerKill=" + firstTowerKill +
-               ", goldEarned=" + goldEarned +
-               ", goldSpent=" + goldSpent +
-               ", inhibitorKills=" + inhibitorKills +
-               ", item0=" + item0 +
-               ", item1=" + item1 +
-               ", item2=" + item2 +
-               ", item3=" + item3 +
-               ", item4=" + item4 +
-               ", item5=" + item5 +
-               ", item6=" + item6 +
-               ", killingSprees=" + killingSprees +
-               ", kills=" + kills +
-               ", largestCriticalStrike=" + largestCriticalStrike +
-               ", largestKillingSpree=" + largestKillingSpree +
-               ", largestMultiKill=" + largestMultiKill +
-               ", longestTimeSpentLiving=" + longestTimeSpentLiving +
-               ", magicDamageDealt=" + magicDamageDealt +
-               ", magicDamageDealtToChampions=" + magicDamageDealtToChampions +
-               ", magicalDamageTaken=" + magicalDamageTaken +
-               ", neutralMinionsKilled=" + neutralMinionsKilled +
-               ", neutralMinionsKilledEnemyJungle=" + neutralMinionsKilledEnemyJungle +
-               ", neutralMinionsKilledTeamJungle=" + neutralMinionsKilledTeamJungle +
-               ", nodeCapture=" + nodeCapture +
-               ", nodeCaptureAssist=" + nodeCaptureAssist +
-               ", nodeNeutralize=" + nodeNeutralize +
-               ", nodeNeutralizeAssist=" + nodeNeutralizeAssist +
-               ", objectivePlayerScore=" + objectivePlayerScore +
-               ", pentaKills=" + pentaKills +
-               ", physicalDamageDealt=" + physicalDamageDealt +
-               ", physicalDamageDealtToChampions=" + physicalDamageDealtToChampions +
-               ", physicalDamageTaken=" + physicalDamageTaken +
-               ", quadraKills=" + quadraKills +
-               ", sightWardsBoughtInGame=" + sightWardsBoughtInGame +
-               ", teamObjective=" + teamObjective +
-               ", timeCCingOthers=" + timeCCingOthers +
-               ", totalDamageDealt=" + totalDamageDealt +
-               ", totalDamageDealtToChampions=" + totalDamageDealtToChampions +
-               ", totalDamageTaken=" + totalDamageTaken +
-               ", totalHeal=" + totalHeal +
-               ", totalMinionsKilled=" + totalMinionsKilled +
-               ", totalPlayerScore=" + totalPlayerScore +
-               ", totalScoreRank=" + totalScoreRank +
-               ", totalTimeCrowdControlDealt=" + totalTimeCrowdControlDealt +
-               ", totalUnitsHealed=" + totalUnitsHealed +
-               ", turretKills=" + turretKills +
-               ", tripleKills=" + tripleKills +
-               ", trueDamageDealt=" + trueDamageDealt +
-               ", trueDamageDealtToChampions=" + trueDamageDealtToChampions +
-               ", trueDamageTaken=" + trueDamageTaken +
-               ", unrealKills=" + unrealKills +
-               ", visionScore=" + visionScore +
-               ", visionWardsBoughtInGame=" + visionWardsBoughtInGame +
-               ", wardsKilled=" + wardsKilled +
-               ", wardsPlaced=" + wardsPlaced +
-               ", win=" + win +
-               '}';
     }
 }
