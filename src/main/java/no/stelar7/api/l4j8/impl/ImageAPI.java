@@ -65,7 +65,7 @@ public final class ImageAPI
     public String getProfileIcon(Platform region, String summonerName)
     {
         // http://avatar.leagueoflegends.com/region/summonername.png
-        return "http://avatar.leagueoflegends.com/" + region.toString() + Constants.SEPARATOR + summonerName + ".png";
+        return "http://avatar.leagueoflegends.com/" + region.toString() + Constants.SEPARATOR + summonerName.replace(" ", "%20") + ".png";
     }
     
     /**

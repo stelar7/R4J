@@ -41,7 +41,7 @@ public class MatchListTest
     @Test
     public void testMatchAndMatchList()
     {
-        Set<GameQueueType> queue      = EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
+        Set<GameQueueType> queue      = null;//EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2017);
         Set<Integer>       champ      = null;//Arrays.asList(Constants.TEST_CHAMPION_IDS);
         Long               beginTime  = null;//LocalDateTime.now().withHour(0).toEpochSecond(ZoneOffset.UTC) * 1000;//1481108400000L; // start of season 2017
