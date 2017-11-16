@@ -1,13 +1,11 @@
 package no.stelar7.api.l4j8.impl;
 
-import no.stelar7.api.l4j8.basic.utils.Utils;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Utils;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
-import no.stelar7.api.l4j8.pojo.summoner.runes.*;
 
-import java.util.*;
+import java.util.Optional;
 
 @SuppressWarnings("unchecked")
 public final class SummonerAPI
@@ -26,55 +24,6 @@ public final class SummonerAPI
         // Hide public constructor
     }
     
-    /**
-     * The response object contains the MasteryPages objects mapped by their userId.
-     *
-     * @param server     the region to execute against
-     * @param summonerId summonerId associated with summoners to retrieve.
-     * @return Optional MasteryPages
-     */
-    public List<MasteryPage> getMasteries(final Platform server, long summonerId)
-    {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
-                                                       .withEndpoint(URLEndpoint.V3_MASTERIES_BY_ID)
-                                                       .withPlatform(server);
-        
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERIES_BY_ID, server, summonerId);
-        if (chl.isPresent())
-        {
-            return (List<MasteryPage>) chl.get();
-        }
-        
-        MasteryPages list = (MasteryPages) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERIES_BY_ID, list.getPages(), server, summonerId);
-        return list.getPages();
-    }
-    
-    /**
-     * The response object contains the RunePages objects mapped by their userId.
-     *
-     * @param server     the region to execute against
-     * @param summonerId summonerId associated with summoners to retrieve.
-     * @return Optional RunePages
-     */
-    public List<RunePage> getRunes(final Platform server, long summonerId)
-    {
-        DataCallBuilder builder = new DataCallBuilder()
-                .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
-                .withEndpoint(URLEndpoint.V3_RUNES_BY_ID)
-                .withPlatform(server);
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_RUNES_BY_ID, server, summonerId);
-        if (chl.isPresent())
-        {
-            return (List<RunePage>) chl.get();
-        }
-        
-        RunePages list = (RunePages) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_RUNES_BY_ID, list.getPages(), server, summonerId);
-        return list.getPages();
-    }
     
     /**
      * The response object contains the summoner objects mapped by their user id.
