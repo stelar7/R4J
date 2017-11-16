@@ -5,8 +5,9 @@ import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.utils.LazyList;
-import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.*;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
@@ -50,7 +51,7 @@ public class MatchListTest
         long               beginIndex = -1;//0;
         long               endIndex   = -1;//50;
         
-        MatchListBuilder builder = l4j8.getMatchList();
+        MatchListBuilder builder = new MatchListBuilder();
         builder = builder.withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[0]);
         builder = builder.withBeginTime(beginTime).withEndTime(endTime);
         builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
@@ -118,7 +119,7 @@ public class MatchListTest
     @Test
     public void testLazyList()
     {
-        LazyList<MatchReference> refs = l4j8.getSummoner().withPlatform(Platform.EUW1).withName("stelar7").get().getGames().getLazy();
+        LazyList<MatchReference> refs = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get().getGames().getLazy();
         Assert.assertTrue("LazyList is populated?", refs.isEmpty());
         refs.loadFully();
         Assert.assertTrue("LazyList is not populated?", !refs.isEmpty());

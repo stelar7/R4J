@@ -5,6 +5,8 @@ import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.ChampDataFlags;
 import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
@@ -52,13 +54,13 @@ public class CacheTest
     {
         DataCall.setLogLevel(LogLevel.DEBUG);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
-        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
-        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
+        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
+        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
         
         Thread.sleep(6000);
         
-        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
-        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
+        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
+        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
     }
     
     @Test
@@ -79,7 +81,7 @@ public class CacheTest
     private void doCacheStuff() throws InterruptedException
     {
         DataCall.setLogLevel(LogLevel.DEBUG);
-        List<MatchReference> recents = l4j8.getMatchList().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
+        List<MatchReference> recents = new MatchListBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
         
         if (recents.isEmpty())
         {

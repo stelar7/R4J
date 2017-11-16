@@ -11,7 +11,7 @@ public class SpectatorBuilder
     private final Platform platform;
     private final Long     summonerId;
     
-    public SpectatorBuilder(Platform platform, Long summonerId)
+    private SpectatorBuilder(Platform platform, Long summonerId)
     {
         this.platform = platform;
         this.summonerId = summonerId;

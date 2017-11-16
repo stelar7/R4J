@@ -20,7 +20,7 @@ public class ChampionMasteryTest
     public void testChampionMastery()
     {
         ChampionMastery        mastery;
-        ChampionMasteryBuilder bu = l4j8.getMastery().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
+        ChampionMasteryBuilder bu = new ChampionMasteryBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
         
         mastery = bu.withChampionId(Constants.TEST_CHAMPION_IDS[0]).getChampionMastery();
         assert mastery != null;
@@ -33,14 +33,14 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryAll()
     {
-        List<ChampionMastery> all = l4j8.getMastery().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getChampionMasteries();
+        List<ChampionMastery> all = new ChampionMasteryBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getChampionMasteries();
         assert all != null;
     }
     
     @Test
     public void testChampionMasteryScore()
     {
-        Integer score = l4j8.getMastery().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getMasteryScore();
+        Integer score = new ChampionMasteryBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getMasteryScore();
         Assert.assertNotNull("no data", score);
     }
     

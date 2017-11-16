@@ -4,7 +4,8 @@ package no.stelar7.api.l4j8.tests.summoner;
 import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
@@ -37,7 +38,7 @@ public class SummonerTest
     {
         for (int i = 0; i < Constants.TEST_SUMMONER_IDS.length; i++)
         {
-            Summoner optional = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[i]).withSummonerId(Constants.TEST_SUMMONER_IDS[i]).get();
+            Summoner optional = new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[i]).withSummonerId(Constants.TEST_SUMMONER_IDS[i]).get();
             doAssertions.accept(optional);
         }
     }
@@ -47,7 +48,7 @@ public class SummonerTest
     {
         for (int i = 0; i < Constants.TEST_SUMMONER_NAMES.length; i++)
         {
-            Summoner optional = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[i]).withName(Constants.TEST_SUMMONER_NAMES[i]).get();
+            Summoner optional = new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[i]).withName(Constants.TEST_SUMMONER_NAMES[i]).get();
             doAssertions.accept(optional);
         }
     }
@@ -57,7 +58,7 @@ public class SummonerTest
     {
         for (int i = 0; i < Constants.TEST_ACCOUNT_IDS.length; i++)
         {
-            Summoner optional = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[i]).withAccountId(Constants.TEST_ACCOUNT_IDS[i]).get();
+            Summoner optional = new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[i]).withAccountId(Constants.TEST_ACCOUNT_IDS[i]).get();
             doAssertions.accept(optional);
         }
     }

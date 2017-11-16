@@ -8,6 +8,7 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.utils.LazyList;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.item.Item;
@@ -50,7 +51,7 @@ public class FrameToImageTest
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         
-        Summoner                 sum  = api.getSummoner().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner                 sum  = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         LazyList<MatchReference> refs = new MatchListBuilder().withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId()).getLazy();
         Match                    full = refs.get(0).getFullMatch();
         

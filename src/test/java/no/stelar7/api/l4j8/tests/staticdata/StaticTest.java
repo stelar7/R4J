@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.raw.StaticAPI;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapDetails;

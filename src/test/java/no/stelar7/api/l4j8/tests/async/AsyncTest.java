@@ -1,7 +1,9 @@
 package no.stelar7.api.l4j8.tests.async;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -27,13 +29,13 @@ public class AsyncTest
         for (int i = 0; i < 100; i++)
         {
             futures.add(
-                    supplyAsync(() -> l4j8.getSummoner().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
+                    supplyAsync(() -> new SummonerBuilder().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
                             .thenAccept(this::handleSummonerCallback)
                        );
         }
         
         futures.add(
-                supplyAsync(() -> l4j8.getMatchList().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
+                supplyAsync(() -> new MatchListBuilder().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
                         .thenAccept(this::handleMatchCallback)
                    );
         CompletableFuture spinner = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));

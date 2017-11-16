@@ -23,7 +23,7 @@ public class LeagueBuilder
         this.leagueId = null;
     }
     
-    public LeagueBuilder(Platform platform, GameQueueType queue, Long summonerId, String leagueId)
+    private LeagueBuilder(Platform platform, GameQueueType queue, Long summonerId, String leagueId)
     {
         this.platform = platform;
         this.queue = queue;

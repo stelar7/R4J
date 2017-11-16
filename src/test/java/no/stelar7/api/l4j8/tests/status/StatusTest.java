@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.tests.status;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.raw.StatusAPI;
 import no.stelar7.api.l4j8.pojo.status.ShardStatus;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.Test;

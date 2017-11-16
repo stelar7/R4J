@@ -16,7 +16,7 @@ public class ChampionMasteryBuilder
     private final Long     summonerId;
     private final Integer  championId;
     
-    public ChampionMasteryBuilder(Platform platform, Long summonerId, Integer championId)
+    private ChampionMasteryBuilder(Platform platform, Long summonerId, Integer championId)
     {
         this.platform = platform;
         this.summonerId = summonerId;

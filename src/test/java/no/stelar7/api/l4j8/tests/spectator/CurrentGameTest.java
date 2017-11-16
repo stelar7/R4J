@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.tests.spectator;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -39,7 +40,7 @@ public class CurrentGameTest
         
         // Get a summoner from that game
         final String   name = game.get(0).getParticipants().get(0).getSummonerName();
-        final Summoner sum  = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withName(name).get();
+        final Summoner sum  = new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withName(name).get();
         
         // Get game info
         final SpectatorGameInfo currentGame = sb.withSummonerId(sum.getSummonerId()).getCurrentGame();

@@ -2,12 +2,7 @@ package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.APICredentials;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
-import no.stelar7.api.l4j8.impl.builders.champion.ChampionBuilder;
-import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
-import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
-import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
-import no.stelar7.api.l4j8.impl.builders.match.*;
+import no.stelar7.api.l4j8.impl.raw.*;
 
 /**
  * The base class for calling anything from this api wrapper
@@ -30,9 +25,9 @@ public class L4J8
      *
      * @return the mastery api
      */
-    public ChampionMasteryBuilder getMastery()
+    public MasteryAPI getMasteryAPI()
     {
-        return new ChampionMasteryBuilder();
+        return MasteryAPI.getInstance();
     }
     
     /**
@@ -40,9 +35,9 @@ public class L4J8
      *
      * @return the spectator api
      */
-    public SpectatorBuilder getSpectator()
+    public SpectatorAPI getSpectatorAPI()
     {
-        return new SpectatorBuilder();
+        return SpectatorAPI.getInstance();
     }
     
     /**
@@ -50,9 +45,9 @@ public class L4J8
      *
      * @return the summoner api
      */
-    public SummonerBuilder getSummoner()
+    public SummonerAPI getSummonerAPI()
     {
-        return new SummonerBuilder();
+        return SummonerAPI.getInstance();
     }
     
     /**
@@ -71,9 +66,9 @@ public class L4J8
      *
      * @return the champion api
      */
-    public ChampionBuilder getChampion()
+    public ChampionAPI getChampionAPI()
     {
-        return new ChampionBuilder();
+        return ChampionAPI.getInstance();
     }
     
     /**
@@ -97,34 +92,13 @@ public class L4J8
     }
     
     /**
-     * Gets match .
+     * Gets match api.
      *
      * @return the match api
      */
-    public MatchBuilder getMatch()
+    public MatchAPI getMatchAPI()
     {
-        return new MatchBuilder();
-    }
-    
-    /**
-     * Gets match timeline.
-     *
-     * @return matchtimeline
-     */
-    public TimelineBuilder getMatchTimeline()
-    {
-        return new TimelineBuilder();
-    }
-    
-    
-    /**
-     * Gets matchlist.
-     *
-     * @return matchlist
-     */
-    public MatchListBuilder getMatchList()
-    {
-        return new MatchListBuilder();
+        return MatchAPI.getInstance();
     }
     
     /**
@@ -132,9 +106,9 @@ public class L4J8
      *
      * @return the league api
      */
-    public LeagueBuilder getLeague()
+    public LeagueAPI getLeagueAPI()
     {
-        return new LeagueBuilder();
+        return LeagueAPI.getInstance();
     }
     
     /**

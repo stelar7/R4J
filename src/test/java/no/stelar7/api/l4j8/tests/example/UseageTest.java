@@ -4,6 +4,7 @@ import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
@@ -28,7 +29,7 @@ public class UseageTest
         Map<Integer, StaticMastery>  masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, null, null, null);
         Map<Integer, StaticChampion> championData  = api.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
         
-        Summoner             stelar7        = api.getSummoner().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner             stelar7        = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         List<MatchReference> some           = stelar7.getGames().get();
         MatchReference       mostRecentGame = some.stream().sorted(Comparator.comparing(MatchReference::getTimestamp).reversed()).findFirst().get();
         

@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.tests.tournament;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.raw.TournamentAPI;
 import no.stelar7.api.l4j8.pojo.match.Match;
 import no.stelar7.api.l4j8.pojo.tournament.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
