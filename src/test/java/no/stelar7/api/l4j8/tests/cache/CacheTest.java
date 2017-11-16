@@ -52,13 +52,13 @@ public class CacheTest
     {
         DataCall.setLogLevel(LogLevel.DEBUG);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
-        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
-        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
         
         Thread.sleep(6000);
         
-        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
-        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
     }
     
     @Test
