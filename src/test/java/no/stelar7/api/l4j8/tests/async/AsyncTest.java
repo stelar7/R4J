@@ -5,7 +5,7 @@ import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -19,23 +19,21 @@ public class AsyncTest
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
     @Test
+    @Ignore
     public void testAsync() throws InterruptedException
     {
-        SummonerAPI sapi = l4j8.getSummonerAPI();
-        MatchAPI    mapi = l4j8.getMatchAPI();
-        
         List<CompletableFuture> futures = new ArrayList<>();
         
         for (int i = 0; i < 100; i++)
         {
             futures.add(
-                    supplyAsync(() -> sapi.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1]))
+                    supplyAsync(() -> l4j8.getSummoner().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
                             .thenAccept(this::handleSummonerCallback)
                        );
         }
         
         futures.add(
-                supplyAsync(() -> mapi.getMatchList(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[1], null, null, null, null, null, null, null))
+                supplyAsync(() -> l4j8.getMatchList().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
                         .thenAccept(this::handleMatchCallback)
                    );
         CompletableFuture spinner = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));

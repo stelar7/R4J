@@ -206,7 +206,7 @@ public class StaticTest
         
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
         
-        Map<Integer, StaticSummonerSpell> list = api.getSummonerSpells(Platform.EUW1, dataFlags, null, null);
+        Map<Integer, StaticSummonerSpell> list = api.getSummonerSpells(Platform.EUN1, dataFlags, null, null);
     }
     
     

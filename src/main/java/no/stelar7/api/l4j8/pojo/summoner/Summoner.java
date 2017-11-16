@@ -2,16 +2,15 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.basic.utils.*;
+import no.stelar7.api.l4j8.basic.utils.Utils;
 import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.LeaguePosition;
-import no.stelar7.api.l4j8.pojo.match.MatchReference;
 
 import java.io.Serializable;
 import java.time.*;
-import java.util.*;
+import java.util.List;
 
 public final class Summoner implements Serializable
 {
@@ -106,37 +105,15 @@ public final class Summoner implements Serializable
     }
     
     /**
-     * This method has the same function as
-     * <p>
-     * {@link MatchAPI#getMatchList(no.stelar7.api.l4j8.basic.constants.api.Platform, long, Long, Long, Integer, Integer, java.util.Set, java.util.Set, java.util.Set)}
-     * <p>
-     * but with the accountId and platform already set
+     * This method has the same function as the main one but with the accountId and platform already set
      *
-     * @param beginTime  optional filter the games started after this time
-     * @param endTime    optional filter for games started before this time
-     * @param beginIndex optional filter for skipping the first x games
-     * @param endIndex   optional filter for skipping only showing x games
-     * @param queueTypes optional filter for selecting the queue
-     * @param seasons    optional filter for selecting the season
-     * @param championId optional filter for selecting the champion played
-     * @return {@code List<MatchReference>}
+     * @return MatchListBuilder
      */
-    public List<MatchReference> getGames(Long beginTime, Long endTime, Integer beginIndex, Integer endIndex, Set<GameQueueType> queueTypes, Set<SeasonType> seasons, Set<Integer> championId)
+    public MatchListBuilder getGames()
     {
-        return MatchAPI.getInstance().getMatchList(platform, accountId, beginTime, endTime, beginIndex, endIndex, queueTypes, seasons, championId);
+        return new MatchListBuilder().withPlatform(platform).withAccountId(accountId);
     }
     
-    /**
-     * Returns a list of all games avaliable in the api
-     * This list is updated lazily!
-     * To get all the items, either iterate the list once, or get(Integer.MAX_VALUE)
-     *
-     * @return {@code List<MatchReference>}
-     */
-    public LazyList<MatchReference> getGames()
-    {
-        return MatchAPI.getInstance().getMatchList(platform, accountId);
-    }
     
     /**
      * This method has the same function as

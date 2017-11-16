@@ -33,6 +33,7 @@ public class CacheTest
     public void testFileSystemCache() throws InterruptedException
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
         doCacheStuff();
     }
     
@@ -51,13 +52,13 @@ public class CacheTest
     {
         DataCall.setLogLevel(LogLevel.DEBUG);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
-        l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
         
         Thread.sleep(6000);
         
-        l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
-        l4j8.getSummonerAPI().getSummonerById(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
     }
     
     @Test
@@ -77,8 +78,15 @@ public class CacheTest
     
     private void doCacheStuff() throws InterruptedException
     {
-        List<MatchReference> recents = l4j8.getMatchAPI().getMatchList(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0], null, null, null, null, null, null, null);
-        MatchReference       ref     = recents.get(0);
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        List<MatchReference> recents = l4j8.getMatchList().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
+        
+        if (recents.isEmpty())
+        {
+            return;
+        }
+        
+        MatchReference ref = recents.get(0);
         
         System.out.println("Starting timer");
         

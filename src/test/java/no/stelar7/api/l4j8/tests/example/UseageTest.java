@@ -21,24 +21,24 @@ public class UseageTest
     public void testUseage()
     {
         L4J8 api = new L4J8(SecretFile.CREDS);
-        DataCall.setLogLevel(LogLevel.INFO);
+        DataCall.setLogLevel(LogLevel.DEBUG);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
-    
+        
         Map<Integer, StaticRune>     runeData      = api.getStaticAPI().getRunes(Platform.EUW1, null, null, null);
         Map<Integer, StaticMastery>  masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, null, null, null);
         Map<Integer, StaticChampion> championData  = api.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
         
-        Summoner             stelar7        = api.getSummonerAPI().getSummonerByName(Platform.EUW1, "stelar7");
-        List<MatchReference> some           = stelar7.getGames(null, null, null, null, null, null, null);
+        Summoner             stelar7        = api.getSummoner().withPlatform(Platform.EUW1).withName("stelar7").get();
+        List<MatchReference> some           = stelar7.getGames().get();
         MatchReference       mostRecentGame = some.stream().sorted(Comparator.comparing(MatchReference::getTimestamp).reversed()).findFirst().get();
         
         Match       match = mostRecentGame.getFullMatch();
         Participant self  = match.getParticipantFromSummonerId(stelar7.getSummonerId());
         
-        List<MatchRune>    runes      = self.getRunes();
-        List<MatchMastery> masteries  = self.getMasteries();
-        StaticChampion     champion   = championData.get(mostRecentGame.getChampionId());
-    
+        List<MatchRune>    runes     = self.getRunes();
+        List<MatchMastery> masteries = self.getMasteries();
+        StaticChampion     champion  = championData.get(mostRecentGame.getChampionId());
+        
         ChampionMastery mastery = stelar7.getChampionMastery(champion.getId());
         
         boolean didWin = match.didWin(self);
@@ -70,7 +70,7 @@ public class UseageTest
             String name = masteriesData.get(matchMastery.getMasteryId()).getName();
             System.out.format("Name: '%-45s' Level: %s%n", name, matchMastery.getRank());
         }
-    
+        
     }
     
     /*

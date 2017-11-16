@@ -2,7 +2,7 @@ package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.impl.MatchAPI;
+import no.stelar7.api.l4j8.impl.builders.match.TimelineBuilder;
 
 import java.io.Serializable;
 import java.time.*;
@@ -269,7 +269,7 @@ public class Match implements Serializable
      */
     public MatchTimeline getTimeline()
     {
-        return MatchAPI.getInstance().getTimeline(platformId, gameId);
+        return new TimelineBuilder().withPlatform(platformId).withId(gameId).get();
     }
     
     

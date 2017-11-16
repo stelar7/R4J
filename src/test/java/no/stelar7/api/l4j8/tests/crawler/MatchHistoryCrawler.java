@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.TeamType;
 import no.stelar7.api.l4j8.basic.exceptions.APIEnumNotUpToDateException;
 import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.match.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
@@ -167,17 +168,18 @@ public class MatchHistoryCrawler
     
     private List<MatchReference> getRankedGames(Long accountid, Platform platformid)
     {
-        return api.getMatchAPI().getMatchList(platformid, accountid, null, null, null, null, null, null, null);
+        return new MatchListBuilder().withPlatform(platformid).withAccountId(accountid).get();
     }
     
     private Match getMatch(Long key, Platform value) throws InterruptedException
     {
-        Match match = api.getMatchAPI().getMatch(value, key);
+        MatchBuilder mb    = new MatchBuilder().withPlatform(value).withId(key);
+        Match        match = mb.get();
         
         if (match == null)
         {
             Thread.sleep(5000);
-            match = api.getMatchAPI().getMatch(value, key);
+            match = mb.get();
             if (match == null)
             {
                 return null;

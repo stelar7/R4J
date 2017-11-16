@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.tests.div;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -18,8 +19,8 @@ public class CheckNormalGameForWinTest
     @Ignore
     public void testFindSelfInNormalGame()
     {
-        Summoner             dev  = l4j8.getSummonerAPI().getSummonerByName(Platform.NA1, "devitgg");
-        List<MatchReference> refs = l4j8.getMatchAPI().getMatchList(Platform.NA1, dev.getAccountId(), null, null, null, null, null, null, null);
+        Summoner             dev  = l4j8.getSummoner().withPlatform(Platform.NA1).withName("devitgg").get();
+        List<MatchReference> refs = new MatchListBuilder().withPlatform(Platform.NA1).withAccountId(dev.getAccountId()).get();
         
         for (MatchReference current : refs)
         {
@@ -54,7 +55,7 @@ public class CheckNormalGameForWinTest
     @Ignore
     public void testFindSelfAfterNormalGame()
     {
-        Summoner dev = l4j8.getSummonerAPI().getSummonerByName(Platform.NA1, "devitgg");
+        Summoner dev = l4j8.getSummoner().withPlatform(Platform.NA1).withName("devitgg").get();
         
         while (l4j8.getSpectatorAPI().getCurrentGame(Platform.NA1, dev.getSummonerId()) != null)
         {
@@ -67,7 +68,7 @@ public class CheckNormalGameForWinTest
             }
         }
         
-        List<MatchReference> refs = l4j8.getMatchAPI().getMatchList(Platform.NA1, dev.getAccountId(), null, null, null, null, null, null, null);
+        List<MatchReference> refs = new MatchListBuilder().withPlatform(Platform.NA1).withAccountId(dev.getAccountId()).get();
         
         for (MatchReference current : refs)
         {

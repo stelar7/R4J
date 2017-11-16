@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants.types;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum SummonerSpellType
 {
@@ -113,6 +113,12 @@ public enum SummonerSpellType
      */
     public static Optional<SummonerSpellType> getFromCode(final String type)
     {
+        Optional<SummonerSpellType> byName = Stream.of(SummonerSpellType.values()).filter(t -> t.getApiName().equals(type)).findFirst();
+        if (byName.isPresent())
+        {
+            return byName;
+        }
+        
         return Stream.of(SummonerSpellType.values()).filter(t -> t.getValue().equals(Integer.valueOf(type))).findFirst();
     }
     

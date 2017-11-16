@@ -2,6 +2,8 @@ package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.APICredentials;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
+import no.stelar7.api.l4j8.impl.builders.match.*;
 
 /**
  * The base class for calling anything from this api wrapper
@@ -44,9 +46,9 @@ public class L4J8
      *
      * @return the summoner api
      */
-    public SummonerAPI getSummonerAPI()
+    public SummonerBuilder getSummoner()
     {
-        return SummonerAPI.getInstance();
+        return new SummonerBuilder();
     }
     
     /**
@@ -91,13 +93,34 @@ public class L4J8
     }
     
     /**
-     * Gets match api.
+     * Gets match .
      *
      * @return the match api
      */
-    public MatchAPI getMatchAPI()
+    public MatchBuilder getMatch()
     {
-        return MatchAPI.getInstance();
+        return new MatchBuilder();
+    }
+    
+    /**
+     * Gets match timeline.
+     *
+     * @return matchtimeline
+     */
+    public TimelineBuilder getMatchTimeline()
+    {
+        return new TimelineBuilder();
+    }
+    
+    
+    /**
+     * Gets matchlist.
+     *
+     * @return matchlist
+     */
+    public MatchListBuilder getMatchList()
+    {
+        return new MatchListBuilder();
     }
     
     /**

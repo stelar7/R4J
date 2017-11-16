@@ -2,7 +2,6 @@ package no.stelar7.api.l4j8.tests.ratelimit;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
-import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 import org.junit.rules.Stopwatch;
@@ -50,6 +49,7 @@ public class RatelimitTest
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
     @Test
+    @Ignore
     public void testRateLimitThreaded()
     {
         try
@@ -57,7 +57,7 @@ public class RatelimitTest
             ExecutorService pool = Executors.newFixedThreadPool(8);
             for (int i2 = 0; i2 < 130; i2++)
             {
-                pool.execute(() -> l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]));
+                pool.execute(() -> l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get());
             }
             pool.shutdown();
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
@@ -69,24 +69,27 @@ public class RatelimitTest
     
     
     @Test
+    @Ignore
     public void testRateLimit()
     {
         final L4J8 test = new L4J8(SecretFile.CREDS);
         for (int i2 = 0; i2 < 130; i2++)
         {
-            Summoner ignore = l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]);
+            l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
         }
     }
     
     @Test
+    @Ignore
     public void testRateLimitWithSleep() throws InterruptedException
     {
-        l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]);
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
         TimeUnit.SECONDS.sleep(10);
-        l4j8.getSummonerAPI().getSummonerByAccount(Constants.TEST_PLATFORM[0], Constants.TEST_ACCOUNT_IDS[0]);
+        l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
     }
     
     @Test
+    @Ignore
     public void testRateLimitStatic()
     {
         Platform plat = Platform.values()[1];

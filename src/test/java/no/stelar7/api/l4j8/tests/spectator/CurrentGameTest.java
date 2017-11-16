@@ -32,13 +32,13 @@ public class CurrentGameTest
     {
         final L4J8   l4j8 = new L4J8(SecretFile.CREDS);
         SpectatorAPI api  = l4j8.getSpectatorAPI();
-    
+        
         // Get a game in progess
         final List<SpectatorGameInfo> game = api.getFeaturedGames(Platform.EUW1);
         
         // Get a summoner from that game
         final String   name = game.get(0).getParticipants().get(0).getSummonerName();
-        final Summoner sum  = l4j8.getSummonerAPI().getSummonerByName(Platform.EUW1, name);
+        final Summoner sum  = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withName(name).get();
         
         // Get game info
         final SpectatorGameInfo currentGame = api.getCurrentGame(Platform.EUW1, sum.getSummonerId());

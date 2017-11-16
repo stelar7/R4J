@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.tests.summoner;
 
 
+import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
@@ -22,14 +24,20 @@ public class SummonerTest
     };
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-    SummonerAPI api = l4j8.getSummonerAPI();
+    
+    @Before
+    public void before()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
+    }
     
     @Test
     public void testById()
     {
         for (int i = 0; i < Constants.TEST_SUMMONER_IDS.length; i++)
         {
-            Summoner optional = api.getSummonerById(Constants.TEST_PLATFORM[i], Constants.TEST_SUMMONER_IDS[i]);
+            Summoner optional = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[i]).withSummonerId(Constants.TEST_SUMMONER_IDS[i]).get();
             doAssertions.accept(optional);
         }
     }
@@ -39,7 +47,7 @@ public class SummonerTest
     {
         for (int i = 0; i < Constants.TEST_SUMMONER_NAMES.length; i++)
         {
-            Summoner optional = api.getSummonerByName(Constants.TEST_PLATFORM[i], Constants.TEST_SUMMONER_NAMES[i]);
+            Summoner optional = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[i]).withName(Constants.TEST_SUMMONER_NAMES[i]).get();
             doAssertions.accept(optional);
         }
     }
@@ -47,7 +55,10 @@ public class SummonerTest
     @Test
     public void testByAccount()
     {
-        Summoner optional = api.getSummonerByAccount(Platform.EUW1, Constants.TEST_ACCOUNT_IDS[0]);
-        doAssertions.accept(optional);
+        for (int i = 0; i < Constants.TEST_ACCOUNT_IDS.length; i++)
+        {
+            Summoner optional = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[i]).withAccountId(Constants.TEST_ACCOUNT_IDS[i]).get();
+            doAssertions.accept(optional);
+        }
     }
 }
