@@ -3,7 +3,8 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.utils.Utils;
-import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
+import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.LeaguePosition;
@@ -116,47 +117,30 @@ public final class Summoner implements Serializable
     
     
     /**
-     * This method has the same function as
-     * <p>
-     * {@link no.stelar7.api.l4j8.impl.MasteryAPI#getChampionMastery(no.stelar7.api.l4j8.basic.constants.api.Platform, long, int)}
-     * <p>
-     * but with the id and platform already set
-     * <p>
+     * Returns the mastery of the provided championid
      *
      * @param championId the championId
      * @return ChampionMastery
      */
     public ChampionMastery getChampionMastery(int championId)
     {
-        return MasteryAPI.getInstance().getChampionMastery(platform, id, championId);
+        return new ChampionMasteryBuilder().withPlatform(platform).withSummonerId(id).withChampionId(championId).getChampionMastery();
     }
     
     /**
-     * This method has the same function as
-     * <p>
-     * {@link no.stelar7.api.l4j8.impl.MasteryAPI#getChampionMasteries(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
-     * <p>
-     * but with the id and platform already set
+     * Returns a list of all the masteries of all the champions
      *
      * @return {@code List<ChampionMastery> }
      */
     public List<ChampionMastery> getChampionMasteries()
     {
-        return MasteryAPI.getInstance().getChampionMasteries(platform, id);
+        return new ChampionMasteryBuilder().withPlatform(platform).withSummonerId(id).getChampionMasteries();
     }
     
-    /**
-     * This method has the same function as
-     * <p>
-     * {@link no.stelar7.api.l4j8.impl.LeagueAPI#getLeaguePosition(no.stelar7.api.l4j8.basic.constants.api.Platform, long)}
-     * <p>
-     * but with the id and platform already set
-     *
-     * @return {@code List<LeaguePosition>}
-     */
+    
     public List<LeaguePosition> getLeagueEntry()
     {
-        return LeagueAPI.getInstance().getLeaguePosition(platform, id);
+        return new LeagueBuilder().withPlatform(platform).withSummonerId(id).getLeaguePosition();
     }
     
     /**

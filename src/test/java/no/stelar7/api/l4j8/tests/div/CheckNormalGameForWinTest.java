@@ -57,7 +57,7 @@ public class CheckNormalGameForWinTest
     {
         Summoner dev = l4j8.getSummoner().withPlatform(Platform.NA1).withName("devitgg").get();
         
-        while (l4j8.getSpectatorAPI().getCurrentGame(Platform.NA1, dev.getSummonerId()) != null)
+        while (l4j8.getSpectator().withPlatform(Platform.NA1).withSummonerId(dev.getSummonerId()).getCurrentGame() != null)
         {
             try
             {

@@ -2,6 +2,10 @@ package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.APICredentials;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
+import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
+import no.stelar7.api.l4j8.impl.builders.champion.ChampionBuilder;
+import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.impl.builders.match.*;
 
@@ -26,9 +30,9 @@ public class L4J8
      *
      * @return the mastery api
      */
-    public MasteryAPI getMasteryAPI()
+    public ChampionMasteryBuilder getMastery()
     {
-        return MasteryAPI.getInstance();
+        return new ChampionMasteryBuilder();
     }
     
     /**
@@ -36,9 +40,9 @@ public class L4J8
      *
      * @return the spectator api
      */
-    public SpectatorAPI getSpectatorAPI()
+    public SpectatorBuilder getSpectator()
     {
-        return SpectatorAPI.getInstance();
+        return new SpectatorBuilder();
     }
     
     /**
@@ -67,9 +71,9 @@ public class L4J8
      *
      * @return the champion api
      */
-    public ChampionAPI getChampionAPI()
+    public ChampionBuilder getChampion()
     {
-        return ChampionAPI.getInstance();
+        return new ChampionBuilder();
     }
     
     /**
@@ -128,9 +132,9 @@ public class L4J8
      *
      * @return the league api
      */
-    public LeagueAPI getLeagueAPI()
+    public LeagueBuilder getLeague()
     {
-        return LeagueAPI.getInstance();
+        return new LeagueBuilder();
     }
     
     /**

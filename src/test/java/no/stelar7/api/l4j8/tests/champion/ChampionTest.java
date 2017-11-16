@@ -12,12 +12,11 @@ public class ChampionTest
 {
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-    ChampionAPI api = l4j8.getChampionAPI();
     
     @Test
     public void testSingleChampion()
     {
-        Champion champ = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0]);
+        Champion champ = l4j8.getChampion().withPlatform(Platform.EUW1).withId(Constants.TEST_CHAMPION_IDS[0]).get();
         
         Assert.assertTrue("Championid is not leona?", champ.getId() == Constants.TEST_CHAMPION_IDS[0]);
         
@@ -26,7 +25,7 @@ public class ChampionTest
     @Test
     public void testFreeToPlay()
     {
-        List<Champion> champ = api.getChampions(Platform.EUW1, true);
+        List<Champion> champ = l4j8.getChampion().withPlatform(Platform.EUW1).getFreeToPlay();
         Assert.assertTrue("count greater than 20?", champ.size() < 20);
         
         champ.sort(Comparator.comparing(Champion::getId));
@@ -39,7 +38,7 @@ public class ChampionTest
     @Test
     public void testChampionList()
     {
-        List<Champion> champ = api.getChampions(Platform.EUW1, false);
+        List<Champion> champ = l4j8.getChampion().withPlatform(Platform.EUW1).getAll();
         Assert.assertTrue("count less than 100?", champ.size() > 100);
     }
 }

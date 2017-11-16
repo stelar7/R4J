@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.tests.spectator;
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -30,28 +31,28 @@ public class CurrentGameTest
     @Test
     public void testCurrentGame()
     {
-        final L4J8   l4j8 = new L4J8(SecretFile.CREDS);
-        SpectatorAPI api  = l4j8.getSpectatorAPI();
+        final L4J8       l4j8 = new L4J8(SecretFile.CREDS);
+        SpectatorBuilder sb   = new SpectatorBuilder().withPlatform(Platform.EUW1);
         
         // Get a game in progess
-        final List<SpectatorGameInfo> game = api.getFeaturedGames(Platform.EUW1);
+        final List<SpectatorGameInfo> game = sb.getFeaturedGames();
         
         // Get a summoner from that game
         final String   name = game.get(0).getParticipants().get(0).getSummonerName();
         final Summoner sum  = l4j8.getSummoner().withPlatform(Constants.TEST_PLATFORM[0]).withName(name).get();
         
         // Get game info
-        final SpectatorGameInfo currentGame = api.getCurrentGame(Platform.EUW1, sum.getSummonerId());
+        final SpectatorGameInfo currentGame = sb.withSummonerId(sum.getSummonerId()).getCurrentGame();
         doAssertions.accept(currentGame);
     }
     
     @Test
     public void testCurrentlyNotInGame()
     {
-        final L4J8   l4j8 = new L4J8(SecretFile.CREDS);
-        SpectatorAPI api  = l4j8.getSpectatorAPI();
+        final L4J8       l4j8 = new L4J8(SecretFile.CREDS);
+        SpectatorBuilder sb   = new SpectatorBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
         
-        SpectatorGameInfo game = api.getCurrentGame(Constants.TEST_PLATFORM[0], Constants.TEST_SUMMONER_IDS[0]);
+        SpectatorGameInfo game = sb.getCurrentGame();
         
         System.out.format("%s is %sin game", Constants.TEST_SUMMONER_NAMES[0], game != null ? "" : "not ");
     }
