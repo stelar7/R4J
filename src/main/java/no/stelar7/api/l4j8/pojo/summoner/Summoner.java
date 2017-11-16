@@ -1,15 +1,13 @@
 package no.stelar7.api.l4j8.pojo.summoner;
 
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
-import no.stelar7.api.l4j8.pojo.league.*;
+import no.stelar7.api.l4j8.pojo.league.LeaguePosition;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.MasteryPage;
-import no.stelar7.api.l4j8.pojo.summoner.runes.RunePage;
 
 import java.io.Serializable;
 import java.time.*;
@@ -105,16 +103,6 @@ public final class Summoner implements Serializable
     public long getAccountId()
     {
         return accountId;
-    }
-    
-    public List<RunePage> getRunePages()
-    {
-        return SummonerAPI.getInstance().getRunes(platform, this.getSummonerId());
-    }
-    
-    public List<MasteryPage> getMasteryPages()
-    {
-        return SummonerAPI.getInstance().getMasteries(platform, this.getSummonerId());
     }
     
     /**
