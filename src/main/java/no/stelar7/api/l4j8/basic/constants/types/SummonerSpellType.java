@@ -72,7 +72,24 @@ public enum SummonerSpellType
     /**
      * Instantly revives your champion at your team's Summoner Platform and increases their Movement Speed for a short duration.
      */
-    REVIVE(10, "SummonerRevive");
+    REVIVE(10, "SummonerRevive"),
+    /**
+     * In Nexus Siege, Summoner Spells are replaced with Siege Weapon Slots. Spend Crystal Shards to buy single-use Siege Weapons from the item shop, then use your Summoner Spell keys to activate them!
+     */
+    NEXUS_SIEGE_1(33, "SiegeEmptySlot"),
+    /**
+     * In Nexus Siege, Summoner Spells are replaced with Siege Weapon Slots. Spend Crystal Shards to buy single-use Siege Weapons from the item shop, then use your Summoner Spell keys to activate them!
+     */
+    NEXUS_SIEGE_2(34, "SiegeEmptySlot"),
+    /**
+     * Summoner spells are disabled in this mode.
+     */
+    DARK_STAR_1(35, "Summoner_Empty"),
+    /**
+     * Summoner spells are disabled in this mode.
+     */
+    DARK_STAR_2(36, "Summoner_Empty");
+    
     
     private final Integer id;
     private final String  apiName;
