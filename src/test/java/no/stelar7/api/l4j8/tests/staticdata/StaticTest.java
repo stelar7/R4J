@@ -4,7 +4,6 @@ import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
-import no.stelar7.api.l4j8.basic.exceptions.APIDataNotParseableException;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
@@ -14,7 +13,6 @@ import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconDetails;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
 import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.StaticSummonerSpell;
-import no.stelar7.api.l4j8.pojo.summoner.masteries.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
@@ -113,43 +111,6 @@ public class StaticTest
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         Map<Integer, StaticMastery> list = api.getMasteries(Platform.EUW1, dataFlags, null, null);
-    }
-    
-    @Test
-    public void testMasteryTreeish()
-    {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
-        DataCall.setLogLevel(LogLevel.DEBUG);
-        
-        EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
-        
-        Map<Integer, StaticMastery> data  = api.getMasteries(Platform.EUW1, dataFlags, null, null);
-        List<MasteryPage>           pages = SummonerAPI.getInstance().getMasteries(Platform.EUW1, Constants.TEST_SUMMONER_IDS[0]);
-        
-        for (MasteryPage page : pages)
-        {
-            int[] score = {0, 0, 0};
-            for (Mastery mastery : page.getMasteries())
-            {
-                StaticMastery staticMastery = data.get(mastery.getId());
-                switch (staticMastery.getMasteryTree())
-                {
-                    case "Ferocity":
-                        score[0] += mastery.getRank();
-                        break;
-                    case "Cunning":
-                        score[1] += mastery.getRank();
-                        break;
-                    case "Resolve":
-                        score[2] += mastery.getRank();
-                        break;
-                    default:
-                        throw new APIDataNotParseableException("new mastery names?");
-                }
-            }
-            
-            System.out.format("%s: %s/%s/%s%n", page.getName(), score[0], score[1], score[2]);
-        }
     }
     
     
