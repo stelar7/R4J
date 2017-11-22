@@ -115,7 +115,11 @@ public enum GameSubType
     /**
      * Invasion games
      */
-    STARGUARDIAN;
+    STARGUARDIAN,
+    /**
+     * Overcharge games?
+     */
+    OVERCHARGE;
     
     public static Optional<GameSubType> getFromCode(final String subType)
     {

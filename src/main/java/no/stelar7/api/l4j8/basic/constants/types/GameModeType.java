@@ -64,7 +64,11 @@ public enum GameModeType
     /**
      * Doombots mode
      */
-    DOOMBOTSTEEMO;
+    DOOMBOTSTEEMO,
+    /**
+     * Overcharge mode?
+     */
+    OVERCHARGE;
     
     /**
      * Returns a GameModeType from the provided value
