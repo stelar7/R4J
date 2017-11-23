@@ -175,7 +175,7 @@ public class MatchListBuilder
         }
         if (this.queues != null)
         {
-            this.queues.forEach(queue -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(queue.getValue())));
+            this.queues.forEach(queue -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(queue.getValues()[0])));
         }
         if (this.seasons != null)
         {

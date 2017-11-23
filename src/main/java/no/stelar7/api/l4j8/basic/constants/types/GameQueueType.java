@@ -68,7 +68,7 @@ public enum GameQueueType
     /**
      * Historical Summoner's Rift Coop vs AI Intermediate Bot games
      */
-    BOT_5X5_INTERMEDIATE_OLD(new Integer[]{33, 36}),
+    BOT_5X5_INTERMEDIATE_OLD(new Integer[]{36}),
     /**
      * Twisted Treeline Coop vs AI games
      */
@@ -124,11 +124,11 @@ public enum GameQueueType
     /**
      * Ascension games
      */
-    ASCENSION_5X5(new Integer[]{96, 97, 910, 911}),
+    ASCENSION_5X5(new Integer[]{910, 911, 96, 97}),
     /**
      * Twisted Treeline 6x6 Hexakill games
      */
-    HEXAKILL(new Integer[]{98, 970}),
+    HEXAKILL(new Integer[]{970, 98}),
     /**
      * Butcher's Bridge games
      */
@@ -136,7 +136,7 @@ public enum GameQueueType
     /**
      * King Poro games
      */
-    KING_PORO_5X5(new Integer[]{300, 301, 920, 921}),
+    KING_PORO_5X5(new Integer[]{920, 921, 300, 301}),
     /**
      * Nemesis games
      */
@@ -156,7 +156,7 @@ public enum GameQueueType
     /**
      * All Random URF games
      */
-    ALL_RANDOM_URF(new Integer[]{318, 319, 900, 901}),
+    ALL_RANDOM_URF(new Integer[]{900, 901, 318, 319}),
     /**
      * All Random snow URF games
      */
@@ -168,7 +168,7 @@ public enum GameQueueType
     /**
      * All Random Summoner's Rift games
      */
-    ARAM_5X5(new Integer[]{324, 325}),
+    ARAM_5X5(new Integer[]{325, 324}),
     /**
      * Normal 5v5 Draft Pick games (Dynamic Queue)
      */
@@ -236,7 +236,7 @@ public enum GameQueueType
     /**
      * Nexus Siege games
      */
-    NEXUS_SIEGE(new Integer[]{314, 315, 940, 941}),
+    NEXUS_SIEGE(new Integer[]{940, 941, 314, 315}),
     /**
      * Doom Bots w/ difficulty voting
      */
@@ -294,7 +294,7 @@ public enum GameQueueType
         return "".equals(apiname) ? this.name() : apiname;
     }
     
-    public Integer[] getValue()
+    public Integer[] getValues()
     {
         return this.codes;
     }

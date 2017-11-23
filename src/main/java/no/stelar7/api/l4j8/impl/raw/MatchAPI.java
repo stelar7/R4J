@@ -91,7 +91,7 @@ public final class MatchAPI
         }
         if (rankedQueue != null)
         {
-            rankedQueue.forEach(queue -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(queue.getValue())));
+            rankedQueue.forEach(queue -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(queue.getValues()[0])));
         }
         if (season != null)
         {
