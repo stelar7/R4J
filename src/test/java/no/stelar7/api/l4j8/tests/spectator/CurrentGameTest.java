@@ -55,6 +55,6 @@ public class CurrentGameTest
         
         SpectatorGameInfo game = sb.getCurrentGame();
         
-        System.out.format("%s is %sin game", Constants.TEST_SUMMONER_NAMES[0], game != null ? "" : "not ");
+        System.out.format("%s is %sin game%n", Constants.TEST_SUMMONER_NAMES[0], game != null ? "" : "not ");
     }
 }

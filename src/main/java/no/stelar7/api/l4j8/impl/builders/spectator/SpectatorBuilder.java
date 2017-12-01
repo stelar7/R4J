@@ -73,8 +73,14 @@ public class SpectatorBuilder
             return (SpectatorGameInfo) chl.get();
         }
         
-        SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg, this.platform, this.summonerId);
-        return fg;
+        try
+        {
+            SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg, this.platform, this.summonerId);
+            return fg;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
     }
 }

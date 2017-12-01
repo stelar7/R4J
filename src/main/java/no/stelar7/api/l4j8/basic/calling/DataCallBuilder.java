@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.basic.calling;
 
 import com.google.gson.*;
+import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
@@ -92,7 +93,7 @@ public class DataCallBuilder
             
             case 404:
             {
-                return null;
+                return new Pair<>(response.getResponseCode(), response.getResponseData());
             }
             
             case 429:

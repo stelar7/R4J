@@ -110,6 +110,9 @@ public enum URLEndpoint
     V3_LEAGUE_CHALLENGER("lol", "league", "v3", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V3_LEAGUE_MASTER("lol", "league", "v3", "masterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     
+    // lol/platform/v3/third-party-code/by-summoner/{summonerId}
+    V3_THIRD_PARTY_CODE("lol", "platform", "v3", "third-party-code/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, String.class),
+    
     
     // POST lol/tournament-stub/v3/codes Create a mock tournament code for the given tournament.
     // GET  lol/tournament-stub/v3/lobby-events/by-code/{tournamentCode} Gets a mock list of lobby events by tournament code.
