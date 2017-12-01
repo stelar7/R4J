@@ -67,8 +67,15 @@ public final class SpectatorAPI
             return (SpectatorGameInfo) chl.get();
         }
         
-        SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg, server);
-        return fg;
+        
+        try
+        {
+            SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg, server);
+            return fg;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
     }
 }
