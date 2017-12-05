@@ -60,10 +60,16 @@ public final class StaticAPI
             return ((StaticChampionList) chl.get()).getData();
         }
         
-        StaticChampionList list = (StaticChampionList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPIONS, list, server, dataFlags, version, locale);
-        
-        return list.getData();
+        try
+        {
+            StaticChampionList list = (StaticChampionList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPIONS, list, server, dataFlags, version, locale);
+            return list.getData();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public StaticChampion getChampion(Platform server, int id, @Nullable Set<ChampDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -105,10 +111,16 @@ public final class StaticAPI
             return dataMap.get(id);
         }
         
-        StaticChampion list = (StaticChampion) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, list, server, id, dataFlags, version, locale);
-        
-        return list;
+        try
+        {
+            StaticChampion list = (StaticChampion) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, list, server, id, dataFlags, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public ItemList getItems(Platform server, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -141,10 +153,16 @@ public final class StaticAPI
             return (ItemList) chl.get();
         }
         
-        ItemList list = (ItemList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEMS, list, server, dataFlags, version, locale);
-        
-        return list;
+        try
+        {
+            ItemList list = (ItemList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEMS, list, server, dataFlags, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
         
     }
     
@@ -187,11 +205,16 @@ public final class StaticAPI
             return dataMap.get(id);
         }
         
-        
-        Item list = (Item) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, list, server, id, dataFlags, version, locale);
-        
-        return list;
+        try
+        {
+            Item list = (Item) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, list, server, id, dataFlags, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public Map<String, String> getLanguageStrings(Platform server, @Nullable String version, @Nullable String locale)
@@ -216,12 +239,16 @@ public final class StaticAPI
             return ((LanguageStrings) chl.get()).getData();
         }
         
-        LanguageStrings list = (LanguageStrings) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, list, server, version, locale);
-        
-        return list.getData();
-        
-        
+        try
+        {
+            LanguageStrings list = (LanguageStrings) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, list, server, version, locale);
+            return list.getData();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -242,12 +269,16 @@ public final class StaticAPI
         {
             return (List<String>) chl.get();
         }
-        
-        List<String> list = (List<String>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGES, list, server);
-        
-        
-        return list;
+        try
+        {
+            List<String> list = (List<String>) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGES, list, server);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return Collections.emptyList();
+        }
     }
     
     public Map<String, MapDetails> getMaps(Platform server, @Nullable String version, @Nullable String locale)
@@ -272,9 +303,16 @@ public final class StaticAPI
             return ((MapData) chl.get()).getData();
         }
         
-        MapData list = (MapData) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MAPS, list, server, version, locale);
-        return list.getData();
+        try
+        {
+            MapData list = (MapData) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MAPS, list, server, version, locale);
+            return list.getData();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public Map<Integer, StaticMastery> getMasteries(Platform server, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -308,10 +346,16 @@ public final class StaticAPI
             return ((StaticMasteryList) chl.get()).getData();
         }
         
-        StaticMasteryList list = (StaticMasteryList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list, server, dataFlags, version, locale);
-        
-        return list.getData();
+        try
+        {
+            StaticMasteryList list = (StaticMasteryList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list, server, dataFlags, version, locale);
+            return list.getData();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public Map<String, List<MasteryTreeList>> getMasteryTree(Platform server, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -344,10 +388,16 @@ public final class StaticAPI
             return ((StaticMasteryList) chl.get()).getTree();
         }
         
-        StaticMasteryList list = (StaticMasteryList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list, server, dataFlags, version, locale);
-        
-        return list.getTree();
+        try
+        {
+            StaticMasteryList list = (StaticMasteryList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list, server, dataFlags, version, locale);
+            return list.getTree();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public StaticMastery getMastery(Platform server, int id, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -388,10 +438,16 @@ public final class StaticAPI
             return dataMap.get(id);
         }
         
-        
-        StaticMastery list = (StaticMastery) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, list, server, id, dataFlags, version, locale);
-        return list;
+        try
+        {
+            StaticMastery list = (StaticMastery) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, list, server, id, dataFlags, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public Map<Long, ProfileIconDetails> getProfileIcons(Platform server, @Nullable String version, @Nullable String locale)
@@ -415,10 +471,16 @@ public final class StaticAPI
             return ((ProfileIconData) chl.get()).getData();
         }
         
-        ProfileIconData list = (ProfileIconData) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PROFILEICONS, list, server, version, locale);
-        
-        return list.getData();
+        try
+        {
+            ProfileIconData list = (ProfileIconData) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PROFILEICONS, list, server, version, locale);
+            return list.getData();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public Realm getRealm(Platform server)
@@ -433,10 +495,16 @@ public final class StaticAPI
             return (Realm) chl.get();
         }
         
-        Realm list = (Realm) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_REALMS, list, server);
-        
-        return list;
+        try
+        {
+            Realm list = (Realm) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_REALMS, list, server);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public Map<Integer, StaticRune> getRunes(Platform server, @Nullable Set<RuneDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -470,9 +538,16 @@ public final class StaticAPI
             return ((StaticRuneList) chl.get()).getData();
         }
         
-        StaticRuneList list = (StaticRuneList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNES, list, server, dataFlags, version, locale);
-        return list.getData();
+        try
+        {
+            StaticRuneList list = (StaticRuneList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNES, list, server, dataFlags, version, locale);
+            return list.getData();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     
@@ -514,9 +589,16 @@ public final class StaticAPI
             return dataMap.get(id);
         }
         
-        StaticRune list = (StaticRune) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNE_BY_ID, list, server, id, dataFlags, version, locale);
-        return list;
+        try
+        {
+            StaticRune list = (StaticRune) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_RUNE_BY_ID, list, server, id, dataFlags, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     
@@ -551,9 +633,16 @@ public final class StaticAPI
             return ((StaticSummonerSpellList) chl.get()).getData();
         }
         
-        StaticSummonerSpellList list = (StaticSummonerSpellList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELLS, list, server, dataFlags, version, locale);
-        return list.getData();
+        try
+        {
+            StaticSummonerSpellList list = (StaticSummonerSpellList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELLS, list, server, dataFlags, version, locale);
+            return list.getData();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public StaticSummonerSpell getSummonerSpell(Platform server, int id, @Nullable Set<SpellDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -596,10 +685,16 @@ public final class StaticAPI
             return dataMap.get(id);
         }
         
-        
-        StaticSummonerSpell list = (StaticSummonerSpell) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, list, server, id, dataFlags, version, locale);
-        return list;
+        try
+        {
+            StaticSummonerSpell list = (StaticSummonerSpell) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_SUMMONER_SPELL_BY_ID, list, server, id, dataFlags, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     
@@ -615,9 +710,16 @@ public final class StaticAPI
             return (List<String>) chl.get();
         }
         
-        List<String> list = (List<String>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_VERSIONS, list, server);
-        return list;
+        try
+        {
+            List<String> list = (List<String>) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_VERSIONS, list, server);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return Collections.emptyList();
+        }
     }
     
 }

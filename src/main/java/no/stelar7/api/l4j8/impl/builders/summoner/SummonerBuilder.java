@@ -2,7 +2,7 @@ package no.stelar7.api.l4j8.impl.builders.summoner;
 
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.utils.Utils;
+import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.util.Optional;
@@ -89,9 +89,15 @@ public class SummonerBuilder
             return (Summoner) chl.get();
         }
         
-        Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(endpoint, summoner, this.accId, this.sumId, this.name, this.platform);
         
-        return summoner;
+        Object sob = builder.build();
+        
+        if (sob instanceof Pair)
+        {
+            return null;
+        }
+        
+        DataCall.getCacheProvider().store(endpoint, sob, this.accId, this.sumId, this.name, this.platform);
+        return (Summoner) sob;
     }
 }

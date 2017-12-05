@@ -56,8 +56,15 @@ public class TimelineBuilder
             return (MatchTimeline) chl.get();
         }
         
-        MatchTimeline timeline = (MatchTimeline) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline, this.id, this.platform);
-        return timeline;
+        try
+        {
+            MatchTimeline timeline = (MatchTimeline) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline, this.id, this.platform);
+            return timeline;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
 }

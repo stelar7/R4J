@@ -59,7 +59,14 @@ public final class TournamentAPI
             builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_CODES);
         }
         
-        return (List<String>) builder.build();
+        try
+        {
+            return (List<String>) builder.build();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -75,8 +82,14 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCHLIST)
                                                        .withPlatform(ServicePlatform.AMERICAS);
         
-        
-        return (List<Long>) builder.build();
+        try
+        {
+            return (List<Long>) builder.build();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -96,8 +109,14 @@ public final class TournamentAPI
                                                        .withURLData(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCH)
                                                        .withPlatform(server);
-        
-        return (Match) builder.build();
+        try
+        {
+            return (Match) builder.build();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -118,7 +137,14 @@ public final class TournamentAPI
             throw new IllegalArgumentException("This method is not useable with the stub API");
         }
         
-        return (TournamentCode) builder.build();
+        try
+        {
+            return (TournamentCode) builder.build();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -139,9 +165,15 @@ public final class TournamentAPI
             builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_LOBBY_EVENTS);
         }
         
-        
-        LobbyEventWrapper lew = (LobbyEventWrapper) builder.build();
-        return lew.getEventList();
+        try
+        {
+            LobbyEventWrapper lew = (LobbyEventWrapper) builder.build();
+            return lew.getEventList();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -154,7 +186,7 @@ public final class TournamentAPI
      * @param params the provider definition
      * @return provider id
      */
-    public long registerAsProvider(final ProviderRegistrationParameters params)
+    public Long registerAsProvider(final ProviderRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_PROVIDER)
@@ -168,7 +200,14 @@ public final class TournamentAPI
             builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_PROVIDER);
         }
         
-        return (Long) builder.build();
+        try
+        {
+            return (Long) builder.build();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -177,7 +216,7 @@ public final class TournamentAPI
      * @param params the tournament definition
      * @return the id
      */
-    public long registerTournament(final TournamentRegistrationParameters params)
+    public Long registerTournament(final TournamentRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_TOURNAMENT)
@@ -190,8 +229,13 @@ public final class TournamentAPI
             builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_TOURNAMENT);
         }
         
-        
-        return (Long) builder.build();
+        try
+        {
+            return (Long) builder.build();
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
     }
     
     /**
@@ -199,8 +243,9 @@ public final class TournamentAPI
      *
      * @param params         the tournament definition
      * @param tournamentCode The tournament code of the match
+     * @return returns true if update was successfull
      */
-    public void updateTournament(final String tournamentCode, final TournamentCodeUpdateParameters params)
+    public boolean updateTournament(final String tournamentCode, final TournamentCodeUpdateParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
@@ -214,6 +259,13 @@ public final class TournamentAPI
             throw new IllegalArgumentException("This method is not useable with the stub API");
         }
         
-        builder.build();
+        try
+        {
+            builder.build();
+            return true;
+        } catch (ClassCastException e)
+        {
+            return false;
+        }
     }
 }

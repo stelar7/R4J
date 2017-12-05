@@ -49,10 +49,16 @@ public class SpectatorBuilder
             return (List<SpectatorGameInfo>) chl.get();
         }
         
-        FeaturedGames fg = (FeaturedGames) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg.getGameList(), this.platform);
-        return fg.getGameList();
-        
+        try
+        {
+            FeaturedGames fg = (FeaturedGames) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg.getGameList(), this.platform);
+            return fg.getGameList();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public SpectatorGameInfo getCurrentGame()

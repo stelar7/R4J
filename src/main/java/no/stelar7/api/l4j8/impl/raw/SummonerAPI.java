@@ -46,9 +46,16 @@ public final class SummonerAPI
             return (Summoner) chl.get();
         }
         
-        Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ID, summoner, summonerId, server);
-        return summoner;
+        try
+        {
+            Summoner summoner = (Summoner) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ID, summoner, summonerId, server);
+            return summoner;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -72,9 +79,16 @@ public final class SummonerAPI
             return (Summoner) chl.get();
         }
         
-        Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_NAME, summoner, summonerName, server);
-        return summoner;
+        try
+        {
+            Summoner summoner = (Summoner) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_NAME, summoner, summonerName, server);
+            return summoner;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -97,8 +111,15 @@ public final class SummonerAPI
             return (Summoner) chl.get();
         }
         
-        Summoner summoner = (Summoner) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoner, accountId, server);
-        return summoner;
+        try
+        {
+            Summoner summoner = (Summoner) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoner, accountId, server);
+            return summoner;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
 }

@@ -44,7 +44,10 @@ public class CurrentGameTest
         
         // Get game info
         final SpectatorGameInfo currentGame = sb.withSummonerId(sum.getSummonerId()).getCurrentGame();
-        doAssertions.accept(currentGame);
+        if (currentGame != null)
+        {
+            doAssertions.accept(currentGame);
+        }
     }
     
     @Test

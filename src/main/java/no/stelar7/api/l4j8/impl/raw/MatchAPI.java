@@ -109,15 +109,17 @@ public final class MatchAPI
             return (List<MatchReference>) chl.get();
         }
         
-        MatchList list = (MatchList) builder.build();
-        
-        if (list == null)
+        try
         {
+            
+            MatchList list = (MatchList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches(), accountId, server, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
+            return list.getMatches();
+        } catch (ClassCastException e)
+        {
+            
             return Collections.emptyList();
         }
-        
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches(), accountId, server, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
-        return list.getMatches();
     }
     
     /**
@@ -156,9 +158,16 @@ public final class MatchAPI
             return (Match) chl.get();
         }
         
-        Match match = (Match) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, matchId, server);
-        return match;
+        try
+        {
+            Match match = (Match) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, matchId, server);
+            return match;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -181,8 +190,15 @@ public final class MatchAPI
             return (MatchTimeline) chl.get();
         }
         
-        MatchTimeline timeline = (MatchTimeline) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline, matchId, server);
-        return timeline;
+        try
+        {
+            MatchTimeline timeline = (MatchTimeline) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline, matchId, server);
+            return timeline;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
 }

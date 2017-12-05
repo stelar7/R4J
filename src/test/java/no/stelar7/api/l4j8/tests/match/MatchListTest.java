@@ -43,13 +43,14 @@ public class MatchListTest
     public void testMatchAndMatchList()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.DEBUG);
         Set<GameQueueType> queue      = null;//EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2017);
         Set<Integer>       champ      = null;//Arrays.asList(Constants.TEST_CHAMPION_IDS);
-        long               beginTime  = -1;//LocalDateTime.now().withHour(0).toEpochSecond(ZoneOffset.UTC) * 1000;//1481108400000L; // start of season 2017
-        long               endTime    = -1;//LocalDateTime.now().withHour(0).plusWeeks(1).toEpochSecond(ZoneOffset.UTC) * 1000; // 604800000 is one week in ms
-        long               beginIndex = -1;//0;
-        long               endIndex   = -1;//50;
+        Long               beginTime  = null;//LocalDateTime.now().withHour(0).toEpochSecond(ZoneOffset.UTC) * 1000;//1481108400000L; // start of season 2017
+        Long               endTime    = null;//LocalDateTime.now().withHour(0).plusWeeks(1).toEpochSecond(ZoneOffset.UTC) * 1000; // 604800000 is one week in ms
+        Long               beginIndex = null;//0;
+        Long               endIndex   = null;//50;
         
         MatchListBuilder builder = new MatchListBuilder();
         builder = builder.withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[0]);
@@ -82,6 +83,7 @@ public class MatchListTest
     public void testMatchlistAllLazy()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCHLIST);
         
         for (int i = 0; i < Constants.TEST_ACCOUNT_IDS.length; i++)
         {
@@ -117,6 +119,7 @@ public class MatchListTest
     }
     
     @Test
+    @Ignore
     public void testLazyList()
     {
         LazyList<MatchReference> refs = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get().getGames().getLazy();

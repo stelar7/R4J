@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.impl.builders.championmastery;
 
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 
 import java.lang.reflect.Field;
@@ -65,9 +66,16 @@ public class ChampionMasteryBuilder
             return (Integer) chl.get();
         }
         
-        Integer list = (Integer) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list, this.platform, this.summonerId);
-        return list;
+        try
+        {
+            Integer list = (Integer) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list, this.platform, this.summonerId);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public List<ChampionMastery> getChampionMasteries()
@@ -88,10 +96,15 @@ public class ChampionMasteryBuilder
             return (List<ChampionMastery>) chl.get();
         }
         
-        List<ChampionMastery> list = (List<ChampionMastery>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list, this.platform, this.summonerId);
-        
-        return list;
+        try
+        {
+            List<ChampionMastery> list = (List<ChampionMastery>) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list, this.platform, this.summonerId);
+            return list;
+        } catch (ClassCastException e)
+        {
+            return Collections.emptyList();
+        }
     }
     
     public List<ChampionMastery> getTopChampions(Integer count)
@@ -124,13 +137,13 @@ public class ChampionMasteryBuilder
             return (ChampionMastery) chl.get();
         }
         
-        ChampionMastery mastery = (ChampionMastery) builder.build();
+        Object masterObj = builder.build();
         
-        if (mastery == null)
+        if (masterObj instanceof Pair)
         {
             try
             {
-                mastery = new ChampionMastery();
+                ChampionMastery mastery = new ChampionMastery();
                 
                 Field player = mastery.getClass().getDeclaredField("playerId");
                 player.setAccessible(true);
@@ -143,13 +156,17 @@ public class ChampionMasteryBuilder
                 Field level = mastery.getClass().getDeclaredField("championLevel");
                 level.setAccessible(true);
                 level.set(mastery, 0);
+                
+                DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery, this.platform, this.summonerId, this.championId);
+                return mastery;
+                
             } catch (NoSuchFieldException | IllegalAccessException e)
             {
                 Logger.getGlobal().warning("Class has changed, please fix me");
             }
         }
         
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery, this.platform, this.summonerId, this.championId);
-        return mastery;
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, masterObj, this.platform, this.summonerId, this.championId);
+        return (ChampionMastery) masterObj;
     }
 }

@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.impl.builders.match;
 
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.match.Match;
 
 import java.util.Optional;
@@ -58,9 +59,14 @@ public class MatchBuilder
             return (Match) chl.get();
         }
         
-        Match match = (Match) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, this.id, this.platform);
+        Object matchObj = builder.build();
+        if (matchObj instanceof Pair)
+        {
+            return null;
+        }
         
+        Match match = (Match) matchObj;
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, this.id, this.platform);
         return match;
     }
 }

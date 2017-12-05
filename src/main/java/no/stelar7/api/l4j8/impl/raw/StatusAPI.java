@@ -31,9 +31,16 @@ public final class StatusAPI
             return (ShardStatus) chl.get();
         }
         
-        ShardStatus list = (ShardStatus) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_SHARD_STATUS, list, server);
-        return list;
+        try
+        {
+            ShardStatus list = (ShardStatus) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SHARD_STATUS, list, server);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
 }

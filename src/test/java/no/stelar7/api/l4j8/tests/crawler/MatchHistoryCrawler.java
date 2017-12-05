@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.tests.crawler;
 
-import javafx.util.Pair;
+
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.TeamType;
 import no.stelar7.api.l4j8.basic.exceptions.APIEnumNotUpToDateException;

@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.impl.raw;
 
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 
 import javax.annotation.Nullable;
@@ -47,9 +48,16 @@ public final class MasteryAPI
             return (Integer) chl.get();
         }
         
-        Integer list = (Integer) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list, server, summonerId);
-        return list;
+        try
+        {
+            Integer list = (Integer) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list, server, summonerId);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     /**
@@ -94,13 +102,12 @@ public final class MasteryAPI
             return (ChampionMastery) chl.get();
         }
         
-        ChampionMastery mastery = (ChampionMastery) builder.build();
-        
-        if (mastery == null)
+        Object masteryObj = builder.build();
+        if (masteryObj instanceof Pair)
         {
             try
             {
-                mastery = new ChampionMastery();
+                ChampionMastery mastery = new ChampionMastery();
                 
                 Field player = mastery.getClass().getDeclaredField("playerId");
                 player.setAccessible(true);
@@ -113,14 +120,15 @@ public final class MasteryAPI
                 Field level = mastery.getClass().getDeclaredField("championLevel");
                 level.setAccessible(true);
                 level.set(mastery, 0);
+                DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery, server, summonerId, championId);
+                
             } catch (NoSuchFieldException | IllegalAccessException e)
             {
                 Logger.getGlobal().warning("Class has changed, please fix me");
             }
         }
-        
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery, server, summonerId, championId);
-        return mastery;
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, masteryObj, server, summonerId, championId);
+        return (ChampionMastery) masteryObj;
     }
     
     
@@ -145,9 +153,16 @@ public final class MasteryAPI
             return (List<ChampionMastery>) chl.get();
         }
         
-        List<ChampionMastery> list = (List<ChampionMastery>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list, server, summonerId);
-        return list;
+        try
+        {
+            List<ChampionMastery> list = (List<ChampionMastery>) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list, server, summonerId);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return Collections.emptyList();
+        }
     }
     
 }

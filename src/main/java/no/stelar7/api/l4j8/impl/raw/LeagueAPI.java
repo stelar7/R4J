@@ -45,9 +45,16 @@ public final class LeagueAPI
             return (LeagueList) chl.get();
         }
         
-        LeagueList list = (LeagueList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_MASTER, list, server, queue);
-        return list;
+        try
+        {
+            LeagueList list = (LeagueList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_MASTER, list, server, queue);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     
@@ -73,10 +80,16 @@ public final class LeagueAPI
             return (LeagueList) chl.get();
         }
         
-        LeagueList list = (LeagueList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_CHALLENGER, list, server, queue);
-        return list;
-        
+        try
+        {
+            LeagueList list = (LeagueList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_CHALLENGER, list, server, queue);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     
@@ -102,9 +115,16 @@ public final class LeagueAPI
             return (List<LeaguePosition>) chl.get();
         }
         
-        List<LeaguePosition> list = (List<LeaguePosition>) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, summonerId, server);
-        return list;
+        try
+        {
+            List<LeaguePosition> list = (List<LeaguePosition>) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, summonerId, server);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     
@@ -128,8 +148,15 @@ public final class LeagueAPI
             return (LeagueList) chl.get();
         }
         
-        LeagueList list = (LeagueList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list, leagueId, server);
-        return list;
+        try
+        {
+            LeagueList list = (LeagueList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list, leagueId, server);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
 }

@@ -50,9 +50,16 @@ public class ChampionBuilder
             return (List<Champion>) chl.get();
         }
         
-        ChampionList cl = (ChampionList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), this.platform, String.valueOf(true));
-        return cl.getChampions();
+        try
+        {
+            ChampionList cl = (ChampionList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), this.platform, String.valueOf(true));
+            return cl.getChampions();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     public List<Champion> getAll()
@@ -72,9 +79,16 @@ public class ChampionBuilder
             return (List<Champion>) chl.get();
         }
         
-        ChampionList cl = (ChampionList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), this.platform, String.valueOf(false));
-        return cl.getChampions();
+        try
+        {
+            ChampionList cl = (ChampionList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), this.platform, String.valueOf(false));
+            return cl.getChampions();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     
@@ -95,8 +109,15 @@ public class ChampionBuilder
             return (Champion) chl.get();
         }
         
-        Champion ch = (Champion) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS_BY_ID, ch, this, platform, this.id);
-        return ch;
+        try
+        {
+            Champion ch = (Champion) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS_BY_ID, ch, this, platform, this.id);
+            return ch;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
 }

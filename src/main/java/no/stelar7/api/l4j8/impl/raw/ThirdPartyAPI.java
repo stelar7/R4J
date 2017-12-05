@@ -1,8 +1,8 @@
 package no.stelar7.api.l4j8.impl.raw;
 
-import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.calling.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 
 public final class ThirdPartyAPI
 {
@@ -34,7 +34,7 @@ public final class ThirdPartyAPI
             return false;
         } catch (ClassCastException e)
         {
-            e.printStackTrace();
+            
             return true;
         }
     }
@@ -51,7 +51,7 @@ public final class ThirdPartyAPI
             return data.getValue();
         } catch (ClassCastException e)
         {
-            e.printStackTrace();
+            
             return (String) builder.build();
         }
     }

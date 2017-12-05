@@ -1,11 +1,10 @@
 package no.stelar7.api.l4j8.basic.calling;
 
 import com.google.gson.*;
-import javafx.util.Pair;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
-import no.stelar7.api.l4j8.basic.utils.Utils;
+import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;

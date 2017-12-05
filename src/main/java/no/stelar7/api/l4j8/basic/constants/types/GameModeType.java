@@ -66,9 +66,9 @@ public enum GameModeType
      */
     DOOMBOTSTEEMO,
     /**
-     * Overcharge mode?
+     * Overcharge mode
      */
-    OVERCHARGE;
+    PROJECT;
     
     /**
      * Returns a GameModeType from the provided value

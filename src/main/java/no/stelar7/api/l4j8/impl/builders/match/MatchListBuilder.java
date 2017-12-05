@@ -52,27 +52,27 @@ public class MatchListBuilder
         return new MatchListBuilder(platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
     }
     
-    public MatchListBuilder withAccountId(long accountId)
+    public MatchListBuilder withAccountId(Long accountId)
     {
         return new MatchListBuilder(this.platform, accountId, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
     }
     
-    public MatchListBuilder withBeginTime(long time)
+    public MatchListBuilder withBeginTime(Long time)
     {
         return new MatchListBuilder(this.platform, this.id, time, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
     }
     
-    public MatchListBuilder withEndTime(long time)
+    public MatchListBuilder withEndTime(Long time)
     {
         return new MatchListBuilder(this.platform, this.id, this.beginTime, time, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
     }
     
-    public MatchListBuilder withBeginIndex(long index)
+    public MatchListBuilder withBeginIndex(Long index)
     {
         return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, index, this.endIndex, this.queues, this.seasons, this.champions);
     }
     
-    public MatchListBuilder withEndIndex(long index)
+    public MatchListBuilder withEndIndex(Long index)
     {
         return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, this.beginIndex, index, this.queues, this.seasons, this.champions);
     }
@@ -193,15 +193,16 @@ public class MatchListBuilder
             return (List<MatchReference>) chl.get();
         }
         
-        MatchList list = (MatchList) builder.build();
-        
-        if (list == null)
+        try
         {
+            MatchList list = (MatchList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches(), this.id, this.platform, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
+            return list.getMatches();
+        } catch (ClassCastException e)
+        {
+            
             return Collections.emptyList();
         }
-        
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, list.getMatches(), this.id, this.platform, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
-        return list.getMatches();
     }
     
     /**
@@ -215,8 +216,8 @@ public class MatchListBuilder
     {
         int increment = 50;
         return new LazyList<>(increment, prevValue -> {
-            long begin = (this.beginIndex != null ? this.beginIndex : 0) + prevValue;
-            long end   = (this.endIndex != null ? this.endIndex : 0) + increment + prevValue;
+            Long begin = (this.beginIndex != null ? this.beginIndex : 0) + prevValue;
+            Long end   = (this.endIndex != null ? this.endIndex : 0) + increment + prevValue;
             
             MatchListBuilder local = new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, begin, end, this.queues, this.seasons, this.champions);
             return local.get();

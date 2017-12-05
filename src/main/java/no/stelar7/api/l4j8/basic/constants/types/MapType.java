@@ -10,10 +10,12 @@ public enum MapType
     /**
      * Summoner's Rift Original Summer Variant
      */
+    // -6500, -83, 14076, 14522 ??
     SUMMONERS_RIFT_SUMMER_OLD(1, new Rectangle(-269, -83, 14276, 14522)),
     /**
      * Summoner's Rift Original Autumn Variant
      */
+    // -6500, -83, 14076, 14522 ??
     SUMMONERS_RIFT_AUTUMN_OLD(2, new Rectangle(-269, -83, 14276, 14522)),
     /**
      * The Proving Grounds Tutorial map
@@ -34,6 +36,7 @@ public enum MapType
     /**
      * Summoner's Rift Current Version
      */
+    // 0, 0, 14820, 148841 ??
     SUMMONERS_RIFT(11, new Rectangle(-269, -83, 14276, 14522)),
     /**
      * Howling Abyss ARAM map
@@ -46,11 +49,18 @@ public enum MapType
     /**
      * Darkstar Map
      */
+    //-650, -83, 14076, 14522 ??
     COSMIC_RUINS(16, new Rectangle(20, 20, 6970, 6970)),
     /**
      * Invasion map
      */
-    VALORAN_CITY_PARK(18, new Rectangle(0, 0, 28767, 28767));
+    //16975, 18675, 23025, 24725 ??
+    VALORAN_CITY_PARK(18, new Rectangle(0, 0, 28767, 28767)),
+    /**
+     * Invasion map
+     */
+    SUBSTRUCTURE_43(19, new Rectangle(0, 0, 12056, 12056)),
+    ;
     
     
     private final Integer   mapId;

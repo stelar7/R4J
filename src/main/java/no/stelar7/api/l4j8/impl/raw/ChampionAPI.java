@@ -37,10 +37,16 @@ public final class ChampionAPI
             return (List<Champion>) chl.get();
         }
         
-        
-        ChampionList cl = (ChampionList) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), server);
-        return cl.getChampions();
+        try
+        {
+            ChampionList cl = (ChampionList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), server);
+            return cl.getChampions();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
     
@@ -57,9 +63,16 @@ public final class ChampionAPI
             return (Champion) chl.get();
         }
         
-        Champion ch = (Champion) builder.build();
-        DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS_BY_ID, ch, server, id);
-        return ch;
+        try
+        {
+            Champion ch = (Champion) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS_BY_ID, ch, server, id);
+            return ch;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
     }
     
 }
