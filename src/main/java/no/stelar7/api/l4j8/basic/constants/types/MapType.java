@@ -10,12 +10,12 @@ public enum MapType
     /**
      * Summoner's Rift Original Summer Variant
      */
-    // -6500, -83, 14076, 14522 ??
+    // -650, -83, 14076, 14522 ??
     SUMMONERS_RIFT_SUMMER_OLD(1, new Rectangle(-269, -83, 14276, 14522)),
     /**
      * Summoner's Rift Original Autumn Variant
      */
-    // -6500, -83, 14076, 14522 ??
+    // -650, -83, 14076, 14522 ??
     SUMMONERS_RIFT_AUTUMN_OLD(2, new Rectangle(-269, -83, 14276, 14522)),
     /**
      * The Proving Grounds Tutorial map
