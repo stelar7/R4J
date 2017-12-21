@@ -104,7 +104,7 @@ public class DataCallBuilder
                     System.err.println();
                     System.err.println(response.getResponseData());
                     System.err.println("429 ratelimit hit! Please do not restart your application to refresh the timer!");
-                    System.err.println("This isnt supposed to happen unless you restarted your app before the last limit was hit!");
+                    System.err.println("This isn't supposed to happen unless you restarted your app before the last limit was hit!");
                 }
                 
                 return this.build();
