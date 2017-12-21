@@ -8,6 +8,7 @@ import no.stelar7.api.l4j8.basic.ratelimiting.RateLimiter;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.prefs.Preferences;
 
 public final class DataCall
 {
@@ -27,7 +28,8 @@ public final class DataCall
     
     private Enum        platform;
     private URLEndpoint endpoint;
-    private static String urlProxy = Constants.REQUEST_URL;
+    private static String      urlProxy         = Constants.REQUEST_URL;
+    private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/l4j8");
     
     
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter()
@@ -38,7 +40,11 @@ public final class DataCall
     public static Map<Enum, Map<Enum, Map<Integer, Integer>>> getCallData()
     {
         return callData;
-        
+    }
+    
+    public static Preferences getRatelimiterCache()
+    {
+        return ratelimiterCache;
     }
     
     public Map<String, String> getUrlParams()

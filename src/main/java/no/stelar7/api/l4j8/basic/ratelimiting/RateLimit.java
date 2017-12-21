@@ -7,7 +7,7 @@ public class RateLimit
     private int  permits;
     private long delayInMs;
     
-    public RateLimit(final int permits, final int time, final TimeUnit unit)
+    public RateLimit(final int permits, final long time, final TimeUnit unit)
     {
         this.permits = permits;
         delayInMs = unit.toMillis(time);

@@ -95,11 +95,7 @@ public abstract class RateLimiter
         try
         {
             overloadTimer = Integer.parseInt(sleep);
-            
-            if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
-            {
-                System.err.println("Forcing next sleep to be atleast: " + overloadTimer + " seconds");
-            }
+            DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Forcing next sleep to be atleast: %d seconds", overloadTimer));
             
         } catch (NumberFormatException e)
         {
@@ -124,5 +120,15 @@ public abstract class RateLimiter
             this.firstCallInTime = oldLimit.getFirstCallInTime();
             this.overloadTimer = oldLimit.overloadTimer;
         }
+    }
+    
+    public void setCallCountInTime(Map<RateLimit, AtomicLong> callCountInTime)
+    {
+        this.callCountInTime = callCountInTime;
+    }
+    
+    public void setFirstCallInTime(Map<RateLimit, Instant> firstCallInTime)
+    {
+        this.firstCallInTime = firstCallInTime;
     }
 }

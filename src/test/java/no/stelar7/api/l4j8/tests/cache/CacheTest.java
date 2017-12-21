@@ -40,7 +40,7 @@ public class CacheTest
     }
     
     @Test
-    public void testStaticDataCache() throws InterruptedException
+    public void testStaticDataCache()
     {
         DataCall.setLogLevel(LogLevel.DEBUG);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));

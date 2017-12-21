@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.tests.ratelimit;
 
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
@@ -48,6 +49,12 @@ public class RatelimitTest
     };
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+    
+    @Before
+    public void addDebug()
+    {
+        DataCall.setLogLevel(LogLevel.DEBUG);
+    }
     
     @Test
     @Ignore

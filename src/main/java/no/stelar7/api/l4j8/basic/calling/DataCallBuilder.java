@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.basic.calling;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
@@ -11,10 +12,14 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiFunction;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.*;
+import java.util.function.*;
+import java.util.prefs.BackingStoreException;
 
 public class DataCallBuilder
 {
@@ -28,7 +33,8 @@ public class DataCallBuilder
     
     private static void updateRatelimiter(Enum server, Enum endpoint)
     {
-        DataCall.getLimiter().get(server).get(endpoint).updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint));
+        RateLimiter limiter = DataCall.getLimiter().get(server).get(endpoint);
+        limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint));
     }
     
     /**
@@ -46,10 +52,8 @@ public class DataCallBuilder
         
         dc.getUrlHeaders().put("X-Riot-Token", DataCall.getCredentials().getBaseAPIKey());
         final String url = this.getURL();
-        if (DataCall.getLogLevel().ordinal() >= LogLevel.INFO.ordinal())
-        {
-            System.err.format("Trying url: %s%n", url);
-        }
+        
+        DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Trying url: %s", url));
         
         // app limit
         applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
@@ -58,10 +62,7 @@ public class DataCallBuilder
         
         
         final DataCallResponse response = this.getResponse(url);
-        if (DataCall.getLogLevel().ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
-        {
-            System.err.println(response);
-        }
+        DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, response.toString());
         
         switch (response.getResponseCode())
         {
@@ -74,7 +75,7 @@ public class DataCallBuilder
                 
                 if (this.dc.getEndpoint() == URLEndpoint.V3_MATCH)
                 {
-                    returnValue = postProcess(returnValue);
+                    returnValue = postProcessMatch(returnValue);
                 }
                 
                 Object dtoobj = Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
@@ -128,7 +129,7 @@ public class DataCallBuilder
         throw new APINoValidResponseException(response.getResponseData());
     }
     
-    private String postProcess(String returnValue)
+    private String postProcessMatch(String returnValue)
     {
         JsonObject element = (JsonObject) new JsonParser().parse(returnValue);
         
@@ -204,20 +205,84 @@ public class DataCallBuilder
         }
     }
     
-    
-    // TODO
+    public static final ReentrantLock lock = new ReentrantLock();
     
     private void applyLimit(Enum platform, Enum endpoint)
     {
-        Map<Enum, RateLimiter> limits = DataCall.getLimiter().get(platform);
-        if (limits != null)
+        lock.lock();
+        try
         {
-            RateLimiter limitr = limits.get(endpoint);
-            if (limitr != null)
+            Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
+            
+            if (child.get(endpoint) == null)
             {
-                limitr.acquire();
+                loadLimiterFromCache(platform, endpoint, child);
+                
             }
+        } finally
+        {
+            lock.unlock();
         }
+        
+        RateLimiter limitr = DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).get(endpoint);
+        
+        if (limitr != null)
+        {
+            limitr.acquire();
+            storeLimiter(platform, endpoint);
+        }
+    }
+    
+    private void storeLimiter(Enum platform, Enum endpoint)
+    {
+        RateLimiter limiter  = DataCall.getLimiter().get(platform).get(endpoint);
+        String      baseKey  = platform.toString() + "/" + endpoint.toString();
+        String      limitKey = "limits/" + baseKey;
+        String      firstKey = "first/" + baseKey;
+        String      callKey  = "call/" + baseKey;
+        
+        try
+        {
+            DataCall.getRatelimiterCache().put(limitKey, Utils.getGson().toJson(limiter.getLimits()));
+            DataCall.getRatelimiterCache().put(firstKey, Utils.getGson().toJson(limiter.getFirstCallInTime()));
+            DataCall.getRatelimiterCache().put(callKey, Utils.getGson().toJson(limiter.getCallCountInTime()));
+            DataCall.getRatelimiterCache().sync();
+        } catch (BackingStoreException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    private void loadLimiterFromCache(Enum platform, Enum endpoint, Map<Enum, RateLimiter> child)
+    {
+        String baseKey  = platform.toString() + "/" + endpoint.toString();
+        String limitKey = "limits/" + baseKey;
+        String firstKey = "first/" + baseKey;
+        String callKey  = "call/" + baseKey;
+        
+        String lastLimit = DataCall.getRatelimiterCache().get(limitKey, null);
+        String lastFirst = DataCall.getRatelimiterCache().get(firstKey, null);
+        String lastKey   = DataCall.getRatelimiterCache().get(callKey, null);
+        
+        if (lastLimit == null)
+        {
+            DataCall.getLogLevel().printIf(LogLevel.DEBUG, "No instance of an old ratelimiter found");
+            return;
+        }
+        
+        List<RateLimit>            knownLimits = Utils.getGson().fromJson(lastLimit, new TypeToken<List<RateLimit>>() {}.getType());
+        Map<RateLimit, Instant>    knownTime   = Utils.getGson().fromJson(lastFirst, new TypeToken<Map<RateLimit, Instant>>() {}.getType());
+        Map<RateLimit, AtomicLong> knownCount  = Utils.getGson().fromJson(lastKey, new TypeToken<Map<RateLimit, AtomicLong>>() {}.getType());
+        
+        
+        RateLimiter newerLimit = new BurstRateLimiter(knownLimits);
+        newerLimit.setCallCountInTime(knownCount);
+        newerLimit.setFirstCallInTime(knownTime);
+        
+        DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Loaded ratelimit for %s", endpoint));
+        
+        child.put(endpoint, newerLimit);
+        DataCall.getLimiter().put(platform, child);
     }
     
     private Object process(Object dtoobj)
@@ -270,15 +335,19 @@ public class DataCallBuilder
             
             con.setRequestMethod(requestMethod);
             
-            if (DataCall.getLogLevel().ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
-            {
-                System.err.format(Constants.VERBOSE_STRING_FORMAT, "URL", url);
-                System.err.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod());
-                System.err.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.postData);
-                System.err.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", "");
-                
-                con.getRequestProperties().forEach((key, value) -> System.err.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value));
-            }
+            
+            StringBuilder sb = new StringBuilder();
+            con.getRequestProperties().forEach((key, value) -> sb.append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
+            
+            String printMe = new StringBuilder()
+                    .append(String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url)).append("\n")
+                    .append(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod())).append("\n")
+                    .append(String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.postData)).append("\n")
+                    .append(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", "")).append("\n")
+                    .append(sb).toString().trim();
+            
+            DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, printMe);
+            
             
             if (!this.postData.isEmpty())
             {
@@ -291,11 +360,9 @@ public class DataCallBuilder
             
             con.connect();
             
-            if (DataCall.getLogLevel().ordinal() >= LogLevel.EXTENDED_INFO.ordinal())
-            {
-                System.err.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", "");
-                con.getHeaderFields().forEach((key, value) -> System.err.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value));
-            }
+            DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
+            con.getHeaderFields()
+               .forEach((key, value) -> DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
             
             
             String appA    = con.getHeaderField("X-App-Rate-Limit");
@@ -303,23 +370,19 @@ public class DataCallBuilder
             String methodA = con.getHeaderField("X-Method-Rate-Limit");
             String methodB = con.getHeaderField("X-Method-Rate-Limit-Count");
             
-            if (appA == null && DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
+            if (appA == null)
             {
-                System.err.println("Header 'X-App-Rate-Limit' missing from call: " + getURL());
-            }
-            
-            if (appA != null)
+                DataCall.getLogLevel().printIf(LogLevel.DEBUG, "Header 'X-App-Rate-Limit' missing from call: " + getURL());
+            } else
             {
                 createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
                 saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
             }
             
-            if (methodA == null && DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
+            if (methodA == null)
             {
-                System.err.println("Header 'X-Method-Rate-Limit' missing from call: " + getURL());
-            }
-            
-            if (methodA != null)
+                DataCall.getLogLevel().printIf(LogLevel.DEBUG, "Header 'X-Method-Rate-Limit' missing from call: " + getURL());
+            } else
             {
                 createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
                 saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
@@ -392,11 +455,8 @@ public class DataCallBuilder
             newerLimit.mergeFrom(oldLimit);
             child.put(endpoint, newerLimit);
             
-            if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
-            {
-                System.err.println("Updating Ratelimit For " + endpoint);
-                System.err.println(newerLimit.getLimits());
-            }
+            DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Updating Ratelimit For %s", endpoint));
+            DataCall.getLogLevel().printIf(LogLevel.DEBUG, newerLimit.getLimits().toString());
         }
         
         DataCall.getLimiter().put(platform, child);
@@ -404,7 +464,6 @@ public class DataCallBuilder
     
     private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
     {
-        
         Map<Enum, Map<Integer, Integer>> parent = DataCall.getCallData().getOrDefault(platform, new HashMap<>());
         Map<Integer, Integer>            child  = parent.getOrDefault(endpoint, new HashMap<>());
         
@@ -413,6 +472,7 @@ public class DataCallBuilder
         DataCall.getCallData().put(platform, parent);
         
         updateRatelimiter(platform, endpoint);
+        storeLimiter(platform, endpoint);
     }
     
     private Map<Integer, Integer> parseLimitFromHeader(String headerValue)
@@ -440,7 +500,7 @@ public class DataCallBuilder
             limits.add(new RateLimit(entry.getValue(), entry.getKey(), TimeUnit.SECONDS));
         }
         
-        return new BurstRateLimiter(limits.toArray(new RateLimit[limits.size()]));
+        return new BurstRateLimiter(limits);
     }
     
     

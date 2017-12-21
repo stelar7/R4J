@@ -15,9 +15,9 @@ import java.util.Map.Entry;
 public class BurstRateLimiter extends RateLimiter
 {
     
-    public BurstRateLimiter(RateLimit... limits)
+    public BurstRateLimiter(List<RateLimit> limits)
     {
-        super(limits);
+        super(limits.toArray(new RateLimit[limits.size()]));
     }
     
     @Override
@@ -31,16 +31,13 @@ public class BurstRateLimiter extends RateLimiter
             if (sleepTime != 0)
             {
                 Duration dur = Duration.of(sleepTime, ChronoUnit.MILLIS);
-                System.err.format("Ratelimited activated! Sleeping for: %s%n", dur);
                 
-                if (DataCall.getLogLevel().ordinal() >= LogLevel.INFO.ordinal())
-                {
-                    int skip  = DataCall.getCallStackSkip();
-                    int limit = DataCall.getCallStackLimit();
-                    System.err.println();
-                    System.err.println("Callstack:");
-                    Arrays.stream(Thread.currentThread().getStackTrace()).skip(skip).limit(limit).forEachOrdered(System.err::println);
-                }
+                DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Ratelimited activated! Sleeping for: %s%n", dur));
+                DataCall.getLogLevel().printIf(LogLevel.INFO, "Callstack:");
+                Arrays.stream(Thread.currentThread().getStackTrace())
+                      .skip(DataCall.getCallStackSkip())
+                      .limit(DataCall.getCallStackLimit())
+                      .forEachOrdered(s -> DataCall.getLogLevel().printIf(LogLevel.INFO, s.toString()));
             }
             
             
@@ -65,11 +62,7 @@ public class BurstRateLimiter extends RateLimiter
                     if (oldVal + 1 < newVal)
                     {
                         callCountInTime.get(l).set(newVal);
-                        
-                        if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
-                        {
-                            System.err.println("limit " + key + " has changed from " + oldVal + " to " + newVal);
-                        }
+                        DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("limit %s has changed from %d to %d", key, oldVal, newVal));
                     }
                 }
             }
@@ -92,11 +85,8 @@ public class BurstRateLimiter extends RateLimiter
                 if (actual >= limit.getPermits())
                 {
                     
-                    if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
-                    {
-                        System.err.println("Calls made in the time frame: " + actual);
-                        System.err.println("Limit for the time frame: " + limit.getPermits());
-                    }
+                    DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Calls made in the time frame: %d", actual));
+                    DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Limit for the time frame: %d", limit.getPermits()));
                     
                     int newBias = (int) Math.floorDiv(actual, limit.getPermits());
                     if (newBias > multiplicativeBias)
@@ -134,10 +124,7 @@ public class BurstRateLimiter extends RateLimiter
             
             callCountInTime.get(limit).incrementAndGet();
             
-            if (DataCall.getLogLevel().ordinal() >= LogLevel.DEBUG.ordinal())
-            {
-                System.err.println(limit + " Calls made: " + callCountInTime.get(limit));
-            }
+            DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("%s: current call count: %s", limit, callCountInTime.get(limit)));
         }
     }
     

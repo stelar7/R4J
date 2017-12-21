@@ -4,6 +4,7 @@ import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.deserializer.*;
+import no.stelar7.api.l4j8.basic.ratelimiting.RateLimit;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -36,6 +37,7 @@ public final class Utils
         builder.registerTypeAdapter(MonsterSubType.class, new MonsterSubTypeDeserializer());
         builder.registerTypeAdapter(Platform.class, new PlatformDeserializer());
         builder.registerTypeAdapter(PointType.class, new PointTypeDeserializer());
+        builder.registerTypeAdapter(RateLimit.class, new RatelimitDeserializer());
         builder.registerTypeAdapter(RoleType.class, new RoleTypeDeserializer());
         builder.registerTypeAdapter(SeasonType.class, new SeasonTypeDeserializer());
         builder.registerTypeAdapter(SummonerSpellType.class, new SummonerSpellTypeDeserializer());
