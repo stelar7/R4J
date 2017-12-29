@@ -138,11 +138,18 @@ public class MatchHistoryCrawler
             {
                 Pair<Long, Platform> pair = dataset.get(i);
                 
+                
                 System.out.format("Loading match %s/%s, Id: %s Platform: %s%n", i + 1, dataset.size(), pair.getKey(), pair.getValue());
                 Match match = getMatch(pair.getKey(), pair.getValue());
                 if (match == null)
                 {
                     System.out.format("%nMatchid: %s not found!%n", pair.getValue());
+                    continue;
+                }
+    
+                if (match.getParticipants().get(0).getRunes() == null)
+                {
+                    System.out.format("%nMatchid: %s does not have old runes!%n", pair.getValue());
                     continue;
                 }
                 
