@@ -59,8 +59,7 @@ public enum MapType
     /**
      * Invasion map
      */
-    SUBSTRUCTURE_43(19, new Rectangle(0, 0, 12056, 12056)),
-    ;
+    SUBSTRUCTURE_43(19, new Rectangle(0, 0, 12056, 12056)),;
     
     
     private final Integer   mapId;

@@ -13,7 +13,6 @@ public enum AscencionType
      * Returns an AscentionType from the provided value
      *
      * @param type the type to check
-     *
      * @return AscentionType
      */
     public static Optional<AscencionType> getFromCode(final String type)
