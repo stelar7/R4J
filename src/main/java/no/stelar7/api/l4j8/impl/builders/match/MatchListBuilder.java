@@ -123,10 +123,10 @@ public class MatchListBuilder
      * A number of optional parameters are provided for filtering.<br>
      * <br>
      * It is up to the caller to ensure that the combination of filter parameters provided is valid for the requested account, otherwise, no matches may be returned.<br>
-     * If beginIndex is specified, but not endIndex, then endIndex defaults to beginIndex+50.<br>
+     * If beginIndex is specified, but not endIndex, then endIndex defaults to beginIndex+100.<br>
      * If endIndex is specified, but not beginIndex, then beginIndex defaults to 0.<br>
      * If both are specified, then endIndex must be greater than beginIndex.<br>
-     * The maximum range allowed is 50, otherwise a 400 error code is returned.<br>
+     * The maximum range allowed is 100, otherwise a 400 error code is returned.<br>
      * If beginTime is specified, but not endTime, then these parameters are ignored.<br>
      * If endTime is specified, but not beginTime, then beginTime defaults to the start of the account's match history.<br>
      * If both are specified, then endTime should be greater than beginTime.<br>
@@ -152,9 +152,9 @@ public class MatchListBuilder
         }
         if (this.endIndex != null)
         {
-            if ((this.beginIndex != null ? this.beginIndex : 0) + 50 - this.endIndex < 0)
+            if ((this.beginIndex != null ? this.beginIndex : 0) + 100 - this.endIndex < 0)
             {
-                throw new IllegalArgumentException("begin-endindex out of range! (difference between beginIndex and endIndex is more than 50)");
+                throw new IllegalArgumentException("begin-endindex out of range! (difference between beginIndex and endIndex is more than 100)");
             }
             
             builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, String.valueOf(this.endIndex));
@@ -199,10 +199,10 @@ public class MatchListBuilder
      * <br>
      * A number of optional parameters are provided for filtering.<br>
      * It is up to the caller to ensure that the combination of filter parameters provided is valid for the requested account, otherwise, no matches may be returned.<br>
-     * If beginIndex is specified, but not endIndex, then endIndex defaults to beginIndex+50.<br>
+     * If beginIndex is specified, but not endIndex, then endIndex defaults to beginIndex+100.<br>
      * If endIndex is specified, but not beginIndex, then beginIndex defaults to 0.<br>
      * If both are specified, then endIndex must be greater than beginIndex.<br>
-     * The maximum range allowed is 50, otherwise a 400 error code is returned.<br>
+     * The maximum range allowed is 100, otherwise a 400 error code is returned.<br>
      * If beginTime is specified, but not endTime, then these parameters are ignored.<br>
      * If endTime is specified, but not beginTime, then beginTime defaults to the start of the account's match history.<br>
      * If both are specified, then endTime should be greater than beginTime.<br>
@@ -211,7 +211,7 @@ public class MatchListBuilder
      */
     public LazyList<MatchReference> getLazy()
     {
-        int increment = 50;
+        int increment = 100;
         return new LazyList<>(increment, prevValue -> {
             Long begin = (this.beginIndex != null ? this.beginIndex : 0) + prevValue;
             Long end   = (this.endIndex != null ? this.endIndex : 0) + increment + prevValue;

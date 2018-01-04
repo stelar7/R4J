@@ -29,10 +29,10 @@ public final class MatchAPI
      * <p>
      * A number of optional parameters are provided for filtering.
      * It is up to the caller to ensure that the combination of filter parameters provided is valid for the requested account, otherwise, no matches may be returned.
-     * If beginIndex is specified, but not endIndex, then endIndex defaults to beginIndex+50.
+     * If beginIndex is specified, but not endIndex, then endIndex defaults to beginIndex+100.
      * If endIndex is specified, but not beginIndex, then beginIndex defaults to 0.
      * If both are specified, then endIndex must be greater than beginIndex.
-     * The maximum range allowed is 50, otherwise a 400 error code is returned.
+     * The maximum range allowed is 100, otherwise a 400 error code is returned.
      * If beginTime is specified, but not endTime, then these parameters are ignored.
      * If endTime is specified, but not beginTime, then beginTime defaults to the start of the account's match history.
      * If both are specified, then endTime should be greater than beginTime.
@@ -67,9 +67,9 @@ public final class MatchAPI
         }
         if (endIndex != null)
         {
-            if ((beginIndex != null ? beginIndex : 0) + 50 - endIndex < 0)
+            if ((beginIndex != null ? beginIndex : 0) + 100 - endIndex < 0)
             {
-                throw new IllegalArgumentException("begin-endindex out of range! (difference between beginIndex and endIndex is more than 50)");
+                throw new IllegalArgumentException("begin-endindex out of range! (difference between beginIndex and endIndex is more than 100)");
             }
             
             builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, endIndex.toString());
@@ -117,7 +117,7 @@ public final class MatchAPI
      */
     public LazyList<MatchReference> getMatchList(Platform server, long accountId)
     {
-        int increment = 50;
+        int increment = 100;
         return new LazyList<>(increment, prevValue -> getMatchList(server, accountId, null, null, prevValue, prevValue + increment, null, null, null));
     }
     

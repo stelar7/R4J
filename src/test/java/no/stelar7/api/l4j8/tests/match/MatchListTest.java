@@ -50,7 +50,7 @@ public class MatchListTest
         Long               beginTime  = null;//LocalDateTime.now().withHour(0).toEpochSecond(ZoneOffset.UTC) * 1000;//1481108400000L; // start of season 2017
         Long               endTime    = null;//LocalDateTime.now().withHour(0).plusWeeks(1).toEpochSecond(ZoneOffset.UTC) * 1000; // 604800000 is one week in ms
         Long               beginIndex = null;//0;
-        Long               endIndex   = null;//50;
+        Long               endIndex   = null;//100;
         
         MatchListBuilder builder = new MatchListBuilder();
         builder = builder.withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[0]);
