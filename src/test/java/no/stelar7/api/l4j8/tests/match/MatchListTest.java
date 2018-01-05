@@ -9,6 +9,7 @@ import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.*;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
@@ -40,10 +41,10 @@ public class MatchListTest
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
     @Test
-    public void testMatchAndMatchList()
+    public void testMatchAndMatchList() throws InterruptedException
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setLogLevel(LogLevel.INFO);
         Set<GameQueueType> queue      = null;//EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2017);
         Set<Integer>       champ      = null;//Arrays.asList(Constants.TEST_CHAMPION_IDS);
@@ -53,18 +54,23 @@ public class MatchListTest
         Long               endIndex   = null;//100;
         
         MatchListBuilder builder = new MatchListBuilder();
-        builder = builder.withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[0]);
+        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.NA1).withName("chowdog").get();
+        builder = builder.withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId());
         builder = builder.withBeginTime(beginTime).withEndTime(endTime);
         builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
         builder = builder.withQueues(queue).withSeasons(season).withChampions(champ);
         
-        List<MatchReference> all = builder.get();
+        List<MatchReference> all = builder.getLazy();
         
         MatchBuilder    mb = new MatchBuilder();
         TimelineBuilder tb = new TimelineBuilder();
         
-        Match         detail   = mb.withId(all.get(0).getGameId()).withPlatform(all.get(0).getPlatform()).get();
-        MatchTimeline timeline = tb.withId(all.get(0).getGameId()).withPlatform(all.get(0).getPlatform()).get();
+        for (MatchReference reference : all)
+        {
+            Match detail = reference.getFullMatch();
+            System.out.println(detail.getGameQueueType());
+            Thread.sleep(100);
+        }
     }
     
     

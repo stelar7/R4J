@@ -68,7 +68,11 @@ public enum GameModeType
     /**
      * Overcharge mode
      */
-    PROJECT;
+    PROJECT,
+    /**
+     * Snow Battle ARURF mode
+     */
+    SNOWURF;
     
     /**
      * Returns a GameModeType from the provided value

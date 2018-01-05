@@ -88,7 +88,12 @@ public enum SummonerSpellType
     /**
      * Summoner spells are disabled in this mode.
      */
-    DARK_STAR_2(36, "Summoner_Empty");
+    DARK_STAR_2(36, "Summoner_Empty"),
+    /**
+     * It's a snowball! It's a Poro! It's...uh...one of those.
+     */
+    SNOW_MARK(39, "SummonerMark")
+    ;
     
     
     private final Integer id;
