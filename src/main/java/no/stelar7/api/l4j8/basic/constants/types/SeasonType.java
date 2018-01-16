@@ -14,7 +14,9 @@ public enum SeasonType
     PRE_SEASON_2016("PRESEASON2016", 6),
     SEASON_2016("SEASON2016", 7),
     PRE_SEASON_2017("PRESEASON2017", 8),
-    SEASON_2017("SEASON2017", 9);
+    SEASON_2017("SEASON2017", 9),
+    PRE_SEASON_2018("PRESEASON2018", 10),
+    SEASON_2018("SEASON2018", 11);
     
     private final String  value;
     private final Integer seasonId;
