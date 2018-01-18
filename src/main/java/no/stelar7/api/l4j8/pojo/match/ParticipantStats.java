@@ -78,7 +78,6 @@ public class ParticipantStats implements Serializable
     private long       wardsKilled;
     private long       wardsPlaced;
     private boolean    win;
-    private MatchPerks perks;
     
     
     /**
@@ -120,16 +119,6 @@ public class ParticipantStats implements Serializable
     public long getChampLevel()
     {
         return this.champLevel;
-    }
-    
-    /**
-     * Gets the match perks, returns null on older games
-     *
-     * @return {@code List<MatchPerk>}
-     */
-    public MatchPerks getPerks()
-    {
-        return perks;
     }
     
     /**
@@ -847,7 +836,6 @@ public class ParticipantStats implements Serializable
                ", wardsKilled=" + wardsKilled +
                ", wardsPlaced=" + wardsPlaced +
                ", win=" + win +
-               ", perks=" + perks +
                '}';
     }
     
@@ -1137,11 +1125,7 @@ public class ParticipantStats implements Serializable
         {
             return false;
         }
-        if (win != that.win)
-        {
-            return false;
-        }
-        return (perks != null) ? perks.equals(that.perks) : (that.perks == null);
+        return win == that.win;
     }
     
     @Override
@@ -1216,7 +1200,6 @@ public class ParticipantStats implements Serializable
         result = 31 * result + (int) (wardsKilled ^ (wardsKilled >>> 32));
         result = 31 * result + (int) (wardsPlaced ^ (wardsPlaced >>> 32));
         result = 31 * result + (win ? 1 : 0);
-        result = 31 * result + (perks != null ? perks.hashCode() : 0);
         return result;
     }
 }

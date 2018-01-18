@@ -9,16 +9,28 @@ public class Participant implements Serializable
 {
     private static final long serialVersionUID = 4416173192578454833L;
     
+    private int                 participantId;
     private int                 championId;
     private TierType            highestAchievedSeasonTier;
-    private List<MatchMastery>  masteries;
-    private int                 participantId;
     private List<MatchRune>     runes;
+    private List<MatchMastery>  masteries;
+    private MatchPerks          perks;
     private SummonerSpellType   spell1Id;
     private SummonerSpellType   spell2Id;
     private ParticipantStats    stats;
     private TeamType            teamId;
     private ParticipantTimeline timeline;
+    
+    
+    /**
+     * Gets the match perks, returns null on older games
+     *
+     * @return {@code List<MatchPerk>}
+     */
+    public MatchPerks getPerks()
+    {
+        return perks;
+    }
     
     
     /**

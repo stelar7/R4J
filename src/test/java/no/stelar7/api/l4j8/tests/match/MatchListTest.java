@@ -41,6 +41,7 @@ public class MatchListTest
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
     @Test
+    @Ignore
     public void testMatchAndMatchList() throws InterruptedException
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
@@ -54,7 +55,7 @@ public class MatchListTest
         Long               endIndex   = null;//100;
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.NA1).withName("chowdog").get();
+        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         builder = builder.withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId());
         builder = builder.withBeginTime(beginTime).withEndTime(endTime);
         builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);

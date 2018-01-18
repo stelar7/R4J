@@ -210,6 +210,14 @@ public final class Summoner implements Serializable
     @Override
     public String toString()
     {
-        return String.format("Summoner{profileIconId=%d, name='%s', summonerLevel=%d, accountId=%d, id=%d, revisionDate=%d}", profileIconId, name, summonerLevel, accountId, id, revisionDate);
+        return "Summoner{" +
+               "profileIconId=" + profileIconId +
+               ", name='" + name + '\'' +
+               ", summonerLevel=" + summonerLevel +
+               ", accountId=" + accountId +
+               ", id=" + id +
+               ", revisionDate=" + revisionDate +
+               ", platform=" + platform +
+               '}';
     }
 }

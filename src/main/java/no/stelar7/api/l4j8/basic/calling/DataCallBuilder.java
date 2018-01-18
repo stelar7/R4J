@@ -6,10 +6,9 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
 import no.stelar7.api.l4j8.basic.utils.*;
-import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;
-import java.lang.reflect.*;
+import java.lang.reflect.Type;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -17,8 +16,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.*;
-import java.util.function.*;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.BiFunction;
 import java.util.prefs.BackingStoreException;
 
 public class DataCallBuilder
@@ -61,7 +60,8 @@ public class DataCallBuilder
         applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
         
         
-        final DataCallResponse response = this.getResponse(url);
+        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME);
+        final DataCallResponse  response          = this.getResponse(url);
         DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, response.toString());
         
         switch (response.getResponseCode())
@@ -78,9 +78,12 @@ public class DataCallBuilder
                     returnValue = postProcessMatch(returnValue);
                 }
                 
-                Object dtoobj = Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
+                if (summonerEndpoints.contains(this.dc.getEndpoint()))
+                {
+                    returnValue = postProcessSummoner(returnValue);
+                }
                 
-                return process(dtoobj);
+                return Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
             }
             
             case 403:
@@ -129,6 +132,13 @@ public class DataCallBuilder
         throw new APINoValidResponseException(response.getResponseData());
     }
     
+    private String postProcessSummoner(String returnValue)
+    {
+        JsonObject element = (JsonObject) new JsonParser().parse(returnValue);
+        element.addProperty("platform", this.dc.getPlatform().toString());
+        return Utils.getGson().toJson(element);
+    }
+    
     private String postProcessMatch(String returnValue)
     {
         JsonObject element = (JsonObject) new JsonParser().parse(returnValue);
@@ -137,6 +147,7 @@ public class DataCallBuilder
         for (JsonElement participant : participants)
         {
             JsonObject stats = participant.getAsJsonObject().getAsJsonObject("stats");
+            JsonObject part  = participant.getAsJsonObject();
             if (!stats.has("perkPrimaryStyle"))
             {
                 return returnValue;
@@ -168,7 +179,7 @@ public class DataCallBuilder
             stats.remove("perkPrimaryStyle");
             stats.remove("perkSubStyle");
             
-            stats.add("perks", mPerk);
+            part.add("perks", mPerk);
         }
         
         return Utils.getGson().toJson(element);
@@ -283,27 +294,6 @@ public class DataCallBuilder
         
         child.put(endpoint, newerLimit);
         DataCall.getLimiter().put(platform, child);
-    }
-    
-    private Object process(Object dtoobj)
-    {
-        try
-        {
-            if (dtoobj instanceof Summoner)
-            {
-                Summoner sum = (Summoner) dtoobj;
-                Field    f   = sum.getClass().getDeclaredField("platform");
-                f.setAccessible(true);
-                f.set(sum, this.dc.getPlatform());
-            }
-            
-        } catch (NoSuchFieldException | IllegalAccessException e)
-        {
-            e.printStackTrace();
-        }
-        
-        return dtoobj;
-        
     }
     
     
