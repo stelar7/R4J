@@ -92,36 +92,41 @@ public class CacheTest
         
         System.out.println("Starting timer");
         
-        long start = stopwatch.runtime(TimeUnit.MICROSECONDS);
+        long start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         ref.getFullMatch();
-        System.out.printf("1x url fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("1x url fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         
-        start = stopwatch.runtime(TimeUnit.MICROSECONDS);
+        start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         ref.getFullMatch();
-        System.out.printf("1x cache fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("1x cache fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         
-        start = stopwatch.runtime(TimeUnit.MICROSECONDS);
+        start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         for (int i = 0; i < 10; i++)
         {
             ref.getFullMatch();
         }
-        System.out.printf("10x cache fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("10x cache fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
+        System.out.println();
+        
+        start = stopwatch.runtime(TimeUnit.NANOSECONDS);
+        ref.getFullMatch();
+        System.out.printf("1x cache fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         System.out.println();
         
         System.out.println("clearing cache");
         System.out.println();
         DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
         
-        start = stopwatch.runtime(TimeUnit.MICROSECONDS);
+        start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         ref.getFullMatch();
-        System.out.printf("1x url fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("1x url fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         
-        start = stopwatch.runtime(TimeUnit.MICROSECONDS);
+        start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         for (int i = 0; i < 10; i++)
         {
             ref.getFullMatch();
         }
-        System.out.printf("10x cache fetch time: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("10x cache fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         System.out.println();
         
         System.out.println("Fetching 3 aditional matches");
@@ -137,12 +142,12 @@ public class CacheTest
         System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize());
         
         System.out.println("Re-fetching cached items");
-        start = stopwatch.runtime(TimeUnit.MICROSECONDS);
+        start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         recents.get(0).getFullMatch();
         recents.get(1).getFullMatch();
         recents.get(2).getFullMatch();
         recents.get(3).getFullMatch();
-        System.out.printf("4x fetches took: %dµs%n", stopwatch.runtime(TimeUnit.MICROSECONDS) - start);
+        System.out.printf("4x fetches took: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         
         System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize());
         System.out.println();
