@@ -27,6 +27,7 @@ public class CacheTest
     public void testMemoryCache() throws InterruptedException
     {
         DataCall.setCacheProvider(new MemoryCacheProvider(5));
+        DataCall.setLogLevel(LogLevel.INFO);
         doCacheStuff();
     }
     
@@ -35,15 +36,15 @@ public class CacheTest
     public void testFileSystemCache() throws InterruptedException
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setLogLevel(LogLevel.INFO);
         doCacheStuff();
     }
     
     @Test
     public void testStaticDataCache()
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setLogLevel(LogLevel.INFO);
         l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
         l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
         l4j8.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
@@ -52,7 +53,7 @@ public class CacheTest
     @Test
     public void testCacheStuff() throws InterruptedException
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setLogLevel(LogLevel.INFO);
         DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
         new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
         new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
@@ -66,8 +67,8 @@ public class CacheTest
     @Test
     public void testTieredMemoryCache() throws InterruptedException
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
-        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(1), new FileSystemCacheProvider(null, -1)));
+        DataCall.setLogLevel(LogLevel.INFO);
+        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(3), new FileSystemCacheProvider(null, -1)));
         doCacheStuff();
     }
     
@@ -80,7 +81,6 @@ public class CacheTest
     
     private void doCacheStuff() throws InterruptedException
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
         List<MatchReference> recents = new MatchListBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
         
         if (recents.isEmpty())
@@ -110,7 +110,7 @@ public class CacheTest
         
         System.out.println("clearing cache");
         System.out.println();
-        //DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
+        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
         
         start = stopwatch.runtime(TimeUnit.MICROSECONDS);
         ref.getFullMatch();
