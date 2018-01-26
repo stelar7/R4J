@@ -4,12 +4,13 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.exceptions.APIUnsupportedActionException;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class TournamentCodeParameters implements Serializable
 {
     private static final long serialVersionUID = 6366533149651958130L;
     
-    private SummonerIdParams        allowedSummonerIds;
+    private Set<Long>               allowedSummonerIds;
     private TournamentMapType       mapType;
     private String                  metadata;
     private TournamentPickType      pickType;
@@ -23,7 +24,7 @@ public class TournamentCodeParameters implements Serializable
     
     public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final int teamSize)
     {
-        this.allowedSummonerIds = new SummonerIdParams(updateParams.getAllowedParticipants());
+        this.allowedSummonerIds = updateParams.getAllowedParticipants();
         this.spectatorType = updateParams.getSpectatorType();
         this.pickType = updateParams.getPickType();
         this.mapType = updateParams.getMapType();
@@ -33,7 +34,7 @@ public class TournamentCodeParameters implements Serializable
         
         if ((getTeamSize() > 1) && (getTeamSize() < 6) && ((getTeamSize() % 2) == 0))
         {
-            throw new APIUnsupportedActionException("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size) (" + teamSize / 2 + " != " + getAllowedSummonerIds().getParticipants().size());
+            throw new APIUnsupportedActionException("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size) (" + teamSize / 2 + " != " + getAllowedSummonerIds().size());
         }
     }
     
@@ -44,12 +45,12 @@ public class TournamentCodeParameters implements Serializable
      *
      * @return SummonerIdParams
      */
-    public SummonerIdParams getAllowedSummonerIds()
+    public Set<Long> getAllowedSummonerIds()
     {
         return this.allowedSummonerIds;
     }
     
-    public void setAllowedSummonerIds(final SummonerIdParams allowedSummonerIds)
+    public void setAllowedSummonerIds(final Set<Long> allowedSummonerIds)
     {
         this.allowedSummonerIds = allowedSummonerIds;
     }
