@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests.match;
 
-import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -42,26 +42,27 @@ public class MatchListTest
     
     @Test
     @Ignore
-    public void testMatchAndMatchList() throws InterruptedException
+    public void testMatchAndMatchList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.INFO);
         Set<GameQueueType> queue      = null;//EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
-        Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2017);
-        Set<Integer>       champ      = null;//Arrays.asList(Constants.TEST_CHAMPION_IDS);
+        Set<SeasonType>    season     = EnumSet.of(SeasonType.SEASON_2018);
+        Set<Integer>       champ      = new HashSet<>(Collections.singletonList(40));
         Long               beginTime  = null;//LocalDateTime.now().withHour(0).toEpochSecond(ZoneOffset.UTC) * 1000;//1481108400000L; // start of season 2017
         Long               endTime    = null;//LocalDateTime.now().withHour(0).plusWeeks(1).toEpochSecond(ZoneOffset.UTC) * 1000; // 604800000 is one week in ms
         Long               beginIndex = null;//0;
         Long               endIndex   = null;//100;
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.NA1).withName("admomgoboom").get();
         builder = builder.withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId());
         builder = builder.withBeginTime(beginTime).withEndTime(endTime);
         builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
         builder = builder.withQueues(queue).withSeasons(season).withChampions(champ);
         
-        List<MatchReference> all = builder.getLazy();
+        LazyList<MatchReference> all = builder.getLazy();
+        all.loadFully();
         
         MatchBuilder    mb = new MatchBuilder();
         TimelineBuilder tb = new TimelineBuilder();
@@ -69,8 +70,6 @@ public class MatchListTest
         for (MatchReference reference : all)
         {
             Match detail = reference.getFullMatch();
-            System.out.println(detail.getGameQueueType());
-            Thread.sleep(100);
         }
     }
     
@@ -89,7 +88,7 @@ public class MatchListTest
     @Test
     public void testMatchlistAllLazy()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCHLIST);
         
         for (int i = 0; i < Constants.TEST_ACCOUNT_IDS.length; i++)

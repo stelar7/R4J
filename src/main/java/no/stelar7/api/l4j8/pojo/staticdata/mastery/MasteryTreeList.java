@@ -27,15 +27,11 @@ public class MasteryTreeList implements Serializable
         final MasteryTreeList other = (MasteryTreeList) obj;
         if (this.masteryTreeItems == null)
         {
-            if (other.masteryTreeItems != null)
-            {
-                return false;
-            }
-        } else if (!this.masteryTreeItems.equals(other.masteryTreeItems))
+            return other.masteryTreeItems == null;
+        } else
         {
-            return false;
+            return this.masteryTreeItems.equals(other.masteryTreeItems);
         }
-        return true;
     }
     
     

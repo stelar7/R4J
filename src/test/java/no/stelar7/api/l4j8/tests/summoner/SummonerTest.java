@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.tests.summoner;
 
 
-import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
@@ -29,7 +29,7 @@ public class SummonerTest
     @Before
     public void before()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
     }
     

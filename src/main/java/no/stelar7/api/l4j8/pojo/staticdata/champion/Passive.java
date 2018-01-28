@@ -61,15 +61,11 @@ public class Passive implements Serializable
         }
         if (this.sanitizedDescription == null)
         {
-            if (other.sanitizedDescription != null)
-            {
-                return false;
-            }
-        } else if (!this.sanitizedDescription.equals(other.sanitizedDescription))
+            return other.sanitizedDescription == null;
+        } else
         {
-            return false;
+            return this.sanitizedDescription.equals(other.sanitizedDescription);
         }
-        return true;
     }
     
     /**

@@ -27,15 +27,11 @@ public class ChampionList implements Serializable
         final ChampionList other = (ChampionList) obj;
         if (this.champions == null)
         {
-            if (other.champions != null)
-            {
-                return false;
-            }
-        } else if (!this.champions.equals(other.champions))
+            return other.champions == null;
+        } else
         {
-            return false;
+            return this.champions.equals(other.champions);
         }
-        return true;
     }
     
     /**

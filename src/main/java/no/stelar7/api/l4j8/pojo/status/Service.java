@@ -61,15 +61,11 @@ public class Service implements Serializable
         }
         if (this.status == null)
         {
-            if (other.status != null)
-            {
-                return false;
-            }
-        } else if (!this.status.equals(other.status))
+            return other.status == null;
+        } else
         {
-            return false;
+            return this.status.equals(other.status);
         }
-        return true;
     }
     
     /**

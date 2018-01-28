@@ -82,15 +82,11 @@ public class ShardStatus implements Serializable
         }
         if (this.slug == null)
         {
-            if (other.slug != null)
-            {
-                return false;
-            }
-        } else if (!this.slug.equals(other.slug))
+            return other.slug == null;
+        } else
         {
-            return false;
+            return this.slug.equals(other.slug);
         }
-        return true;
     }
     
     /**

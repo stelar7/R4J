@@ -37,15 +37,11 @@ public class Group implements Serializable
         }
         if (this.key == null)
         {
-            if (other.key != null)
-            {
-                return false;
-            }
-        } else if (!this.key.equals(other.key))
+            return other.key == null;
+        } else
         {
-            return false;
+            return this.key.equals(other.key);
         }
-        return true;
     }
     
     /**

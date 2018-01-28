@@ -90,15 +90,11 @@ public class LobbyEvent implements Serializable
         }
         if (this.timestamp == null)
         {
-            if (other.timestamp != null)
-            {
-                return false;
-            }
-        } else if (!this.timestamp.equals(other.timestamp))
+            return other.timestamp == null;
+        } else
         {
-            return false;
+            return this.timestamp.equals(other.timestamp);
         }
-        return true;
     }
     
     @Override

@@ -94,15 +94,11 @@ public class Message implements Serializable
         }
         if (this.updated_at == null)
         {
-            if (other.updated_at != null)
-            {
-                return false;
-            }
-        } else if (!this.updated_at.equals(other.updated_at))
+            return other.updated_at == null;
+        } else
         {
-            return false;
+            return this.updated_at.equals(other.updated_at);
         }
-        return true;
     }
     
     /**

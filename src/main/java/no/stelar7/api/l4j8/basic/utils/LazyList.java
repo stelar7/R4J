@@ -114,8 +114,8 @@ public class LazyList<T> extends ArrayList<T>
     
     private class LazyListIterator implements ListIterator<T>
     {
-        private int index = -1;
-        private int size  = size();
+        private int index;
+        private int size = size();
         
         public LazyListIterator(int startIndex)
         {

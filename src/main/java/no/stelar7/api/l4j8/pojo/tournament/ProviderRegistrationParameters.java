@@ -81,15 +81,11 @@ public class ProviderRegistrationParameters implements Serializable
         }
         if (this.url == null)
         {
-            if (other.url != null)
-            {
-                return false;
-            }
-        } else if (!this.url.equals(other.url))
+            return other.url == null;
+        } else
         {
-            return false;
+            return this.url.equals(other.url);
         }
-        return true;
     }
     
     @Override

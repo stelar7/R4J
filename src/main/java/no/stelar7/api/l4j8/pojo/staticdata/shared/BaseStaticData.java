@@ -37,15 +37,11 @@ public class BaseStaticData implements Serializable
         }
         if (this.version == null)
         {
-            if (other.version != null)
-            {
-                return false;
-            }
-        } else if (!this.version.equals(other.version))
+            return other.version == null;
+        } else
         {
-            return false;
+            return this.version.equals(other.version);
         }
-        return true;
     }
     
     /**

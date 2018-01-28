@@ -1,15 +1,14 @@
 package no.stelar7.api.l4j8.tests.crawler;
 
 
-import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.TeamType;
 import no.stelar7.api.l4j8.basic.exceptions.APIEnumNotUpToDateException;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.shared.BannedChampion;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.tests.SecretFile;
 
 import java.sql.*;
@@ -40,9 +39,6 @@ public class MatchHistoryCrawler
     private PreparedStatement mmInsertStatement;
     private PreparedStatement rInsertStatement;
     private PreparedStatement psInsertStatement;
-    
-    private Map<Integer, StaticChampion> championMap;
-    
     
     // TODO: make this use the new mysql cache system, when its finished
     
@@ -125,9 +121,6 @@ public class MatchHistoryCrawler
         mmInsertStatement = sql.getConnection().prepareStatement(M_INSERT, Statement.RETURN_GENERATED_KEYS);
         rInsertStatement = sql.getConnection().prepareStatement(R_INSERT, Statement.RETURN_GENERATED_KEYS);
         psInsertStatement = sql.getConnection().prepareStatement(PS_INSERT, Statement.RETURN_GENERATED_KEYS);
-        
-        championMap = api.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
-        
     }
     
     private void insertMatches(List<Pair<Long, Platform>> dataset)
@@ -616,11 +609,11 @@ public class MatchHistoryCrawler
     
     static class MySQL
     {
-        private   String     hostname   = "";
-        private   String     portnmbr   = "";
-        private   String     username   = "";
-        private   String     password   = "";
-        private   String     database   = "";
+        private String hostname;
+        private String portnmbr;
+        private String username;
+        private String password;
+        private String database;
         protected Connection connection = null;
         
         public MySQL(final String hostname, final String portnmbr, final String database, final String username, final String password)

@@ -26,15 +26,11 @@ public class Observer implements Serializable
         final Observer other = (Observer) obj;
         if (this.encryptionKey == null)
         {
-            if (other.encryptionKey != null)
-            {
-                return false;
-            }
-        } else if (!this.encryptionKey.equals(other.encryptionKey))
+            return other.encryptionKey == null;
+        } else
         {
-            return false;
+            return this.encryptionKey.equals(other.encryptionKey);
         }
-        return true;
     }
     
     /**

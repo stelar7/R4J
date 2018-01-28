@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests.example;
 
-import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
@@ -23,7 +23,7 @@ public class UseageTest
     {
         L4J8 api = new L4J8(SecretFile.CREDS);
         DataCall.setLogLevel(LogLevel.DEBUG);
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         Map<Integer, StaticRune>     runeData      = api.getStaticAPI().getRunes(Platform.EUW1, null, null, null);
         Map<Integer, StaticMastery>  masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, null, null, null);
@@ -31,7 +31,7 @@ public class UseageTest
         
         Summoner             stelar7        = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         List<MatchReference> some           = stelar7.getGames().get();
-        MatchReference       mostRecentGame = some.stream().sorted(Comparator.comparing(MatchReference::getTimestamp).reversed()).findFirst().get();
+        MatchReference       mostRecentGame = some.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
         
         Match       match = mostRecentGame.getFullMatch();
         Participant self  = match.getParticipantFromSummonerId(stelar7.getSummonerId());

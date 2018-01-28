@@ -22,7 +22,7 @@ public class AsyncTest
     
     @Test
     @Ignore
-    public void testAsync() throws InterruptedException
+    public void testAsync()
     {
         List<CompletableFuture> futures = new ArrayList<>();
         

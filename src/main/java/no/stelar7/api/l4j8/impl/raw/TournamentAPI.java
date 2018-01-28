@@ -243,9 +243,8 @@ public final class TournamentAPI
      *
      * @param params         the tournament definition
      * @param tournamentCode The tournament code of the match
-     * @return returns true if update was successfull
      */
-    public boolean updateTournament(final String tournamentCode, final TournamentCodeUpdateParameters params)
+    public void updateTournament(final String tournamentCode, final TournamentCodeUpdateParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
@@ -259,13 +258,6 @@ public final class TournamentAPI
             throw new IllegalArgumentException("This method is not useable with the stub API");
         }
         
-        try
-        {
-            builder.build();
-            return true;
-        } catch (ClassCastException e)
-        {
-            return false;
-        }
+        builder.build();
     }
 }

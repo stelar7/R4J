@@ -38,15 +38,11 @@ public class LevelTip implements Serializable
         }
         if (this.label == null)
         {
-            if (other.label != null)
-            {
-                return false;
-            }
-        } else if (!this.label.equals(other.label))
+            return other.label == null;
+        } else
         {
-            return false;
+            return this.label.equals(other.label);
         }
-        return true;
     }
     
     /**

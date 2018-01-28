@@ -49,15 +49,11 @@ public class Translation implements Serializable
         }
         if (this.heading == null)
         {
-            if (other.heading != null)
-            {
-                return false;
-            }
-        } else if (!this.heading.equals(other.heading))
+            return other.heading == null;
+        } else
         {
-            return false;
+            return this.heading.equals(other.heading);
         }
-        return true;
     }
     
     /**

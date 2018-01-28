@@ -19,6 +19,11 @@ public class FileSystemCacheProvider extends CacheProvider
         home = pathToFiles != null ? pathToFiles : Paths.get(".", "l4j8cache").normalize();
     }
     
+    public FileSystemCacheProvider()
+    {
+        this(CacheProvider.LOCATION_DEFAULT, CacheProvider.TTL_INFINITY);
+    }
+    
     @Override
     public void store(URLEndpoint type, Object... obj)
     {

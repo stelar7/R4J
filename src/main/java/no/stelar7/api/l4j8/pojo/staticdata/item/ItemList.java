@@ -49,16 +49,12 @@ public class ItemList implements Serializable
         }
         if (this.tree == null)
         {
-            if (other.tree != null)
-            {
-                return false;
-            }
-        } else if (!this.tree.equals(other.tree))
+            return other.tree == null;
+        } else
         {
-            return false;
+            return this.tree.equals(other.tree);
         }
-        
-        return true;
+    
     }
     
     /**

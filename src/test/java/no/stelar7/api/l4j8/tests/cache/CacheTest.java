@@ -35,7 +35,7 @@ public class CacheTest
     @Test
     public void testFileSystemCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.INFO);
         doCacheStuff();
     }
@@ -43,7 +43,7 @@ public class CacheTest
     @Test
     public void testStaticDataCache()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.INFO);
         l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
         l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
@@ -54,7 +54,7 @@ public class CacheTest
     public void testCacheStuff() throws InterruptedException
     {
         DataCall.setLogLevel(LogLevel.INFO);
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
         new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
         
@@ -68,7 +68,7 @@ public class CacheTest
     public void testTieredMemoryCache() throws InterruptedException
     {
         DataCall.setLogLevel(LogLevel.INFO);
-        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(3), new FileSystemCacheProvider(null, -1)));
+        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(3), new FileSystemCacheProvider()));
         doCacheStuff();
     }
     

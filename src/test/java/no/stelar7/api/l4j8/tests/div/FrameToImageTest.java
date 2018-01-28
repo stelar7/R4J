@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests.div;
 
-import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -48,7 +48,7 @@ public class FrameToImageTest
     @Ignore
     public void testStuff()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         Summoner                 sum  = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         LazyList<MatchReference> refs = new MatchListBuilder().withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId()).getLazy();

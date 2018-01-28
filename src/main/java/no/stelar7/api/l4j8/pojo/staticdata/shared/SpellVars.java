@@ -72,15 +72,11 @@ public class SpellVars implements Serializable
         }
         if (this.ranksWith == null)
         {
-            if (other.ranksWith != null)
-            {
-                return false;
-            }
-        } else if (!this.ranksWith.equals(other.ranksWith))
+            return other.ranksWith == null;
+        } else
         {
-            return false;
+            return this.ranksWith.equals(other.ranksWith);
         }
-        return true;
     }
     
     /**

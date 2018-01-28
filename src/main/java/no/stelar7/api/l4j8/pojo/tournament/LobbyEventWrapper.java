@@ -27,15 +27,11 @@ public class LobbyEventWrapper implements Serializable
         final LobbyEventWrapper other = (LobbyEventWrapper) obj;
         if (this.eventList == null)
         {
-            if (other.eventList != null)
-            {
-                return false;
-            }
-        } else if (!this.eventList.equals(other.eventList))
+            return other.eventList == null;
+        } else
         {
-            return false;
+            return this.eventList.equals(other.eventList);
         }
-        return true;
     }
     
     /**

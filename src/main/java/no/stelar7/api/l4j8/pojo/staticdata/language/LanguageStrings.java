@@ -28,15 +28,11 @@ public class LanguageStrings extends BaseStaticData
         final LanguageStrings other = (LanguageStrings) obj;
         if (this.data == null)
         {
-            if (other.data != null)
-            {
-                return false;
-            }
-        } else if (!this.data.equals(other.data))
+            return other.data == null;
+        } else
         {
-            return false;
+            return this.data.equals(other.data);
         }
-        return true;
     }
     
     /**

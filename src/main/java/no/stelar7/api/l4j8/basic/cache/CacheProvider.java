@@ -2,11 +2,15 @@ package no.stelar7.api.l4j8.basic.cache;
 
 import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.concurrent.*;
 
 public abstract class CacheProvider
 {
+    
+    public static final int  TTL_INFINITY     = -1;
+    public static final Path LOCATION_DEFAULT = null;
     
     /**
      * Stores the obj in the type cache

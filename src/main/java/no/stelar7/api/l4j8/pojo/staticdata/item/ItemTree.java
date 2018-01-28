@@ -38,15 +38,11 @@ public class ItemTree implements Serializable
         }
         if (this.tags == null)
         {
-            if (other.tags != null)
-            {
-                return false;
-            }
-        } else if (!this.tags.equals(other.tags))
+            return other.tags == null;
+        } else
         {
-            return false;
+            return this.tags.equals(other.tags);
         }
-        return true;
     }
     
     /**

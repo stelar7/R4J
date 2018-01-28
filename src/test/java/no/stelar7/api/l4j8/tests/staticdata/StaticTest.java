@@ -1,10 +1,10 @@
 package no.stelar7.api.l4j8.tests.staticdata;
 
-import no.stelar7.api.l4j8.basic.cache.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
-import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.raw.StaticAPI;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
@@ -28,7 +28,7 @@ public class StaticTest
     @Test
     public void testChampionList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
@@ -40,7 +40,7 @@ public class StaticTest
     @Test
     public void testChampionSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
@@ -52,7 +52,7 @@ public class StaticTest
     @Test
     public void testItemList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
@@ -65,7 +65,7 @@ public class StaticTest
     @Test
     public void testItemSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
@@ -78,7 +78,7 @@ public class StaticTest
     @Test
     public void testLanguageStrings()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         Map<String, String> strings = api.getLanguageStrings(Platform.EUW1, null, null);
@@ -87,7 +87,7 @@ public class StaticTest
     @Test
     public void testLanguages()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         List<String> strings = api.getLanguages(Platform.EUW1);
@@ -96,7 +96,7 @@ public class StaticTest
     @Test
     public void testMaps()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         Map<String, MapDetails> data = api.getMaps(Platform.EUW1, null, null);
@@ -106,7 +106,7 @@ public class StaticTest
     @Test
     public void testMasteryList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
@@ -118,7 +118,7 @@ public class StaticTest
     @Test
     public void testMasterySingleMultipleFlags()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
@@ -130,7 +130,7 @@ public class StaticTest
     @Test
     public void testMasterySingleOneFlag()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
@@ -142,7 +142,7 @@ public class StaticTest
     @Test
     public void testMasterySingleNoFlags()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, null, null, null);
@@ -152,7 +152,7 @@ public class StaticTest
     @Test
     public void testProfileIcons()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         Map<Long, ProfileIconDetails> data = api.getProfileIcons(Platform.EUW1, null, null);
@@ -161,7 +161,7 @@ public class StaticTest
     @Test
     public void testRealms()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         Realm data = api.getRealm(Platform.EUW1);
@@ -170,7 +170,7 @@ public class StaticTest
     @Test
     public void testRuneList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
@@ -182,7 +182,7 @@ public class StaticTest
     @Test
     public void testRuneSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
@@ -202,7 +202,7 @@ public class StaticTest
     @Test
     public void testSummonerSpellList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
@@ -214,7 +214,7 @@ public class StaticTest
     @Test
     public void testSummonerSpellSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
@@ -227,7 +227,7 @@ public class StaticTest
     @Test
     public void testVersions()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider(null, -1));
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         List<String> data = api.getVersions(Platform.EUW1);
