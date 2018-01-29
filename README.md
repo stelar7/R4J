@@ -15,7 +15,7 @@ Check out one of the many [tests](https://github.com/stelar7/L4J8/tree/master/sr
 
 | Cache           | Supported |
 | :------------: | :-------: |
-| Memory            | Yes!      |
+| Memory            | Partly...     |
 | FileSystem            | Yes!      |
 | SQL         | Not yet :(     |
 
