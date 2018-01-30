@@ -20,7 +20,6 @@ public class MySQL
         this.database = database;
         this.username = username;
         this.password = password;
-        open();
     }
     
     /**
@@ -41,27 +40,6 @@ public class MySQL
     }
     
     /**
-     * Empties a table
-     *
-     * @param table the table to empty
-     */
-    public void clearTable(final String table)
-    {
-        try
-        {
-            try (PreparedStatement statement = this.connection.prepareStatement("DELETE FROM ?"))
-            {
-                statement.setString(1, table);
-                statement.executeUpdate();
-                statement.close();
-            }
-        } catch (final SQLException e)
-        {
-            e.printStackTrace();
-        }
-    }
-    
-    /**
      * close database connection
      */
     public void close()
@@ -78,23 +56,6 @@ public class MySQL
         }
     }
     
-    /**
-     * Delete a table
-     *
-     * @param table the table to delete
-     */
-    public void deleteTable(final String table)
-    {
-        try (PreparedStatement statement = this.connection.prepareStatement("DROP TABLE ?"))
-        {
-            statement.setString(1, table);
-            statement.executeUpdate();
-            statement.close();
-        } catch (final SQLException e)
-        {
-            e.printStackTrace();
-        }
-    }
     
     /**
      * returns the active connection
@@ -119,8 +80,8 @@ public class MySQL
             this.connection = DriverManager.getConnection(url, this.username, this.password);
         } catch (final SQLException e)
         {
-            System.out.print("Could not connect to MySQL server! ");
-            System.out.println(e.getMessage());
+            System.err.print("Could not connect to MySQL server! ");
+            System.err.println(e.getMessage());
         }
     }
 }
