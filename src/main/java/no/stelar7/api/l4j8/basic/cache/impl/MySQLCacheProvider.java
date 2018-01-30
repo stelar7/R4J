@@ -14,10 +14,20 @@ public class MySQLCacheProvider implements CacheProvider
     private       CacheLifetimeHint hints;
     private final MySQL             sql;
     
+    private static final String EXPIRES_AT = "expires_at";
+    
     public MySQLCacheProvider(String host, int port, String database, String username, String password)
     {
-        sql = new MySQL(host, port, database, username, password);
-        sql.open();
+        sql = new MySQL(host, port, username, password);
+        try
+        {
+            sql.open();
+            sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", database));
+            sql.getConnection().setCatalog(database);
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
     
     
@@ -39,17 +49,18 @@ public class MySQLCacheProvider implements CacheProvider
     {
         try
         {
-            try (PreparedStatement statement = sql.getConnection().prepareStatement("UPDATE ? SET expiration = ? WHERE ?=? AND ?=?"))
+            try (PreparedStatement statement = sql.getConnection().prepareStatement("UPDATE ? SET ? = ? WHERE ?=? AND ?=?"))
             {
                 statement.setString(1, type.toString());
                 statement.setLong(2, System.currentTimeMillis() + getTimeToLive(type));
+                statement.setString(3, EXPIRES_AT);
                 
                 if (type == URLEndpoint.V3_MATCH)
                 {
-                    statement.setString(3, "gameId");
-                    statement.setLong(4, (Long) obj[1]);
-                    statement.setString(5, "platformId");
-                    statement.setString(6, (String) obj[2]);
+                    statement.setString(4, "gameId");
+                    statement.setLong(5, (Long) obj[1]);
+                    statement.setString(6, "platformId");
+                    statement.setString(7, (String) obj[2]);
                 } else
                 {
                     throw new UnsupportedOperationException(type.toString() + " is not registered with the cache");
@@ -87,12 +98,13 @@ public class MySQLCacheProvider implements CacheProvider
             return;
         }
         
-        try (PreparedStatement stmt = sql.getConnection().prepareStatement("DELETE FROM ? WHERE expiration < ?"))
+        try (PreparedStatement stmt = sql.getConnection().prepareStatement("DELETE FROM ? WHERE ? < ?"))
         {
             for (URLEndpoint endpoint : URLEndpoint.values())
             {
                 stmt.setString(1, endpoint.toString());
-                stmt.setLong(2, System.currentTimeMillis() + getTimeToLive(endpoint));
+                stmt.setString(2, EXPIRES_AT);
+                stmt.setLong(3, System.currentTimeMillis() + getTimeToLive(endpoint));
                 stmt.executeUpdate();
             }
         } catch (SQLException e)

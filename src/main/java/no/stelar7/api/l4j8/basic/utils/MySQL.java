@@ -8,16 +8,14 @@ public class MySQL
     private int    portnmbr;
     private String username;
     private String password;
-    private String database;
     
     protected Connection connection = null;
     
-    public MySQL(final String hostname, final int portnmbr, final String database, final String username, final String password)
+    public MySQL(final String hostname, final int portnmbr, final String username, final String password)
     {
         super();
         this.hostname = hostname;
         this.portnmbr = portnmbr;
-        this.database = database;
         this.username = username;
         this.password = password;
     }
@@ -76,11 +74,11 @@ public class MySQL
         try
         {
             final String parameters = "?useUnicode=true&characterEncoding=UTF-8&useServerPrepStmts=false&rewriteBatchedStatements=true&serverTimezone=UTC";
-            final String url        = String.format("jdbc:mysql://%s:%d/%s%s", this.hostname, this.portnmbr, this.database, parameters);
+            final String url        = String.format("jdbc:mysql://%s:%d/%s", this.hostname, this.portnmbr, parameters);
             this.connection = DriverManager.getConnection(url, this.username, this.password);
         } catch (final SQLException e)
         {
-            System.err.print("Could not connect to MySQL server! ");
+            System.err.println("Could not connect to MySQL server! ");
             System.err.println(e.getMessage());
         }
     }
