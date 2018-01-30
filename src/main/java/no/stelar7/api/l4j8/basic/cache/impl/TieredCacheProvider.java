@@ -1,10 +1,11 @@
-package no.stelar7.api.l4j8.basic.cache;
+package no.stelar7.api.l4j8.basic.cache.impl;
 
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 
 import java.util.*;
 
-public class TieredCacheProvider extends CacheProvider
+public class TieredCacheProvider implements CacheProvider
 {
     private final List<CacheProvider> providers = new LinkedList<>();
     
@@ -63,7 +64,7 @@ public class TieredCacheProvider extends CacheProvider
             } else
             {
                 // Only update if its not an infinite store
-                if (provider.getTimeToLive() > 0)
+                if (provider.getTimeToLive(type) == CacheProvider.TTL_INFINITY)
                 {
                     provider.update(type, obj);
                 }
@@ -78,25 +79,33 @@ public class TieredCacheProvider extends CacheProvider
     }
     
     @Override
-    protected void clearOldCache()
+    public void clearOldCache()
     {
         providers.forEach(CacheProvider::clearOldCache);
     }
     
     @Override
-    public long getTimeToLive()
+    public long getTimeToLive(URLEndpoint type)
     {
-        return providers.stream().mapToLong(CacheProvider::getTimeToLive).sum();
+        return providers.stream().mapToLong(provider -> provider.getTimeToLive(type)).sum();
     }
     
     @Override
-    public long getSize()
+    public long getSize(URLEndpoint type)
     {
-        long size = 0;
-        for (CacheProvider provider : providers)
-        {
-            size += provider.getSize();
-        }
-        return size;
+        return providers.stream().mapToLong(provider -> provider.getSize(type)).sum();
     }
+    
+    @Override
+    public void setTimeToLiveGlobal(long timeToLive)
+    {
+        // this is ignored for tiered caches
+    }
+    
+    @Override
+    public void setTimeToLive(CacheLifetimeHint hints)
+    {
+        // this is ignored for tiered caches
+    }
+    
 }

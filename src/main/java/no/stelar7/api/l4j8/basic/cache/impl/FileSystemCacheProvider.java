@@ -1,5 +1,6 @@
-package no.stelar7.api.l4j8.basic.cache;
+package no.stelar7.api.l4j8.basic.cache.impl;
 
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 
 import java.io.*;
@@ -7,16 +8,45 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.*;
 import java.util.*;
+import java.util.concurrent.*;
 
-public class FileSystemCacheProvider extends CacheProvider
+public class FileSystemCacheProvider implements CacheProvider
 {
     
-    private final Path home;
+    private final Path              home;
+    private       long              timeToLive;
+    private       CacheLifetimeHint hints;
+    
+    private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture<?> clearTask;
     
     public FileSystemCacheProvider(Path pathToFiles, int ttl)
     {
-        setTimeToLive(ttl);
+        setTimeToLiveGlobal(ttl);
         home = pathToFiles != null ? pathToFiles : Paths.get(".", "l4j8cache").normalize();
+    }
+    
+    @Override
+    public void setTimeToLiveGlobal(long timeToLive)
+    {
+        this.timeToLive = timeToLive;
+        
+        if (timeToLive > 0)
+        {
+            clearTask = clearService.scheduleAtFixedRate(this::clearOldCache, timeToLive, timeToLive, TimeUnit.SECONDS);
+        } else
+        {
+            if (clearTask != null)
+            {
+                clearTask.cancel(false);
+            }
+        }
+    }
+    
+    @Override
+    public void setTimeToLive(CacheLifetimeHint hints)
+    {
+        this.hints = hints;
     }
     
     public FileSystemCacheProvider()
@@ -124,7 +154,7 @@ public class FileSystemCacheProvider extends CacheProvider
     }
     
     @Override
-    protected void clearOldCache()
+    public void clearOldCache()
     {
         try
         {
@@ -133,17 +163,42 @@ public class FileSystemCacheProvider extends CacheProvider
                 {
                     BasicFileAttributes attributes = Files.readAttributes(p, BasicFileAttributes.class);
                     long                life       = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() - attributes.lastAccessTime().toInstant().toEpochMilli();
-                    if (timeToLive < life)
+                    
+                    if (timeToLive != CacheProvider.TTL_USE_HINTS)
                     {
-                        // no point in deleting the folders..
-                        if (Files.isDirectory(p))
+                        if (timeToLive < life)
                         {
-                            return;
+                            // no point in deleting the folders..
+                            if (Files.isDirectory(p))
+                            {
+                                return;
+                            }
+                            
+                            Files.deleteIfExists(p);
+                        }
+                    } else
+                    {
+                        Path folder = p;
+                        while (!folder.getParent().equals(home))
+                        {
+                            folder = p.getParent();
                         }
                         
-                        Files.deleteIfExists(p);
+                        URLEndpoint endpoint     = URLEndpoint.valueOf(folder.toFile().toString());
+                        long        expectedLife = hints.get(endpoint);
+                        
+                        if (expectedLife < life)
+                        {
+                            // no point in deleting the folders..
+                            if (Files.isDirectory(p))
+                            {
+                                return;
+                            }
+                            
+                            Files.deleteIfExists(p);
+                        }
+                        
                     }
-                    
                 } catch (IOException e)
                 {
                     e.printStackTrace();
@@ -156,17 +211,17 @@ public class FileSystemCacheProvider extends CacheProvider
     }
     
     @Override
-    public long getTimeToLive()
+    public long getTimeToLive(URLEndpoint type)
     {
         return timeToLive;
     }
     
     @Override
-    public long getSize()
+    public long getSize(URLEndpoint type)
     {
         try
         {
-            return Files.size(home);
+            return Files.size(home.resolve(type.toString()));
         } catch (IOException e)
         {
             e.printStackTrace();

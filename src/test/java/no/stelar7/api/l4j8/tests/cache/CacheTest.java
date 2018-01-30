@@ -1,13 +1,13 @@
 package no.stelar7.api.l4j8.tests.cache;
 
-import no.stelar7.api.l4j8.basic.cache.*;
+import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.ChampDataFlags;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
-import no.stelar7.api.l4j8.pojo.match.MatchReference;
+import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 import org.junit.rules.Stopwatch;
@@ -27,6 +27,14 @@ public class CacheTest
     public void testMemoryCache() throws InterruptedException
     {
         DataCall.setCacheProvider(new MemoryCacheProvider(5));
+        DataCall.setLogLevel(LogLevel.INFO);
+        doCacheStuff();
+    }
+    
+    @Test
+    public void testSQLCache() throws InterruptedException
+    {
+        DataCall.setCacheProvider(new MySQLCacheProvider("localhost", 3306, "lolcachetest", "root", ""));
         DataCall.setLogLevel(LogLevel.INFO);
         doCacheStuff();
     }
@@ -75,7 +83,7 @@ public class CacheTest
     @After
     public void clearCacheProvider()
     {
-        DataCall.setCacheProvider(CacheProvider.EmptyProvider.INSTANCE);
+        DataCall.setCacheProvider(EmptyCacheProvider.INSTANCE);
     }
     
     
@@ -92,13 +100,18 @@ public class CacheTest
         
         System.out.println("Starting timer");
         
-        long start = stopwatch.runtime(TimeUnit.NANOSECONDS);
-        ref.getFullMatch();
+        long  start = stopwatch.runtime(TimeUnit.NANOSECONDS);
+        Match url   = ref.getFullMatch();
         System.out.printf("1x url fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         
         start = stopwatch.runtime(TimeUnit.NANOSECONDS);
-        ref.getFullMatch();
+        Match cached = ref.getFullMatch();
         System.out.printf("1x cache fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
+        
+        if (!url.equals(cached))
+        {
+            throw new RuntimeException("CACHE IS BROKEN!!!!");
+        }
         
         start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         for (int i = 0; i < 10; i++)
@@ -134,12 +147,12 @@ public class CacheTest
         recents.get(2).getFullMatch();
         recents.get(3).getFullMatch();
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize());
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V3_MATCH));
         
         System.out.println("Waiting for cache timeout");
         TimeUnit.SECONDS.sleep(5);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize());
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V3_MATCH));
         
         System.out.println("Re-fetching cached items");
         start = stopwatch.runtime(TimeUnit.NANOSECONDS);
@@ -149,7 +162,7 @@ public class CacheTest
         recents.get(3).getFullMatch();
         System.out.printf("4x fetches took: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize());
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V3_MATCH));
         System.out.println();
     }
     

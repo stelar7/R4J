@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests.staticdata;
 
-import no.stelar7.api.l4j8.basic.cache.*;
+import no.stelar7.api.l4j8.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;

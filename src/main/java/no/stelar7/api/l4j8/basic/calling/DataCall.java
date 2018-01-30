@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.basic.calling;
 
 import no.stelar7.api.l4j8.basic.APICredentials;
 import no.stelar7.api.l4j8.basic.cache.CacheProvider;
+import no.stelar7.api.l4j8.basic.cache.impl.EmptyCacheProvider;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.RateLimiter;
 
@@ -17,7 +18,7 @@ public final class DataCall
     private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
     
     private static APICredentials creds;
-    private static CacheProvider cache          = CacheProvider.EmptyProvider.INSTANCE;
+    private static CacheProvider cache          = EmptyCacheProvider.INSTANCE;
     private static LogLevel      logLevel       = LogLevel.NONE;
     private static int           callStackSkip  = 5;
     private static int           callStackLimit = 5;
@@ -127,7 +128,7 @@ public final class DataCall
     
     public static void setCacheProvider(@Nullable CacheProvider provider)
     {
-        cache = provider == null ? CacheProvider.EmptyProvider.INSTANCE : provider;
+        cache = provider == null ? EmptyCacheProvider.INSTANCE : provider;
     }
     
     public static void setCredentials(final APICredentials creds)

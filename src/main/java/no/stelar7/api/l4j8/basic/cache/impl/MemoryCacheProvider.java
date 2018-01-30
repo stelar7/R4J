@@ -1,5 +1,6 @@
-package no.stelar7.api.l4j8.basic.cache;
+package no.stelar7.api.l4j8.basic.cache.impl;
 
+import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.pojo.match.Match;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
@@ -7,11 +8,17 @@ import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import java.time.*;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.*;
 
-public class MemoryCacheProvider extends CacheProvider
+public class MemoryCacheProvider implements CacheProvider
 {
     private Map<Summoner, LocalDateTime> summoners = new HashMap<>();
     private Map<Match, LocalDateTime>    matches   = new HashMap<>();
+    
+    private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture<?> clearTask;
+    private long               timeToLive;
+    private CacheLifetimeHint  hints;
     
     /**
      * Creates a memory cache, where items expire after ttl seconds
@@ -20,8 +27,33 @@ public class MemoryCacheProvider extends CacheProvider
      */
     public MemoryCacheProvider(long ttl)
     {
-        setTimeToLive(ttl);
+        setTimeToLiveGlobal(ttl);
     }
+    
+    
+    @Override
+    public void setTimeToLiveGlobal(long timeToLive)
+    {
+        this.timeToLive = timeToLive;
+        
+        if (timeToLive > 0)
+        {
+            clearTask = clearService.scheduleAtFixedRate(this::clearOldCache, timeToLive, timeToLive, TimeUnit.SECONDS);
+        } else
+        {
+            if (clearTask != null)
+            {
+                clearTask.cancel(false);
+            }
+        }
+    }
+    
+    @Override
+    public void setTimeToLive(CacheLifetimeHint hints)
+    {
+        this.hints = hints;
+    }
+    
     
     @Override
     public void store(URLEndpoint type, Object... obj)
@@ -88,20 +120,23 @@ public class MemoryCacheProvider extends CacheProvider
     }
     
     @Override
-    protected void clearOldCache()
+    public void clearOldCache()
     {
-        clearOldCache(summoners);
-        clearOldCache(matches);
+        
+        clearOldCache(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoners);
+        clearOldCache(URLEndpoint.V3_SUMMONER_BY_NAME, summoners);
+        clearOldCache(URLEndpoint.V3_SUMMONER_BY_ID, summoners);
+        clearOldCache(URLEndpoint.V3_MATCH, matches);
     }
     
     @Override
-    public long getTimeToLive()
+    public long getTimeToLive(URLEndpoint type)
     {
         return timeToLive;
     }
     
     @Override
-    public long getSize()
+    public long getSize(URLEndpoint type)
     {
         long size = 0;
         size += summoners.size();
@@ -109,7 +144,7 @@ public class MemoryCacheProvider extends CacheProvider
         return size;
     }
     
-    private void clearOldCache(Map<?, LocalDateTime> data)
+    private void clearOldCache(URLEndpoint endpoint, Map<?, LocalDateTime> data)
     {
         List<Entry<?, LocalDateTime>> list = new ArrayList<>(data.entrySet());
         list.sort(Comparator.comparing(Entry::getValue));
@@ -117,10 +152,19 @@ public class MemoryCacheProvider extends CacheProvider
         for (Entry<?, LocalDateTime> entry : list)
         {
             long life = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() - entry.getValue().toInstant(ZoneOffset.UTC).toEpochMilli();
-            
-            if (timeToLive < life)
+            if (timeToLive != CacheProvider.TTL_USE_HINTS)
             {
-                data.remove(entry.getKey());
+                if (timeToLive < life)
+                {
+                    data.remove(entry.getKey());
+                }
+            } else
+            {
+                long expectedLife = hints.get(endpoint);
+                if (expectedLife < life)
+                {
+                    data.remove(entry.getKey());
+                }
             }
         }
     }
