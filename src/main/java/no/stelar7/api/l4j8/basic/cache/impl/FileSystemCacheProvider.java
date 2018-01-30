@@ -156,6 +156,11 @@ public class FileSystemCacheProvider implements CacheProvider
     @Override
     public void clearOldCache()
     {
+        if (timeToLive == CacheProvider.TTL_INFINITY)
+        {
+            return;
+        }
+        
         try
         {
             Files.walk(home).sorted(Comparator.reverseOrder()).forEach(p -> {

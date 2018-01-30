@@ -45,29 +45,25 @@ public class TieredCacheProvider implements CacheProvider
         return Optional.empty();
     }
     
-    private void restoreCache(CacheProvider stoppingPoint, URLEndpoint type, Object obj)
+    private void restoreCache(CacheProvider cacheDepth, URLEndpoint type, Object obj)
     {
         
-        boolean inTheFuture = false;
+        boolean shouldUpdate = false;
         
         for (CacheProvider provider : providers)
         {
-            if (provider.equals(stoppingPoint))
+            if (provider.equals(cacheDepth))
             {
-                inTheFuture = true;
+                shouldUpdate = true;
             }
             
             
-            if (!inTheFuture)
+            if (!shouldUpdate)
             {
                 provider.store(type, obj);
             } else
             {
-                // Only update if its not an infinite store
-                if (provider.getTimeToLive(type) == CacheProvider.TTL_INFINITY)
-                {
-                    provider.update(type, obj);
-                }
+                provider.update(type, obj);
             }
         }
     }
@@ -99,13 +95,13 @@ public class TieredCacheProvider implements CacheProvider
     @Override
     public void setTimeToLiveGlobal(long timeToLive)
     {
-        // this is ignored for tiered caches
+        // this is ignored for tiered caches as the individuals control it themself
     }
     
     @Override
     public void setTimeToLive(CacheLifetimeHint hints)
     {
-        // this is ignored for tiered caches
+        // this is ignored for tiered caches as the individuals control it themself
     }
     
 }

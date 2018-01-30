@@ -82,6 +82,11 @@ public class MySQLCacheProvider implements CacheProvider
     @Override
     public void clearOldCache()
     {
+        if (timeToLive == CacheProvider.TTL_INFINITY)
+        {
+            return;
+        }
+        
         try (PreparedStatement stmt = sql.getConnection().prepareStatement("DELETE FROM ? WHERE expiration < ?"))
         {
             for (URLEndpoint endpoint : URLEndpoint.values())

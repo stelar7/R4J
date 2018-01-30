@@ -122,6 +122,10 @@ public class MemoryCacheProvider implements CacheProvider
     @Override
     public void clearOldCache()
     {
+        if (timeToLive == CacheProvider.TTL_INFINITY)
+        {
+            return;
+        }
         
         clearOldCache(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoners);
         clearOldCache(URLEndpoint.V3_SUMMONER_BY_NAME, summoners);
