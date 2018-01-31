@@ -47,27 +47,15 @@ public class MySQLCacheProvider implements CacheProvider
     @Override
     public void update(URLEndpoint type, Object... obj)
     {
-        try
+        String updateQuery = CacheDataKeys.createUpdateStatement(type, obj);
+        
+        try (PreparedStatement statement = sql.getConnection().prepareStatement(updateQuery))
         {
-            try (PreparedStatement statement = sql.getConnection().prepareStatement("UPDATE ? SET ? = ? WHERE ?=? AND ?=?"))
-            {
-                statement.setString(1, type.toString());
-                statement.setLong(2, System.currentTimeMillis() + getTimeToLive(type));
-                statement.setString(3, EXPIRES_AT);
-                
-                if (type == URLEndpoint.V3_MATCH)
-                {
-                    statement.setString(4, "gameId");
-                    statement.setLong(5, (Long) obj[1]);
-                    statement.setString(6, "platformId");
-                    statement.setString(7, (String) obj[2]);
-                } else
-                {
-                    throw new UnsupportedOperationException(type.toString() + " is not registered with the cache");
-                }
-                
-                statement.executeUpdate();
-            }
+            statement.setString(1, type.toString());
+            statement.setLong(2, System.currentTimeMillis() + getTimeToLive(type));
+            statement.setString(3, EXPIRES_AT);
+            
+            statement.executeUpdate();
         } catch (final SQLException e)
         {
             e.printStackTrace();
