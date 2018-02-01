@@ -9,6 +9,7 @@ import java.time.*;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.*;
+import java.util.stream.Stream;
 
 public class MemoryCacheProvider implements CacheProvider
 {
@@ -83,18 +84,36 @@ public class MemoryCacheProvider implements CacheProvider
     @Override
     public Optional<?> get(URLEndpoint type, Object... data)
     {
-        switch (type)
+        Object platform = data[0];
+        if (type == URLEndpoint.V3_SUMMONER_BY_ACCOUNT || type == URLEndpoint.V3_SUMMONER_BY_NAME || type == URLEndpoint.V3_SUMMONER_BY_ID)
         {
-            case V3_SUMMONER_BY_ACCOUNT:
-                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[1])).filter(s -> data[0].equals(s.getAccountId())).findFirst();
-            case V3_SUMMONER_BY_NAME:
-                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[1])).filter(s -> data[0].equals(s.getName())).findFirst();
-            case V3_SUMMONER_BY_ID:
-                return summoners.keySet().stream().filter(s -> s.getPlatform().equals(data[1])).filter(s -> data[0].equals(s.getSummonerId())).findFirst();
-            case V3_MATCH:
-                return matches.keySet().stream().filter(m -> m.getPlatform().equals(data[1])).filter(m -> data[0].equals(m.getMatchId())).findFirst();
-            default:
-                break;
+            Object accountId    = data[1];
+            Object summonerId   = data[2];
+            Object summonerName = data[3];
+            
+            Stream<Summoner> sums = summoners.keySet().stream().filter(s -> s.getPlatform().equals(platform));
+            if (type == URLEndpoint.V3_SUMMONER_BY_ID)
+            {
+                sums.filter(s -> summonerId.equals(s.getSummonerId()));
+            }
+            if (type == URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
+            {
+                sums.filter(s -> accountId.equals(s.getAccountId()));
+            }
+            if (type == URLEndpoint.V3_SUMMONER_BY_NAME)
+            {
+                sums.filter(s -> summonerName.equals(s.getName()));
+            }
+            return sums.findFirst();
+        }
+        
+        if (type == URLEndpoint.V3_MATCH)
+        {
+            Object matchId = data[1];
+            return matches.keySet().stream()
+                          .filter(m -> m.getPlatform().equals(platform))
+                          .filter(m -> matchId.equals(m.getMatchId()))
+                          .findFirst();
         }
         
         return Optional.empty();

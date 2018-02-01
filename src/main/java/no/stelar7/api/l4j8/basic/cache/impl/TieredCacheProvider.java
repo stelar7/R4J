@@ -1,7 +1,8 @@
 package no.stelar7.api.l4j8.basic.cache.impl;
 
 import no.stelar7.api.l4j8.basic.cache.*;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 
 import java.util.*;
 
@@ -37,6 +38,8 @@ public class TieredCacheProvider implements CacheProvider
             
             if (returnValue.isPresent())
             {
+                DataCall.getLogLevel().printIf(LogLevel.DEBUG, "Loaded from: " + provider.getClass().getName());
+                
                 restoreCache(provider, type, returnValue.get());
                 return returnValue;
             }
@@ -60,9 +63,11 @@ public class TieredCacheProvider implements CacheProvider
             
             if (!shouldUpdate)
             {
+                DataCall.getLogLevel().printIf(LogLevel.DEBUG, "Saved to: " + provider.getClass().getName());
                 provider.store(type, obj);
             } else
             {
+                DataCall.getLogLevel().printIf(LogLevel.DEBUG, "Updating timestamp: " + provider.getClass().getName());
                 provider.update(type, obj);
             }
         }

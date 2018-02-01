@@ -48,6 +48,15 @@ public class CacheTest
         doCacheStuff();
     }
     
+    
+    @Test
+    public void testTieredMemoryCache() throws InterruptedException
+    {
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(3), new FileSystemCacheProvider()));
+        doCacheStuff();
+    }
+    
     @Test
     public void testStaticDataCache()
     {
@@ -70,14 +79,6 @@ public class CacheTest
         
         new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
         new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
-    }
-    
-    @Test
-    public void testTieredMemoryCache() throws InterruptedException
-    {
-        DataCall.setLogLevel(LogLevel.INFO);
-        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(3), new FileSystemCacheProvider()));
-        doCacheStuff();
     }
     
     @After

@@ -5,7 +5,7 @@ import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 
 import java.io.*;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.*;
 import java.time.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -95,7 +95,6 @@ public class FileSystemCacheProvider implements CacheProvider
         Path storePath = home.resolve(type.toString());
         
         List<Object> pathData = new ArrayList<>(obj);
-        Collections.reverse(pathData);
         
         for (Object datum : pathData)
         {
@@ -108,7 +107,16 @@ public class FileSystemCacheProvider implements CacheProvider
     @Override
     public void update(URLEndpoint type, Object... obj)
     {
-        store(type, obj);
+        try
+        {
+            List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
+            pathData.remove(0);
+            Path storePath = resolvePath(type, pathData);
+            Files.setLastModifiedTime(storePath, FileTime.from(Instant.now()));
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
     
     @Override

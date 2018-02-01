@@ -33,12 +33,12 @@ public class SummonerBuilder
     
     public SummonerBuilder withSummonerId(Long id)
     {
-        return new SummonerBuilder("$$", id, -1, this.platform);
+        return new SummonerBuilder("", id, -1, this.platform);
     }
     
     public SummonerBuilder withAccountId(Long id)
     {
-        return new SummonerBuilder("$$", -1, id, this.platform);
+        return new SummonerBuilder("", -1, id, this.platform);
     }
     
     public SummonerBuilder withName(String name)
