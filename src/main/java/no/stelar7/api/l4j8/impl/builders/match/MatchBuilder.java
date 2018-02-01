@@ -53,7 +53,7 @@ public class MatchBuilder
                                                        .withPlatform(this.platform);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, this.id, this.platform);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, this.platform, this.id);
         if (chl.isPresent())
         {
             return (Match) chl.get();
@@ -66,7 +66,7 @@ public class MatchBuilder
         }
         
         Match match = (Match) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, this.id, this.platform);
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, this.platform, this.id);
         return match;
     }
 }

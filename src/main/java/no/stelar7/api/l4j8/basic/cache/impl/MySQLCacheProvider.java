@@ -14,7 +14,7 @@ public class MySQLCacheProvider implements CacheProvider
     private       CacheLifetimeHint hints;
     private final MySQL             sql;
     
-    private static final String EXPIRES_AT = "expires_at";
+    private static final String COLUMN_EXPIRES_AT = "expires_at";
     
     public MySQLCacheProvider(String host, int port, String database, String username, String password)
     {
@@ -53,7 +53,7 @@ public class MySQLCacheProvider implements CacheProvider
         {
             statement.setString(1, type.toString());
             statement.setLong(2, System.currentTimeMillis() + getTimeToLive(type));
-            statement.setString(3, EXPIRES_AT);
+            statement.setString(3, COLUMN_EXPIRES_AT);
             
             statement.executeUpdate();
         } catch (final SQLException e)
@@ -91,7 +91,7 @@ public class MySQLCacheProvider implements CacheProvider
             for (URLEndpoint endpoint : URLEndpoint.values())
             {
                 stmt.setString(1, endpoint.toString());
-                stmt.setString(2, EXPIRES_AT);
+                stmt.setString(2, COLUMN_EXPIRES_AT);
                 stmt.setLong(3, System.currentTimeMillis() + getTimeToLive(endpoint));
                 stmt.executeUpdate();
             }

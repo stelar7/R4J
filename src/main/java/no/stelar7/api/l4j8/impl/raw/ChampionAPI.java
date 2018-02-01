@@ -31,7 +31,7 @@ public final class ChampionAPI
             builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, "true");
         }
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPIONS, server);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPIONS, server, freeToPlay);
         if (chl.isPresent())
         {
             return (List<Champion>) chl.get();
@@ -40,7 +40,7 @@ public final class ChampionAPI
         try
         {
             ChampionList cl = (ChampionList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), server);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), server, freeToPlay);
             return cl.getChampions();
         } catch (ClassCastException e)
         {

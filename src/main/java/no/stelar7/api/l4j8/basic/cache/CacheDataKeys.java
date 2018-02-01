@@ -9,7 +9,6 @@ public final class CacheDataKeys
         // hide public constructor
     }
     
-    private static String[] matchKeys = {"gameId", "platformId"};
     
     private static String[] getKeysForType(URLEndpoint type)
     {
@@ -17,11 +16,75 @@ public final class CacheDataKeys
         {
             case V3_MATCH:
             {
-                return matchKeys;
+                return new String[]{"platformId", "gameId"};
+            }
+            case V3_TIMELINE:
+            {
+                return new String[]{"platformId", "gameId"};
+            }
+            case V3_CHAMPIONS_BY_ID:
+            {
+                return new String[]{"platformId", "id"};
+            }
+            case V3_CHAMPIONS:
+            {
+                return new String[]{"platformId", "freeToPlay"};
+            }
+            case V3_MASTERY_BY_ID:
+            {
+                return new String[]{"platformId", "playerId"};
+            }
+            case V3_MASTERY_BY_CHAMPION:
+            {
+                return new String[]{"platformId", "playerId", "championId"};
+            }
+            case V3_MASTERY_SCORE:
+            {
+                return new String[]{"platformId", "playerId"};
+            }
+            case V3_LEAGUE_CHALLENGER:
+            {
+                return new String[]{"platformId", "queue"};
+            }
+            case V3_LEAGUE_MASTER:
+            {
+                return new String[]{"platformId", "queue"};
+            }
+            case V3_LEAGUE:
+            {
+                return new String[]{"platformId", "leagueId"};
+            }
+            case V3_LEAGUE_ENTRY:
+            {
+                return new String[]{"platformId", "playerOrTeamId"};
+            }
+            case V3_SPECTATOR_CURRENT:
+            {
+                return new String[]{"platformId", "playerId"};
+            }
+            case V3_SPECTATOR_FEATURED:
+            {
+                return new String[]{"platformId"};
+            }
+            case V3_SUMMONER_BY_ACCOUNT:
+            {
+                return new String[]{"platformId", "accountId"};
+            }
+            case V3_SUMMONER_BY_ID:
+            {
+                return new String[]{"platformId", "1", "id"};
+            }
+            case V3_SUMMONER_BY_NAME:
+            {
+                return new String[]{"platformId", "1", "1", "name"};
+            }
+            case V3_SHARD_STATUS:
+            {
+                return new String[]{"platformId"};
             }
             default:
             {
-                throw new UnsupportedOperationException(type.toString() + " is not registered with the cache");
+                throw new UnsupportedOperationException(type.toString() + " is not added to the cache");
             }
         }
     }
@@ -39,7 +102,15 @@ public final class CacheDataKeys
             start.append(" WHERE ");
             for (int i = 0; i < keys.length; i++)
             {
-                start.append(keys[i]).append(" = ").append(filters[i]);
+                String key   = keys[i];
+                Object value = filters[i];
+                
+                if ("1".equals(key))
+                {
+                    continue;
+                }
+                
+                start.append(key).append(" = ").append(value);
                 if (i < keys.length - 1)
                 {
                     start.append(" AND ");

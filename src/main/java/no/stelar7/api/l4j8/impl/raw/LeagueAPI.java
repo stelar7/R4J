@@ -109,7 +109,7 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE_ENTRY)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_ENTRY, summonerId, server);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_ENTRY, server, summonerId);
         if (chl.isPresent())
         {
             return (List<LeaguePosition>) chl.get();
@@ -118,7 +118,7 @@ public final class LeagueAPI
         try
         {
             List<LeaguePosition> list = (List<LeaguePosition>) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, summonerId, server);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, server, summonerId);
             return list;
         } catch (ClassCastException e)
         {
@@ -142,7 +142,7 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE, leagueId, server);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE, server, leagueId);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -151,7 +151,7 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list, leagueId, server);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list, server, leagueId);
             return list;
         } catch (ClassCastException e)
         {
