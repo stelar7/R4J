@@ -52,8 +52,8 @@ public class CacheTest
     @Test
     public void testTieredMemoryCache() throws InterruptedException
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
         DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(3), new FileSystemCacheProvider()));
+        DataCall.setLogLevel(LogLevel.INFO);
         doCacheStuff();
     }
     
