@@ -55,7 +55,7 @@ public final class Utils
         builder.registerTypeAdapter(WardType.class, new WardTypeDeserializer());
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
         
-        format = new DecimalFormat("0.0000", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        format = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         format.setRoundingMode(RoundingMode.HALF_UP);
     }
     

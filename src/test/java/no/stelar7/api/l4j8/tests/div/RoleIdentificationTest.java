@@ -493,13 +493,20 @@ public class RoleIdentificationTest
         String adc = String.format("%s (%s %s)", staticChampionData.get(roles.get(LaneRoleType.DUO_CARRY)).getName(), carry.getSpell1(), carry.getSpell2());
         String sup = String.format("%s (%s %s)", staticChampionData.get(roles.get(LaneRoleType.DUO_SUPPORT)).getName(), helper.getSpell1(), helper.getSpell2());
         
-        System.out.format("Probability: %s%%%nConfidence: %s%%%nTop: %s%nJungle: %s%nMid: %s%nADC: %s%nSupport: %s%nAlternative roles: [%s]%nMatch id: %s:%s%nTeamid: %s%n",
-                          prob, conf,
-                          top, jun, mid, adc, sup,
-                          alternative.toString(),
-                          match.getPlatform(),
-                          match.getMatchId(),
-                          String.format("%s (%s)", team, team.getValue()));
+        
+        StringJoiner sb = new StringJoiner("\n");
+        sb.add(String.format("Match: %s:%s", match.getPlatform().toString().toUpperCase(Locale.ENGLISH), match.getMatchId()));
+        sb.add(String.format("Team: %s (%s)", team, team.getValue()));
+        sb.add(String.format("Probability: %s%%", prob));
+        sb.add(String.format("Confidence: %s%%", conf));
+        sb.add("Top: " + top);
+        sb.add("Jungle: " + jun);
+        sb.add("Mid: " + mid);
+        sb.add("ADC: " + adc);
+        sb.add("Support: " + sup);
+        sb.add(String.format("Alternative roles: [%s]", alternative.toString()));
+        
+        System.out.println(sb.toString());
     }
     
     
