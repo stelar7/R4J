@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.impl.raw;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.basic.utils.LazyList;
+import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.pojo.match.*;
 
 import javax.annotation.Nullable;
@@ -102,8 +102,13 @@ public final class MatchAPI
             championId.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
         }
         
-        MatchList list = (MatchList) builder.build();
-        return list.getMatches();
+        Object data = builder.build();
+        if (data instanceof Pair)
+        {
+            return Collections.emptyList();
+        }
+        
+        return ((MatchList) data).getMatches();
     }
     
     /**

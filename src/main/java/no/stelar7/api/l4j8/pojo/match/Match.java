@@ -141,6 +141,11 @@ public class Match implements Serializable
         return null;
     }
     
+    public List<Participant> getParticipants(TeamType team)
+    {
+        return getParticipants().stream().filter(p -> p.getTeam() == team).collect(Collectors.toList());
+    }
+    
     public ParticipantIdentity getParticipantIdentityFromParticipantId(int participantId)
     {
         for (ParticipantIdentity participant : participantIdentities)
