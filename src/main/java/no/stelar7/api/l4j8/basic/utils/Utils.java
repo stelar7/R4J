@@ -7,16 +7,13 @@ import no.stelar7.api.l4j8.basic.deserializer.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.RateLimit;
 
 import java.io.*;
-import java.math.RoundingMode;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.text.*;
 import java.util.*;
 
 public final class Utils
 {
-    private static final Gson          gson;
-    private static final DecimalFormat format;
+    private static final Gson gson;
     
     private Utils()
     {
@@ -35,7 +32,6 @@ public final class Utils
         builder.registerTypeAdapter(GameSubType.class, new GameSubTypeDeserializer());
         builder.registerTypeAdapter(GameType.class, new GameTypeDeserializer());
         builder.registerTypeAdapter(LaneType.class, new LaneTypeDeserializer());
-        builder.registerTypeAdapter(LaneRoleType.class, new LaneRoleTypeDeserializer());
         builder.registerTypeAdapter(LevelUpType.class, new LevelUpTypeDeserializer());
         builder.registerTypeAdapter(MapType.class, new MapTypeDeserializer());
         builder.registerTypeAdapter(MonsterType.class, new MonsterTypeDeserializer());
@@ -54,14 +50,6 @@ public final class Utils
         builder.registerTypeAdapter(TowerType.class, new TowerTypeDeserializer());
         builder.registerTypeAdapter(WardType.class, new WardTypeDeserializer());
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
-        
-        format = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-        format.setRoundingMode(RoundingMode.HALF_UP);
-    }
-    
-    public static DecimalFormat getDecimalFormat()
-    {
-        return format;
     }
     
     public static Gson getGson()
