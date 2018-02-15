@@ -137,13 +137,6 @@ public class RoleIdentificationTest
     }
     
     
-    private Map<Integer, Map<LaneRoleType, Float>> getChampionGGRates()
-    {
-        Map<Integer, Map<LaneRoleType, Float>> data = loadChampionGGData();
-        System.out.println();
-        return null;
-    }
-    
     private boolean hasSmite(Participant p)
     {
         return p.getSpell1() == SummonerSpellType.SMITE || p.getSpell2() == SummonerSpellType.SMITE;
