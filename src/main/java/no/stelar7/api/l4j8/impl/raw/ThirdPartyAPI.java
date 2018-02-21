@@ -4,6 +4,7 @@ import no.stelar7.api.l4j8.basic.calling.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.utils.Pair;
 
+@SuppressWarnings("unchecked")
 public final class ThirdPartyAPI
 {
     private static final ThirdPartyAPI INSTANCE = new ThirdPartyAPI();

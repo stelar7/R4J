@@ -7,6 +7,7 @@ import no.stelar7.api.l4j8.pojo.league.*;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class LeagueBuilder
 {
     

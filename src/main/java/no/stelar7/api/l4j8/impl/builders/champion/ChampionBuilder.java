@@ -6,6 +6,7 @@ import no.stelar7.api.l4j8.pojo.champion.*;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class ChampionBuilder
 {
     private final Platform platform;

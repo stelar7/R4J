@@ -8,6 +8,7 @@ import no.stelar7.api.l4j8.pojo.match.*;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class MatchListBuilder
 {
     

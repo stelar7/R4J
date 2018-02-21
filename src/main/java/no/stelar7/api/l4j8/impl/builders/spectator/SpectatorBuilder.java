@@ -6,6 +6,7 @@ import no.stelar7.api.l4j8.pojo.spectator.*;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class SpectatorBuilder
 {
     private final Platform platform;
