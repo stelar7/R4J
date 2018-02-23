@@ -1,7 +1,8 @@
 package no.stelar7.api.l4j8.basic.cache.impl;
 
 import no.stelar7.api.l4j8.basic.cache.*;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.match.Match;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
@@ -87,6 +88,7 @@ public class MemoryCacheProvider implements CacheProvider
         Object platform = data[0];
         if (type == URLEndpoint.V3_SUMMONER_BY_ACCOUNT || type == URLEndpoint.V3_SUMMONER_BY_NAME || type == URLEndpoint.V3_SUMMONER_BY_ID)
         {
+            DataCall.getLogLevel().printIf(LogLevel.INFO, "Loaded data from cache");
             Object accountId    = data[1];
             Object summonerId   = data[2];
             Object summonerName = data[3];
@@ -109,6 +111,7 @@ public class MemoryCacheProvider implements CacheProvider
         
         if (type == URLEndpoint.V3_MATCH)
         {
+            DataCall.getLogLevel().printIf(LogLevel.INFO, "Loaded data from cache");
             Object matchId = data[1];
             return matches.keySet().stream()
                           .filter(m -> m.getPlatform().equals(platform))

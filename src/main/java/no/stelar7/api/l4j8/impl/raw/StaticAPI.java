@@ -8,6 +8,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
 import no.stelar7.api.l4j8.pojo.staticdata.map.*;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.perk.*;
 import no.stelar7.api.l4j8.pojo.staticdata.profileicon.*;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
@@ -719,6 +720,159 @@ public final class StaticAPI
         {
             
             return Collections.emptyList();
+        }
+    }
+    
+    public List<StaticPerk> getPerks(Platform server, @Nullable String version, @Nullable String locale)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_PERKS)
+                                                       .withPlatform(server);
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_PERKS, server, version, locale);
+        if (chl.isPresent())
+        {
+            return (List<StaticPerk>) chl.get();
+        }
+        
+        try
+        {
+            List<StaticPerk> list = (List<StaticPerk>) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PERKS, list, server, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
+    }
+    
+    public StaticPerk getPerk(Platform server, int id, @Nullable String version, @Nullable String locale)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
+                                                       .withEndpoint(URLEndpoint.V3_STATIC_PERK_BY_ID)
+                                                       .withPlatform(server);
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_PERK_BY_ID, server, id, version, locale);
+        if (chl.isPresent())
+        {
+            return (StaticPerk) chl.get();
+        }
+        
+        try
+        {
+            StaticPerk list = (StaticPerk) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PERK_BY_ID, list, server, id, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
+    }
+    
+    public List<PerkPath> getPerkPaths(Platform server, @Nullable String version, @Nullable String locale)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_PERKPATHS)
+                                                       .withPlatform(server);
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_PERKPATHS, server, version, locale);
+        if (chl.isPresent())
+        {
+            return (List<PerkPath>) chl.get();
+        }
+        
+        try
+        {
+            List<PerkPath> list = (List<PerkPath>) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PERKPATHS, list, server, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
+    }
+    
+    public PerkPath getPerkPath(Platform server, int id, @Nullable String version, @Nullable String locale)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
+                                                       .withEndpoint(URLEndpoint.V3_STATIC_PERKPATH_BY_ID)
+                                                       .withPlatform(server);
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        if (locale != null)
+        {
+            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+        }
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_PERKPATH_BY_ID, server, id, version, locale);
+        if (chl.isPresent())
+        {
+            return (PerkPath) chl.get();
+        }
+        
+        try
+        {
+            PerkPath list = (PerkPath) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_PERKPATH_BY_ID, list, server, id, version, locale);
+            return list;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
+    }
+    
+    public String getTarball(Platform server, @Nullable String version)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_TARBALL)
+                                                       .withPlatform(server);
+        
+        if (version != null)
+        {
+            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
+        }
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_TARBALL, server, version);
+        if (chl.isPresent())
+        {
+            return (String) chl.get();
+        }
+        
+        try
+        {
+            String list = (String) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_TARBALL, list, server, version);
+            return list;
+        } catch (ClassCastException e)
+        {
+            return null;
         }
     }
     

@@ -10,6 +10,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapDetails;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
+import no.stelar7.api.l4j8.pojo.staticdata.perk.*;
 import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconDetails;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
@@ -233,5 +234,52 @@ public class StaticTest
         List<String> data = api.getVersions(Platform.EUW1);
     }
     
+    @Test
+    public void testPerkPath()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
+        List<PerkPath> paths = api.getPerkPaths(Platform.EUW1, null, null);
+    }
+    
+    @Test
+    public void testPerkPathId()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
+        PerkPath paths = api.getPerkPath(Platform.EUW1, 8000, null, null);
+    }
+    
+    @Test
+    public void testPerk()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
+        List<StaticPerk> paths = api.getPerks(Platform.EUW1, null, null);
+        System.out.println();
+    }
+    
+    @Test
+    public void testPerkId()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
+        StaticPerk paths = api.getPerk(Platform.EUW1, 8005, null, null);
+        System.out.println();
+    }
+    
+    @Test
+    public void testTarball()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
+        String paths = api.getTarball(Platform.EUW1, null);
+        System.out.println();
+    }
     
 }

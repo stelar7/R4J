@@ -1,7 +1,8 @@
 package no.stelar7.api.l4j8.basic.cache.impl;
 
 import no.stelar7.api.l4j8.basic.cache.*;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
+import no.stelar7.api.l4j8.basic.calling.DataCall;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 
 import java.io.*;
 import java.nio.file.*;
@@ -132,6 +133,7 @@ public class FileSystemCacheProvider implements CacheProvider
         
         try (ByteArrayInputStream bis = new ByteArrayInputStream(Files.readAllBytes(filepath)); ObjectInput in = new ObjectInputStream(bis))
         {
+            DataCall.getLogLevel().printIf(LogLevel.INFO, "Loaded data from cache");
             Object o = in.readObject();
             return Optional.of(o);
             

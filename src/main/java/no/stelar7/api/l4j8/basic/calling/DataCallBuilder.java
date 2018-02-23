@@ -60,8 +60,7 @@ public class DataCallBuilder
         applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
         
         
-        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME);
-        final DataCallResponse  response          = this.getResponse(url);
+        final DataCallResponse response = this.getResponse(url);
         DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, response.toString());
         
         switch (response.getResponseCode())
@@ -72,16 +71,7 @@ public class DataCallBuilder
                 String returnValue = response.getResponseData();
                 
                 final Object returnType = this.dc.getEndpoint().getType();
-                
-                if (this.dc.getEndpoint() == URLEndpoint.V3_MATCH)
-                {
-                    returnValue = postProcessMatch(returnValue);
-                }
-                
-                if (summonerEndpoints.contains(this.dc.getEndpoint()))
-                {
-                    returnValue = postProcessSummoner(returnValue);
-                }
+                returnValue = postProcess(returnValue);
                 
                 return Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
             }
@@ -130,6 +120,79 @@ public class DataCallBuilder
         System.err.println("Response Code:" + response.getResponseCode());
         System.err.println("Response Data:" + response.getResponseData());
         throw new APINoValidResponseException(response.getResponseData());
+    }
+    
+    private String postProcess(String returnValue)
+    {
+        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME);
+        
+        if (this.dc.getEndpoint() == URLEndpoint.V3_MATCH)
+        {
+            returnValue = postProcessMatch(returnValue);
+        }
+        
+        if (this.dc.getEndpoint() == URLEndpoint.V3_STATIC_PERKPATHS)
+        {
+            returnValue = postProcessPerkPaths(returnValue);
+        }
+        
+        if (this.dc.getEndpoint() == URLEndpoint.V3_STATIC_PERKPATH_BY_ID)
+        {
+            returnValue = postProcessPerkPath(returnValue);
+        }
+        
+        if (summonerEndpoints.contains(this.dc.getEndpoint()))
+        {
+            returnValue = postProcessSummoner(returnValue);
+        }
+        
+        return returnValue;
+    }
+    
+    private String postProcessPerkPath(String returnValue)
+    {
+        JsonObject elem     = (JsonObject) new JsonParser().parse(returnValue);
+        String     pathName = elem.get("name").getAsString();
+        String     pathId   = elem.get("id").getAsString();
+        
+        JsonArray slots = elem.getAsJsonArray("slots");
+        for (JsonElement slot : slots)
+        {
+            JsonArray runes = slot.getAsJsonObject().getAsJsonArray("runes");
+            for (JsonElement rune : runes)
+            {
+                JsonObject obj = (JsonObject) rune;
+                obj.addProperty("runePathName", pathName);
+                obj.addProperty("runePathId", pathId);
+            }
+        }
+        
+        return Utils.getGson().toJson(elem);
+    }
+    
+    private String postProcessPerkPaths(String returnValue)
+    {
+        JsonArray element = (JsonArray) new JsonParser().parse(returnValue);
+        
+        for (JsonElement elem : element)
+        {
+            String pathName = elem.getAsJsonObject().get("name").getAsString();
+            String pathId   = elem.getAsJsonObject().get("id").getAsString();
+            
+            JsonArray slots = elem.getAsJsonObject().getAsJsonArray("slots");
+            for (JsonElement slot : slots)
+            {
+                JsonArray runes = slot.getAsJsonObject().getAsJsonArray("runes");
+                for (JsonElement rune : runes)
+                {
+                    JsonObject obj = (JsonObject) rune;
+                    obj.addProperty("runePathName", pathName);
+                    obj.addProperty("runePathId", pathId);
+                }
+            }
+        }
+        
+        return Utils.getGson().toJson(element);
     }
     
     private String postProcessSummoner(String returnValue)

@@ -54,6 +54,7 @@ public interface CacheProvider
     /**
      * Returns the time in seconds the items are alloweed to live in the cache
      *
+     * @param type the endpoint
      * @return long
      */
     long getTimeToLive(URLEndpoint type);
@@ -61,6 +62,7 @@ public interface CacheProvider
     /**
      * Returns the count of items in the cache (or the size in bytes)
      *
+     * @param type the endpoint
      * @return long
      */
     long getSize(URLEndpoint type);

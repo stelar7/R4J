@@ -11,6 +11,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.perk.*;
 import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
@@ -74,7 +75,12 @@ public enum URLEndpoint
     // lol/static-data/v3/runes/{id} Retrieves rune by its unique id.
     // lol/static-data/v3/summoner-spells Retrieves summoner spell list.
     // lol/static-data/v3/summoner-spells/{id} Retrieves summoner spell by its unique id.
-    // lol/static-data/v3/versions
+    // lol/static-data/v3/versions Retrieve version data
+    // lol/static-data/v3/reforged-runes Retrieves reforged rune list
+    // lol/static-data/v3/reforged-runes/{id} Retrieves reforged rune by ID
+    // lol/static-data/v3/reforged-rune-paths Retrieves reforged rune path list
+    // lol/static-data/v3/reforged-rune-paths/{id} Retrieves reforged rune path by ID
+    // lol/static-data/v3/tarball-links Retrieves full tarball link
     V3_STATIC_CHAMPIONS("lol", "static-data", "v3", "champions", StaticChampionList.class),
     V3_STATIC_CHAMPION_BY_ID("lol", "static-data", "v3", "champions/" + Constants.ID_PLACEHOLDER, StaticChampion.class),
     V3_STATIC_ITEMS("lol", "static-data", "v3", "items", ItemList.class),
@@ -91,6 +97,11 @@ public enum URLEndpoint
     V3_STATIC_SUMMONER_SPELLS("lol", "static-data", "v3", "summoner-spells", StaticSummonerSpellList.class),
     V3_STATIC_SUMMONER_SPELL_BY_ID("lol", "static-data", "v3", "summoner-spells/" + Constants.ID_PLACEHOLDER, StaticSummonerSpell.class),
     V3_STATIC_VERSIONS("lol", "static-data", "v3", "versions", new TypeToken<List<String>>() {}.getType()),
+    V3_STATIC_PERK_BY_ID("lol", "static-data", "v3", "reforged-runes/" + Constants.ID_PLACEHOLDER, StaticPerk.class),
+    V3_STATIC_PERKS("lol", "static-data", "v3", "reforged-runes", new TypeToken<List<StaticPerk>>() {}.getType()),
+    V3_STATIC_PERKPATH_BY_ID("lol", "static-data", "v3", "reforged-rune-paths/" + Constants.ID_PLACEHOLDER, PerkPath.class),
+    V3_STATIC_PERKPATHS("lol", "static-data", "v3", "reforged-rune-paths", new TypeToken<List<PerkPath>>() {}.getType()),
+    V3_STATIC_TARBALL("lol", "static-data", "v3", "tarball-links", String.class),
     
     //    lol/match/v3/matches/{matchId}
     //    lol/match/v3/matchlists/by-account/{accountId}
