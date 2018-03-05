@@ -23,7 +23,12 @@ public enum LaneType
     /**
      * The bottom lane
      */
-    BOT("BOT", "BOTTOM", "BOT_LANE");
+    BOT("BOT", "BOTTOM", "BOT_LANE"),
+    
+    /**
+     * The Riot API could not decide on a lane
+     */
+    NONE("NONE");
     
     private final String[] keys;
     

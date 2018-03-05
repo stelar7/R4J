@@ -55,11 +55,11 @@ public class MatchListTest
         Long               endIndex   = null;//100;
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.NA1).withName("admomgoboom").get();
+        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.NA1).withName("Kejorn").get();
         builder = builder.withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId());
-        builder = builder.withBeginTime(beginTime).withEndTime(endTime);
-        builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
-        builder = builder.withQueues(queue).withSeasons(season).withChampions(champ);
+//        builder = builder.withBeginTime(beginTime).withEndTime(endTime);
+//        builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
+//        builder = builder.withQueues(queue).withSeasons(season).withChampions(champ);
         
         LazyList<MatchReference> all = builder.getLazy();
         all.loadFully();
