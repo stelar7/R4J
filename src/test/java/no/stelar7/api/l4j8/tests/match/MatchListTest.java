@@ -47,22 +47,21 @@ public class MatchListTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.INFO);
         Set<GameQueueType> queue      = null;//EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
-        Set<SeasonType>    season     = EnumSet.of(SeasonType.SEASON_2018);
-        Set<Integer>       champ      = new HashSet<>(Collections.singletonList(40));
+        Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2018);
+        Set<Integer>       champ      = null;//new HashSet<>(Collections.singletonList(40));
         Long               beginTime  = null;//LocalDateTime.now().withHour(0).toEpochSecond(ZoneOffset.UTC) * 1000;//1481108400000L; // start of season 2017
         Long               endTime    = null;//LocalDateTime.now().withHour(0).plusWeeks(1).toEpochSecond(ZoneOffset.UTC) * 1000; // 604800000 is one week in ms
         Long               beginIndex = null;//0;
         Long               endIndex   = null;//100;
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.NA1).withName("Kejorn").get();
+        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         builder = builder.withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId());
-//        builder = builder.withBeginTime(beginTime).withEndTime(endTime);
-//        builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
-//        builder = builder.withQueues(queue).withSeasons(season).withChampions(champ);
+        builder = builder.withBeginTime(beginTime).withEndTime(endTime);
+        builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
+        builder = builder.withQueues(queue).withSeasons(season).withChampions(champ);
         
         LazyList<MatchReference> all = builder.getLazy();
-        all.loadFully();
         
         MatchBuilder    mb = new MatchBuilder();
         TimelineBuilder tb = new TimelineBuilder();

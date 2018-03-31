@@ -84,7 +84,7 @@ public enum GameQueueType
     /**
      * One for All games
      */
-    ONEFORALL_5X5(new Integer[]{70}),
+    ONEFORALL_5X5(new Integer[]{70, 1020}),
     /**
      * Snowdown Showdown 1v1 games
      */
