@@ -595,25 +595,16 @@ public class MatchHistoryCrawler
     
     public static void main(String[] args) throws SQLException, InterruptedException
     {
-        for (int i = 0; i < Integer.MAX_VALUE; )
-        {
-            try
-            {
-                new MatchHistoryCrawler();
-            } catch (APIEnumNotUpToDateException e)
-            {
-                e.printStackTrace();
-            }
-        }
+        new MatchHistoryCrawler();
     }
     
     static class MySQL
     {
-        private String hostname;
-        private String portnmbr;
-        private String username;
-        private String password;
-        private String database;
+        private   String     hostname;
+        private   String     portnmbr;
+        private   String     username;
+        private   String     password;
+        private   String     database;
         protected Connection connection = null;
         
         public MySQL(final String hostname, final String portnmbr, final String database, final String username, final String password)

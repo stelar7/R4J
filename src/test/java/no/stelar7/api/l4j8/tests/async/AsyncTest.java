@@ -38,7 +38,7 @@ public class AsyncTest
                 supplyAsync(() -> new MatchListBuilder().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
                         .thenAccept(this::handleMatchCallback)
                    );
-        CompletableFuture spinner = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
+        CompletableFuture spinner = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
         spinner.join();
     }
     

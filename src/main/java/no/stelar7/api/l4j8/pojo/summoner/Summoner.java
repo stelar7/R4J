@@ -3,7 +3,6 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.utils.Utils;
-import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
 import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;

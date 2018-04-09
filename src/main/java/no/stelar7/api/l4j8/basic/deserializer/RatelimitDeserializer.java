@@ -35,12 +35,12 @@ public class RatelimitDeserializer implements JsonDeserializer<RateLimit>
                 
                 if ("permits".equalsIgnoreCase(field))
                 {
-                    result[0] = new Integer(value);
+                    result[0] = Integer.valueOf(value);
                 }
                 
                 if ("delayInMs".equalsIgnoreCase(field))
                 {
-                    result[1] = new Long(value);
+                    result[1] = Long.valueOf(value);
                 }
             }
             

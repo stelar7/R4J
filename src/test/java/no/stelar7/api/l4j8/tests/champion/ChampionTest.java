@@ -18,8 +18,8 @@ public class ChampionTest
     public void testSingleChampion()
     {
         Champion champ = new ChampionBuilder().withPlatform(Platform.EUW1).withId(Constants.TEST_CHAMPION_IDS[0]).get();
-        
-        Assert.assertTrue("Championid is not leona?", champ.getId() == Constants.TEST_CHAMPION_IDS[0]);
+    
+        Assert.assertEquals("Championid is not leona?", champ.getId(), (int) Constants.TEST_CHAMPION_IDS[0]);
         
     }
     

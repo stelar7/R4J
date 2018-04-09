@@ -17,7 +17,7 @@ public class BurstRateLimiter extends RateLimiter
     
     public BurstRateLimiter(List<RateLimit> limits)
     {
-        super(limits.toArray(new RateLimit[limits.size()]));
+        super(limits.toArray(new RateLimit[0]));
     }
     
     @Override
@@ -88,7 +88,7 @@ public class BurstRateLimiter extends RateLimiter
                     DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Calls made in the time frame: %d", actual));
                     DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Limit for the time frame: %d", limit.getPermits()));
                     
-                    int newBias = (int) Math.floorDiv(actual, limit.getPermits());
+                    int newBias = (int) Math.floorDiv(actual, (long) limit.getPermits());
                     if (newBias > multiplicativeBias)
                     {
                         multiplicativeBias = newBias;

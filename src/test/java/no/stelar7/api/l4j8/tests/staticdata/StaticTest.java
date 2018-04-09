@@ -47,7 +47,7 @@ public class StaticTest
         EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
         
         StaticChampion list = api.getChampion(Platform.EUW1, Constants.TEST_CHAMPION_IDS[0], dataFlags, null, null);
-        Assert.assertTrue("ok?", list.getId() == Constants.TEST_CHAMPION_IDS[0]);
+        Assert.assertEquals("ok?", list.getId(), (int) Constants.TEST_CHAMPION_IDS[0]);
     }
     
     @Test
@@ -72,7 +72,7 @@ public class StaticTest
         EnumSet<ItemDataFlags> dataFlags = EnumSet.of(ItemDataFlags.ALL, ItemDataFlags.IMAGE);
         
         Item list = api.getItem(Platform.EUW1, 3147, dataFlags, null, null);
-        Assert.assertTrue("ok?", list.getId() == 3147);
+        Assert.assertEquals("ok?", 3147, list.getId());
     }
     
     
@@ -125,7 +125,7 @@ public class StaticTest
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL, MasteryDataFlags.IMAGE);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
-        Assert.assertTrue("ok?", list.getId() == 6131);
+        Assert.assertEquals("ok?", 6131, list.getId());
     }
     
     @Test
@@ -137,7 +137,7 @@ public class StaticTest
         EnumSet<MasteryDataFlags> dataFlags = EnumSet.of(MasteryDataFlags.ALL);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, dataFlags, null, null);
-        Assert.assertTrue("ok?", list.getId() == 6131);
+        Assert.assertEquals("ok?", 6131, list.getId());
     }
     
     @Test
@@ -147,7 +147,7 @@ public class StaticTest
         DataCall.setLogLevel(LogLevel.DEBUG);
         
         StaticMastery list = api.getMastery(Platform.EUW1, 6131, null, null, null);
-        Assert.assertTrue("ok?", list.getId() == 6131);
+        Assert.assertEquals("ok?", 6131, list.getId());
     }
     
     @Test
@@ -189,15 +189,15 @@ public class StaticTest
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
         
         StaticRune rune = api.getRune(Platform.EUW1, 5023, dataFlags, null, null);
-        
-        Assert.assertTrue("missing id?", rune.getId() == 5023);
-        Assert.assertTrue("missing stats?", rune.getStats() != null);
-        Assert.assertTrue("missing desc?", rune.getDescription() != null);
-        Assert.assertTrue("missing tags?", rune.getTags() != null);
-        Assert.assertTrue("missing image?", rune.getImage() != null);
-        Assert.assertTrue("missing sandesc?", rune.getSanitizedDescription() != null);
-        Assert.assertTrue("missing rune?", rune.getRune() != null);
-        Assert.assertTrue("missing name?", rune.getName() != null);
+    
+        Assert.assertEquals("missing id?", 5023, rune.getId());
+        Assert.assertNotNull("missing stats?", rune.getStats());
+        Assert.assertNotNull("missing desc?", rune.getDescription());
+        Assert.assertNotNull("missing tags?", rune.getTags());
+        Assert.assertNotNull("missing image?", rune.getImage());
+        Assert.assertNotNull("missing sandesc?", rune.getSanitizedDescription());
+        Assert.assertNotNull("missing rune?", rune.getRune());
+        Assert.assertNotNull("missing name?", rune.getName());
     }
     
     @Test
@@ -221,7 +221,7 @@ public class StaticTest
         EnumSet<SpellDataFlags> dataFlags = EnumSet.of(SpellDataFlags.ALL, SpellDataFlags.IMAGE);
         
         StaticSummonerSpell list = api.getSummonerSpell(Platform.EUW1, 21, dataFlags, null, null);
-        Assert.assertTrue("ok?", list.getId() == 21);
+        Assert.assertEquals("ok?", 21, list.getId());
     }
     
     

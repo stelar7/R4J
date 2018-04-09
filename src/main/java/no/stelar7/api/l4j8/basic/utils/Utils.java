@@ -88,7 +88,6 @@ public final class Utils
                 {
                     joiner.add(inputLine);
                 }
-                in.close();
             }
         } catch (IOException e)
         {
