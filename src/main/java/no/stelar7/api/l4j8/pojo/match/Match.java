@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.pojo.match;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.builders.match.TimelineBuilder;
+import no.stelar7.api.l4j8.impl.raw.*;
 
 import java.io.Serializable;
 import java.time.*;
@@ -28,6 +29,10 @@ public class Match implements Serializable
     private long                      gameCreation;
     private long                      gameDuration;
     
+    public static Match byId(Long id, Platform platform)
+    {
+        return MatchAPI.getInstance().getMatch(platform, id);
+    }
     
     /**
      * a GameQueueType representing the GameQueueType.

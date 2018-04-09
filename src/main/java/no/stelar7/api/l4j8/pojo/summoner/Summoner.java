@@ -3,9 +3,11 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.utils.Utils;
+import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
 import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
+import no.stelar7.api.l4j8.impl.raw.SummonerAPI;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.LeaguePosition;
 
@@ -24,6 +26,22 @@ public final class Summoner implements Serializable
     private long     id;
     private long     revisionDate;
     private Platform platform;
+    
+    
+    public static Summoner byName(String name, Platform platform)
+    {
+        return SummonerAPI.getInstance().getSummonerByName(platform, name);
+    }
+    
+    public static Summoner bySummonerId(Long id, Platform platform)
+    {
+        return SummonerAPI.getInstance().getSummonerById(platform, id);
+    }
+    
+    public static Summoner byAccountId(Long id, Platform platform)
+    {
+        return SummonerAPI.getInstance().getSummonerByAccount(platform, id);
+    }
     
     /**
      * The Summoners ID

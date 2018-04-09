@@ -1,6 +1,10 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.impl.raw.*;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class Champion implements Serializable
 {
@@ -12,6 +16,16 @@ public class Champion implements Serializable
     private boolean freeToPlay;
     private boolean rankedPlayEnabled;
     private int     id;
+    
+    public static Champion byId(Integer id, Platform platform)
+    {
+        return ChampionAPI.getInstance().getChampion(platform, id);
+    }
+    
+    public static List<Champion> all(Platform platform)
+    {
+        return ChampionAPI.getInstance().getChampions(platform, false);
+    }
     
     public int getId()
     {
