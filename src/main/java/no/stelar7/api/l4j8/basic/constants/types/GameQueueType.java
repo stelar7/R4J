@@ -210,6 +210,10 @@ public enum GameQueueType
      */
     DARKSTAR_3X3(new Integer[]{610, 611}),
     /**
+     * Clash games
+     */
+    CLASH(new Integer[]{700}),
+    /**
      * BOT 3x3 games
      */
     BOT_3X3_INTERMEDIATE(new Integer[]{800, 801}),
