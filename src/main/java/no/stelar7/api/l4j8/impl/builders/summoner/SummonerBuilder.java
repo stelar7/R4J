@@ -60,30 +60,34 @@ public class SummonerBuilder
     {
         DataCallBuilder builder  = new DataCallBuilder().withPlatform(this.platform);
         URLEndpoint     endpoint = null;
+        Object          index    = "";
         
         
         if (accId > 0)
         {
             builder.withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(this.accId));
             endpoint = URLEndpoint.V3_SUMMONER_BY_ACCOUNT;
+            index = this.accId;
         }
         
         if (sumId > 0)
         {
             builder.withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.sumId));
             endpoint = URLEndpoint.V3_SUMMONER_BY_ID;
+            index = this.sumId;
         }
         
         if (name.length() > 0)
         {
             builder.withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeSummonerName(this.name));
             endpoint = URLEndpoint.V3_SUMMONER_BY_NAME;
+            index = this.name;
         }
         
         builder.withEndpoint(endpoint);
         
         
-        Optional chl = DataCall.getCacheProvider().get(endpoint, this.platform, this.accId, this.sumId, this.name);
+        Optional chl = DataCall.getCacheProvider().get(endpoint, this.platform, index);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -97,7 +101,7 @@ public class SummonerBuilder
             return null;
         }
         
-        DataCall.getCacheProvider().store(endpoint, sob, this.platform, this.accId, this.sumId, this.name);
+        DataCall.getCacheProvider().store(endpoint, sob, this.platform, index);
         return (Summoner) sob;
     }
 }

@@ -40,7 +40,7 @@ public final class SummonerAPI
                 .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_ID, server, "", summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_ID, server, summonerId);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -49,7 +49,7 @@ public final class SummonerAPI
         try
         {
             Summoner summoner = (Summoner) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ID, summoner, server, "", summonerId);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ID, summoner, server, summonerId);
             return summoner;
         } catch (ClassCastException e)
         {
@@ -73,7 +73,7 @@ public final class SummonerAPI
                 .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_NAME, server, "", "", summonerName);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_NAME, server, summonerName);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -82,7 +82,7 @@ public final class SummonerAPI
         try
         {
             Summoner summoner = (Summoner) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_NAME, summoner, server, "", "", summonerName);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_NAME, summoner, server, summonerName);
             return summoner;
         } catch (ClassCastException e)
         {

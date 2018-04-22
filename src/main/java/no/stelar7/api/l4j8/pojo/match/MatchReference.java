@@ -2,7 +2,8 @@ package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.impl.builders.match.*;
+import no.stelar7.api.l4j8.impl.builders.match.MatchBuilder;
+import no.stelar7.api.l4j8.impl.builders.match.TimelineBuilder;
 
 import java.io.Serializable;
 import java.time.*;

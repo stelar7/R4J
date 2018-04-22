@@ -18,9 +18,9 @@ public class MemoryCacheProvider implements CacheProvider
     private Map<Match, LocalDateTime>    matches   = new HashMap<>();
     
     private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
-    private ScheduledFuture<?> clearTask;
-    private long               timeToLive;
-    private CacheLifetimeHint  hints;
+    private ScheduledFuture<?>       clearTask;
+    private long                     timeToLive;
+    private CacheLifetimeHint        hints;
     
     /**
      * Creates a memory cache, where items expire after ttl seconds
@@ -30,6 +30,11 @@ public class MemoryCacheProvider implements CacheProvider
     public MemoryCacheProvider(long ttl)
     {
         setTimeToLiveGlobal(ttl);
+    }
+    
+    public MemoryCacheProvider()
+    {
+        this(CacheProvider.TTL_INFINITY);
     }
     
     
@@ -85,47 +90,62 @@ public class MemoryCacheProvider implements CacheProvider
     @Override
     public Optional<?> get(URLEndpoint type, Object... data)
     {
-        Object platform = data[0];
-        if (type == URLEndpoint.V3_SUMMONER_BY_ACCOUNT || type == URLEndpoint.V3_SUMMONER_BY_NAME || type == URLEndpoint.V3_SUMMONER_BY_ID)
+        Object      platform = data[0];
+        Optional<?> opt;
+        
+        switch (type)
         {
-            DataCall.getLogLevel().printIf(LogLevel.INFO, "Loaded data from cache");
-            Object accountId    = data[1];
-            Object summonerId   = data[2];
-            Object summonerName = data[3];
-            
-            Stream<Summoner> sums = summoners.keySet().stream().filter(s -> s.getPlatform().equals(platform));
-            if (type == URLEndpoint.V3_SUMMONER_BY_ID)
+            case V3_SUMMONER_BY_ACCOUNT:
+            case V3_SUMMONER_BY_NAME:
+            case V3_SUMMONER_BY_ID:
             {
-                sums.filter(s -> summonerId.equals(s.getSummonerId()));
+                Object value = data[1];
+                
+                Stream<Summoner> sums = summoners.keySet().stream().filter(s -> s.getPlatform().equals(platform));
+                if (type == URLEndpoint.V3_SUMMONER_BY_ID)
+                {
+                    sums = sums.filter(s -> value.equals(s.getSummonerId()));
+                }
+                if (type == URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
+                {
+                    sums = sums.filter(s -> value.equals(s.getAccountId()));
+                }
+                if (type == URLEndpoint.V3_SUMMONER_BY_NAME)
+                {
+                    sums = sums.filter(s -> value.equals(s.getName()));
+                }
+                
+                opt = sums.findFirst();
+                break;
             }
-            if (type == URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
+            case V3_MATCH:
             {
-                sums.filter(s -> accountId.equals(s.getAccountId()));
+                Object matchId = data[1];
+                
+                opt = matches.keySet().stream()
+                             .filter(m -> m.getPlatform().equals(platform))
+                             .filter(m -> matchId.equals(m.getMatchId()))
+                             .findFirst();
+                break;
             }
-            if (type == URLEndpoint.V3_SUMMONER_BY_NAME)
+            default:
             {
-                sums.filter(s -> summonerName.equals(s.getName()));
+                opt = Optional.empty();
             }
-            return sums.findFirst();
         }
         
-        if (type == URLEndpoint.V3_MATCH)
+        if (opt.isPresent())
         {
-            DataCall.getLogLevel().printIf(LogLevel.INFO, "Loaded data from cache");
-            Object matchId = data[1];
-            return matches.keySet().stream()
-                          .filter(m -> m.getPlatform().equals(platform))
-                          .filter(m -> matchId.equals(m.getMatchId()))
-                          .findFirst();
+            DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Loaded data from cache (%s %s %s)", this.getClass().getName(), type, Arrays.toString(data)));
         }
         
-        return Optional.empty();
+        return opt;
     }
     
     @Override
     public void clear(URLEndpoint type, Object... filter)
     {
-        // TODO: respect filter
+        // TODO: respect filters
         switch (type)
         {
             case V3_SUMMONER_BY_ACCOUNT:

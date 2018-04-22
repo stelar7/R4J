@@ -34,7 +34,19 @@ public class MySQLCacheProvider implements CacheProvider
     @Override
     public void store(URLEndpoint type, Object... obj)
     {
-        System.out.println(Arrays.toString(obj));
+        int                 index = 0;
+        Map<String, String> keys  = new HashMap<>();
+        for (String key : getKeysForType(type))
+        {
+            keys.put(key, obj[index++].toString());
+        }
+        
+        storeParent(obj[0], keys);
+    }
+    
+    private void storeParent(Object storeMe, Map<String, String> indexFields)
+    {
+        // TODO
     }
     
     @Override
@@ -47,19 +59,7 @@ public class MySQLCacheProvider implements CacheProvider
     @Override
     public void update(URLEndpoint type, Object... obj)
     {
-        String updateQuery = CacheDataKeys.createUpdateStatement(type, obj);
-        
-        try (PreparedStatement statement = sql.getConnection().prepareStatement(updateQuery))
-        {
-            statement.setString(1, type.toString());
-            statement.setLong(2, System.currentTimeMillis() + getTimeToLive(type));
-            statement.setString(3, COLUMN_EXPIRES_AT);
-            
-            statement.executeUpdate();
-        } catch (final SQLException e)
-        {
-            e.printStackTrace();
-        }
+        // todo
     }
     
     @Override
@@ -128,6 +128,85 @@ public class MySQLCacheProvider implements CacheProvider
         {
             e.printStackTrace();
             return 0;
+        }
+    }
+    
+    private String[] getKeysForType(URLEndpoint type)
+    {
+        switch (type)
+        {
+            case V3_MATCH:
+            {
+                return new String[]{"platformId", "gameId"};
+            }
+            case V3_TIMELINE:
+            {
+                return new String[]{"platformId", "gameId"};
+            }
+            case V3_CHAMPIONS_BY_ID:
+            {
+                return new String[]{"platformId", "id"};
+            }
+            case V3_CHAMPIONS:
+            {
+                return new String[]{"platformId", "freeToPlay"};
+            }
+            case V3_MASTERY_BY_ID:
+            {
+                return new String[]{"platformId", "playerId"};
+            }
+            case V3_MASTERY_BY_CHAMPION:
+            {
+                return new String[]{"platformId", "playerId", "championId"};
+            }
+            case V3_MASTERY_SCORE:
+            {
+                return new String[]{"platformId", "playerId"};
+            }
+            case V3_LEAGUE_CHALLENGER:
+            {
+                return new String[]{"platformId", "queue"};
+            }
+            case V3_LEAGUE_MASTER:
+            {
+                return new String[]{"platformId", "queue"};
+            }
+            case V3_LEAGUE:
+            {
+                return new String[]{"platformId", "leagueId"};
+            }
+            case V3_LEAGUE_ENTRY:
+            {
+                return new String[]{"platformId", "playerOrTeamId"};
+            }
+            case V3_SPECTATOR_CURRENT:
+            {
+                return new String[]{"platformId", "playerId"};
+            }
+            case V3_SPECTATOR_FEATURED:
+            {
+                return new String[]{"platformId"};
+            }
+            case V3_SUMMONER_BY_ACCOUNT:
+            {
+                return new String[]{"platformId", "accountId"};
+            }
+            case V3_SUMMONER_BY_ID:
+            {
+                return new String[]{"platformId", "id"};
+            }
+            case V3_SUMMONER_BY_NAME:
+            {
+                return new String[]{"platformId", "name"};
+            }
+            case V3_SHARD_STATUS:
+            {
+                return new String[]{"platformId"};
+            }
+            default:
+            {
+                throw new UnsupportedOperationException(type.toString() + " is not added to the cache");
+            }
         }
     }
     

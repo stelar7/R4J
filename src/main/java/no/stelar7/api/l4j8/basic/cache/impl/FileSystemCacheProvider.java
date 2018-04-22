@@ -19,7 +19,7 @@ public class FileSystemCacheProvider implements CacheProvider
     private       CacheLifetimeHint hints;
     
     private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
-    private ScheduledFuture<?> clearTask;
+    private ScheduledFuture<?>       clearTask;
     
     public FileSystemCacheProvider(Path pathToFiles, int ttl)
     {
@@ -133,7 +133,7 @@ public class FileSystemCacheProvider implements CacheProvider
         
         try (ByteArrayInputStream bis = new ByteArrayInputStream(Files.readAllBytes(filepath)); ObjectInput in = new ObjectInputStream(bis))
         {
-            DataCall.getLogLevel().printIf(LogLevel.INFO, "Loaded data from cache");
+            DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Loaded data from cache (%s %s %s)", this.getClass().getName(), type, Arrays.toString(data)));
             Object o = in.readObject();
             return Optional.of(o);
             

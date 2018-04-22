@@ -18,7 +18,11 @@ import java.util.concurrent.TimeUnit;
 public class CacheTest
 {
     
-    final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
+    final L4J8                    l4j8        = new L4J8(SecretFile.CREDS);
+    final MySQLCacheProvider      sqlCache    = new MySQLCacheProvider("localhost", 3306, "lolcachetest", "root", "");
+    final FileSystemCacheProvider fileCache   = new FileSystemCacheProvider();
+    final MemoryCacheProvider     memCache    = new MemoryCacheProvider(5);
+    final TieredCacheProvider     tieredCache = new TieredCacheProvider(memCache, fileCache, sqlCache);
     
     @Rule
     public Stopwatch stopwatch = new Stopwatch() {};
@@ -34,7 +38,7 @@ public class CacheTest
     @Test
     public void testSQLCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(new MySQLCacheProvider("localhost", 3306, "lolcachetest", "root", ""));
+        DataCall.setCacheProvider(sqlCache);
         DataCall.setLogLevel(LogLevel.INFO);
         doCacheStuff();
     }
@@ -43,7 +47,7 @@ public class CacheTest
     @Test
     public void testFileSystemCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(fileCache);
         DataCall.setLogLevel(LogLevel.INFO);
         doCacheStuff();
     }
@@ -52,16 +56,16 @@ public class CacheTest
     @Test
     public void testTieredMemoryCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(3), new FileSystemCacheProvider()));
-        DataCall.setLogLevel(LogLevel.INFO);
+        DataCall.setCacheProvider(tieredCache);
+        DataCall.setLogLevel(LogLevel.DEBUG);
         doCacheStuff();
     }
     
     @Test
     public void testStaticDataCache()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.INFO);
+        DataCall.setCacheProvider(fileCache);
         l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
         l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
         l4j8.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
@@ -71,7 +75,7 @@ public class CacheTest
     public void testCacheStuff() throws InterruptedException
     {
         DataCall.setLogLevel(LogLevel.INFO);
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setCacheProvider(fileCache);
         new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
         new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
         
