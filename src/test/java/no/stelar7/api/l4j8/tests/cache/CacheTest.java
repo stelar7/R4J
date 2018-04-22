@@ -94,6 +94,7 @@ public class CacheTest
     
     private void doCacheStuff() throws InterruptedException
     {
+        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
         List<MatchReference> recents = new MatchListBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
         
         if (recents.isEmpty())

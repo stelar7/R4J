@@ -4,6 +4,7 @@ import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.basic.utils.MySQL;
 
+import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.*;
 
@@ -47,6 +48,31 @@ public class MySQLCacheProvider implements CacheProvider
     private void storeParent(Object storeMe, Map<String, String> indexFields)
     {
         // TODO
+        try
+        {
+            for (Field field : storeMe.getClass().getDeclaredFields())
+            {
+                field.setAccessible(true);
+                
+                boolean isBasic = field.getType().isPrimitive() || field.getType() == String.class;
+                boolean isList  = Collection.class.isAssignableFrom(field.getType());
+                
+                if (isBasic)
+                {
+                    System.out.printf("Storing basic field %s=%s%n", field.getName(), field.get(storeMe));
+                } else if (isList)
+                {
+                    System.out.printf("Storing list type %s=%s%n", field.getName(), field.get(storeMe));
+                } else
+                {
+                    System.out.printf("Storing custom type %s=%s%n", field.getName(), field.get(storeMe));
+                }
+            }
+        } catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println();
     }
     
     @Override
