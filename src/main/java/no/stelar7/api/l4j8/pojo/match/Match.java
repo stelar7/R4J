@@ -173,7 +173,7 @@ public class Match implements Serializable
     {
         for (ParticipantIdentity identity : participantIdentities)
         {
-            if (identity.getPlayer().getSummonerId() == summonerId)
+            if (identity.getSummonerId() == summonerId)
             {
                 return identity;
             }

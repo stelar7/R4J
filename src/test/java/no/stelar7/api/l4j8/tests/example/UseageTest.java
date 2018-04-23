@@ -56,7 +56,7 @@ public class UseageTest
         
         System.out.format("They %s that game%n", didWin ? "won" : "lost");
         
-        System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getPlayer().getSummonerName(), opponentChampion.getName());
+        System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getSummonerName(), opponentChampion.getName());
         
         System.out.format("%nThey used the following runes:%n");
         for (MatchRune rune : runes)

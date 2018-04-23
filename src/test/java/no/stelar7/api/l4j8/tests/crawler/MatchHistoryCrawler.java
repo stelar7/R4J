@@ -3,7 +3,6 @@ package no.stelar7.api.l4j8.tests.crawler;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.TeamType;
-import no.stelar7.api.l4j8.basic.exceptions.APIEnumNotUpToDateException;
 import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.*;
@@ -152,9 +151,9 @@ public class MatchHistoryCrawler
                 
                 for (Participant participant : match.getParticipants())
                 {
-                    Player p             = match.getParticipantIdentityFromParticipantId(participant.getParticipantId()).getPlayer();
-                    long   summonerid    = insertSummoner(p);
-                    long   participantid = insertParticipant(matchid, participant);
+                    ParticipantIdentity p             = match.getParticipantIdentityFromParticipantId(participant.getParticipantId());
+                    long                summonerid    = insertSummoner(p);
+                    long                participantid = insertParticipant(matchid, participant);
                     insertParticipantIdentity(participantid, summonerid);
                     insertMasteries(participantid, participant);
                     insertRunes(participantid, participant);
@@ -208,7 +207,7 @@ public class MatchHistoryCrawler
     }
     
     
-    private long insertSummoner(Player summoner) throws SQLException
+    private long insertSummoner(ParticipantIdentity summoner) throws SQLException
     {
         sumCheck.setLong(1, summoner.getCurrentAccountId());
         sumCheck.setString(2, summoner.getCurrentPlatform().name());

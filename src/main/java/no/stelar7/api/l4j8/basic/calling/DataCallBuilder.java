@@ -206,6 +206,18 @@ public class DataCallBuilder
     {
         JsonObject element = (JsonObject) new JsonParser().parse(returnValue);
         
+        JsonArray participantIds = element.getAsJsonArray("participantIdentities");
+        for (JsonElement participant : participantIds)
+        {
+            JsonObject pid    = participant.getAsJsonObject();
+            JsonObject player = participant.getAsJsonObject().getAsJsonObject("player");
+            for (String key : player.keySet())
+            {
+                pid.add(key, player.get(key));
+            }
+            pid.remove("player");
+        }
+        
         JsonArray participants = element.getAsJsonArray("participants");
         for (JsonElement participant : participants)
         {

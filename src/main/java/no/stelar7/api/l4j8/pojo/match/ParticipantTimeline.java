@@ -3,22 +3,22 @@ package no.stelar7.api.l4j8.pojo.match;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.*;
 
 public class ParticipantTimeline implements Serializable
 {
     private static final long serialVersionUID = -3577088635621988014L;
     
-    private LaneType            lane;
-    private long                participantId;
-    private Map<String, Double> csDiffPerMinDeltas;
-    private Map<String, Double> goldPerMinDeltas;
-    private Map<String, Double> xpDiffPerMinDeltas;
-    private Map<String, Double> creepsPerMinDeltas;
-    private Map<String, Double> xpPerMinDeltas;
-    private RoleType            role;
-    private Map<String, Double> damageTakenDiffPerMinDeltas;
-    private Map<String, Double> damageTakenPerMinDeltas;
+    private LaneType                       lane;
+    private long                           participantId;
+    private ParticipantTimelineDeltaMapMap csDiffPerMinDeltas;
+    private ParticipantTimelineDeltaMapMap goldPerMinDeltas;
+    private ParticipantTimelineDeltaMapMap xpDiffPerMinDeltas;
+    private ParticipantTimelineDeltaMapMap creepsPerMinDeltas;
+    private ParticipantTimelineDeltaMapMap xpPerMinDeltas;
+    private RoleType                       role;
+    private ParticipantTimelineDeltaMapMap damageTakenDiffPerMinDeltas;
+    private ParticipantTimelineDeltaMapMap damageTakenPerMinDeltas;
     
     /**
      * the lane the player was in
@@ -42,72 +42,42 @@ public class ParticipantTimeline implements Serializable
     }
     
     /**
-     * valid keys are:
-     * 0-10
-     * 10-20
-     * 20-30
-     * 30-end
-     *
      * @return cs diff per min deltas
      */
-    public Map<String, Double> getCsDiffPerMinDeltas()
+    public ParticipantTimelineDeltaMapMap getCsDiffPerMinDeltas()
     {
         return csDiffPerMinDeltas;
     }
     
     
     /**
-     * valid keys are:
-     * 0-10
-     * 10-20
-     * 20-30
-     * 30-end
-     *
      * @return gold per min deltas
      */
-    public Map<String, Double> getGoldPerMinDeltas()
+    public ParticipantTimelineDeltaMapMap getGoldPerMinDeltas()
     {
         return goldPerMinDeltas;
     }
     
     /**
-     * valid keys are:
-     * 0-10
-     * 10-20
-     * 20-30
-     * 30-end
-     *
      * @return xp diff per min deltas
      */
-    public Map<String, Double> getXpDiffPerMinDeltas()
+    public ParticipantTimelineDeltaMapMap getXpDiffPerMinDeltas()
     {
         return xpDiffPerMinDeltas;
     }
     
     /**
-     * valid keys are:
-     * 0-10
-     * 10-20
-     * 20-30
-     * 30-end
-     *
      * @return creeps per min deltas
      */
-    public Map<String, Double> getCreepsPerMinDeltas()
+    public ParticipantTimelineDeltaMapMap getCreepsPerMinDeltas()
     {
         return creepsPerMinDeltas;
     }
     
     /**
-     * valid keys are:
-     * 0-10
-     * 10-20
-     * 20-30
-     * 30-end
-     *
      * @return xp per min deltas
      */
-    public Map<String, Double> getXpPerMinDeltas()
+    public ParticipantTimelineDeltaMapMap getXpPerMinDeltas()
     {
         return xpPerMinDeltas;
     }
@@ -123,29 +93,17 @@ public class ParticipantTimeline implements Serializable
     }
     
     /**
-     * valid keys are:
-     * 0-10
-     * 10-20
-     * 20-30
-     * 30-end
-     *
      * @return damage taken diff per min deltas
      */
-    public Map<String, Double> getDamageTakenDiffPerMinDeltas()
+    public ParticipantTimelineDeltaMapMap getDamageTakenDiffPerMinDeltas()
     {
         return damageTakenDiffPerMinDeltas;
     }
     
     /**
-     * valid keys are:
-     * 0-10
-     * 10-20
-     * 20-30
-     * 30-end
-     *
      * @return damage taken per min deltas
      */
-    public Map<String, Double> getDamageTakenPerMinDeltas()
+    public ParticipantTimelineDeltaMapMap getDamageTakenPerMinDeltas()
     {
         return damageTakenPerMinDeltas;
     }
@@ -161,62 +119,24 @@ public class ParticipantTimeline implements Serializable
         {
             return false;
         }
-        
         ParticipantTimeline that = (ParticipantTimeline) o;
-        
-        if (participantId != that.participantId)
-        {
-            return false;
-        }
-        if (lane != that.lane)
-        {
-            return false;
-        }
-        if ((csDiffPerMinDeltas != null) ? !csDiffPerMinDeltas.equals(that.csDiffPerMinDeltas) : (that.csDiffPerMinDeltas != null))
-        {
-            return false;
-        }
-        if ((goldPerMinDeltas != null) ? !goldPerMinDeltas.equals(that.goldPerMinDeltas) : (that.goldPerMinDeltas != null))
-        {
-            return false;
-        }
-        if ((xpDiffPerMinDeltas != null) ? !xpDiffPerMinDeltas.equals(that.xpDiffPerMinDeltas) : (that.xpDiffPerMinDeltas != null))
-        {
-            return false;
-        }
-        if ((creepsPerMinDeltas != null) ? !creepsPerMinDeltas.equals(that.creepsPerMinDeltas) : (that.creepsPerMinDeltas != null))
-        {
-            return false;
-        }
-        if ((xpPerMinDeltas != null) ? !xpPerMinDeltas.equals(that.xpPerMinDeltas) : (that.xpPerMinDeltas != null))
-        {
-            return false;
-        }
-        if (role != that.role)
-        {
-            return false;
-        }
-        if ((damageTakenDiffPerMinDeltas != null) ? !damageTakenDiffPerMinDeltas.equals(that.damageTakenDiffPerMinDeltas) : (that.damageTakenDiffPerMinDeltas != null))
-        {
-            return false;
-        }
-        return (damageTakenPerMinDeltas != null) ? damageTakenPerMinDeltas.equals(that.damageTakenPerMinDeltas) : (that.damageTakenPerMinDeltas == null);
+        return participantId == that.participantId &&
+               lane == that.lane &&
+               Objects.equals(csDiffPerMinDeltas, that.csDiffPerMinDeltas) &&
+               Objects.equals(goldPerMinDeltas, that.goldPerMinDeltas) &&
+               Objects.equals(xpDiffPerMinDeltas, that.xpDiffPerMinDeltas) &&
+               Objects.equals(creepsPerMinDeltas, that.creepsPerMinDeltas) &&
+               Objects.equals(xpPerMinDeltas, that.xpPerMinDeltas) &&
+               role == that.role &&
+               Objects.equals(damageTakenDiffPerMinDeltas, that.damageTakenDiffPerMinDeltas) &&
+               Objects.equals(damageTakenPerMinDeltas, that.damageTakenPerMinDeltas);
     }
     
     @Override
     public int hashCode()
     {
-        int result = lane != null ? lane.hashCode() : 0;
-        result = 31 * result + (int) (participantId ^ (participantId >>> 32));
-        result = 31 * result + (csDiffPerMinDeltas != null ? csDiffPerMinDeltas.hashCode() : 0);
-        result = 31 * result + (goldPerMinDeltas != null ? goldPerMinDeltas.hashCode() : 0);
-        result = 31 * result + (xpDiffPerMinDeltas != null ? xpDiffPerMinDeltas.hashCode() : 0);
-        result = 31 * result + (creepsPerMinDeltas != null ? creepsPerMinDeltas.hashCode() : 0);
-        result = 31 * result + (xpPerMinDeltas != null ? xpPerMinDeltas.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (damageTakenDiffPerMinDeltas != null ? damageTakenDiffPerMinDeltas.hashCode() : 0);
-        result = 31 * result + (damageTakenPerMinDeltas != null ? damageTakenPerMinDeltas.hashCode() : 0);
-        return result;
+        
+        return Objects.hash(lane, participantId, csDiffPerMinDeltas, goldPerMinDeltas, xpDiffPerMinDeltas, creepsPerMinDeltas, xpPerMinDeltas, role, damageTakenDiffPerMinDeltas, damageTakenPerMinDeltas);
     }
     
     @Override

@@ -54,6 +54,36 @@ public class MySQL
         }
     }
     
+    public boolean tableExists(String table)
+    {
+        try
+        {
+            getConnection().createStatement().executeUpdate("SELECT 1 FROM `" + table + "` LIMIT 1");
+            return true;
+        } catch (final SQLException e)
+        {
+            if (!e.getMessage().contains("doesn't exist"))
+            {
+                e.printStackTrace();
+            }
+            return false;
+        }
+    }
+    
+    public void clearTable(String table)
+    {
+        try
+        {
+            getConnection().createStatement().executeUpdate("DELETE FROM " + table);
+        } catch (final SQLException e)
+        {
+            if (!e.getMessage().contains("doesn't exist"))
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     
     /**
      * returns the active connection

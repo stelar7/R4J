@@ -2,11 +2,12 @@ package no.stelar7.api.l4j8.basic.cache.impl;
 
 import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
-import no.stelar7.api.l4j8.basic.utils.MySQL;
+import no.stelar7.api.l4j8.basic.utils.*;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.*;
 import java.sql.*;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class MySQLCacheProvider implements CacheProvider
 {
@@ -31,6 +32,7 @@ public class MySQLCacheProvider implements CacheProvider
         }
     }
     
+    Set<URLEndpoint> created = new HashSet<>();
     
     @Override
     public void store(URLEndpoint type, Object... obj)
@@ -42,37 +44,266 @@ public class MySQLCacheProvider implements CacheProvider
             keys.put(key, obj[index++].toString());
         }
         
-        storeParent(obj[0], keys);
-    }
-    
-    private void storeParent(Object storeMe, Map<String, String> indexFields)
-    {
-        // TODO
         try
         {
-            for (Field field : storeMe.getClass().getDeclaredFields())
+            if (!created.contains(type))
+            {
+                createTableIfMissing(type, obj[0], keys.keySet());
+                created.add(type);
+            }
+            
+            storeParent(type, obj[0], keys);
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    @SuppressWarnings("unchecked")
+    private void createTableIfMissing(URLEndpoint type, Object obj, Set<String> keys) throws SQLException
+    {
+        Field[]                    fields = obj.getClass().getDeclaredFields();
+        Map<String, Object>        data   = new HashMap<>(fieldToSQLType(fields, obj));
+        List<Pair<String, String>> fks    = new ArrayList<>();
+        
+        StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+        sb.append("`").append(type.name()).append("`");
+        sb.append(" ( ");
+        for (Entry<String, Object> entry : data.entrySet())
+        {
+            String k = entry.getKey();
+            Object v = entry.getValue();
+            
+            sb.append("`").append(k).append("`").append(" ");
+            if (v instanceof Map)
+            {
+                fks.add(new Pair(k, createSubTableIfMissing(type, k, (Map<String, Object>) v)));
+                sb.append("BIGINT").append(", ");
+            } else
+            {
+                sb.append(v).append(", ");
+            }
+        }
+        
+        sb.append("`").append(COLUMN_EXPIRES_AT).append("` ").append("DATETIME");
+        
+        if (keys != null && !keys.isEmpty())
+        {
+            sb.append(", PRIMARY KEY(");
+            keys.forEach(k -> sb.append("`").append(k).append("`").append(", "));
+            sb.reverse().deleteCharAt(0).deleteCharAt(0).reverse();
+            sb.append(")");
+        }
+        
+        if (!fks.isEmpty())
+        {
+            sb.append(", ");
+            fks.forEach(t -> {
+                sb.append("CONSTRAINT `").append(type.name()).append("-").append(t.getValue()).append("` FOREIGN KEY (").append("`").append(t.getKey()).append("`) ");
+                sb.append("REFERENCES ").append("`").append(t.getValue()).append("`").append("(indexColumn) ");
+                sb.append("ON UPDATE CASCADE ON DELETE CASCADE, ");
+            });
+            sb.reverse().deleteCharAt(0).deleteCharAt(0).reverse();
+        }
+        sb.append(")");
+        
+        sql.getConnection().createStatement().executeUpdate(sb.toString());
+    }
+    
+    @SuppressWarnings("unchecked")
+    private String createSubTableIfMissing(URLEndpoint type, String parent, Map<String, Object> data) throws SQLException
+    {
+        String                     tableName = type.name() + "-" + parent;
+        List<Pair<String, String>> fks       = new ArrayList<>();
+        
+        StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+        sb.append("`").append(tableName).append("`");
+        sb.append(" (");
+        sb.append("indexColumn BIGINT AUTO_INCREMENT PRIMARY KEY, ");
+        for (Entry<String, Object> entry : data.entrySet())
+        {
+            String k = entry.getKey();
+            Object v = entry.getValue();
+            
+            sb.append("`").append(k).append("`").append(" ");
+            if (v instanceof Map)
+            {
+                fks.add(new Pair(k, createSubTableIfMissing(type, k, (Map<String, Object>) v)));
+                sb.append("BIGINT").append(", ");
+            } else
+            {
+                sb.append(v).append(", ");
+            }
+        }
+        
+        sb.append("`").append(COLUMN_EXPIRES_AT).append("` ").append("DATETIME");
+        
+        if (!fks.isEmpty())
+        {
+            sb.append(", ");
+            fks.forEach(t -> {
+                sb.append("CONSTRAINT `").append(tableName).append("-").append(t.getValue()).append("` FOREIGN KEY (").append("`").append(t.getKey()).append("`) ");
+                sb.append("REFERENCES ").append("`").append(t.getValue()).append("`").append("(indexColumn) ");
+                sb.append("ON UPDATE CASCADE ON DELETE CASCADE, ");
+            });
+            
+            sb.reverse().deleteCharAt(0).deleteCharAt(0).reverse();
+        }
+        
+        sb.append(")");
+        
+        sql.getConnection().createStatement().executeUpdate(sb.toString());
+        
+        return tableName;
+    }
+    
+    private Map<String, Object> fieldToSQLType(Field[] fields, Object parent)
+    {
+        Map<String, Object> data = new HashMap<>();
+        try
+        {
+            for (Field field : fields)
             {
                 field.setAccessible(true);
                 
                 boolean isBasic = field.getType().isPrimitive() || field.getType() == String.class;
                 boolean isList  = Collection.class.isAssignableFrom(field.getType());
+                boolean isEnum  = field.getType().isEnum();
                 
-                if (isBasic)
+                String name  = field.getName();
+                Object value = field.get(parent);
+                
+                if (name.equalsIgnoreCase("serialVersionUID"))
                 {
-                    System.out.printf("Storing basic field %s=%s%n", field.getName(), field.get(storeMe));
+                    continue;
+                }
+                
+                if (value == null)
+                {
+                    data.put(name, "BLOB");
                 } else if (isList)
                 {
-                    System.out.printf("Storing list type %s=%s%n", field.getName(), field.get(storeMe));
+                    Field[] newFields = ((Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]).getDeclaredFields();
+                    data.put(name, fieldToSQLType(newFields, ((Collection) value).iterator().next()));
+                } else if (isBasic || isEnum)
+                {
+                    if (field.getType() == int.class)
+                    {
+                        data.put(name, "INTEGER");
+                    } else if (field.getType() == long.class)
+                    {
+                        data.put(name, "BIGINT");
+                    } else if (field.getType() == String.class || field.getType().isEnum())
+                    {
+                        data.put(name, "VARCHAR(60)");
+                    } else if (field.getType() == boolean.class)
+                    {
+                        data.put(name, "TINYINT(1)");
+                    } else if (field.getType() == float.class)
+                    {
+                        data.put(name, "FLOAT");
+                    } else if (field.getType() == Map.class)
+                    {
+                        data.put(name, "BIGINT");
+                    } else
+                    {
+                        throw new RuntimeException("Unhandled type! " + field.getType());
+                    }
                 } else
                 {
-                    System.out.printf("Storing custom type %s=%s%n", field.getName(), field.get(storeMe));
+                    Field[] newFields = field.getType().getDeclaredFields();
+                    data.put(name, fieldToSQLType(newFields, value));
                 }
             }
         } catch (IllegalAccessException e)
         {
             e.printStackTrace();
         }
-        System.out.println();
+        
+        return data;
+    }
+    
+    private void storeParent(URLEndpoint type, Object storeMe, Map<String, String> indexFields)
+    {
+        Map<String, Object> data = new HashMap<>();
+        indexFields.forEach(data::putIfAbsent);
+        
+        Field[] fields = storeMe.getClass().getDeclaredFields();
+        data.putAll(fieldToMap(fields, storeMe));
+        
+        
+        /* TODO
+        generate intermediate tables for childlists
+        sql.insert(type, data);
+        */
+    }
+    
+    private Map<String, Object> storeChildList(Field selfField, Object selfValue)
+    {
+        Map<String, Object> data   = new HashMap<>();
+        Field[]             fields = ((Class) ((ParameterizedType) selfField.getGenericType()).getActualTypeArguments()[0]).getDeclaredFields();
+        Collection<?>       coll   = (Collection) selfValue;
+        
+        int outdex = 0;
+        for (Object obj : coll)
+        {
+            data.put(String.valueOf(outdex++), fieldToMap(fields, obj));
+        }
+        
+        return data;
+    }
+    
+    private Map<String, Object> storeChild(Field selfField, Object selfValue)
+    {
+        Field[] fields = selfField.getType().getDeclaredFields();
+        
+        Map<String, Object> data = fieldToMap(fields, selfValue);
+        
+        return data;
+    }
+    
+    private Map<String, Object> fieldToMap(Field[] fields, Object parent)
+    {
+        Map<String, Object> data = new HashMap<>();
+        try
+        {
+            for (Field field : fields)
+            {
+                field.setAccessible(true);
+                
+                boolean isBasic = field.getType().isPrimitive() || field.getType() == String.class;
+                boolean isList  = Collection.class.isAssignableFrom(field.getType());
+                boolean isEnum  = field.getType().isEnum();
+                
+                String name  = field.getName();
+                Object value = field.get(parent);
+                
+                if (name.equalsIgnoreCase("serialVersionUID"))
+                {
+                    continue;
+                }
+                
+                if (value == null)
+                {
+                    data.put(name, null);
+                } else if (isList)
+                {
+                    data.put(name, storeChildList(field, value));
+                } else if (isBasic || isEnum)
+                {
+                    data.put(name, value);
+                } else
+                {
+                    data.put(name, storeChild(field, value));
+                }
+            }
+        } catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return data;
     }
     
     @Override
@@ -91,17 +322,7 @@ public class MySQLCacheProvider implements CacheProvider
     @Override
     public void clear(URLEndpoint type, Object... obj)
     {
-        try
-        {
-            try (PreparedStatement statement = sql.getConnection().prepareStatement("DELETE FROM ?"))
-            {
-                statement.setString(1, type.toString());
-                statement.executeUpdate();
-            }
-        } catch (final SQLException e)
-        {
-            e.printStackTrace();
-        }
+        sql.clearTable(type.name());
     }
     
     @Override
@@ -116,7 +337,7 @@ public class MySQLCacheProvider implements CacheProvider
         {
             for (URLEndpoint endpoint : URLEndpoint.values())
             {
-                stmt.setString(1, endpoint.toString());
+                stmt.setString(1, endpoint.name());
                 stmt.setString(2, COLUMN_EXPIRES_AT);
                 stmt.setLong(3, System.currentTimeMillis() + getTimeToLive(endpoint));
                 stmt.executeUpdate();
@@ -141,20 +362,20 @@ public class MySQLCacheProvider implements CacheProvider
     @Override
     public long getSize(URLEndpoint type)
     {
-        try (PreparedStatement stmt = sql.getConnection().prepareStatement("SELECT COUNT(*) FROM ?"))
+        try
         {
-            stmt.setString(1, type.toString());
-            
-            try (ResultSet rs = stmt.executeQuery())
+            try (ResultSet rs = sql.getConnection().createStatement().executeQuery("SELECT COUNT(*) FROM " + type.name()))
             {
-                rs.next();
-                return rs.getLong(1);
+                if (rs.next())
+                {
+                    return rs.getLong(1);
+                }
             }
         } catch (SQLException e)
         {
             e.printStackTrace();
-            return 0;
         }
+        return -1;
     }
     
     private String[] getKeysForType(URLEndpoint type)

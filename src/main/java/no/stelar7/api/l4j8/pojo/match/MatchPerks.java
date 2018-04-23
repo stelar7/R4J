@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.pojo.match;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,13 +9,14 @@ public class MatchPerks implements Serializable
 {
     private static final long serialVersionUID = 3983457177783676301L;
     
-    private List<MatchPerk> perks;
+    @SerializedName("perks")
+    private List<MatchPerk> perkList;
     private int             perkPrimaryStyle;
     private int             perkSubStyle;
     
-    public List<MatchPerk> getPerks()
+    public List<MatchPerk> getPerkList()
     {
-        return perks;
+        return perkList;
     }
     
     public int getPerkPrimaryStyle()
@@ -48,13 +51,13 @@ public class MatchPerks implements Serializable
         {
             return false;
         }
-        return (perks != null) ? perks.equals(that.perks) : (that.perks == null);
+        return (perkList != null) ? perkList.equals(that.perkList) : (that.perkList == null);
     }
     
     @Override
     public int hashCode()
     {
-        int result = perks != null ? perks.hashCode() : 0;
+        int result = perkList != null ? perkList.hashCode() : 0;
         result = 31 * result + perkPrimaryStyle;
         result = 31 * result + perkSubStyle;
         return result;
@@ -64,7 +67,7 @@ public class MatchPerks implements Serializable
     public String toString()
     {
         return "MatchPerks{" +
-               "perks=" + perks +
+               "perks=" + perkList +
                ", perkPrimaryStyle=" + perkPrimaryStyle +
                ", perkSubStyle=" + perkSubStyle +
                '}';
