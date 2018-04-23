@@ -64,7 +64,7 @@ public class MySQLCacheProvider implements CacheProvider
     private void createTableIfMissing(URLEndpoint type, Object obj, Set<String> keys) throws SQLException
     {
         Field[]                    fields = obj.getClass().getDeclaredFields();
-        Map<String, Object>        data   = new HashMap<>(fieldToSQLType(fields, obj));
+        Map<String, Object>        data   = new HashMap<>(fieldToSQLType(fields, obj.getClass()));
         List<Pair<String, String>> fks    = new ArrayList<>();
         
         StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
@@ -158,60 +158,54 @@ public class MySQLCacheProvider implements CacheProvider
         return tableName;
     }
     
-    private Map<String, Object> fieldToSQLType(Field[] fields, Object parent)
+    private Map<String, Object> fieldToSQLType(Field[] fields, Class parent)
     {
         Map<String, Object> data = new HashMap<>();
-        try
+        for (Field field : fields)
         {
-            for (Field field : fields)
+            boolean isBasic = field.getType().isPrimitive() || field.getType() == String.class;
+            boolean isList  = Collection.class.isAssignableFrom(field.getType());
+            boolean isEnum  = field.getType().isEnum();
+            
+            String name = field.getName();
+            if (name.equalsIgnoreCase("serialVersionUID"))
             {
-                boolean isBasic = field.getType().isPrimitive() || field.getType() == String.class;
-                boolean isList  = Collection.class.isAssignableFrom(field.getType());
-                boolean isEnum  = field.getType().isEnum();
-                
-                String name = field.getName();
-                if (name.equalsIgnoreCase("serialVersionUID"))
+                continue;
+            }
+            
+            if (isList)
+            {
+                Field[] newFields = ((Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]).getDeclaredFields();
+                data.put(name, fieldToSQLType(newFields, ((Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0])));
+            } else if (isBasic || isEnum)
+            {
+                if (field.getType() == int.class)
                 {
-                    continue;
-                }
-                
-                if (isList)
+                    data.put(name, "INTEGER");
+                } else if (field.getType() == long.class)
                 {
-                    Field[] newFields = ((Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]).getDeclaredFields();
-                    data.put(name, fieldToSQLType(newFields, ((Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]).newInstance()));
-                } else if (isBasic || isEnum)
+                    data.put(name, "BIGINT");
+                } else if (field.getType() == String.class || field.getType().isEnum())
                 {
-                    if (field.getType() == int.class)
-                    {
-                        data.put(name, "INTEGER");
-                    } else if (field.getType() == long.class)
-                    {
-                        data.put(name, "BIGINT");
-                    } else if (field.getType() == String.class || field.getType().isEnum())
-                    {
-                        data.put(name, "VARCHAR(60)");
-                    } else if (field.getType() == boolean.class)
-                    {
-                        data.put(name, "TINYINT(1)");
-                    } else if (field.getType() == float.class)
-                    {
-                        data.put(name, "FLOAT");
-                    } else if (field.getType() == Map.class)
-                    {
-                        data.put(name, "BIGINT");
-                    } else
-                    {
-                        throw new RuntimeException("Unhandled type! " + field.getType());
-                    }
+                    data.put(name, "VARCHAR(60)");
+                } else if (field.getType() == boolean.class)
+                {
+                    data.put(name, "TINYINT(1)");
+                } else if (field.getType() == float.class)
+                {
+                    data.put(name, "FLOAT");
+                } else if (field.getType() == Map.class)
+                {
+                    data.put(name, "BIGINT");
                 } else
                 {
-                    Field[] newFields = field.getType().getDeclaredFields();
-                    data.put(name, fieldToSQLType(newFields, field.getType().newInstance()));
+                    throw new RuntimeException("Unhandled type! " + field.getType());
                 }
+            } else
+            {
+                Field[] newFields = field.getType().getDeclaredFields();
+                data.put(name, fieldToSQLType(newFields, field.getType()));
             }
-        } catch (IllegalAccessException | InstantiationException e)
-        {
-            e.printStackTrace();
         }
         
         return data;
