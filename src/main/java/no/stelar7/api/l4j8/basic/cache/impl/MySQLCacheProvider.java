@@ -165,27 +165,20 @@ public class MySQLCacheProvider implements CacheProvider
         {
             for (Field field : fields)
             {
-                field.setAccessible(true);
-                
                 boolean isBasic = field.getType().isPrimitive() || field.getType() == String.class;
                 boolean isList  = Collection.class.isAssignableFrom(field.getType());
                 boolean isEnum  = field.getType().isEnum();
                 
-                String name  = field.getName();
-                Object value = field.get(parent);
-                
+                String name = field.getName();
                 if (name.equalsIgnoreCase("serialVersionUID"))
                 {
                     continue;
                 }
                 
-                if (value == null)
-                {
-                    data.put(name, "BLOB");
-                } else if (isList)
+                if (isList)
                 {
                     Field[] newFields = ((Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]).getDeclaredFields();
-                    data.put(name, fieldToSQLType(newFields, ((Collection) value).iterator().next()));
+                    data.put(name, fieldToSQLType(newFields, ((Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]).newInstance()));
                 } else if (isBasic || isEnum)
                 {
                     if (field.getType() == int.class)
@@ -213,10 +206,10 @@ public class MySQLCacheProvider implements CacheProvider
                 } else
                 {
                     Field[] newFields = field.getType().getDeclaredFields();
-                    data.put(name, fieldToSQLType(newFields, value));
+                    data.put(name, fieldToSQLType(newFields, field.getType().newInstance()));
                 }
             }
-        } catch (IllegalAccessException e)
+        } catch (IllegalAccessException | InstantiationException e)
         {
             e.printStackTrace();
         }
