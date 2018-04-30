@@ -225,7 +225,7 @@ public class DataCallBuilder
             JsonObject part  = participant.getAsJsonObject();
             if (!stats.has("perkPrimaryStyle"))
             {
-                return returnValue;
+                return Utils.getGson().toJson(element);
             }
             
             JsonObject mPerk = new JsonObject();
@@ -258,7 +258,6 @@ public class DataCallBuilder
         }
         
         return Utils.getGson().toJson(element);
-        
     }
     
     private Object sleepAndRetry(int[] retrys, String shortMessage, String longMessage)
