@@ -32,7 +32,7 @@ public class TournamentCodeParameters implements Serializable
         this.teamSize = teamSize;
         
         
-        if ((getTeamSize() > 1) && (getTeamSize() < 6) && ((getTeamSize() % 2) == 0))
+        if (getTeamSize() < 1 || getTeamSize() < 6 || getTeamSize() / 2 != allowedSummonerIds.size())
         {
             throw new APIUnsupportedActionException("Cant create a match with unbalanced teams (note that teamsize / 2 must = allowedSummonerIds.size) (" + teamSize / 2 + " != " + getAllowedSummonerIds().size());
         }
