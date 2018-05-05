@@ -10,53 +10,77 @@ public enum Platform
      */
     UNKNOWN(""),
     /**
-     * BR platform.
+     * BRAZIL platform.
      */
     BR1("BR1"),
     /**
-     * EUNE platform.
+     * Europe Nordic & East platform.
      */
     EUN1("EUN1"),
     /**
-     * EUW platform.
+     * Europe West platform.
      */
     EUW1("EUW1"),
     /**
-     * JP platform.
+     * Japan platform.
      */
     JP1("JP1"),
     /**
-     * KR platform.
+     * Korea platform.
      */
     KR("KR"),
     /**
-     * LAN platform.
+     * Latin America North platform.
      */
     LA1("LA1"),
     /**
-     * LAS platform.
+     * Latin America South platform.
      */
     LA2("LA2"),
     /**
-     * NA platform.
+     * North America platform.
      */
     NA1("NA1", "NA"),
     /**
-     * OC platform.
+     * Oceania platform.
      */
     OC1("OC1"),
     /**
-     * TR platform.
+     * Turkey platform.
      */
     TR1("TR1"),
     /**
-     * RU platform.
+     * Russia platform.
      */
     RU("RU"),
     /**
-     * PBE platform.
+     * Public Beta Environment platform.
      */
-    PBE1("PBE1");
+    PBE1("PBE1"),
+    /**
+     * Singapore platform
+     */
+    SG("SG"),
+    /**
+     * Philippines platform
+     */
+    PH("PH"),
+    /**
+     * Indonesia platform
+     */
+    ID1("ID1"),
+    /**
+     * Vietnam platform
+     */
+    VN("VN"),
+    /**
+     * Thailand platform
+     */
+    TH("TH"),
+    /**
+     * Taiwan platform
+     */
+    TW("TW");
     
     
     private String[] keys;
