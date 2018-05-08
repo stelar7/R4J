@@ -20,6 +20,17 @@ public class APICredentials
     }
     
     /**
+     * Instantiates new API credentials.
+     *
+     * @param api the api key
+     */
+    public APICredentials(final String api)
+    {
+        this.baseApiKey = api;
+        this.tournamentApiKey = api;
+    }
+    
+    /**
      * Gets the api key.
      *
      * @return the key

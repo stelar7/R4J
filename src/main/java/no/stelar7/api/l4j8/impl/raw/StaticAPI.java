@@ -68,9 +68,13 @@ public final class StaticAPI
             return list.getData();
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Map<Integer, StaticChampion> getChampions()
+    {
+        return getChampions(Platform.EUW1, null, null, null);
     }
     
     public StaticChampion getChampion(Platform server, int id, @Nullable Set<ChampDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -119,9 +123,13 @@ public final class StaticAPI
             return list;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public StaticChampion getChampion(int id)
+    {
+        return getChampion(Platform.EUW1, id, null, null, null);
     }
     
     public ItemList getItems(Platform server, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -161,11 +169,15 @@ public final class StaticAPI
             return list;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
-        
     }
+    
+    public ItemList getItems()
+    {
+        return getItems(Platform.EUW1, null, null, null);
+    }
+    
     
     public Item getItem(Platform server, int id, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
     {
@@ -213,9 +225,13 @@ public final class StaticAPI
             return list;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Item getItem(int id)
+    {
+        return getItem(Platform.EUW1, id, null, null, null);
     }
     
     public Map<String, String> getLanguageStrings(Platform server, @Nullable String version, @Nullable String locale)
@@ -247,9 +263,13 @@ public final class StaticAPI
             return list.getData();
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Map<String, String> getLanguageStrings()
+    {
+        return getLanguageStrings(Platform.EUW1, null, null);
     }
     
     /**
@@ -277,9 +297,13 @@ public final class StaticAPI
             return list;
         } catch (ClassCastException e)
         {
-            
             return Collections.emptyList();
         }
+    }
+    
+    public List<String> getLanguages()
+    {
+        return getLanguages(Platform.EUW1);
     }
     
     public Map<String, MapDetails> getMaps(Platform server, @Nullable String version, @Nullable String locale)
@@ -311,9 +335,13 @@ public final class StaticAPI
             return list.getData();
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Map<String, MapDetails> getMaps()
+    {
+        return getMaps(Platform.EUW1, null, null);
     }
     
     public Map<Integer, StaticMastery> getMasteries(Platform server, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -354,9 +382,13 @@ public final class StaticAPI
             return list.getData();
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Map<Integer, StaticMastery> getMasteries()
+    {
+        return getMasteries(Platform.EUW1, null, null, null);
     }
     
     public Map<String, List<MasteryTreeList>> getMasteryTree(Platform server, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -396,9 +428,13 @@ public final class StaticAPI
             return list.getTree();
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Map<String, List<MasteryTreeList>> getMasteryTree()
+    {
+        return getMasteryTree(Platform.EUW1, null, null, null);
     }
     
     public StaticMastery getMastery(Platform server, int id, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -446,9 +482,13 @@ public final class StaticAPI
             return list;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public StaticMastery getMastery(int id)
+    {
+        return getMastery(Platform.EUW1, id, null, null, null);
     }
     
     public Map<Long, ProfileIconDetails> getProfileIcons(Platform server, @Nullable String version, @Nullable String locale)
@@ -479,9 +519,13 @@ public final class StaticAPI
             return list.getData();
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Map<Long, ProfileIconDetails> getProfileIcons()
+    {
+        return getProfileIcons(Platform.EUW1, null, null);
     }
     
     public Realm getRealm(Platform server)
@@ -506,6 +550,11 @@ public final class StaticAPI
             
             return null;
         }
+    }
+    
+    public Realm getRealm()
+    {
+        return getRealm(Platform.EUW1);
     }
     
     public Map<Integer, StaticRune> getRunes(Platform server, @Nullable Set<RuneDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -546,9 +595,13 @@ public final class StaticAPI
             return list.getData();
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Map<Integer, StaticRune> getRunes()
+    {
+        return getRunes(Platform.EUW1, null, null, null);
     }
     
     
@@ -597,9 +650,13 @@ public final class StaticAPI
             return list;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public StaticRune getRune(int id)
+    {
+        return getRune(Platform.EUW1, id, null, null, null);
     }
     
     
@@ -641,9 +698,13 @@ public final class StaticAPI
             return list.getData();
         } catch (ClassCastException e)
         {
-            
             return null;
         }
+    }
+    
+    public Map<Integer, StaticSummonerSpell> getSummonerSpells()
+    {
+        return getSummonerSpells(Platform.EUW1, null, null, null);
     }
     
     public StaticSummonerSpell getSummonerSpell(Platform server, int id, @Nullable Set<SpellDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
@@ -693,11 +754,14 @@ public final class StaticAPI
             return list;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
     }
     
+    public StaticSummonerSpell getSummonerSpell(int id)
+    {
+        return getSummonerSpell(Platform.EUW1, id, null, null, null);
+    }
     
     public List<String> getVersions(Platform server)
     {
@@ -718,9 +782,13 @@ public final class StaticAPI
             return list;
         } catch (ClassCastException e)
         {
-            
             return Collections.emptyList();
         }
+    }
+    
+    public List<String> getVersions()
+    {
+        return getVersions(Platform.EUW1);
     }
     
     public List<StaticPerk> getPerks(Platform server, @Nullable String version, @Nullable String locale)
@@ -752,6 +820,11 @@ public final class StaticAPI
         {
             return null;
         }
+    }
+    
+    public List<StaticPerk> getPerks()
+    {
+        return getPerks(Platform.EUW1, null, null);
     }
     
     public StaticPerk getPerk(Platform server, int id, @Nullable String version, @Nullable String locale)
@@ -786,6 +859,11 @@ public final class StaticAPI
         }
     }
     
+    public StaticPerk getPerk(int id)
+    {
+        return getPerk(Platform.EUW1, id, null, null);
+    }
+    
     public List<PerkPath> getPerkPaths(Platform server, @Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_PERKPATHS)
@@ -815,6 +893,11 @@ public final class StaticAPI
         {
             return null;
         }
+    }
+    
+    public List<PerkPath> getPerkPaths()
+    {
+        return getPerkPaths(Platform.EUW1, null, null);
     }
     
     public PerkPath getPerkPath(Platform server, int id, @Nullable String version, @Nullable String locale)
@@ -849,6 +932,11 @@ public final class StaticAPI
         }
     }
     
+    public PerkPath getPerkPath(int id)
+    {
+        return getPerkPath(Platform.EUW1, id, null, null);
+    }
+    
     public String getTarball(Platform server, @Nullable String version)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_TARBALL)
@@ -874,6 +962,11 @@ public final class StaticAPI
         {
             return null;
         }
+    }
+    
+    public String getTarball()
+    {
+        return getTarball(Platform.EUW1, null);
     }
     
 }
