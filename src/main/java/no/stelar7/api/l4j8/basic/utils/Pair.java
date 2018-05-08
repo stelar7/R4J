@@ -5,6 +5,10 @@ public final class Pair<A, B>
     private A key;
     private B value;
     
+    public Pair()
+    {
+    }
+    
     public Pair(A key, B value)
     {
         this.key = key;

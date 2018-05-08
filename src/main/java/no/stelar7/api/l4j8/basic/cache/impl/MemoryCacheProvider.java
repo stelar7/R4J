@@ -3,7 +3,9 @@ package no.stelar7.api.l4j8.basic.cache.impl;
 import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.match.Match;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.time.*;
@@ -14,8 +16,9 @@ import java.util.stream.Stream;
 
 public class MemoryCacheProvider implements CacheProvider
 {
-    private Map<Summoner, LocalDateTime> summoners = new HashMap<>();
-    private Map<Match, LocalDateTime>    matches   = new HashMap<>();
+    private Map<Summoner, LocalDateTime>            summoners = new HashMap<>();
+    private Map<Match, LocalDateTime>               matches   = new HashMap<>();
+    private Pair<StaticChampionList, LocalDateTime> champions;
     
     private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?>       clearTask;
@@ -75,6 +78,11 @@ public class MemoryCacheProvider implements CacheProvider
             case V3_MATCH:
                 matches.put((Match) obj[0], LocalDateTime.now());
                 break;
+            case V3_STATIC_CHAMPIONS:
+                champions = new Pair<>();
+                champions.setKey((StaticChampionList) obj[0]);
+                champions.setValue(LocalDateTime.now());
+                break;
             default:
                 break;
         }
@@ -128,6 +136,31 @@ public class MemoryCacheProvider implements CacheProvider
                              .findFirst();
                 break;
             }
+            
+            case V3_STATIC_CHAMPIONS:
+            {
+                opt = champions != null ? Optional.of(champions.getKey()) : Optional.empty();
+                break;
+            }
+            
+            
+            case V3_STATIC_CHAMPION_BY_ID:
+            {
+                if (champions != null)
+                {
+                    opt = champions.getKey()
+                                   .getData()
+                                   .values()
+                                   .stream()
+                                   .filter(i -> i.getId() == Integer.parseInt(String.valueOf(data[1])))
+                                   .findFirst();
+                } else
+                {
+                    opt = Optional.empty();
+                }
+                break;
+            }
+            
             default:
             {
                 opt = Optional.empty();
@@ -156,6 +189,8 @@ public class MemoryCacheProvider implements CacheProvider
             case V3_MATCH:
                 matches.clear();
                 break;
+            case V3_STATIC_CHAMPIONS:
+                champions = null;
             default:
                 break;
         }
@@ -173,6 +208,7 @@ public class MemoryCacheProvider implements CacheProvider
         clearOldCache(URLEndpoint.V3_SUMMONER_BY_NAME, summoners);
         clearOldCache(URLEndpoint.V3_SUMMONER_BY_ID, summoners);
         clearOldCache(URLEndpoint.V3_MATCH, matches);
+        clearOldCache(URLEndpoint.V3_STATIC_CHAMPIONS, matches);
     }
     
     @Override
