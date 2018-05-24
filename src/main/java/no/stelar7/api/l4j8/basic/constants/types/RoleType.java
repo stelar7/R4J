@@ -7,23 +7,23 @@ public enum RoleType
 {
     
     /**
-     * Duo queue?
+     * When there are 2 participants in a lane, both farming
      */
     DUO,
     /**
-     * Unknown?
+     * No set role (Jungler)
      */
     NONE,
     /**
-     * Solo queue?
+     * Someone alone in a lane
      */
     SOLO,
     /**
-     * Duo queue marksman
+     * When there are 2 participants in a lane, this person farmed
      */
     DUO_CARRY,
     /**
-     * Duo queue support
+     * When there are 2 participants in a lane, this parson did not farm
      */
     DUO_SUPPORT;
     
