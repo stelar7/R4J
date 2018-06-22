@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum TournamentMapType
+public enum TournamentMapType implements CodedEnum
 {
     /**
      * Summoner's Rift Current Version
@@ -30,7 +30,7 @@ public enum TournamentMapType
         this.code = code;
     }
     
-    public static Optional<TournamentMapType> getFromCode(final String teamId)
+    public Optional<TournamentMapType> getFromCode(final String teamId)
     {
         return Stream.of(TournamentMapType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
     }

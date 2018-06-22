@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum LaneType
+public enum LaneType implements CodedEnum
 {
     /**
      * The middle lane
@@ -43,7 +43,7 @@ public enum LaneType
      * @param code the lookup key
      * @return LaneType
      */
-    public static Optional<LaneType> getFromCode(final String code)
+    public Optional<LaneType> getFromCode(final String code)
     {
         return Stream.of(LaneType.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }

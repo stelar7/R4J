@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public enum TournamentPickType
+public enum TournamentPickType implements CodedEnum
 {
     BLIND_PICK,
     DRAFT_MODE,
@@ -11,7 +11,7 @@ public enum TournamentPickType
     TOURNAMENT_DRAFT;
     
     
-    public static Optional<TournamentPickType> getFromCode(final String value)
+    public Optional<TournamentPickType> getFromCode(final String value)
     {
         return Stream.of(TournamentPickType.values()).filter(t -> t.name().equals(value)).findFirst();
     }

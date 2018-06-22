@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum TeamType
+public enum TeamType implements CodedEnum
 {
     
     BLUE(100),
@@ -16,7 +16,7 @@ public enum TeamType
         this.code = code;
     }
     
-    public static Optional<TeamType> getFromCode(final String teamId)
+    public Optional<TeamType> getFromCode(final String teamId)
     {
         return Stream.of(TeamType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
     }

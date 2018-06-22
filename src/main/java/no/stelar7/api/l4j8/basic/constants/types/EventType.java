@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum EventType
+public enum EventType implements CodedEnum
 {
     ASCENDED_EVENT,
     BUILDING_KILL,
@@ -25,7 +25,7 @@ public enum EventType
      * @param type the type to check
      * @return EventType
      */
-    public static Optional<EventType> getFromCode(final String type)
+    public Optional<EventType> getFromCode(final String type)
     {
         return Stream.of(EventType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }

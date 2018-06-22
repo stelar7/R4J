@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum SeasonType
+public enum SeasonType implements CodedEnum
 {
     PRE_SEASON_2013("PRESEASON3", 0),
     SEASON_2013("SEASON3", 1),
@@ -27,7 +27,7 @@ public enum SeasonType
         this.seasonId = seasonId;
     }
     
-    public static Optional<SeasonType> getFromCode(final String value)
+    public Optional<SeasonType> getFromCode(final String value)
     {
         try
         {

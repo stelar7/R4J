@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum TowerType
+public enum TowerType implements CodedEnum
 {
     BASE_TURRET,
     FOUNTAIN_TURRET,
@@ -18,7 +18,7 @@ public enum TowerType
      * @param type the type to check
      * @return TowerType
      */
-    public static Optional<TowerType> getFromCode(final String type)
+    public Optional<TowerType> getFromCode(final String type)
     {
         return Stream.of(TowerType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }

@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum GameSubType
+public enum GameSubType implements CodedEnum
 {
     /**
      * Custom games
@@ -121,7 +121,7 @@ public enum GameSubType
      */
     OVERCHARGE;
     
-    public static Optional<GameSubType> getFromCode(final String subType)
+    public Optional<GameSubType> getFromCode(final String subType)
     {
         return Stream.of(GameSubType.values()).filter(t -> t.name().equalsIgnoreCase(subType)).findFirst();
     }

@@ -4,7 +4,7 @@ import no.stelar7.api.l4j8.basic.utils.Pair;
 
 import java.util.*;
 
-public final class TowerLocationType
+public final class TowerLocationType implements CodedEnum
 {
     private TowerLocationType()
     {
@@ -96,5 +96,11 @@ public final class TowerLocationType
         towers.getOrDefault(map, new HashMap<>()).forEach((k, v) -> v.forEach((k1, v1) -> v1.forEach((k2, v2) -> retTowers.add(v2))));
         
         return retTowers;
+    }
+    
+    @Override
+    public Optional getFromCode(String type)
+    {
+        return Optional.empty();
     }
 }

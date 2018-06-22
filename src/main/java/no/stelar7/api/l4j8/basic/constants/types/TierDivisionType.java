@@ -1,9 +1,9 @@
 package no.stelar7.api.l4j8.basic.constants.types;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.Pattern;
 
-public enum TierDivisionType
+public enum TierDivisionType implements CodedEnum
 {
     CHALLENGER_I,
     
@@ -50,6 +50,13 @@ public enum TierDivisionType
     public String getCode()
     {
         return this.name();
+    }
+    
+    
+    public Optional<TierDivisionType> getFromCode(String tierAndRank)
+    {
+        Pattern pattern = Pattern.compile(tierAndRank);
+        return Arrays.stream(TierDivisionType.values()).filter(s -> pattern.matcher(s.name()).matches()).findFirst();
     }
     
     public static TierDivisionType getFromCodes(String tier, String rank)

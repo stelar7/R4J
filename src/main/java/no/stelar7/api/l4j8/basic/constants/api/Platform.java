@@ -1,9 +1,11 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
+import no.stelar7.api.l4j8.basic.constants.types.CodedEnum;
+
 import java.util.*;
 import java.util.stream.Stream;
 
-public enum Platform
+public enum Platform implements CodedEnum
 {
     /**
      * Unknown platform, used for bots in participant identities
@@ -96,7 +98,12 @@ public enum Platform
      * @param code the lookup key
      * @return Platform from code
      */
-    public static Optional<Platform> getFromCode(final String code)
+    public Optional<Platform> getFromCode(final String code)
+    {
+        return fromString(code);
+    }
+    
+    public static Optional<Platform> fromString(final String code)
     {
         return Stream.of(Platform.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }

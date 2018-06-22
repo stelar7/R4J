@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum MonsterType
+public enum MonsterType implements CodedEnum
 {
     BARON_NASHOR,
     BLUE_GOLEM,
@@ -18,7 +18,7 @@ public enum MonsterType
      * @param type the type to check
      * @return MonsterType
      */
-    public static Optional<MonsterType> getFromCode(final String type)
+    public Optional<MonsterType> getFromCode(final String type)
     {
         return Stream.of(MonsterType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }

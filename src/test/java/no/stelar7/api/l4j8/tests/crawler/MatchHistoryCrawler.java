@@ -52,7 +52,7 @@ public class MatchHistoryCrawler
                 do
                 {
                     long                       accountid    = rs.getLong("accountid");
-                    Platform                   platformid   = Platform.getFromCode(rs.getString("platformid")).get();
+                    Platform                   platformid   = Platform.fromString(rs.getString("platformid")).get();
                     List<Pair<Long, Platform>> filteredRefs = getAndFilter(accountid, platformid);
                     if (filteredRefs == null)
                     {
@@ -199,7 +199,7 @@ public class MatchHistoryCrawler
         {
             while (rs.next())
             {
-                data.add(new Pair(rs.getLong("gameid"), Platform.getFromCode(rs.getString("platformid")).get()));
+                data.add(new Pair(rs.getLong("gameid"), Platform.fromString(rs.getString("platformid")).get()));
             }
             
             return data;

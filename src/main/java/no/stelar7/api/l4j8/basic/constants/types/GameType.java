@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum GameType
+public enum GameType implements CodedEnum
 {
     /**
      * Custom games
@@ -24,7 +24,7 @@ public enum GameType
      * @param gameType the type to check
      * @return GameType
      */
-    public static Optional<GameType> getFromCode(final String gameType)
+    public Optional<GameType> getFromCode(final String gameType)
     {
         return Stream.of(GameType.values()).filter(t -> t.name().equalsIgnoreCase(gameType)).findFirst();
     }

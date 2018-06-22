@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum PointType
+public enum PointType implements CodedEnum
 {
     POINT_A,
     POINT_B,
@@ -17,7 +17,7 @@ public enum PointType
      * @param type the type to check
      * @return PointType
      */
-    public static Optional<PointType> getFromCode(final String type)
+    public Optional<PointType> getFromCode(final String type)
     {
         return Stream.of(PointType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }

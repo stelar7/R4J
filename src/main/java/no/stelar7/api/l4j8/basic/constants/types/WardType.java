@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum WardType
+public enum WardType implements CodedEnum
 {
     
     BLUE_TRINKET,
@@ -21,7 +21,7 @@ public enum WardType
      * @param type the type to check
      * @return WardType
      */
-    public static Optional<WardType> getFromCode(final String type)
+    public Optional<WardType> getFromCode(final String type)
     {
         return Stream.of(WardType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }

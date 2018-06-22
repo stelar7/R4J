@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public enum SummonerSpellType
+public enum SummonerSpellType implements CodedEnum
 {
     /**
      * Used for bots that didn't know how to use summoners
@@ -116,7 +116,7 @@ public enum SummonerSpellType
      * @param type the type
      * @return SummonerSpellType
      */
-    public static Optional<SummonerSpellType> getFromCode(final String type)
+    public Optional<SummonerSpellType> getFromCode(final String type)
     {
         Optional<SummonerSpellType> byName = Stream.of(SummonerSpellType.values()).filter(t -> t.getApiName().equals(type)).findFirst();
         if (byName.isPresent())

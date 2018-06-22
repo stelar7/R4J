@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum BuildingType
+public enum BuildingType implements CodedEnum
 
 {
     INHIBITOR_BUILDING,
@@ -15,7 +15,7 @@ public enum BuildingType
      * @param type the type to check
      * @return BuildingType
      */
-    public static Optional<BuildingType> getFromCode(final String type)
+    public Optional<BuildingType> getFromCode(final String type)
     {
         return Stream.of(BuildingType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }

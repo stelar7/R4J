@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum GameModeType
+public enum GameModeType implements CodedEnum
 {
     /**
      * Classic Summoner's Rift and Twisted Treeline games
@@ -80,7 +80,7 @@ public enum GameModeType
      * @param gameMode the mode to check
      * @return GameModeType
      */
-    public static Optional<GameModeType> getFromCode(final String gameMode)
+    public Optional<GameModeType> getFromCode(final String gameMode)
     {
         return Stream.of(GameModeType.values()).filter(t -> t.name().equalsIgnoreCase(gameMode)).findFirst();
     }

@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.stream.*;
 
-public enum MapType
+public enum MapType implements CodedEnum
 {
     
     /**
@@ -84,7 +84,7 @@ public enum MapType
      * @param mapId the map id
      * @return the from code
      */
-    public static Optional<MapType> getFromCode(final String mapId)
+    public Optional<MapType> getFromCode(final String mapId)
     {
         return Stream.of(MapType.values()).filter(t -> t.mapId.equals(Integer.valueOf(mapId))).findFirst();
     }

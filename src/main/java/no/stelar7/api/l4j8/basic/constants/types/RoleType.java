@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum RoleType
+public enum RoleType implements CodedEnum
 {
     
     /**
@@ -33,7 +33,7 @@ public enum RoleType
      * @param code the lookup key
      * @return RoleType
      */
-    public static Optional<RoleType> getFromCode(final String code)
+    public Optional<RoleType> getFromCode(final String code)
     {
         return Stream.of(RoleType.values()).filter(t -> t.name().equalsIgnoreCase(code)).findFirst();
     }

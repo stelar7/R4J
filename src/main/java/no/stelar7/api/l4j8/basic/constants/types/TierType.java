@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.Optional;
 import java.util.stream.*;
 
-public enum TierType
+public enum TierType implements CodedEnum
 {
     CHALLENGER,
     MASTER,
@@ -20,7 +20,7 @@ public enum TierType
      * @param type the type to check
      * @return TierType
      */
-    public static Optional<TierType> getFromCode(final String type)
+    public Optional<TierType> getFromCode(final String type)
     {
         return Stream.of(TierType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }

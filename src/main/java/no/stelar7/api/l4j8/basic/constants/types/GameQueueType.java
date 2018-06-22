@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.basic.constants.types;
 import java.util.*;
 import java.util.stream.*;
 
-public enum GameQueueType
+public enum GameQueueType implements CodedEnum
 {
     /**
      * Custom games
@@ -272,7 +272,7 @@ public enum GameQueueType
         this.apiname = apiName;
     }
     
-    public static Optional<GameQueueType> getFromCode(final String value)
+    public Optional<GameQueueType> getFromCode(final String value)
     {
         try
         {

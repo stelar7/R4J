@@ -4,7 +4,7 @@ import no.stelar7.api.l4j8.basic.utils.Pair;
 
 import java.util.*;
 
-public final class InhibitorLocationType
+public final class InhibitorLocationType implements CodedEnum
 {
     private InhibitorLocationType()
     {
@@ -50,5 +50,11 @@ public final class InhibitorLocationType
         inhibs.getOrDefault(map, new HashMap<>()).forEach((k, v) -> v.forEach((k2, v2) -> retTowers.add(v2)));
         
         return retTowers;
+    }
+    
+    @Override
+    public Optional getFromCode(String type)
+    {
+        return Optional.empty();
     }
 }
