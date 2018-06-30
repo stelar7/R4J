@@ -5,7 +5,7 @@ import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.impl.L4J8;
-import no.stelar7.api.l4j8.impl.raw.StaticAPI;
+import no.stelar7.api.l4j8.impl.raw.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapDetails;
@@ -24,7 +24,7 @@ public class StaticTest
 {
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-    StaticAPI api = l4j8.getStaticAPI();
+    DDragonAPI api = l4j8.getDDragonAPI();
     
     @Test
     public void testChampionList()
@@ -32,9 +32,7 @@ public class StaticTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
-        EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
-        
-        Map<Integer, StaticChampion> list = api.getChampions(Platform.EUW1, dataFlags, null, null);
+        Map<Integer, StaticChampion> list = api.getChampions();
         Assert.assertTrue("less than 100?", list.size() > 100);
     }
     
@@ -189,7 +187,7 @@ public class StaticTest
         EnumSet<RuneDataFlags> dataFlags = EnumSet.of(RuneDataFlags.ALL, RuneDataFlags.IMAGE);
         
         StaticRune rune = api.getRune(Platform.EUW1, 5023, dataFlags, null, null);
-    
+        
         Assert.assertEquals("missing id?", 5023, rune.getId());
         Assert.assertNotNull("missing stats?", rune.getStats());
         Assert.assertNotNull("missing desc?", rune.getDescription());

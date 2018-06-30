@@ -18,17 +18,17 @@ public final class DataCall
     private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
     
     private static APICredentials creds;
-    private static CacheProvider cache          = EmptyCacheProvider.INSTANCE;
-    private static LogLevel      logLevel       = LogLevel.NONE;
-    private static int           callStackSkip  = 5;
-    private static int           callStackLimit = 5;
+    private static CacheProvider  cache          = EmptyCacheProvider.INSTANCE;
+    private static LogLevel       logLevel       = LogLevel.NONE;
+    private static int            callStackSkip  = 5;
+    private static int            callStackLimit = 5;
     
     private final Map<String, String> urlParams  = new TreeMap<>();
     private final Map<String, String> urlData    = new TreeMap<>();
     private final Map<String, String> urlHeaders = new TreeMap<>();
     
-    private Enum        platform;
-    private URLEndpoint endpoint;
+    private        Enum        platform;
+    private        URLEndpoint endpoint;
     private static String      urlProxy         = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/l4j8");
     
@@ -108,6 +108,16 @@ public final class DataCall
         return cache;
     }
     
+    public static void setCacheProvider(@Nullable CacheProvider provider)
+    {
+        cache = provider == null ? EmptyCacheProvider.INSTANCE : provider;
+    }
+    
+    public static void setCredentials(final APICredentials creds)
+    {
+        DataCall.creds = creds;
+    }
+    
     /**
      * Takes in a proxy for the api.
      * The URL should contain the parts:
@@ -121,26 +131,15 @@ public final class DataCall
      *
      * @param proxy the url
      */
-    public static void setProxy(@Nullable String proxy)
+    public void setProxy(@Nullable String proxy)
     {
         urlProxy = proxy == null ? Constants.REQUEST_URL : proxy;
-    }
-    
-    public static void setCacheProvider(@Nullable CacheProvider provider)
-    {
-        cache = provider == null ? EmptyCacheProvider.INSTANCE : provider;
-    }
-    
-    public static void setCredentials(final APICredentials creds)
-    {
-        DataCall.creds = creds;
     }
     
     public String getProxy()
     {
         return urlProxy;
     }
-    
     
     public static int getCallStackSkip()
     {

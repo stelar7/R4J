@@ -54,11 +54,13 @@ public class DataCallBuilder
         
         DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Trying url: %s", url));
         
-        // app limit
-        applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
-        // method limit
-        applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
-        
+        if (!this.dc.getEndpoint().isDDragon())
+        {
+            // app limit
+            applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
+            // method limit
+            applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
+        }
         
         final DataCallResponse response = this.getResponse(url);
         DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, response.toString());
@@ -78,7 +80,9 @@ public class DataCallBuilder
             
             case 403:
             {
-                String reasonText = "Your Api key is invalid!\n";
+                
+                String reasonText = "The API denied your request!\n";
+                reasonText += "Your API key might be invalid\n";
                 reasonText += "You may be trying to call a endpoint you dont have access to\n";
                 reasonText += "or if you just regenerated it; wait a few seconds, then try again\n";
                 throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
@@ -124,7 +128,11 @@ public class DataCallBuilder
     
     private String postProcess(String returnValue)
     {
-        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME);
+        
+        if (this.dc.getEndpoint() == URLEndpoint.DDRAGON_CHAMPION_MANY)
+        {
+            returnValue = postProcessDDragonChampionMany(returnValue);
+        }
         
         if (this.dc.getEndpoint() == URLEndpoint.V3_MATCH)
         {
@@ -141,12 +149,30 @@ public class DataCallBuilder
             returnValue = postProcessPerkPath(returnValue);
         }
         
+        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME);
         if (summonerEndpoints.contains(this.dc.getEndpoint()))
         {
             returnValue = postProcessSummoner(returnValue);
         }
         
         return returnValue;
+    }
+    
+    private String postProcessDDragonChampionMany(String returnValue)
+    {
+        JsonObject elem   = (JsonObject) new JsonParser().parse(returnValue);
+        JsonObject parent = elem.getAsJsonObject("data");
+        for (String key : new HashSet<>(parent.keySet()))
+        {
+            JsonObject child = parent.getAsJsonObject(key);
+            String     id    = child.get("key").getAsString();
+            child.addProperty("key", key);
+            child.addProperty("id", id);
+            parent.add(id, child);
+            parent.remove(key);
+        }
+        
+        return Utils.getGson().toJson(elem);
     }
     
     private String postProcessPerkPath(String returnValue)
@@ -302,7 +328,6 @@ public class DataCallBuilder
             if (child.get(endpoint) == null)
             {
                 loadLimiterFromCache(platform, endpoint, child);
-                
             }
         } finally
         {
@@ -576,7 +601,10 @@ public class DataCallBuilder
     private String getURL()
     {
         String[] url = {dc.getProxy()};
-        url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString());
+        if (!url[0].equalsIgnoreCase(Constants.DDRAGON_PROXY))
+        {
+            url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString());
+        }
         url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.getEndpoint().getGame());
         url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.getEndpoint().getService());
         url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.getEndpoint().getVersion());
@@ -699,6 +727,12 @@ public class DataCallBuilder
     public DataCallBuilder withURLParameter(final String key, final String value)
     {
         this.dc.getUrlParams().merge(key, value, MERGE);
+        return this;
+    }
+    
+    public DataCallBuilder withProxy(String proxy)
+    {
+        this.dc.setProxy(proxy);
         return this;
     }
 }

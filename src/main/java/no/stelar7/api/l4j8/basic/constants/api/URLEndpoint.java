@@ -103,6 +103,9 @@ public enum URLEndpoint
     V3_STATIC_PERKPATHS("lol", "static-data", "v3", "reforged-rune-paths", new TypeToken<List<PerkPath>>() {}.getType()),
     V3_STATIC_TARBALL("lol", "static-data", "v3", "tarball-links", String.class),
     
+    
+    DDRAGON_CHAMPION_MANY("cdn", "", Constants.VERSION_PLACEHOLDER, "data/" + Constants.LOCALE_PLACEHOLDER + "/champion.json", StaticChampionList.class),
+    
     //    lol/match/v3/matches/{matchId}
     //    lol/match/v3/matchlists/by-account/{accountId}
     //    lol/match/v3/matchlists/by-account/{accountId}/recent
@@ -200,5 +203,10 @@ public enum URLEndpoint
     public Object getType()
     {
         return type;
+    }
+    
+    public boolean isDDragon()
+    {
+        return game.equalsIgnoreCase("cdn");
     }
 }
