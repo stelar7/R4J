@@ -25,9 +25,9 @@ public class UseageTest
         DataCall.setLogLevel(LogLevel.DEBUG);
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Map<Integer, StaticRune>     runeData      = api.getStaticAPI().getRunes(Platform.EUW1, null, null, null);
-        Map<Integer, StaticMastery>  masteriesData = api.getStaticAPI().getMasteries(Platform.EUW1, null, null, null);
-        Map<Integer, StaticChampion> championData  = api.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
+        Map<Integer, StaticRune>     runeData      = api.getDDragonAPI().getRunes(Platform.EUW1, null, null, null);
+        Map<Integer, StaticMastery>  masteriesData = api.getDDragonAPI().getMasteries(Platform.EUW1, null, null, null);
+        Map<Integer, StaticChampion> championData  = api.getDDragonAPI().getChampions();
         
         Summoner             stelar7        = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         List<MatchReference> some           = stelar7.getGames().get();

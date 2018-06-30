@@ -2,7 +2,6 @@ package no.stelar7.api.l4j8.impl.raw;
 
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.constants.flags.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
@@ -61,180 +60,67 @@ public final class DDragonAPI
         return getChampions(null, null);
     }
     
-    public StaticChampion getChampion(Platform server, int id, @Nullable Set<ChampDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
+    public StaticChampion getChampion(int id, @Nullable String version, @Nullable String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withEndpoint(URLEndpoint.V3_STATIC_CHAMPION_BY_ID)
-                                                       .withPlatform(server);
-        
-        if (dataFlags != null)
-        {
-            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.CHAMPDATA_PLACEHOLDER_DATA, flag.getValue()));
-        } else
-        {
-            builder.withURLDataAsSet(Constants.CHAMPDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
-        }
-        
-        if (version != null)
-        {
-            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
-        }
-        if (locale != null)
-        {
-            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-        }
-        
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, server, id, dataFlags, version, locale);
-        if (chl.isPresent())
-        {
-            return (StaticChampion) chl.get();
-        }
-        
-        chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_CHAMPIONS, server, dataFlags, version, locale);
-        if (chl.isPresent())
-        {
-            Map<Integer, StaticChampion> dataMap = ((StaticChampionList) chl.get()).getData();
-            dataMap.forEach((k, v) -> DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, v, server, k, dataFlags, version, locale));
-            return dataMap.get(id);
-        }
-        
-        try
-        {
-            StaticChampion list = (StaticChampion) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_CHAMPION_BY_ID, list, server, id, dataFlags, version, locale);
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return getChampions(version, locale).get(id);
     }
     
     public StaticChampion getChampion(int id)
     {
-        return getChampion(Platform.EUW1, id, null, null, null);
+        return getChampion(id, null, null);
     }
     
-    public ItemList getItems(Platform server, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
+    public Map<Integer, Item> getItems(@Nullable String version, @Nullable String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_ITEMS)
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withPlatform(server);
+        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
+                                                       .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
         
-        if (dataFlags != null)
-        {
-            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
-        } else
-        {
-            builder.withURLDataAsSet(Constants.ITEMLISTDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
-        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        if (version != null)
-        {
-            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
-        }
-        if (locale != null)
-        {
-            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-        }
-        
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_ITEMS, server, dataFlags, version, locale);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_ITEMS, version, locale);
         if (chl.isPresent())
         {
-            return (ItemList) chl.get();
+            return ((ItemList) chl.get()).getData();
         }
         
         try
         {
             ItemList list = (ItemList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEMS, list, server, dataFlags, version, locale);
-            return list;
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_ITEMS, list, version, locale);
+            return list.getData();
         } catch (ClassCastException e)
         {
             return null;
         }
     }
     
-    public ItemList getItems()
+    public Map<Integer, Item> getItems()
     {
-        return getItems(Platform.EUW1, null, null, null);
+        return getItems(null, null);
     }
     
     
-    public Item getItem(Platform server, int id, @Nullable Set<ItemDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
+    public Item getItem(int id, @Nullable String version, @Nullable String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withEndpoint(URLEndpoint.V3_STATIC_ITEM_BY_ID)
-                                                       .withPlatform(server);
-        
-        if (dataFlags != null)
-        {
-            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.ITEMDATA_PLACEHOLDER_DATA, flag.getValue()));
-        } else
-        {
-            builder.withURLDataAsSet(Constants.ITEMDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
-        }
-        
-        if (version != null)
-        {
-            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
-        }
-        if (locale != null)
-        {
-            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-        }
-        
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_ITEM_BY_ID, server, id, dataFlags, version, locale);
-        if (chl.isPresent())
-        {
-            return (Item) chl.get();
-        }
-        
-        chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_ITEMS, server, dataFlags, version, locale);
-        if (chl.isPresent())
-        {
-            Map<Integer, Item> dataMap = ((ItemList) chl.get()).getData();
-            dataMap.forEach((k, v) -> DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, v, server, k, dataFlags, version, locale));
-            return dataMap.get(id);
-        }
-        
-        try
-        {
-            Item list = (Item) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_ITEM_BY_ID, list, server, id, dataFlags, version, locale);
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return getItems(version, locale).get(id);
     }
     
     public Item getItem(int id)
     {
-        return getItem(Platform.EUW1, id, null, null, null);
+        return getItem(id, null, null);
     }
     
-    public Map<String, String> getLanguageStrings(Platform server, @Nullable String version, @Nullable String locale)
+    public Map<String, String> getLanguageStrings(@Nullable String version, @Nullable String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS)
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withPlatform(server);
+        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
+                                                       .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
         
-        if (version != null)
-        {
-            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
-        }
-        if (locale != null)
-        {
-            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, server, version, locale);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, version, locale);
         if (chl.isPresent())
         {
             return ((LanguageStrings) chl.get()).getData();
@@ -243,7 +129,7 @@ public final class DDragonAPI
         try
         {
             LanguageStrings list = (LanguageStrings) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, list, server, version, locale);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -253,23 +139,21 @@ public final class DDragonAPI
     
     public Map<String, String> getLanguageStrings()
     {
-        return getLanguageStrings(Platform.EUW1, null, null);
+        return getLanguageStrings(null, null);
     }
     
     /**
      * Returns a list of possible locales
      *
-     * @param server the server to get from
      * @return a list of strings avaliable in this language
      */
-    public List<String> getLanguages(Platform server)
+    public List<String> getLanguages()
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_LANGUAGES)
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withPlatform(server);
+        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
+                                                       .withEndpoint(URLEndpoint.DDRAGON_LANGUAGES);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGES, server);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGES);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -277,7 +161,7 @@ public final class DDragonAPI
         try
         {
             List<String> list = (List<String>) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGES, list, server);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGES, list);
             return list;
         } catch (ClassCastException e)
         {
@@ -285,28 +169,15 @@ public final class DDragonAPI
         }
     }
     
-    public List<String> getLanguages()
+    public Map<String, MapDetails> getMaps(@Nullable String version, @Nullable String locale)
     {
-        return getLanguages(Platform.EUW1);
-    }
-    
-    public Map<String, MapDetails> getMaps(Platform server, @Nullable String version, @Nullable String locale)
-    {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MAPS)
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withPlatform(server);
+        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
+                                                       .withEndpoint(URLEndpoint.DDRAGON_MAPS);
         
-        if (version != null)
-        {
-            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
-        }
-        if (locale != null)
-        {
-            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MAPS, server, version, locale);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MAPS, version, locale);
         if (chl.isPresent())
         {
             return ((MapData) chl.get()).getData();
@@ -315,7 +186,7 @@ public final class DDragonAPI
         try
         {
             MapData list = (MapData) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MAPS, list, server, version, locale);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MAPS, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -325,35 +196,18 @@ public final class DDragonAPI
     
     public Map<String, MapDetails> getMaps()
     {
-        return getMaps(Platform.EUW1, null, null);
+        return getMaps(null, null);
     }
     
-    public Map<Integer, StaticMastery> getMasteries(Platform server, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
+    public Map<Integer, StaticMastery> getMasteries(@Nullable String version, @Nullable String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withPlatform(server);
+        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
+                                                       .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
-        if (dataFlags != null)
-        {
-            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
-        } else
-        {
-            builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
-        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        
-        if (version != null)
-        {
-            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
-        }
-        if (locale != null)
-        {
-            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-        }
-        
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MASTERIES, server, dataFlags, version, locale);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, version, locale);
         if (chl.isPresent())
         {
             return ((StaticMasteryList) chl.get()).getData();
@@ -362,7 +216,7 @@ public final class DDragonAPI
         try
         {
             StaticMasteryList list = (StaticMasteryList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list, server, dataFlags, version, locale);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -372,34 +226,18 @@ public final class DDragonAPI
     
     public Map<Integer, StaticMastery> getMasteries()
     {
-        return getMasteries(Platform.EUW1, null, null, null);
+        return getMasteries(null, null);
     }
     
-    public Map<String, List<MasteryTreeList>> getMasteryTree(Platform server, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
+    public Map<String, List<MasteryTreeList>> getMasteryTree(@Nullable String version, @Nullable String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_MASTERIES)
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withPlatform(server);
+        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
+                                                       .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
-        if (dataFlags != null)
-        {
-            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, flag.getValue()));
-        } else
-        {
-            builder.withURLDataAsSet(Constants.MASTERYLISTDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
-        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        if (version != null)
-        {
-            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
-        }
-        if (locale != null)
-        {
-            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-        }
-        
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MASTERIES, server, dataFlags, version, locale);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, version, locale);
         if (chl.isPresent())
         {
             return ((StaticMasteryList) chl.get()).getTree();
@@ -408,7 +246,7 @@ public final class DDragonAPI
         try
         {
             StaticMasteryList list = (StaticMasteryList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERIES, list, server, dataFlags, version, locale);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, list, version, locale);
             return list.getTree();
         } catch (ClassCastException e)
         {
@@ -418,61 +256,17 @@ public final class DDragonAPI
     
     public Map<String, List<MasteryTreeList>> getMasteryTree()
     {
-        return getMasteryTree(Platform.EUW1, null, null, null);
+        return getMasteryTree(null, null);
     }
     
-    public StaticMastery getMastery(Platform server, int id, @Nullable Set<MasteryDataFlags> dataFlags, @Nullable String version, @Nullable String locale)
+    public StaticMastery getMastery(int id, @Nullable String version, @Nullable String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
-                                                       .withEndpoint(URLEndpoint.V3_STATIC_MASTERY_BY_ID)
-                                                       .withPlatform(server);
-        
-        if (dataFlags != null)
-        {
-            dataFlags.forEach(flag -> builder.withURLDataAsSet(Constants.MASTERYDATA_PLACEHOLDER_DATA, flag.getValue()));
-        } else
-        {
-            builder.withURLDataAsSet(Constants.MASTERYDATA_PLACEHOLDER_DATA, ChampDataFlags.ALL.getValue());
-        }
-        
-        if (version != null)
-        {
-            builder.withURLData(Constants.VERSION_PLACEHOLDER_DATA, version);
-        }
-        if (locale != null)
-        {
-            builder.withURLData(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-        }
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MASTERY_BY_ID, server, id, dataFlags, version, locale);
-        if (chl.isPresent())
-        {
-            return (StaticMastery) chl.get();
-        }
-        
-        chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_MASTERIES, server, dataFlags, version, locale);
-        if (chl.isPresent())
-        {
-            Map<Integer, StaticMastery> dataMap = ((StaticMasteryList) chl.get()).getData();
-            dataMap.forEach((k, v) -> DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, v, server, k, dataFlags, version, locale));
-            return dataMap.get(id);
-        }
-        
-        try
-        {
-            StaticMastery list = (StaticMastery) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_MASTERY_BY_ID, list, server, id, dataFlags, version, locale);
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return getMasteries(version, locale).get(id);
     }
     
     public StaticMastery getMastery(int id)
     {
-        return getMastery(Platform.EUW1, id, null, null, null);
+        return getMastery(id, null, null);
     }
     
     public Map<Long, ProfileIconDetails> getProfileIcons(Platform server, @Nullable String version, @Nullable String locale)
@@ -514,11 +308,10 @@ public final class DDragonAPI
     
     public Realm getRealm(Platform server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_STATIC_REALMS)
-                                                       .withURLData(Constants.URL_PARAM_DATA_BY_ID, String.valueOf(true))
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.DDRAGON_REALMS)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_REALMS, server);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS, server);
         if (chl.isPresent())
         {
             return (Realm) chl.get();
@@ -527,11 +320,10 @@ public final class DDragonAPI
         try
         {
             Realm list = (Realm) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_REALMS, list, server);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_REALMS, list, server);
             return list;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
     }

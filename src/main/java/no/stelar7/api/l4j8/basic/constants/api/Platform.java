@@ -10,79 +10,79 @@ public enum Platform implements CodedEnum
     /**
      * Unknown platform, used for bots in participant identities
      */
-    UNKNOWN(""),
+    UNKNOWN("", ""),
     /**
      * BRAZIL platform.
      */
-    BR1("BR1"),
+    BR1("BR1", "br"),
     /**
      * Europe Nordic & East platform.
      */
-    EUN1("EUN1"),
+    EUN1("EUN1", "eune"),
     /**
      * Europe West platform.
      */
-    EUW1("EUW1"),
+    EUW1("EUW1", "euw"),
     /**
      * Japan platform.
      */
-    JP1("JP1"),
+    JP1("JP1", "jp"),
     /**
      * Korea platform.
      */
-    KR("KR"),
+    KR("KR", "kr"),
     /**
      * Latin America North platform.
      */
-    LA1("LA1"),
+    LA1("LA1", "lan"),
     /**
      * Latin America South platform.
      */
-    LA2("LA2"),
+    LA2("LA2", "las"),
     /**
      * North America platform.
      */
-    NA1("NA1", "NA"),
+    NA1("NA1", "na"),
     /**
      * Oceania platform.
      */
-    OC1("OC1"),
+    OC1("OC1", "oc"),
     /**
      * Turkey platform.
      */
-    TR1("TR1"),
+    TR1("TR1", "tr"),
     /**
      * Russia platform.
      */
-    RU("RU"),
+    RU("RU", "ru"),
     /**
      * Public Beta Environment platform.
      */
-    PBE1("PBE1"),
+    PBE1("PBE1", "pbe"),
     /**
      * Singapore platform
      */
-    SG("SG"),
+    SG("SG", "sg"),
     /**
      * Philippines platform
      */
-    PH("PH"),
+    PH("PH", "ph"),
     /**
      * Indonesia platform
      */
-    ID1("ID1"),
+    ID1("ID1", "id"),
     /**
      * Vietnam platform
      */
-    VN("VN"),
+    VN("VN", "vn"),
     /**
      * Thailand platform
      */
-    TH("TH"),
+    TH("TH", "th"),
     /**
      * Taiwan platform
      */
-    TW("TW");
+    TW("TW", "tw");
     
     
     private String[] keys;
@@ -117,6 +117,16 @@ public enum Platform implements CodedEnum
     public String getValue()
     {
         return this.keys[0];
+    }
+    
+    /**
+     * Used internaly in the api...
+     *
+     * @return the value
+     */
+    public String getRealmValue()
+    {
+        return this.keys[1];
     }
     
     @Override

@@ -601,14 +601,15 @@ public class DataCallBuilder
     private String getURL()
     {
         String[] url = {dc.getProxy()};
-        if (!url[0].equalsIgnoreCase(Constants.DDRAGON_PROXY))
-        {
-            url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString());
-        }
         url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.getEndpoint().getGame());
         url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.getEndpoint().getService());
         url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.getEndpoint().getVersion());
         url[0] = url[0].replace(Constants.RESOURCE_PLACEHOLDER, dc.getEndpoint().getResource());
+        if (dc.getPlatform() != null)
+        {
+            url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString());
+            url[0] = url[0].replace(Constants.REGION_PLACEHOLDER, ((Platform) dc.getPlatform()).getRealmValue());
+        }
         dc.getUrlParams().forEach((k, v) -> url[0] = url[0].replace(k, v));
         
         boolean first = true;

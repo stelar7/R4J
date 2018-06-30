@@ -86,17 +86,6 @@ public class L4J8
      *
      * @return the static api
      */
-    public StaticAPI getStaticAPI()
-    {
-        return StaticAPI.getInstance();
-    }
-    
-    
-    /**
-     * Gets static api.
-     *
-     * @return the static api
-     */
     public DDragonAPI getDDragonAPI()
     {
         return DDragonAPI.getInstance();

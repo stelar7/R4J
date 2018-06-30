@@ -66,9 +66,8 @@ public class CacheTest
     {
         DataCall.setLogLevel(LogLevel.INFO);
         DataCall.setCacheProvider(fileCache);
-        l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
-        l4j8.getStaticAPI().getChampions(Platform.NA1, EnumSet.allOf(ChampDataFlags.class), null, null);
-        l4j8.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
+        l4j8.getDDragonAPI().getChampions();
+        l4j8.getDDragonAPI().getChampions(null, null);
     }
     
     @Test

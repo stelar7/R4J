@@ -33,7 +33,7 @@ public final class ImageAPI
             region = Platform.EUW1;
         }
         
-        Realm  realm         = StaticAPI.getInstance().getRealm(region);
+        Realm  realm         = DDragonAPI.getInstance().getRealm(region);
         String cdn           = realm.getCDN();
         String versionString = version != null ? version : realm.getV();
         

@@ -104,7 +104,13 @@ public enum URLEndpoint
     V3_STATIC_TARBALL("lol", "static-data", "v3", "tarball-links", String.class),
     
     
-    DDRAGON_CHAMPION_MANY("cdn", "", Constants.VERSION_PLACEHOLDER, "data/" + Constants.LOCALE_PLACEHOLDER + "/champion.json", StaticChampionList.class),
+    DDRAGON_CHAMPION_MANY("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/championFull.json", StaticChampionList.class),
+    DDRAGON_ITEMS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/item.json", ItemList.class),
+    DDRAGON_LANGUAGE_STRINGS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/language.json", LanguageStrings.class),
+    DDRAGON_LANGUAGES("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/languages.json", new TypeToken<List<String>>() {}.getType()),
+    DDRAGON_MAPS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/map.json", MapData.class),
+    DDRAGON_MASTERIES("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/map.json", StaticMasteryList.class),
+    DDRAGON_REALMS("realms/", "", Constants.REGION_PLACEHOLDER, ".json", Realm.class),
     
     //    lol/match/v3/matches/{matchId}
     //    lol/match/v3/matchlists/by-account/{accountId}
@@ -207,6 +213,6 @@ public enum URLEndpoint
     
     public boolean isDDragon()
     {
-        return game.equalsIgnoreCase("cdn");
+        return this.name().startsWith("DDRAGON");
     }
 }

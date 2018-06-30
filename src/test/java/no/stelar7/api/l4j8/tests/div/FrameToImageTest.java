@@ -78,8 +78,8 @@ public class FrameToImageTest
             // load icon data
             int                          championSquareOffset  = (int) (120d / 4d);
             int                          championSquarePadding = (int) (120d / 12d);
-            Map<Integer, Item>           items                 = api.getStaticAPI().getItems(Platform.EUW1, null, null, null).getData();
-            Map<Integer, StaticChampion> champs                = api.getStaticAPI().getChampions(Platform.EUW1, null, null, null);
+            Map<Integer, Item>           items                 = api.getDDragonAPI().getItems(Platform.EUW1, null, null, null).getData();
+            Map<Integer, StaticChampion> champs                = api.getDDragonAPI().getChampions(null, null);
             Map<Integer, BufferedImage>  championImages        = new HashMap<>();
             Map<Integer, BufferedImage>  itemImages            = new HashMap<>();
             
