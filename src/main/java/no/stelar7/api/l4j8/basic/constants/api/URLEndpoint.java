@@ -103,14 +103,19 @@ public enum URLEndpoint
     V3_STATIC_PERKPATHS("lol", "static-data", "v3", "reforged-rune-paths", new TypeToken<List<PerkPath>>() {}.getType()),
     V3_STATIC_TARBALL("lol", "static-data", "v3", "tarball-links", String.class),
     
-    
     DDRAGON_CHAMPION_MANY("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/championFull.json", StaticChampionList.class),
     DDRAGON_ITEMS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/item.json", ItemList.class),
     DDRAGON_LANGUAGE_STRINGS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/language.json", LanguageStrings.class),
     DDRAGON_LANGUAGES("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/languages.json", new TypeToken<List<String>>() {}.getType()),
-    DDRAGON_MAPS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/map.json", MapData.class),
+    DDRAGON_MAPS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/mnastery.json", MapData.class),
     DDRAGON_MASTERIES("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/map.json", StaticMasteryList.class),
+    DDRAGON_PROFILEICONS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/profileicon.json", ProfileIconData.class),
+    DDRAGON_RUNES("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/rune.json", StaticRuneList.class),
+    DDRAGON_PERKS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/runesReforged.json", new TypeToken<List<StaticPerk>>() {}.getType()),
+    DDRAGON_SUMMONER_SPELLS("api/", "", "", "/versions.json", StaticSummonerSpellList.class),
+    DDRAGON_VERSIONS("lol", "static-data", "v3", "versions", new TypeToken<List<String>>() {}.getType()),
     DDRAGON_REALMS("realms/", "", Constants.REGION_PLACEHOLDER, ".json", Realm.class),
+    DDRAGON_TARBALL("", "", "", "", String.class),
     
     //    lol/match/v3/matches/{matchId}
     //    lol/match/v3/matchlists/by-account/{accountId}
