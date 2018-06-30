@@ -103,9 +103,9 @@ public class RatelimitTest
         Platform plat = Platform.values()[1];
         for (int i = 0; i < 30; i++)
         {
-            l4j8.getDDragonAPI().getRealm(plat);
-            l4j8.getDDragonAPI().getVersions(plat);
-            l4j8.getDDragonAPI().getLanguages(plat);
+            l4j8.getDDragonAPI().getRealm();
+            l4j8.getDDragonAPI().getVersions();
+            l4j8.getDDragonAPI().getLanguages();
             if (i % 9 == 0)
             {
                 plat = Platform.values()[plat.ordinal() + 1];

@@ -1,7 +1,6 @@
 package no.stelar7.api.l4j8.tests.local;
 
 import com.google.gson.*;
-import no.stelar7.api.l4j8.basic.constants.flags.ChampDataFlags;
 import no.stelar7.api.l4j8.basic.utils.Utils;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import org.junit.*;
@@ -54,8 +53,6 @@ public class SelfServedFileTest
     
     public void testStaticDataIntegrety(StaticChampionList clist)
     {
-        EnumSet<ChampDataFlags> dataFlags = EnumSet.of(ChampDataFlags.ALL, ChampDataFlags.IMAGE);
-        
         Map<Integer, StaticChampion> list = clist.getData();
         Assert.assertTrue("less than 100?", list.size() > 100);
         

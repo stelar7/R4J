@@ -25,15 +25,9 @@ public final class ImageAPI
     }
     
     
-    private String buildImageURL(@Nullable String version, String path, String file, @Nullable Platform rreg)
+    private String buildImageURL(@Nullable String version, String path, String file)
     {
-        Platform region = rreg;
-        if (region == null)
-        {
-            region = Platform.EUW1;
-        }
-        
-        Realm  realm         = DDragonAPI.getInstance().getRealm(region);
+        Realm  realm         = DDragonAPI.getInstance().getRealm();
         String cdn           = realm.getCDN();
         String versionString = version != null ? version : realm.getV();
         
@@ -47,13 +41,12 @@ public final class ImageAPI
      *
      * @param iconid  the iconid
      * @param version the version
-     * @param region  the region
      * @return the profile icon
      */
-    public String getProfileIcon(String iconid, @Nullable String version, @Nullable Platform region)
+    public String getProfileIcon(String iconid, @Nullable String version)
     {
         //http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png
-        return buildImageURL(version, "img/profileicon", iconid + ".png", region);
+        return buildImageURL(version, "img/profileicon", iconid + ".png");
     }
     
     /**
@@ -74,26 +67,25 @@ public final class ImageAPI
      *
      * @param championId the champion id
      * @param skinNum    the skin num
-     * @param region     the region
+
      * @return the splash art
      */
-    public String getSplashArt(String championId, int skinNum, @Nullable Platform region)
+    public String getSplashArt(String championId, int skinNum)
     {
         // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
-        return buildImageURL(null, "img/champion/splash", championId + "_" + skinNum + ".png", region);
+        return buildImageURL(null, "img/champion/splash", championId + "_" + skinNum + ".png");
     }
     
     /**
      * Gets splash art.
      *
      * @param skin   the skin
-     * @param region the region
      * @return the splash art
      */
-    public String getSplashArt(Skin skin, @Nullable Platform region)
+    public String getSplashArt(Skin skin)
     {
         // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
-        return buildImageURL(null, "img/champion/splash", skin.getId() + "_" + skin.getNum() + ".png", region);
+        return buildImageURL(null, "img/champion/splash", skin.getId() + "_" + skin.getNum() + ".png");
     }
     
     /**
@@ -101,26 +93,26 @@ public final class ImageAPI
      *
      * @param championId the champion id
      * @param skinNum    the skin num
-     * @param region     the region
+
      * @return the loading screen art
      */
-    public String getLoadingScreenArt(String championId, int skinNum, @Nullable Platform region)
+    public String getLoadingScreenArt(String championId, int skinNum)
     {
         // http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
-        return buildImageURL(null, "img/champion/loading", championId + "_" + skinNum + ".png", region);
+        return buildImageURL(null, "img/champion/loading", championId + "_" + skinNum + ".png");
     }
     
     /**
      * Gets loading screen art.
      *
      * @param skin   the skin
-     * @param region the region
+     
      * @return the loading screen art
      */
-    public String getLoadingScreenArt(Skin skin, @Nullable Platform region)
+    public String getLoadingScreenArt(Skin skin)
     {
         // http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
-        return buildImageURL(null, "img/champion/loading", skin.getId() + "_" + skin.getNum() + ".png", region);
+        return buildImageURL(null, "img/champion/loading", skin.getId() + "_" + skin.getNum() + ".png");
     }
     
     
@@ -129,13 +121,13 @@ public final class ImageAPI
      *
      * @param champ   the champ
      * @param version the version
-     * @param region  the region
+     * 
      * @return the square
      */
-    public String getSquare(StaticChampion champ, @Nullable String version, @Nullable Platform region)
+    public String getSquare(StaticChampion champ, @Nullable String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
-        return buildImageURL(version, "img/champion", champ.getImage().getFull(), region);
+        return buildImageURL(version, "img/champion", champ.getImage().getFull());
     }
     
     /**
@@ -143,13 +135,13 @@ public final class ImageAPI
      *
      * @param champKey the champ key
      * @param version  the version
-     * @param region   the region
+     * 
      * @return the square
      */
-    public String getSquare(String champKey, @Nullable String version, @Nullable Platform region)
+    public String getSquare(String champKey, @Nullable String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
-        return buildImageURL(version, "img/champion", champKey + ".png", region);
+        return buildImageURL(version, "img/champion", champKey + ".png");
     }
     
     
@@ -158,13 +150,13 @@ public final class ImageAPI
      *
      * @param imageFull the spell.getImage().getFull()
      * @param version   the version
-     * @param region    the region
+     *
      * @return the ability
      */
-    public String getPassive(String imageFull, @Nullable String version, @Nullable Platform region)
+    public String getPassive(String imageFull, @Nullable String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
-        return buildImageURL(version, "img/passive", imageFull, region);
+        return buildImageURL(version, "img/passive", imageFull);
     }
     
     /**
@@ -172,13 +164,13 @@ public final class ImageAPI
      *
      * @param passive the passive
      * @param version the version
-     * @param region  the region
+     * 
      * @return the passive
      */
-    public String getPassive(Passive passive, @Nullable String version, @Nullable Platform region)
+    public String getPassive(Passive passive, @Nullable String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
-        return getPassive(passive.getImage().getFull(), version, region);
+        return getPassive(passive.getImage().getFull(), version);
     }
     
     /**
@@ -186,13 +178,13 @@ public final class ImageAPI
      *
      * @param spell   the spell
      * @param version the version
-     * @param region  the region
+     * 
      * @return the ability
      */
-    public String getAbility(StaticChampionSpell spell, @Nullable String version, @Nullable Platform region)
+    public String getAbility(StaticChampionSpell spell, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
-        return buildImageURL(version, "img/spell", spell.getImage().getFull(), region);
+        return buildImageURL(version, "img/spell", spell.getImage().getFull());
     }
     
     /**
@@ -200,13 +192,13 @@ public final class ImageAPI
      *
      * @param imageFull the spell.getImage().getFull()
      * @param version   the version
-     * @param region    the region
+     *
      * @return the ability
      */
-    public String getAbility(String imageFull, @Nullable String version, @Nullable Platform region)
+    public String getAbility(String imageFull, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
-        return buildImageURL(version, "img/spell", imageFull, region);
+        return buildImageURL(version, "img/spell", imageFull);
     }
     
     /**
@@ -214,13 +206,13 @@ public final class ImageAPI
      *
      * @param spell   the spell
      * @param version the version
-     * @param region  the region
+     * 
      * @return the summoner spell
      */
-    public String getSummonerSpell(SummonerSpellType spell, @Nullable String version, @Nullable Platform region)
+    public String getSummonerSpell(SummonerSpellType spell, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
-        return buildImageURL(version, "img/spell", spell.getApiName() + ".png", region);
+        return buildImageURL(version, "img/spell", spell.getApiName() + ".png");
     }
     
     /**
@@ -228,13 +220,13 @@ public final class ImageAPI
      *
      * @param spell   the spell
      * @param version the version
-     * @param region  the region
+     * 
      * @return the summoner spell
      */
-    public String getSummonerSpell(String spell, @Nullable String version, @Nullable Platform region)
+    public String getSummonerSpell(String spell, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
-        return buildImageURL(version, "img/spell", spell + ".png", region);
+        return buildImageURL(version, "img/spell", spell + ".png");
     }
     
     /**
@@ -242,13 +234,13 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * @param region  the region
+     * 
      * @return the item
      */
-    public String getItem(String id, @Nullable String version, @Nullable Platform region)
+    public String getItem(String id, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
-        return buildImageURL(version, "img/item", id + ".png", region);
+        return buildImageURL(version, "img/item", id + ".png");
     }
     
     
@@ -257,13 +249,13 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * @param region  the region
+     * 
      * @return the item
      */
-    public String getItem(Item id, @Nullable String version, @Nullable Platform region)
+    public String getItem(Item id, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
-        return buildImageURL(version, "img/item", id.getImage().getFull(), region);
+        return buildImageURL(version, "img/item", id.getImage().getFull());
     }
     
     /**
@@ -271,13 +263,13 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * @param region  the region
+     * 
      * @return the mastery
      */
-    public String getMastery(StaticMastery id, @Nullable String version, @Nullable Platform region)
+    public String getMastery(StaticMastery id, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
-        return buildImageURL(version, "img/mastery", id.getImage().getFull(), region);
+        return buildImageURL(version, "img/mastery", id.getImage().getFull());
     }
     
     /**
@@ -285,13 +277,13 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * @param region  the region
+     * 
      * @return the mastery
      */
-    public String getMastery(String id, @Nullable String version, @Nullable Platform region)
+    public String getMastery(String id, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
-        return buildImageURL(version, "img/mastery", id + ".png", region);
+        return buildImageURL(version, "img/mastery", id + ".png");
     }
     
     
@@ -300,13 +292,13 @@ public final class ImageAPI
      *
      * @param sprite  the sprite field from an image object
      * @param version the version
-     * @param region  the region
+     * 
      * @return the spritesheet
      */
-    public String getSpriteSheet(String sprite, @Nullable String version, @Nullable Platform region)
+    public String getSpriteSheet(String sprite, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/7.8.1/img/sprite/mastery0.png
-        return buildImageURL(version, "img/sprite", sprite, region);
+        return buildImageURL(version, "img/sprite", sprite);
     }
     
     /**
@@ -314,13 +306,13 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * @param region  the region
+     * 
      * @return the rune
      */
-    public String getRune(String id, @Nullable String version, @Nullable Platform region)
+    public String getRune(String id, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
-        return buildImageURL(version, "img/rune", id + ".png", region);
+        return buildImageURL(version, "img/rune", id + ".png");
     }
     
     /**
@@ -328,13 +320,13 @@ public final class ImageAPI
      *
      * @param rune    the rune
      * @param version the version
-     * @param region  the region
+     * 
      * @return the rune
      */
-    public String getRune(StaticRune rune, @Nullable String version, @Nullable Platform region)
+    public String getRune(StaticRune rune, @Nullable String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
-        return buildImageURL(version, "img/rune", rune.getImage().getFull(), region);
+        return buildImageURL(version, "img/rune", rune.getImage().getFull());
     }
     
     
@@ -343,13 +335,13 @@ public final class ImageAPI
      *
      * @param map     the map
      * @param version the version
-     * @param region  the region
+     * 
      * @return the map
      */
-    public String getMap(MapType map, @Nullable String version, @Nullable Platform region)
+    public String getMap(MapType map, @Nullable String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
-        return buildImageURL(version, "img/map", "map" + map.getId() + ".png", region);
+        return buildImageURL(version, "img/map", "map" + map.getId() + ".png");
     }
     
     /**
@@ -357,12 +349,12 @@ public final class ImageAPI
      *
      * @param map     the map
      * @param version the version
-     * @param region  the region
+     * 
      * @return the map
      */
-    public String getMap(String map, @Nullable String version, @Nullable Platform region)
+    public String getMap(String map, @Nullable String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
-        return buildImageURL(version, "img/map", map + ".png", region);
+        return buildImageURL(version, "img/map", map + ".png");
     }
 }

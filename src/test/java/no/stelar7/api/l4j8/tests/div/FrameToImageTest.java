@@ -72,21 +72,21 @@ public class FrameToImageTest
         try
         {
             
-            BufferedImage image     = ImageIO.read(new URL(api.getImageAPI().getMap("map" + match.getMap().getId(), null, null)));
+            BufferedImage image     = ImageIO.read(new URL(api.getImageAPI().getMap("map" + match.getMap().getId(), null)));
             Rectangle     mapBounds = match.getMap().getBounds();
             
             // load icon data
             int                          championSquareOffset  = (int) (120d / 4d);
             int                          championSquarePadding = (int) (120d / 12d);
-            Map<Integer, Item>           items                 = api.getDDragonAPI().getItems(Platform.EUW1, null, null, null).getData();
-            Map<Integer, StaticChampion> champs                = api.getDDragonAPI().getChampions(null, null);
+            Map<Integer, Item>           items                 = api.getDDragonAPI().getItems();
+            Map<Integer, StaticChampion> champs                = api.getDDragonAPI().getChampions();
             Map<Integer, BufferedImage>  championImages        = new HashMap<>();
             Map<Integer, BufferedImage>  itemImages            = new HashMap<>();
             
             match.getParticipants().forEach(p -> {
                 try
                 {
-                    BufferedImage before      = ImageIO.read(new URL(api.getImageAPI().getSquare(champs.get(p.getChampionId()), null, null)));
+                    BufferedImage before      = ImageIO.read(new URL(api.getImageAPI().getSquare(champs.get(p.getChampionId()), null)));
                     double        scaleFactor = 1d / 4d;
                     BufferedImage after       = scaleImage(before, scaleFactor);
                     
@@ -100,7 +100,7 @@ public class FrameToImageTest
             items.values().parallelStream().forEach(i -> {
                 try
                 {
-                    BufferedImage before      = ImageIO.read(new URL(api.getImageAPI().getItem(i, null, null)));
+                    BufferedImage before      = ImageIO.read(new URL(api.getImageAPI().getItem(i, null)));
                     double        scaleFactor = 1d / 2d;
                     BufferedImage after       = scaleImage(before, scaleFactor);
                     

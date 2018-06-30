@@ -128,10 +128,15 @@ public class DataCallBuilder
     
     private String postProcess(String returnValue)
     {
-        
-        if (this.dc.getEndpoint() == URLEndpoint.DDRAGON_CHAMPION_MANY)
+        final List<URLEndpoint> ddragon = Arrays.asList(URLEndpoint.DDRAGON_CHAMPION_MANY, URLEndpoint.DDRAGON_SUMMONER_SPELLS);
+        if (ddragon.contains(this.dc.getEndpoint()))
         {
-            returnValue = postProcessDDragonChampionMany(returnValue);
+            returnValue = postProcessDDragonMany(returnValue);
+        }
+        
+        if (this.dc.getEndpoint() == URLEndpoint.DDRAGON_ITEMS || this.dc.getEndpoint() == URLEndpoint.DDRAGON_RUNES)
+        {
+            returnValue = postProcessDDragonAddId(returnValue);
         }
         
         if (this.dc.getEndpoint() == URLEndpoint.V3_MATCH)
@@ -158,7 +163,7 @@ public class DataCallBuilder
         return returnValue;
     }
     
-    private String postProcessDDragonChampionMany(String returnValue)
+    private String postProcessDDragonMany(String returnValue)
     {
         JsonObject elem   = (JsonObject) new JsonParser().parse(returnValue);
         JsonObject parent = elem.getAsJsonObject("data");
@@ -170,6 +175,19 @@ public class DataCallBuilder
             child.addProperty("id", id);
             parent.add(id, child);
             parent.remove(key);
+        }
+        
+        return Utils.getGson().toJson(elem);
+    }
+    
+    private String postProcessDDragonAddId(String returnValue)
+    {
+        JsonObject elem   = (JsonObject) new JsonParser().parse(returnValue);
+        JsonObject parent = elem.getAsJsonObject("data");
+        for (String key : new HashSet<>(parent.keySet()))
+        {
+            JsonObject child = parent.getAsJsonObject(key);
+            child.addProperty("id", key);
         }
         
         return Utils.getGson().toJson(elem);

@@ -7,8 +7,10 @@ public class StaticMasteryList implements Serializable
 {
     private static final long serialVersionUID = 214283211901387914L;
     
-    private Map<Integer, StaticMastery>        data;
-    private Map<String, List<MasteryTreeList>> tree;
+    private String                                   type;
+    private String                                   version;
+    private Map<Integer, StaticMastery>              data;
+    private Map<String, List<List<MasteryTreeItem>>> tree;
     
     
     /**
@@ -26,7 +28,7 @@ public class StaticMasteryList implements Serializable
      *
      * @return the tree
      */
-    public Map<String, List<MasteryTreeList>> getTree()
+    public Map<String, List<List<MasteryTreeItem>>> getTree()
     {
         return this.tree;
     }

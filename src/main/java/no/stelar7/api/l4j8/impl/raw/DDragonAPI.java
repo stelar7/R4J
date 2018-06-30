@@ -15,6 +15,7 @@ import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.Map.Entry;
 
 public final class DDragonAPI
 {
@@ -152,6 +153,9 @@ public final class DDragonAPI
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
                                                        .withEndpoint(URLEndpoint.DDRAGON_LANGUAGES);
         
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, "");
+        builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, "");
+        
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGES);
         if (chl.isPresent())
@@ -204,7 +208,7 @@ public final class DDragonAPI
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
                                                        .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, version, locale);
@@ -229,12 +233,12 @@ public final class DDragonAPI
         return getMasteries(null, null);
     }
     
-    public Map<String, List<MasteryTreeList>> getMasteryTree(@Nullable String version, @Nullable String locale)
+    public Map<String, List<List<MasteryTreeItem>>> getMasteryTree(@Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
                                                        .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, version, locale);
@@ -254,7 +258,7 @@ public final class DDragonAPI
         }
     }
     
-    public Map<String, List<MasteryTreeList>> getMasteryTree()
+    public Map<String, List<List<MasteryTreeItem>>> getMasteryTree()
     {
         return getMasteryTree(null, null);
     }
@@ -299,9 +303,18 @@ public final class DDragonAPI
         return getProfileIcons(null, null);
     }
     
+    /**
+     * Always returns euw
+     */
     public Realm getRealm()
     {
+        return getRealm(Platform.EUW1);
+    }
+    
+    public Realm getRealm(Platform region)
+    {
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
+                                                       .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
                                                        .withEndpoint(URLEndpoint.DDRAGON_REALMS);
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS);
@@ -326,7 +339,7 @@ public final class DDragonAPI
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
                                                        .withEndpoint(URLEndpoint.DDRAGON_RUNES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_RUNES, version, locale);
@@ -426,32 +439,31 @@ public final class DDragonAPI
         }
     }
     
-    public List<StaticPerk> getPerks(@Nullable String version, @Nullable String locale)
+    public Map<Integer, StaticPerk> getPerks(@Nullable String version, @Nullable String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_PERKS);
-        
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
-        builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
-        
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PERKS, version, locale);
         if (chl.isPresent())
         {
-            return (List<StaticPerk>) chl.get();
+            return (Map<Integer, StaticPerk>) chl.get();
         }
         
-        try
+        Map<Integer, StaticPerk> perks = new HashMap<>();
+        for (Entry<Integer, PerkPath> path : getPerkPaths(version, locale).entrySet())
         {
-            List<StaticPerk> list = (List<StaticPerk>) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PERKS, list, version, locale);
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
+            for (PerkSlot slot : path.getValue().getSlots())
+            {
+                for (StaticPerk perk : slot.getRunes())
+                {
+                    perks.put(perk.getId(), perk);
+                }
+            }
         }
+        
+        DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PERKS, perks, version, locale);
+        return perks;
     }
     
-    public List<StaticPerk> getPerks()
+    public Map<Integer, StaticPerk> getPerks()
     {
         return getPerks(null, null);
     }
@@ -466,7 +478,7 @@ public final class DDragonAPI
         return getPerk(id, null, null);
     }
     
-    public List<PerkPath> getPerkPaths(@Nullable String version, @Nullable String locale)
+    public Map<Integer, PerkPath> getPerkPaths(@Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
                                                        .withEndpoint(URLEndpoint.DDRAGON_PERKPATHS);
@@ -477,21 +489,27 @@ public final class DDragonAPI
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PERKPATHS, version, locale);
         if (chl.isPresent())
         {
-            return (List<PerkPath>) chl.get();
+            return (Map<Integer, PerkPath>) chl.get();
         }
         
         try
         {
-            List<PerkPath> list = (List<PerkPath>) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PERKPATHS, list, version, locale);
-            return list;
+            List<PerkPath>         list  = (List<PerkPath>) builder.build();
+            Map<Integer, PerkPath> paths = new HashMap<>();
+            for (PerkPath path : list)
+            {
+                paths.put(path.getId(), path);
+            }
+            
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PERKPATHS, paths, version, locale);
+            return paths;
         } catch (ClassCastException e)
         {
             return null;
         }
     }
     
-    public List<PerkPath> getPerkPaths()
+    public Map<Integer, PerkPath> getPerkPaths()
     {
         return getPerkPaths(null, null);
     }

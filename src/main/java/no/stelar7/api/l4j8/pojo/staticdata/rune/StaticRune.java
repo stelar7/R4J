@@ -27,7 +27,6 @@ public class StaticRune implements Serializable
     private boolean              consumeOnFull;
     private String               name;
     private boolean              consumed;
-    private String               sanitizedDescription;
     private int                  depth;
     private MetaData             rune;
     private int                  stacks;
@@ -118,10 +117,6 @@ public class StaticRune implements Serializable
         return consumed;
     }
     
-    public String getSanitizedDescription()
-    {
-        return sanitizedDescription;
-    }
     
     public int getDepth()
     {
@@ -237,10 +232,6 @@ public class StaticRune implements Serializable
         {
             return false;
         }
-        if ((sanitizedDescription != null) ? !sanitizedDescription.equals(that.sanitizedDescription) : (that.sanitizedDescription != null))
-        {
-            return false;
-        }
         return (rune != null) ? rune.equals(that.rune) : (that.rune == null);
     }
     
@@ -265,7 +256,6 @@ public class StaticRune implements Serializable
         result = 31 * result + (consumeOnFull ? 1 : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (consumed ? 1 : 0);
-        result = 31 * result + (sanitizedDescription != null ? sanitizedDescription.hashCode() : 0);
         result = 31 * result + depth;
         result = 31 * result + (rune != null ? rune.hashCode() : 0);
         result = 31 * result + stacks;
@@ -294,7 +284,6 @@ public class StaticRune implements Serializable
                ", consumeOnFull=" + consumeOnFull +
                ", name='" + name + '\'' +
                ", consumed=" + consumed +
-               ", sanitizedDescription='" + sanitizedDescription + '\'' +
                ", depth=" + depth +
                ", rune=" + rune +
                ", stacks=" + stacks +
