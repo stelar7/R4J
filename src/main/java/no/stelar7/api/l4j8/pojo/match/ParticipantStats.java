@@ -9,75 +9,85 @@ public class ParticipantStats implements Serializable
 {
     private static final long serialVersionUID = -2910190875533332744L;
     
-    private long       assists;
-    private long       champLevel;
-    private long       combatPlayerScore;
-    private long       damageSelfMitigated;
-    private long       damageDealtToTurrets;
-    private long       damageDealtToObjectives;
-    private long       deaths;
-    private long       doubleKills;
-    private boolean    firstBloodAssist;
-    private boolean    firstBloodKill;
-    private boolean    firstInhibitorAssist;
-    private boolean    firstInhibitorKill;
-    private boolean    firstTowerAssist;
-    private boolean    firstTowerKill;
-    private long       goldEarned;
-    private long       goldSpent;
-    private long       inhibitorKills;
-    private long       item0;
-    private long       item1;
-    private long       item2;
-    private long       item3;
-    private long       item4;
-    private long       item5;
-    private long       item6;
-    private long       killingSprees;
-    private long       kills;
-    private long       largestCriticalStrike;
-    private long       largestKillingSpree;
-    private long       largestMultiKill;
-    private long       longestTimeSpentLiving;
-    private long       magicDamageDealt;
-    private long       magicDamageDealtToChampions;
-    private long       magicalDamageTaken;
-    private long       neutralMinionsKilled;
-    private long       neutralMinionsKilledEnemyJungle;
-    private long       neutralMinionsKilledTeamJungle;
-    private long       nodeCapture;
-    private long       nodeCaptureAssist;
-    private long       nodeNeutralize;
-    private long       nodeNeutralizeAssist;
-    private long       objectivePlayerScore;
-    private long       pentaKills;
-    private long       physicalDamageDealt;
-    private long       physicalDamageDealtToChampions;
-    private long       physicalDamageTaken;
-    private long       quadraKills;
-    private long       sightWardsBoughtInGame;
-    private long       teamObjective;
-    private long       timeCCingOthers;
-    private long       totalDamageDealt;
-    private long       totalDamageDealtToChampions;
-    private long       totalDamageTaken;
-    private long       totalHeal;
-    private long       totalMinionsKilled;
-    private long       totalPlayerScore;
-    private long       totalScoreRank;
-    private long       totalTimeCrowdControlDealt;
-    private long       totalUnitsHealed;
-    private long       turretKills;
-    private long       tripleKills;
-    private long       trueDamageDealt;
-    private long       trueDamageDealtToChampions;
-    private long       trueDamageTaken;
-    private long       unrealKills;
-    private long       visionScore;
-    private long       visionWardsBoughtInGame;
-    private long       wardsKilled;
-    private long       wardsPlaced;
-    private boolean    win;
+    private long    assists;
+    private long    champLevel;
+    private long    combatPlayerScore;
+    private long    damageSelfMitigated;
+    private long    damageDealtToTurrets;
+    private long    damageDealtToObjectives;
+    private long    deaths;
+    private long    doubleKills;
+    private boolean firstBloodAssist;
+    private boolean firstBloodKill;
+    private boolean firstInhibitorAssist;
+    private boolean firstInhibitorKill;
+    private boolean firstTowerAssist;
+    private boolean firstTowerKill;
+    private long    goldEarned;
+    private long    goldSpent;
+    private long    inhibitorKills;
+    private long    item0;
+    private long    item1;
+    private long    item2;
+    private long    item3;
+    private long    item4;
+    private long    item5;
+    private long    item6;
+    private long    killingSprees;
+    private long    kills;
+    private long    largestCriticalStrike;
+    private long    largestKillingSpree;
+    private long    largestMultiKill;
+    private long    longestTimeSpentLiving;
+    private long    magicDamageDealt;
+    private long    magicDamageDealtToChampions;
+    private long    magicalDamageTaken;
+    private long    neutralMinionsKilled;
+    private long    neutralMinionsKilledEnemyJungle;
+    private long    neutralMinionsKilledTeamJungle;
+    private long    nodeCapture;
+    private long    nodeCaptureAssist;
+    private long    nodeNeutralize;
+    private long    nodeNeutralizeAssist;
+    private long    objectivePlayerScore;
+    private long    pentaKills;
+    private long    physicalDamageDealt;
+    private long    physicalDamageDealtToChampions;
+    private long    physicalDamageTaken;
+    private long    playerScore0;
+    private long    playerScore1;
+    private long    playerScore2;
+    private long    playerScore3;
+    private long    playerScore4;
+    private long    playerScore5;
+    private long    playerScore6;
+    private long    playerScore7;
+    private long    playerScore8;
+    private long    playerScore9;
+    private long    quadraKills;
+    private long    sightWardsBoughtInGame;
+    private long    teamObjective;
+    private long    timeCCingOthers;
+    private long    totalDamageDealt;
+    private long    totalDamageDealtToChampions;
+    private long    totalDamageTaken;
+    private long    totalHeal;
+    private long    totalMinionsKilled;
+    private long    totalPlayerScore;
+    private long    totalScoreRank;
+    private long    totalTimeCrowdControlDealt;
+    private long    totalUnitsHealed;
+    private long    turretKills;
+    private long    tripleKills;
+    private long    trueDamageDealt;
+    private long    trueDamageDealtToChampions;
+    private long    trueDamageTaken;
+    private long    unrealKills;
+    private long    visionScore;
+    private long    visionWardsBoughtInGame;
+    private long    wardsKilled;
+    private long    wardsPlaced;
+    private boolean win;
     
     
     /**
@@ -763,6 +773,161 @@ public class ParticipantStats implements Serializable
         return visionScore;
     }
     
+    public long getPlayerScore0()
+    {
+        return playerScore0;
+    }
+    
+    public long getPlayerScore1()
+    {
+        return playerScore1;
+    }
+    
+    public long getPlayerScore2()
+    {
+        return playerScore2;
+    }
+    
+    public long getPlayerScore3()
+    {
+        return playerScore3;
+    }
+    
+    public long getPlayerScore4()
+    {
+        return playerScore4;
+    }
+    
+    public long getPlayerScore5()
+    {
+        return playerScore5;
+    }
+    
+    public long getPlayerScore6()
+    {
+        return playerScore6;
+    }
+    
+    public long getPlayerScore7()
+    {
+        return playerScore7;
+    }
+    
+    public long getPlayerScore8()
+    {
+        return playerScore8;
+    }
+    
+    public long getPlayerScore9()
+    {
+        return playerScore9;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        ParticipantStats that = (ParticipantStats) o;
+        return assists == that.assists &&
+               champLevel == that.champLevel &&
+               combatPlayerScore == that.combatPlayerScore &&
+               damageSelfMitigated == that.damageSelfMitigated &&
+               damageDealtToTurrets == that.damageDealtToTurrets &&
+               damageDealtToObjectives == that.damageDealtToObjectives &&
+               deaths == that.deaths &&
+               doubleKills == that.doubleKills &&
+               firstBloodAssist == that.firstBloodAssist &&
+               firstBloodKill == that.firstBloodKill &&
+               firstInhibitorAssist == that.firstInhibitorAssist &&
+               firstInhibitorKill == that.firstInhibitorKill &&
+               firstTowerAssist == that.firstTowerAssist &&
+               firstTowerKill == that.firstTowerKill &&
+               goldEarned == that.goldEarned &&
+               goldSpent == that.goldSpent &&
+               inhibitorKills == that.inhibitorKills &&
+               item0 == that.item0 &&
+               item1 == that.item1 &&
+               item2 == that.item2 &&
+               item3 == that.item3 &&
+               item4 == that.item4 &&
+               item5 == that.item5 &&
+               item6 == that.item6 &&
+               killingSprees == that.killingSprees &&
+               kills == that.kills &&
+               largestCriticalStrike == that.largestCriticalStrike &&
+               largestKillingSpree == that.largestKillingSpree &&
+               largestMultiKill == that.largestMultiKill &&
+               longestTimeSpentLiving == that.longestTimeSpentLiving &&
+               magicDamageDealt == that.magicDamageDealt &&
+               magicDamageDealtToChampions == that.magicDamageDealtToChampions &&
+               magicalDamageTaken == that.magicalDamageTaken &&
+               neutralMinionsKilled == that.neutralMinionsKilled &&
+               neutralMinionsKilledEnemyJungle == that.neutralMinionsKilledEnemyJungle &&
+               neutralMinionsKilledTeamJungle == that.neutralMinionsKilledTeamJungle &&
+               nodeCapture == that.nodeCapture &&
+               nodeCaptureAssist == that.nodeCaptureAssist &&
+               nodeNeutralize == that.nodeNeutralize &&
+               nodeNeutralizeAssist == that.nodeNeutralizeAssist &&
+               objectivePlayerScore == that.objectivePlayerScore &&
+               pentaKills == that.pentaKills &&
+               physicalDamageDealt == that.physicalDamageDealt &&
+               physicalDamageDealtToChampions == that.physicalDamageDealtToChampions &&
+               physicalDamageTaken == that.physicalDamageTaken &&
+               playerScore0 == that.playerScore0 &&
+               playerScore1 == that.playerScore1 &&
+               playerScore2 == that.playerScore2 &&
+               playerScore3 == that.playerScore3 &&
+               playerScore4 == that.playerScore4 &&
+               playerScore5 == that.playerScore5 &&
+               playerScore6 == that.playerScore6 &&
+               playerScore7 == that.playerScore7 &&
+               playerScore8 == that.playerScore8 &&
+               playerScore9 == that.playerScore9 &&
+               quadraKills == that.quadraKills &&
+               sightWardsBoughtInGame == that.sightWardsBoughtInGame &&
+               teamObjective == that.teamObjective &&
+               timeCCingOthers == that.timeCCingOthers &&
+               totalDamageDealt == that.totalDamageDealt &&
+               totalDamageDealtToChampions == that.totalDamageDealtToChampions &&
+               totalDamageTaken == that.totalDamageTaken &&
+               totalHeal == that.totalHeal &&
+               totalMinionsKilled == that.totalMinionsKilled &&
+               totalPlayerScore == that.totalPlayerScore &&
+               totalScoreRank == that.totalScoreRank &&
+               totalTimeCrowdControlDealt == that.totalTimeCrowdControlDealt &&
+               totalUnitsHealed == that.totalUnitsHealed &&
+               turretKills == that.turretKills &&
+               tripleKills == that.tripleKills &&
+               trueDamageDealt == that.trueDamageDealt &&
+               trueDamageDealtToChampions == that.trueDamageDealtToChampions &&
+               trueDamageTaken == that.trueDamageTaken &&
+               unrealKills == that.unrealKills &&
+               visionScore == that.visionScore &&
+               visionWardsBoughtInGame == that.visionWardsBoughtInGame &&
+               wardsKilled == that.wardsKilled &&
+               wardsPlaced == that.wardsPlaced &&
+               win == that.win;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(assists, champLevel, combatPlayerScore, damageSelfMitigated, damageDealtToTurrets, damageDealtToObjectives, deaths, doubleKills, firstBloodAssist, firstBloodKill, firstInhibitorAssist, firstInhibitorKill,
+                            firstTowerAssist, firstTowerKill, goldEarned, goldSpent, inhibitorKills, item0, item1, item2, item3, item4, item5, item6, killingSprees, kills, largestCriticalStrike, largestKillingSpree, largestMultiKill,
+                            longestTimeSpentLiving, magicDamageDealt, magicDamageDealtToChampions, magicalDamageTaken, neutralMinionsKilled, neutralMinionsKilledEnemyJungle, neutralMinionsKilledTeamJungle, nodeCapture, nodeCaptureAssist,
+                            nodeNeutralize, nodeNeutralizeAssist, objectivePlayerScore, pentaKills, physicalDamageDealt, physicalDamageDealtToChampions, physicalDamageTaken, playerScore0, playerScore1, playerScore2, playerScore3,
+                            playerScore4, playerScore5, playerScore6, playerScore7, playerScore8, playerScore9, quadraKills, sightWardsBoughtInGame, teamObjective, timeCCingOthers, totalDamageDealt, totalDamageDealtToChampions,
+                            totalDamageTaken, totalHeal, totalMinionsKilled, totalPlayerScore, totalScoreRank, totalTimeCrowdControlDealt, totalUnitsHealed, turretKills, tripleKills, trueDamageDealt, trueDamageDealtToChampions,
+                            trueDamageTaken, unrealKills, visionScore, visionWardsBoughtInGame, wardsKilled, wardsPlaced, win);
+    }
+    
     @Override
     public String toString()
     {
@@ -812,6 +977,16 @@ public class ParticipantStats implements Serializable
                ", physicalDamageDealt=" + physicalDamageDealt +
                ", physicalDamageDealtToChampions=" + physicalDamageDealtToChampions +
                ", physicalDamageTaken=" + physicalDamageTaken +
+               ", playerScore0=" + playerScore0 +
+               ", playerScore1=" + playerScore1 +
+               ", playerScore2=" + playerScore2 +
+               ", playerScore3=" + playerScore3 +
+               ", playerScore4=" + playerScore4 +
+               ", playerScore5=" + playerScore5 +
+               ", playerScore6=" + playerScore6 +
+               ", playerScore7=" + playerScore7 +
+               ", playerScore8=" + playerScore8 +
+               ", playerScore9=" + playerScore9 +
                ", quadraKills=" + quadraKills +
                ", sightWardsBoughtInGame=" + sightWardsBoughtInGame +
                ", teamObjective=" + teamObjective +
@@ -837,369 +1012,5 @@ public class ParticipantStats implements Serializable
                ", wardsPlaced=" + wardsPlaced +
                ", win=" + win +
                '}';
-    }
-    
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass())
-        {
-            return false;
-        }
-        
-        ParticipantStats that = (ParticipantStats) o;
-        
-        if (assists != that.assists)
-        {
-            return false;
-        }
-        if (champLevel != that.champLevel)
-        {
-            return false;
-        }
-        if (combatPlayerScore != that.combatPlayerScore)
-        {
-            return false;
-        }
-        if (damageSelfMitigated != that.damageSelfMitigated)
-        {
-            return false;
-        }
-        if (damageDealtToTurrets != that.damageDealtToTurrets)
-        {
-            return false;
-        }
-        if (damageDealtToObjectives != that.damageDealtToObjectives)
-        {
-            return false;
-        }
-        if (deaths != that.deaths)
-        {
-            return false;
-        }
-        if (doubleKills != that.doubleKills)
-        {
-            return false;
-        }
-        if (firstBloodAssist != that.firstBloodAssist)
-        {
-            return false;
-        }
-        if (firstBloodKill != that.firstBloodKill)
-        {
-            return false;
-        }
-        if (firstInhibitorAssist != that.firstInhibitorAssist)
-        {
-            return false;
-        }
-        if (firstInhibitorKill != that.firstInhibitorKill)
-        {
-            return false;
-        }
-        if (firstTowerAssist != that.firstTowerAssist)
-        {
-            return false;
-        }
-        if (firstTowerKill != that.firstTowerKill)
-        {
-            return false;
-        }
-        if (goldEarned != that.goldEarned)
-        {
-            return false;
-        }
-        if (goldSpent != that.goldSpent)
-        {
-            return false;
-        }
-        if (inhibitorKills != that.inhibitorKills)
-        {
-            return false;
-        }
-        if (item0 != that.item0)
-        {
-            return false;
-        }
-        if (item1 != that.item1)
-        {
-            return false;
-        }
-        if (item2 != that.item2)
-        {
-            return false;
-        }
-        if (item3 != that.item3)
-        {
-            return false;
-        }
-        if (item4 != that.item4)
-        {
-            return false;
-        }
-        if (item5 != that.item5)
-        {
-            return false;
-        }
-        if (item6 != that.item6)
-        {
-            return false;
-        }
-        if (killingSprees != that.killingSprees)
-        {
-            return false;
-        }
-        if (kills != that.kills)
-        {
-            return false;
-        }
-        if (largestCriticalStrike != that.largestCriticalStrike)
-        {
-            return false;
-        }
-        if (largestKillingSpree != that.largestKillingSpree)
-        {
-            return false;
-        }
-        if (largestMultiKill != that.largestMultiKill)
-        {
-            return false;
-        }
-        if (longestTimeSpentLiving != that.longestTimeSpentLiving)
-        {
-            return false;
-        }
-        if (magicDamageDealt != that.magicDamageDealt)
-        {
-            return false;
-        }
-        if (magicDamageDealtToChampions != that.magicDamageDealtToChampions)
-        {
-            return false;
-        }
-        if (magicalDamageTaken != that.magicalDamageTaken)
-        {
-            return false;
-        }
-        if (neutralMinionsKilled != that.neutralMinionsKilled)
-        {
-            return false;
-        }
-        if (neutralMinionsKilledEnemyJungle != that.neutralMinionsKilledEnemyJungle)
-        {
-            return false;
-        }
-        if (neutralMinionsKilledTeamJungle != that.neutralMinionsKilledTeamJungle)
-        {
-            return false;
-        }
-        if (nodeCapture != that.nodeCapture)
-        {
-            return false;
-        }
-        if (nodeCaptureAssist != that.nodeCaptureAssist)
-        {
-            return false;
-        }
-        if (nodeNeutralize != that.nodeNeutralize)
-        {
-            return false;
-        }
-        if (nodeNeutralizeAssist != that.nodeNeutralizeAssist)
-        {
-            return false;
-        }
-        if (objectivePlayerScore != that.objectivePlayerScore)
-        {
-            return false;
-        }
-        if (pentaKills != that.pentaKills)
-        {
-            return false;
-        }
-        if (physicalDamageDealt != that.physicalDamageDealt)
-        {
-            return false;
-        }
-        if (physicalDamageDealtToChampions != that.physicalDamageDealtToChampions)
-        {
-            return false;
-        }
-        if (physicalDamageTaken != that.physicalDamageTaken)
-        {
-            return false;
-        }
-        if (quadraKills != that.quadraKills)
-        {
-            return false;
-        }
-        if (sightWardsBoughtInGame != that.sightWardsBoughtInGame)
-        {
-            return false;
-        }
-        if (teamObjective != that.teamObjective)
-        {
-            return false;
-        }
-        if (timeCCingOthers != that.timeCCingOthers)
-        {
-            return false;
-        }
-        if (totalDamageDealt != that.totalDamageDealt)
-        {
-            return false;
-        }
-        if (totalDamageDealtToChampions != that.totalDamageDealtToChampions)
-        {
-            return false;
-        }
-        if (totalDamageTaken != that.totalDamageTaken)
-        {
-            return false;
-        }
-        if (totalHeal != that.totalHeal)
-        {
-            return false;
-        }
-        if (totalMinionsKilled != that.totalMinionsKilled)
-        {
-            return false;
-        }
-        if (totalPlayerScore != that.totalPlayerScore)
-        {
-            return false;
-        }
-        if (totalScoreRank != that.totalScoreRank)
-        {
-            return false;
-        }
-        if (totalTimeCrowdControlDealt != that.totalTimeCrowdControlDealt)
-        {
-            return false;
-        }
-        if (totalUnitsHealed != that.totalUnitsHealed)
-        {
-            return false;
-        }
-        if (turretKills != that.turretKills)
-        {
-            return false;
-        }
-        if (tripleKills != that.tripleKills)
-        {
-            return false;
-        }
-        if (trueDamageDealt != that.trueDamageDealt)
-        {
-            return false;
-        }
-        if (trueDamageDealtToChampions != that.trueDamageDealtToChampions)
-        {
-            return false;
-        }
-        if (trueDamageTaken != that.trueDamageTaken)
-        {
-            return false;
-        }
-        if (unrealKills != that.unrealKills)
-        {
-            return false;
-        }
-        if (visionScore != that.visionScore)
-        {
-            return false;
-        }
-        if (visionWardsBoughtInGame != that.visionWardsBoughtInGame)
-        {
-            return false;
-        }
-        if (wardsKilled != that.wardsKilled)
-        {
-            return false;
-        }
-        if (wardsPlaced != that.wardsPlaced)
-        {
-            return false;
-        }
-        return win == that.win;
-    }
-    
-    @Override
-    public int hashCode()
-    {
-        int result = (int) (assists ^ (assists >>> 32));
-        result = 31 * result + (int) (champLevel ^ (champLevel >>> 32));
-        result = 31 * result + (int) (combatPlayerScore ^ (combatPlayerScore >>> 32));
-        result = 31 * result + (int) (damageSelfMitigated ^ (damageSelfMitigated >>> 32));
-        result = 31 * result + (int) (damageDealtToTurrets ^ (damageDealtToTurrets >>> 32));
-        result = 31 * result + (int) (damageDealtToObjectives ^ (damageDealtToObjectives >>> 32));
-        result = 31 * result + (int) (deaths ^ (deaths >>> 32));
-        result = 31 * result + (int) (doubleKills ^ (doubleKills >>> 32));
-        result = 31 * result + (firstBloodAssist ? 1 : 0);
-        result = 31 * result + (firstBloodKill ? 1 : 0);
-        result = 31 * result + (firstInhibitorAssist ? 1 : 0);
-        result = 31 * result + (firstInhibitorKill ? 1 : 0);
-        result = 31 * result + (firstTowerAssist ? 1 : 0);
-        result = 31 * result + (firstTowerKill ? 1 : 0);
-        result = 31 * result + (int) (goldEarned ^ (goldEarned >>> 32));
-        result = 31 * result + (int) (goldSpent ^ (goldSpent >>> 32));
-        result = 31 * result + (int) (inhibitorKills ^ (inhibitorKills >>> 32));
-        result = 31 * result + (int) (item0 ^ (item0 >>> 32));
-        result = 31 * result + (int) (item1 ^ (item1 >>> 32));
-        result = 31 * result + (int) (item2 ^ (item2 >>> 32));
-        result = 31 * result + (int) (item3 ^ (item3 >>> 32));
-        result = 31 * result + (int) (item4 ^ (item4 >>> 32));
-        result = 31 * result + (int) (item5 ^ (item5 >>> 32));
-        result = 31 * result + (int) (item6 ^ (item6 >>> 32));
-        result = 31 * result + (int) (killingSprees ^ (killingSprees >>> 32));
-        result = 31 * result + (int) (kills ^ (kills >>> 32));
-        result = 31 * result + (int) (largestCriticalStrike ^ (largestCriticalStrike >>> 32));
-        result = 31 * result + (int) (largestKillingSpree ^ (largestKillingSpree >>> 32));
-        result = 31 * result + (int) (largestMultiKill ^ (largestMultiKill >>> 32));
-        result = 31 * result + (int) (longestTimeSpentLiving ^ (longestTimeSpentLiving >>> 32));
-        result = 31 * result + (int) (magicDamageDealt ^ (magicDamageDealt >>> 32));
-        result = 31 * result + (int) (magicDamageDealtToChampions ^ (magicDamageDealtToChampions >>> 32));
-        result = 31 * result + (int) (magicalDamageTaken ^ (magicalDamageTaken >>> 32));
-        result = 31 * result + (int) (neutralMinionsKilled ^ (neutralMinionsKilled >>> 32));
-        result = 31 * result + (int) (neutralMinionsKilledEnemyJungle ^ (neutralMinionsKilledEnemyJungle >>> 32));
-        result = 31 * result + (int) (neutralMinionsKilledTeamJungle ^ (neutralMinionsKilledTeamJungle >>> 32));
-        result = 31 * result + (int) (nodeCapture ^ (nodeCapture >>> 32));
-        result = 31 * result + (int) (nodeCaptureAssist ^ (nodeCaptureAssist >>> 32));
-        result = 31 * result + (int) (nodeNeutralize ^ (nodeNeutralize >>> 32));
-        result = 31 * result + (int) (nodeNeutralizeAssist ^ (nodeNeutralizeAssist >>> 32));
-        result = 31 * result + (int) (objectivePlayerScore ^ (objectivePlayerScore >>> 32));
-        result = 31 * result + (int) (pentaKills ^ (pentaKills >>> 32));
-        result = 31 * result + (int) (physicalDamageDealt ^ (physicalDamageDealt >>> 32));
-        result = 31 * result + (int) (physicalDamageDealtToChampions ^ (physicalDamageDealtToChampions >>> 32));
-        result = 31 * result + (int) (physicalDamageTaken ^ (physicalDamageTaken >>> 32));
-        result = 31 * result + (int) (quadraKills ^ (quadraKills >>> 32));
-        result = 31 * result + (int) (sightWardsBoughtInGame ^ (sightWardsBoughtInGame >>> 32));
-        result = 31 * result + (int) (teamObjective ^ (teamObjective >>> 32));
-        result = 31 * result + (int) (timeCCingOthers ^ (timeCCingOthers >>> 32));
-        result = 31 * result + (int) (totalDamageDealt ^ (totalDamageDealt >>> 32));
-        result = 31 * result + (int) (totalDamageDealtToChampions ^ (totalDamageDealtToChampions >>> 32));
-        result = 31 * result + (int) (totalDamageTaken ^ (totalDamageTaken >>> 32));
-        result = 31 * result + (int) (totalHeal ^ (totalHeal >>> 32));
-        result = 31 * result + (int) (totalMinionsKilled ^ (totalMinionsKilled >>> 32));
-        result = 31 * result + (int) (totalPlayerScore ^ (totalPlayerScore >>> 32));
-        result = 31 * result + (int) (totalScoreRank ^ (totalScoreRank >>> 32));
-        result = 31 * result + (int) (totalTimeCrowdControlDealt ^ (totalTimeCrowdControlDealt >>> 32));
-        result = 31 * result + (int) (totalUnitsHealed ^ (totalUnitsHealed >>> 32));
-        result = 31 * result + (int) (turretKills ^ (turretKills >>> 32));
-        result = 31 * result + (int) (tripleKills ^ (tripleKills >>> 32));
-        result = 31 * result + (int) (trueDamageDealt ^ (trueDamageDealt >>> 32));
-        result = 31 * result + (int) (trueDamageDealtToChampions ^ (trueDamageDealtToChampions >>> 32));
-        result = 31 * result + (int) (trueDamageTaken ^ (trueDamageTaken >>> 32));
-        result = 31 * result + (int) (unrealKills ^ (unrealKills >>> 32));
-        result = 31 * result + (int) (visionScore ^ (visionScore >>> 32));
-        result = 31 * result + (int) (visionWardsBoughtInGame ^ (visionWardsBoughtInGame >>> 32));
-        result = 31 * result + (int) (wardsKilled ^ (wardsKilled >>> 32));
-        result = 31 * result + (int) (wardsPlaced ^ (wardsPlaced >>> 32));
-        result = 31 * result + (win ? 1 : 0);
-        return result;
     }
 }
