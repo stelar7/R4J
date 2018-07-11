@@ -116,8 +116,20 @@ public abstract class RateLimiter
     {
         if (oldLimit != null)
         {
-            this.callCountInTime = oldLimit.getCallCountInTime();
-            this.firstCallInTime = oldLimit.getFirstCallInTime();
+            oldLimit.getCallCountInTime().forEach((key, value) -> {
+                if (callCountInTime.containsKey(key))
+                {
+                    callCountInTime.put(key, value);
+                }
+            });
+    
+            oldLimit.getFirstCallInTime().forEach((key, value) -> {
+                if (firstCallInTime.containsKey(key))
+                {
+                    firstCallInTime.put(key, value);
+                }
+            });
+            
             this.overloadTimer = oldLimit.overloadTimer;
         }
     }
