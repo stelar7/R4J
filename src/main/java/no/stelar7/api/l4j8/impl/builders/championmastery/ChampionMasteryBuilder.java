@@ -112,7 +112,7 @@ public class ChampionMasteryBuilder
     {
         List<ChampionMastery> list = getChampionMasteries();
         
-        return list.stream().sorted(Comparator.comparing(ChampionMastery::getChampionPoints))
+        return list.stream().sorted(Comparator.comparing(ChampionMastery::getChampionPoints).reversed())
                    .limit(count != null ? count : 3)
                    .collect(Collectors.toList());
         

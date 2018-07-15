@@ -30,6 +30,14 @@ public class ChampionMasteryTest
         
     }
     
+    
+    @Test
+    public void testChampionMasteryTop()
+    {
+        List<ChampionMastery> all = new ChampionMasteryBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getTopChampions(null);
+        assert all != null;
+    }
+    
     @Test
     public void testChampionMasteryAll()
     {
