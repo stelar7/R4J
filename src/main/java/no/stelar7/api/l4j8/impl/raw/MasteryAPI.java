@@ -72,7 +72,7 @@ public final class MasteryAPI
     {
         List<ChampionMastery> list = getChampionMasteries(server, summonerId);
         
-        return list.stream().sorted(Comparator.comparing(ChampionMastery::getChampionPoints))
+        return list.stream().sorted(Comparator.comparing(ChampionMastery::getChampionPoints).reversed())
                    .limit(count != null ? count : 3)
                    .collect(Collectors.toList());
         
