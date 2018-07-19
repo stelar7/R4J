@@ -18,4 +18,10 @@ public class StatusTest
     {
         ShardStatus status = api.getShardStatus(Platform.EUW1);
     }
+    
+    @Test
+    public void testNullInit() {
+        final L4J8 l4j8 = new L4J8(null);
+        l4j8.getDDragonAPI().getRealm();
+    }
 }

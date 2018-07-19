@@ -44,23 +44,24 @@ public class DataCallBuilder
      */
     public Object build(int... retrys)
     {
-        if (DataCall.getCredentials() == null)
-        {
-            throw new APIUnsupportedActionException("No API Creds set!");
-        }
-        
-        dc.getUrlHeaders().put("X-Riot-Token", DataCall.getCredentials().getBaseAPIKey());
-        final String url = this.getURL();
-        
-        DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Trying url: %s", url));
-        
         if (!this.dc.getEndpoint().isDDragon())
         {
+            if (DataCall.getCredentials() == null)
+            {
+                throw new APIUnsupportedActionException("No API Creds set!");
+            }
+            
+            dc.getUrlHeaders().put("X-Riot-Token", DataCall.getCredentials().getBaseAPIKey());
+            
             // app limit
             applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
             // method limit
             applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
         }
+        
+        
+        final String url = this.getURL();
+        DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Trying url: %s", url));
         
         final DataCallResponse response = this.getResponse(url);
         DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, response.toString());
