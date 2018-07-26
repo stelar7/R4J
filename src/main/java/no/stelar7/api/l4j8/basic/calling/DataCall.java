@@ -29,6 +29,7 @@ public final class DataCall
     
     private        Enum        platform;
     private        URLEndpoint endpoint;
+    private        Platform    defaultPlatform  = Platform.EUW1;
     private static String      urlProxy         = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/l4j8");
     
@@ -65,6 +66,8 @@ public final class DataCall
     
     public Enum getPlatform()
     {
+        if(platform == null) return defaultPlatform;
+        if(platform == Platform.UNKNOWN) return defaultPlatform;
         return platform;
     }
     
@@ -139,6 +142,16 @@ public final class DataCall
     public String getProxy()
     {
         return urlProxy;
+    }
+    
+    public Platform getDefaultPlatform()
+    {
+        return defaultPlatform;
+    }
+    
+    public void setDefaultPlatform(Platform defaultPlatform)
+    {
+        this.defaultPlatform = defaultPlatform;
     }
     
     public static int getCallStackSkip()
