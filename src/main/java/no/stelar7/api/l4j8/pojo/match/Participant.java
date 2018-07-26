@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.impl.raw.DDragonAPI;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.io.Serializable;
 import java.util.*;
@@ -41,6 +43,11 @@ public class Participant implements Serializable
     public int getChampionId()
     {
         return championId;
+    }
+    
+    
+    public StaticChampion getChampion() {
+        return DDragonAPI.getInstance().getChampion(championId);
     }
     
     

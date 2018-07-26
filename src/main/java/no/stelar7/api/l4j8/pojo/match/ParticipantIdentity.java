@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.pojo.match;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -19,6 +20,15 @@ public class ParticipantIdentity implements Serializable
     private long     accountId;
     private long     currentAccountId;
     
+    public Summoner getCurrentSummoner()
+    {
+        return Summoner.byAccountId(currentAccountId, currentPlatformId);
+    }
+    
+    public Summoner getOldSummoner()
+    {
+        return Summoner.byAccountId(accountId, platformId);
+    }
     
     public int getParticipantId()
     {

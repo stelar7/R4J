@@ -4,6 +4,8 @@ import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.builders.match.MatchBuilder;
 import no.stelar7.api.l4j8.impl.builders.match.TimelineBuilder;
+import no.stelar7.api.l4j8.impl.raw.DDragonAPI;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.io.Serializable;
 import java.time.*;
@@ -41,6 +43,12 @@ public class MatchReference implements Serializable
     {
         return this.champion;
     }
+    
+    
+    public StaticChampion getChampion() {
+        return DDragonAPI.getInstance().getChampion(champion);
+    }
+    
     
     
     /**
