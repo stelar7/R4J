@@ -87,6 +87,7 @@ public class MatchListTest
     @Test
     public void testMatchlistError()
     {
+        l4j8.getDDragonAPI().getRealm();
         Platform region    = Constants.TEST_PLATFORM[0];
         long     accountId = Constants.TEST_ACCOUNT_IDS[0];
         
