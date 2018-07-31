@@ -85,6 +85,21 @@ public class MatchListTest
     }
     
     @Test
+    public void testMatchlistError()
+    {
+        Platform region    = Constants.TEST_PLATFORM[0];
+        long     accountId = Constants.TEST_ACCOUNT_IDS[0];
+        
+        Set<GameQueueType> queueTypes = new HashSet<>();
+        queueTypes.add(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
+        
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        List<MatchReference> refs = l4j8.getMatchAPI().getMatchList(region, accountId, null, null, null, null, queueTypes, null, null);
+        System.out.println(refs);
+    }
+    
+    
+    @Test
     public void testMatchlistAllLazy()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());

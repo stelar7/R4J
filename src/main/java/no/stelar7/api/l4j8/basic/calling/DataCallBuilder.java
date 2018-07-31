@@ -445,14 +445,14 @@ public class DataCallBuilder
             
             
             StringBuilder sb = new StringBuilder();
-            con.getRequestProperties().forEach((key, value) -> sb.append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
+            con.getRequestProperties().forEach((key, value) -> sb.append(String.format(Constants.TABBED2X_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
             
-            String printMe = new StringBuilder()
-                    .append(String.format(Constants.VERBOSE_STRING_FORMAT, "URL", url)).append("\n")
-                    .append(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod())).append("\n")
-                    .append(String.format(Constants.VERBOSE_STRING_FORMAT, "POST", this.postData)).append("\n")
-                    .append(String.format(Constants.VERBOSE_STRING_FORMAT, "Request Headers", "")).append("\n")
-                    .append(sb).toString().trim();
+            String printMe = new StringBuilder("\n")
+                    .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Url", url)).append("\n")
+                    .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod())).append("\n")
+                    .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "POST data", this.postData)).append("\n")
+                    .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Request Headers", "")).append("\n")
+                    .append(sb).toString();
             
             DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, printMe);
             
@@ -468,9 +468,13 @@ public class DataCallBuilder
             
             con.connect();
             
-            DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, String.format(Constants.VERBOSE_STRING_FORMAT, "Response Headers", ""));
-            con.getHeaderFields()
-               .forEach((key, value) -> DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, key, value)));
+            StringBuilder sb2 = new StringBuilder("\n");
+            con.getHeaderFields().forEach((key, value) -> sb2.append(String.format(Constants.TABBED2X_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
+            
+            String printMe2 = new StringBuilder("\n").append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Response Headers", ""))
+                                                 .append(sb2)
+                                                 .toString();
+            DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, printMe2);
             
             
             String appA    = con.getHeaderField("X-App-Rate-Limit");
