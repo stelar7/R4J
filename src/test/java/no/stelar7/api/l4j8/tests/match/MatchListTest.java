@@ -15,6 +15,7 @@ import org.junit.*;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class MatchListTest
 {
@@ -82,6 +83,24 @@ public class MatchListTest
             List<MatchReference> list = mlb.withAccountId(Constants.TEST_ACCOUNT_IDS[i]).withPlatform(Constants.TEST_PLATFORM[i]).get();
             Assert.assertTrue("api didnt load data?!", !list.isEmpty());
         }
+    }
+    
+    @Test
+    public void testMatchlistPetter()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setLogLevel(LogLevel.INFO);
+        
+        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUW1).withName("dendrofil").get().getGames().getLazy();
+        list.loadFully();
+        
+        List<MatchReference> filtered = list.stream()
+                                            .filter(r -> r.getSeason() == SeasonType.SEASON_2018)
+                                            .filter(r -> r.getQueue() == GameQueueType.TEAM_BUILDER_RANKED_SOLO)
+                                            .collect(Collectors.toList());
+        
+        System.out.println(list.size());
+        System.out.println(filtered.size());
     }
     
     @Test
