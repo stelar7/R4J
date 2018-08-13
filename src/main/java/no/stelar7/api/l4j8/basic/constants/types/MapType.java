@@ -59,7 +59,12 @@ public enum MapType implements CodedEnum
     /**
      * Invasion map
      */
-    SUBSTRUCTURE_43(19, new Rectangle(0, 0, 12056, 12056)),;
+    SUBSTRUCTURE_43(19, new Rectangle(0, 0, 12056, 12056)),
+    /**
+     * Nexus Blitz map
+     */
+    NEXUS_BLITZ(21, new Rectangle(0, 0, 12056, 12056)),
+    ;
     
     
     private final Integer   mapId;

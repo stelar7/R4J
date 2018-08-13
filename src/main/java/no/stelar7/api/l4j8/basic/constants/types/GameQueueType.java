@@ -256,7 +256,11 @@ public enum GameQueueType implements CodedEnum
     /**
      * Invasion games
      */
-    INVASION_ONSLAUGHT(new Integer[]{990});
+    INVASION_ONSLAUGHT(new Integer[]{990}),
+    /**
+     * Nexus Blitz games
+     */
+    NEXUS_BLITZ(new Integer[]{1200});
     
     private final Integer[] codes;
     private final String    apiname;

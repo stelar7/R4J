@@ -72,7 +72,11 @@ public enum GameModeType implements CodedEnum
     /**
      * Snow Battle ARURF mode
      */
-    SNOWURF;
+    SNOWURF,
+    /**
+     * Nexus Blitz mode
+     */
+    GAMEMODEX;
     
     /**
      * Returns a GameModeType from the provided value
