@@ -9,14 +9,13 @@ public class StaticMastery implements Serializable
 {
     private static final long serialVersionUID = -2913618253144483204L;
     
-    private List<String> description;
-    private int          id;
-    private Image        image;
-    private String       masteryTree;
-    private String       name;
-    private String       prereq;
-    private int          ranks;
-    private List<String> sanitizedDescription;
+    private String description;
+    private int    id;
+    private Image  image;
+    private String masteryTree;
+    private String name;
+    private String prereq;
+    private int    ranks;
     
     
     /**
@@ -24,7 +23,7 @@ public class StaticMastery implements Serializable
      *
      * @return the description
      */
-    public List<String> getDescription()
+    public String getDescription()
     {
         return this.description;
     }
@@ -96,9 +95,17 @@ public class StaticMastery implements Serializable
      *
      * @return the sanitized description
      */
-    public List<String> getSanitizedDescription()
+    public String getSanitizedDescription()
     {
-        return this.sanitizedDescription;
+        return sanitize(this.description);
+    }
+    
+    private String sanitize(String inData)
+    {
+        String outData = inData;
+        outData = outData.replaceAll("<br>", "\n");
+        outData = outData.replaceAll("<.+?>", "");
+        return outData;
     }
     
     @Override
@@ -139,11 +146,7 @@ public class StaticMastery implements Serializable
         {
             return false;
         }
-        if ((prereq != null) ? !prereq.equals(that.prereq) : (that.prereq != null))
-        {
-            return false;
-        }
-        return (sanitizedDescription != null) ? sanitizedDescription.equals(that.sanitizedDescription) : (that.sanitizedDescription == null);
+        return (prereq != null) ? prereq.equals(that.prereq) : (that.prereq == null);
     }
     
     @Override
@@ -156,7 +159,6 @@ public class StaticMastery implements Serializable
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (prereq != null ? prereq.hashCode() : 0);
         result = 31 * result + ranks;
-        result = 31 * result + (sanitizedDescription != null ? sanitizedDescription.hashCode() : 0);
         return result;
     }
     
@@ -171,7 +173,6 @@ public class StaticMastery implements Serializable
                ", name='" + name + '\'' +
                ", prereq='" + prereq + '\'' +
                ", ranks=" + ranks +
-               ", sanitizedDescription=" + sanitizedDescription +
                '}';
     }
 }

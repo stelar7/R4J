@@ -377,14 +377,6 @@ public class MySQLCacheProvider implements CacheProvider
             {
                 return new String[]{"platformId", "gameId"};
             }
-            case V3_CHAMPIONS_BY_ID:
-            {
-                return new String[]{"platformId", "id"};
-            }
-            case V3_CHAMPIONS:
-            {
-                return new String[]{"platformId", "freeToPlay"};
-            }
             case V3_MASTERY_BY_ID:
             {
                 return new String[]{"platformId", "playerId"};

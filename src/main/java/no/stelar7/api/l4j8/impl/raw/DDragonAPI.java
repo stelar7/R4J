@@ -56,6 +56,40 @@ public final class DDragonAPI
         }
     }
     
+    public List<StaticChampion> getChampionsFromId(List<Integer> freeChampionIds)
+    {
+        Map<Integer, StaticChampion> all    = getChampions();
+        List<StaticChampion>         champs = new ArrayList<>();
+        
+        for (Integer id : freeChampionIds)
+        {
+            StaticChampion champ = all.get(id);
+            if (champ != null)
+            {
+                champs.add(champ);
+            }
+        }
+        
+        return champs;
+    }
+    
+    public List<StaticChampion> getChampionsFromId(List<Integer> freeChampionIds, @Nullable String version, @Nullable String locale)
+    {
+        Map<Integer, StaticChampion> all    = getChampions(version, locale);
+        List<StaticChampion>         champs = new ArrayList<>();
+        
+        for (Integer id : freeChampionIds)
+        {
+            StaticChampion champ = all.get(id);
+            if (champ != null)
+            {
+                champs.add(champ);
+            }
+        }
+        
+        return champs;
+    }
+    
     public Map<Integer, StaticChampion> getChampions()
     {
         return getChampions(null, null);
@@ -533,4 +567,5 @@ public final class DDragonAPI
     {
         return getTarball(null);
     }
+    
 }

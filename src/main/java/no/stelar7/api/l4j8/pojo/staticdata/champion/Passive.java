@@ -11,7 +11,6 @@ public class Passive implements Serializable
     private String description;
     private Image  image;
     private String name;
-    private String sanitizedDescription;
     
     @Override
     public boolean equals(final Object obj)
@@ -51,20 +50,10 @@ public class Passive implements Serializable
         }
         if (this.name == null)
         {
-            if (other.name != null)
-            {
-                return false;
-            }
-        } else if (!this.name.equals(other.name))
-        {
-            return false;
-        }
-        if (this.sanitizedDescription == null)
-        {
-            return other.sanitizedDescription == null;
+            return other.name == null;
         } else
         {
-            return this.sanitizedDescription.equals(other.sanitizedDescription);
+            return this.name.equals(other.name);
         }
     }
     
@@ -105,7 +94,16 @@ public class Passive implements Serializable
      */
     public String getSanitizedDescription()
     {
-        return this.sanitizedDescription;
+        return sanitize(this.description);
+    }
+    
+    
+    private String sanitize(String inData)
+    {
+        String outData = inData;
+        outData = outData.replaceAll("<br>", "\n");
+        outData = outData.replaceAll("<.+?>", "");
+        return outData;
     }
     
     @Override
@@ -116,7 +114,6 @@ public class Passive implements Serializable
         result = (prime * result) + ((this.description == null) ? 0 : this.description.hashCode());
         result = (prime * result) + ((this.image == null) ? 0 : this.image.hashCode());
         result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        result = (prime * result) + ((this.sanitizedDescription == null) ? 0 : this.sanitizedDescription.hashCode());
         return result;
     }
     
@@ -127,7 +124,6 @@ public class Passive implements Serializable
                "description='" + description + '\'' +
                ", image=" + image +
                ", name='" + name + '\'' +
-               ", sanitizedDescription='" + sanitizedDescription + '\'' +
                '}';
     }
 }

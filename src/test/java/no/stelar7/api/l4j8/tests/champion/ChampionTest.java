@@ -3,7 +3,9 @@ package no.stelar7.api.l4j8.tests.champion;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.impl.builders.champion.ChampionBuilder;
-import no.stelar7.api.l4j8.pojo.champion.Champion;
+import no.stelar7.api.l4j8.impl.raw.ChampionAPI;
+import no.stelar7.api.l4j8.pojo.champion.*;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
@@ -14,32 +16,25 @@ public class ChampionTest
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
-    @Test
-    public void testSingleChampion()
-    {
-        Champion champ = new ChampionBuilder().withPlatform(Platform.EUW1).withId(Constants.TEST_CHAMPION_IDS[0]).get();
-    
-        Assert.assertEquals("Championid is not leona?", champ.getId(), (int) Constants.TEST_CHAMPION_IDS[0]);
-        
-    }
     
     @Test
     public void testFreeToPlay()
     {
-        List<Champion> champ = new ChampionBuilder().withPlatform(Platform.EUW1).getFreeToPlay();
-        Assert.assertTrue("count greater than 20?", champ.size() < 20);
+        ChampionRotationInfo champ = new ChampionBuilder().withPlatform(Platform.EUW1).getFreeToPlayRotation();
         
-        champ.sort(Comparator.comparing(Champion::getId));
-        for (Champion champion : champ)
+        for (Integer champion : champ.getFreeChampionIds())
         {
-            System.out.format("%s%n", champion.getId());
+            System.out.format("%s%n", champion);
         }
     }
     
     @Test
-    public void testChampionList()
+    public void testFreeToPlay2()
     {
-        List<Champion> champ = new ChampionBuilder().withPlatform(Platform.EUW1).getAll();
-        Assert.assertTrue("count less than 100?", champ.size() > 100);
+        ChampionRotationInfo champ2 = ChampionAPI.getInstance().getFreeToPlayRotation(Platform.EUW1);
+        for (StaticChampion free : champ2.getFreeChampions())
+        {
+            System.out.format("%s%n", free.toString());
+        }
     }
 }

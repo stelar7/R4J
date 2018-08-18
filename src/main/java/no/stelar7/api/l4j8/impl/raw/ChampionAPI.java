@@ -21,58 +21,25 @@ public final class ChampionAPI
         // Hide public constructor
     }
     
-    public List<Champion> getChampions(Platform server, boolean freeToPlay)
+    public ChampionRotationInfo getFreeToPlayRotation(Platform server)
     {
-        
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPIONS)
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)
                                                        .withPlatform(server);
-        if (freeToPlay)
-        {
-            builder.withURLData(Constants.FREE_TO_PLAY_PLACEHOLDER_DATA, "true");
-        }
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPIONS, server, freeToPlay);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPION_ROTATIONS, server);
         if (chl.isPresent())
         {
-            return (List<Champion>) chl.get();
+            return (ChampionRotationInfo) chl.get();
         }
         
         try
         {
-            ChampionList cl = (ChampionList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS, cl.getChampions(), server, freeToPlay);
-            return cl.getChampions();
+            ChampionRotationInfo cl = (ChampionRotationInfo) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPION_ROTATIONS, cl, server);
+            return cl;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
     }
-    
-    
-    public Champion getChampion(Platform server, int id)
-    {
-        
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
-                                                       .withEndpoint(URLEndpoint.V3_CHAMPIONS_BY_ID)
-                                                       .withPlatform(server);
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPIONS_BY_ID, server, id);
-        if (chl.isPresent())
-        {
-            return (Champion) chl.get();
-        }
-        
-        try
-        {
-            Champion ch = (Champion) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPIONS_BY_ID, ch, server, id);
-            return ch;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
-    }
-    
 }

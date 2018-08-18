@@ -52,10 +52,8 @@ public enum URLEndpoint
     V3_MASTERY_BY_CHAMPION("lol", "champion-mastery", "v3", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER + "/by-champion/" + Constants.CHAMPION_ID_PLACEHOLDER, ChampionMastery.class),
     V3_MASTERY_SCORE("lol", "champion-mastery", "v3", "scores/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, Integer.class),
     
-    // lol/platform/v3/champions
-    // lol/platform/v3/champions/{id}
-    V3_CHAMPIONS("lol", "platform", "v3", "champions", ChampionList.class),
-    V3_CHAMPIONS_BY_ID("lol", "platform", "v3", "champions/" + Constants.ID_PLACEHOLDER, Champion.class),
+    // lol/platform/v3/champion-rotations
+    V3_CHAMPION_ROTATIONS("lol", "platform", "v3", "champion-rotations", ChampionRotationInfo.class),
     
     // lol/status/v3/shard-data
     V3_SHARD_STATUS("lol", "status", "v3", "shard-data", ShardStatus.class),

@@ -25,8 +25,6 @@ public class BaseSpellData implements Serializable
     private Object             range;
     private String             rangeBurn;
     private String             resource;
-    private String             sanitizedDescription;
-    private String             sanitizedTooltip;
     private String             tooltip;
     private List<SpellVars>    vars;
     
@@ -198,7 +196,7 @@ public class BaseSpellData implements Serializable
      */
     public String getSanitizedDescription()
     {
-        return this.sanitizedDescription != null ? sanitizedDescription : sanitize(description);
+        return sanitize(description);
     }
     
     /**
@@ -208,7 +206,7 @@ public class BaseSpellData implements Serializable
      */
     public String getSanitizedTooltip()
     {
-        return this.sanitizedTooltip != null ? this.sanitizedTooltip : sanitize(tooltip);
+        return sanitize(tooltip);
     }
     
     public String getSanitizedTooltip(final int champLevel, final int spellLevel)
@@ -381,14 +379,6 @@ public class BaseSpellData implements Serializable
         {
             return false;
         }
-        if ((sanitizedDescription != null) ? !sanitizedDescription.equals(that.sanitizedDescription) : (that.sanitizedDescription != null))
-        {
-            return false;
-        }
-        if ((sanitizedTooltip != null) ? !sanitizedTooltip.equals(that.sanitizedTooltip) : (that.sanitizedTooltip != null))
-        {
-            return false;
-        }
         if ((tooltip != null) ? !tooltip.equals(that.tooltip) : (that.tooltip != null))
         {
             return false;
@@ -415,8 +405,6 @@ public class BaseSpellData implements Serializable
         result = 31 * result + (range != null ? range.hashCode() : 0);
         result = 31 * result + (rangeBurn != null ? rangeBurn.hashCode() : 0);
         result = 31 * result + (resource != null ? resource.hashCode() : 0);
-        result = 31 * result + (sanitizedDescription != null ? sanitizedDescription.hashCode() : 0);
-        result = 31 * result + (sanitizedTooltip != null ? sanitizedTooltip.hashCode() : 0);
         result = 31 * result + (tooltip != null ? tooltip.hashCode() : 0);
         result = 31 * result + (vars != null ? vars.hashCode() : 0);
         return result;
@@ -442,8 +430,6 @@ public class BaseSpellData implements Serializable
                ", range=" + range +
                ", rangeBurn='" + rangeBurn + '\'' +
                ", resource='" + resource + '\'' +
-               ", sanitizedDescription='" + sanitizedDescription + '\'' +
-               ", sanitizedTooltip='" + sanitizedTooltip + '\'' +
                ", tooltip='" + tooltip + '\'' +
                ", vars=" + vars +
                '}';

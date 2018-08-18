@@ -28,7 +28,6 @@ public class Item implements Serializable
     private String               plaintext;
     private String               requiredChampion;
     private MetaData             rune;
-    private String               sanitizedDescription;
     private int                  specialRecipe;
     private int                  stacks;
     private InventoryDataStats   stats;
@@ -231,7 +230,15 @@ public class Item implements Serializable
      */
     public String getSanitizedDescription()
     {
-        return sanitizedDescription;
+        return sanitize(this.description);
+    }
+    
+    private String sanitize(String inData)
+    {
+        String outData = inData;
+        outData = outData.replaceAll("<br>", "\n");
+        outData = outData.replaceAll("<.+?>", "");
+        return outData;
     }
     
     /**
@@ -372,10 +379,6 @@ public class Item implements Serializable
         {
             return false;
         }
-        if ((sanitizedDescription != null) ? !sanitizedDescription.equals(item.sanitizedDescription) : (item.sanitizedDescription != null))
-        {
-            return false;
-        }
         if ((stats != null) ? !stats.equals(item.stats) : (item.stats != null))
         {
             return false;
@@ -405,7 +408,6 @@ public class Item implements Serializable
         result = 31 * result + (plaintext != null ? plaintext.hashCode() : 0);
         result = 31 * result + (requiredChampion != null ? requiredChampion.hashCode() : 0);
         result = 31 * result + (rune != null ? rune.hashCode() : 0);
-        result = 31 * result + (sanitizedDescription != null ? sanitizedDescription.hashCode() : 0);
         result = 31 * result + specialRecipe;
         result = 31 * result + stacks;
         result = 31 * result + (stats != null ? stats.hashCode() : 0);
@@ -437,7 +439,6 @@ public class Item implements Serializable
                ", plaintext='" + plaintext + '\'' +
                ", requiredChampion='" + requiredChampion + '\'' +
                ", rune=" + rune +
-               ", sanitizedDescription='" + sanitizedDescription + '\'' +
                ", specialRecipe=" + specialRecipe +
                ", stacks=" + stacks +
                ", stats=" + stats +
