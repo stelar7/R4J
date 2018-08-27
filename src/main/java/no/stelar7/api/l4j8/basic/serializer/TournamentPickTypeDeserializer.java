@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.basic.deserializer;
+package no.stelar7.api.l4j8.basic.serializer;
 
 import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -6,12 +6,12 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class GameTypeDeserializer implements JsonDeserializer<GameType>
+public class TournamentPickTypeDeserializer implements JsonDeserializer<TournamentPickType>
 {
     
     @Override
     @SuppressWarnings("unchecked")
-    public GameType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
+    public TournamentPickType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
         String              id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
@@ -21,5 +21,5 @@ public class GameTypeDeserializer implements JsonDeserializer<GameType>
                                       .map(Optional::get)
                                       .findFirst();
     
-        return retu.map(o -> (GameType) o).orElseGet(() -> (GameType) CodedEnum.printError(t, id));    }
+        return retu.map(o -> (TournamentPickType) o).orElseGet(() -> (TournamentPickType) CodedEnum.printError(t, id));}
 }

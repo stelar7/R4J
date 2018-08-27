@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.tests.tournament;
 
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.*;
@@ -15,12 +16,14 @@ import java.util.*;
 public class TournamentTest
 {
     
-    final TournamentAPI api = new L4J8(SecretFile.CREDS).getTournamentAPI(false);
+    final TournamentAPI api = new L4J8(SecretFile.CREDS).getTournamentAPI(true);
     
     
     @Test
     public void testAllRegistrations()
     {
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         final ProviderRegistrationParameters params     = new ProviderRegistrationParameters(Platform.EUW1, "http://stelar7.no/loltest/provider.php");
         final long                           providerId = this.api.registerAsProvider(params);
         
@@ -36,13 +39,14 @@ public class TournamentTest
         
         
         final TournamentCodeUpdateParameters tcuparams = new TournamentCodeUpdateParameters(Arrays.asList(10L, 20L, 30L, 40L, 50L, 60L, 70L, 80L, 90L, 100L), TournamentMapType.TWISTED_TREELINE, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
-        this.api.updateTournament(codes.get(0), tcuparams);
-        
-        
-        final TournamentCode id = this.api.getTournamentInfo(codes.get(0));
         
         final List<LobbyEvent> events = this.api.getTournamentLobbyInfo(codes.get(0));
         
+        if (!api.isStub())
+        {
+            this.api.updateTournament(codes.get(0), tcuparams);
+            final TournamentCode id = this.api.getTournamentInfo(codes.get(0));
+        }
     }
     
     @Test

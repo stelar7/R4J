@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.basic.deserializer;
+package no.stelar7.api.l4j8.basic.serializer;
 
 import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -6,14 +6,14 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class TowerTypeDeserializer implements JsonDeserializer<TowerType>
+public class GameModeTypeDeserializer implements JsonDeserializer<GameModeType>
 {
     
     @Override
     @SuppressWarnings("unchecked")
-    public TowerType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
+    public GameModeType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
-        String              id     = json.getAsString();
+        String       id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
         Optional<Object> retu = values.stream()
                                       .map(v -> v.getFromCode(id))
@@ -21,5 +21,6 @@ public class TowerTypeDeserializer implements JsonDeserializer<TowerType>
                                       .map(Optional::get)
                                       .findFirst();
     
-        return retu.map(o -> (TowerType) o).orElseGet(() -> (TowerType) CodedEnum.printError(t, id)); }
+        return retu.map(o -> (GameModeType) o).orElseGet(() -> (GameModeType) CodedEnum.printError(t, id));
+    }
 }

@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.basic.deserializer;
+package no.stelar7.api.l4j8.basic.serializer;
 
 import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -6,14 +6,14 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class MonsterTypeDeserializer implements JsonDeserializer<MonsterType>
+public class MapTypeDeserializer implements JsonDeserializer<MapType>
 {
     
     @Override
     @SuppressWarnings("unchecked")
-    public MonsterType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
+    public MapType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
-        String                id     = json.getAsString();
+        String            id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
         Optional<Object> retu = values.stream()
                                       .map(v -> v.getFromCode(id))
@@ -21,6 +21,6 @@ public class MonsterTypeDeserializer implements JsonDeserializer<MonsterType>
                                       .map(Optional::get)
                                       .findFirst();
     
-        return retu.map(o -> (MonsterType) o).orElseGet(() -> (MonsterType) CodedEnum.printError(t, id));
+        return retu.map(o -> (MapType) o).orElseGet(() -> (MapType) CodedEnum.printError(t, id));
     }
 }

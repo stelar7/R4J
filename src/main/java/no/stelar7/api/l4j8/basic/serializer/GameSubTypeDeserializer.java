@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.basic.deserializer;
+package no.stelar7.api.l4j8.basic.serializer;
 
 import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -6,12 +6,12 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class WardTypeDeserializer implements JsonDeserializer<WardType>
+public class GameSubTypeDeserializer implements JsonDeserializer<GameSubType>
 {
     
     @Override
     @SuppressWarnings("unchecked")
-    public WardType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
+    public GameSubType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
         String          id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
@@ -21,6 +21,6 @@ public class WardTypeDeserializer implements JsonDeserializer<WardType>
                                       .map(Optional::get)
                                       .findFirst();
         
-        return retu.map(o -> (WardType) o).orElseGet(() -> (WardType) CodedEnum.printError(t, id));
+        return retu.map(o -> (GameSubType) o).orElseGet(() -> (GameSubType) CodedEnum.printError(t, id));
     }
 }

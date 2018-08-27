@@ -1,11 +1,11 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
-import no.stelar7.api.l4j8.basic.constants.types.CodedEnum;
+import no.stelar7.api.l4j8.basic.constants.types.*;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-public enum Platform implements CodedEnum
+public enum Platform implements CodedEnum, RealmSpesificEnum
 {
     /**
      * Unknown platform, used for bots in participant identities
@@ -124,6 +124,7 @@ public enum Platform implements CodedEnum
      *
      * @return the value
      */
+    @Override
     public String getRealmValue()
     {
         return this.keys[1];
@@ -132,6 +133,6 @@ public enum Platform implements CodedEnum
     @Override
     public String toString()
     {
-        return this.keys[0].toLowerCase(Locale.ENGLISH);
+        return this.getValue();
     }
 }

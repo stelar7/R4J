@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.basic.calling;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.types.RealmSpesificEnum;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
 import no.stelar7.api.l4j8.basic.utils.*;
@@ -472,8 +473,8 @@ public class DataCallBuilder
             con.getHeaderFields().forEach((key, value) -> sb2.append(String.format(Constants.TABBED2X_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
             
             String printMe2 = new StringBuilder("\n").append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Response Headers", ""))
-                                                 .append(sb2)
-                                                 .toString();
+                                                     .append(sb2)
+                                                     .toString();
             DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, printMe2);
             
             
@@ -631,7 +632,7 @@ public class DataCallBuilder
         if (dc.getPlatform() != null)
         {
             url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString());
-            url[0] = url[0].replace(Constants.REGION_PLACEHOLDER, ((Platform) dc.getPlatform()).getRealmValue());
+            url[0] = url[0].replace(Constants.REGION_PLACEHOLDER, ((RealmSpesificEnum) dc.getPlatform()).getRealmValue());
         }
         dc.getUrlParams().forEach((k, v) -> url[0] = url[0].replace(k, v));
         

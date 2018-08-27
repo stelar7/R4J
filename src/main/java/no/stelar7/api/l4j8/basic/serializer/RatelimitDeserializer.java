@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.basic.deserializer;
+package no.stelar7.api.l4j8.basic.serializer;
 
 import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.RateLimit;
@@ -14,8 +14,8 @@ public class RatelimitDeserializer implements JsonDeserializer<RateLimit>
     {
         if (json.isJsonObject())
         {
-            Integer permit = json.getAsJsonObject().get("permits").getAsInt();
-            Long    delay  = json.getAsJsonObject().get("delayInMs").getAsLong();
+            int  permit = json.getAsJsonObject().get("permits").getAsInt();
+            long delay  = json.getAsJsonObject().get("delayInMs").getAsLong();
             
             return new RateLimit(permit, delay, TimeUnit.MILLISECONDS);
         }

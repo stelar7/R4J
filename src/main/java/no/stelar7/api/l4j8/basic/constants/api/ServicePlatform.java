@@ -1,30 +1,32 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
+import no.stelar7.api.l4j8.basic.constants.types.RealmSpesificEnum;
+
 import java.util.*;
 import java.util.stream.Stream;
 
-public enum ServicePlatform
+public enum ServicePlatform implements RealmSpesificEnum
 {
     /**
      * Unknown platform, used for bots in participant identities
      */
-    UNKNOWN(""),
+    UNKNOWN("", ""),
     /**
      * Americas platform.
      */
-    AMERICAS("AMERICAS"),
+    AMERICAS("AMERICAS", "americas"),
     /**
      * Europe platform.
      */
-    EUROPE("EUROPE"),
+    EUROPE("EUROPE", "europe"),
     /**
      * Asia platform.
      */
-    ASIA("ASIA");
+    ASIA("ASIA", "asia");
     
-    private String key;
+    private String[] key;
     
-    ServicePlatform(String s)
+    ServicePlatform(String... s)
     {
         this.key = s;
     }
@@ -37,7 +39,7 @@ public enum ServicePlatform
      */
     public static Optional<ServicePlatform> getFromCode(final String code)
     {
-        return Stream.of(ServicePlatform.values()).filter(t -> t.key.equalsIgnoreCase(code)).findFirst();
+        return Stream.of(ServicePlatform.values()).filter(t -> t.key[0].equalsIgnoreCase(code)).findFirst();
     }
     
     
@@ -48,12 +50,23 @@ public enum ServicePlatform
      */
     public String getValue()
     {
-        return this.key;
+        return this.key[0];
+    }
+    
+    /**
+     * Used internaly in the api...
+     *
+     * @return the value
+     */
+    @Override
+    public String getRealmValue()
+    {
+        return this.key[1];
     }
     
     @Override
     public String toString()
     {
-        return this.key.toLowerCase(Locale.ENGLISH);
+        return this.getValue();
     }
 }

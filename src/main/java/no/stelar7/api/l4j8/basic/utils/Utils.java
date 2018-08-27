@@ -1,10 +1,10 @@
 package no.stelar7.api.l4j8.basic.utils;
 
 import com.google.gson.*;
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.basic.deserializer.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.RateLimit;
+import no.stelar7.api.l4j8.basic.serializer.*;
 
 import java.io.*;
 import java.net.*;
@@ -49,6 +49,9 @@ public final class Utils
         builder.registerTypeAdapter(TournamentSpectatorType.class, new TournamentSpectatorTypeDeserializer());
         builder.registerTypeAdapter(TowerType.class, new TowerTypeDeserializer());
         builder.registerTypeAdapter(WardType.class, new WardTypeDeserializer());
+        builder.registerTypeAdapter(RealmSpesificEnum.class, new RealmSpesificEnumSerializer());
+        builder.registerTypeAdapter(ServicePlatform.class, new RealmSpesificEnumSerializer());
+        builder.registerTypeAdapter(Platform.class, new RealmSpesificEnumSerializer());
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
     }
     

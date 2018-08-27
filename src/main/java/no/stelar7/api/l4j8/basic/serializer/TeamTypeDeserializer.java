@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.basic.deserializer;
+package no.stelar7.api.l4j8.basic.serializer;
 
 import com.google.gson.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -6,12 +6,12 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class MapTypeDeserializer implements JsonDeserializer<MapType>
+public class TeamTypeDeserializer implements JsonDeserializer<TeamType>
 {
     
     @Override
     @SuppressWarnings("unchecked")
-    public MapType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
+    public TeamType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
         String            id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
@@ -21,6 +21,5 @@ public class MapTypeDeserializer implements JsonDeserializer<MapType>
                                       .map(Optional::get)
                                       .findFirst();
     
-        return retu.map(o -> (MapType) o).orElseGet(() -> (MapType) CodedEnum.printError(t, id));
-    }
+        return retu.map(o -> (TeamType) o).orElseGet(() -> (TeamType) CodedEnum.printError(t, id)); }
 }

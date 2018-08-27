@@ -34,6 +34,11 @@ public final class TournamentAPI
     }
     
     
+    public boolean isStub()
+    {
+        return useStub;
+    }
+    
     /**
      * Generates a list of tournamentCodes to use for adding players to games.
      * You should only use a code per match.
@@ -46,9 +51,8 @@ public final class TournamentAPI
     public List<String> generateTournamentCodes(final TournamentCodeParameters params, final long tournamentId, @Nullable Integer count)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withURLParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
-                                                       .withURLParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
-                                                       .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, "")
+                                                       .withURLData(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
+                                                       .withURLData(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
@@ -156,7 +160,7 @@ public final class TournamentAPI
     public List<LobbyEvent> getTournamentLobbyInfo(final String tournamentCode)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_LOBBY_EVENTS)
                                                        .withPlatform(ServicePlatform.AMERICAS);
         
@@ -202,10 +206,9 @@ public final class TournamentAPI
         
         try
         {
-            return (Long) builder.build();
-        } catch (ClassCastException e)
+            return Long.parseLong(builder.build().toString());
+        } catch (NumberFormatException e)
         {
-            
             return null;
         }
     }
@@ -231,8 +234,8 @@ public final class TournamentAPI
         
         try
         {
-            return (Long) builder.build();
-        } catch (ClassCastException e)
+            return Long.parseLong(builder.build().toString());
+        } catch (NumberFormatException e)
         {
             return null;
         }
