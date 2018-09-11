@@ -76,7 +76,11 @@ public enum GameModeType implements CodedEnum
     /**
      * Nexus Blitz mode
      */
-    GAMEMODEX;
+    GAMEMODEX,
+    /**
+     * 	Odyssey: Extraction mode
+     */
+    ODYSSEY;
     
     /**
      * Returns a GameModeType from the provided value

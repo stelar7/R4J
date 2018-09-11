@@ -119,7 +119,11 @@ public enum GameSubType implements CodedEnum
     /**
      * Overcharge games?
      */
-    OVERCHARGE;
+    OVERCHARGE,
+    /**
+     * Odyssey games
+     */
+    ODYSSEY;
     
     public Optional<GameSubType> getFromCode(final String subType)
     {

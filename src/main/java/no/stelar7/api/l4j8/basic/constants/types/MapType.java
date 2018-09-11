@@ -61,6 +61,10 @@ public enum MapType implements CodedEnum
      */
     SUBSTRUCTURE_43(19, new Rectangle(0, 0, 12056, 12056)),
     /**
+     * Crash Site map
+     */
+    CRASH_SITE(20, new Rectangle(0, 0, 12056, 12056)),
+    /**
      * Nexus Blitz map
      */
     NEXUS_BLITZ(21, new Rectangle(0, 0, 12056, 12056)),

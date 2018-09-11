@@ -260,7 +260,17 @@ public enum GameQueueType implements CodedEnum
     /**
      * Nexus Blitz games
      */
-    NEXUS_BLITZ(new Integer[]{1200});
+    NEXUS_BLITZ(new Integer[]{1200}),
+    /**
+     * Odyssey: Extraction games
+     * 1030 Intro games
+     * 1040 Cadet games
+     * 1050	Crewmember games
+     * 1060 Captain games
+     * 1070 Onslaught games
+     */
+    ODYSSEY(new Integer[]{1030, 1040, 1050, 1060, 1070}),
+    ;
     
     private final Integer[] codes;
     private final String    apiname;
