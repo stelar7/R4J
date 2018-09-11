@@ -182,6 +182,7 @@ public final class DDragonAPI
      *
      * @return a list of strings avaliable in this language
      */
+    @SuppressWarnings("unchecked")
     public List<String> getLanguages()
     {
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
@@ -450,6 +451,7 @@ public final class DDragonAPI
         return getSummonerSpell(id, null, null);
     }
     
+    @SuppressWarnings("unchecked")
     public List<String> getVersions()
     {
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
@@ -473,6 +475,7 @@ public final class DDragonAPI
         }
     }
     
+    @SuppressWarnings("unchecked")
     public Map<Integer, StaticPerk> getPerks(@Nullable String version, @Nullable String locale)
     {
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PERKS, version, locale);
@@ -512,6 +515,7 @@ public final class DDragonAPI
         return getPerk(id, null, null);
     }
     
+    @SuppressWarnings("unchecked")
     public Map<Integer, PerkPath> getPerkPaths(@Nullable String version, @Nullable String locale)
     {
         DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)

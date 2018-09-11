@@ -3,8 +3,6 @@ package no.stelar7.api.l4j8.impl.builders.champion;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.pojo.champion.*;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
-import org.omg.CORBA.UNKNOWN;
 
 import java.util.*;
 
