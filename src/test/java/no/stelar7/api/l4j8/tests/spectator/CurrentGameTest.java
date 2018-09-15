@@ -51,13 +51,12 @@ public class CurrentGameTest
     }
     
     @Test
-    public void testCurrentlyNotInGame()
+    public void testCurrentGameFame()
     {
-        final L4J8       l4j8 = new L4J8(SecretFile.CREDS);
-        SpectatorBuilder sb   = new SpectatorBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
+        final L4J8        l4j8 = new L4J8(SecretFile.CREDS);
+        Summoner          s    = Summoner.byName("Imaqtpie", Platform.NA1);
+        SpectatorGameInfo game = s.getCurrentGame();
         
-        SpectatorGameInfo game = sb.getCurrentGame();
-        
-        System.out.format("%s is %sin game%n", Constants.TEST_SUMMONER_NAMES[0], game != null ? "" : "not ");
+        System.out.format("%s is %sin game%n", s.getName(), game != null ? "" : "not ");
     }
 }
