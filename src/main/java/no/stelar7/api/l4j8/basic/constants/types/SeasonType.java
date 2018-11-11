@@ -16,7 +16,9 @@ public enum SeasonType implements CodedEnum
     PRE_SEASON_2017("PRESEASON2017", 8),
     SEASON_2017("SEASON2017", 9),
     PRE_SEASON_2018("PRESEASON2018", 10),
-    SEASON_2018("SEASON2018", 11);
+    SEASON_2018("SEASON2018", 11),
+    PRE_SEASON_2019("PRESEASON2019", 12),
+    SEASON_2019("SEASON2019", 13);
     
     private final String  value;
     private final Integer seasonId;

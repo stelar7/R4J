@@ -7,37 +7,45 @@ public enum TierDivisionType implements CodedEnum
 {
     CHALLENGER_I,
     
+    GRANDMASTER_I,
+    GRANDMASTER_II,
+    GRANDMASTER_III,
+    GRANDMASTER_IV,
+    
     MASTER_I,
+    MASTER_II,
+    MASTER_III,
+    MASTER_IV,
     
     DIAMOND_I,
     DIAMOND_II,
     DIAMOND_III,
     DIAMOND_IV,
-    DIAMOND_V,
     
     PLATINUM_I,
     PLATINUM_II,
     PLATINUM_III,
     PLATINUM_IV,
-    PLATINUM_V,
     
     GOLD_I,
     GOLD_II,
     GOLD_III,
     GOLD_IV,
-    GOLD_V,
     
     SILVER_I,
     SILVER_II,
     SILVER_III,
     SILVER_IV,
-    SILVER_V,
     
     BRONZE_I,
     BRONZE_II,
     BRONZE_III,
     BRONZE_IV,
-    BRONZE_V,
+    
+    IRON_I,
+    IRON_II,
+    IRON_III,
+    IRON_IV,
     
     UNRANKED;
     

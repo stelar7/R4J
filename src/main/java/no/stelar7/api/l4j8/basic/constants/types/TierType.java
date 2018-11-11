@@ -6,12 +6,14 @@ import java.util.stream.*;
 public enum TierType implements CodedEnum
 {
     CHALLENGER,
+    GRANDMASTER,
     MASTER,
     DIAMOND,
     PLATINUM,
     GOLD,
     SILVER,
     BRONZE,
+    IRON,
     UNRANKED;
     
     /**
