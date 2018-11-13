@@ -11,41 +11,49 @@ public enum TierDivisionType implements CodedEnum
     GRANDMASTER_II,
     GRANDMASTER_III,
     GRANDMASTER_IV,
+    GRANDMASTER_V,
     
     MASTER_I,
     MASTER_II,
     MASTER_III,
     MASTER_IV,
+    MASTER_V,
     
     DIAMOND_I,
     DIAMOND_II,
     DIAMOND_III,
     DIAMOND_IV,
+    DIAMOND_V,
     
     PLATINUM_I,
     PLATINUM_II,
     PLATINUM_III,
     PLATINUM_IV,
+    PLATINUM_V,
     
     GOLD_I,
     GOLD_II,
     GOLD_III,
     GOLD_IV,
+    GOLD_V,
     
     SILVER_I,
     SILVER_II,
     SILVER_III,
     SILVER_IV,
+    SILVER_V,
     
     BRONZE_I,
     BRONZE_II,
     BRONZE_III,
     BRONZE_IV,
+    BRONZE_V,
     
     IRON_I,
     IRON_II,
     IRON_III,
     IRON_IV,
+    IRON_V,
     
     UNRANKED;
     
@@ -71,10 +79,5 @@ public enum TierDivisionType implements CodedEnum
     {
         Pattern pattern = Pattern.compile(String.format("%s_%s", tier, rank));
         return Arrays.stream(TierDivisionType.values()).filter(s -> pattern.matcher(s.name()).matches()).findFirst().orElse(TierDivisionType.UNRANKED);
-    }
-    
-    public TierDivisionType getNext()
-    {
-        return TierDivisionType.values()[Math.max(this.ordinal() - 1, 0)];
     }
 }
