@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.pojo.match;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 public class MatchPerks implements Serializable
 {
@@ -13,6 +13,14 @@ public class MatchPerks implements Serializable
     private List<MatchPerk> perkList;
     private int             perkPrimaryStyle;
     private int             perkSubStyle;
+    private int             statPerk1;
+    private int             statPerk2;
+    private int             statPerk3;
+    
+    public static long getSerialVersionUID()
+    {
+        return serialVersionUID;
+    }
     
     public List<MatchPerk> getPerkList()
     {
@@ -29,6 +37,21 @@ public class MatchPerks implements Serializable
         return perkSubStyle;
     }
     
+    public int getStatPerk1()
+    {
+        return statPerk1;
+    }
+    
+    public int getStatPerk2()
+    {
+        return statPerk2;
+    }
+    
+    public int getStatPerk3()
+    {
+        return statPerk3;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -40,36 +63,31 @@ public class MatchPerks implements Serializable
         {
             return false;
         }
-        
         MatchPerks that = (MatchPerks) o;
-        
-        if (perkPrimaryStyle != that.perkPrimaryStyle)
-        {
-            return false;
-        }
-        if (perkSubStyle != that.perkSubStyle)
-        {
-            return false;
-        }
-        return (perkList != null) ? perkList.equals(that.perkList) : (that.perkList == null);
+        return perkPrimaryStyle == that.perkPrimaryStyle &&
+               perkSubStyle == that.perkSubStyle &&
+               statPerk1 == that.statPerk1 &&
+               statPerk2 == that.statPerk2 &&
+               statPerk3 == that.statPerk3 &&
+               Objects.equals(perkList, that.perkList);
     }
     
     @Override
     public int hashCode()
     {
-        int result = perkList != null ? perkList.hashCode() : 0;
-        result = 31 * result + perkPrimaryStyle;
-        result = 31 * result + perkSubStyle;
-        return result;
+        return Objects.hash(perkList, perkPrimaryStyle, perkSubStyle, statPerk1, statPerk2, statPerk3);
     }
     
     @Override
     public String toString()
     {
         return "MatchPerks{" +
-               "perks=" + perkList +
+               "perkList=" + perkList +
                ", perkPrimaryStyle=" + perkPrimaryStyle +
                ", perkSubStyle=" + perkSubStyle +
+               ", statPerk1=" + statPerk1 +
+               ", statPerk2=" + statPerk2 +
+               ", statPerk3=" + statPerk3 +
                '}';
     }
 }

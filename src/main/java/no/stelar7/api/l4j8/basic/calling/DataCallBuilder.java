@@ -296,6 +296,9 @@ public class DataCallBuilder
             mPerk.add("perks", array);
             mPerk.add("perkPrimaryStyle", stats.get("perkPrimaryStyle"));
             mPerk.add("perkSubStyle", stats.get("perkSubStyle"));
+            mPerk.add("stat0", stats.get("statPerk0"));
+            mPerk.add("stat1", stats.get("statPerk1"));
+            mPerk.add("stat2", stats.get("statPerk2"));
             
             stats.remove("perkPrimaryStyle");
             stats.remove("perkSubStyle");
