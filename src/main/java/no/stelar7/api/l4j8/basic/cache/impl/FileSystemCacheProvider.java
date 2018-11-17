@@ -27,6 +27,16 @@ public class FileSystemCacheProvider implements CacheProvider
         home = pathToFiles != null ? pathToFiles : Paths.get(".", "l4j8cache").normalize();
     }
     
+    public FileSystemCacheProvider(Path pathToFiles)
+    {
+        this(pathToFiles, CacheProvider.TTL_INFINITY);
+    }
+    
+    public FileSystemCacheProvider(int ttl)
+    {
+        this(null, ttl);
+    }
+    
     @Override
     public void setTimeToLiveGlobal(long timeToLive)
     {
@@ -60,8 +70,11 @@ public class FileSystemCacheProvider implements CacheProvider
     {
         try
         {
+            // inject api key so cache still works in v4
             List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
+            pathData.add(DataCall.getCredentials().getBaseAPIKey());
             pathData.remove(0);
+            
             Path storePath = resolvePath(type, pathData);
             Files.createDirectories(storePath.getParent());
             try
@@ -110,8 +123,11 @@ public class FileSystemCacheProvider implements CacheProvider
     {
         try
         {
+            // inject api key so cache still works in v4
             List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
+            pathData.add(DataCall.getCredentials().getBaseAPIKey());
             pathData.remove(0);
+            
             Path storePath = resolvePath(type, pathData);
             Files.setLastModifiedTime(storePath, FileTime.from(Instant.now()));
         } catch (IOException e)
@@ -123,8 +139,10 @@ public class FileSystemCacheProvider implements CacheProvider
     @Override
     public Optional<?> get(URLEndpoint type, Object... data)
     {
+        // inject api key so cache still works in v4
         List<Object> pathData = new ArrayList<>(Arrays.asList(data));
-        Path         filepath = resolvePath(type, pathData);
+        pathData.add(DataCall.getCredentials().getBaseAPIKey());
+        Path filepath = resolvePath(type, pathData);
         
         if (!Files.exists(filepath))
         {
@@ -154,6 +172,11 @@ public class FileSystemCacheProvider implements CacheProvider
             for (Object o : filter)
             {
                 pathToWalk = pathToWalk.resolve(o.toString());
+            }
+            
+            if (!Files.exists(pathToWalk))
+            {
+                return;
             }
             
             Files.walk(pathToWalk).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);

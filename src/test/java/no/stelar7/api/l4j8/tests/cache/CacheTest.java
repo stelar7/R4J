@@ -19,7 +19,7 @@ public class CacheTest
     
     final L4J8                    l4j8        = new L4J8(SecretFile.CREDS);
     final MySQLCacheProvider      sqlCache    = new MySQLCacheProvider("localhost", 3306, "lolcachetest", "root", "");
-    final FileSystemCacheProvider fileCache   = new FileSystemCacheProvider();
+    final FileSystemCacheProvider fileCache   = new FileSystemCacheProvider(5);
     final MemoryCacheProvider     memCache    = new MemoryCacheProvider(5);
     final TieredCacheProvider     tieredCache = new TieredCacheProvider(memCache, fileCache, sqlCache);
     
@@ -92,7 +92,7 @@ public class CacheTest
     
     private void doCacheStuff() throws InterruptedException
     {
-        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
+       // DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
         List<MatchReference> recents = new MatchListBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
         
         if (recents.isEmpty())
@@ -154,7 +154,7 @@ public class CacheTest
         System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V3_MATCH));
         
         System.out.println("Waiting for cache timeout");
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(6);
         
         System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V3_MATCH));
         
