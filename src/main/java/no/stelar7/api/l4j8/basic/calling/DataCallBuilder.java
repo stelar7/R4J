@@ -79,6 +79,15 @@ public class DataCallBuilder
                 
                 return Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
             }
+    
+            case 401:
+            {
+        
+                String reasonText = "The API denied your request!\n";
+                reasonText += "Your API key was not present in the request\n";
+                reasonText += "Make sure you have setup your APICredentials before doing a API call!\n";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_401, reasonText + response.getResponseData());
+            }
             
             case 403:
             {
