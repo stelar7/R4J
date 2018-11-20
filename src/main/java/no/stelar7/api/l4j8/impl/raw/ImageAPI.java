@@ -8,8 +8,6 @@ import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
 import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRune;
 
-import javax.annotation.Nullable;
-
 public final class ImageAPI
 {
     private static final ImageAPI INSTANCE = new ImageAPI();
@@ -25,7 +23,7 @@ public final class ImageAPI
     }
     
     
-    private String buildImageURL(@Nullable String version, String path, String file)
+    private String buildImageURL(String version, String path, String file)
     {
         Realm  realm         = DDragonAPI.getInstance().getRealm();
         String cdn           = realm.getCDN();
@@ -43,7 +41,7 @@ public final class ImageAPI
      * @param version the version
      * @return the profile icon
      */
-    public String getProfileIcon(String iconid, @Nullable String version)
+    public String getProfileIcon(String iconid, String version)
     {
         //http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png
         return buildImageURL(version, "img/profileicon", iconid + ".png");
@@ -67,7 +65,6 @@ public final class ImageAPI
      *
      * @param championId the champion id
      * @param skinNum    the skin num
-
      * @return the splash art
      */
     public String getSplashArt(String championId, int skinNum)
@@ -79,7 +76,7 @@ public final class ImageAPI
     /**
      * Gets splash art.
      *
-     * @param skin   the skin
+     * @param skin the skin
      * @return the splash art
      */
     public String getSplashArt(Skin skin)
@@ -93,7 +90,6 @@ public final class ImageAPI
      *
      * @param championId the champion id
      * @param skinNum    the skin num
-
      * @return the loading screen art
      */
     public String getLoadingScreenArt(String championId, int skinNum)
@@ -105,8 +101,7 @@ public final class ImageAPI
     /**
      * Gets loading screen art.
      *
-     * @param skin   the skin
-     
+     * @param skin the skin
      * @return the loading screen art
      */
     public String getLoadingScreenArt(Skin skin)
@@ -121,10 +116,9 @@ public final class ImageAPI
      *
      * @param champ   the champ
      * @param version the version
-     * 
      * @return the square
      */
-    public String getSquare(StaticChampion champ, @Nullable String version)
+    public String getSquare(StaticChampion champ, String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
         return buildImageURL(version, "img/champion", champ.getImage().getFull());
@@ -135,10 +129,9 @@ public final class ImageAPI
      *
      * @param champKey the champ key
      * @param version  the version
-     * 
      * @return the square
      */
-    public String getSquare(String champKey, @Nullable String version)
+    public String getSquare(String champKey, String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
         return buildImageURL(version, "img/champion", champKey + ".png");
@@ -150,10 +143,9 @@ public final class ImageAPI
      *
      * @param imageFull the spell.getImage().getFull()
      * @param version   the version
-     *
      * @return the ability
      */
-    public String getPassive(String imageFull, @Nullable String version)
+    public String getPassive(String imageFull, String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
         return buildImageURL(version, "img/passive", imageFull);
@@ -164,10 +156,9 @@ public final class ImageAPI
      *
      * @param passive the passive
      * @param version the version
-     * 
      * @return the passive
      */
-    public String getPassive(Passive passive, @Nullable String version)
+    public String getPassive(Passive passive, String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
         return getPassive(passive.getImage().getFull(), version);
@@ -178,10 +169,9 @@ public final class ImageAPI
      *
      * @param spell   the spell
      * @param version the version
-     * 
      * @return the ability
      */
-    public String getAbility(StaticChampionSpell spell, @Nullable String version)
+    public String getAbility(StaticChampionSpell spell, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
         return buildImageURL(version, "img/spell", spell.getImage().getFull());
@@ -192,10 +182,9 @@ public final class ImageAPI
      *
      * @param imageFull the spell.getImage().getFull()
      * @param version   the version
-     *
      * @return the ability
      */
-    public String getAbility(String imageFull, @Nullable String version)
+    public String getAbility(String imageFull, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
         return buildImageURL(version, "img/spell", imageFull);
@@ -206,10 +195,9 @@ public final class ImageAPI
      *
      * @param spell   the spell
      * @param version the version
-     * 
      * @return the summoner spell
      */
-    public String getSummonerSpell(SummonerSpellType spell, @Nullable String version)
+    public String getSummonerSpell(SummonerSpellType spell, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
         return buildImageURL(version, "img/spell", spell.getApiName() + ".png");
@@ -220,10 +208,9 @@ public final class ImageAPI
      *
      * @param spell   the spell
      * @param version the version
-     * 
      * @return the summoner spell
      */
-    public String getSummonerSpell(String spell, @Nullable String version)
+    public String getSummonerSpell(String spell, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
         return buildImageURL(version, "img/spell", spell + ".png");
@@ -234,10 +221,9 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * 
      * @return the item
      */
-    public String getItem(String id, @Nullable String version)
+    public String getItem(String id, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
         return buildImageURL(version, "img/item", id + ".png");
@@ -249,10 +235,9 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * 
      * @return the item
      */
-    public String getItem(Item id, @Nullable String version)
+    public String getItem(Item id, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
         return buildImageURL(version, "img/item", id.getImage().getFull());
@@ -263,10 +248,9 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * 
      * @return the mastery
      */
-    public String getMastery(StaticMastery id, @Nullable String version)
+    public String getMastery(StaticMastery id, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
         return buildImageURL(version, "img/mastery", id.getImage().getFull());
@@ -277,10 +261,9 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * 
      * @return the mastery
      */
-    public String getMastery(String id, @Nullable String version)
+    public String getMastery(String id, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
         return buildImageURL(version, "img/mastery", id + ".png");
@@ -292,10 +275,9 @@ public final class ImageAPI
      *
      * @param sprite  the sprite field from an image object
      * @param version the version
-     * 
      * @return the spritesheet
      */
-    public String getSpriteSheet(String sprite, @Nullable String version)
+    public String getSpriteSheet(String sprite, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/7.8.1/img/sprite/mastery0.png
         return buildImageURL(version, "img/sprite", sprite);
@@ -306,10 +288,9 @@ public final class ImageAPI
      *
      * @param id      the id
      * @param version the version
-     * 
      * @return the rune
      */
-    public String getRune(String id, @Nullable String version)
+    public String getRune(String id, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
         return buildImageURL(version, "img/rune", id + ".png");
@@ -320,10 +301,9 @@ public final class ImageAPI
      *
      * @param rune    the rune
      * @param version the version
-     * 
      * @return the rune
      */
-    public String getRune(StaticRune rune, @Nullable String version)
+    public String getRune(StaticRune rune, String version)
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
         return buildImageURL(version, "img/rune", rune.getImage().getFull());
@@ -335,10 +315,9 @@ public final class ImageAPI
      *
      * @param map     the map
      * @param version the version
-     * 
      * @return the map
      */
-    public String getMap(MapType map, @Nullable String version)
+    public String getMap(MapType map, String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
         return buildImageURL(version, "img/map", "map" + map.getId() + ".png");
@@ -349,10 +328,9 @@ public final class ImageAPI
      *
      * @param map     the map
      * @param version the version
-     * 
      * @return the map
      */
-    public String getMap(String map, @Nullable String version)
+    public String getMap(String map, String version)
     {
         // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
         return buildImageURL(version, "img/map", map + ".png");

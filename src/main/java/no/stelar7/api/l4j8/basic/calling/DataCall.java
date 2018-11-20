@@ -7,7 +7,6 @@ import no.stelar7.api.l4j8.basic.cache.impl.EmptyCacheProvider;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.RateLimiter;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.prefs.Preferences;
 
@@ -117,7 +116,7 @@ public final class DataCall
         return cache;
     }
     
-    public static void setCacheProvider(@Nullable CacheProvider provider)
+    public static void setCacheProvider(CacheProvider provider)
     {
         cache = provider == null ? EmptyCacheProvider.INSTANCE : provider;
     }
@@ -140,7 +139,7 @@ public final class DataCall
      *
      * @param proxy the url
      */
-    public void setProxy(@Nullable String proxy)
+    public void setProxy(String proxy)
     {
         urlProxy = proxy == null ? Constants.REQUEST_URL : proxy;
     }

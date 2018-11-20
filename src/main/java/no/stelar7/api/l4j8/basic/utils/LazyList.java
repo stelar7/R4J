@@ -1,7 +1,6 @@
 package no.stelar7.api.l4j8.basic.utils;
 
 
-import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Function;
 
@@ -12,7 +11,7 @@ public class LazyList<T> extends ArrayList<T>
     private           int                        lastValue;
     private           int                        increment;
     private transient Function<Integer, List<T>> makerOfMoreData;
-    private boolean hasMore = true;
+    private           boolean                    hasMore = true;
     
     public LazyList(int increment, Function<Integer, List<T>> maker)
     {
@@ -45,21 +44,18 @@ public class LazyList<T> extends ArrayList<T>
         return true;
     }
     
-    @Nonnull
     @Override
     public Iterator<T> iterator()
     {
         return new LazyListIterator(-1);
     }
     
-    @Nonnull
     @Override
     public ListIterator<T> listIterator()
     {
         return new LazyListIterator(-1);
     }
     
-    @Nonnull
     @Override
     public ListIterator<T> listIterator(int index)
     {

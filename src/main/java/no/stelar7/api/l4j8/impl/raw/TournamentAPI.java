@@ -6,7 +6,6 @@ import no.stelar7.api.l4j8.basic.utils.Utils;
 import no.stelar7.api.l4j8.pojo.match.Match;
 import no.stelar7.api.l4j8.pojo.tournament.*;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -48,7 +47,7 @@ public final class TournamentAPI
      * @param tournamentId the tournamentId this game is played on
      * @return a list of tournamentcodes
      */
-    public List<String> generateTournamentCodes(final TournamentCodeParameters params, final long tournamentId, @Nullable Integer count)
+    public List<String> generateTournamentCodes(final TournamentCodeParameters params, final long tournamentId, Integer count)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLData(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
