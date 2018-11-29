@@ -92,8 +92,7 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * It's a snowball! It's a Poro! It's...uh...one of those.
      */
-    SNOW_MARK(39, "SummonerMark")
-    ;
+    SNOW_MARK(39, "SummonerMark");
     
     
     private final Integer id;

@@ -20,7 +20,8 @@ public class StatusTest
     }
     
     @Test
-    public void testNullInit() {
+    public void testNullInit()
+    {
         final L4J8 l4j8 = new L4J8(null);
         l4j8.getDDragonAPI().getRealm();
     }

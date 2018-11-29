@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.tests.async;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
@@ -24,18 +25,19 @@ public class AsyncTest
     @Ignore
     public void testAsync()
     {
+        String                  id      = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner                s       = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         List<CompletableFuture> futures = new ArrayList<>();
-        
         for (int i = 0; i < 100; i++)
         {
             futures.add(
-                    supplyAsync(() -> new SummonerBuilder().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
+                    supplyAsync(() -> new SummonerBuilder().withPlatform(Platform.EUW1).withAccountId(s.getAccountId()).get())
                             .thenAccept(this::handleSummonerCallback)
                        );
         }
         
         futures.add(
-                supplyAsync(() -> new MatchListBuilder().withPlatform(Platform.EUW1).withAccountId(Constants.TEST_ACCOUNT_IDS[1]).get())
+                supplyAsync(() -> new MatchListBuilder().withPlatform(Platform.EUW1).withAccountId(s.getAccountId()).get())
                         .thenAccept(this::handleMatchCallback)
                    );
         CompletableFuture spinner = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));

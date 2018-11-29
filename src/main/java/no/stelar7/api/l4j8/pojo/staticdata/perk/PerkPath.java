@@ -5,12 +5,12 @@ import java.util.List;
 
 public class PerkPath implements Serializable
 {
-    private static final long serialVersionUID = -2843318973414769225L;
-    private List<PerkSlot> slots;
-    private String         icon;
-    private String         key;
-    private String         name;
-    private int            id;
+    private static final long           serialVersionUID = -2843318973414769225L;
+    private              List<PerkSlot> slots;
+    private              String         icon;
+    private              String         key;
+    private              String         name;
+    private              int            id;
     
     public List<PerkSlot> getSlots()
     {

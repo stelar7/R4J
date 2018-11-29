@@ -41,8 +41,8 @@ public class StaticTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.DEBUG);
         
-        StaticChampion list = api.getChampion(Constants.TEST_CHAMPION_IDS[0]);
-        Assert.assertEquals("ok?", list.getId(), (int) Constants.TEST_CHAMPION_IDS[0]);
+        StaticChampion list = api.getChampion(1);
+        Assert.assertEquals("ok?", list.getId(), 1);
     }
     
     @Test
@@ -103,7 +103,6 @@ public class StaticTest
         
         Map<Integer, StaticMastery> list = api.getMasteries();
     }
-    
     
     
     @Test

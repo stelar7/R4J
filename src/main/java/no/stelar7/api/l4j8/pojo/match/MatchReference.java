@@ -45,10 +45,10 @@ public class MatchReference implements Serializable
     }
     
     
-    public StaticChampion getChampion() {
+    public StaticChampion getChampion()
+    {
         return DDragonAPI.getInstance().getChampion(champion);
     }
-    
     
     
     /**

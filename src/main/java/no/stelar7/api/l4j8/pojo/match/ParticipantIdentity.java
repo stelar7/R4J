@@ -13,12 +13,12 @@ public class ParticipantIdentity implements Serializable
     private int      participantId;
     private String   matchHistoryUri;
     private int      profileIcon;
-    private long     summonerId;
+    private String   summonerId;
     private String   summonerName;
     private Platform currentPlatformId;
     private Platform platformId;
-    private long     accountId;
-    private long     currentAccountId;
+    private String   accountId;
+    private String   currentAccountId;
     
     public Summoner getCurrentSummoner()
     {
@@ -45,7 +45,7 @@ public class ParticipantIdentity implements Serializable
         return profileIcon;
     }
     
-    public long getSummonerId()
+    public String getSummonerId()
     {
         return summonerId;
     }
@@ -65,12 +65,12 @@ public class ParticipantIdentity implements Serializable
         return platformId;
     }
     
-    public long getAccountId()
+    public String getAccountId()
     {
         return accountId;
     }
     
-    public long getCurrentAccountId()
+    public String getCurrentAccountId()
     {
         return currentAccountId;
     }
@@ -89,13 +89,13 @@ public class ParticipantIdentity implements Serializable
         ParticipantIdentity that = (ParticipantIdentity) o;
         return participantId == that.participantId &&
                profileIcon == that.profileIcon &&
-               summonerId == that.summonerId &&
-               accountId == that.accountId &&
-               currentAccountId == that.currentAccountId &&
                Objects.equals(matchHistoryUri, that.matchHistoryUri) &&
+               Objects.equals(summonerId, that.summonerId) &&
                Objects.equals(summonerName, that.summonerName) &&
                currentPlatformId == that.currentPlatformId &&
-               platformId == that.platformId;
+               platformId == that.platformId &&
+               Objects.equals(accountId, that.accountId) &&
+               Objects.equals(currentAccountId, that.currentAccountId);
     }
     
     @Override

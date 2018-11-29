@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.pojo.championmastery;
 
 import java.io.Serializable;
 import java.time.*;
+import java.util.Objects;
 
 public class ChampionMastery implements Serializable
 {
@@ -11,7 +12,7 @@ public class ChampionMastery implements Serializable
     private boolean chestGranted;
     private int     championPoints;
     private long    championPointsSinceLastLevel;
-    private long    playerId;
+    private String  playerId;
     private long    championPointsUntilNextLevel;
     private int     tokensEarned;
     private int     championId;
@@ -103,7 +104,7 @@ public class ChampionMastery implements Serializable
      *
      * @return the player id
      */
-    public long getSummonerId()
+    public String getSummonerId()
     {
         return this.playerId;
     }
@@ -129,57 +130,22 @@ public class ChampionMastery implements Serializable
         {
             return false;
         }
-        
         ChampionMastery that = (ChampionMastery) o;
-        
-        if (championLevel != that.championLevel)
-        {
-            return false;
-        }
-        if (chestGranted != that.chestGranted)
-        {
-            return false;
-        }
-        if (championPoints != that.championPoints)
-        {
-            return false;
-        }
-        if (championPointsSinceLastLevel != that.championPointsSinceLastLevel)
-        {
-            return false;
-        }
-        if (playerId != that.playerId)
-        {
-            return false;
-        }
-        if (championPointsUntilNextLevel != that.championPointsUntilNextLevel)
-        {
-            return false;
-        }
-        if (tokensEarned != that.tokensEarned)
-        {
-            return false;
-        }
-        if (lastPlayTime != that.lastPlayTime)
-        {
-            return false;
-        }
-        return championId == that.championId;
+        return championLevel == that.championLevel &&
+               chestGranted == that.chestGranted &&
+               championPoints == that.championPoints &&
+               championPointsSinceLastLevel == that.championPointsSinceLastLevel &&
+               championPointsUntilNextLevel == that.championPointsUntilNextLevel &&
+               tokensEarned == that.tokensEarned &&
+               championId == that.championId &&
+               lastPlayTime == that.lastPlayTime &&
+               Objects.equals(playerId, that.playerId);
     }
     
     @Override
     public int hashCode()
     {
-        int result = championLevel;
-        result = 31 * result + (chestGranted ? 1 : 0);
-        result = 31 * result + championPoints;
-        result = 31 * result + (int) (championPointsSinceLastLevel ^ (championPointsSinceLastLevel >>> 32));
-        result = 31 * result + (int) (playerId ^ (playerId >>> 32));
-        result = 31 * result + (int) (championPointsUntilNextLevel ^ (championPointsUntilNextLevel >>> 32));
-        result = 31 * result + tokensEarned;
-        result = 31 * result + championId;
-        result = 31 * result + (int) (lastPlayTime ^ (lastPlayTime >>> 32));
-        return result;
+        return Objects.hash(championLevel, chestGranted, championPoints, championPointsSinceLastLevel, playerId, championPointsUntilNextLevel, tokensEarned, championId, lastPlayTime);
     }
     
     @Override

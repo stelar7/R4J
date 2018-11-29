@@ -72,7 +72,7 @@ public class FileSystemCacheProvider implements CacheProvider
         {
             // inject api key so cache still works in v4
             List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
-            pathData.add(DataCall.getCredentials().getBaseAPIKey());
+            pathData.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getBaseAPIKey());
             pathData.remove(0);
             
             Path storePath = resolvePath(type, pathData);
@@ -141,7 +141,7 @@ public class FileSystemCacheProvider implements CacheProvider
     {
         // inject api key so cache still works in v4
         List<Object> pathData = new ArrayList<>(Arrays.asList(data));
-        pathData.add(DataCall.getCredentials().getBaseAPIKey());
+        pathData.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getBaseAPIKey());
         Path filepath = resolvePath(type, pathData);
         
         if (!Files.exists(filepath))

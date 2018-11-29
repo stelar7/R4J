@@ -13,14 +13,14 @@ public class PointTypeDeserializer implements JsonDeserializer<PointType>
     @SuppressWarnings("unchecked")
     public PointType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
-        String           id     = json.getAsString();
+        String          id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
         Optional<Object> retu = values.stream()
                                       .map(v -> v.getFromCode(id))
                                       .filter(Optional::isPresent)
                                       .map(Optional::get)
                                       .findFirst();
-    
+        
         return retu.map(o -> (PointType) o).orElseGet(() -> (PointType) CodedEnum.printError(t, id));
     }
 }

@@ -3,7 +3,9 @@ package no.stelar7.api.l4j8.tests.ratelimit;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 import org.junit.rules.Stopwatch;
@@ -62,10 +64,12 @@ public class RatelimitTest
     {
         try
         {
+            String          id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+            Summoner        s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
             ExecutorService pool = Executors.newFixedThreadPool(8);
             for (int i2 = 0; i2 < 130; i2++)
             {
-                pool.execute(() -> new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get());
+                pool.execute(() -> new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get());
             }
             pool.shutdown();
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
@@ -81,9 +85,11 @@ public class RatelimitTest
     public void testRateLimit()
     {
         final L4J8 test = new L4J8(SecretFile.CREDS);
+        String     id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerId();
+        Summoner   s    = new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
         for (int i2 = 0; i2 < 130; i2++)
         {
-            new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
+            new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
         }
     }
     
@@ -91,9 +97,12 @@ public class RatelimitTest
     @Ignore
     public void testRateLimitWithSleep() throws InterruptedException
     {
-        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        
+        new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
         TimeUnit.SECONDS.sleep(10);
-        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
+        new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
     }
     
     @Test

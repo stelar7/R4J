@@ -5,13 +5,13 @@ import java.util.Objects;
 
 public class StaticPerk implements Serializable
 {
-    private static final long serialVersionUID = 2415927793878298318L;
-    private String name;
-    private String key;
-    private String shortDesc;
-    private String longDesc;
-    private String icon;
-    private int    id;
+    private static final long   serialVersionUID = 2415927793878298318L;
+    private              String name;
+    private              String key;
+    private              String shortDesc;
+    private              String longDesc;
+    private              String icon;
+    private              int    id;
     
     
     public String getName()

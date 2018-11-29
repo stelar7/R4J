@@ -46,7 +46,8 @@ public class Participant implements Serializable
     }
     
     
-    public StaticChampion getChampion() {
+    public StaticChampion getChampion()
+    {
         return DDragonAPI.getInstance().getChampion(championId);
     }
     

@@ -5,8 +5,8 @@ import java.util.List;
 
 public class PerkSlot implements Serializable
 {
-    private static final long serialVersionUID = 7714828182065312379L;
-    private List<StaticPerk> runes;
+    private static final long             serialVersionUID = 7714828182065312379L;
+    private              List<StaticPerk> runes;
     
     public List<StaticPerk> getRunes()
     {

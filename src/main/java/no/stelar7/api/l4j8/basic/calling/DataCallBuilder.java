@@ -79,10 +79,10 @@ public class DataCallBuilder
                 
                 return Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
             }
-    
+            
             case 401:
             {
-        
+                
                 String reasonText = "The API denied your request!\n";
                 reasonText += "Your API key was not present in the request\n";
                 reasonText += "Make sure you have setup your APICredentials before doing a API call!\n";
@@ -153,16 +153,6 @@ public class DataCallBuilder
         if (this.dc.getEndpoint() == URLEndpoint.V3_MATCH)
         {
             returnValue = postProcessMatch(returnValue);
-        }
-        
-        if (this.dc.getEndpoint() == URLEndpoint.V3_STATIC_PERKPATHS)
-        {
-            returnValue = postProcessPerkPaths(returnValue);
-        }
-        
-        if (this.dc.getEndpoint() == URLEndpoint.V3_STATIC_PERKPATH_BY_ID)
-        {
-            returnValue = postProcessPerkPath(returnValue);
         }
         
         final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME);

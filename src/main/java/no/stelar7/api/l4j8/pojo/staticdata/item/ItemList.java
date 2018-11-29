@@ -54,7 +54,7 @@ public class ItemList implements Serializable
         {
             return this.tree.equals(other.tree);
         }
-    
+        
     }
     
     /**

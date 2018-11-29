@@ -13,7 +13,7 @@ public class MatchListBuilder
 {
     
     private final Platform           platform;
-    private final Long               id;
+    private       String             id;
     private final Long               beginTime;
     private final Long               endTime;
     private final Long               beginIndex;
@@ -35,7 +35,7 @@ public class MatchListBuilder
         this.champions = new HashSet<>();
     }
     
-    private MatchListBuilder(Platform platform, Long id, Long beginTime, Long endTime, Long beginIndex, Long endIndex, Set<GameQueueType> queues, Set<SeasonType> seasons, Set<Integer> champions)
+    private MatchListBuilder(Platform platform, String id, Long beginTime, Long endTime, Long beginIndex, Long endIndex, Set<GameQueueType> queues, Set<SeasonType> seasons, Set<Integer> champions)
     {
         this.platform = platform;
         this.id = id;
@@ -53,7 +53,7 @@ public class MatchListBuilder
         return new MatchListBuilder(platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
     }
     
-    public MatchListBuilder withAccountId(Long accountId)
+    public MatchListBuilder withAccountId(String accountId)
     {
         return new MatchListBuilder(this.platform, accountId, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
     }
@@ -137,7 +137,7 @@ public class MatchListBuilder
      */
     public List<MatchReference> get()
     {
-        if (this.id < 0 || this.platform == Platform.UNKNOWN)
+        if (this.id.length() < 0 || this.platform == Platform.UNKNOWN)
         {
             return Collections.emptyList();
         }

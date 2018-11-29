@@ -14,7 +14,7 @@ import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
 
 import java.io.Serializable;
 import java.time.*;
-import java.util.List;
+import java.util.*;
 
 public final class Summoner implements Serializable
 {
@@ -23,8 +23,9 @@ public final class Summoner implements Serializable
     private int      profileIconId;
     private String   name;
     private int      summonerLevel;
-    private long     accountId;
-    private long     id;
+    private String   accountId;
+    private String   PUUID;
+    private String   id;
     private long     revisionDate;
     private Platform platform;
     
@@ -34,12 +35,12 @@ public final class Summoner implements Serializable
         return SummonerAPI.getInstance().getSummonerByName(platform, name);
     }
     
-    public static Summoner bySummonerId(Long id, Platform platform)
+    public static Summoner bySummonerId(String id, Platform platform)
     {
         return SummonerAPI.getInstance().getSummonerById(platform, id);
     }
     
-    public static Summoner byAccountId(Long id, Platform platform)
+    public static Summoner byAccountId(String id, Platform platform)
     {
         return SummonerAPI.getInstance().getSummonerByAccount(platform, id);
     }
@@ -47,9 +48,9 @@ public final class Summoner implements Serializable
     /**
      * The Summoners ID
      *
-     * @return long
+     * @return String
      */
-    public long getSummonerId()
+    public String getSummonerId()
     {
         return this.id;
     }
@@ -119,9 +120,19 @@ public final class Summoner implements Serializable
      *
      * @return int
      */
-    public long getAccountId()
+    public String getAccountId()
     {
         return accountId;
+    }
+    
+    /**
+     * Unique id attributed to the summoner
+     *
+     * @return string
+     */
+    public String getPUUID()
+    {
+        return PUUID;
     }
     
     /**
@@ -199,11 +210,15 @@ public final class Summoner implements Serializable
         {
             return false;
         }
-        if (accountId != summoner.accountId)
+        if ((id != null) ? !id.equals(summoner.id) : (summoner.id != null))
         {
             return false;
         }
-        if (id != summoner.id)
+        if ((accountId != null) ? !accountId.equals(summoner.accountId) : (summoner.accountId != null))
+        {
+            return false;
+        }
+        if ((PUUID != null) ? !PUUID.equals(summoner.PUUID) : (summoner.PUUID != null))
         {
             return false;
         }
@@ -221,14 +236,7 @@ public final class Summoner implements Serializable
     @Override
     public int hashCode()
     {
-        int result = profileIconId;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + summonerLevel;
-        result = 31 * result + (int) (accountId ^ (accountId >>> 32));
-        result = 31 * result + (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (revisionDate ^ (revisionDate >>> 32));
-        result = 31 * result + (platform != null ? platform.hashCode() : 0);
-        return result;
+        return Objects.hash(profileIconId, name, summonerLevel, accountId, PUUID, id, revisionDate, platform);
     }
     
     @Override

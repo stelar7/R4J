@@ -51,7 +51,7 @@ public class MatchHistoryCrawler
             {
                 do
                 {
-                    long                       accountid    = rs.getLong("accountid");
+                    String                     accountid    = rs.getString("accountid");
                     Platform                   platformid   = Platform.fromString(rs.getString("platformid")).get();
                     List<Pair<Long, Platform>> filteredRefs = getAndFilter(accountid, platformid);
                     if (filteredRefs == null)
@@ -64,8 +64,9 @@ public class MatchHistoryCrawler
             } else
             {
                 // Seed
-                List<Pair<Long, Platform>> filteredRefs = getAndFilter(22401330L, Platform.EUW1);
-                storeMatches(filteredRefs);
+                // List<Pair<Long, Platform>> filteredRefs = getAndFilter(22401330L, Platform.EUW1);
+                //storeMatches(filteredRefs);
+                return;
             }
         }
     }
@@ -80,7 +81,7 @@ public class MatchHistoryCrawler
         sql.getConnection().commit();
     }
     
-    private List<Pair<Long, Platform>> getAndFilter(Long accountid, Platform platformid) throws SQLException
+    private List<Pair<Long, Platform>> getAndFilter(String accountid, Platform platformid) throws SQLException
     {
         System.out.format("%nLoading Accountid: %s Platform: %s%n", accountid, platformid);
         
@@ -166,7 +167,7 @@ public class MatchHistoryCrawler
         }
     }
     
-    private List<MatchReference> getRankedGames(Long accountid, Platform platformid)
+    private List<MatchReference> getRankedGames(String accountid, Platform platformid)
     {
         return new MatchListBuilder().withPlatform(platformid).withAccountId(accountid).get();
     }
@@ -188,11 +189,11 @@ public class MatchHistoryCrawler
         return match;
     }
     
-    private List<Pair<Long, Platform>> getGamesFromDatabase(Long accountid, Platform platformid) throws SQLException
+    private List<Pair<Long, Platform>> getGamesFromDatabase(String accountid, Platform platformid) throws SQLException
     {
         List<Pair<Long, Platform>> data = new ArrayList<>();
         
-        matchCheck.setLong(1, accountid);
+        matchCheck.setString(1, accountid);
         matchCheck.setString(2, platformid.name());
         
         try (ResultSet rs = matchCheck.executeQuery())
@@ -209,7 +210,7 @@ public class MatchHistoryCrawler
     
     private long insertSummoner(ParticipantIdentity summoner) throws SQLException
     {
-        sumCheck.setLong(1, summoner.getCurrentAccountId());
+        sumCheck.setString(1, summoner.getCurrentAccountId());
         sumCheck.setString(2, summoner.getCurrentPlatform().name());
         try (ResultSet result = sumCheck.executeQuery())
         {
@@ -219,8 +220,8 @@ public class MatchHistoryCrawler
             }
         }
         
-        sumInsertStatement.setLong(1, summoner.getCurrentAccountId());
-        sumInsertStatement.setLong(2, summoner.getSummonerId());
+        sumInsertStatement.setString(1, summoner.getCurrentAccountId());
+        sumInsertStatement.setString(2, summoner.getSummonerId());
         sumInsertStatement.setString(3, summoner.getCurrentPlatform().name());
         sumInsertStatement.setString(4, summoner.getSummonerName());
         sumInsertStatement.setLong(5, summoner.getProfileIcon());

@@ -32,10 +32,10 @@ public final class SummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerById(final Platform server, long summonerId)
+    public Summoner getSummonerById(final Platform server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder()
-                .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+                .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ID)
                 .withPlatform(server);
         
@@ -98,10 +98,10 @@ public final class SummonerAPI
      * @param accountId accountId associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerByAccount(final Platform server, long accountId)
+    public Summoner getSummonerByAccount(final Platform server, String accountId)
     {
         DataCallBuilder builder = new DataCallBuilder()
-                .withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
+                .withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, accountId)
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
@@ -115,6 +115,39 @@ public final class SummonerAPI
         {
             Summoner summoner = (Summoner) builder.build();
             DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoner, server, accountId);
+            return summoner;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
+    }
+    
+    
+    /**
+     * The response object contains the summoner objects mapped by their username.
+     *
+     * @param server the region to execute against
+     * @param PUUID  puuid associated with summoner to retrieve.
+     * @return Optional Summoner
+     */
+    public Summoner getSummonerByPUUID(final Platform server, String PUUID)
+    {
+        DataCallBuilder builder = new DataCallBuilder()
+                .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
+                .withEndpoint(URLEndpoint.V3_SUMMONER_BY_PUUID)
+                .withPlatform(server);
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SUMMONER_BY_PUUID, server, PUUID);
+        if (chl.isPresent())
+        {
+            return (Summoner) chl.get();
+        }
+        
+        try
+        {
+            Summoner summoner = (Summoner) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SUMMONER_BY_PUUID, summoner, server, PUUID);
             return summoner;
         } catch (ClassCastException e)
         {

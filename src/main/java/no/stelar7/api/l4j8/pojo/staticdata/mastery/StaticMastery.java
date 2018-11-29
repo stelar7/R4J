@@ -9,13 +9,13 @@ public class StaticMastery implements Serializable
 {
     private static final long serialVersionUID = -2913618253144483204L;
     
-    private String description;
-    private int    id;
-    private Image  image;
-    private String masteryTree;
-    private String name;
-    private String prereq;
-    private int    ranks;
+    private List<String> description;
+    private int          id;
+    private Image        image;
+    private String       masteryTree;
+    private String       name;
+    private String       prereq;
+    private int          ranks;
     
     
     /**
@@ -25,7 +25,7 @@ public class StaticMastery implements Serializable
      */
     public String getDescription()
     {
-        return this.description;
+        return String.join("\n", this.description);
     }
     
     /**
@@ -97,7 +97,7 @@ public class StaticMastery implements Serializable
      */
     public String getSanitizedDescription()
     {
-        return sanitize(this.description);
+        return sanitize(this.getDescription());
     }
     
     private String sanitize(String inData)

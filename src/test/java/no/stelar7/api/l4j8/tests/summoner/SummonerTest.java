@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -36,39 +37,28 @@ public class SummonerTest
     @Test
     public void testById()
     {
-        for (int in = 0; in < 2; in++)
-        {
-            for (int i = 0; i < Constants.TEST_SUMMONER_IDS.length; i++)
-            {
-                Summoner optional = new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[i]).withSummonerId(Constants.TEST_SUMMONER_IDS[i]).get();
-                doAssertions.accept(optional);
-            }
-        }
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        doAssertions.accept(s);
     }
     
     @Test
     public void testByName()
     {
-        for (int in = 0; in < 2; in++)
-        {
-            for (int i = 0; i < Constants.TEST_SUMMONER_NAMES.length; i++)
-            {
-                Summoner optional = new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[i]).withName(Constants.TEST_SUMMONER_NAMES[i]).get();
-                doAssertions.accept(optional);
-            }
-        }
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        
+        Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withName(s.getNormalizedName()).get();
+        doAssertions.accept(optional);
     }
     
     @Test
     public void testByAccount()
     {
-        for (int in = 0; in < 2; in++)
-        {
-            for (int i = 0; i < Constants.TEST_ACCOUNT_IDS.length; i++)
-            {
-                Summoner optional = new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[i]).withAccountId(Constants.TEST_ACCOUNT_IDS[i]).get();
-                doAssertions.accept(optional);
-            }
-        }
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        
+        Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withAccountId(s.getAccountId()).get();
+        doAssertions.accept(optional);
     }
 }

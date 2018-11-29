@@ -19,7 +19,7 @@ public class SpectatorParticipant implements Serializable
     private SpectatorPerks         perks;
     private List<SpectatorMastery> masteries;
     private List<SpectatorRune>    runes;
-    private long                   summonerId;
+    private String                 summonerId;
     
     /**
      * The id of the champion
@@ -107,7 +107,7 @@ public class SpectatorParticipant implements Serializable
      *
      * @return the summoner id
      */
-    public long getSummonerId()
+    public String getSummonerId()
     {
         return summonerId;
     }
@@ -158,7 +158,7 @@ public class SpectatorParticipant implements Serializable
         {
             return false;
         }
-        if (summonerId != that.summonerId)
+        if ((summonerId != null) ? !summonerId.equals(that.summonerId) : (that.summonerId != null))
         {
             return false;
         }
@@ -202,7 +202,7 @@ public class SpectatorParticipant implements Serializable
         result = 31 * result + (perks != null ? perks.hashCode() : 0);
         result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
         result = 31 * result + (runes != null ? runes.hashCode() : 0);
-        result = 31 * result + (int) (summonerId ^ (summonerId >>> 32));
+        result = 31 * result + (summonerId != null ? summonerId.hashCode() : 0);
         return result;
     }
     

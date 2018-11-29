@@ -4,7 +4,10 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.league.*;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
@@ -13,7 +16,7 @@ import java.util.*;
 public class LeagueTest
 {
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
-    LeagueBuilder lb = new LeagueBuilder().withPlatform(Constants.TEST_PLATFORM[0]);
+    LeagueBuilder lb = new LeagueBuilder().withPlatform(Platform.EUW1);
     
     @Test
     public void testMasterLeague()
@@ -33,7 +36,9 @@ public class LeagueTest
     @Test
     public void testLeagueEntry()
     {
-        List<LeaguePosition> data = lb.withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getLeaguePosition();
+        String               id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner             s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        List<LeaguePosition> data = lb.withSummonerId(s.getSummonerId()).getLeaguePosition();
         assert data != null;
     }
     

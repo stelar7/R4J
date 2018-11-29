@@ -3,7 +3,10 @@ package no.stelar7.api.l4j8.tests.championmastery;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
@@ -19,13 +22,16 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMastery()
     {
-        ChampionMastery        mastery;
-        ChampionMasteryBuilder bu = new ChampionMasteryBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]);
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         
-        mastery = bu.withChampionId(Constants.TEST_CHAMPION_IDS[0]).getChampionMastery();
+        ChampionMastery        mastery;
+        ChampionMasteryBuilder bu = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withSummonerId(s.getSummonerId());
+        
+        mastery = bu.withChampionId(1).getChampionMastery();
         assert mastery != null;
         
-        mastery = bu.withChampionId(Constants.TEST_CHAMPION_IDS[1]).getChampionMastery();
+        mastery = bu.withChampionId(2).getChampionMastery();
         assert mastery != null;
         
     }
@@ -34,21 +40,30 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryTop()
     {
-        List<ChampionMastery> all = new ChampionMasteryBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getTopChampions(null);
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        
+        List<ChampionMastery> all = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withSummonerId(s.getSummonerId()).getTopChampions(null);
         assert all != null;
     }
     
     @Test
     public void testChampionMasteryAll()
     {
-        List<ChampionMastery> all = new ChampionMasteryBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getChampionMasteries();
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        
+        List<ChampionMastery> all = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withSummonerId(s.getSummonerId()).getChampionMasteries();
         assert all != null;
     }
     
     @Test
     public void testChampionMasteryScore()
     {
-        Integer score = new ChampionMasteryBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).getMasteryScore();
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        
+        Integer score = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withSummonerId(s.getSummonerId()).getMasteryScore();
         Assert.assertNotNull("no data", score);
     }
     

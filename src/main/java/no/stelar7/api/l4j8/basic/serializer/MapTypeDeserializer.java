@@ -13,14 +13,14 @@ public class MapTypeDeserializer implements JsonDeserializer<MapType>
     @SuppressWarnings("unchecked")
     public MapType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
-        String            id     = json.getAsString();
+        String          id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
         Optional<Object> retu = values.stream()
                                       .map(v -> v.getFromCode(id))
                                       .filter(Optional::isPresent)
                                       .map(Optional::get)
                                       .findFirst();
-    
+        
         return retu.map(o -> (MapType) o).orElseGet(() -> (MapType) CodedEnum.printError(t, id));
     }
 }

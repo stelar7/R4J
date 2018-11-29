@@ -13,13 +13,14 @@ public class SummonerSpellTypeDeserializer implements JsonDeserializer<SummonerS
     @SuppressWarnings("unchecked")
     public SummonerSpellType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
-        String             id     = json.getAsString();
+        String          id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
         Optional<Object> retu = values.stream()
                                       .map(v -> v.getFromCode(id))
                                       .filter(Optional::isPresent)
                                       .map(Optional::get)
                                       .findFirst();
-    
-        return retu.map(o -> (SummonerSpellType) o).orElseGet(() -> (SummonerSpellType) CodedEnum.printError(t, id)); }
+        
+        return retu.map(o -> (SummonerSpellType) o).orElseGet(() -> (SummonerSpellType) CodedEnum.printError(t, id));
+    }
 }

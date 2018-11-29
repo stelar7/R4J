@@ -13,7 +13,7 @@ public class LeagueBuilder
     
     private final Platform      platform;
     private final GameQueueType queue;
-    private final Long          summonerId;
+    private final String        summonerId;
     private final String        leagueId;
     
     public LeagueBuilder()
@@ -24,7 +24,7 @@ public class LeagueBuilder
         this.leagueId = null;
     }
     
-    private LeagueBuilder(Platform platform, GameQueueType queue, Long summonerId, String leagueId)
+    private LeagueBuilder(Platform platform, GameQueueType queue, String summonerId, String leagueId)
     {
         this.platform = platform;
         this.queue = queue;
@@ -42,7 +42,7 @@ public class LeagueBuilder
         return new LeagueBuilder(this.platform, queue, this.summonerId, this.leagueId);
     }
     
-    public LeagueBuilder withSummonerId(Long summonerId)
+    public LeagueBuilder withSummonerId(String summonerId)
     {
         return new LeagueBuilder(this.platform, this.queue, summonerId, this.leagueId);
     }

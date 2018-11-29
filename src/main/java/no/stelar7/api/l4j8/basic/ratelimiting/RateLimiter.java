@@ -122,7 +122,7 @@ public abstract class RateLimiter
                     callCountInTime.put(key, value);
                 }
             });
-    
+            
             oldLimit.getFirstCallInTime().forEach((key, value) -> {
                 if (firstCallInTime.containsKey(key))
                 {

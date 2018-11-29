@@ -40,7 +40,7 @@ public class CurrentGameTest
         
         // Get a summoner from that game
         final String   name = game.get(0).getParticipants().get(0).getSummonerName();
-        final Summoner sum  = new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withName(name).get();
+        final Summoner sum  = new SummonerBuilder().withPlatform(game.get(0).getPlatform()).withName(name).get();
         
         // Get game info
         final SpectatorGameInfo currentGame = sb.withSummonerId(sum.getSummonerId()).getCurrentGame();

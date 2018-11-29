@@ -10,7 +10,7 @@ public enum APIHTTPErrorReason
     ERROR_500(500, "Generic Server Error"),
     ERROR_599(599, "Read Timed Out");
     
-    private int code;
+    private int    code;
     private String reason;
     
     APIHTTPErrorReason(int code, String reason)

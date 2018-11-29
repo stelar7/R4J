@@ -33,7 +33,7 @@ public class MapData extends BaseStaticData
         {
             return this.data.equals(other.data);
         }
-    
+        
     }
     
     /**

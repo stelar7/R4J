@@ -47,72 +47,9 @@ public class TournamentTest
             this.api.updateTournament(codes.get(0), tcuparams);
             final TournamentCode id = this.api.getTournamentInfo(codes.get(0));
         }
-    }
-    
-    @Test
-    public void testPostGameData()
-    {
-        final List<Long> tournamentCodeMatchIds = this.api.getMatchIds(Constants.TEST_TOURNAMENT_CODES[0]);
         
-        final Match matchDetail = this.api.getMatchInfo(Platform.EUW1, Constants.TEST_TOURNAMENT_CODES[0], tournamentCodeMatchIds.get(0));
+        final List<Long> tournamentCodeMatchIds = this.api.getMatchIds(codes.get(0));
+        final Match      matchDetail            = this.api.getMatchInfo(Platform.EUW1, codes.get(0), tournamentCodeMatchIds.get(0));
     }
-    
-    @Test
-    public void testTournamentCodeGeneration()
-    {
-        final int                            tournamentId = 3107;
-        final int                            teamSize     = 1;
-        final TournamentCodeUpdateParameters inner        = new TournamentCodeUpdateParameters(Arrays.asList(19613950L, 22291359L), TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
-        final TournamentCodeParameters       params       = new TournamentCodeParameters(inner, "THIS IS METADATA YOOO", teamSize);
-        final List<String>                   codes        = this.api.generateTournamentCodes(params, tournamentId, 2);
-        
-    }
-    
-    @Test
-    public void testTournamentCodeGet()
-    {
-        final TournamentCode id = this.api.getTournamentInfo(Constants.TEST_TOURNAMENT_CODES[0]);
-    }
-    
-    @Test
-    public void testTournamentCodeUpdate()
-    {
-        final TournamentCodeUpdateParameters params = new TournamentCodeUpdateParameters(Arrays.asList(19613950L, 22291359L), TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
-        this.api.updateTournament(Constants.TEST_TOURNAMENT_CODES[0], params);
-    }
-    
-    @Test
-    public void testTournamentLobbyEvents()
-    {
-        final List<LobbyEvent> events = this.api.getTournamentLobbyInfo(Constants.TEST_TOURNAMENT_CODES[0]);
-    }
-    
-    @Test
-    public void testTournamentMatchDetails()
-    {
-        final Match eventWrapper = this.api.getMatchInfo(Platform.EUW1, Constants.TEST_TOURNAMENT_CODES[0], this.api.getMatchIds(Constants.TEST_TOURNAMENT_CODES[0]).get(0));
-    }
-    
-    @Test
-    public void testTournamentMatchIds()
-    {
-        final List<Long> eventWrapper = this.api.getMatchIds(Constants.TEST_TOURNAMENT_CODES[0]);
-    }
-    
-    @Test
-    public void testTournamentProviderRegistration()
-    {
-        final ProviderRegistrationParameters params = new ProviderRegistrationParameters(Platform.EUW1, "http://stelar7.no/loltest/provider.php");
-        final Long                           id     = this.api.registerAsProvider(params);
-    }
-    
-    @Test
-    public void testTournamentRegistration()
-    {
-        final int                              providerId = 199;
-        final TournamentRegistrationParameters params     = new TournamentRegistrationParameters("THE BEST TOURNAMENT EVER", providerId);
-        final Long                             id         = this.api.registerTournament(params);
-    }
-    
     
 }

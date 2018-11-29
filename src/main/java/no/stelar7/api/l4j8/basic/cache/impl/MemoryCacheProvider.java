@@ -78,11 +78,6 @@ public class MemoryCacheProvider implements CacheProvider
             case V3_MATCH:
                 matches.put((Match) obj[0], LocalDateTime.now());
                 break;
-            case V3_STATIC_CHAMPIONS:
-                champions = new Pair<>();
-                champions.setKey((StaticChampionList) obj[0]);
-                champions.setValue(LocalDateTime.now());
-                break;
             default:
                 break;
         }
@@ -137,30 +132,6 @@ public class MemoryCacheProvider implements CacheProvider
                 break;
             }
             
-            case V3_STATIC_CHAMPIONS:
-            {
-                opt = champions != null ? Optional.of(champions.getKey()) : Optional.empty();
-                break;
-            }
-            
-            
-            case V3_STATIC_CHAMPION_BY_ID:
-            {
-                if (champions != null)
-                {
-                    opt = champions.getKey()
-                                   .getData()
-                                   .values()
-                                   .stream()
-                                   .filter(i -> i.getId() == Integer.parseInt(String.valueOf(data[1])))
-                                   .findFirst();
-                } else
-                {
-                    opt = Optional.empty();
-                }
-                break;
-            }
-            
             default:
             {
                 opt = Optional.empty();
@@ -189,8 +160,6 @@ public class MemoryCacheProvider implements CacheProvider
             case V3_MATCH:
                 matches.clear();
                 break;
-            case V3_STATIC_CHAMPIONS:
-                champions = null;
             default:
                 break;
         }
@@ -208,7 +177,6 @@ public class MemoryCacheProvider implements CacheProvider
         clearOldCache(URLEndpoint.V3_SUMMONER_BY_NAME, summoners);
         clearOldCache(URLEndpoint.V3_SUMMONER_BY_ID, summoners);
         clearOldCache(URLEndpoint.V3_MATCH, matches);
-        clearOldCache(URLEndpoint.V3_STATIC_CHAMPIONS, matches);
     }
     
     @Override

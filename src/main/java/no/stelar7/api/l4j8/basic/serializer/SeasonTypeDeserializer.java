@@ -13,13 +13,14 @@ public class SeasonTypeDeserializer implements JsonDeserializer<SeasonType>
     @SuppressWarnings("unchecked")
     public SeasonType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
-        String             id     = json.getAsString();
+        String          id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
         Optional<Object> retu = values.stream()
                                       .map(v -> v.getFromCode(id))
                                       .filter(Optional::isPresent)
                                       .map(Optional::get)
                                       .findFirst();
-    
-        return retu.map(o -> (SeasonType) o).orElseGet(() -> (SeasonType) CodedEnum.printError(t, id));  }
+        
+        return retu.map(o -> (SeasonType) o).orElseGet(() -> (SeasonType) CodedEnum.printError(t, id));
+    }
 }

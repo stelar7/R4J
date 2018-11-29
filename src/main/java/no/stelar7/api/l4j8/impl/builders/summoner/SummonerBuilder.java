@@ -11,44 +11,52 @@ public class SummonerBuilder
 {
     
     private final String   name;
-    private final long     sumId;
-    private final long     accId;
+    private final String   sumId;
+    private final String   accId;
+    private final String   puuid;
     private final Platform platform;
     
     public SummonerBuilder()
     {
         this.name = "";
-        this.sumId = -1;
-        this.accId = -1;
+        this.sumId = "";
+        this.accId = "";
+        this.puuid = "";
         this.platform = Platform.UNKNOWN;
     }
     
-    private SummonerBuilder(String name, long sumId, long accId, Platform platform)
+    private SummonerBuilder(String name, String sumId, String accId, String puuid, Platform platform)
     {
         this.name = name;
         this.sumId = sumId;
         this.accId = accId;
+        this.puuid = puuid;
         this.platform = platform;
     }
     
-    public SummonerBuilder withSummonerId(Long id)
+    public SummonerBuilder withSummonerId(String id)
     {
-        return new SummonerBuilder("", id, -1, this.platform);
+        return new SummonerBuilder("", id, "", "", this.platform);
     }
     
-    public SummonerBuilder withAccountId(Long id)
+    public SummonerBuilder withAccountId(String id)
     {
-        return new SummonerBuilder("", -1, id, this.platform);
+        return new SummonerBuilder("", "", id, "", this.platform);
     }
     
     public SummonerBuilder withName(String name)
     {
-        return new SummonerBuilder(name, -1, -1, this.platform);
+        return new SummonerBuilder(name, "", "", "", this.platform);
+    }
+    
+    public SummonerBuilder withPUUID(String puuid)
+    {
+        return new SummonerBuilder(name, "", "", puuid, this.platform);
     }
     
     public SummonerBuilder withPlatform(Platform platform)
     {
-        return new SummonerBuilder(this.name, this.sumId, this.accId, platform);
+        return new SummonerBuilder(this.name, this.sumId, this.accId, this.puuid, platform);
     }
     
     /**
@@ -63,14 +71,21 @@ public class SummonerBuilder
         Object          index    = "";
         
         
-        if (accId > 0)
+        if (accId.length() > 0)
         {
             builder.withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(this.accId));
             endpoint = URLEndpoint.V3_SUMMONER_BY_ACCOUNT;
             index = this.accId;
         }
         
-        if (sumId > 0)
+        if (puuid.length() > 0)
+        {
+            builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, String.valueOf(this.accId));
+            endpoint = URLEndpoint.V3_SUMMONER_BY_PUUID;
+            index = this.puuid;
+        }
+        
+        if (sumId.length() > 0)
         {
             builder.withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.sumId));
             endpoint = URLEndpoint.V3_SUMMONER_BY_ID;

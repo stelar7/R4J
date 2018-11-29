@@ -10,9 +10,9 @@ import java.util.*;
 public class SpectatorBuilder
 {
     private final Platform platform;
-    private final Long     summonerId;
+    private final String   summonerId;
     
-    private SpectatorBuilder(Platform platform, Long summonerId)
+    private SpectatorBuilder(Platform platform, String summonerId)
     {
         this.platform = platform;
         this.summonerId = summonerId;
@@ -29,7 +29,7 @@ public class SpectatorBuilder
         return new SpectatorBuilder(platform, this.summonerId);
     }
     
-    public SpectatorBuilder withSummonerId(Long id)
+    public SpectatorBuilder withSummonerId(String id)
     {
         return new SpectatorBuilder(this.platform, id);
     }

@@ -32,7 +32,7 @@ public class StaticSummonerSpellList implements Serializable
         {
             return this.data.equals(other.data);
         }
-    
+        
     }
     
     /**

@@ -15,10 +15,10 @@ public class ChampionMasteryBuilder
 {
     
     private final Platform platform;
-    private final Long     summonerId;
+    private       String   summonerId;
     private final Integer  championId;
     
-    private ChampionMasteryBuilder(Platform platform, Long summonerId, Integer championId)
+    private ChampionMasteryBuilder(Platform platform, String summonerId, Integer championId)
     {
         this.platform = platform;
         this.summonerId = summonerId;
@@ -33,7 +33,7 @@ public class ChampionMasteryBuilder
     }
     
     
-    public ChampionMasteryBuilder withSummonerId(Long id)
+    public ChampionMasteryBuilder withSummonerId(String id)
     {
         return new ChampionMasteryBuilder(this.platform, id, this.championId);
     }

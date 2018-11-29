@@ -48,14 +48,14 @@ public final class MatchAPI
      * @param championId  optional filter for selecting the champion played
      * @return MatchList
      */
-    public List<MatchReference> getMatchList(Platform server, long accountId,
+    public List<MatchReference> getMatchList(Platform server, String accountId,
                                              Long beginTime, Long endTime,
                                              Integer beginIndex, Integer endIndex,
                                              Set<GameQueueType> rankedQueue,
                                              Set<SeasonType> season,
                                              Set<Integer> championId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(accountId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, accountId)
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
                                                        .withPlatform(server);
         
@@ -119,7 +119,7 @@ public final class MatchAPI
      * @param accountId the account to check
      * @return {@code List<MatchReference>}
      */
-    public LazyList<MatchReference> getMatchList(Platform server, long accountId)
+    public LazyList<MatchReference> getMatchList(Platform server, String accountId)
     {
         int increment = 100;
         return new LazyList<>(increment, prevValue -> getMatchList(server, accountId, null, null, prevValue, prevValue + increment, null, null, null));

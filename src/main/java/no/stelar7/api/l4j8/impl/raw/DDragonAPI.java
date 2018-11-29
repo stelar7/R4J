@@ -154,7 +154,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, version, locale);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, version, locale);
         if (chl.isPresent())
         {
             return ((LanguageStrings) chl.get()).getData();
@@ -163,7 +163,7 @@ public final class DDragonAPI
         try
         {
             LanguageStrings list = (LanguageStrings) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGE_STRINGS, list, version, locale);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -191,7 +191,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, "");
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_STATIC_LANGUAGES);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGES);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -199,7 +199,7 @@ public final class DDragonAPI
         try
         {
             List<String> list = (List<String>) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_STATIC_LANGUAGES, list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGES, list);
             return list;
         } catch (ClassCastException e)
         {

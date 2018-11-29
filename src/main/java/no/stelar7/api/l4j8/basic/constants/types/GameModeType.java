@@ -78,7 +78,7 @@ public enum GameModeType implements CodedEnum
      */
     GAMEMODEX,
     /**
-     * 	Odyssey: Extraction mode
+     * Odyssey: Extraction mode
      */
     ODYSSEY;
     

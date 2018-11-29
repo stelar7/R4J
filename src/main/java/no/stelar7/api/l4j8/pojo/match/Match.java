@@ -169,11 +169,11 @@ public class Match implements Serializable
      * @param summonerId the id to check
      * @return ParticipantIdentity
      */
-    public ParticipantIdentity getParticipantIdentityFromSummonerId(long summonerId)
+    public ParticipantIdentity getParticipantIdentityFromSummonerId(String summonerId)
     {
         for (ParticipantIdentity identity : participantIdentities)
         {
-            if (identity.getSummonerId() == summonerId)
+            if (identity.getSummonerId().equals(summonerId))
             {
                 return identity;
             }
@@ -187,7 +187,7 @@ public class Match implements Serializable
      * @param summonerId the id to check
      * @return Participant
      */
-    public Participant getParticipantFromSummonerId(long summonerId)
+    public Participant getParticipantFromSummonerId(String summonerId)
     {
         ParticipantIdentity id = getParticipantIdentityFromSummonerId(summonerId);
         

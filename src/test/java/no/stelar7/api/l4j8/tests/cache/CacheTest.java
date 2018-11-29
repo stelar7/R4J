@@ -5,8 +5,10 @@ import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 import org.junit.rules.Stopwatch;
@@ -56,7 +58,7 @@ public class CacheTest
     public void testTieredMemoryCache() throws InterruptedException
     {
         DataCall.setCacheProvider(tieredCache);
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setLogLevel(LogLevel.INFO);
         doCacheStuff();
     }
     
@@ -74,13 +76,14 @@ public class CacheTest
     {
         DataCall.setLogLevel(LogLevel.INFO);
         DataCall.setCacheProvider(fileCache);
-        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
-        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
+        String id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         
         Thread.sleep(6000);
         
-        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
-        new SummonerBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withSummonerId(Constants.TEST_SUMMONER_IDS[0]).get();
+        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
     }
     
     @After
@@ -92,8 +95,10 @@ public class CacheTest
     
     private void doCacheStuff() throws InterruptedException
     {
-       // DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
-        List<MatchReference> recents = new MatchListBuilder().withPlatform(Constants.TEST_PLATFORM[0]).withAccountId(Constants.TEST_ACCOUNT_IDS[0]).get();
+        // DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
+        String               id      = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner             s       = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        List<MatchReference> recents = new MatchListBuilder().withPlatform(Platform.EUW1).withAccountId(s.getAccountId()).get();
         
         if (recents.isEmpty())
         {
