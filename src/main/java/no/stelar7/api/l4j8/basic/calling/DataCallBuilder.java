@@ -123,7 +123,7 @@ public class DataCallBuilder
             case 503:
             case 504:
             {
-                return sleepAndRetry(retrys, "Server error, waiting 10 second and retrying", "Server error (%s / 3 times), waiting 1 second and retrying%n");
+                return sleepAndRetry(retrys, "Server error (" + response.getResponseCode() + ") , waiting 10 second and retrying", "Server error (" + response.getResponseCode() + ") (%s / 3 times), waiting 1 second and retrying%n");
             }
             
             default:
@@ -256,11 +256,14 @@ public class DataCallBuilder
         {
             JsonObject pid    = participant.getAsJsonObject();
             JsonObject player = participant.getAsJsonObject().getAsJsonObject("player");
-            for (String key : player.keySet())
+            if (player != null)
             {
-                pid.add(key, player.get(key));
+                for (String key : player.keySet())
+                {
+                    pid.add(key, player.get(key));
+                }
+                pid.remove("player");
             }
-            pid.remove("player");
         }
         
         JsonArray participants = element.getAsJsonArray("participants");

@@ -108,8 +108,8 @@ public final class TournamentAPI
     public Match getMatchInfo(final Platform server, final String tournamentCode, final Long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withURLData(Constants.URL_PARAM_TOURNAMENT_CODE, tournamentCode)
-                                                       .withURLData(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
+                                                       .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCH)
                                                        .withPlatform(server);
         try
