@@ -14,8 +14,8 @@ public class LeagueItem implements Serializable
     private int        wins;
     private boolean    veteran;
     private int        losses;
-    private long       playerOrTeamId;
-    private String     playerOrTeamName;
+    private long       summonerId;
+    private String     summonerName;
     private boolean    inactive;
     private boolean    freshBlood;
     private int        leaguePoints;
@@ -123,7 +123,7 @@ public class LeagueItem implements Serializable
      */
     public long getSummonerId()
     {
-        return this.playerOrTeamId;
+        return this.summonerId;
     }
     
     /**
@@ -133,7 +133,7 @@ public class LeagueItem implements Serializable
      */
     public String getSummonerName()
     {
-        return this.playerOrTeamName;
+        return this.summonerName;
     }
     
     /**
@@ -176,7 +176,7 @@ public class LeagueItem implements Serializable
         {
             return false;
         }
-        if (playerOrTeamId != that.playerOrTeamId)
+        if (summonerId != that.summonerId)
         {
             return false;
         }
@@ -200,7 +200,7 @@ public class LeagueItem implements Serializable
         {
             return false;
         }
-        return (playerOrTeamName != null) ? playerOrTeamName.equals(that.playerOrTeamName) : (that.playerOrTeamName == null);
+        return (summonerName != null) ? summonerName.equals(that.summonerName) : (that.summonerName == null);
     }
     
     @Override
@@ -212,8 +212,8 @@ public class LeagueItem implements Serializable
         result = 31 * result + wins;
         result = 31 * result + (veteran ? 1 : 0);
         result = 31 * result + losses;
-        result = 31 * result + (int) (playerOrTeamId ^ (playerOrTeamId >>> 32));
-        result = 31 * result + (playerOrTeamName != null ? playerOrTeamName.hashCode() : 0);
+        result = 31 * result + (int) (summonerId ^ (summonerId >>> 32));
+        result = 31 * result + (summonerName != null ? summonerName.hashCode() : 0);
         result = 31 * result + (inactive ? 1 : 0);
         result = 31 * result + (freshBlood ? 1 : 0);
         result = 31 * result + leaguePoints;
@@ -232,8 +232,8 @@ public class LeagueItem implements Serializable
                ", leaguePoints=" + leaguePoints +
                ", losses=" + losses +
                ", miniSeries=" + miniSeries +
-               ", playerOrTeamId='" + playerOrTeamId + '\'' +
-               ", playerOrTeamName='" + playerOrTeamName + '\'' +
+               ", summonerId='" + summonerId + '\'' +
+               ", summonerName='" + summonerName + '\'' +
                ", wins=" + wins +
                '}';
     }
