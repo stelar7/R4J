@@ -9,12 +9,12 @@ public class TournamentCodeUpdateParameters implements Serializable
 {
     private static final long serialVersionUID = 614195923641043920L;
     
-    private Set<Long>               allowedParticipants;
+    private Set<String>             allowedParticipants;
     private TournamentMapType       mapType;
     private TournamentPickType      pickType;
     private TournamentSpectatorType spectatorType;
     
-    public TournamentCodeUpdateParameters(final List<Long> allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)
+    public TournamentCodeUpdateParameters(final List<String> allowedParticipants, final TournamentMapType map, final TournamentPickType pickType, final TournamentSpectatorType specType)
     {
         super();
         this.mapType = map;
@@ -30,12 +30,12 @@ public class TournamentCodeUpdateParameters implements Serializable
      *
      * @return set
      */
-    public Set<Long> getAllowedParticipants()
+    public Set<String> getAllowedParticipants()
     {
         return this.allowedParticipants;
     }
     
-    public void setAllowedParticipants(final Set<Long> allowedParticipants)
+    public void setAllowedParticipants(final Set<String> allowedParticipants)
     {
         this.allowedParticipants = new HashSet<>(allowedParticipants);
     }

@@ -4,13 +4,17 @@ import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.impl.raw.TournamentAPI;
 import no.stelar7.api.l4j8.pojo.match.Match;
+import no.stelar7.api.l4j8.pojo.spectator.*;
 import no.stelar7.api.l4j8.pojo.tournament.*;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Ignore
 public class TournamentTest
@@ -22,7 +26,7 @@ public class TournamentTest
     @Test
     public void testAllRegistrations()
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        DataCall.setLogLevel(LogLevel.INFO);
         
         final ProviderRegistrationParameters params     = new ProviderRegistrationParameters(Platform.EUW1, "http://stelar7.no/loltest/provider.php");
         final long                           providerId = this.api.registerAsProvider(params);
@@ -32,24 +36,32 @@ public class TournamentTest
         
         final int teamSize = 5;
         
-        final TournamentCodeUpdateParameters tcinner  = new TournamentCodeUpdateParameters(Arrays.asList(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L), TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
+        SpectatorBuilder        spectatorBuilder = new SpectatorBuilder().withPlatform(Platform.EUW1);
+        final SpectatorGameInfo game             = spectatorBuilder.getFeaturedGames().get(0);
+        List<String>            names            = game.getParticipants().stream().map(SpectatorParticipant::getSummonerName).collect(Collectors.toList());
+        List<String>            ids              = new ArrayList<>();
+        SummonerBuilder         sb               = new SummonerBuilder().withPlatform(Platform.EUW1);
+        for (String name : names)
+        {
+            ids.add(sb.withName(name).get().getSummonerId());
+        }
+        
+        final TournamentCodeUpdateParameters tcinner  = new TournamentCodeUpdateParameters(ids, TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
         final TournamentCodeParameters       tcparams = new TournamentCodeParameters(tcinner, "THIS IS METADATA YOOO", teamSize);
         
         final List<String> codes = this.api.generateTournamentCodes(tcparams, tournamentId, 1);
         
         
-        final TournamentCodeUpdateParameters tcuparams = new TournamentCodeUpdateParameters(Arrays.asList(10L, 20L, 30L, 40L, 50L, 60L, 70L, 80L, 90L, 100L), TournamentMapType.TWISTED_TREELINE, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
+        final TournamentCodeUpdateParameters tcuparams = new TournamentCodeUpdateParameters(ids, TournamentMapType.TWISTED_TREELINE, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
         
         final List<LobbyEvent> events = this.api.getTournamentLobbyInfo(codes.get(0));
         
         if (!api.isStub())
         {
             this.api.updateTournament(codes.get(0), tcuparams);
-            final TournamentCode id = this.api.getTournamentInfo(codes.get(0));
+            final TournamentCode id                     = this.api.getTournamentInfo(codes.get(0));
+            final List<Long>     tournamentCodeMatchIds = this.api.getMatchIds(Platform.EUW1, codes.get(0));
+            final Match          matchDetail            = this.api.getMatchInfo(Platform.EUW1, codes.get(0), tournamentCodeMatchIds.get(0));
         }
-        
-        final List<Long> tournamentCodeMatchIds = this.api.getMatchIds(codes.get(0));
-        final Match      matchDetail            = this.api.getMatchInfo(Platform.EUW1, codes.get(0), tournamentCodeMatchIds.get(0));
     }
-    
 }

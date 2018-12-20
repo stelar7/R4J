@@ -85,11 +85,11 @@ public class RatelimitTest
     public void testRateLimit()
     {
         final L4J8 test = new L4J8(SecretFile.CREDS);
-        String     id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerId();
-        Summoner   s    = new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
+        String     id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner   s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         for (int i2 = 0; i2 < 130; i2++)
         {
-            new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
+            new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         }
     }
     

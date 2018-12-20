@@ -78,12 +78,12 @@ public final class TournamentAPI
      * @param tournamentCode The tournament code of the match
      * @return a list of matchIds played with this code
      */
-    public List<Long> getMatchIds(final String tournamentCode)
+    public List<Long> getMatchIds(final Platform platform, final String tournamentCode)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCHLIST)
-                                                       .withPlatform(ServicePlatform.AMERICAS);
+                                                       .withPlatform(platform);
         
         try
         {

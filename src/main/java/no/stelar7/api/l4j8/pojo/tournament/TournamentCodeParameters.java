@@ -10,7 +10,7 @@ public class TournamentCodeParameters implements Serializable
 {
     private static final long serialVersionUID = 6366533149651958130L;
     
-    private Set<Long>               allowedSummonerIds;
+    private Set<String>             allowedSummonerIds;
     private TournamentMapType       mapType;
     private String                  metadata;
     private TournamentPickType      pickType;
@@ -46,12 +46,12 @@ public class TournamentCodeParameters implements Serializable
      *
      * @return SummonerIdParams
      */
-    public Set<Long> getAllowedSummonerIds()
+    public Set<String> getAllowedSummonerIds()
     {
         return this.allowedSummonerIds;
     }
     
-    public void setAllowedSummonerIds(final Set<Long> allowedSummonerIds)
+    public void setAllowedSummonerIds(final Set<String> allowedSummonerIds)
     {
         this.allowedSummonerIds = allowedSummonerIds;
     }
