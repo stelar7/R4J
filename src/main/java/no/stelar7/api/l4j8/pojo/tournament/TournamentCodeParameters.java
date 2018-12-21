@@ -32,7 +32,7 @@ public class TournamentCodeParameters implements Serializable
         this.teamSize = teamSize;
         
         
-        if (getTeamSize() < 1 || getTeamSize() > 5 || getTeamSize() * 2 != allowedSummonerIds.size())
+        if (getTeamSize() < 1 || getTeamSize() > 5 || (allowedSummonerIds != null && getTeamSize() * 2 != allowedSummonerIds.size()))
         {
             String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s", getTeamSize(), 1, 5, allowedSummonerIds.size());
             throw new APIUnsupportedActionException(error);

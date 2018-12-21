@@ -20,7 +20,7 @@ public class TournamentCodeUpdateParameters implements Serializable
         this.mapType = map;
         this.pickType = pickType;
         this.spectatorType = specType;
-        this.allowedParticipants = new HashSet<>(allowedParticipants);
+        this.allowedParticipants = allowedParticipants == null ? null : new HashSet<>(allowedParticipants);
     }
     
     /**
