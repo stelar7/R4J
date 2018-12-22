@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.regex.*;
 
 public final class Utils
 {
@@ -53,6 +54,27 @@ public final class Utils
         builder.registerTypeAdapter(ServicePlatform.class, new RealmSpesificEnumSerializer());
         builder.registerTypeAdapter(Platform.class, new RealmSpesificEnumSerializer());
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
+    }
+    
+    public static Map<String, String> extractRegex(String input, String regex, String... vars)
+    {
+        Map<String, String> matches = new HashMap<>();
+        
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(input);
+        if (!m.find())
+        {
+            return null;
+        }
+        
+        Arrays.stream(vars).forEach(v -> matches.put(v, m.group(v)));
+        
+        return matches;
+    }
+    
+    public static String extractRegex(String input, String regex, String var)
+    {
+        return extractRegex(input, regex, new String[]{var}).get(var);
     }
     
     public static Gson getGson()
