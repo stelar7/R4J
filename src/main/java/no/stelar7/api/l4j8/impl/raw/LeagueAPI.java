@@ -57,6 +57,41 @@ public final class LeagueAPI
         }
     }
     
+    /**
+     * Get grandmaster tier leagues.
+     * Valid queues are: RANKED_SOLO_5x5, RANKED_FLEX_SR, RANKED_FLEX_TT
+     *
+     * @param server region to get data from
+     * @param queue  queueType to get data for
+     * @return LeagueList
+     */
+    public LeagueList getGrandmasterLeague(Platform server, GameQueueType queue)
+    {
+        
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
+                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_GRANDMASTER)
+                                                       .withPlatform(server);
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_GRANDMASTER, server, queue);
+        if (chl.isPresent())
+        {
+            return (LeagueList) chl.get();
+        }
+        
+        try
+        {
+            LeagueList list = (LeagueList) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_GRANDMASTER, list, server, queue);
+            return list;
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
+    }
+    
+    
     
     /**
      * Get challenger tier leagues.
