@@ -34,9 +34,9 @@ public final class MasteryAPI
      * @param summonerId the summonerId
      * @return Optional FeaturedGames
      */
-    public Integer getMasteryScore(Platform server, long summonerId)
+    public Integer getMasteryScore(Platform server, String summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_SCORE)
                                                        .withPlatform(server);
         
@@ -67,7 +67,7 @@ public final class MasteryAPI
      * @param count      the amount of champions to get
      * @return A sorted list of ChampionMastery
      */
-    public List<ChampionMastery> getTopChampions(Platform server, long summonerId, Integer count)
+    public List<ChampionMastery> getTopChampions(Platform server, String summonerId, Integer count)
     {
         List<ChampionMastery> list = getChampionMasteries(server, summonerId);
         
@@ -87,9 +87,9 @@ public final class MasteryAPI
      * @param championId the championId
      * @return Optional ChampionMastery
      */
-    public ChampionMastery getChampionMastery(Platform server, long summonerId, int championId)
+    public ChampionMastery getChampionMastery(Platform server, String summonerId, int championId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(championId))
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
@@ -139,9 +139,9 @@ public final class MasteryAPI
      * @param summonerId the summonerId
      * @return Optional ChampionMastery
      */
-    public List<ChampionMastery> getChampionMasteries(Platform server, long summonerId)
+    public List<ChampionMastery> getChampionMasteries(Platform server, String summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V3_MASTERY_BY_ID)
                                                        .withPlatform(server);
         

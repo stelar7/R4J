@@ -61,9 +61,9 @@ public final class SpectatorAPI
      * @param summonerId the summonerId
      * @return SpectatorGameInfo
      */
-    public SpectatorGameInfo getCurrentGame(Platform server, long summonerId)
+    public SpectatorGameInfo getCurrentGame(Platform server, String summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V3_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         

@@ -19,9 +19,9 @@ public final class ThirdPartyAPI
         // Hide public constructor
     }
     
-    public boolean checkCode(Platform platform, long summonerId)
+    public boolean checkCode(Platform platform, String summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V3_THIRD_PARTY_CODE)
                                                        .withPlatform(platform);
         
@@ -40,9 +40,9 @@ public final class ThirdPartyAPI
         }
     }
     
-    public String getCode(Platform platform, long summonerId)
+    public String getCode(Platform platform, String summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V3_THIRD_PARTY_CODE)
                                                        .withPlatform(platform);
         

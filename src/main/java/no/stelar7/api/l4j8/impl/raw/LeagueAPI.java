@@ -136,11 +136,11 @@ public final class LeagueAPI
      * @param summonerId summoner to get data for
      * @return LeagueList
      */
-    public List<LeaguePosition> getLeaguePosition(Platform server, long summonerId)
+    public List<LeaguePosition> getLeaguePosition(Platform server, String summonerId)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(summonerId))
+                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE_ENTRY)
                                                        .withPlatform(server);
         
