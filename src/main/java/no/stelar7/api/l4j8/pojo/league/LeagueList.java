@@ -23,7 +23,7 @@ public class LeagueList implements Serializable
      * @param id the id to use for construction
      * @return TierDivisionType
      */
-    public TierDivisionType getTierDivisionType(long id)
+    public TierDivisionType getTierDivisionType(String id)
     {
         LeagueItem pos = getLeagueItem(id);
         
@@ -37,9 +37,9 @@ public class LeagueList implements Serializable
      * @param id the Tier to use for construction
      * @return LeagueItem
      */
-    public LeagueItem getLeagueItem(long id)
+    public LeagueItem getLeagueItem(String id)
     {
-        return entries.stream().filter(s -> s.getSummonerId() == id).findFirst().orElse(null);
+        return entries.stream().filter(s -> s.getSummonerId().equals(id)).findFirst().orElse(null);
     }
     
     @Override
