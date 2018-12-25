@@ -9,14 +9,16 @@ public class SpectatorParticipant implements Serializable
 {
     private static final long serialVersionUID = -4280093223886492229L;
     
-    private int                    championId;
-    private long                   profileIconId;
-    private SummonerSpellType      spell1Id;
-    private SummonerSpellType      spell2Id;
-    private String                 summonerName;
-    private TeamType               teamId;
-    private boolean                bot;
-    private SpectatorPerks         perks;
+    private int                                    championId;
+    private long                                   profileIconId;
+    private SummonerSpellType                      spell1Id;
+    private SummonerSpellType                      spell2Id;
+    private String                                 summonerName;
+    private String                                 summonerId;
+    private TeamType                               teamId;
+    private boolean                                bot;
+    private SpectatorPerks                         perks;
+    private List<SpectatorGameCustomizationObject> gameCustomizationObjects;
     
     /**
      * The id of the champion

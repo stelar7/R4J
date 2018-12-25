@@ -7,7 +7,8 @@ import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
 import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
-import no.stelar7.api.l4j8.impl.raw.SummonerAPI;
+import no.stelar7.api.l4j8.impl.builders.thirdparty.ThirdPartyCodeBuilder;
+import no.stelar7.api.l4j8.impl.raw.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.LeaguePosition;
 import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
@@ -167,7 +168,6 @@ public final class Summoner implements Serializable
         return new ChampionMasteryBuilder().withPlatform(platform).withSummonerId(id).getChampionMasteries();
     }
     
-    
     public List<LeaguePosition> getLeagueEntry()
     {
         return new LeagueBuilder().withPlatform(platform).withSummonerId(id).getLeaguePosition();
@@ -176,6 +176,21 @@ public final class Summoner implements Serializable
     public SpectatorGameInfo getCurrentGame()
     {
         return new SpectatorBuilder().withPlatform(platform).withSummonerId(id).getCurrentGame();
+    }
+    
+    public String getThirdPartyCode()
+    {
+        return new ThirdPartyCodeBuilder().withPlatform(platform).withSummonerId(id).getCode();
+    }
+    
+    public List<LeaguePosition> getLeaguePosition()
+    {
+        return new LeagueBuilder().withPlatform(platform).withSummonerId(id).getLeaguePosition();
+    }
+    
+    public int getMasteryScore()
+    {
+        return new ChampionMasteryBuilder().withPlatform(platform).withSummonerId(id).getMasteryScore();
     }
     
     /**
