@@ -90,6 +90,23 @@ public class SpectatorParticipant implements Serializable
         return bot;
     }
     
+    /**
+     * the participants summonerid
+     * @return the summoner id
+     */
+    public String getSummonerId()
+    {
+        return summonerId;
+    }
+    
+    /**
+     * no clue...
+     * @return stuff?
+     */
+    public List<SpectatorGameCustomizationObject> getGameCustomizationObjects()
+    {
+        return gameCustomizationObjects;
+    }
     
     /**
      * Gets perks, not present on older games
@@ -99,6 +116,23 @@ public class SpectatorParticipant implements Serializable
     public SpectatorPerks getPerks()
     {
         return perks;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "SpectatorParticipant{" +
+               "championId=" + championId +
+               ", profileIconId=" + profileIconId +
+               ", spell1Id=" + spell1Id +
+               ", spell2Id=" + spell2Id +
+               ", summonerName='" + summonerName + '\'' +
+               ", summonerId='" + summonerId + '\'' +
+               ", teamId=" + teamId +
+               ", bot=" + bot +
+               ", perks=" + perks +
+               ", gameCustomizationObjects=" + gameCustomizationObjects +
+               '}';
     }
     
     @Override
@@ -119,28 +153,16 @@ public class SpectatorParticipant implements Serializable
                spell1Id == that.spell1Id &&
                spell2Id == that.spell2Id &&
                Objects.equals(summonerName, that.summonerName) &&
+               Objects.equals(summonerId, that.summonerId) &&
                teamId == that.teamId &&
-               Objects.equals(perks, that.perks);
+               Objects.equals(perks, that.perks) &&
+               Objects.equals(gameCustomizationObjects, that.gameCustomizationObjects);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(championId, profileIconId, spell1Id, spell2Id, summonerName, teamId, bot, perks);
+        return Objects.hash(championId, profileIconId, spell1Id, spell2Id, summonerName, summonerId, teamId, bot, perks, gameCustomizationObjects);
     }
     
-    @Override
-    public String toString()
-    {
-        return "SpectatorParticipant{" +
-               "championId=" + championId +
-               ", profileIconId=" + profileIconId +
-               ", spell1Id=" + spell1Id +
-               ", spell2Id=" + spell2Id +
-               ", summonerName='" + summonerName + '\'' +
-               ", teamId=" + teamId +
-               ", bot=" + bot +
-               ", perks=" + perks +
-               '}';
-    }
 }

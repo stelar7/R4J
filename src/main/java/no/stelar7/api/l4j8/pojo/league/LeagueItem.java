@@ -14,7 +14,7 @@ public class LeagueItem implements Serializable
     private int        wins;
     private boolean    veteran;
     private int        losses;
-    private long       summonerId;
+    private String     summonerId;
     private String     summonerName;
     private boolean    inactive;
     private boolean    freshBlood;
@@ -121,7 +121,7 @@ public class LeagueItem implements Serializable
      *
      * @return the player or team id
      */
-    public long getSummonerId()
+    public String getSummonerId()
     {
         return this.summonerId;
     }
@@ -176,7 +176,7 @@ public class LeagueItem implements Serializable
         {
             return false;
         }
-        if (summonerId != that.summonerId)
+        if (!summonerId.equals(that.summonerId))
         {
             return false;
         }
@@ -212,7 +212,7 @@ public class LeagueItem implements Serializable
         result = 31 * result + wins;
         result = 31 * result + (veteran ? 1 : 0);
         result = 31 * result + losses;
-        result = 31 * result + (int) (summonerId ^ (summonerId >>> 32));
+        result = 31 * result + (summonerId != null ? summonerId.hashCode() : 0);
         result = 31 * result + (summonerName != null ? summonerName.hashCode() : 0);
         result = 31 * result + (inactive ? 1 : 0);
         result = 31 * result + (freshBlood ? 1 : 0);
