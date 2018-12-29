@@ -7,9 +7,9 @@ public class MatchFrame implements Serializable
 {
     private static final long serialVersionUID = 9214624443412276664L;
     
-    private long                               timestamp;
-    private Map<String, MatchParticipantFrame> participantFrames;
-    private List<MatchEvent>                   events;
+    private long                                timestamp;
+    private Map<Integer, MatchParticipantFrame> participantFrames;
+    private List<MatchEvent>                    events;
     
     /**
      * List of events for this frame.
@@ -26,7 +26,7 @@ public class MatchFrame implements Serializable
      *
      * @return {@code Map<String, MatchParticipantFrame> }
      */
-    public Map<String, MatchParticipantFrame> getParticipantFrames()
+    public Map<Integer, MatchParticipantFrame> getParticipantFrames()
     {
         return this.participantFrames;
     }

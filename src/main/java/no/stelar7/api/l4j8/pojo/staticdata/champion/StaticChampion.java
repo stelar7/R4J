@@ -23,7 +23,7 @@ public class StaticChampion implements Serializable
     private List<Recommended>         recommended;
     private List<Skin>                skins;
     private List<StaticChampionSpell> spells;
-    private Stats                     stats;
+    private StaticChampionStats       stats;
     private List<String>              tags;
     private String                    title;
     
@@ -173,7 +173,7 @@ public class StaticChampion implements Serializable
      *
      * @return the stats
      */
-    public Stats getStats()
+    public StaticChampionStats getStats()
     {
         return this.stats;
     }

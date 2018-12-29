@@ -70,7 +70,9 @@ public class MatchListTest
         
         for (MatchReference reference : all)
         {
-            Match detail = reference.getFullMatch();
+            Match         detail   = reference.getFullMatch();
+            MatchTimeline timeline = detail.getTimeline();
+            System.out.println();
         }
     }
     
