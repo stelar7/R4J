@@ -64,12 +64,12 @@ public class RatelimitTest
     {
         try
         {
-            String          id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-            Summoner        s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+            String          name   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+            Summoner        s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(name).get();
             ExecutorService pool = Executors.newFixedThreadPool(8);
             for (int i2 = 0; i2 < 130; i2++)
             {
-                pool.execute(() -> new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get());
+                pool.execute(() -> new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(s.getSummonerId()).get());
             }
             pool.shutdown();
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
