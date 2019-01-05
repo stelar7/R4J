@@ -270,6 +270,11 @@ public enum GameQueueType implements CodedEnum
      * 1070 Onslaught games
      */
     ODYSSEY(new Integer[]{1030, 1040, 1050, 1060, 1070}),
+    
+    /**
+     * Tutorial games
+     */
+    TUTORIAL(new Integer[]{2000, 2010, 2020}),
     ;
     
     private final Integer[] codes;
