@@ -25,7 +25,7 @@ public final class Summoner implements Serializable
     private String   name;
     private int      summonerLevel;
     private String   accountId;
-    private String   PUUID;
+    private String   puuid;
     private String   id;
     private long     revisionDate;
     private Platform platform;
@@ -133,7 +133,7 @@ public final class Summoner implements Serializable
      */
     public String getPUUID()
     {
-        return PUUID;
+        return puuid;
     }
     
     /**
@@ -233,7 +233,7 @@ public final class Summoner implements Serializable
         {
             return false;
         }
-        if ((PUUID != null) ? !PUUID.equals(summoner.PUUID) : (summoner.PUUID != null))
+        if ((puuid != null) ? !puuid.equals(summoner.puuid) : (summoner.puuid != null))
         {
             return false;
         }
@@ -251,7 +251,7 @@ public final class Summoner implements Serializable
     @Override
     public int hashCode()
     {
-        return Objects.hash(profileIconId, name, summonerLevel, accountId, PUUID, id, revisionDate, platform);
+        return Objects.hash(profileIconId, name, summonerLevel, accountId, puuid, id, revisionDate, platform);
     }
     
     @Override

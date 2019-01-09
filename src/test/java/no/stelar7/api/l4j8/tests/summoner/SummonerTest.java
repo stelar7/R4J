@@ -23,6 +23,7 @@ public class SummonerTest
         Assert.assertNotEquals("Summoner revision date is NULL", value.getRevisionDate(), 0L);
         Assert.assertNotEquals("Summoner level is NULL", value.getSummonerLevel(), 0);
         Assert.assertNotNull("Summoner revison date DATE is NULL", value.getRevisionDateAsDate());
+        Assert.assertNotNull("Summoner PUUID is null", value.getPUUID());
     };
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);

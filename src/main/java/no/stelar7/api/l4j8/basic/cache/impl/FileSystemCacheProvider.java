@@ -129,7 +129,13 @@ public class FileSystemCacheProvider implements CacheProvider
             pathData.remove(0);
             
             Path storePath = resolvePath(type, pathData);
-            Files.setLastModifiedTime(storePath, FileTime.from(Instant.now()));
+            if (Files.exists(storePath))
+            {
+                Files.setLastModifiedTime(storePath, FileTime.from(Instant.now()));
+            } else
+            {
+                store(type, obj);
+            }
         } catch (IOException e)
         {
             e.printStackTrace();
