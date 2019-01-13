@@ -47,10 +47,6 @@ public class UseageTest
         
         boolean didWin = match.didWin(self);
         
-        ParticipantIdentity opponentIdentity = match.getLaneOpponentIdentity(self);
-        Participant         opponent         = match.getParticipantFromParticipantId(opponentIdentity.getParticipantId());
-        StaticChampion      opponentChampion = championData.get(opponent.getChampionId());
-        
         System.out.format("Player '%s' played their latest game as '%s'%n", stelar7.getName(), champion.getName());
         
         System.out.format("They have a masteryscore of %s on that champion%n", mastery.getChampionPoints());
@@ -59,7 +55,15 @@ public class UseageTest
         
         System.out.format("They %s that game%n", didWin ? "won" : "lost");
         
-        System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getSummonerName(), opponentChampion.getName());
+        
+        ParticipantIdentity opponentIdentity = match.getLaneOpponentIdentity(self);
+        if (opponentIdentity != null)
+        {
+            Participant    opponent         = match.getParticipantFromParticipantId(opponentIdentity.getParticipantId());
+            StaticChampion opponentChampion = championData.get(opponent.getChampionId());
+            
+            System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getSummonerName(), opponentChampion.getName());
+        }
         
         if (!runes.isEmpty() && !masteries.isEmpty())
         {
