@@ -225,6 +225,11 @@ public class Match implements Serializable
                 continue;
             }
             
+            if (participant.getTeam() == self.getTeam())
+            {
+                continue;
+            }
+            
             LaneType otherLane = participant.getTimeline().getLane();
             RoleType otherRole = participant.getTimeline().getRole();
             
