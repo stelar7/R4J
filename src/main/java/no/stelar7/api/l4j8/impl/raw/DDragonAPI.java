@@ -32,8 +32,10 @@ public final class DDragonAPI
     
     public Map<Integer, StaticChampion> getChampions(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_CHAMPION_MANY);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_CHAMPION_MANY);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -106,8 +108,10 @@ public final class DDragonAPI
     
     public Map<Integer, Item> getItems(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -147,8 +151,10 @@ public final class DDragonAPI
     
     public Map<String, String> getLanguageStrings(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -184,8 +190,10 @@ public final class DDragonAPI
     @SuppressWarnings("unchecked")
     public List<String> getLanguages()
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_LANGUAGES);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_LANGUAGES);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, "");
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, "");
@@ -209,8 +217,10 @@ public final class DDragonAPI
     
     public Map<String, MapDetails> getMaps(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_MAPS);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_MAPS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -239,8 +249,10 @@ public final class DDragonAPI
     
     public Map<Integer, StaticMastery> getMasteries(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -269,8 +281,10 @@ public final class DDragonAPI
     
     public Map<String, List<List<MasteryTreeItem>>> getMasteryTree(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -309,8 +323,10 @@ public final class DDragonAPI
     
     public Map<Long, ProfileIconDetails> getProfileIcons(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_PROFILEICONS);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_PROFILEICONS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -347,9 +363,11 @@ public final class DDragonAPI
     
     public Realm getRealm(Platform region)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
-                                                       .withEndpoint(URLEndpoint.DDRAGON_REALMS);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
+                .withEndpoint(URLEndpoint.DDRAGON_REALMS);
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS);
         if (chl.isPresent())
@@ -370,8 +388,10 @@ public final class DDragonAPI
     
     public Map<Integer, StaticRune> getRunes(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_RUNES);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_RUNES);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -412,8 +432,10 @@ public final class DDragonAPI
     
     public Map<Integer, StaticSummonerSpell> getSummonerSpells(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_SUMMONER_SPELLS);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_SUMMONER_SPELLS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
@@ -453,8 +475,10 @@ public final class DDragonAPI
     @SuppressWarnings("unchecked")
     public List<String> getVersions()
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
         
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS);
@@ -517,8 +541,10 @@ public final class DDragonAPI
     @SuppressWarnings("unchecked")
     public Map<Integer, PerkPath> getPerkPaths(String version, String locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withProxy(Constants.DDRAGON_PROXY)
-                                                       .withEndpoint(URLEndpoint.DDRAGON_PERKPATHS);
+        DataCallBuilder builder = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(Constants.DDRAGON_PROXY)
+                .withEndpoint(URLEndpoint.DDRAGON_PERKPATHS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);

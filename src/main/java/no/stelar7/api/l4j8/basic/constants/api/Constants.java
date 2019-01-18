@@ -76,7 +76,8 @@ public final class Constants
     public static final String METHOD_POST      = "POST";
     public static final String PROTOCOL         = "https://";
     public static final String HOST_PLACEHOLDER = ".api.riotgames.com";
-    public static final String DDRAGON_PROXY    = "http://ddragon.leagueoflegends.com/{game}{service}{version}{resource}";
+    public static final String GSVR             = "{game}{service}{version}{resource}";
+    public static final String DDRAGON_PROXY    = "http://ddragon.leagueoflegends.com/" + GSVR;
     
     public static final String BASE_URL = PROTOCOL + PLATFORM_PLACEHOLDER + HOST_PLACEHOLDER + SEPARATOR;
     public static final String URL_PATH = GAME_PLACEHOLDER + SEPARATOR + SERVICE_PLACEHOLDER + SEPARATOR + VERSION_PLACEHOLDER + SEPARATOR + RESOURCE_PLACEHOLDER;

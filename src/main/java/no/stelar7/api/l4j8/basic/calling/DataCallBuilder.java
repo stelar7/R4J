@@ -8,10 +8,13 @@ import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
 import no.stelar7.api.l4j8.basic.utils.*;
 
+import javax.net.ssl.*;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.security.cert.X509Certificate;
 import java.time.Instant;
 import java.util.*;
 import java.util.Map.Entry;
@@ -31,6 +34,41 @@ public class DataCallBuilder
     private String requestMethod = "GET";
     private String postData      = "";
     
+    private static TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
+    {
+        public java.security.cert.X509Certificate[] getAcceptedIssuers()
+        {
+            return null;
+        }
+        
+        public void checkClientTrusted(X509Certificate[] certs, String authType)
+        {
+        }
+        
+        public void checkServerTrusted(X509Certificate[] certs, String authType)
+        {
+        }
+    }
+    };
+    
+    // Create all-trusting host name verifier
+    private static HostnameVerifier allHostsValid = (hostname, session) -> true;
+    
+    static
+    {
+        try
+        {
+            // Install the all-trusting trust manager
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (KeyManagementException | NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    
     private static void updateRatelimiter(Enum server, Enum endpoint)
     {
         RateLimiter limiter = DataCall.getLimiter().get(server).get(endpoint);
@@ -45,7 +83,7 @@ public class DataCallBuilder
      */
     public Object build(int... retrys)
     {
-        if (!this.dc.getEndpoint().isDDragon())
+        if (this.dc.useRatelimiter())
         {
             if (DataCall.getCredentials() == null)
             {
@@ -70,6 +108,7 @@ public class DataCallBuilder
         switch (response.getResponseCode())
         {
             case 200:
+            case 201:
             case 204:
             {
                 String returnValue = response.getResponseData();
@@ -78,6 +117,12 @@ public class DataCallBuilder
                 returnValue = postProcess(returnValue);
                 
                 return Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
+            }
+            
+            case 400:
+            {
+                String reasonText = "Your api request is malformed!";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_400, reasonText + response.getResponseData());
             }
             
             case 401:
@@ -132,6 +177,7 @@ public class DataCallBuilder
             }
         }
         
+        System.err.println("UNHANDLED RESPONSE CODE!!!");
         System.err.println("Response Code:" + response.getResponseCode());
         System.err.println("Response Data:" + response.getResponseData());
         throw new APINoValidResponseException(response.getResponseData());
@@ -539,11 +585,11 @@ public class DataCallBuilder
                 return new DataCallResponse(con.getResponseCode(), reason);
             }
             
-            InputStream stream = (con.getResponseCode() == 200) ? con.getInputStream() : con.getErrorStream();
+            InputStream stream = (con.getResponseCode() <= 399) ? con.getInputStream() : con.getErrorStream();
             
             if (stream == null)
             {
-                return new DataCallResponse(APIHTTPErrorReason.ERROR_500.getCode(), APIHTTPErrorReason.ERROR_500.getReason());
+                return new DataCallResponse(con.getResponseCode(), "Unable to read stream!");
             }
             
             try (BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)))
@@ -667,6 +713,18 @@ public class DataCallBuilder
     public DataCallBuilder withEndpoint(final URLEndpoint endpoint)
     {
         this.dc.setEndpoint(endpoint);
+        return this;
+    }
+    
+    /**
+     * enables ratelimiters for this call
+     *
+     * @param flag enabled or disabled
+     * @return this
+     */
+    public DataCallBuilder withLimiters(final boolean flag)
+    {
+        this.dc.setUseLimiters(flag);
         return this;
     }
     

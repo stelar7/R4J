@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
@@ -121,7 +122,18 @@ public enum URLEndpoint
     V3_TOURNAMENT_STUB_CODES("lol", "tournament-stub", "v4", "codes", new TypeToken<List<String>>() {}.getType()),
     V3_TOURNAMENT_STUB_LOBBY_EVENTS("lol", "tournament-stub", "v4", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V3_TOURNAMENT_STUB_PROVIDER("lol", "tournament-stub", "v4", "providers", Integer.class),
-    V3_TOURNAMENT_STUB_TOURNAMENT("lol", "tournament-stub", "v4", "tournaments", Integer.class);
+    V3_TOURNAMENT_STUB_TOURNAMENT("lol", "tournament-stub", "v4", "tournaments", Integer.class),
+    
+    // LCU
+    LCU_LOBBY("lol-lobby/v2/lobby", "", "", "", JsonObject.class),
+    LCU_LOBBY_INVITE("lol-lobby/v2/lobby/invitations", "", "", "", JsonArray.class),
+    LCU_LOBBY_POSITION("lol-lobby/v2/lobby/members/localMember/position-preferences", "", "", "", Void.class),
+    LCU_LOBBY_MATCHMAKING("lol-lobby/v2/lobby/matchmaking/search", "", "", "", Void.class),
+    
+    LCU_SUMMONER_BY_NAME("lol-summoner/v2/summoners", "", "", "", JsonArray.class),
+    
+    LCU_CREATE_NOTIFICATION("player-notifications/v1/notifications", "", "", "", JsonObject.class),
+    ;
     
     
     private final String game;
@@ -162,10 +174,5 @@ public enum URLEndpoint
     public Object getType()
     {
         return type;
-    }
-    
-    public boolean isDDragon()
-    {
-        return this.name().startsWith("DDRAGON");
     }
 }

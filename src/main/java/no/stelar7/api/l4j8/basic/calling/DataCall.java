@@ -28,6 +28,7 @@ public final class DataCall
     
     private        Enum        platform;
     private        URLEndpoint endpoint;
+    private        boolean     useLimiters      = true;
     private        Platform    defaultPlatform  = Platform.EUW1;
     private        String      urlProxy         = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/l4j8");
@@ -84,6 +85,11 @@ public final class DataCall
     public void setPlatform(Enum platform)
     {
         this.platform = platform;
+    }
+    
+    public void setUseLimiters(boolean flag)
+    {
+        this.useLimiters = flag;
     }
     
     public void setEndpoint(URLEndpoint endpoint)
@@ -177,5 +183,10 @@ public final class DataCall
     public static void setCallStackLimit(int callStackLimit)
     {
         DataCall.callStackLimit = callStackLimit;
+    }
+    
+    public boolean useRatelimiter()
+    {
+        return useLimiters;
     }
 }
