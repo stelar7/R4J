@@ -58,7 +58,7 @@ public class LCUApi
         
         String               postData = sw.toString();
         Pair<String, String> header   = LCUConnection.getAuthorizationHeader();
-        JsonObject obj = (JsonObject) new DataCallBuilder()
+        JsonArray obj = (JsonArray) new DataCallBuilder()
                 .withLimiters(false)
                 .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
                 .withEndpoint(URLEndpoint.LCU_LOBBY_INVITE)
@@ -188,5 +188,31 @@ public class LCUApi
                 .build();
         
         return obj.get("id").getAsInt();
+    }
+    
+    /**
+     * Joins the lobby with the specified id
+     * <p>
+     * returns true if lobby exists, and we are able to join
+     */
+    public static boolean joinLobby(String id)
+    {
+        try
+        {
+            Pair<String, String> header = LCUConnection.getAuthorizationHeader();
+            new DataCallBuilder()
+                    .withLimiters(false)
+                    .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
+                    .withEndpoint(URLEndpoint.LCU_LOBBY_JOIN)
+                    .withURLParameter(Constants.ID_PLACEHOLDER, id)
+                    .withRequestMethod("POST")
+                    .withHeader(header.getKey(), header.getValue())
+                    .build();
+            
+            return true;
+        } catch (APIResponseException e)
+        {
+            return false;
+        }
     }
 }

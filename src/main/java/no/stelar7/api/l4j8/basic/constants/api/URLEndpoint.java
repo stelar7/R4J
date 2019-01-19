@@ -126,6 +126,7 @@ public enum URLEndpoint
     
     // LCU
     LCU_LOBBY("lol-lobby/v2/lobby", "", "", "", JsonObject.class),
+    LCU_LOBBY_JOIN("lol-lobby/v2/party/{id}/join", "", "", "", Void.class),
     LCU_LOBBY_INVITE("lol-lobby/v2/lobby/invitations", "", "", "", JsonArray.class),
     LCU_LOBBY_POSITION("lol-lobby/v2/lobby/members/localMember/position-preferences", "", "", "", Void.class),
     LCU_LOBBY_MATCHMAKING("lol-lobby/v2/lobby/matchmaking/search", "", "", "", Void.class),
