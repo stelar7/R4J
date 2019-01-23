@@ -262,15 +262,25 @@ public enum GameQueueType implements CodedEnum
      */
     NEXUS_BLITZ(new Integer[]{1200}),
     /**
-     * Odyssey: Extraction games
-     * 1030 Intro games
-     * 1040 Cadet games
-     * 1050	Crewmember games
-     * 1060 Captain games
-     * 1070 Onslaught games
+     * Odyssey: Extraction Intro games
      */
-    ODYSSEY(new Integer[]{1030, 1040, 1050, 1060, 1070}),
-    
+    ODYSSEY_INTRO(new Integer[]{1030}),
+    /**
+     * Odyssey: Extraction Cadet games
+     */
+    ODYSSEY_CADET(new Integer[]{1040}),
+    /**
+     * Odyssey: Extraction Crewmember games
+     */
+    ODYSSEY_CREWMEMBER(new Integer[]{1050}),
+    /**
+     * Odyssey: Extraction Captain games
+     */
+    ODYSSEY_CAPTAIN(new Integer[]{1060}),
+    /**
+     * Odyssey: Extraction Onslaught games
+     */
+    ODYSSEY_ONSLAUGHT(new Integer[]{1070}),
     /**
      * Tutorial games
      */
