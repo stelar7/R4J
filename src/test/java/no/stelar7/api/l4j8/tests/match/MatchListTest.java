@@ -106,17 +106,17 @@ public class MatchListTest
     }
     
     @Test
-    public void testCallsCoUsT()
+    public void testNoDuplicates()
     {
         DataCall.setLogLevel(LogLevel.INFO);
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getGames().getLazy();
-        for (Iterator<MatchReference> matchReferenceIterator = list.iterator(); matchReferenceIterator.hasNext(); )
+        Set<MatchReference>      ref  = new HashSet<>();
+        for (MatchReference reference : list)
         {
-            MatchReference matchReference = matchReferenceIterator.next();
-            if (matchReferenceIterator.hasNext())
+            if (!ref.add(reference))
             {
-                matchReferenceIterator.hasNext();
+                System.out.println("dup");
             }
         }
     }

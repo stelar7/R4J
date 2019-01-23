@@ -138,6 +138,7 @@ public class LazyList<T> extends ArrayList<T>
             {
                 
                 // check if this call has more data, and return true if it does
+                hasMore = loadMoreData();
                 if (hasMore)
                 {
                     size = size();
