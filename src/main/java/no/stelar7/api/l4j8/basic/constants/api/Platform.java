@@ -34,7 +34,7 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
     /**
      * Latin America North platform.
      */
-    LA1("LA1", "lan"),
+    LA1("LA1", "lan", "WAS_LA1"),
     /**
      * Latin America South platform.
      */
