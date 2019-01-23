@@ -88,12 +88,11 @@ public class MatchListTest
     }
     
     @Test
-    public void testMatchlistStelar7()
+    public void testMatchlistSummoner() throws InterruptedException
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.INFO);
-        
-        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get().getGames().getLazy();
+        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getGames().getLazy();
         list.loadFully();
         
         List<MatchReference> filtered = list.stream()
@@ -101,8 +100,25 @@ public class MatchListTest
                                             .filter(r -> r.getQueue() == GameQueueType.TEAM_BUILDER_RANKED_SOLO)
                                             .collect(Collectors.toList());
         
-        System.out.println(list.size());
+        Thread.sleep(500);
+        System.out.println("Total game count:" + list.size());
         System.out.println(filtered.size());
+    }
+    
+    @Test
+    public void testCallsCoUsT()
+    {
+        DataCall.setLogLevel(LogLevel.INFO);
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getGames().getLazy();
+        for (Iterator<MatchReference> matchReferenceIterator = list.iterator(); matchReferenceIterator.hasNext(); )
+        {
+            MatchReference matchReference = matchReferenceIterator.next();
+            if (matchReferenceIterator.hasNext())
+            {
+                matchReferenceIterator.hasNext();
+            }
+        }
     }
     
     @Test

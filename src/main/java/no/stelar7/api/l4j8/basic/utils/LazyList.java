@@ -35,6 +35,8 @@ public class LazyList<T> extends ArrayList<T>
         List<T> more = makerOfMoreData.apply(lastValue);
         lastValue += increment;
         
+        // we should return false here if the list doesnt contain 100 games, but that depends on the api always returning 100 games,
+        // so we instead make another call to make sure we dont miss any data.
         if (more.isEmpty())
         {
             return false;
@@ -131,11 +133,16 @@ public class LazyList<T> extends ArrayList<T>
                 return true;
             }
             
-            hasMore = loadMoreData();
+            // if the last call had more data
             if (hasMore)
             {
-                size = size();
-                return true;
+                
+                // check if this call has more data, and return true if it does
+                if (hasMore)
+                {
+                    size = size();
+                    return true;
+                }
             }
             
             return false;
