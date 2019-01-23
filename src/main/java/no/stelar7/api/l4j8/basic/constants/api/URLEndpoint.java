@@ -79,6 +79,7 @@ public enum URLEndpoint
     // api/lol/{region}/v2.5/league/master
     V3_LEAGUE("lol", "league", "v4", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
     V3_LEAGUE_ENTRY("lol", "league", "v4", "positions/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeaguePosition>>() {}.getType()),
+    V3_LEAGUE_POSITIONAL("lol", "league", "v4", "positions/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER + "/" + Constants.LANE_PLACEHOLDER + "/" + Constants.PAGE_PLACEHOLDER, new TypeToken<List<LeaguePosition>>() {}.getType()),
     V3_LEAGUE_MASTER("lol", "league", "v4", "masterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V3_LEAGUE_GRANDMASTER("lol", "league", "v4", "grandmasterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V3_LEAGUE_CHALLENGER("lol", "league", "v4", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),

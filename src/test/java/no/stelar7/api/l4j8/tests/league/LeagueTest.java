@@ -1,7 +1,9 @@
 package no.stelar7.api.l4j8.tests.league;
 
+import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.utils.LazyList;
 import no.stelar7.api.l4j8.impl.*;
 import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
@@ -42,4 +44,11 @@ public class LeagueTest
         assert data != null;
     }
     
+    @Test
+    public void testPositionalRanks()
+    {
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        LazyList<LeaguePosition> posLazy = l4j8.getLeagueAPI().getPositionalRanksLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I, LeaguePositionType.BOTTOM);
+        List<LeaguePosition>     pos     = l4j8.getLeagueAPI().getPositionalRanks(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I, LeaguePositionType.BOTTOM, 0);
+    }
 }

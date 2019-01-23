@@ -68,6 +68,26 @@ public enum TierDivisionType implements CodedEnum
         return this.name();
     }
     
+    public String getTier()
+    {
+        if (!name().contains("_"))
+        {
+            return null;
+        }
+        
+        return name().split("_")[0];
+    }
+    
+    public String getDivision()
+    {
+        if (!name().contains("_"))
+        {
+            return null;
+        }
+        
+        return name().split("_")[1];
+    }
+    
     
     public Optional<TierDivisionType> getFromCode(String tierAndRank)
     {

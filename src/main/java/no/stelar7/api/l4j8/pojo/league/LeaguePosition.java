@@ -3,26 +3,33 @@ package no.stelar7.api.l4j8.pojo.league;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class LeaguePosition implements Serializable
 {
     private static final long serialVersionUID = -895051155625969402L;
     
-    private String        rank;
-    private GameQueueType queueType;
-    private boolean       hotStreak;
-    private MiniSeries    miniSeries;
-    private int           wins;
-    private boolean       veteran;
-    private int           losses;
-    private String        playerOrTeamId;
-    private String        leagueName;
-    private String        playerOrTeamName;
-    private boolean       inactive;
-    private boolean       freshBlood;
-    private String        tier;
-    private int           leaguePoints;
-    private String        leagueId;
+    private String             rank;
+    private GameQueueType      queueType;
+    private boolean            hotStreak;
+    private MiniSeries         miniSeries;
+    private int                wins;
+    private boolean            veteran;
+    private int                losses;
+    private String             summonerId;
+    private String             leagueName;
+    private String             summonerName;
+    private boolean            inactive;
+    private boolean            freshBlood;
+    private LeaguePositionType position;
+    private String             tier;
+    private int                leaguePoints;
+    private String             leagueId;
+    
+    public LeaguePositionType getPosition()
+    {
+        return position;
+    }
     
     public String getRank()
     {
@@ -64,9 +71,9 @@ public class LeaguePosition implements Serializable
         return losses;
     }
     
-    public String getPlayerOrTeamId()
+    public String getSummonerId()
     {
-        return playerOrTeamId;
+        return summonerId;
     }
     
     public String getLeagueName()
@@ -74,9 +81,9 @@ public class LeaguePosition implements Serializable
         return leagueName;
     }
     
-    public String getPlayerOrTeamName()
+    public String getSummonerName()
     {
-        return playerOrTeamName;
+        return summonerName;
     }
     
     public boolean isInactive()
@@ -104,6 +111,11 @@ public class LeaguePosition implements Serializable
         return leaguePoints;
     }
     
+    public String getLeagueId()
+    {
+        return leagueId;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -115,93 +127,29 @@ public class LeaguePosition implements Serializable
         {
             return false;
         }
-        
         LeaguePosition that = (LeaguePosition) o;
-        
-        if (hotStreak != that.hotStreak)
-        {
-            return false;
-        }
-        if (wins != that.wins)
-        {
-            return false;
-        }
-        if (veteran != that.veteran)
-        {
-            return false;
-        }
-        if (losses != that.losses)
-        {
-            return false;
-        }
-        if (inactive != that.inactive)
-        {
-            return false;
-        }
-        if (freshBlood != that.freshBlood)
-        {
-            return false;
-        }
-        if (leaguePoints != that.leaguePoints)
-        {
-            return false;
-        }
-        if ((rank != null) ? !rank.equals(that.rank) : (that.rank != null))
-        {
-            return false;
-        }
-        if (queueType != that.queueType)
-        {
-            return false;
-        }
-        if ((miniSeries != null) ? !miniSeries.equals(that.miniSeries) : (that.miniSeries != null))
-        {
-            return false;
-        }
-        if ((playerOrTeamId != null) ? !playerOrTeamId.equals(that.playerOrTeamId) : (that.playerOrTeamId != null))
-        {
-            return false;
-        }
-        if ((leagueName != null) ? !leagueName.equals(that.leagueName) : (that.leagueName != null))
-        {
-            return false;
-        }
-        if ((playerOrTeamName != null) ? !playerOrTeamName.equals(that.playerOrTeamName) : (that.playerOrTeamName != null))
-        {
-            return false;
-        }
-        if ((tier != null) ? !tier.equals(that.tier) : (that.tier != null))
-        {
-            return false;
-        }
-        return (leagueId != null) ? leagueId.equals(that.leagueId) : (that.leagueId == null);
+        return hotStreak == that.hotStreak &&
+               wins == that.wins &&
+               veteran == that.veteran &&
+               losses == that.losses &&
+               inactive == that.inactive &&
+               freshBlood == that.freshBlood &&
+               leaguePoints == that.leaguePoints &&
+               Objects.equals(rank, that.rank) &&
+               queueType == that.queueType &&
+               Objects.equals(miniSeries, that.miniSeries) &&
+               Objects.equals(summonerId, that.summonerId) &&
+               Objects.equals(leagueName, that.leagueName) &&
+               Objects.equals(summonerName, that.summonerName) &&
+               position == that.position &&
+               Objects.equals(tier, that.tier) &&
+               Objects.equals(leagueId, that.leagueId);
     }
     
     @Override
     public int hashCode()
     {
-        int result = rank != null ? rank.hashCode() : 0;
-        result = 31 * result + (queueType != null ? queueType.hashCode() : 0);
-        result = 31 * result + (hotStreak ? 1 : 0);
-        result = 31 * result + (miniSeries != null ? miniSeries.hashCode() : 0);
-        result = 31 * result + wins;
-        result = 31 * result + (veteran ? 1 : 0);
-        result = 31 * result + losses;
-        result = 31 * result + (playerOrTeamId != null ? playerOrTeamId.hashCode() : 0);
-        result = 31 * result + (leagueName != null ? leagueName.hashCode() : 0);
-        result = 31 * result + (playerOrTeamName != null ? playerOrTeamName.hashCode() : 0);
-        result = 31 * result + (inactive ? 1 : 0);
-        result = 31 * result + (freshBlood ? 1 : 0);
-        result = 31 * result + (tier != null ? tier.hashCode() : 0);
-        result = 31 * result + leaguePoints;
-        result = 31 * result + (leagueId != null ? leagueId.hashCode() : 0);
-        return result;
-    }
-    
-    public String getLeagueId()
-    {
-        
-        return leagueId;
+        return Objects.hash(rank, queueType, hotStreak, miniSeries, wins, veteran, losses, summonerId, leagueName, summonerName, inactive, freshBlood, position, tier, leaguePoints, leagueId);
     }
     
     @Override
@@ -215,13 +163,15 @@ public class LeaguePosition implements Serializable
                ", wins=" + wins +
                ", veteran=" + veteran +
                ", losses=" + losses +
-               ", playerOrTeamId='" + playerOrTeamId + '\'' +
+               ", summonerId='" + summonerId + '\'' +
                ", leagueName='" + leagueName + '\'' +
-               ", playerOrTeamName='" + playerOrTeamName + '\'' +
+               ", summonerName='" + summonerName + '\'' +
                ", inactive=" + inactive +
                ", freshBlood=" + freshBlood +
+               ", position=" + position +
                ", tier='" + tier + '\'' +
                ", leaguePoints=" + leaguePoints +
+               ", leagueId='" + leagueId + '\'' +
                '}';
     }
     
