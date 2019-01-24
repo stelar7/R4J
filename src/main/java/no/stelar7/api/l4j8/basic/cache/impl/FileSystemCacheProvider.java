@@ -37,6 +37,11 @@ public class FileSystemCacheProvider implements CacheProvider
         this(null, ttl);
     }
     
+    public FileSystemCacheProvider()
+    {
+        this(CacheProvider.LOCATION_DEFAULT, CacheProvider.TTL_INFINITY);
+    }
+    
     @Override
     public void setTimeToLiveGlobal(long timeToLive)
     {
@@ -58,11 +63,6 @@ public class FileSystemCacheProvider implements CacheProvider
     public void setTimeToLive(CacheLifetimeHint hints)
     {
         this.hints = hints;
-    }
-    
-    public FileSystemCacheProvider()
-    {
-        this(CacheProvider.LOCATION_DEFAULT, CacheProvider.TTL_INFINITY);
     }
     
     @Override
