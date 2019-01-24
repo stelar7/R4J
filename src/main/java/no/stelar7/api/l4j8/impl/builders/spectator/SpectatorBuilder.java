@@ -45,12 +45,6 @@ public class SpectatorBuilder
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SPECTATOR_FEATURED)
                                                        .withPlatform(this.platform);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SPECTATOR_FEATURED, this.platform);
-        if (chl.isPresent())
-        {
-            return (List<SpectatorGameInfo>) chl.get();
-        }
-        
         try
         {
             Object data = builder.build();
@@ -60,7 +54,6 @@ public class SpectatorBuilder
             }
             
             FeaturedGames fg = (FeaturedGames) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg.getGameList(), this.platform);
             return fg.getGameList();
         } catch (ClassCastException e)
         {
@@ -79,17 +72,9 @@ public class SpectatorBuilder
                                                        .withEndpoint(URLEndpoint.V3_SPECTATOR_CURRENT)
                                                        .withPlatform(this.platform);
         
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SPECTATOR_CURRENT, this.platform, this.summonerId);
-        if (chl.isPresent())
-        {
-            return (SpectatorGameInfo) chl.get();
-        }
-        
         try
         {
             SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg, this.platform, this.summonerId);
             return fg;
         } catch (ClassCastException e)
         {
