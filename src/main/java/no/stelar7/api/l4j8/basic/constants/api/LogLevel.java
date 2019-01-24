@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
+import no.stelar7.api.l4j8.basic.calling.DataCall;
+
 import java.time.Instant;
 
 public enum LogLevel
@@ -14,7 +16,7 @@ public enum LogLevel
     {
         if (other.ordinal() <= this.ordinal())
         {
-            System.err.printf("[%-30s - %-13s]: %s%n", Instant.now(), other.toString(), text);
+            System.err.printf(DataCall.getLogFormat(), Instant.now(), other.toString(), text);
         }
     }
 }

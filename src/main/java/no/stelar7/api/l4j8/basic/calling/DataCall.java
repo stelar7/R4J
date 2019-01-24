@@ -19,6 +19,7 @@ public final class DataCall
     private static APICredentials creds;
     private static CacheProvider  cache          = EmptyCacheProvider.INSTANCE;
     private static LogLevel       logLevel       = LogLevel.NONE;
+    private static String         logFormat      = "[%-30s - %-13s]: %s%n";
     private static int            callStackSkip  = 5;
     private static int            callStackLimit = 5;
     
@@ -188,5 +189,15 @@ public final class DataCall
     public boolean useRatelimiter()
     {
         return useLimiters;
+    }
+    
+    public static void setLogFormat(String format)
+    {
+        DataCall.logFormat = format;
+    }
+    
+    public static String getLogFormat()
+    {
+        return DataCall.logFormat;
     }
 }
