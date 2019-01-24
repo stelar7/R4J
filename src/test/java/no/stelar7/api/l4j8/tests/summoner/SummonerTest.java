@@ -62,4 +62,14 @@ public class SummonerTest
         Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withAccountId(s.getAccountId()).get();
         doAssertions.accept(optional);
     }
+    
+    @Test
+    public void testByPUUID()
+    {
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        
+        Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID()).get();
+        doAssertions.accept(optional);
+    }
 }

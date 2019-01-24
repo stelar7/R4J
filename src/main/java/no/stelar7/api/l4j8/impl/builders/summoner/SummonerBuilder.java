@@ -80,7 +80,7 @@ public class SummonerBuilder
         
         if (puuid.length() > 0)
         {
-            builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, String.valueOf(this.accId));
+            builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, String.valueOf(this.puuid));
             endpoint = URLEndpoint.V3_SUMMONER_BY_PUUID;
             index = this.puuid;
         }

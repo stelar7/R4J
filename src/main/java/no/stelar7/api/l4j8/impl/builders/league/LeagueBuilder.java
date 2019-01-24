@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.impl.builders.league;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.GameQueueType;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.league.*;
 
 import java.util.*;
@@ -120,7 +121,7 @@ public class LeagueBuilder
     {
         if (this.platform == Platform.UNKNOWN || this.summonerId == null)
         {
-            return null;
+            return Collections.emptyList();
         }
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
@@ -136,13 +137,18 @@ public class LeagueBuilder
         
         try
         {
-            List<LeaguePosition> list = (List<LeaguePosition>) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyList();
+            }
+            
+            List<LeaguePosition> list = (List<LeaguePosition>) data;
             DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, this.platform, this.summonerId);
             return list;
         } catch (ClassCastException e)
         {
-            
-            return null;
+            return Collections.emptyList();
         }
     }
     

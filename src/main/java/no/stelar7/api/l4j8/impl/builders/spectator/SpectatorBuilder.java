@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.impl.builders.spectator;
 
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.spectator.*;
 
 import java.util.*;
@@ -52,13 +53,18 @@ public class SpectatorBuilder
         
         try
         {
-            FeaturedGames fg = (FeaturedGames) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyList();
+            }
+            
+            FeaturedGames fg = (FeaturedGames) data;
             DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg.getGameList(), this.platform);
             return fg.getGameList();
         } catch (ClassCastException e)
         {
-            
-            return null;
+            return Collections.emptyList();
         }
     }
     

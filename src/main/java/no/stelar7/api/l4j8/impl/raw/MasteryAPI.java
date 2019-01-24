@@ -154,7 +154,13 @@ public final class MasteryAPI
         
         try
         {
-            List<ChampionMastery> list = (List<ChampionMastery>) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyList();
+            }
+            
+            List<ChampionMastery> list = (List<ChampionMastery>) data;
             DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list, server, summonerId);
             return list;
         } catch (ClassCastException e)

@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.impl.raw;
 
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
@@ -48,12 +49,18 @@ public final class DDragonAPI
         
         try
         {
-            StaticChampionList list = (StaticChampionList) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            StaticChampionList list = (StaticChampionList) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_CHAMPION_MANY, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -124,12 +131,18 @@ public final class DDragonAPI
         
         try
         {
-            ItemList list = (ItemList) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            ItemList list = (ItemList) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_ITEMS, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -168,12 +181,18 @@ public final class DDragonAPI
         
         try
         {
-            LanguageStrings list = (LanguageStrings) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            LanguageStrings list = (LanguageStrings) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -206,7 +225,13 @@ public final class DDragonAPI
         }
         try
         {
-            List<String> list = (List<String>) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyList();
+            }
+            
+            List<String> list = (List<String>) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGES, list);
             return list;
         } catch (ClassCastException e)
@@ -233,12 +258,18 @@ public final class DDragonAPI
         
         try
         {
-            MapData list = (MapData) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            MapData list = (MapData) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MAPS, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -265,12 +296,18 @@ public final class DDragonAPI
         
         try
         {
-            StaticMasteryList list = (StaticMasteryList) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            StaticMasteryList list = (StaticMasteryList) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -297,12 +334,18 @@ public final class DDragonAPI
         
         try
         {
-            StaticMasteryList list = (StaticMasteryList) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            StaticMasteryList list = (StaticMasteryList) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, list, version, locale);
             return list.getTree();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -339,12 +382,18 @@ public final class DDragonAPI
         
         try
         {
-            ProfileIconData list = (ProfileIconData) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            ProfileIconData list = (ProfileIconData) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PROFILEICONS, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -404,12 +453,18 @@ public final class DDragonAPI
         
         try
         {
-            StaticRuneList list = (StaticRuneList) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            StaticRuneList list = (StaticRuneList) data;
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_RUNES, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -448,12 +503,18 @@ public final class DDragonAPI
         
         try
         {
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
             StaticSummonerSpellList list = (StaticSummonerSpellList) builder.build();
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_SUMMONER_SPELLS, list, version, locale);
             return list.getData();
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     
@@ -489,6 +550,12 @@ public final class DDragonAPI
         
         try
         {
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyList();
+            }
+            
             List<String> list = (List<String>) builder.build();
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_VERSIONS, list);
             return list;
@@ -557,7 +624,13 @@ public final class DDragonAPI
         
         try
         {
-            List<PerkPath>         list  = (List<PerkPath>) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyMap();
+            }
+            
+            List<PerkPath>         list  = (List<PerkPath>) data;
             Map<Integer, PerkPath> paths = new HashMap<>();
             for (PerkPath path : list)
             {
@@ -568,7 +641,7 @@ public final class DDragonAPI
             return paths;
         } catch (ClassCastException e)
         {
-            return null;
+            return Collections.emptyMap();
         }
     }
     

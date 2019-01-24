@@ -64,7 +64,7 @@ public final class Utils
         Matcher m = p.matcher(input);
         if (!m.find())
         {
-            return null;
+            return Collections.emptyMap();
         }
         
         Arrays.stream(vars).forEach(v -> matches.put(v, m.group(v)));
@@ -74,7 +74,7 @@ public final class Utils
     
     public static String extractRegex(String input, String regex, String var)
     {
-        return extractRegex(input, regex, new String[]{var}).get(var);
+        return extractRegex(input, regex, new String[]{var}).getOrDefault(var, null);
     }
     
     public static Gson getGson()
@@ -82,6 +82,7 @@ public final class Utils
         return gson;
     }
     
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     public static String normalizeSummonerName(final String data)
     {
         try

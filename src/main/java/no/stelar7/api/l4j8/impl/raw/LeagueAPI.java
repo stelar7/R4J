@@ -3,10 +3,11 @@ package no.stelar7.api.l4j8.impl.raw;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.basic.utils.LazyList;
+import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.pojo.league.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
 public final class LeagueAPI
@@ -152,13 +153,18 @@ public final class LeagueAPI
         
         try
         {
-            List<LeaguePosition> list = (List<LeaguePosition>) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyList();
+            }
+            
+            List<LeaguePosition> list = (List<LeaguePosition>) data;
             DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, server, summonerId);
             return list;
         } catch (ClassCastException e)
         {
-            
-            return null;
+            return Collections.emptyList();
         }
     }
     
@@ -222,13 +228,18 @@ public final class LeagueAPI
         
         try
         {
-            List<LeaguePosition> list = (List<LeaguePosition>) builder.build();
+            Object data = builder.build();
+            if (data instanceof Pair)
+            {
+                return Collections.emptyList();
+            }
+            
+            List<LeaguePosition> list = (List<LeaguePosition>) data;
             DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_POSITIONAL, list, server, queue, tierdiv, lane, page);
             return list;
         } catch (ClassCastException e)
         {
-            
-            return null;
+            return Collections.emptyList();
         }
     }
     

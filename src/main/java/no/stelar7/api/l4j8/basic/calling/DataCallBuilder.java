@@ -121,7 +121,8 @@ public class DataCallBuilder
             
             case 400:
             {
-                String reasonText = "Your api request is malformed!";
+                String reasonText = "Your api request is malformed!\n";
+                reasonText += url + "\n";
                 throw new APIResponseException(APIHTTPErrorReason.ERROR_400, reasonText + response.getResponseData());
             }
             
@@ -201,7 +202,7 @@ public class DataCallBuilder
             returnValue = postProcessMatch(returnValue);
         }
         
-        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME);
+        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME, URLEndpoint.V3_SUMMONER_BY_PUUID);
         if (summonerEndpoints.contains(this.dc.getEndpoint()))
         {
             returnValue = postProcessSummoner(returnValue);

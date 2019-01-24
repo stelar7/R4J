@@ -205,6 +205,11 @@ public class FileSystemCacheProvider implements CacheProvider
             Files.walk(home).sorted(Comparator.reverseOrder()).forEach(p -> {
                 try
                 {
+                    if (!Files.exists(p))
+                    {
+                        return;
+                    }
+                    
                     BasicFileAttributes attributes = Files.readAttributes(p, BasicFileAttributes.class);
                     long                life       = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() - attributes.lastAccessTime().toInstant().toEpochMilli();
                     

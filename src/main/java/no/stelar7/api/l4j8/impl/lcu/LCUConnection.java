@@ -30,6 +30,7 @@ public class LCUConnection
             
             if (password == null || port == null)
             {
+                System.err.println("The league client does not appear to be running!");
                 return null;
             }
             
