@@ -94,7 +94,7 @@ public class SummonerBuilder
         
         if (name.length() > 0)
         {
-            builder.withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeSummonerName(this.name));
+            builder.withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeString(this.name));
             endpoint = URLEndpoint.V3_SUMMONER_BY_NAME;
             index = this.name;
         }

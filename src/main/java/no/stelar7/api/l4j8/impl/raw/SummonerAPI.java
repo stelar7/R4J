@@ -68,7 +68,7 @@ public final class SummonerAPI
     public Summoner getSummonerByName(final Platform server, String summonerName)
     {
         DataCallBuilder builder = new DataCallBuilder()
-                .withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeSummonerName(summonerName))
+                .withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeString(summonerName))
                 .withEndpoint(URLEndpoint.V3_SUMMONER_BY_NAME)
                 .withPlatform(server);
         

@@ -83,7 +83,7 @@ public final class Utils
     }
     
     @SuppressWarnings("CharsetObjectCanBeUsed")
-    public static String normalizeSummonerName(final String data)
+    public static String normalizeString(final String data)
     {
         try
         {

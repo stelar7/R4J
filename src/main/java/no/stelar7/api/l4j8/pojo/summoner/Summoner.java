@@ -73,7 +73,7 @@ public final class Summoner implements Serializable
      */
     public String getNormalizedName()
     {
-        return Utils.normalizeSummonerName(name);
+        return Utils.normalizeString(name);
     }
     
     /**

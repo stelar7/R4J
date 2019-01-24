@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.basic.cache.impl;
 import no.stelar7.api.l4j8.basic.cache.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.utils.Utils;
 
 import java.io.*;
 import java.nio.file.*;
@@ -112,7 +113,7 @@ public class FileSystemCacheProvider implements CacheProvider
         
         for (Object datum : pathData)
         {
-            storePath = storePath.resolve(datum != null ? datum.toString() : "null");
+            storePath = storePath.resolve(datum != null ? Utils.normalizeString(datum.toString()) : "null");
         }
         
         return storePath;
