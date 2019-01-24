@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.impl;
 
 import no.stelar7.api.l4j8.basic.APICredentials;
+import no.stelar7.api.l4j8.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.impl.raw.*;
 
@@ -18,6 +19,7 @@ public class L4J8
     public L4J8(final APICredentials creds)
     {
         DataCall.setCredentials(creds);
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
     }
     
     /**
