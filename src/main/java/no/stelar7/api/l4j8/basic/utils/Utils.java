@@ -88,10 +88,7 @@ public final class Utils
         try
         {
             final String stripped = data.replaceAll("\\s+", "");
-            final String fixed    = stripped.replace("\u0130", "i");
-            final String cased    = fixed.toLowerCase(Locale.ENGLISH);
-            
-            final String result = cased;
+            final String result   = stripped;
             return URLEncoder.encode(result, "UTF-8");
         } catch (final UnsupportedEncodingException e)
         {
