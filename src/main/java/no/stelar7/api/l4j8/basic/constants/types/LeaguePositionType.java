@@ -6,6 +6,10 @@ import java.util.stream.Stream;
 public enum LeaguePositionType implements CodedEnum
 {
     /**
+     * MASTER+ rank gets this for some reason?
+     */
+    APEX,
+    /**
      * Top lane
      */
     TOP,
@@ -24,7 +28,11 @@ public enum LeaguePositionType implements CodedEnum
     /**
      * Support
      */
-    UTILITY;
+    UTILITY,
+    /**
+     * Not a positional queue
+     */
+    NONE;
     
     /**
      * Returns an LeaguePositionType from the provided value
