@@ -6,6 +6,7 @@ import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.replay.*;
 import no.stelar7.api.l4j8.pojo.spectator.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
 import no.stelar7.api.l4j8.pojo.staticdata.item.*;
@@ -135,6 +136,13 @@ public enum URLEndpoint
     LCU_SUMMONER_BY_NAME("lol-summoner/v2/summoners", "", "", "", JsonArray.class),
     
     LCU_CREATE_NOTIFICATION("player-notifications/v1/notifications", "", "", "", JsonObject.class),
+    
+    // REPLAY
+    REPLAY_GAME("replay/game", "", "", "", ReplayGameClientProcessInfo.class),
+    REPLAY_PLAYBACK("replay/playback", "", "", "", ReplayPlaybackInfo.class),
+    REPLAY_RECORDING("replay/recording", "", "", "", ReplayRecordingInfo.class),
+    REPLAY_RENDER("replay/render", "", "", "", ReplayRenderInfo.class),
+    REPLAY_SEQUENCE("replay/sequence", "", "", "", ReplayKeyframeSequence.class),
     ;
     
     
