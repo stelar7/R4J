@@ -43,10 +43,18 @@ public class LCUConnection
         }
     }
     
+    
+    private static String urlString;
+    
     public static String getConnectionString()
     {
+        if (urlString != null)
+        {
+            return urlString;
+        }
+        
         Pair<String, String> info = getConnectionData();
-        return String.format("https://@127.0.0.1:%s/", info.getValue());
+        return (urlString = String.format("https://127.0.0.1:%s/", info.getValue()));
     }
     
     private static Pair<String, String> headerMap;
@@ -58,11 +66,18 @@ public class LCUConnection
             return headerMap;
         }
         
+        Pair<String, String> info = getConnectionData();
         
-        Pair<String, String> info    = getConnectionData();
-        String               val     = "riot:" + info.getKey();
-        String               encoded = new String(Base64.getEncoder().encode(val.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+        byte[] login   = ("riot:" + info.getKey()).getBytes(StandardCharsets.UTF_8);
+        byte[] base64  = Base64.getEncoder().encode(login);
+        String encoded = new String(base64, StandardCharsets.UTF_8);
         
         return (headerMap = new Pair<>("Authorization", "Basic " + encoded));
+    }
+    
+    public static void refetchConnection()
+    {
+        headerMap = null;
+        urlString = null;
     }
 }
