@@ -80,7 +80,7 @@ public enum GameQueueType implements CodedEnum
     /**
      * ARAM games
      */
-    ARAM_5X5_OLD(new Integer[]{62, 63, 64, 65}),
+    ARAM_5X5_OLD(new Integer[]{62, 63, 64, 65, 67}),
     /**
      * One for All games
      */
