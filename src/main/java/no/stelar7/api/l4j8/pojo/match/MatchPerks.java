@@ -13,9 +13,9 @@ public class MatchPerks implements Serializable
     private List<MatchPerk> perkList;
     private int             perkPrimaryStyle;
     private int             perkSubStyle;
+    private int             statPerk0;
     private int             statPerk1;
     private int             statPerk2;
-    private int             statPerk3;
     
     public static long getSerialVersionUID()
     {
@@ -37,6 +37,11 @@ public class MatchPerks implements Serializable
         return perkSubStyle;
     }
     
+    public int getStatPerk0()
+    {
+        return statPerk0;
+    }
+    
     public int getStatPerk1()
     {
         return statPerk1;
@@ -45,11 +50,6 @@ public class MatchPerks implements Serializable
     public int getStatPerk2()
     {
         return statPerk2;
-    }
-    
-    public int getStatPerk3()
-    {
-        return statPerk3;
     }
     
     @Override
@@ -66,16 +66,16 @@ public class MatchPerks implements Serializable
         MatchPerks that = (MatchPerks) o;
         return perkPrimaryStyle == that.perkPrimaryStyle &&
                perkSubStyle == that.perkSubStyle &&
+               statPerk0 == that.statPerk0 &&
                statPerk1 == that.statPerk1 &&
                statPerk2 == that.statPerk2 &&
-               statPerk3 == that.statPerk3 &&
                Objects.equals(perkList, that.perkList);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(perkList, perkPrimaryStyle, perkSubStyle, statPerk1, statPerk2, statPerk3);
+        return Objects.hash(perkList, perkPrimaryStyle, perkSubStyle, statPerk0, statPerk1, statPerk2);
     }
     
     @Override
@@ -85,9 +85,9 @@ public class MatchPerks implements Serializable
                "perkList=" + perkList +
                ", perkPrimaryStyle=" + perkPrimaryStyle +
                ", perkSubStyle=" + perkSubStyle +
-               ", statPerk1=" + statPerk1 +
-               ", statPerk2=" + statPerk2 +
-               ", statPerk3=" + statPerk3 +
+               ", statPerk1=" + statPerk0 +
+               ", statPerk2=" + statPerk1 +
+               ", statPerk3=" + statPerk2 +
                '}';
     }
 }
