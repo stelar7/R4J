@@ -15,7 +15,7 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.X509Certificate;
-import java.time.Instant;
+import java.time.*;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
@@ -553,6 +553,12 @@ public class DataCallBuilder
                 saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
             }
             
+            String deprecationHeader = con.getHeaderField("X-Riot-Deprecated");
+            if (deprecationHeader != null)
+            {
+                LocalDateTime timeout = LocalDateTime.ofEpochSecond(Long.parseLong(deprecationHeader) / 1000, 0, ZoneOffset.ofHours(-7));
+                DataCall.getLogLevel().printIf(LogLevel.INFO, "You are using a deprecated method, this method will stop working at: " + timeout.toString());
+            }
             
             if (con.getResponseCode() == 429)
             {
