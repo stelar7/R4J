@@ -38,17 +38,19 @@ public class LeagueTest
     @Test
     public void testLeagueEntry()
     {
-        String               id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner             s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
-        List<LeaguePosition> data = lb.withSummonerId(s.getSummonerId()).getLeaguePosition();
+        String            id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner          s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        List<LeagueEntry> data = lb.withSummonerId(s.getSummonerId()).getLeagueEntries();
         assert data != null;
     }
     
     @Test
     public void testPositionalRanks()
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
-        LazyList<LeaguePosition> posLazy = l4j8.getLeagueAPI().getPositionalRanksLazy(Platform.NA1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I, LeaguePositionType.BOTTOM);
-        List<LeaguePosition>     pos     = l4j8.getLeagueAPI().getPositionalRanks(Platform.NA1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I, LeaguePositionType.BOTTOM, 0);
+        DataCall.setLogLevel(LogLevel.INFO);
+        //List<LeagueEntry>     pos     = l4j8.getLeagueAPI().getLeagueByTierDivision(Platform.NA1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I, 1);
+        LazyList<LeagueEntry> posLazy = l4j8.getLeagueAPI().getLeagueByTierDivisionLazy(Platform.NA1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I);
+        posLazy.loadFully();
+        System.out.println();
     }
 }

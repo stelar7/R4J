@@ -117,7 +117,7 @@ public class LeagueBuilder
         
     }
     
-    public List<LeaguePosition> getLeaguePosition()
+    public List<LeagueEntry> getLeagueEntries()
     {
         if (this.platform == Platform.UNKNOWN || this.summonerId == null)
         {
@@ -132,7 +132,7 @@ public class LeagueBuilder
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_ENTRY, this.platform, this.summonerId);
         if (chl.isPresent())
         {
-            return (List<LeaguePosition>) chl.get();
+            return (List<LeagueEntry>) chl.get();
         }
         
         try
@@ -143,7 +143,7 @@ public class LeagueBuilder
                 return Collections.emptyList();
             }
             
-            List<LeaguePosition> list = (List<LeaguePosition>) data;
+            List<LeagueEntry> list = (List<LeagueEntry>) data;
             DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, this.platform, this.summonerId);
             return list;
         } catch (ClassCastException e)

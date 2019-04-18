@@ -10,7 +10,7 @@ import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.thirdparty.ThirdPartyCodeBuilder;
 import no.stelar7.api.l4j8.impl.raw.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
-import no.stelar7.api.l4j8.pojo.league.LeaguePosition;
+import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
 
 import java.io.Serializable;
@@ -168,9 +168,9 @@ public final class Summoner implements Serializable
         return new ChampionMasteryBuilder().withPlatform(platform).withSummonerId(id).getChampionMasteries();
     }
     
-    public List<LeaguePosition> getLeagueEntry()
+    public List<LeagueEntry> getLeagueEntry()
     {
-        return new LeagueBuilder().withPlatform(platform).withSummonerId(id).getLeaguePosition();
+        return new LeagueBuilder().withPlatform(platform).withSummonerId(id).getLeagueEntries();
     }
     
     public SpectatorGameInfo getCurrentGame()
@@ -181,11 +181,6 @@ public final class Summoner implements Serializable
     public String getThirdPartyCode()
     {
         return new ThirdPartyCodeBuilder().withPlatform(platform).withSummonerId(id).getCode();
-    }
-    
-    public List<LeaguePosition> getLeaguePosition()
-    {
-        return new LeagueBuilder().withPlatform(platform).withSummonerId(id).getLeaguePosition();
     }
     
     public int getMasteryScore()

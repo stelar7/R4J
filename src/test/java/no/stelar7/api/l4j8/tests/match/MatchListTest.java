@@ -186,6 +186,24 @@ public class MatchListTest
     }
     
     @Test
+    public void testMatchTolkiIssue()
+    {
+        Match detail = new MatchBuilder().withId(3961977905L).withPlatform(Platform.EUW1).get();
+        detail.getParticipantIdentities().forEach(p -> {
+            Summoner olda = new SummonerBuilder().withPlatform(p.getPlatform()).withAccountId(p.getAccountId()).get();
+            Summoner newa = new SummonerBuilder().withPlatform(p.getCurrentPlatform()).withAccountId(p.getCurrentAccountId()).get();
+            
+            System.out.println(newa.getName() + ":");
+            System.out.println(newa.getPlatform() + ":" + newa.getName());
+            System.out.println(newa.getPUUID());
+            System.out.println(olda.getPlatform() + ":" + olda.getName());
+            System.out.println(olda.getPUUID());
+            
+            
+        });
+    }
+    
+    @Test
     @Ignore
     public void testLazyList()
     {

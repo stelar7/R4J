@@ -32,6 +32,7 @@ public final class Constants
     public static final String TIMELINE_PLACEHOLDER_DATA   = "includeTimeline";
     public static final String COUNT_PLACEHOLDER_DATA      = "count";
     public static final String TYPE_PLACEHOLDER_DATA       = "type";
+    public static final String PAGE_PLACEHOLDER_DATA       = "page";
     
     public static final String TOURNAMENT_CODE_PLACEHOLDER  = "{tournamentCode}";
     public static final String PLATFORM_ID_PLACEHOLDER      = "{platformId}";

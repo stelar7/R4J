@@ -5,7 +5,7 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class LeaguePosition implements Serializable
+public class LeagueEntry implements Serializable
 {
     private static final long serialVersionUID = -895051155625969402L;
     
@@ -17,19 +17,12 @@ public class LeaguePosition implements Serializable
     private boolean            veteran;
     private int                losses;
     private String             summonerId;
-    private String             leagueName;
     private String             summonerName;
     private boolean            inactive;
     private boolean            freshBlood;
-    private LeaguePositionType position;
     private String             tier;
     private int                leaguePoints;
     private String             leagueId;
-    
-    public LeaguePositionType getPosition()
-    {
-        return position;
-    }
     
     public String getRank()
     {
@@ -74,11 +67,6 @@ public class LeaguePosition implements Serializable
     public String getSummonerId()
     {
         return summonerId;
-    }
-    
-    public String getLeagueName()
-    {
-        return leagueName;
     }
     
     public String getSummonerName()
@@ -127,7 +115,7 @@ public class LeaguePosition implements Serializable
         {
             return false;
         }
-        LeaguePosition that = (LeaguePosition) o;
+        LeagueEntry that = (LeagueEntry) o;
         return hotStreak == that.hotStreak &&
                wins == that.wins &&
                veteran == that.veteran &&
@@ -139,9 +127,7 @@ public class LeaguePosition implements Serializable
                queueType == that.queueType &&
                Objects.equals(miniSeries, that.miniSeries) &&
                Objects.equals(summonerId, that.summonerId) &&
-               Objects.equals(leagueName, that.leagueName) &&
                Objects.equals(summonerName, that.summonerName) &&
-               position == that.position &&
                Objects.equals(tier, that.tier) &&
                Objects.equals(leagueId, that.leagueId);
     }
@@ -149,7 +135,7 @@ public class LeaguePosition implements Serializable
     @Override
     public int hashCode()
     {
-        return Objects.hash(rank, queueType, hotStreak, miniSeries, wins, veteran, losses, summonerId, leagueName, summonerName, inactive, freshBlood, position, tier, leaguePoints, leagueId);
+        return Objects.hash(rank, queueType, hotStreak, miniSeries, wins, veteran, losses, summonerId, summonerName, inactive, freshBlood, tier, leaguePoints, leagueId);
     }
     
     @Override
@@ -164,11 +150,9 @@ public class LeaguePosition implements Serializable
                ", veteran=" + veteran +
                ", losses=" + losses +
                ", summonerId='" + summonerId + '\'' +
-               ", leagueName='" + leagueName + '\'' +
                ", summonerName='" + summonerName + '\'' +
                ", inactive=" + inactive +
                ", freshBlood=" + freshBlood +
-               ", position=" + position +
                ", tier='" + tier + '\'' +
                ", leaguePoints=" + leaguePoints +
                ", leagueId='" + leagueId + '\'' +

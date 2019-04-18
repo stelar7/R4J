@@ -7,7 +7,6 @@ import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.pojo.league.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
 public final class LeagueAPI
@@ -130,46 +129,6 @@ public final class LeagueAPI
     
     
     /**
-     * Get league entries for a summonerId
-     * Empty if unranked
-     *
-     * @param server     region to get data from
-     * @param summonerId summoner to get data for
-     * @return LeagueList
-     */
-    public List<LeaguePosition> getLeaguePosition(Platform server, String summonerId)
-    {
-        
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_ENTRY)
-                                                       .withPlatform(server);
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_ENTRY, server, summonerId);
-        if (chl.isPresent())
-        {
-            return (List<LeaguePosition>) chl.get();
-        }
-        
-        try
-        {
-            Object data = builder.build();
-            if (data instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-            
-            List<LeaguePosition> list = (List<LeaguePosition>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, server, summonerId);
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
-    }
-    
-    
-    /**
      * Get league from its ID.
      *
      * @param server   region to get data from
@@ -205,25 +164,23 @@ public final class LeagueAPI
      * @param server  the region to query
      * @param queue   the queue to fetch data from (only RANKED_SOLO_5x5, RANKED_FLEX_SR and RANKED_FLEX_TT is allowed)
      * @param tierdiv the tier and division to query
-     * @param lane    the lane to query (only TOP, JUNGLE, MIDDLE, BOTTOM, and UTILITY are allowed)
-     * @param page    the page to query
+     * @param page    the page to query (first page is 1)
      * @return LeagueList
      */
-    public List<LeaguePosition> getPositionalRanks(Platform server, GameQueueType queue, TierDivisionType tierdiv, LeaguePositionType lane, int page)
+    public List<LeagueEntry> getLeagueByTierDivision(Platform server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
-                                                       .withURLParameter(Constants.LANE_PLACEHOLDER, lane.name())
-                                                       .withURLParameter(Constants.PAGE_PLACEHOLDER, String.valueOf(page))
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_POSITIONAL)
+                                                       .withURLData(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_RANK)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_POSITIONAL, server, queue, tierdiv, lane, page);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_RANK, server, queue, tierdiv, page);
         if (chl.isPresent())
         {
-            return (List<LeaguePosition>) chl.get();
+            return (List<LeagueEntry>) chl.get();
         }
         
         try
@@ -234,8 +191,8 @@ public final class LeagueAPI
                 return Collections.emptyList();
             }
             
-            List<LeaguePosition> list = (List<LeaguePosition>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_POSITIONAL, list, server, queue, tierdiv, lane, page);
+            List<LeagueEntry> list = (List<LeagueEntry>) data;
+            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_RANK, list, server, queue, tierdiv, page);
             return list;
         } catch (ClassCastException e)
         {
@@ -247,11 +204,10 @@ public final class LeagueAPI
      * @param server  the region to query
      * @param queue   the queue to fetch data from (only RANKED_SOLO_5x5, RANKED_FLEX_SR and RANKED_FLEX_TT is allowed)
      * @param tierdiv the tier and division to query
-     * @param lane    the lane to query (only TOP, JUNGLE, MIDDLE, BOTTOM, and UTILITY are allowed)
      * @return LeagueList
      */
-    public LazyList<LeaguePosition> getPositionalRanksLazy(Platform server, GameQueueType queue, TierDivisionType tierdiv, LeaguePositionType lane)
+    public LazyList<LeagueEntry> getLeagueByTierDivisionLazy(Platform server, GameQueueType queue, TierDivisionType tierdiv)
     {
-        return new LazyList<>(1, prevValue -> getPositionalRanks(server, queue, tierdiv, lane, prevValue));
+        return new LazyList<>(1, prevValue -> getLeagueByTierDivision(server, queue, tierdiv, prevValue + 1));
     }
 }
