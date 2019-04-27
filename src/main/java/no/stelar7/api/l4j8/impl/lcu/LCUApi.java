@@ -36,6 +36,22 @@ public class LCUApi
     }
     
     /**
+     * Restarts the client after waitTimeout seconds
+     */
+    public static void restart(int waitTimeout)
+    {
+        Pair<String, String> header = LCUConnection.getAuthorizationHeader();
+        
+        new DataCallBuilder().withLimiters(false)
+                             .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
+                             .withEndpoint(URLEndpoint.LCU_RESTART)
+                             .withHeader(header.getKey(), header.getValue())
+                             .withURLData("delaySeconds", String.valueOf(waitTimeout))
+                             .withRequestMethod("POST")
+                             .build();
+    }
+    
+    /**
      * Invites the summoner to your game
      */
     public static void inviteSummoner(String name)
@@ -214,5 +230,49 @@ public class LCUApi
         {
             return false;
         }
+    }
+    
+    /**
+     * Attempts to login to the client
+     *
+     * @param username your username
+     * @param password your password
+     */
+    public static JsonObject login(String username, String password)
+    {
+        Pair<String, String> header = LCUConnection.getAuthorizationHeader();
+        StringWriter         sw     = new StringWriter();
+        try
+        {
+            JsonWriter jw = new JsonWriter(sw);
+            jw.beginObject()
+              .name("username").value(username)
+              .name("password").value(password)
+              .endObject();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        
+        String postData = sw.toString();
+        
+        JsonObject obj = (JsonObject) new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
+                .withEndpoint(URLEndpoint.LCU_LOGIN)
+                .withRequestMethod("POST")
+                .withPostData(postData)
+                .withHeader(header.getKey(), header.getValue())
+                .build();
+        
+        return obj;
+    }
+    
+    /**
+     * Creates a new websocket to the LCU
+     */
+    public static LCUSocketReader createWebSocket()
+    {
+        return new LCUSocketReader();
     }
 }

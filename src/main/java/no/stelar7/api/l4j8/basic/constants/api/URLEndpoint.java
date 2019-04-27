@@ -133,7 +133,11 @@ public enum URLEndpoint
     LCU_LOBBY_POSITION("lol-lobby/v2/lobby/members/localMember/position-preferences", "", "", "", Void.class),
     LCU_LOBBY_MATCHMAKING("lol-lobby/v2/lobby/matchmaking/search", "", "", "", Void.class),
     
+    LCU_RESTART("process-control/v1/process/restart", "", "", "", Void.class),
+    
     LCU_SUMMONER_BY_NAME("lol-summoner/v2/summoners", "", "", "", JsonArray.class),
+    
+    LCU_LOGIN("lol-login/v1/session", "", "", "", JsonObject.class),
     
     LCU_CREATE_NOTIFICATION("player-notifications/v1/notifications", "", "", "", JsonObject.class),
     
