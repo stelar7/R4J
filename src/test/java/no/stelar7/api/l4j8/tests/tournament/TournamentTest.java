@@ -46,7 +46,7 @@ public class TournamentTest
             ids.add(sb.withName(name).get().getSummonerId());
         }
         
-        final TournamentCodeUpdateParameters tcinner  = new TournamentCodeUpdateParameters(null, TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
+        final TournamentCodeUpdateParameters tcinner  = new TournamentCodeUpdateParameters(ids, TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
         final TournamentCodeParameters       tcparams = new TournamentCodeParameters(tcinner, "THIS IS METADATA YOOO", teamSize);
         
         final List<String> codes = this.api.generateTournamentCodes(tcparams, tournamentId, 1);
