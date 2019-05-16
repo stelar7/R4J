@@ -269,6 +269,87 @@ public class LCUApi
     }
     
     /**
+     * Downloads replay
+     */
+    public static void downloadReplay(Long gameid)
+    {
+        Pair<String, String> header = LCUConnection.getAuthorizationHeader();
+        StringWriter         sw     = new StringWriter();
+        try
+        {
+            JsonWriter jw = new JsonWriter(sw);
+            jw.beginObject()
+              .name("componentType").value("string")
+              .endObject();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        
+        String postData = sw.toString();
+        
+        JsonObject obj = (JsonObject) new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
+                .withEndpoint(URLEndpoint.LCU_REPLAY_DOWNLOAD)
+                .withRequestMethod("POST")
+                .withURLParameter(Constants.GAMEID_PLACEHOLDER, gameid.toString())
+                .withPostData(postData)
+                .withHeader(header.getKey(), header.getValue())
+                .build();
+    }
+    
+    /**
+     * Start spectator on game
+     */
+    public static void spectateGame(Long gameid)
+    {
+        Pair<String, String> header = LCUConnection.getAuthorizationHeader();
+        StringWriter         sw     = new StringWriter();
+        try
+        {
+            JsonWriter jw = new JsonWriter(sw);
+            jw.beginObject()
+              .name("componentType").value("string")
+              .endObject();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        
+        String postData = sw.toString();
+        
+        JsonObject obj = (JsonObject) new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
+                .withEndpoint(URLEndpoint.LCU_REPLAY_WATCH)
+                .withRequestMethod("POST")
+                .withURLParameter(Constants.GAMEID_PLACEHOLDER, gameid.toString())
+                .withPostData(postData)
+                .withHeader(header.getKey(), header.getValue())
+                .build();
+    }
+    
+    /**
+     * Fetches the replay save path
+     */
+    public static String getReplaySavePath()
+    {
+        Pair<String, String> header = LCUConnection.getAuthorizationHeader();
+        StringWriter         sw     = new StringWriter();
+        String obj = (String) new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
+                .withEndpoint(URLEndpoint.LCU_REPLAY_DOWNLOAD_PATH)
+                .withRequestMethod("GET")
+                .withHeader(header.getKey(), header.getValue())
+                .build();
+        
+        return obj;
+    }
+    
+    
+    /**
      * Creates a new websocket to the LCU
      */
     public static LCUSocketReader createWebSocket()

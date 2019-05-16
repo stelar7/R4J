@@ -47,6 +47,7 @@ public final class Constants
     public static final String ID_PLACEHOLDER               = "{id}";
     public static final String PLATFORM_PLACEHOLDER         = "{platform}";
     public static final String GAME_PLACEHOLDER             = "{game}";
+    public static final String GAMEID_PLACEHOLDER           = "{gameId}";
     public static final String SERVICE_PLACEHOLDER          = "{service}";
     public static final String VERSION_PLACEHOLDER          = "{version}";
     public static final String LOCALE_PLACEHOLDER           = "{locale}";

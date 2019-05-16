@@ -18,6 +18,14 @@ public class LCURunningTest
         LCUApi.login("myusername", "mypassword");
     }
     
+    @Test
+    public void testReplay()
+    {
+        LCUApi.downloadReplay(3042295790L);
+        LCUApi.spectateGame(3042295790L);
+        System.out.println(LCUApi.getReplaySavePath());
+    }
+    
     
     @Test
     public void testCreateSocket() throws InterruptedException

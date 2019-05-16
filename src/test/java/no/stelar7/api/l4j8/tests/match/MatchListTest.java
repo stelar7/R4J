@@ -9,6 +9,7 @@ import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.*;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
+import no.stelar7.api.l4j8.impl.raw.DDragonAPI;
 import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -211,6 +212,26 @@ public class MatchListTest
         Assert.assertTrue("LazyList is populated?", refs.isEmpty());
         refs.loadFully();
         Assert.assertTrue("LazyList is not populated?", !refs.isEmpty());
+    }
+    
+    @Test
+    public void testLunatic()
+    {
+        Match m = new MatchBuilder().withPlatform(Platform.NA1).withId(3042295790L).get();
+        System.out.println(m.getParticipantIdentities().get(2));
+        
+        m.getTimeline().getFrames().stream()
+         .filter(f -> f.getEvents().stream().anyMatch(e -> e.getParticipantId() == 3))
+         .forEach(f -> f.getEvents().stream()
+                        .filter(e -> e.getParticipantId() == 3)
+                        .filter(e -> e.getEventType() == EventType.ITEM_PURCHASED || e.getEventType() == EventType.ITEM_UNDO)
+                        .forEach(e -> {
+                            String before = DDragonAPI.getInstance().getItem(e.getItemBefore()) != null ? DDragonAPI.getInstance().getItem(e.getItemBefore()).getName() : "";
+                            String after  = DDragonAPI.getInstance().getItem(e.getItemAfter()) != null ? DDragonAPI.getInstance().getItem(e.getItemAfter()).getName() : "";
+                            String item   = DDragonAPI.getInstance().getItem(e.getItemId()) != null ? DDragonAPI.getInstance().getItem(e.getItemId()).getName() : "";
+                            String output = String.format("%14s %8s { before: %s after: %s itemid: %s }", e.getEventType(), e.getTimestamp(), before, after, item);
+                            System.out.println(output);
+                        }));
     }
     
 }

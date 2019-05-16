@@ -800,10 +800,10 @@ public class DataCallBuilder
     
     
     /**
-     * Replaces placeholders in the URL (ie. {region})
+     * Adds parameters to the url (ie. ?api_key)
      *
-     * @param key   The key to replace (ie. {region})
-     * @param value The data to replace it with (ie. EUW)
+     * @param key   the parameter to add (ie. api_key)
+     * @param value the value to add after the parameter (ie. 6fa459ea-ee8a-3ca4-894e-db77e160355e)
      * @return this
      */
     public DataCallBuilder withURLData(final String key, final String value)
@@ -813,10 +813,10 @@ public class DataCallBuilder
     }
     
     /**
-     * Adds parameters to the url (ie. ?api_key)
+     * Replaces placeholders in the URL (ie. {region})
      *
-     * @param key   the parameter to add (ie. api_key)
-     * @param value the value to add after the parameter (ie. 6fa459ea-ee8a-3ca4-894e-db77e160355e)
+     * @param key   The key to replace (ie. {region})
+     * @param value The data to replace it with (ie. EUW)
      * @return this
      */
     public DataCallBuilder withURLParameter(final String key, final String value)

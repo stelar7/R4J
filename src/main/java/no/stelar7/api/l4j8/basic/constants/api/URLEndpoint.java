@@ -141,6 +141,10 @@ public enum URLEndpoint
     
     LCU_CREATE_NOTIFICATION("player-notifications/v1/notifications", "", "", "", JsonObject.class),
     
+    LCU_REPLAY_DOWNLOAD("lol-replays/v1/rofls/{gameId}/download", "", "", "", Void.class),
+    LCU_REPLAY_DOWNLOAD_PATH("lol-replays/v1/rofls/path", "", "", "", String.class),
+    LCU_REPLAY_WATCH("lol-replays/v1/rofls/{gameId}/watch", "", "", "", String.class),
+    
     // REPLAY
     REPLAY_GAME("replay/game", "", "", "", ReplayGameClientProcessInfo.class),
     REPLAY_PLAYBACK("replay/playback", "", "", "", ReplayPlaybackInfo.class),
