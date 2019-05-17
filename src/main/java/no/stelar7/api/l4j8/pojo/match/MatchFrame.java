@@ -22,7 +22,7 @@ public class MatchFrame implements Serializable
     }
     
     /**
-     * Map of ineger key (1-10) to the participant's information for the frame.
+     * Map of integer keys (1-10) to the participant's information for the frame.
      * Keys have no relation to the participantid, use {@code getFrameFromParticipantId} for that.
      *
      * @return {@code Map<String, MatchParticipantFrame> }

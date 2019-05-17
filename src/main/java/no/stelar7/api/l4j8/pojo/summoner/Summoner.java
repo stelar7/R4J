@@ -31,17 +31,17 @@ public final class Summoner implements Serializable
     private Platform platform;
     
     
-    public static Summoner byName(String name, Platform platform)
+    public static Summoner byName(Platform platform, String name)
     {
         return SummonerAPI.getInstance().getSummonerByName(platform, name);
     }
     
-    public static Summoner bySummonerId(String id, Platform platform)
+    public static Summoner bySummonerId(Platform platform, String id)
     {
         return SummonerAPI.getInstance().getSummonerById(platform, id);
     }
     
-    public static Summoner byAccountId(String id, Platform platform)
+    public static Summoner byAccountId(Platform platform, String id)
     {
         return SummonerAPI.getInstance().getSummonerByAccount(platform, id);
     }

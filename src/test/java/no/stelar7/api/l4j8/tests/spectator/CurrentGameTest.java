@@ -54,7 +54,7 @@ public class CurrentGameTest
     public void testCurrentGameFame()
     {
         final L4J8        l4j8 = new L4J8(SecretFile.CREDS);
-        Summoner          s    = Summoner.byName("Imaqtpie", Platform.NA1);
+        Summoner          s    = Summoner.byName(Platform.NA1, "Imaqtpie");
         SpectatorGameInfo game = s.getCurrentGame();
         
         System.out.format("%s is %sin game%n", s.getName(), game != null ? "" : "not ");

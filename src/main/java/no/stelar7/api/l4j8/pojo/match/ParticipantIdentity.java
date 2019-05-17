@@ -22,12 +22,12 @@ public class ParticipantIdentity implements Serializable
     
     public Summoner getCurrentSummoner()
     {
-        return Summoner.byAccountId(currentAccountId, currentPlatformId);
+        return Summoner.byAccountId(currentPlatformId, currentAccountId);
     }
     
     public Summoner getOldSummoner()
     {
-        return Summoner.byAccountId(accountId, platformId);
+        return Summoner.byAccountId(platformId, accountId);
     }
     
     public int getParticipantId()

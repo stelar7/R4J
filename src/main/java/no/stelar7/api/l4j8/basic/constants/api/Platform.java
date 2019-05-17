@@ -135,4 +135,25 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
     {
         return this.getValue();
     }
+    
+    public static List<Platform> getDefaultPlatforms()
+    {
+        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2);
+    }
+    
+    public static List<Platform> getSpectatorPlatforms()
+    {
+        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1);
+    }
+    
+    public static List<Platform> getGarenaPlatforms()
+    {
+        return Arrays.asList(SG, PH, ID1, VN, TH, TW);
+    }
+    
+    public static List<Platform> getValidPlatforms()
+    {
+        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2, SG, PH, ID1, VN, TH, TW);
+    }
+    
 }
