@@ -49,6 +49,7 @@ public class MatchListTest
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.setLogLevel(LogLevel.INFO);
+        
         Set<GameQueueType> queue      = null;//EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2018);
         Set<Integer>       champ      = null;//new HashSet<>(Collections.singletonList(40));
@@ -65,6 +66,7 @@ public class MatchListTest
         builder = builder.withQueues(queue).withSeasons(season).withChampions(champ);
         
         LazyList<MatchReference> all = builder.getLazy();
+        all.loadFully();
         
         MatchBuilder    mb = new MatchBuilder();
         TimelineBuilder tb = new TimelineBuilder();

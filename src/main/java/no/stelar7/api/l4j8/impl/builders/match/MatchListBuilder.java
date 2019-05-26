@@ -188,12 +188,21 @@ public class MatchListBuilder
             this.champions.forEach(champ -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(champ)));
         }
         
-        Object listObj = builder.build();
-        if (listObj instanceof Pair)
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, this.platform, this.id, beginTime, endTime, beginIndex, endIndex, queues, seasons, champions);
+        if (chl.isPresent())
+        {
+            return ((MatchList) chl.get()).getMatches();
+        }
+        
+        Object matchObj = builder.build();
+        if (matchObj instanceof Pair)
         {
             return Collections.emptyList();
         }
-        return ((MatchList) listObj).getMatches();
+        
+        MatchList match = (MatchList) matchObj;
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, match, this.platform, this.id, beginTime, endTime, beginIndex, endIndex, queues, seasons, champions);
+        return match.getMatches();
     }
     
     /**

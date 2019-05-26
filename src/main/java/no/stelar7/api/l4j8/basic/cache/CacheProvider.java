@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface CacheProvider
 {
     
-    int  TTL_INFINITY     = -1;
     Path LOCATION_DEFAULT = null;
+    int  TTL_INFINITY     = -1;
     int  TTL_USE_HINTS    = -2;
     
     /**

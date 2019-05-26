@@ -17,7 +17,7 @@ public class FileSystemCacheProvider implements CacheProvider
     
     private final Path              home;
     private       long              timeToLive;
-    private       CacheLifetimeHint hints;
+    private       CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
     
     private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?>       clearTask;
@@ -30,7 +30,7 @@ public class FileSystemCacheProvider implements CacheProvider
     
     public FileSystemCacheProvider(Path pathToFiles)
     {
-        this(pathToFiles, CacheProvider.TTL_INFINITY);
+        this(pathToFiles, CacheProvider.TTL_USE_HINTS);
     }
     
     public FileSystemCacheProvider(int ttl)
@@ -40,7 +40,7 @@ public class FileSystemCacheProvider implements CacheProvider
     
     public FileSystemCacheProvider()
     {
-        this(CacheProvider.LOCATION_DEFAULT, CacheProvider.TTL_INFINITY);
+        this(CacheProvider.LOCATION_DEFAULT, CacheProvider.TTL_USE_HINTS);
     }
     
     @Override
@@ -50,8 +50,8 @@ public class FileSystemCacheProvider implements CacheProvider
         
         if (timeToLive > 0)
         {
-            clearTask = clearService.scheduleAtFixedRate(this::clearOldCache, timeToLive, timeToLive, TimeUnit.SECONDS);
-        } else
+            clearTask = clearService.scheduleAtFixedRate(this::clearOldCache, timeToLive, timeToLive, TimeUnit.MILLISECONDS);
+        } else if (timeToLive == CacheProvider.TTL_INFINITY)
         {
             if (clearTask != null)
             {
@@ -124,10 +124,8 @@ public class FileSystemCacheProvider implements CacheProvider
     {
         try
         {
-            // inject api key so cache still works in v4
             List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
             pathData.add(DataCall.getCredentials().getBaseAPIKey());
-            pathData.remove(0);
             
             Path storePath = resolvePath(type, pathData);
             if (Files.exists(storePath))
@@ -151,9 +149,21 @@ public class FileSystemCacheProvider implements CacheProvider
         pathData.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getBaseAPIKey());
         Path filepath = resolvePath(type, pathData);
         
+        try
+        {
+            clearPath(filepath);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        
         if (!Files.exists(filepath))
         {
             return Optional.empty();
+        } else
+        {
+            // need to find a way to refetch the data for this...?
+            // update(type, data);
         }
         
         try (ByteArrayInputStream bis = new ByteArrayInputStream(Files.readAllBytes(filepath)); ObjectInput in = new ObjectInputStream(bis))
@@ -206,49 +216,7 @@ public class FileSystemCacheProvider implements CacheProvider
             Files.walk(home).sorted(Comparator.reverseOrder()).forEach(p -> {
                 try
                 {
-                    if (!Files.exists(p))
-                    {
-                        return;
-                    }
-                    
-                    BasicFileAttributes attributes = Files.readAttributes(p, BasicFileAttributes.class);
-                    long                life       = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() - attributes.lastAccessTime().toInstant().toEpochMilli();
-                    
-                    if (timeToLive != CacheProvider.TTL_USE_HINTS)
-                    {
-                        if (timeToLive < life)
-                        {
-                            // no point in deleting the folders..
-                            if (Files.isDirectory(p))
-                            {
-                                return;
-                            }
-                            
-                            Files.deleteIfExists(p);
-                        }
-                    } else
-                    {
-                        Path folder = p;
-                        while (!folder.getParent().equals(home))
-                        {
-                            folder = p.getParent();
-                        }
-                        
-                        URLEndpoint endpoint     = URLEndpoint.valueOf(folder.toFile().toString());
-                        long        expectedLife = hints.get(endpoint);
-                        
-                        if (expectedLife < life)
-                        {
-                            // no point in deleting the folders..
-                            if (Files.isDirectory(p))
-                            {
-                                return;
-                            }
-                            
-                            Files.deleteIfExists(p);
-                        }
-                        
-                    }
+                    clearPath(p);
                 } catch (IOException e)
                 {
                     e.printStackTrace();
@@ -260,10 +228,61 @@ public class FileSystemCacheProvider implements CacheProvider
         }
     }
     
+    private void clearPath(Path p) throws IOException
+    {
+        if (!Files.exists(p))
+        {
+            return;
+        }
+        
+        LocalDateTime accessTime = ((FileTime) Files.readAttributes(p, "lastAccessTime").get("lastAccessTime")).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime nowTime    = LocalDateTime.now();
+        long          life       = Duration.between(accessTime, nowTime).getSeconds() * 1000;
+        
+        if (timeToLive != CacheProvider.TTL_USE_HINTS)
+        {
+            
+            if (timeToLive < life)
+            {
+                // no point in deleting the folders..
+                if (Files.isDirectory(p))
+                {
+                    return;
+                }
+                
+                DataCall.getLogLevel().printIf(LogLevel.INFO, "Data in cache is outdated, deleting then re-fetching");
+                Files.deleteIfExists(p);
+            }
+        } else
+        {
+            Path folder = p;
+            while (!folder.getParent().equals(home))
+            {
+                folder = folder.getParent();
+            }
+            
+            URLEndpoint endpoint     = URLEndpoint.valueOf(folder.getFileName().toString());
+            long        expectedLife = hints.get(endpoint);
+            
+            if (expectedLife < life)
+            {
+                // no point in deleting the folders..
+                if (Files.isDirectory(p))
+                {
+                    return;
+                }
+                
+                DataCall.getLogLevel().printIf(LogLevel.INFO, "Data in cache is outdated, deleting then re-fetching");
+                Files.deleteIfExists(p);
+            }
+            
+        }
+    }
+    
     @Override
     public long getTimeToLive(URLEndpoint type)
     {
-        return timeToLive;
+        return timeToLive == TTL_USE_HINTS ? hints.get(type) : timeToLive;
     }
     
     @Override

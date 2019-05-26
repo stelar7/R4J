@@ -23,7 +23,7 @@ public class MemoryCacheProvider implements CacheProvider
     private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?>       clearTask;
     private long                     timeToLive;
-    private CacheLifetimeHint        hints;
+    private CacheLifetimeHint        hints        = CacheLifetimeHint.DEFAULTS;
     
     /**
      * Creates a memory cache, where items expire after ttl seconds
@@ -37,7 +37,7 @@ public class MemoryCacheProvider implements CacheProvider
     
     public MemoryCacheProvider()
     {
-        this(CacheProvider.TTL_INFINITY);
+        this(CacheProvider.TTL_USE_HINTS);
     }
     
     
@@ -182,7 +182,7 @@ public class MemoryCacheProvider implements CacheProvider
     @Override
     public long getTimeToLive(URLEndpoint type)
     {
-        return timeToLive;
+        return timeToLive == TTL_USE_HINTS ? hints.get(type) : timeToLive;
     }
     
     @Override

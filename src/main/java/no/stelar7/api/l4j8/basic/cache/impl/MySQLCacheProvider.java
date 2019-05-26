@@ -13,7 +13,7 @@ public class MySQLCacheProvider implements CacheProvider
 {
     
     private       long              timeToLive;
-    private       CacheLifetimeHint hints;
+    private       CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
     private final MySQL             sql;
     
     private static final String COLUMN_EXPIRES_AT = "expires_at";
@@ -338,12 +338,7 @@ public class MySQLCacheProvider implements CacheProvider
     @Override
     public long getTimeToLive(URLEndpoint type)
     {
-        if (timeToLive == CacheProvider.TTL_USE_HINTS)
-        {
-            return hints.get(type);
-        }
-        
-        return timeToLive;
+        return timeToLive == TTL_USE_HINTS ? hints.get(type) : timeToLive;
     }
     
     @Override

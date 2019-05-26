@@ -101,13 +101,21 @@ public final class MatchAPI
             championId.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
         }
         
-        Object data = builder.build();
-        if (data instanceof Pair)
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
+        if (chl.isPresent())
+        {
+            return ((MatchList) chl.get()).getMatches();
+        }
+        
+        Object matchObj = builder.build();
+        if (matchObj instanceof Pair)
         {
             return Collections.emptyList();
         }
         
-        return ((MatchList) data).getMatches();
+        MatchList match = (MatchList) matchObj;
+        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, match, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
+        return match.getMatches();
     }
     
     /**
