@@ -48,7 +48,6 @@ public class LeagueTest
     public void testPositionalRanks()
     {
         DataCall.setLogLevel(LogLevel.INFO);
-        //List<LeagueEntry>     pos     = l4j8.getLeagueAPI().getLeagueByTierDivision(Platform.NA1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I, 1);
         LazyList<LeagueEntry> posLazy = l4j8.getLeagueAPI().getLeagueByTierDivisionLazy(Platform.NA1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I);
         posLazy.loadFully();
         System.out.println();

@@ -25,8 +25,10 @@ public class CurrentGameTest
         Assert.assertNotNull("gametype is null", currentGame.getGameType());
         Assert.assertNotNull("mapid is null", currentGame.getMap());
         Assert.assertNotNull("observers is null", currentGame.getObservers());
-        Assert.assertNotNull("participantsis null", currentGame.getParticipants());
+        Assert.assertNotNull("participants is null", currentGame.getParticipants());
         
+        // this was an issue somehow??
+        Assert.assertNotNull("participants has null id", currentGame.getParticipants().get(0).getSummonerId());
     };
     
     @Test
