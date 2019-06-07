@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.pojo.replay;
 
+import java.util.Objects;
+
 public class ReplayRecordingInfo
 {
     public enum AVContainer
@@ -61,4 +63,115 @@ public class ReplayRecordingInfo
      * Width of the output video in pixels (same as the game window size)
      */
     int         width;
+    
+    public AVContainer getCodec()
+    {
+        return codec;
+    }
+    
+    public float getCurrentTime()
+    {
+        return currentTime;
+    }
+    
+    public float getEndTime()
+    {
+        return endTime;
+    }
+    
+    public boolean isEnforceFrameRate()
+    {
+        return enforceFrameRate;
+    }
+    
+    public int getFramesPerSecond()
+    {
+        return framesPerSecond;
+    }
+    
+    public int getHeight()
+    {
+        return height;
+    }
+    
+    public boolean isLossless()
+    {
+        return lossless;
+    }
+    
+    public String getPath()
+    {
+        return path;
+    }
+    
+    public boolean isRecording()
+    {
+        return recording;
+    }
+    
+    public float getReplaySpeed()
+    {
+        return replaySpeed;
+    }
+    
+    public float getStartTime()
+    {
+        return startTime;
+    }
+    
+    public int getWidth()
+    {
+        return width;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        ReplayRecordingInfo that = (ReplayRecordingInfo) o;
+        return Float.compare(that.currentTime, currentTime) == 0 &&
+               Float.compare(that.endTime, endTime) == 0 &&
+               enforceFrameRate == that.enforceFrameRate &&
+               framesPerSecond == that.framesPerSecond &&
+               height == that.height &&
+               lossless == that.lossless &&
+               recording == that.recording &&
+               Float.compare(that.replaySpeed, replaySpeed) == 0 &&
+               Float.compare(that.startTime, startTime) == 0 &&
+               width == that.width &&
+               codec == that.codec &&
+               Objects.equals(path, that.path);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(codec, currentTime, endTime, enforceFrameRate, framesPerSecond, height, lossless, path, recording, replaySpeed, startTime, width);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "ReplayRecordingInfo{" +
+               "codec=" + codec +
+               ", currentTime=" + currentTime +
+               ", endTime=" + endTime +
+               ", enforceFrameRate=" + enforceFrameRate +
+               ", framesPerSecond=" + framesPerSecond +
+               ", height=" + height +
+               ", lossless=" + lossless +
+               ", path='" + path + '\'' +
+               ", recording=" + recording +
+               ", replaySpeed=" + replaySpeed +
+               ", startTime=" + startTime +
+               ", width=" + width +
+               '}';
+    }
 }

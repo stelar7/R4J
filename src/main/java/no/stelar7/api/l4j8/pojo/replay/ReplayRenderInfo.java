@@ -1,5 +1,7 @@
 package no.stelar7.api.l4j8.pojo.replay;
 
+import java.util.Objects;
+
 public class ReplayRenderInfo
 {
     
@@ -255,4 +257,416 @@ public class ReplayRenderInfo
      * Vector indicating the direction of the sun for shadows
      */
     Vector3f   sunDirection;
+    
+    public boolean isCameraAttached()
+    {
+        return cameraAttached;
+    }
+    
+    public float getCameraLookSpeed()
+    {
+        return cameraLookSpeed;
+    }
+    
+    public CameraMode getCameraMode()
+    {
+        return cameraMode;
+    }
+    
+    public float getCameraMoveSpeed()
+    {
+        return cameraMoveSpeed;
+    }
+    
+    public Vector3f getCameraPosition()
+    {
+        return cameraPosition;
+    }
+    
+    public Vector3f getCameraRotation()
+    {
+        return cameraRotation;
+    }
+    
+    public boolean isCharacters()
+    {
+        return characters;
+    }
+    
+    public Vector4f getDepthFogColor()
+    {
+        return depthFogColor;
+    }
+    
+    public boolean isDepthFogEnabled()
+    {
+        return depthFogEnabled;
+    }
+    
+    public float getDepthFogEnd()
+    {
+        return depthFogEnd;
+    }
+    
+    public float getDepthFogIntensity()
+    {
+        return depthFogIntensity;
+    }
+    
+    public float getDepthFogStart()
+    {
+        return depthFogStart;
+    }
+    
+    public float getDepthOfFieldCircle()
+    {
+        return depthOfFieldCircle;
+    }
+    
+    public boolean isDepthOfFieldDebug()
+    {
+        return depthOfFieldDebug;
+    }
+    
+    public boolean isDepthOfFieldEnabled()
+    {
+        return depthOfFieldEnabled;
+    }
+    
+    public float getDepthOfFieldFar()
+    {
+        return depthOfFieldFar;
+    }
+    
+    public float getDepthOfFieldMid()
+    {
+        return depthOfFieldMid;
+    }
+    
+    public float getDepthOfFieldNear()
+    {
+        return depthOfFieldNear;
+    }
+    
+    public float getDepthOfFieldWidth()
+    {
+        return depthOfFieldWidth;
+    }
+    
+    public boolean isEnvironment()
+    {
+        return environment;
+    }
+    
+    public float getFarClip()
+    {
+        return farClip;
+    }
+    
+    public float getFieldOfView()
+    {
+        return fieldOfView;
+    }
+    
+    public boolean isFloatingText()
+    {
+        return floatingText;
+    }
+    
+    public boolean isFogOfWar()
+    {
+        return fogOfWar;
+    }
+    
+    public boolean isHealthBarChampions()
+    {
+        return healthBarChampions;
+    }
+    
+    public boolean isHealthBarMinions()
+    {
+        return healthBarMinions;
+    }
+    
+    public boolean isHealthBarPets()
+    {
+        return healthBarPets;
+    }
+    
+    public boolean isHealthBarStructures()
+    {
+        return healthBarStructures;
+    }
+    
+    public boolean isHealthBarWards()
+    {
+        return healthBarWards;
+    }
+    
+    public Vector4f getHeightFogColor()
+    {
+        return heightFogColor;
+    }
+    
+    public boolean isHeightFogEnabled()
+    {
+        return heightFogEnabled;
+    }
+    
+    public float getHeightFogEnd()
+    {
+        return heightFogEnd;
+    }
+    
+    public float getHeightFogIntensity()
+    {
+        return heightFogIntensity;
+    }
+    
+    public float getHeightFogStart()
+    {
+        return heightFogStart;
+    }
+    
+    public boolean isInterfaceAll()
+    {
+        return interfaceAll;
+    }
+    
+    public boolean isInterfaceAnnounce()
+    {
+        return interfaceAnnounce;
+    }
+    
+    public boolean isInterfaceChat()
+    {
+        return interfaceChat;
+    }
+    
+    public boolean isInterfaceFrames()
+    {
+        return interfaceFrames;
+    }
+    
+    public boolean isInterfaceMinimap()
+    {
+        return interfaceMinimap;
+    }
+    
+    public boolean isInterfaceQuests()
+    {
+        return interfaceQuests;
+    }
+    
+    public boolean isInterfaceReplay()
+    {
+        return interfaceReplay;
+    }
+    
+    public boolean isInterfaceScore()
+    {
+        return interfaceScore;
+    }
+    
+    public boolean isInterfaceScoreboard()
+    {
+        return interfaceScoreboard;
+    }
+    
+    public boolean isInterfaceTarget()
+    {
+        return interfaceTarget;
+    }
+    
+    public boolean isInterfaceTimeline()
+    {
+        return interfaceTimeline;
+    }
+    
+    public float getNavGridOffset()
+    {
+        return navGridOffset;
+    }
+    
+    public float getNearClip()
+    {
+        return nearClip;
+    }
+    
+    public float getOutlineHover()
+    {
+        return outlineHover;
+    }
+    
+    public boolean isOutlineSelect()
+    {
+        return outlineSelect;
+    }
+    
+    public boolean isParticles()
+    {
+        return particles;
+    }
+    
+    public float getSkyboxOffset()
+    {
+        return skyboxOffset;
+    }
+    
+    public String getSkyboxPath()
+    {
+        return skyboxPath;
+    }
+    
+    public float getSkyboxRadius()
+    {
+        return skyboxRadius;
+    }
+    
+    public float getSkyboxRotation()
+    {
+        return skyboxRotation;
+    }
+    
+    public Vector3f getSunDirection()
+    {
+        return sunDirection;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        ReplayRenderInfo that = (ReplayRenderInfo) o;
+        return cameraAttached == that.cameraAttached &&
+               Float.compare(that.cameraLookSpeed, cameraLookSpeed) == 0 &&
+               Float.compare(that.cameraMoveSpeed, cameraMoveSpeed) == 0 &&
+               characters == that.characters &&
+               depthFogEnabled == that.depthFogEnabled &&
+               Float.compare(that.depthFogEnd, depthFogEnd) == 0 &&
+               Float.compare(that.depthFogIntensity, depthFogIntensity) == 0 &&
+               Float.compare(that.depthFogStart, depthFogStart) == 0 &&
+               Float.compare(that.depthOfFieldCircle, depthOfFieldCircle) == 0 &&
+               depthOfFieldDebug == that.depthOfFieldDebug &&
+               depthOfFieldEnabled == that.depthOfFieldEnabled &&
+               Float.compare(that.depthOfFieldFar, depthOfFieldFar) == 0 &&
+               Float.compare(that.depthOfFieldMid, depthOfFieldMid) == 0 &&
+               Float.compare(that.depthOfFieldNear, depthOfFieldNear) == 0 &&
+               Float.compare(that.depthOfFieldWidth, depthOfFieldWidth) == 0 &&
+               environment == that.environment &&
+               Float.compare(that.farClip, farClip) == 0 &&
+               Float.compare(that.fieldOfView, fieldOfView) == 0 &&
+               floatingText == that.floatingText &&
+               fogOfWar == that.fogOfWar &&
+               healthBarChampions == that.healthBarChampions &&
+               healthBarMinions == that.healthBarMinions &&
+               healthBarPets == that.healthBarPets &&
+               healthBarStructures == that.healthBarStructures &&
+               healthBarWards == that.healthBarWards &&
+               heightFogEnabled == that.heightFogEnabled &&
+               Float.compare(that.heightFogEnd, heightFogEnd) == 0 &&
+               Float.compare(that.heightFogIntensity, heightFogIntensity) == 0 &&
+               Float.compare(that.heightFogStart, heightFogStart) == 0 &&
+               interfaceAll == that.interfaceAll &&
+               interfaceAnnounce == that.interfaceAnnounce &&
+               interfaceChat == that.interfaceChat &&
+               interfaceFrames == that.interfaceFrames &&
+               interfaceMinimap == that.interfaceMinimap &&
+               interfaceQuests == that.interfaceQuests &&
+               interfaceReplay == that.interfaceReplay &&
+               interfaceScore == that.interfaceScore &&
+               interfaceScoreboard == that.interfaceScoreboard &&
+               interfaceTarget == that.interfaceTarget &&
+               interfaceTimeline == that.interfaceTimeline &&
+               Float.compare(that.navGridOffset, navGridOffset) == 0 &&
+               Float.compare(that.nearClip, nearClip) == 0 &&
+               Float.compare(that.outlineHover, outlineHover) == 0 &&
+               outlineSelect == that.outlineSelect &&
+               particles == that.particles &&
+               Float.compare(that.skyboxOffset, skyboxOffset) == 0 &&
+               Float.compare(that.skyboxRadius, skyboxRadius) == 0 &&
+               Float.compare(that.skyboxRotation, skyboxRotation) == 0 &&
+               cameraMode == that.cameraMode &&
+               Objects.equals(cameraPosition, that.cameraPosition) &&
+               Objects.equals(cameraRotation, that.cameraRotation) &&
+               Objects.equals(depthFogColor, that.depthFogColor) &&
+               Objects.equals(heightFogColor, that.heightFogColor) &&
+               Objects.equals(skyboxPath, that.skyboxPath) &&
+               Objects.equals(sunDirection, that.sunDirection);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(cameraAttached, cameraLookSpeed, cameraMode, cameraMoveSpeed, cameraPosition, cameraRotation, characters, depthFogColor, depthFogEnabled, depthFogEnd, depthFogIntensity, depthFogStart, depthOfFieldCircle, depthOfFieldDebug, depthOfFieldEnabled, depthOfFieldFar, depthOfFieldMid, depthOfFieldNear, depthOfFieldWidth, environment, farClip, fieldOfView, floatingText, fogOfWar, healthBarChampions, healthBarMinions, healthBarPets, healthBarStructures, healthBarWards, heightFogColor, heightFogEnabled, heightFogEnd, heightFogIntensity, heightFogStart, interfaceAll, interfaceAnnounce, interfaceChat, interfaceFrames, interfaceMinimap, interfaceQuests, interfaceReplay, interfaceScore, interfaceScoreboard, interfaceTarget, interfaceTimeline, navGridOffset, nearClip, outlineHover, outlineSelect, particles, skyboxOffset, skyboxPath, skyboxRadius, skyboxRotation, sunDirection);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "ReplayRenderInfo{" +
+               "cameraAttached=" + cameraAttached +
+               ", cameraLookSpeed=" + cameraLookSpeed +
+               ", cameraMode=" + cameraMode +
+               ", cameraMoveSpeed=" + cameraMoveSpeed +
+               ", cameraPosition=" + cameraPosition +
+               ", cameraRotation=" + cameraRotation +
+               ", characters=" + characters +
+               ", depthFogColor=" + depthFogColor +
+               ", depthFogEnabled=" + depthFogEnabled +
+               ", depthFogEnd=" + depthFogEnd +
+               ", depthFogIntensity=" + depthFogIntensity +
+               ", depthFogStart=" + depthFogStart +
+               ", depthOfFieldCircle=" + depthOfFieldCircle +
+               ", depthOfFieldDebug=" + depthOfFieldDebug +
+               ", depthOfFieldEnabled=" + depthOfFieldEnabled +
+               ", depthOfFieldFar=" + depthOfFieldFar +
+               ", depthOfFieldMid=" + depthOfFieldMid +
+               ", depthOfFieldNear=" + depthOfFieldNear +
+               ", depthOfFieldWidth=" + depthOfFieldWidth +
+               ", environment=" + environment +
+               ", farClip=" + farClip +
+               ", fieldOfView=" + fieldOfView +
+               ", floatingText=" + floatingText +
+               ", fogOfWar=" + fogOfWar +
+               ", healthBarChampions=" + healthBarChampions +
+               ", healthBarMinions=" + healthBarMinions +
+               ", healthBarPets=" + healthBarPets +
+               ", healthBarStructures=" + healthBarStructures +
+               ", healthBarWards=" + healthBarWards +
+               ", heightFogColor=" + heightFogColor +
+               ", heightFogEnabled=" + heightFogEnabled +
+               ", heightFogEnd=" + heightFogEnd +
+               ", heightFogIntensity=" + heightFogIntensity +
+               ", heightFogStart=" + heightFogStart +
+               ", interfaceAll=" + interfaceAll +
+               ", interfaceAnnounce=" + interfaceAnnounce +
+               ", interfaceChat=" + interfaceChat +
+               ", interfaceFrames=" + interfaceFrames +
+               ", interfaceMinimap=" + interfaceMinimap +
+               ", interfaceQuests=" + interfaceQuests +
+               ", interfaceReplay=" + interfaceReplay +
+               ", interfaceScore=" + interfaceScore +
+               ", interfaceScoreboard=" + interfaceScoreboard +
+               ", interfaceTarget=" + interfaceTarget +
+               ", interfaceTimeline=" + interfaceTimeline +
+               ", navGridOffset=" + navGridOffset +
+               ", nearClip=" + nearClip +
+               ", outlineHover=" + outlineHover +
+               ", outlineSelect=" + outlineSelect +
+               ", particles=" + particles +
+               ", skyboxOffset=" + skyboxOffset +
+               ", skyboxPath='" + skyboxPath + '\'' +
+               ", skyboxRadius=" + skyboxRadius +
+               ", skyboxRotation=" + skyboxRotation +
+               ", sunDirection=" + sunDirection +
+               '}';
+    }
 }

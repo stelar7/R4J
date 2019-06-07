@@ -2,7 +2,7 @@ package no.stelar7.api.l4j8.pojo.replay;
 
 import no.stelar7.api.l4j8.pojo.replay.ReplayRenderInfo.*;
 
-import java.util.List;
+import java.util.*;
 
 public class ReplayKeyframeSequence
 {
@@ -227,4 +227,219 @@ public class ReplayKeyframeSequence
     List<Vector3fKeyframe> sunDirection;
     
     
+    public List<Vector3fKeyframe> getCameraPosition()
+    {
+        return cameraPosition;
+    }
+    
+    public List<Vector3fKeyframe> getCameraRotation()
+    {
+        return cameraRotation;
+    }
+    
+    public List<Vector4fKeyframe> getDepthFogColor()
+    {
+        return depthFogColor;
+    }
+    
+    public List<BooleanKeyframe> getDepthFogEnabled()
+    {
+        return depthFogEnabled;
+    }
+    
+    public List<FloatKeyframe> getDepthFogEnd()
+    {
+        return depthFogEnd;
+    }
+    
+    public List<FloatKeyframe> getDepthFogIntensity()
+    {
+        return depthFogIntensity;
+    }
+    
+    public List<FloatKeyframe> getDepthFogStart()
+    {
+        return depthFogStart;
+    }
+    
+    public List<FloatKeyframe> getDepthOfFieldCircle()
+    {
+        return depthOfFieldCircle;
+    }
+    
+    public List<BooleanKeyframe> getDepthOfFieldEnabled()
+    {
+        return depthOfFieldEnabled;
+    }
+    
+    public List<FloatKeyframe> getDepthOfFieldFar()
+    {
+        return depthOfFieldFar;
+    }
+    
+    public List<FloatKeyframe> getDepthOfFieldMid()
+    {
+        return depthOfFieldMid;
+    }
+    
+    public List<FloatKeyframe> getDepthOfFieldNear()
+    {
+        return depthOfFieldNear;
+    }
+    
+    public List<FloatKeyframe> getDepthOfFieldWidth()
+    {
+        return depthOfFieldWidth;
+    }
+    
+    public List<FloatKeyframe> getFarClip()
+    {
+        return farClip;
+    }
+    
+    public List<FloatKeyframe> getFieldOfView()
+    {
+        return fieldOfView;
+    }
+    
+    public List<Vector4fKeyframe> getHeightFogColor()
+    {
+        return heightFogColor;
+    }
+    
+    public List<BooleanKeyframe> getHeightFogEnabled()
+    {
+        return heightFogEnabled;
+    }
+    
+    public List<FloatKeyframe> getHeightFogEnd()
+    {
+        return heightFogEnd;
+    }
+    
+    public List<FloatKeyframe> getHeightFogIntensity()
+    {
+        return heightFogIntensity;
+    }
+    
+    public List<FloatKeyframe> getHeightFogStart()
+    {
+        return heightFogStart;
+    }
+    
+    public List<FloatKeyframe> getNavGridOffset()
+    {
+        return navGridOffset;
+    }
+    
+    public List<FloatKeyframe> getNearClip()
+    {
+        return nearClip;
+    }
+    
+    public List<FloatKeyframe> getSpeed()
+    {
+        return speed;
+    }
+    
+    public List<FloatKeyframe> getSkyboxOffset()
+    {
+        return skyboxOffset;
+    }
+    
+    public List<FloatKeyframe> getSkyboxRadius()
+    {
+        return skyboxRadius;
+    }
+    
+    public List<Vector3fKeyframe> getSkyboxRotation()
+    {
+        return skyboxRotation;
+    }
+    
+    public List<Vector3fKeyframe> getSunDirection()
+    {
+        return sunDirection;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        ReplayKeyframeSequence that = (ReplayKeyframeSequence) o;
+        return Objects.equals(cameraPosition, that.cameraPosition) &&
+               Objects.equals(cameraRotation, that.cameraRotation) &&
+               Objects.equals(depthFogColor, that.depthFogColor) &&
+               Objects.equals(depthFogEnabled, that.depthFogEnabled) &&
+               Objects.equals(depthFogEnd, that.depthFogEnd) &&
+               Objects.equals(depthFogIntensity, that.depthFogIntensity) &&
+               Objects.equals(depthFogStart, that.depthFogStart) &&
+               Objects.equals(depthOfFieldCircle, that.depthOfFieldCircle) &&
+               Objects.equals(depthOfFieldEnabled, that.depthOfFieldEnabled) &&
+               Objects.equals(depthOfFieldFar, that.depthOfFieldFar) &&
+               Objects.equals(depthOfFieldMid, that.depthOfFieldMid) &&
+               Objects.equals(depthOfFieldNear, that.depthOfFieldNear) &&
+               Objects.equals(depthOfFieldWidth, that.depthOfFieldWidth) &&
+               Objects.equals(farClip, that.farClip) &&
+               Objects.equals(fieldOfView, that.fieldOfView) &&
+               Objects.equals(heightFogColor, that.heightFogColor) &&
+               Objects.equals(heightFogEnabled, that.heightFogEnabled) &&
+               Objects.equals(heightFogEnd, that.heightFogEnd) &&
+               Objects.equals(heightFogIntensity, that.heightFogIntensity) &&
+               Objects.equals(heightFogStart, that.heightFogStart) &&
+               Objects.equals(navGridOffset, that.navGridOffset) &&
+               Objects.equals(nearClip, that.nearClip) &&
+               Objects.equals(speed, that.speed) &&
+               Objects.equals(skyboxOffset, that.skyboxOffset) &&
+               Objects.equals(skyboxRadius, that.skyboxRadius) &&
+               Objects.equals(skyboxRotation, that.skyboxRotation) &&
+               Objects.equals(sunDirection, that.sunDirection);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(cameraPosition, cameraRotation, depthFogColor, depthFogEnabled, depthFogEnd, depthFogIntensity, depthFogStart, depthOfFieldCircle, depthOfFieldEnabled, depthOfFieldFar, depthOfFieldMid, depthOfFieldNear, depthOfFieldWidth, farClip, fieldOfView, heightFogColor, heightFogEnabled, heightFogEnd, heightFogIntensity, heightFogStart, navGridOffset, nearClip, speed, skyboxOffset, skyboxRadius, skyboxRotation, sunDirection);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "ReplayKeyframeSequence{" +
+               "cameraPosition=" + cameraPosition +
+               ", cameraRotation=" + cameraRotation +
+               ", depthFogColor=" + depthFogColor +
+               ", depthFogEnabled=" + depthFogEnabled +
+               ", depthFogEnd=" + depthFogEnd +
+               ", depthFogIntensity=" + depthFogIntensity +
+               ", depthFogStart=" + depthFogStart +
+               ", depthOfFieldCircle=" + depthOfFieldCircle +
+               ", depthOfFieldEnabled=" + depthOfFieldEnabled +
+               ", depthOfFieldFar=" + depthOfFieldFar +
+               ", depthOfFieldMid=" + depthOfFieldMid +
+               ", depthOfFieldNear=" + depthOfFieldNear +
+               ", depthOfFieldWidth=" + depthOfFieldWidth +
+               ", farClip=" + farClip +
+               ", fieldOfView=" + fieldOfView +
+               ", heightFogColor=" + heightFogColor +
+               ", heightFogEnabled=" + heightFogEnabled +
+               ", heightFogEnd=" + heightFogEnd +
+               ", heightFogIntensity=" + heightFogIntensity +
+               ", heightFogStart=" + heightFogStart +
+               ", navGridOffset=" + navGridOffset +
+               ", nearClip=" + nearClip +
+               ", speed=" + speed +
+               ", skyboxOffset=" + skyboxOffset +
+               ", skyboxRadius=" + skyboxRadius +
+               ", skyboxRotation=" + skyboxRotation +
+               ", sunDirection=" + sunDirection +
+               '}';
+    }
 }
