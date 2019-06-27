@@ -68,6 +68,10 @@ public enum MapType implements CodedEnum
      * Nexus Blitz map
      */
     NEXUS_BLITZ(21, new Rectangle(0, 0, 12056, 12056)),
+    /**
+     * TFT map
+     */
+    TEAMFIGHT_TACTICS(22, new Rectangle(0, 0, 12056, 12056)),
     ;
     
     

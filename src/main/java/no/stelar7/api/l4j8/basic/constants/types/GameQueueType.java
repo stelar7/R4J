@@ -285,6 +285,10 @@ public enum GameQueueType implements CodedEnum
      * Tutorial games
      */
     TUTORIAL(new Integer[]{2000, 2010, 2020}),
+    /**
+     * Teamfight Tactics (Normal)
+     */
+    TEAMFIGHT_TACTICS(new Integer[]{1090}),
     ;
     
     private final Integer[] codes;
