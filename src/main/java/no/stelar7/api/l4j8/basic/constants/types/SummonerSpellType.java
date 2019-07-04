@@ -92,7 +92,11 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * It's a snowball! It's a Poro! It's...uh...one of those.
      */
-    SNOW_MARK(39, "SummonerMark");
+    SNOW_MARK(39, "SummonerMark"),
+    /**
+     * Temporarily shields 75-330 (depending on champion level) damage from your champion. After 2.5 seconds the shield expires and your champion is teleported to safety. Melee champions travel extra distance.
+     */
+    BACKTRACK(5, "Summoner_Backtrack");
     
     
     private final Integer id;
