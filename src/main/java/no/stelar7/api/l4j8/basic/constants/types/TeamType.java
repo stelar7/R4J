@@ -7,7 +7,8 @@ public enum TeamType implements CodedEnum
 {
     
     BLUE(100),
-    RED(200);
+    RED(200),
+    AI(300);
     
     private final Integer code;
     
