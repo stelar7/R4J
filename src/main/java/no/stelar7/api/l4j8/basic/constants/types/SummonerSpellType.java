@@ -98,13 +98,17 @@ public enum SummonerSpellType implements CodedEnum
      */
     BACKTRACK(5, "Summoner_Backtrack"),
     /**
-     * Dash through spacetime, becoming briefly untargetable and invulnerable as you rapidly move towards a location.
-     */
-    ODYSSEY_WARP(52, "SummonerOdysseyFlash"),
-    /**
      * Revive a fallen friend by remaining next to them for 2 seconds. Exiting the area early does not consume your cooldown.
      */
-    ODYSSEY_RESUSCITATE(50, "SummonerOdysseyRevive");
+    RESUSCITATE(50, "SummonerTemp2"),
+    /**
+     * Your champion gains increased Movement Speed and can move through units for 10 seconds. Grants a maximum of 28-45% (depending on champion level) Movement Speed after accelerating for 2 seconds.
+     */
+    GHOST_2(51, "Summoner_haste"),
+    /**
+     * Dash through spacetime, becoming briefly untargetable and invulnerable as you rapidly move towards a location.
+     */
+    WARP(52, "SummonerTemp1");
     
     
     private final Integer id;
