@@ -56,7 +56,11 @@ public class MatchBuilder
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, this.platform, this.id);
         if (chl.isPresent())
         {
-            return (Match) chl.get();
+            Match m = (Match) chl.get();
+            if (m.getParticipants().stream().noneMatch(p -> (p.getSpell1() == null || p.getSpell2() == null)))
+            {
+                return m;
+            }
         }
         
         Object matchObj = builder.build();

@@ -87,7 +87,7 @@ public class MatchListTest
         Summoner             s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         MatchListBuilder     mlb  = new MatchListBuilder();
         List<MatchReference> list = mlb.withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).get();
-        Assert.assertTrue("api didnt load data?!", !list.isEmpty());
+        Assert.assertFalse("api didnt load data?!", list.isEmpty());
     }
     
     @Test
@@ -155,7 +155,7 @@ public class MatchListTest
         List<MatchReference> list = new MatchListBuilder().withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).getLazy();
         Assert.assertTrue("LazyList loaded data?!", list.isEmpty());
         list.get(51);
-        Assert.assertTrue("LazyList didnt load data?!", !list.isEmpty());
+        Assert.assertFalse("LazyList didnt load data?!", list.isEmpty());
     }
     
     @Test
@@ -196,6 +196,16 @@ public class MatchListTest
         System.out.println();
     }
     
+    @Test
+    public void testMatchDartCauseStelarDidntLikeOdyssey()
+    {
+        DataCall.setLogLevel(LogLevel.DEBUG);
+        Match detail = new MatchBuilder().withId(3768089306L).withPlatform(Platform.EUW1).get();
+        System.out.println(detail.getParticipants().get(0).getSpell1().getApiName());
+        System.out.println(detail.getParticipants().get(0).getSpell2().getApiName());
+        System.out.println();
+    }
+    
     
     @Test
     public void testMatchTolkiIssue()
@@ -222,7 +232,7 @@ public class MatchListTest
         LazyList<MatchReference> refs = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get().getGames().getLazy();
         Assert.assertTrue("LazyList is populated?", refs.isEmpty());
         refs.loadFully();
-        Assert.assertTrue("LazyList is not populated?", !refs.isEmpty());
+        Assert.assertFalse("LazyList is not populated?", refs.isEmpty());
     }
     
     @Test
