@@ -195,7 +195,17 @@ public class MatchListTest
         Match detail = new MatchBuilder().withId(3984304842L).withPlatform(Platform.EUW1).get();
         System.out.println();
     }
-    
+
+
+    @Test
+    public void testMatchDartCauseStelarDidntLikeOdyssey()
+    {
+
+        Match detail = new MatchBuilder().withId(3768089306L).withPlatform(Platform.EUW1).get();
+        System.out.println(detail.getParticipants().get(0).getSpell1().getApiName());
+        System.out.println(detail.getParticipants().get(0).getSpell2().getApiName());
+        System.out.println();
+    }
     
     @Test
     public void testMatchTolkiIssue()

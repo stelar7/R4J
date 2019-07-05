@@ -96,7 +96,15 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * Temporarily shields 75-330 (depending on champion level) damage from your champion. After 2.5 seconds the shield expires and your champion is teleported to safety. Melee champions travel extra distance.
      */
-    BACKTRACK(5, "Summoner_Backtrack");
+    BACKTRACK(5, "Summoner_Backtrack"),
+    /**
+     * Dash through spacetime, becoming briefly untargetable and invulnerable as you rapidly move towards a location.
+     */
+    ODYSSEY_WARP(52, "SummonerOdysseyFlash"),
+    /**
+     * Revive a fallen friend by remaining next to them for 2 seconds. Exiting the area early does not consume your cooldown.
+     */
+    ODYSSEY_RESUSCITATE(50, "SummonerOdysseyRevive");
     
     
     private final Integer id;
