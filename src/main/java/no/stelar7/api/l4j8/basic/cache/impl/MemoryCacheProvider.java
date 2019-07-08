@@ -68,6 +68,12 @@ public class MemoryCacheProvider implements CacheProvider
     @Override
     public void store(URLEndpoint type, Object... obj)
     {
+        // if the object we are trying to store is not valid, dont store it.
+        if (obj[0] == null)
+        {
+            return;
+        }
+        
         switch (type)
         {
             case V3_SUMMONER_BY_ACCOUNT:

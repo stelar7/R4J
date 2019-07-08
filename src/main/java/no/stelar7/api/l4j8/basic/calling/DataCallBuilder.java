@@ -153,7 +153,7 @@ public class DataCallBuilder
             case 429:
                 if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
                 {
-                    return sleepAndRetry(retrys, "Ratelimit reached too many times, waiting 10 second and retrying", "Ratelimit reached (%s / 3 times), waiting 1 second and retrying%n");
+                    return sleepAndRetry(retrys, response.getResponseCode());
                 } else
                 {
                     System.err.println();
@@ -169,7 +169,7 @@ public class DataCallBuilder
             case 503:
             case 504:
             {
-                return sleepAndRetry(retrys, "Server error (" + response.getResponseCode() + ") , waiting 10 second and retrying", "Server error (" + response.getResponseCode() + ") (%s / 3 times), waiting 1 second and retrying%n");
+                return sleepAndRetry(retrys, response.getResponseCode());
             }
             
             default:
@@ -358,28 +358,37 @@ public class DataCallBuilder
         return Utils.getGson().toJson(element);
     }
     
-    private Object sleepAndRetry(int[] retrys, String shortMessage, String longMessage)
+    private Object sleepAndRetry(int[] retrys, int errorCode)
     {
         try
         {
-            int attempts = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
-            
-            if (attempts > 5)
+            int  attempts           = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
+            long nextSleepDuration  = attempts * 500;
+            long totalSleepDuration = 0;
+            for (int i = 1; i < attempts; i++)
             {
-                System.err.println("Error! too many times!");
+                totalSleepDuration += 500 * i;
+            }
+            
+            
+            String message = "";
+            if (errorCode == 429)
+            {
+                message = "Ratelimit reached too many times, waiting " + nextSleepDuration / 1000 + " seconds then retrying";
+            } else
+            {
+                message = "Server error (" + errorCode + ") , waiting " + nextSleepDuration / 1000 + " seconds then retrying";
+            }
+            
+            DataCall.getLogLevel().printIf(LogLevel.INFO, message);
+            
+            if (totalSleepDuration > this.dc.getMaxSleep())
+            {
+                DataCall.getLogLevel().printIf(LogLevel.INFO, "Total sleep time is over the max sleep value " + (nextSleepDuration + totalSleepDuration) + " > " + this.dc.getMaxSleep() + ".. Returning null instead");
                 return null;
             }
             
-            
-            if (attempts > 2)
-            {
-                System.err.println(shortMessage);
-                Thread.sleep(10000);
-                return this.build(attempts);
-            }
-            
-            System.err.format(longMessage, attempts);
-            Thread.sleep(1000);
+            Thread.sleep(nextSleepDuration);
             return this.build(attempts);
         } catch (InterruptedException e)
         {

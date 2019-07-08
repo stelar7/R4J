@@ -71,6 +71,12 @@ public class FileSystemCacheProvider implements CacheProvider
     {
         try
         {
+            // if the object we are trying to store is not valid, dont store it.
+            if (obj[0] == null)
+            {
+                return;
+            }
+            
             // inject api key so cache still works in v4
             List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
             pathData.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getBaseAPIKey());
@@ -124,6 +130,12 @@ public class FileSystemCacheProvider implements CacheProvider
     {
         try
         {
+            // if the object we are trying to store is not valid, dont store it.
+            if (obj[0] == null)
+            {
+                return;
+            }
+            
             List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
             pathData.add(DataCall.getCredentials().getBaseAPIKey());
             

@@ -22,6 +22,7 @@ public final class DataCall
     private static String         logFormat      = "[%-30s - %-13s]: %s%n";
     private static int            callStackSkip  = 5;
     private static int            callStackLimit = 5;
+    private static long           maxSleep       = 10000;
     
     private final Map<String, String> urlParams  = new TreeMap<>();
     private final Map<String, String> urlData    = new TreeMap<>();
@@ -30,6 +31,7 @@ public final class DataCall
     private        Enum        platform;
     private        URLEndpoint endpoint;
     private        boolean     useLimiters      = true;
+    private        long        sleep            = -1;
     private        Platform    defaultPlatform  = Platform.EUW1;
     private        String      urlProxy         = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/l4j8");
@@ -96,6 +98,16 @@ public final class DataCall
     public void setEndpoint(URLEndpoint endpoint)
     {
         this.endpoint = endpoint;
+    }
+    
+    public void setMaxSleep(long sleep)
+    {
+        this.sleep = sleep;
+    }
+    
+    public long getMaxSleep()
+    {
+        return this.sleep != -1 ? this.sleep : DataCall.getDefaultMaxSleep();
     }
     
     public static void setLogLevel(LogLevel level)
@@ -200,4 +212,16 @@ public final class DataCall
     {
         return DataCall.logFormat;
     }
+    
+    public static void setDefaultMaxSleep(long sleep)
+    {
+        DataCall.maxSleep = sleep;
+    }
+    
+    public static long getDefaultMaxSleep()
+    {
+        return DataCall.maxSleep;
+    }
+    
+    
 }

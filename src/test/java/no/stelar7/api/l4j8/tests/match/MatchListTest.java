@@ -43,6 +43,12 @@ public class MatchListTest
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
+    @Before
+    public void setLogLevel()
+    {
+        DataCall.setLogLevel(LogLevel.INFO);
+    }
+    
     @Test
     @Ignore
     public void testMatchAndMatchList()
@@ -182,10 +188,8 @@ public class MatchListTest
         Summoner                 s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         LazyList<MatchReference> m  = s.getGames().getLazy();
         
-        Match detail = new MatchBuilder().withId(m.get(0).getGameId()).withPlatform(m.get(0).getPlatform()).get();
-        System.out.println();
+        Match detail  = new MatchBuilder().withId(m.get(0).getGameId()).withPlatform(m.get(0).getPlatform()).get();
         Match detail2 = new MatchBuilder().withId(m.get(1).getGameId()).withPlatform(m.get(1).getPlatform()).get();
-        System.out.println();
     }
     
     @Test
