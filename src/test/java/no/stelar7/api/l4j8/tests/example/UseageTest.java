@@ -23,7 +23,6 @@ public class UseageTest
     public void testUseage()
     {
         L4J8 api = new L4J8(SecretFile.CREDS);
-        DataCall.setLogLevel(LogLevel.NONE);
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         Map<Integer, StaticRune>     runeData      = api.getDDragonAPI().getRunes();

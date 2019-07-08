@@ -2,11 +2,10 @@ package no.stelar7.api.l4j8.tests.staticdata;
 
 import no.stelar7.api.l4j8.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
-import no.stelar7.api.l4j8.impl.raw.*;
+import no.stelar7.api.l4j8.impl.raw.DDragonAPI;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
-import no.stelar7.api.l4j8.pojo.staticdata.item.*;
+import no.stelar7.api.l4j8.pojo.staticdata.item.Item;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapDetails;
 import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMastery;
 import no.stelar7.api.l4j8.pojo.staticdata.perk.*;
@@ -29,7 +28,6 @@ public class StaticTest
     public void testChampionList()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
         
         Map<Integer, StaticChampion> list = api.getChampions();
         Assert.assertTrue("less than 100?", list.size() > 100);
@@ -39,7 +37,6 @@ public class StaticTest
     public void testChampionSingle()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
         
         StaticChampion list = api.getChampion(1);
         Assert.assertEquals("ok?", list.getId(), 1);
@@ -49,7 +46,6 @@ public class StaticTest
     public void testItemList()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
         
         Map<Integer, Item> list = api.getItems();
         Assert.assertTrue("less than 100?", list.size() > 100);
@@ -60,7 +56,7 @@ public class StaticTest
     public void testItemSingle()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Item list = api.getItem(3147);
         Assert.assertEquals("ok?", 3147, list.getId());
@@ -71,7 +67,7 @@ public class StaticTest
     public void testLanguageStrings()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Map<String, String> strings = api.getLanguageStrings();
     }
@@ -80,7 +76,7 @@ public class StaticTest
     public void testLanguages()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         List<String> strings = api.getLanguages();
     }
@@ -89,7 +85,7 @@ public class StaticTest
     public void testMaps()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Map<String, MapDetails> data = api.getMaps();
     }
@@ -99,7 +95,7 @@ public class StaticTest
     public void testMasteryList()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Map<Integer, StaticMastery> list = api.getMasteries();
     }
@@ -109,7 +105,7 @@ public class StaticTest
     public void testMasterySingle()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         StaticMastery list = api.getMastery(6131);
         Assert.assertEquals("ok?", 6131, list.getId());
@@ -119,7 +115,7 @@ public class StaticTest
     public void testProfileIcons()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Map<Long, ProfileIconDetails> data = api.getProfileIcons();
     }
@@ -128,7 +124,7 @@ public class StaticTest
     public void testRealms()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Realm data = api.getRealm();
     }
@@ -137,7 +133,7 @@ public class StaticTest
     public void testRuneList()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Map<Integer, StaticRune> list = api.getRunes();
     }
@@ -147,7 +143,6 @@ public class StaticTest
     public void testRuneSingle()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
         
         
         StaticRune rune = api.getRune(5023);
@@ -165,7 +160,7 @@ public class StaticTest
     public void testSummonerSpellList()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Map<Integer, StaticSummonerSpell> list = api.getSummonerSpells();
     }
@@ -175,7 +170,7 @@ public class StaticTest
     public void testSummonerSpellSingle()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         StaticSummonerSpell list = api.getSummonerSpell(21);
         Assert.assertEquals("ok?", 21, list.getId());
@@ -186,7 +181,7 @@ public class StaticTest
     public void testVersions()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         List<String> data = api.getVersions();
     }
@@ -195,7 +190,7 @@ public class StaticTest
     public void testPerkPath()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Map<Integer, PerkPath> paths = api.getPerkPaths();
     }
@@ -204,7 +199,7 @@ public class StaticTest
     public void testPerkPathId()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         PerkPath paths = api.getPerkPath(8000);
     }
@@ -213,7 +208,7 @@ public class StaticTest
     public void testPerk()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         Map<Integer, StaticPerk> paths = api.getPerks();
         System.out.println();
@@ -223,7 +218,7 @@ public class StaticTest
     public void testPerkId()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         StaticPerk paths = api.getPerk(8005);
         System.out.println();
@@ -233,7 +228,7 @@ public class StaticTest
     public void testTarball()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.DEBUG);
+        
         
         String paths = api.getTarball();
         System.out.println();

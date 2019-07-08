@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.tests.cache;
 
+import ch.qos.logback.classic.*;
 import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
@@ -12,8 +13,9 @@ import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 import org.junit.rules.Stopwatch;
+import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CacheTest
@@ -32,7 +34,7 @@ public class CacheTest
     public void testMemoryCache() throws InterruptedException
     {
         DataCall.setCacheProvider(new MemoryCacheProvider(5));
-        DataCall.setLogLevel(LogLevel.INFO);
+        
         doCacheStuff();
     }
     
@@ -40,7 +42,7 @@ public class CacheTest
     public void testSQLCache() throws InterruptedException
     {
         DataCall.setCacheProvider(sqlCache);
-        DataCall.setLogLevel(LogLevel.INFO);
+        
         doCacheStuff();
     }
     
@@ -49,7 +51,7 @@ public class CacheTest
     public void testFileSystemCache() throws InterruptedException
     {
         DataCall.setCacheProvider(fileCache);
-        DataCall.setLogLevel(LogLevel.INFO);
+        
         doCacheStuff();
     }
     
@@ -58,14 +60,14 @@ public class CacheTest
     public void testTieredMemoryCache() throws InterruptedException
     {
         DataCall.setCacheProvider(tieredCache);
-        DataCall.setLogLevel(LogLevel.INFO);
+        
         doCacheStuff();
     }
     
     @Test
     public void testStaticDataCache()
     {
-        DataCall.setLogLevel(LogLevel.INFO);
+        
         DataCall.setCacheProvider(fileCache);
         l4j8.getDDragonAPI().getChampions();
         l4j8.getDDragonAPI().getChampions(null, null);
@@ -74,7 +76,9 @@ public class CacheTest
     @Test
     public void testCacheStuff() throws InterruptedException
     {
-        DataCall.setLogLevel(LogLevel.INFO);
+        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        root.setLevel(Level.ALL);
+        
         DataCall.setCacheProvider(fileCache);
         String id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();

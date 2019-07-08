@@ -1,19 +1,18 @@
 package no.stelar7.api.l4j8.tests.league;
 
-import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.utils.LazyList;
-import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
-import org.junit.*;
+import org.junit.Test;
 
-import java.util.*;
+import java.util.List;
 
 public class LeagueTest
 {
@@ -47,7 +46,6 @@ public class LeagueTest
     @Test
     public void testPositionalRanks()
     {
-        DataCall.setLogLevel(LogLevel.INFO);
         LazyList<LeagueEntry> posLazy = l4j8.getLeagueAPI().getLeagueByTierDivisionLazy(Platform.NA1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.IRON_I);
         posLazy.loadFully();
         System.out.println();

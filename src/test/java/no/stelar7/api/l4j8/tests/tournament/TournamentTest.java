@@ -1,9 +1,8 @@
 package no.stelar7.api.l4j8.tests.tournament;
 
-import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.impl.*;
+import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.impl.raw.TournamentAPI;
@@ -26,8 +25,6 @@ public class TournamentTest
     @Test
     public void testAllRegistrations()
     {
-        DataCall.setLogLevel(LogLevel.INFO);
-        
         final ProviderRegistrationParameters params     = new ProviderRegistrationParameters(Platform.EUW1, "http://stelar7.no/loltest/provider.php");
         final long                           providerId = this.api.registerAsProvider(params);
         

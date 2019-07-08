@@ -2,7 +2,7 @@ package no.stelar7.api.l4j8.basic.ratelimiting;
 
 
 import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.basic.constants.api.LogLevel;
+import org.slf4j.*;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;
@@ -14,6 +14,8 @@ import java.util.Map.Entry;
  */
 public class BurstRateLimiter extends RateLimiter
 {
+    
+    private static final Logger logger = LoggerFactory.getLogger(BurstRateLimiter.class);
     
     public BurstRateLimiter(List<RateLimit> limits)
     {
@@ -32,12 +34,12 @@ public class BurstRateLimiter extends RateLimiter
             {
                 Duration dur = Duration.of(sleepTime, ChronoUnit.MILLIS);
                 
-                DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Ratelimited activated! Sleeping for: %s%n", dur));
-                DataCall.getLogLevel().printIf(LogLevel.INFO, "Callstack:");
+                logger.info("Ratelimited activated! Sleeping for: {}", dur);
+                logger.info("Callstack:");
                 Arrays.stream(Thread.currentThread().getStackTrace())
                       .skip(DataCall.getCallStackSkip())
                       .limit(DataCall.getCallStackLimit())
-                      .forEachOrdered(s -> DataCall.getLogLevel().printIf(LogLevel.INFO, s.toString()));
+                      .forEachOrdered(s -> logger.info(s.toString()));
             }
             
             
@@ -62,7 +64,7 @@ public class BurstRateLimiter extends RateLimiter
                     if (oldVal + 1 < newVal)
                     {
                         callCountInTime.get(l).set(newVal);
-                        DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("limit %s has changed from %d to %d", key, oldVal, newVal));
+                        logger.debug("limit {} has changed from {} to {}", key, oldVal, newVal);
                     }
                 }
             }
@@ -85,8 +87,8 @@ public class BurstRateLimiter extends RateLimiter
                 if (actual >= limit.getPermits())
                 {
                     
-                    DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Calls made in the time frame: %d", actual));
-                    DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Limit for the time frame: %d", limit.getPermits()));
+                    logger.debug("Calls made in the time frame: {}", actual);
+                    logger.debug("Limit for the time frame: {}", limit.getPermits());
                     
                     int newBias = (int) Math.floorDiv(actual, (long) limit.getPermits());
                     if (newBias > multiplicativeBias)
@@ -124,7 +126,7 @@ public class BurstRateLimiter extends RateLimiter
             
             callCountInTime.get(limit).incrementAndGet();
             
-            DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("%s: current call count: %s", limit, callCountInTime.get(limit)));
+            logger.debug("{}: current call count: {}", limit, callCountInTime.get(limit));
         }
     }
     

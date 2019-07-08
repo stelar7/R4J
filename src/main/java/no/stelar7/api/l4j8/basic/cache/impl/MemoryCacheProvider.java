@@ -1,12 +1,12 @@
 package no.stelar7.api.l4j8.basic.cache.impl;
 
 import no.stelar7.api.l4j8.basic.cache.*;
-import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.match.Match;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampionList;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
+import org.slf4j.*;
 
 import java.time.*;
 import java.util.*;
@@ -16,6 +16,8 @@ import java.util.stream.Stream;
 
 public class MemoryCacheProvider implements CacheProvider
 {
+    private static final Logger logger = LoggerFactory.getLogger(MemoryCacheProvider.class);
+    
     private Map<Summoner, LocalDateTime>            summoners = new HashMap<>();
     private Map<Match, LocalDateTime>               matches   = new HashMap<>();
     private Pair<StaticChampionList, LocalDateTime> champions;
@@ -146,7 +148,7 @@ public class MemoryCacheProvider implements CacheProvider
         
         if (opt.isPresent())
         {
-            DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Loaded data from cache (%s %s %s)", this.getClass().getName(), type, Arrays.toString(data)));
+            logger.info("Loaded data from cache ({} {} {})", this.getClass().getName(), type, Arrays.toString(data));
         }
         
         return opt;

@@ -18,8 +18,6 @@ public final class DataCall
     
     private static APICredentials creds;
     private static CacheProvider  cache          = EmptyCacheProvider.INSTANCE;
-    private static LogLevel       logLevel       = LogLevel.NONE;
-    private static String         logFormat      = "[%-30s - %-13s]: %s%n";
     private static int            callStackSkip  = 5;
     private static int            callStackLimit = 5;
     private static long           maxSleep       = 10000;
@@ -110,16 +108,6 @@ public final class DataCall
         return this.sleep != -1 ? this.sleep : DataCall.getDefaultMaxSleep();
     }
     
-    public static void setLogLevel(LogLevel level)
-    {
-        DataCall.logLevel = level;
-    }
-    
-    public static LogLevel getLogLevel()
-    {
-        return DataCall.logLevel;
-    }
-    
     public static DataCallBuilder builder()
     {
         return new DataCallBuilder();
@@ -203,16 +191,6 @@ public final class DataCall
         return useLimiters;
     }
     
-    public static void setLogFormat(String format)
-    {
-        DataCall.logFormat = format;
-    }
-    
-    public static String getLogFormat()
-    {
-        return DataCall.logFormat;
-    }
-    
     public static void setDefaultMaxSleep(long sleep)
     {
         DataCall.maxSleep = sleep;
@@ -222,6 +200,5 @@ public final class DataCall
     {
         return DataCall.maxSleep;
     }
-    
     
 }

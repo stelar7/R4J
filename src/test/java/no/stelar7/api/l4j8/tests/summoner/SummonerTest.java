@@ -32,7 +32,6 @@ public class SummonerTest
     public void before()
     {
         DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
-        DataCall.setLogLevel(LogLevel.DEBUG);
     }
     
     @Test

@@ -43,18 +43,12 @@ public class MatchListTest
     
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
-    @Before
-    public void setLogLevel()
-    {
-        DataCall.setLogLevel(LogLevel.INFO);
-    }
     
     @Test
     @Ignore
     public void testMatchAndMatchList()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.INFO);
         
         Set<GameQueueType> queue      = null;//EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2018);
@@ -100,7 +94,6 @@ public class MatchListTest
     public void testMatchlistSummoner() throws InterruptedException
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setLogLevel(LogLevel.INFO);
         LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getGames().getLazy();
         list.loadFully();
         
@@ -117,7 +110,6 @@ public class MatchListTest
     @Test
     public void testNoDuplicates()
     {
-        DataCall.setLogLevel(LogLevel.INFO);
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getGames().getLazy();
         Set<MatchReference>      ref  = new HashSet<>();
@@ -144,7 +136,6 @@ public class MatchListTest
         Set<GameQueueType> queueTypes = new HashSet<>();
         queueTypes.add(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         
-        DataCall.setLogLevel(LogLevel.DEBUG);
         List<MatchReference> refs = l4j8.getMatchAPI().getMatchList(region, accountId, null, null, null, null, queueTypes, null, null);
         System.out.println(refs);
     }
@@ -203,7 +194,6 @@ public class MatchListTest
     @Test
     public void testMatchDartCauseStelarDidntLikeOdyssey()
     {
-        DataCall.setLogLevel(LogLevel.DEBUG);
         Match detail = new MatchBuilder().withId(3768089306L).withPlatform(Platform.EUW1).get();
         System.out.println(detail.getParticipants().get(0).getSpell1().getApiName());
         System.out.println(detail.getParticipants().get(0).getSpell2().getApiName());

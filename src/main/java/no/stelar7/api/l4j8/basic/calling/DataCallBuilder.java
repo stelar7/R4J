@@ -7,6 +7,7 @@ import no.stelar7.api.l4j8.basic.constants.types.RealmSpesificEnum;
 import no.stelar7.api.l4j8.basic.exceptions.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.*;
 import no.stelar7.api.l4j8.basic.utils.*;
+import org.slf4j.*;
 
 import javax.net.ssl.*;
 import java.io.*;
@@ -26,6 +27,8 @@ import java.util.prefs.BackingStoreException;
 
 public class DataCallBuilder
 {
+    private static final Logger logger = LoggerFactory.getLogger(DataCallBuilder.class);
+    
     private final DataCall dc = new DataCall();
     
     private static final BiFunction<String, String, String> MERGE        = (o, n) -> o + "," + n;
@@ -100,10 +103,10 @@ public class DataCallBuilder
         
         
         final String url = this.getURL();
-        DataCall.getLogLevel().printIf(LogLevel.INFO, String.format("Trying url: %s", url));
+        logger.info("Trying url: {}", url);
         
         final DataCallResponse response = this.getResponse(url);
-        DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, response.toString());
+        logger.debug(response.toString());
         
         switch (response.getResponseCode())
         {
@@ -380,11 +383,11 @@ public class DataCallBuilder
                 message = "Server error (" + errorCode + ") , waiting " + nextSleepDuration / 1000 + " seconds then retrying";
             }
             
-            DataCall.getLogLevel().printIf(LogLevel.INFO, message);
+            logger.info(message);
             
             if (totalSleepDuration > this.dc.getMaxSleep())
             {
-                DataCall.getLogLevel().printIf(LogLevel.INFO, "Total sleep time is over the max sleep value " + (nextSleepDuration + totalSleepDuration) + " > " + this.dc.getMaxSleep() + ".. Returning null instead");
+                logger.info("Total sleep time is over the max sleep value {} > {}... Returning null instead", (nextSleepDuration + totalSleepDuration), this.dc.getMaxSleep());
                 return null;
             }
             
@@ -457,7 +460,7 @@ public class DataCallBuilder
         
         if (lastLimit == null)
         {
-            DataCall.getLogLevel().printIf(LogLevel.DEBUG, "No instance of an old ratelimiter found");
+            logger.debug("No instance of an old ratelimiter found");
             return;
         }
         
@@ -470,7 +473,7 @@ public class DataCallBuilder
         newerLimit.setCallCountInTime(knownCount);
         newerLimit.setFirstCallInTime(knownTime);
         
-        DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Loaded ratelimit for %s", endpoint));
+        logger.debug("Loaded ratelimit for {}", endpoint);
         
         child.put(endpoint, newerLimit);
         DataCall.getLimiter().put(platform, child);
@@ -516,7 +519,7 @@ public class DataCallBuilder
                     .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Request Headers", "")).append("\n")
                     .append(sb).toString();
             
-            DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, printMe);
+            logger.debug(printMe);
             
             
             if (!this.postData.isEmpty())
@@ -536,7 +539,7 @@ public class DataCallBuilder
             String printMe2 = new StringBuilder("\n").append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Response Headers", ""))
                                                      .append(sb2)
                                                      .toString();
-            DataCall.getLogLevel().printIf(LogLevel.EXTENDED_INFO, printMe2);
+            logger.debug(printMe2);
             
             
             String appA    = con.getHeaderField("X-App-Rate-Limit");
@@ -546,7 +549,7 @@ public class DataCallBuilder
             
             if (appA == null)
             {
-                DataCall.getLogLevel().printIf(LogLevel.DEBUG, "Header 'X-App-Rate-Limit' missing from call: " + getURL());
+                logger.debug("Header 'X-App-Rate-Limit' missing from call: {} ", getURL());
             } else
             {
                 createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
@@ -555,7 +558,7 @@ public class DataCallBuilder
             
             if (methodA == null)
             {
-                DataCall.getLogLevel().printIf(LogLevel.DEBUG, "Header 'X-Method-Rate-Limit' missing from call: " + getURL());
+                logger.debug("Header 'X-Method-Rate-Limit' missing from call: {}", getURL());
             } else
             {
                 createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
@@ -566,7 +569,7 @@ public class DataCallBuilder
             if (deprecationHeader != null)
             {
                 LocalDateTime timeout = LocalDateTime.ofEpochSecond(Long.parseLong(deprecationHeader) / 1000, 0, ZoneOffset.ofHours(-7));
-                DataCall.getLogLevel().printIf(LogLevel.INFO, "You are using a deprecated method, this method will stop working at: " + timeout.toString());
+                logger.info("You are using a deprecated method, this method will stop working at: {}", timeout.toString());
             }
             
             if (con.getResponseCode() == 429)
@@ -635,8 +638,8 @@ public class DataCallBuilder
             newerLimit.mergeFrom(oldLimit);
             child.put(endpoint, newerLimit);
             
-            DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Updating Ratelimit For %s", endpoint));
-            DataCall.getLogLevel().printIf(LogLevel.DEBUG, newerLimit.getLimits().toString());
+            logger.debug("Updating Ratelimit For {}", endpoint);
+            logger.debug(newerLimit.getLimits().toString());
         }
         
         DataCall.getLimiter().put(platform, child);

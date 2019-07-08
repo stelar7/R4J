@@ -1,7 +1,6 @@
 package no.stelar7.api.l4j8.basic.ratelimiting;
 
-import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.basic.constants.api.LogLevel;
+import org.slf4j.*;
 
 import java.time.Instant;
 import java.util.*;
@@ -15,6 +14,8 @@ public abstract class RateLimiter
     protected Map<RateLimit, AtomicLong> callCountInTime;
     
     protected int overloadTimer;
+    
+    private static final Logger logger = LoggerFactory.getLogger(RateLimiter.class);
     
     /**
      * @param limiters the limits to obey
@@ -47,7 +48,7 @@ public abstract class RateLimiter
         
         RateLimiter that = (RateLimiter) o;
         
-        return limits != null ? limits.equals(that.limits) : (that.limits == null);
+        return Objects.equals(limits, that.limits);
     }
     
     @Override
@@ -95,7 +96,7 @@ public abstract class RateLimiter
         try
         {
             overloadTimer = Integer.parseInt(sleep);
-            DataCall.getLogLevel().printIf(LogLevel.DEBUG, String.format("Forcing next sleep to be atleast: %d seconds", overloadTimer));
+            logger.debug("Forcing next sleep to be atleast: {} seconds", overloadTimer);
             
         } catch (NumberFormatException e)
         {

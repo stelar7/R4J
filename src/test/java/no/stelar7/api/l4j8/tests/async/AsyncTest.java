@@ -1,7 +1,6 @@
 package no.stelar7.api.l4j8.tests.async;
 
-import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.async.*;
 import no.stelar7.api.l4j8.impl.raw.SpectatorAPI;
@@ -24,8 +23,6 @@ public class AsyncTest
     @Ignore
     public void testAsync()
     {
-        DataCall.setLogLevel(LogLevel.INFO);
-        
         AsyncSummonerAPI        as      = AsyncSummonerAPI.getInstance();
         AsyncMatchAPI           am      = AsyncMatchAPI.getInstance();
         List<CompletableFuture> futures = new ArrayList<>();
