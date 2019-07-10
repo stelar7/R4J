@@ -289,6 +289,10 @@ public enum GameQueueType implements CodedEnum
      * Teamfight Tactics (Normal)
      */
     TEAMFIGHT_TACTICS(new Integer[]{1090}),
+    /**
+     * Teamfight Tactics (Ranked)
+     */
+    TEAMFIGHT_TACTICS_RANKED(new Integer[]{1100}, "RANKED_TFT"),
     ;
     
     private final Integer[] codes;
