@@ -1,13 +1,15 @@
 package no.stelar7.api.l4j8.pojo.shared;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class BannedChampion implements Serializable
 {
-    private static final long serialVersionUID = 8871188449594133998L;
+    private static final long serialVersionUID = -4431824998067471719L;
     
     private int championId;
     private int pickTurn;
+    private int teamId;
     
     
     /**
@@ -31,6 +33,15 @@ public class BannedChampion implements Serializable
         return this.pickTurn;
     }
     
+    /**
+     * The team that banned this champion
+     * @return int
+     */
+    public int getTeamId()
+    {
+        return teamId;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -42,22 +53,16 @@ public class BannedChampion implements Serializable
         {
             return false;
         }
-        
         BannedChampion that = (BannedChampion) o;
-        
-        if (pickTurn != that.pickTurn)
-        {
-            return false;
-        }
-        return championId == that.championId;
+        return championId == that.championId &&
+               pickTurn == that.pickTurn &&
+               teamId == that.teamId;
     }
     
     @Override
     public int hashCode()
     {
-        int result = championId;
-        result = 31 * result + pickTurn;
-        return result;
+        return Objects.hash(championId, pickTurn, teamId);
     }
     
     @Override
@@ -66,6 +71,7 @@ public class BannedChampion implements Serializable
         return "BannedChampion{" +
                "championId=" + championId +
                ", pickTurn=" + pickTurn +
+               ", teamId=" + teamId +
                '}';
     }
 }

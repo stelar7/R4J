@@ -50,4 +50,12 @@ public class LeagueTest
         posLazy.loadFully();
         System.out.println();
     }
+    
+    @Test
+    public void testPositionalRanksTFT()
+    {
+        LazyList<LeagueEntry> posLazy = l4j8.getLeagueAPI().getLeagueByTierDivisionLazy(Platform.OC1, GameQueueType.TEAMFIGHT_TACTICS_RANKED, TierDivisionType.IRON_IV);
+        posLazy.loadFully();
+        System.out.println();
+    }
 }
