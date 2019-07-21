@@ -1,5 +1,5 @@
 language: java
-jdk: oraclejdk8
+jdk: openjdk8
 install: true
 script:
 - "mvn clean install -DskipTests -Darguments=\"-Dmaven.javadoc.skip=true\""
