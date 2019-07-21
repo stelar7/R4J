@@ -1,6 +1,5 @@
 package no.stelar7.api.l4j8.tests.cache;
 
-import ch.qos.logback.classic.*;
 import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
@@ -13,6 +12,7 @@ import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;
 import org.junit.rules.Stopwatch;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -76,8 +76,7 @@ public class CacheTest
     @Test
     public void testCacheStuff() throws InterruptedException
     {
-        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        root.setLevel(Level.ALL);
+        Logger root = LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         
         DataCall.setCacheProvider(fileCache);
         String id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
