@@ -156,6 +156,11 @@ public final class MatchAPI
             {
                 return m;
             }
+            
+            if (m.getGameQueueType() != null && m.getSeason() != null && m.getMatchMode() != null && m.getMatchType() != null)
+            {
+                return m;
+            }
         }
         
         try

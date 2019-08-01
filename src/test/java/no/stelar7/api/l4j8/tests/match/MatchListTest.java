@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests.match;
 
-import no.stelar7.api.l4j8.basic.cache.impl.FileSystemCacheProvider;
+import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
@@ -227,6 +227,14 @@ public class MatchListTest
         Assert.assertTrue("LazyList is populated?", refs.isEmpty());
         refs.loadFully();
         Assert.assertFalse("LazyList is not populated?", refs.isEmpty());
+    }
+    
+    @Test
+    public void testTutorialModules()
+    {
+        DataCall.setCacheProvider(EmptyCacheProvider.INSTANCE);
+        Match m = new MatchBuilder().withId(4002917402L).withPlatform(Platform.EUW1).get();
+        System.out.println();
     }
     
     @Test
