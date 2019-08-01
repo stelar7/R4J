@@ -151,16 +151,23 @@ public final class MatchAPI
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
         if (chl.isPresent())
         {
-            Match m = (Match) chl.get();
+            Match   m            = (Match) chl.get();
+            boolean shouldReturn = false;
+            if (m.getGameQueueType() != null && m.getSeason() != null && m.getMatchMode() != null && m.getMatchType() != null)
+            {
+                shouldReturn = true;
+            }
+            
             if (m.getParticipants().stream().noneMatch(p -> (p.getSpell1() == null || p.getSpell2() == null)))
+            {
+                shouldReturn = true;
+            }
+            
+            if (shouldReturn)
             {
                 return m;
             }
             
-            if (m.getGameQueueType() != null && m.getSeason() != null && m.getMatchMode() != null && m.getMatchType() != null)
-            {
-                return m;
-            }
         }
         
         try
