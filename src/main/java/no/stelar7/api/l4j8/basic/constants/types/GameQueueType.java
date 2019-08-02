@@ -322,7 +322,7 @@ public enum GameQueueType implements CodedEnum
     
     public static Optional<GameQueueType> getFromString(final String value)
     {
-        return Stream.of(GameQueueType.values()).filter(t -> t.name().equalsIgnoreCase(value)).findFirst();
+        return Stream.of(GameQueueType.values()).filter(t -> t.name().equalsIgnoreCase(value) || t.apiname.equalsIgnoreCase(value)).findFirst();
     }
     
     public static Optional<GameQueueType> getFromId(final int value)
