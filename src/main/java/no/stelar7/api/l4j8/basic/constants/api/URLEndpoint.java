@@ -80,10 +80,11 @@ public enum URLEndpoint
     // api/lol/{region}/v2.5/league/master
     V3_LEAGUE("lol", "league", "v4", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
     V3_LEAGUE_ENTRY("lol", "league", "v4", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
-    V3_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
-    V3_LEAGUE_MASTER("lol", "league", "v4", "masterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
-    V3_LEAGUE_GRANDMASTER("lol", "league", "v4", "grandmasterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
-    V3_LEAGUE_CHALLENGER("lol", "league", "v4", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
+    //V3_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
+    V3_LEAGUE_RANK("lol", "league-exp", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
+    //V3_LEAGUE_MASTER("lol", "league", "v4", "masterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
+    //V3_LEAGUE_GRANDMASTER("lol", "league", "v4", "grandmasterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
+    //V3_LEAGUE_CHALLENGER("lol", "league", "v4", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     
     // lol/platform/v3/third-party-code/by-summoner/{summonerId}
     V3_THIRD_PARTY_CODE("lol", "platform", "v4", "third-party-code/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, String.class),

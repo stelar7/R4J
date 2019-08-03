@@ -365,14 +365,13 @@ public class MySQLCacheProvider implements CacheProvider
         switch (type)
         {
             case V3_MATCH:
-            {
-                return new String[]{"platformId", "gameId"};
-            }
             case V3_TIMELINE:
             {
                 return new String[]{"platformId", "gameId"};
             }
             case V3_MASTERY_BY_ID:
+            case V3_MASTERY_SCORE:
+            case V3_SPECTATOR_CURRENT:
             {
                 return new String[]{"platformId", "playerId"};
             }
@@ -380,10 +379,7 @@ public class MySQLCacheProvider implements CacheProvider
             {
                 return new String[]{"platformId", "playerId", "championId"};
             }
-            case V3_MASTERY_SCORE:
-            {
-                return new String[]{"platformId", "playerId"};
-            }
+          /*
             case V3_LEAGUE_CHALLENGER:
             {
                 return new String[]{"platformId", "queue"};
@@ -392,6 +388,8 @@ public class MySQLCacheProvider implements CacheProvider
             {
                 return new String[]{"platformId", "queue"};
             }
+            
+           */
             case V3_LEAGUE:
             {
                 return new String[]{"platformId", "leagueId"};
@@ -400,11 +398,8 @@ public class MySQLCacheProvider implements CacheProvider
             {
                 return new String[]{"platformId", "playerOrTeamId"};
             }
-            case V3_SPECTATOR_CURRENT:
-            {
-                return new String[]{"platformId", "playerId"};
-            }
             case V3_SPECTATOR_FEATURED:
+            case V3_SHARD_STATUS:
             {
                 return new String[]{"platformId"};
             }
@@ -419,10 +414,6 @@ public class MySQLCacheProvider implements CacheProvider
             case V3_SUMMONER_BY_NAME:
             {
                 return new String[]{"platformId", "name"};
-            }
-            case V3_SHARD_STATUS:
-            {
-                return new String[]{"platformId"};
             }
             default:
             {

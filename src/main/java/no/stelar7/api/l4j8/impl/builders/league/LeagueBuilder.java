@@ -5,12 +5,15 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.GameQueueType;
 import no.stelar7.api.l4j8.basic.utils.Pair;
 import no.stelar7.api.l4j8.pojo.league.*;
+import org.slf4j.*;
 
 import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class LeagueBuilder
 {
+    
+    private static final Logger logger = LoggerFactory.getLogger(LeagueBuilder.class);
     
     private final Platform      platform;
     private final GameQueueType queue;
@@ -57,6 +60,7 @@ public class LeagueBuilder
     {
         if (this.platform == Platform.UNKNOWN || this.summonerId == null)
         {
+            logger.warn("GET called with invalid platform or summonerId");
             return Collections.emptyList();
         }
         
@@ -93,6 +97,7 @@ public class LeagueBuilder
         
         if (this.platform == Platform.UNKNOWN || this.leagueId == null)
         {
+            logger.warn("GET called with invalid platform or leagueId");
             return null;
         }
         
@@ -114,7 +119,6 @@ public class LeagueBuilder
             return list;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
     }

@@ -56,10 +56,10 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V3_CHAMPION_ROTATIONS, DAYS_1);
         
         DEFAULTS.add(URLEndpoint.V3_LEAGUE, MINUTES_30);
-        DEFAULTS.add(URLEndpoint.V3_LEAGUE_CHALLENGER, MINUTES_30);
+        //DEFAULTS.add(URLEndpoint.V3_LEAGUE_CHALLENGER, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V3_LEAGUE_ENTRY, MINUTES_30);
-        DEFAULTS.add(URLEndpoint.V3_LEAGUE_GRANDMASTER, MINUTES_30);
-        DEFAULTS.add(URLEndpoint.V3_LEAGUE_MASTER, MINUTES_30);
+        //DEFAULTS.add(URLEndpoint.V3_LEAGUE_GRANDMASTER, MINUTES_30);
+        //DEFAULTS.add(URLEndpoint.V3_LEAGUE_MASTER, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V3_LEAGUE_RANK, MINUTES_30);
         
     }

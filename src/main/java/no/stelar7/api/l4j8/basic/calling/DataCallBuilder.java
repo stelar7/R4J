@@ -86,6 +86,9 @@ public class DataCallBuilder
      */
     public Object build(int... retrys)
     {
+        final String url = this.getURL();
+        logger.info("Trying url: {}", url);
+        
         if (this.dc.useRatelimiter())
         {
             if (DataCall.getCredentials() == null)
@@ -101,9 +104,6 @@ public class DataCallBuilder
             applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
         }
         
-        
-        final String url = this.getURL();
-        logger.info("Trying url: {}", url);
         
         final DataCallResponse response = this.getResponse(url);
         logger.debug(response.toString());

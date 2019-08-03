@@ -23,7 +23,7 @@ public final class LeagueAPI
         // Hide public constructor
     }
     
-    
+    /*
     /**
      * Get master tier leagues.
      * Valid queues are: RANKED_SOLO_5x5, RANKED_FLEX_SR, RANKED_FLEX_TT
@@ -31,7 +31,6 @@ public final class LeagueAPI
      * @param server region to get data from
      * @param queue  queueType to get data for
      * @return LeagueList
-     */
     public LeagueList getMasterLeague(Platform server, GameQueueType queue)
     {
         
@@ -65,7 +64,6 @@ public final class LeagueAPI
      * @param server region to get data from
      * @param queue  queueType to get data for
      * @return LeagueList
-     */
     public LeagueList getGrandmasterLeague(Platform server, GameQueueType queue)
     {
         
@@ -100,7 +98,6 @@ public final class LeagueAPI
      * @param server region to get data from
      * @param queue  queueType to get data for
      * @return LeagueList
-     */
     public LeagueList getChallengerLeague(Platform server, GameQueueType queue)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -126,6 +123,7 @@ public final class LeagueAPI
             return null;
         }
     }
+    */
     
     
     /**

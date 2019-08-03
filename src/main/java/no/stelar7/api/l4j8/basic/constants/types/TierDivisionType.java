@@ -8,16 +8,8 @@ public enum TierDivisionType implements CodedEnum
     CHALLENGER_I,
     
     GRANDMASTER_I,
-    GRANDMASTER_II,
-    GRANDMASTER_III,
-    GRANDMASTER_IV,
-    GRANDMASTER_V,
     
     MASTER_I,
-    MASTER_II,
-    MASTER_III,
-    MASTER_IV,
-    MASTER_V,
     
     DIAMOND_I,
     DIAMOND_II,
