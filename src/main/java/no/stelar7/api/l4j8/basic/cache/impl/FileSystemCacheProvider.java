@@ -188,7 +188,7 @@ public class FileSystemCacheProvider implements CacheProvider
             
         } catch (IOException | ClassNotFoundException e)
         {
-            e.printStackTrace();
+            logger.info("Data in cache is from an older version of the library, re-fetching");
             return Optional.empty();
         }
     }
