@@ -19,7 +19,7 @@ public class FeaturedGameTest
             Assert.assertNotNull("bannedchampion is null", featured.getBannedChampions());
             Assert.assertNotNull("gamemode is null", featured.getGameMode());
             Assert.assertNotNull("gamequeuecongifid is null", featured.getGameQueueConfig());
-            Assert.assertNotNull("gamestarttime is null", featured.getGameStartTimeAsDate());
+            Assert.assertNotNull("gamestarttime is null", featured.getGameStartAsDate());
             Assert.assertNotNull("gametype is null", featured.getGameType());
             Assert.assertNotNull("mapid is null", featured.getMap());
             Assert.assertNotNull("observers is null", featured.getObservers());

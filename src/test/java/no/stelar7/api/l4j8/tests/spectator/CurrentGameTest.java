@@ -21,7 +21,7 @@ public class CurrentGameTest
         Assert.assertNotNull("bannedchampion is null", currentGame.getBannedChampions());
         Assert.assertNotNull("gamemode is null", currentGame.getGameMode());
         Assert.assertNotNull("gamequeuecongifid is null", currentGame.getGameQueueConfig());
-        Assert.assertNotNull("gamestarttime is null", currentGame.getGameStartTimeAsDate());
+        Assert.assertNotNull("gamestarttime is null", currentGame.getGameStartAsDate());
         Assert.assertNotNull("gametype is null", currentGame.getGameType());
         Assert.assertNotNull("mapid is null", currentGame.getMap());
         Assert.assertNotNull("observers is null", currentGame.getObservers());

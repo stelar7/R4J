@@ -77,11 +77,21 @@ public class SpectatorGameInfo implements Serializable
     }
     
     /**
-     * A ZonedDateTime of {@code getGameStartTime()}
+     * Epoch millis representing the start of the game
+     *
+     * @return long
+     */
+    public long getGameStart()
+    {
+        return this.gameStartTime;
+    }
+    
+    /**
+     * A ZonedDateTime of {@code getGameStart()}
      *
      * @return ZonedDateTime
      */
-    public ZonedDateTime getGameStartTimeAsDate()
+    public ZonedDateTime getGameStartAsDate()
     {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTime), ZoneOffset.UTC);
     }
@@ -163,7 +173,7 @@ public class SpectatorGameInfo implements Serializable
         {
             return false;
         }
-        if ((bannedChampions != null) ? !bannedChampions.equals(that.bannedChampions) : (that.bannedChampions != null))
+        if (!Objects.equals(bannedChampions, that.bannedChampions))
         {
             return false;
         }
