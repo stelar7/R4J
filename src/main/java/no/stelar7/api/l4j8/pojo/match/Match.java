@@ -55,14 +55,25 @@ public class Match implements Serializable
     }
     
     /**
+     * Time the game started
+     *
+     * @return long
+     */
+    public long getMatchCreation()
+    {
+        return this.gameCreation;
+    }
+    
+    /**
      * A ZonedDateTime of {@code getMatchCreation()}
      *
      * @return ZonedDateTime
      */
-    public ZonedDateTime getMatchCreationDate()
+    public ZonedDateTime getMatchCreationAsDate()
     {
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameCreation), ZoneOffset.UTC);
     }
+    
     
     /**
      * Match duration

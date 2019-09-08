@@ -391,7 +391,7 @@ public class MatchHistoryCrawler
         matchInsertStatement.setLong(3, match.getGameQueueType().getValues()[0]);
         matchInsertStatement.setLong(4, match.getSeason().getValue());
         matchInsertStatement.setLong(5, match.getMatchDuration().getSeconds());
-        matchInsertStatement.setLong(6, match.getMatchCreationDate().toInstant().toEpochMilli());
+        matchInsertStatement.setLong(6, match.getMatchCreationAsDate().toInstant().toEpochMilli());
         matchInsertStatement.setString(7, match.getMatchVersion());
         matchInsertStatement.executeUpdate();
         
