@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests.spectator;
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
@@ -56,7 +56,7 @@ public class CurrentGameTest
     public void testCurrentGameFame()
     {
         final L4J8        l4j8 = new L4J8(SecretFile.CREDS);
-        Summoner          s    = Summoner.byName(Platform.NA1, "Imaqtpie");
+        Summoner          s    = Summoner.byName(Platform.EUW1, "Klospülautomat");
         SpectatorGameInfo game = s.getCurrentGame();
         
         System.out.format("%s is %sin game%n", s.getName(), game != null ? "" : "not ");

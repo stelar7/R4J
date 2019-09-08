@@ -42,9 +42,14 @@ public class SpectatorBuilder
             return Collections.emptyList();
         }
         
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SPECTATOR_FEATURED, this.platform);
+        if (chl.isPresent())
+        {
+            return ((FeaturedGames) chl.get()).getGameList();
+        }
+        
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SPECTATOR_FEATURED)
                                                        .withPlatform(this.platform);
-        
         try
         {
             Object data = builder.build();
@@ -54,6 +59,7 @@ public class SpectatorBuilder
             }
             
             FeaturedGames fg = (FeaturedGames) data;
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg, this.platform);
             return fg.getGameList();
         } catch (ClassCastException e)
         {
@@ -68,13 +74,21 @@ public class SpectatorBuilder
             return null;
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SPECTATOR_CURRENT, this.platform, this.summonerId);
+        if (chl.isPresent())
+        {
+            return (SpectatorGameInfo) chl.get();
+        }
+        
+        
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
                                                        .withEndpoint(URLEndpoint.V3_SPECTATOR_CURRENT)
                                                        .withPlatform(this.platform);
         
         try
         {
             SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg, this.platform, this.summonerId);
             return fg;
         } catch (ClassCastException e)
         {

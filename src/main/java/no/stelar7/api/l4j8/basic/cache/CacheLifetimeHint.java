@@ -14,6 +14,7 @@ public class CacheLifetimeHint
     private static final long HOURS_1    = TimeUnit.HOURS.toMillis(1);
     private static final long MINUTES_30 = TimeUnit.MINUTES.toMillis(30);
     private static final long MINUTES_10 = TimeUnit.MINUTES.toMillis(10);
+    private static final long MINUTES_1  = TimeUnit.MINUTES.toMillis(1);
     private static final long SECONDS_5  = TimeUnit.SECONDS.toMillis(5);
     
     private final Map<URLEndpoint, Long> timeToLiveMS = new EnumMap<>(URLEndpoint.class);
@@ -46,8 +47,8 @@ public class CacheLifetimeHint
         
         DEFAULTS.add(URLEndpoint.V3_MATCHLIST, MINUTES_10);
         
-        DEFAULTS.add(URLEndpoint.V3_SPECTATOR_CURRENT, MINUTES_10);
-        DEFAULTS.add(URLEndpoint.V3_SPECTATOR_FEATURED, MINUTES_10);
+        DEFAULTS.add(URLEndpoint.V3_SPECTATOR_CURRENT, MINUTES_1);
+        DEFAULTS.add(URLEndpoint.V3_SPECTATOR_FEATURED, MINUTES_1);
         
         DEFAULTS.add(URLEndpoint.V3_MASTERY_BY_CHAMPION, MINUTES_10);
         DEFAULTS.add(URLEndpoint.V3_MASTERY_BY_ID, MINUTES_10);
@@ -56,10 +57,7 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V3_CHAMPION_ROTATIONS, DAYS_1);
         
         DEFAULTS.add(URLEndpoint.V3_LEAGUE, MINUTES_30);
-        //DEFAULTS.add(URLEndpoint.V3_LEAGUE_CHALLENGER, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V3_LEAGUE_ENTRY, MINUTES_30);
-        //DEFAULTS.add(URLEndpoint.V3_LEAGUE_GRANDMASTER, MINUTES_30);
-        //DEFAULTS.add(URLEndpoint.V3_LEAGUE_MASTER, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V3_LEAGUE_RANK, MINUTES_30);
         
     }
