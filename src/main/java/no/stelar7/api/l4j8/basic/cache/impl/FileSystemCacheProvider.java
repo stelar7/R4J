@@ -245,7 +245,7 @@ public class FileSystemCacheProvider implements CacheProvider
     
     private void clearPath(Path p) throws IOException
     {
-        if (!Files.exists(p))
+        if (!Files.exists(p) || p.equals(home))
         {
             return;
         }

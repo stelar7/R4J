@@ -1,8 +1,9 @@
 package no.stelar7.api.l4j8.basic.constants.types;
 
-import java.awt.*;
-import java.util.*;
-import java.util.stream.*;
+import no.stelar7.api.l4j8.basic.utils.Rectangle;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum MapType implements CodedEnum
 {

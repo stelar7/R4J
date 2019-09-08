@@ -4,6 +4,7 @@ import no.stelar7.api.l4j8.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.utils.Rectangle;
 import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
@@ -21,8 +22,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 import java.io.*;
 import java.net.URL;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -254,11 +255,12 @@ public class FrameToImageTest
                         }
                     });
                     
-                    turrets.forEach(p -> {
-                        BufferedImage turretImage = turretIcon.get(turretTeam.get(p));
+                    for (Pair<Integer, Integer> turret : turrets)
+                    {
+                        BufferedImage turretImage = turretIcon.get(turretTeam.get(turret));
                         
-                        int xPos = scale(p.getKey(), (int) mapBounds.getX(), (int) mapBounds.getWidth(), 0, image.getWidth());
-                        int yPos = image.getHeight() - scale(p.getValue(), (int) mapBounds.getY(), (int) mapBounds.getHeight(), 0, image.getHeight());
+                        int xPos = scale(turret.getKey(), mapBounds.getX(), mapBounds.getW(), 0, image.getWidth());
+                        int yPos = image.getHeight() - scale(turret.getValue(), mapBounds.getY(), mapBounds.getH(), 0, image.getHeight());
                         
                         int xOffset = (int) (-turretImage.getWidth() / 1.25f);
                         int yOffset = -(turretImage.getHeight() / 2);
@@ -266,13 +268,14 @@ public class FrameToImageTest
                         yPos += yOffset;
                         
                         g.drawImage(turretImage, xPos, yPos, null);
-                    });
+                    }
                     
-                    inhib.forEach(p -> {
+                    for (Pair<Integer, Integer> p : inhib)
+                    {
                         BufferedImage inhibImage = inhibIcon.get(inhibTeam.get(p));
                         
-                        int xPos = scale(p.getKey(), (int) mapBounds.getX(), (int) mapBounds.getWidth(), 0, image.getWidth());
-                        int yPos = image.getHeight() - scale(p.getValue(), (int) mapBounds.getY(), (int) mapBounds.getHeight(), 0, image.getHeight());
+                        int xPos = scale(p.getKey(), mapBounds.getX(), mapBounds.getW(), 0, image.getWidth());
+                        int yPos = image.getHeight() - scale(p.getValue(), mapBounds.getY(), mapBounds.getH(), 0, image.getHeight());
                         
                         int xOffset = (int) (-inhibImage.getWidth() / 1.1f);
                         int yOffset = -(inhibImage.getHeight() / 3);
@@ -280,7 +283,7 @@ public class FrameToImageTest
                         yPos += yOffset;
                         
                         g.drawImage(inhibImage, xPos, yPos, null);
-                    });
+                    }
                     
                     frame.getParticipantFrames().values().forEach(mpf -> {
                         drawPosition(image, mapBounds, g, mpf, championImages);
@@ -373,8 +376,8 @@ public class FrameToImageTest
         
         if (pos != null)
         {
-            int xPos = scale(pos.getX(), (int) mapBounds.getX(), (int) mapBounds.getWidth(), 0, image.getWidth());
-            int yPos = image.getHeight() - scale(pos.getY(), (int) mapBounds.getY(), (int) mapBounds.getHeight(), 0, image.getHeight());
+            int xPos = scale(pos.getX(), mapBounds.getX(), mapBounds.getW(), 0, image.getWidth());
+            int yPos = image.getHeight() - scale(pos.getY(), mapBounds.getY(), mapBounds.getH(), 0, image.getHeight());
             
             int xOffset = (mpf.getParticipantId() < 5) ? -(square.getWidth() / 2) : -square.getWidth();
             int yOffset = (mpf.getParticipantId() < 5) ? -(square.getHeight() / 2) : 0;
@@ -417,8 +420,8 @@ public class FrameToImageTest
             kda.put(id, new Triplet<>(assist.a, assist.b, assist.c + 1));
         });
         
-        int xPos = scale(me.getPosition().getX(), (int) mapBounds.getX(), (int) mapBounds.getWidth(), 0, image.getWidth());
-        int yPos = image.getHeight() - scale(me.getPosition().getY(), (int) mapBounds.getY(), (int) mapBounds.getHeight(), 0, image.getHeight());
+        int xPos = scale(me.getPosition().getX(), mapBounds.getX(), mapBounds.getW(), 0, image.getWidth());
+        int yPos = image.getHeight() - scale(me.getPosition().getY(), mapBounds.getY(), mapBounds.getH(), 0, image.getHeight());
         
         killList.add(new Pair<>(xPos, yPos));
         
