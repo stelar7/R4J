@@ -142,7 +142,7 @@ public class MatchListBuilder
             return Collections.emptyList();
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(this.id))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, this.id)
                                                        .withEndpoint(URLEndpoint.V3_MATCHLIST)
                                                        .withPlatform(this.platform);
         
@@ -234,6 +234,16 @@ public class MatchListBuilder
             return local.get();
         });
         
+    }
+    
+    /**
+     * Returns an iterator that transforms all {@code MatchReference} to {@code Match}
+     *
+     * @return {@code MatchIterator}
+     */
+    public MatchIterator getMatchIterator()
+    {
+        return new MatchIterator(getLazy());
     }
     
 }

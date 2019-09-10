@@ -4,7 +4,7 @@ import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.basic.utils.LazyList;
+import no.stelar7.api.l4j8.basic.utils.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.match.*;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
@@ -76,6 +76,19 @@ public class MatchListTest
             Match         detail   = reference.getFullMatch();
             MatchTimeline timeline = detail.getTimeline();
             System.out.println();
+        }
+    }
+    
+    
+    @Test
+    public void testMatchlistIterator() throws InterruptedException
+    {
+        Summoner      s     = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        MatchIterator games = s.getGames().getMatchIterator();
+        for (Match m : games)
+        {
+            System.out.println(m);
+            Thread.sleep(1000);
         }
     }
     

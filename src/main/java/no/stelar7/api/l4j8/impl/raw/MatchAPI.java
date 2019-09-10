@@ -133,6 +133,18 @@ public final class MatchAPI
         return new LazyList<>(increment, prevValue -> getMatchList(server, accountId, null, null, prevValue, prevValue + increment, null, null, null));
     }
     
+    /**
+     * Returns an iterator that transforms all {@code MatchReference} to {@code Match}
+     *
+     * @param server    the platform the account is on
+     * @param accountId the account to check
+     * @return {@code MatchIterator}
+     */
+    public MatchIterator getMatchIterator(Platform server, String accountId)
+    {
+        return new MatchIterator(getMatchList(server, accountId));
+    }
+    
     
     /**
      * Returns the match data from a match id

@@ -3,7 +3,8 @@ package no.stelar7.api.l4j8.tests.summoner;
 
 import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
-import no.stelar7.api.l4j8.basic.constants.api.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.utils.SummonerCrawler;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
@@ -70,5 +71,19 @@ public class SummonerTest
         
         Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID()).get();
         doAssertions.accept(optional);
+    }
+    
+    @Test
+    public void testCrawler()
+    {
+        SummonerCrawler crawler = new SummonerCrawler(Summoner.byName(Platform.EUW1, "stelar7"));
+        System.out.println(crawler.get().size());
+        crawler.crawlLeague();
+        System.out.println(crawler.get().size());
+        
+        crawler = new SummonerCrawler(Summoner.byName(Platform.EUW1, "stelar7"));
+        System.out.println(crawler.get().size());
+        crawler.crawlGames();
+        System.out.println(crawler.get().size());
     }
 }
