@@ -6,12 +6,10 @@ import no.stelar7.api.l4j8.basic.constants.types.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class TournamentPickTypeDeserializer implements JsonDeserializer<TournamentPickType>
+public class GenericEnumSerializer<T> implements JsonDeserializer<T>
 {
-    
     @Override
-    @SuppressWarnings("unchecked")
-    public TournamentPickType deserialize(JsonElement json, Type t, JsonDeserializationContext context)
+    public T deserialize(JsonElement json, Type t, JsonDeserializationContext context)
     {
         String          id     = json.getAsString();
         List<CodedEnum> values = Arrays.asList(((Class<CodedEnum>) t).getEnumConstants());
@@ -21,6 +19,6 @@ public class TournamentPickTypeDeserializer implements JsonDeserializer<Tourname
                                       .map(Optional::get)
                                       .findFirst();
         
-        return retu.map(o -> (TournamentPickType) o).orElseGet(() -> (TournamentPickType) CodedEnum.printError(t, id));
+        return retu.map(o -> (T) o).orElseGet(() -> (T) CodedEnum.printError(t, id));
     }
 }

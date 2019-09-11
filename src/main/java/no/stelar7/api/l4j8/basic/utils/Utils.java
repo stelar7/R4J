@@ -25,34 +25,33 @@ public final class Utils
         GsonBuilder builder = new GsonBuilder();
         
         // Register enum types with GSON
-        builder.registerTypeAdapter(AscencionType.class, new AscencionTypeDeserializer());
-        builder.registerTypeAdapter(BuildingType.class, new BuildingTypeDeserializer());
-        builder.registerTypeAdapter(EventType.class, new EventTypeDeserializer());
-        builder.registerTypeAdapter(GameModeType.class, new GameModeTypeDeserializer());
-        builder.registerTypeAdapter(GameQueueType.class, new GameQueueTypeDeserializer());
-        builder.registerTypeAdapter(GameSubType.class, new GameSubTypeDeserializer());
-        builder.registerTypeAdapter(GameType.class, new GameTypeDeserializer());
-        builder.registerTypeAdapter(LaneType.class, new LaneTypeDeserializer());
-        builder.registerTypeAdapter(LevelUpType.class, new LevelUpTypeDeserializer());
-        builder.registerTypeAdapter(MapType.class, new MapTypeDeserializer());
-        builder.registerTypeAdapter(MonsterType.class, new MonsterTypeDeserializer());
-        builder.registerTypeAdapter(MonsterSubType.class, new MonsterSubTypeDeserializer());
-        builder.registerTypeAdapter(Platform.class, new PlatformDeserializer());
-        builder.registerTypeAdapter(PointType.class, new PointTypeDeserializer());
+        builder.registerTypeAdapter(AscencionType.class, new GenericEnumSerializer<AscencionType>());
+        builder.registerTypeAdapter(BuildingType.class, new GenericEnumSerializer<BuildingType>());
+        builder.registerTypeAdapter(EventType.class, new GenericEnumSerializer<EventType>());
+        builder.registerTypeAdapter(GameModeType.class, new GenericEnumSerializer<GameModeType>());
+        builder.registerTypeAdapter(GameQueueType.class, new GenericEnumSerializer<GameQueueType>());
+        builder.registerTypeAdapter(GameSubType.class, new GenericEnumSerializer<GameSubType>());
+        builder.registerTypeAdapter(GameType.class, new GenericEnumSerializer<GameType>());
+        builder.registerTypeAdapter(LaneType.class, new GenericEnumSerializer<LaneType>());
+        builder.registerTypeAdapter(LevelUpType.class, new GenericEnumSerializer<LevelUpType>());
+        builder.registerTypeAdapter(MapType.class, new GenericEnumSerializer<Map>());
+        builder.registerTypeAdapter(MonsterType.class, new GenericEnumSerializer<MonsterType>());
+        builder.registerTypeAdapter(MonsterSubType.class, new GenericEnumSerializer<MonsterSubType>());
+        builder.registerTypeAdapter(Platform.class, new GenericEnumSerializer<Platform>());
+        builder.registerTypeAdapter(PointType.class, new GenericEnumSerializer<PointType>());
         builder.registerTypeAdapter(RateLimit.class, new RatelimitDeserializer());
-        builder.registerTypeAdapter(RoleType.class, new RoleTypeDeserializer());
-        builder.registerTypeAdapter(SeasonType.class, new SeasonTypeDeserializer());
-        builder.registerTypeAdapter(SummonerSpellType.class, new SummonerSpellTypeDeserializer());
-        builder.registerTypeAdapter(TeamType.class, new TeamTypeDeserializer());
-        builder.registerTypeAdapter(TierType.class, new TierTypeDeserializer());
-        builder.registerTypeAdapter(TournamentMapType.class, new TournamentMapTypeDeserializer());
-        builder.registerTypeAdapter(TournamentPickType.class, new TournamentPickTypeDeserializer());
-        builder.registerTypeAdapter(TournamentSpectatorType.class, new TournamentSpectatorTypeDeserializer());
-        builder.registerTypeAdapter(TowerType.class, new TowerTypeDeserializer());
-        builder.registerTypeAdapter(WardType.class, new WardTypeDeserializer());
+        builder.registerTypeAdapter(RoleType.class, new GenericEnumSerializer<RoleType>());
+        builder.registerTypeAdapter(SeasonType.class, new GenericEnumSerializer<SeasonType>());
+        builder.registerTypeAdapter(SummonerSpellType.class, new GenericEnumSerializer<SummonerSpellType>());
+        builder.registerTypeAdapter(TeamType.class, new GenericEnumSerializer<TeamType>());
+        builder.registerTypeAdapter(TierType.class, new GenericEnumSerializer<TierType>());
+        builder.registerTypeAdapter(TournamentMapType.class, new GenericEnumSerializer<TournamentMapType>());
+        builder.registerTypeAdapter(TournamentPickType.class, new GenericEnumSerializer<TournamentPickType>());
+        builder.registerTypeAdapter(TournamentSpectatorType.class, new GenericEnumSerializer<TournamentSpectatorType>());
+        builder.registerTypeAdapter(TowerType.class, new GenericEnumSerializer<TowerType>());
+        builder.registerTypeAdapter(WardType.class, new GenericEnumSerializer<WardType>());
         builder.registerTypeAdapter(RealmSpesificEnum.class, new RealmSpesificEnumSerializer());
         builder.registerTypeAdapter(ServicePlatform.class, new RealmSpesificEnumSerializer());
-        builder.registerTypeAdapter(Platform.class, new RealmSpesificEnumSerializer());
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
     }
     
