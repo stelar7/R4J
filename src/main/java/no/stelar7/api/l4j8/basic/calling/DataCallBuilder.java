@@ -462,21 +462,38 @@ public class DataCallBuilder
         {
             logger.debug("No instance of an old ratelimiter found");
             return;
+        } else
+        {
+            logger.debug("Loading old ratelimiter data");
         }
         
-        List<RateLimit>            knownLimits = Utils.getGson().fromJson(lastLimit, new TypeToken<List<RateLimit>>() {}.getType());
-        Map<RateLimit, Instant>    knownTime   = Utils.getGson().fromJson(lastFirst, new TypeToken<Map<RateLimit, Instant>>() {}.getType());
-        Map<RateLimit, AtomicLong> knownCount  = Utils.getGson().fromJson(lastKey, new TypeToken<Map<RateLimit, AtomicLong>>() {}.getType());
-        
-        
-        RateLimiter newerLimit = new BurstRateLimiter(knownLimits);
-        newerLimit.setCallCountInTime(knownCount);
-        newerLimit.setFirstCallInTime(knownTime);
-        
-        logger.debug("Loaded ratelimit for {}", endpoint);
-        
-        child.put(endpoint, newerLimit);
-        DataCall.getLimiter().put(platform, child);
+        try
+        {
+            List<RateLimit>            knownLimits = Utils.getGson().fromJson(lastLimit, new TypeToken<List<RateLimit>>() {}.getType());
+            Map<RateLimit, AtomicLong> knownTime   = Utils.getGson().fromJson(lastFirst, new TypeToken<Map<RateLimit, AtomicLong>>() {}.getType());
+            Map<RateLimit, AtomicLong> knownCount  = Utils.getGson().fromJson(lastKey, new TypeToken<Map<RateLimit, AtomicLong>>() {}.getType());
+            
+            
+            RateLimiter newerLimit = new BurstRateLimiter(knownLimits);
+            newerLimit.setCallCountInTime(knownCount);
+            newerLimit.setFirstCallInTime(knownTime);
+            
+            logger.debug("Loaded ratelimit for {}", endpoint);
+            
+            child.put(endpoint, newerLimit);
+            DataCall.getLimiter().put(platform, child);
+        } catch (JsonSyntaxException s)
+        {
+            try
+            {
+                logger.debug("Old ratelimiter was of incompatible type, re-creating");
+                DataCall.getRatelimiterCache().clear();
+                DataCall.getRatelimiterCache().sync();
+            } catch (BackingStoreException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
     
     

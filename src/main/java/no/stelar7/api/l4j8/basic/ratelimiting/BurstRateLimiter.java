@@ -96,7 +96,7 @@ public class BurstRateLimiter extends RateLimiter
                         multiplicativeBias = newBias;
                     }
                     
-                    long newDelay = firstCallInTime.get(limit).toEpochMilli() + limit.getTimeframeInMS() - now.toEpochMilli();
+                    long newDelay = firstCallInTime.get(limit).get() + limit.getTimeframeInMS() - now.toEpochMilli();
                     if (newDelay > delay[0])
                     {
                         delay[0] = newDelay;
@@ -118,9 +118,9 @@ public class BurstRateLimiter extends RateLimiter
         Instant now = Instant.now();
         for (RateLimit limit : limits)
         {
-            if ((firstCallInTime.get(limit).toEpochMilli() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
+            if ((firstCallInTime.get(limit).get() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
             {
-                firstCallInTime.put(limit, now);
+                firstCallInTime.get(limit).set(now.toEpochMilli());
                 callCountInTime.get(limit).set(0);
             }
             

@@ -88,7 +88,6 @@ public class MatchListTest
         for (Match m : games)
         {
             System.out.println(m);
-            Thread.sleep(1000);
         }
     }
     

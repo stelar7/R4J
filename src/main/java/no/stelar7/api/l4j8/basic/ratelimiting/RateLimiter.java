@@ -10,7 +10,7 @@ public abstract class RateLimiter
 {
     
     protected List<RateLimit>            limits;
-    protected Map<RateLimit, Instant>    firstCallInTime;
+    protected Map<RateLimit, AtomicLong> firstCallInTime;
     protected Map<RateLimit, AtomicLong> callCountInTime;
     
     protected int overloadTimer;
@@ -29,7 +29,7 @@ public abstract class RateLimiter
         
         for (RateLimit limit : limits)
         {
-            firstCallInTime.put(limit, Instant.now());
+            firstCallInTime.put(limit, new AtomicLong(Instant.now().toEpochMilli()));
             callCountInTime.put(limit, new AtomicLong(0));
         }
     }
@@ -65,7 +65,7 @@ public abstract class RateLimiter
     
     public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data);
     
-    public Map<RateLimit, Instant> getFirstCallInTime()
+    public Map<RateLimit, AtomicLong> getFirstCallInTime()
     {
         return firstCallInTime;
     }
@@ -108,7 +108,7 @@ public abstract class RateLimiter
     {
         for (RateLimit limit : limits)
         {
-            firstCallInTime.put(limit, Instant.now().minusMillis(limit.getTimeframeInMS()));
+            firstCallInTime.get(limit).set(Instant.now().minusMillis(limit.getTimeframeInMS()).toEpochMilli());
             callCountInTime.get(limit).set(0);
         }
     }
@@ -140,7 +140,7 @@ public abstract class RateLimiter
         this.callCountInTime = callCountInTime;
     }
     
-    public void setFirstCallInTime(Map<RateLimit, Instant> firstCallInTime)
+    public void setFirstCallInTime(Map<RateLimit, AtomicLong> firstCallInTime)
     {
         this.firstCallInTime = firstCallInTime;
     }
