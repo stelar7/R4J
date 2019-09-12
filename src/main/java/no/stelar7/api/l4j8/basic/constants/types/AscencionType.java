@@ -23,4 +23,20 @@ public enum AscencionType implements CodedEnum
     {
         return this.name();
     }
+    
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case CHAMPION_ASCENDED:
+                return "Champion Ascended";
+            case CLEAR_ASCENDED:
+                return "Clear Ascended";
+            case MINION_ASCENDED:
+                return "Minion Ascended";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
 }

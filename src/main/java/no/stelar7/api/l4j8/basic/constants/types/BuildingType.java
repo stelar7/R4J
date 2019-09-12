@@ -29,4 +29,18 @@ public enum BuildingType implements CodedEnum
     {
         return this.name();
     }
+    
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case INHIBITOR_BUILDING:
+                return "Inhibitor";
+            case TOWER_BUILDING:
+                return "Tower";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
 }

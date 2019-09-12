@@ -12,4 +12,6 @@ public interface CodedEnum<T>
         System.err.format("The enum %s is missing the type %s!%nPlease make sure you have the latest version of the library!%nIf you do, send this message to the maintainer of the API.", type.getTypeName(), value);
         return null;
     }
+    
+    String prettyName();
 }
