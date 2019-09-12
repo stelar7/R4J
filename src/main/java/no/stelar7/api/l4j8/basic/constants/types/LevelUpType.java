@@ -19,6 +19,19 @@ public enum LevelUpType implements CodedEnum
         return Stream.of(LevelUpType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case EVOLVE:
+                return "Evolve";
+            case NORMAL:
+                return "Normal";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * The value used to map strings to objects
      *

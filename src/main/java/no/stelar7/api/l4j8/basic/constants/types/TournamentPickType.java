@@ -16,4 +16,22 @@ public enum TournamentPickType implements CodedEnum
         return Stream.of(TournamentPickType.values()).filter(t -> t.name().equals(value)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case BLIND_PICK:
+                return "Blind Pick";
+            case DRAFT_MODE:
+                return "Draft Mode";
+            case ALL_RANDOM:
+                return "All Random";
+            case TOURNAMENT_DRAFT:
+                return "Tournament Draft";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
 }

@@ -103,6 +103,45 @@ public enum MapType implements CodedEnum
         return Stream.of(MapType.values()).filter(t -> t.mapId.equals(Integer.valueOf(mapId))).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case SUMMONERS_RIFT_SUMMER_OLD:
+                return "Summoners Rift Old Skin";
+            case SUMMONERS_RIFT_AUTUMN_OLD:
+                return "Summoners Rift Autumn Skin";
+            case PROVING_GROUNDS:
+                return "Proving Grounds";
+            case TWISTED_TREELINE_OLD:
+                return "Twisted Treeline Old Skin";
+            case CRYSTAL_SCAR:
+                return "Crystal Scar";
+            case TWISTED_TREELINE:
+                return "Twisted Treeline";
+            case SUMMONERS_RIFT:
+                return "Summoners Rift";
+            case HOWLING_ABYSS:
+                return "Howling Abyss";
+            case BUTCHERS_BRIDGE:
+                return "Butchers Bridge";
+            case COSMIC_RUINS:
+                return "Cosmic Ruins";
+            case VALORAN_CITY_PARK:
+                return "Valoran City Park";
+            case SUBSTRUCTURE_43:
+                return "Substructure 43";
+            case CRASH_SITE:
+                return "Crash Site";
+            case NEXUS_BLITZ:
+                return "Nexus Blitz";
+            case TEAMFIGHT_TACTICS:
+                return "Teamfight Tactics";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * Gets bounds.
      *

@@ -18,7 +18,9 @@ public enum SeasonType implements CodedEnum
     PRE_SEASON_2018("PRESEASON2018", 10),
     SEASON_2018("SEASON2018", 11),
     PRE_SEASON_2019("PRESEASON2019", 12),
-    SEASON_2019("SEASON2019", 13);
+    SEASON_2019("SEASON2019", 13),
+    PRE_SEASON_2020("PRESEASON2020", 14),
+    SEASON_2020("SEASON2020", 15);
     
     private final String  value;
     private final Integer seasonId;
@@ -37,6 +39,48 @@ public enum SeasonType implements CodedEnum
         } catch (NumberFormatException e)
         {
             return getFromString(value);
+        }
+    }
+    
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case PRE_SEASON_2013:
+                return "Preseason 2013";
+            case SEASON_2013:
+                return "Season 2013";
+            case PRE_SEASON_2014:
+                return "Preseason 2014";
+            case SEASON_2014:
+                return "Season 2014";
+            case PRE_SEASON_2015:
+                return "Preseason 2015";
+            case SEASON_2015:
+                return "Season 2015";
+            case PRE_SEASON_2016:
+                return "Preseason 2016";
+            case SEASON_2016:
+                return "Season 2016";
+            case PRE_SEASON_2017:
+                return "Preseason 2017";
+            case SEASON_2017:
+                return "Season 2017";
+            case PRE_SEASON_2018:
+                return "Preseason 2018";
+            case SEASON_2018:
+                return "Season 2018";
+            case PRE_SEASON_2019:
+                return "Preseason 2019";
+            case SEASON_2019:
+                return "Season 2019";
+            case PRE_SEASON_2020:
+                return "Preseason 2020";
+            case SEASON_2020:
+                return "Season 2020";
+            default:
+                return "This enum does not have a pretty name";
         }
     }
     

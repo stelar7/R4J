@@ -23,6 +23,28 @@ public enum MonsterType implements CodedEnum
         return Stream.of(MonsterType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case BARON_NASHOR:
+                return "Baron Nashor";
+            case BLUE_GOLEM:
+                return "Blue Golem";
+            case DRAGON:
+                return "Dragon";
+            case RED_LIZARD:
+                return "Red Lizard";
+            case RIFTHERALD:
+                return "Rift Herald";
+            case VILEMAW:
+                return "Vilemaw";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * The value used to map strings to objects
      *

@@ -48,6 +48,25 @@ public enum LaneType implements CodedEnum
         return Stream.of(LaneType.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case MID:
+                return "Mid";
+            case TOP:
+                return "Top";
+            case JUNGLE:
+                return "Jungle";
+            case BOT:
+                return "Bot";
+            case NONE:
+                return "None";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     public String getValue()
     {
         return this.name();

@@ -103,6 +103,54 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
         return fromString(code);
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case UNKNOWN:
+                return "Unknown";
+            case BR1:
+                return "Brazil";
+            case EUN1:
+                return "Europe Nordic & East";
+            case EUW1:
+                return "Europe West";
+            case JP1:
+                return "Japan";
+            case KR:
+                return "Korea";
+            case LA1:
+                return "Latin America North";
+            case LA2:
+                return "Latin America South";
+            case NA1:
+                return "North America";
+            case OC1:
+                return "Oceania";
+            case TR1:
+                return "Turkey";
+            case RU:
+                return "Russia";
+            case PBE1:
+                return "Public Beta Environment";
+            case SG:
+                return "Singapore";
+            case PH:
+                return "Philippines";
+            case ID1:
+                return "Indonesia";
+            case VN:
+                return "Vitenam";
+            case TH:
+                return "Thailand";
+            case TW:
+                return "Taiwan";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     public static Optional<Platform> fromString(final String code)
     {
         return Stream.of(Platform.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();

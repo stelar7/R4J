@@ -142,6 +142,66 @@ public enum SummonerSpellType implements CodedEnum
         return Stream.of(SummonerSpellType.values()).filter(t -> t.getValue().equals(Integer.valueOf(type))).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case UNKNOWN:
+                return "Unknown";
+            case CLEANSE:
+                return "Cleanse";
+            case TELEPORT:
+                return "Teleport";
+            case TO_THE_KING:
+                return "To The King";
+            case IGNITE:
+                return "Ignite";
+            case GHOST:
+            case GHOST_2:
+                return "Ghost";
+            case MARK:
+                return "Mark";
+            case HEAL:
+                return "Heal";
+            case SMITE:
+                return "Smite";
+            case EXHAUST:
+                return "Exhaust";
+            case PORO_TOSS:
+                return "Poro Toss";
+            case CLARITY:
+                return "Clarity";
+            case CLAIRVOYANCE:
+                return "Clairvoyance";
+            case BARRIER:
+                return "Barrier";
+            case FLASH:
+                return "Flash";
+            case GARRISON:
+                return "Garrison";
+            case REVIVE:
+                return "Revive";
+            case NEXUS_SIEGE_1:
+                return "Siege Slot 1";
+            case NEXUS_SIEGE_2:
+                return "Siege Slot 2";
+            case DARK_STAR_1:
+                return "Disabled";
+            case DARK_STAR_2:
+                return "Disabled";
+            case SNOW_MARK:
+                return "Snow Mark";
+            case BACKTRACK:
+                return "Backtrack";
+            case RESUSCITATE:
+                return "Resuscitate";
+            case WARP:
+                return "Warp";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * Gets the id.
      *

@@ -102,6 +102,7 @@ public enum GameSubType implements CodedEnum
      */
     SIEGE,
     /**
+     *
      */
     RANKED_FLEX_SR,
     /**
@@ -128,5 +129,76 @@ public enum GameSubType implements CodedEnum
     public Optional<GameSubType> getFromCode(final String subType)
     {
         return Stream.of(GameSubType.values()).filter(t -> t.name().equalsIgnoreCase(subType)).findFirst();
+    }
+    
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            
+            case NONE:
+                return "Custom Game";
+            case NORMAL:
+                return "Summoners Rift Unranked";
+            case NORMAL_3X3:
+                return "Twisted Treeline Unranked";
+            case ODIN_UNRANKED:
+                return "Dominion Unranked";
+            case ARAM_UNRANKED_5X5:
+                return "ARAM Unranked";
+            case BOT:
+                return "Summoners Rift Bot Game";
+            case BOT_3X3:
+                return "Twisted Treeline Bot Game";
+            case RANKED_SOLO_5X5:
+                return "Summoners Rift Ranked Solo";
+            case RANKED_TEAM_3X3:
+                return "Twisted Treeline Ranked Team";
+            case RANKED_TEAM_5X5:
+                return "Summoners Rift Ranked Team";
+            case ONEFORALL_5X5:
+                return "One for All";
+            case FIRSTBLOOD_1X1:
+                return "Snowdown Showdown 1v1";
+            case FIRSTBLOOD_2X2:
+                return "Snowdown Showdown 2v2";
+            case SR_6X6:
+                return "Summoners Rift Hexakill";
+            case CAP_5X5:
+                return "Teambuilder";
+            case URF:
+                return "Ultra Rapid Fire";
+            case URF_BOT:
+                return "Ulta Rapid Fire Bot Game";
+            case NIGHTMARE_BOT:
+                return "Summoners Rift Nightmare Bots";
+            case ASCENSION:
+                return "Ascension";
+            case HEXAKILL:
+                return "Twisted Treeline Hexakill";
+            case KING_PORO:
+                return "King Poro";
+            case COUNTER_PICK:
+                return "Nemesis";
+            case BILGEWATER:
+                return "Blackmarket Brawlers";
+            case SIEGE:
+                return "Nexus Siege";
+            case RANKED_FLEX_SR:
+                return "Summoners Rift Ranked Flex";
+            case RANKED_FLEX_TT:
+                return "Twisted Treeline Ranked Flex";
+            case DARKSTAR:
+                return "Darkstar";
+            case STARGUARDIAN:
+                return "Invasion";
+            case OVERCHARGE:
+                return "Overcharge";
+            case ODYSSEY:
+                return "Odyssey";
+            default:
+                return "This enum does not have a pretty name";
+        }
     }
 }

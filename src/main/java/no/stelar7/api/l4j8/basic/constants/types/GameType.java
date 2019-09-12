@@ -29,6 +29,21 @@ public enum GameType implements CodedEnum
         return Stream.of(GameType.values()).filter(t -> t.name().equalsIgnoreCase(gameType)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case CUSTOM_GAME:
+                return "Custom Game";
+            case TUTORIAL_GAME:
+                return "Tutorial Game";
+            case MATCHED_GAME:
+                return "Matched Game";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     
     /**
      * Used internaly in the api...

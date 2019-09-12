@@ -30,6 +30,43 @@ public enum EventType implements CodedEnum
         return Stream.of(EventType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            
+            case ASCENDED_EVENT:
+                return "Ascended";
+            case BUILDING_KILL:
+                return "Building Killed";
+            case CAPTURE_POINT:
+                return "Point Captured";
+            case CHAMPION_KILL:
+                return "Champion Killed";
+            case ELITE_MONSTER_KILL:
+                return "Elite Monster Killed";
+            case ITEM_DESTROYED:
+                return "Item Destroyed";
+            case ITEM_PURCHASED:
+                return "item Purchased";
+            case ITEM_SOLD:
+                return "Item Sold";
+            case ITEM_UNDO:
+                return "Item Undone";
+            case PORO_KING_SUMMON:
+                return "Poro King Summoned";
+            case SKILL_LEVEL_UP:
+                return "Skill Leveled";
+            case WARD_KILL:
+                return "Ward Killed";
+            case WARD_PLACED:
+                return "Ward Placed";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * The value used to map strings to objects
      *

@@ -26,6 +26,31 @@ public enum WardType implements CodedEnum
         return Stream.of(WardType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case BLUE_TRINKET:
+                return "Blue Trinket";
+            case CONTROL_WARD:
+                return "Control Ward";
+            case SIGHT_WARD:
+                return "Sight Ward";
+            case TEEMO_MUSHROOM:
+                return "Teemo Mushroom";
+            case UNDEFINED:
+                return "Undefined";
+            case VISION_WARD:
+                return "Vision Ward";
+            case YELLOW_TRINKET:
+                return "Yellow Trinket";
+            case YELLOW_TRINKET_UPGRADE:
+                return "Yellow Trinket Upgrade";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * The value used to map strings to objects
      *

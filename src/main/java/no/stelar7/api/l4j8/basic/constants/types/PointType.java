@@ -22,6 +22,25 @@ public enum PointType implements CodedEnum
         return Stream.of(PointType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case POINT_A:
+                return "Point A";
+            case POINT_B:
+                return "Point B";
+            case POINT_C:
+                return "Point C";
+            case POINT_D:
+                return "Point D";
+            case POINT_E:
+                return "Point E";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * The value used to map strings to objects
      *

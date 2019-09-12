@@ -27,6 +27,36 @@ public enum TierType implements CodedEnum
         return Stream.of(TierType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case CHALLENGER:
+                return "Challenger";
+            case GRANDMASTER:
+                return "Grandmaster";
+            case MASTER:
+                return "Master";
+            case DIAMOND:
+                return "Diamond";
+            case PLATINUM:
+                return "Platinum";
+            case GOLD:
+                return "Gold";
+            case SILVER:
+                return "Silver";
+            case BRONZE:
+                return "Bronze";
+            case IRON:
+                return "Iron";
+            case UNRANKED:
+                return "Unranked";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * The value used to map strings to objects
      *

@@ -22,6 +22,21 @@ public enum TeamType implements CodedEnum
         return Stream.of(TeamType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case BLUE:
+                return "Blue";
+            case RED:
+                return "Red";
+            case AI:
+                return "AI";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     public Integer getValue()
     {
         return this.code;

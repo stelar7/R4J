@@ -35,6 +35,24 @@ public enum TournamentMapType implements CodedEnum
         return Stream.of(TournamentMapType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case SUMMONERS_RIFT:
+                return "Summoners Rift";
+            case CRYSTAL_SCAR:
+                return "Crystal Scar";
+            case TWISTED_TREELINE:
+                return "Twisted Treeline";
+            case HOWLING_ABYSS:
+                return "Howling Abyss";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     public Integer getCode()
     {
         return this.code;

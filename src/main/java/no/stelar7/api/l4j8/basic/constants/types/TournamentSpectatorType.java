@@ -13,4 +13,20 @@ public enum TournamentSpectatorType implements CodedEnum
     {
         return Stream.of(TournamentSpectatorType.values()).filter(t -> t.name().equals(value)).findFirst();
     }
+    
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case NONE:
+                return "None";
+            case LOBBYONLY:
+                return "Lobby Only";
+            case ALL:
+                return "All";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
 }

@@ -11,4 +11,24 @@ public enum MonsterSubType implements CodedEnum
     {
         return Stream.of(MonsterSubType.values()).filter(t -> t.name().equalsIgnoreCase(id)).findFirst();
     }
+    
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case EARTH_DRAGON:
+                return "Earth Dragon";
+            case FIRE_DRAGON:
+                return "Fire Dragon";
+            case WATER_DRAGON:
+                return "Water Dragon";
+            case AIR_DRAGON:
+                return "Air Dragon";
+            case ELDER_DRAGON:
+                return "Elder Dragon";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
 }

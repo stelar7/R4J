@@ -38,6 +38,25 @@ public enum RoleType implements CodedEnum
         return Stream.of(RoleType.values()).filter(t -> t.name().equalsIgnoreCase(code)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this) {
+            case DUO:
+                return "Duo";
+            case NONE:
+                return "None";
+            case SOLO:
+                return "Solo";
+            case DUO_CARRY:
+                return "Duo Carry";
+            case DUO_SUPPORT:
+                return "Duo Support";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * The value used to map strings to objects
      *

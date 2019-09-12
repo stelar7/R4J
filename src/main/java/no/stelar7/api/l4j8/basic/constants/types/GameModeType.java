@@ -96,6 +96,58 @@ public enum GameModeType implements CodedEnum
         return Stream.of(GameModeType.values()).filter(t -> t.name().equalsIgnoreCase(gameMode)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            
+            case CLASSIC:
+                return "Classic";
+            case ODIN:
+                return "Dominion";
+            case ARAM:
+                return "ARAM";
+            case TUTORIAL:
+            case TUTORIAL_MODULE_1:
+            case TUTORIAL_MODULE_2:
+            case TUTORIAL_MODULE_3:
+                return "Tutorial";
+            case ONEFORALL:
+                return "One for All";
+            case ASCENSION:
+                return "Ascension";
+            case FIRSTBLOOD:
+                return "Snowdown Showdown";
+            case KINGPORO:
+                return "King Poro";
+            case SIEGE:
+                return "Nexus Siege";
+            case ASSASSINATE:
+                return "Blood Hunt Assassin";
+            case ARSR:
+                return "All Random Summoners Rift";
+            case DARKSTAR:
+                return "Darkstar";
+            case STARGUARDIAN:
+                return "Invasion";
+            case URF:
+                return "URF";
+            case DOOMBOTSTEEMO:
+                return "Doombots";
+            case PROJECT:
+                return "Overcharge";
+            case SNOWURF:
+                return "Snow Battle ARURF";
+            case GAMEMODEX:
+                return "Nexus Blitz";
+            case ODYSSEY:
+                return "Odyssey";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     
     /**
      * Used internaly in the api...

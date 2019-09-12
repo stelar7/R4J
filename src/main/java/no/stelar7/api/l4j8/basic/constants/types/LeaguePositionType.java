@@ -45,6 +45,30 @@ public enum LeaguePositionType implements CodedEnum
         return Stream.of(LeaguePositionType.values()).filter(t -> t.name().equalsIgnoreCase(type)).findFirst();
     }
     
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case APEX:
+                return "Apex";
+            case TOP:
+                return "Top";
+            case JUNGLE:
+                return "Jungle";
+            case MIDDLE:
+                return "Middle";
+            case BOTTOM:
+                return "Bottom";
+            case UTILITY:
+                return "Utility";
+            case NONE:
+                return "None";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     /**
      * The value used to map strings to objects
      *

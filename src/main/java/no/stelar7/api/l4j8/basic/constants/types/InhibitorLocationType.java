@@ -57,4 +57,10 @@ public final class InhibitorLocationType implements CodedEnum
     {
         return Optional.empty();
     }
+    
+    @Override
+    public String prettyName()
+    {
+        return null;
+    }
 }
