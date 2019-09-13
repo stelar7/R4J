@@ -6,6 +6,7 @@ import org.junit.*;
 public class ReplayAPITest
 {
     @Test
+    @Ignore
     public void testReplay()
     {
         System.out.println(ReplayAPI.getProcessInfo());

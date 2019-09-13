@@ -74,6 +74,7 @@ public class SummonerTest
     }
     
     @Test
+    @Ignore
     public void testCrawler()
     {
         SummonerCrawler crawler = new SummonerCrawler(Summoner.byName(Platform.EUW1, "stelar7"));
