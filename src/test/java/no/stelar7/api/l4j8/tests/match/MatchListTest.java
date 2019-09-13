@@ -87,7 +87,7 @@ public class MatchListTest
         MatchIterator games = s.getGames().getMatchIterator();
         for (Match m : games)
         {
-            System.out.println(m);
+            System.out.println(m.getGameQueueType().prettyName());
         }
     }
     

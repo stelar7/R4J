@@ -5,11 +5,11 @@ import com.google.gson.stream.JsonWriter;
 import no.stelar7.api.l4j8.basic.calling.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
-import no.stelar7.api.l4j8.basic.exceptions.*;
+import no.stelar7.api.l4j8.basic.exceptions.APIResponseException;
 import no.stelar7.api.l4j8.basic.utils.Pair;
 
 import java.io.*;
-import java.time.*;
+import java.time.LocalDateTime;
 
 public class LCUApi
 {
@@ -297,6 +297,31 @@ public class LCUApi
                 .withPostData(postData)
                 .withHeader(header.getKey(), header.getValue())
                 .build();
+    }
+    
+    /**
+     * Makes a call to a url not specifically supported in the api
+     *
+     * @param url      the url to call
+     * @param postData null if not a POST call
+     * @return whatever the api returns
+     */
+    public static Object customUrl(String url, String postData)
+    {
+        Pair<String, String> header = LCUConnection.getAuthorizationHeader();
+        
+        DataCallBuilder obj = new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(LCUConnection.getConnectionString() + url)
+                .withHeader(header.getKey(), header.getValue());
+        
+        if (postData != null)
+        {
+            obj = obj.withRequestMethod("POST")
+                     .withPostData(postData);
+            
+        }
+        return obj.build();
     }
     
     /**

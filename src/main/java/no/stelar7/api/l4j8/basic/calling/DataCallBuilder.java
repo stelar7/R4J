@@ -116,10 +116,16 @@ public class DataCallBuilder
             {
                 String returnValue = response.getResponseData();
                 
-                final Object returnType = this.dc.getEndpoint().getType();
-                returnValue = postProcess(returnValue);
-                
-                return Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
+                if (this.dc.getEndpoint() != null)
+                {
+                    final Object returnType = this.dc.getEndpoint().getType();
+                    returnValue = postProcess(returnValue);
+                    
+                    return Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
+                } else
+                {
+                    return returnValue;
+                }
             }
             
             case 400:
@@ -153,6 +159,11 @@ public class DataCallBuilder
                 return new Pair<>(response.getResponseCode(), response.getResponseData());
             }
             
+            case 405:
+            {
+                String reasonText = "The API was unable to handle your request due to the wrong HTTP method being used.\n";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
+            }
             case 429:
                 if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
                 {
@@ -712,10 +723,13 @@ public class DataCallBuilder
     private String getURL()
     {
         String[] url = {dc.getProxy()};
-        url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.getEndpoint().getGame());
-        url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.getEndpoint().getService());
-        url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.getEndpoint().getVersion());
-        url[0] = url[0].replace(Constants.RESOURCE_PLACEHOLDER, dc.getEndpoint().getResource());
+        if (dc.getEndpoint() != null)
+        {
+            url[0] = url[0].replace(Constants.GAME_PLACEHOLDER, dc.getEndpoint().getGame());
+            url[0] = url[0].replace(Constants.SERVICE_PLACEHOLDER, dc.getEndpoint().getService());
+            url[0] = url[0].replace(Constants.VERSION_PLACEHOLDER, dc.getEndpoint().getVersion());
+            url[0] = url[0].replace(Constants.RESOURCE_PLACEHOLDER, dc.getEndpoint().getResource());
+        }
         if (dc.getPlatform() != null)
         {
             url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString());

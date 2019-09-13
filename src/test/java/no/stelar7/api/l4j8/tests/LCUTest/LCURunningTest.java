@@ -26,6 +26,15 @@ public class LCURunningTest
         System.out.println(LCUApi.getReplaySavePath());
     }
     
+    @Test
+    public void testCustomURL()
+    {
+        Object obj  = LCUApi.customUrl("lol-lobby/v2/lobby", "{\"queueId\":420}");
+        Object obj2 = LCUApi.customUrl("lol-email-verification/v1/email", null);
+        System.out.println(obj);
+        System.out.println(obj2);
+    }
+    
     
     @Test
     public void testCreateSocket() throws InterruptedException
