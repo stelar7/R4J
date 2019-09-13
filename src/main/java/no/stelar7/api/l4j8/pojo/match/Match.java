@@ -29,7 +29,7 @@ public class Match implements Serializable
     private long                      gameCreation;
     private long                      gameDuration;
     
-    public static Match byId(Long id, Platform platform)
+    public static Match byId(Platform platform, Long id)
     {
         return MatchAPI.getInstance().getMatch(platform, id);
     }

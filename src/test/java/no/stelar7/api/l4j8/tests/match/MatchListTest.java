@@ -59,7 +59,7 @@ public class MatchListTest
         Long               endIndex   = null;//100;
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner         sum     = Summoner.byName(Platform.EUW1, "stelar7");
         builder = builder.withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId());
         builder = builder.withBeginTime(beginTime).withEndTime(endTime);
         builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
@@ -81,9 +81,10 @@ public class MatchListTest
     
     
     @Test
-    public void testMatchlistIterator() throws InterruptedException
+    @Ignore
+    public void testMatchlistIterator()
     {
-        Summoner      s     = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner      s     = Summoner.byName(Platform.EUW1, "stelar7");
         MatchIterator games = s.getGames().getMatchIterator();
         for (Match m : games)
         {
@@ -103,6 +104,7 @@ public class MatchListTest
     }
     
     @Test
+    @Ignore
     public void testMatchlistSummoner() throws InterruptedException
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
@@ -129,7 +131,7 @@ public class MatchListTest
         {
             if (!ref.add(reference))
             {
-                System.out.println("dup");
+                Assert.fail("Same game is collected when looping matchlist");
             }
         }
     }
@@ -216,7 +218,7 @@ public class MatchListTest
     @Test
     public void testMatchTolkiIssue()
     {
-        Match detail = new MatchBuilder().withId(3961977905L).withPlatform(Platform.EUW1).get();
+        Match detail = Match.byId(Platform.EUW1, 3961977905L);
         detail.getParticipantIdentities().forEach(p -> {
             Summoner olda = new SummonerBuilder().withPlatform(p.getPlatform()).withAccountId(p.getAccountId()).get();
             Summoner newa = new SummonerBuilder().withPlatform(p.getCurrentPlatform()).withAccountId(p.getCurrentAccountId()).get();

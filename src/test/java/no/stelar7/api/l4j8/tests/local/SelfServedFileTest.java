@@ -16,6 +16,7 @@ public class SelfServedFileTest
 {
     
     @Test
+    @Ignore
     public void doTest() throws IOException
     {
         Path filepath = Paths.get("src/test/java/no/stelar7/api/l4j8/tests/local", "championFull.json");

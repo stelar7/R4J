@@ -39,6 +39,7 @@ public class CacheTest
     }
     
     @Test
+    @Ignore
     public void testSQLCache() throws InterruptedException
     {
         DataCall.setCacheProvider(sqlCache);
@@ -57,6 +58,7 @@ public class CacheTest
     
     
     @Test
+    @Ignore
     public void testTieredMemoryCache() throws InterruptedException
     {
         DataCall.setCacheProvider(tieredCache);

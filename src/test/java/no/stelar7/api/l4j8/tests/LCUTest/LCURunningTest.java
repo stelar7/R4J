@@ -6,6 +6,7 @@ import org.junit.*;
 public class LCURunningTest
 {
     @Test
+    @Ignore
     public void testRunning()
     {
         Assert.assertNotNull("Unable to fecth connection string from league client... Is it running?", LCUConnection.getConnectionString());
@@ -13,12 +14,14 @@ public class LCURunningTest
     
     
     @Test
+    @Ignore
     public void testLogin()
     {
         LCUApi.login("myusername", "mypassword");
     }
     
     @Test
+    @Ignore
     public void testReplay()
     {
         LCUApi.downloadReplay(3042295790L);
@@ -27,6 +30,7 @@ public class LCURunningTest
     }
     
     @Test
+    @Ignore
     public void testCustomURL()
     {
         Object obj  = LCUApi.customUrl("lol-lobby/v2/lobby", "{\"queueId\":420}");
@@ -37,6 +41,7 @@ public class LCURunningTest
     
     
     @Test
+    @Ignore
     public void testCreateSocket() throws InterruptedException
     {
         Thread th = new Thread(() -> {
