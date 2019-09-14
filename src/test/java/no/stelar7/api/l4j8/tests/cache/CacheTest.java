@@ -79,15 +79,22 @@ public class CacheTest
     public void testCacheStuff() throws InterruptedException
     {
         Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        root.setLevel(Level.ALL);
+        root.setLevel(Level.INFO);
         
+        System.out.println("Fetching summoner for the first time");
         DataCall.setCacheProvider(fileCache);
         String id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         
         Thread.sleep(6000);
-        
+        System.out.println("Fetching summoner after cache timeout");
+        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+    
+        DataCall.getCacheProvider().clear(URLEndpoint.V3_SUMMONER_BY_NAME, Platform.EUW1, id);
+    
+        System.out.println("Fetching summoner after deleting entry");
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
     }
