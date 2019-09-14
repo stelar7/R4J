@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.tests.cache;
 
 import ch.qos.logback.classic.*;
+import no.stelar7.api.l4j8.basic.cache.CacheLifetimeHint;
 import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.*;
@@ -91,10 +92,19 @@ public class CacheTest
         System.out.println("Fetching summoner after cache timeout");
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
-    
+        
         DataCall.getCacheProvider().clear(URLEndpoint.V3_SUMMONER_BY_NAME, Platform.EUW1, id);
-    
+        
         System.out.println("Fetching summoner after deleting entry");
+        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        
+        CacheLifetimeHint defaults = CacheLifetimeHint.DEFAULTS;
+        defaults.add(URLEndpoint.V3_SUMMONER_BY_NAME, TimeUnit.SECONDS.toMillis(1));
+        DataCall.getCacheProvider().setTimeToLive(defaults);
+        Thread.sleep(1000);
+        
+        System.out.println("Fetching summoner after setting lifetime to a lower limit");
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
     }
