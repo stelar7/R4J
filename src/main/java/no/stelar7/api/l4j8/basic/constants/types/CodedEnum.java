@@ -14,4 +14,9 @@ public interface CodedEnum<T>
     }
     
     String prettyName();
+    
+    default String commonName()
+    {
+        return prettyName();
+    }
 }

@@ -482,6 +482,136 @@ public enum GameQueueType implements CodedEnum
         }
     }
     
+    @Override
+    public String commonName()
+    {
+        switch (this)
+        {
+            
+            case CUSTOM:
+                return "Custom";
+            case NORMAL_3X3_BLIND_PICK_OLD:
+            case RANKED_FLEX_TT:
+                return "3v3 Blind Pick";
+            case NORMAL_5X5_BLIND_PICK_OLD:
+            case NORMAL_5V5_BLIND_PICK:
+                return "5v5 Blind Pick";
+            case NORMAL_5X5_DRAFT:
+            case TEAM_BUILDER_DRAFT_UNRANKED_5X5:
+                return "5v5 Draft Pick";
+            case RANKED_SOLO_5X5:
+            case TEAM_BUILDER_RANKED_SOLO:
+            case TEAM_BUILDER_DRAFT_RANKED_5X5:
+                return "5v5 Ranked Solo";
+            case RANKED_PREMADE_5X5:
+                return "5v5 Ranked Duo";
+            case RANKED_PREMADE_3X3:
+                return "3v3 Ranked Duo";
+            case RANKED_TEAM_3X3:
+                return "3v3 Ranked Team";
+            case RANKED_TEAM_5X5:
+                return "5v5 Ranked Team";
+            case ODIN_5X5_BLIND:
+                return "Dominion Blind Pick";
+            case ODIN_5X5_DRAFT:
+                return "Dominion";
+            case BOT_5X5:
+            case BOT_5X5_INTRO_OLD:
+            case BOT_5X5_BEGINNER_OLD:
+            case BOT_5X5_INTERMEDIATE_OLD:
+            case BOT_5X5_INTRO:
+            case BOT_5X5_BEGINNER:
+            case BOT_5X5_INTERMEDIATE:
+                return "VS AI";
+            case BOT_ODIN_5X5:
+                return "Dominion VS AI";
+            case BOT_3X3_BEGINNER_OLD:
+            case BOT_3X3_INTERMEDIATE:
+            case BOT_3X3_INTRO:
+            case BOT_3X3_BEGINNER:
+                return "Twisted Treeline VS AI";
+            case GROUP_FINDER_5X5:
+                return "Teambuilder";
+            case ARAM_5X5:
+            case ARAM_5X5_OLD:
+            case BILGEWATER_ARAM_5X5:
+                return "ARAM";
+            case ONEFORALL_5X5:
+                return "One for All";
+            case FIRSTBLOOD_1X1:
+                return "1v1 Snowdown Showdown";
+            case FIRSTBLOOD_2X2:
+                return "2v2 Snowdown Showdown";
+            case HEXAKILL:
+            case HEXAKILL_6X6_SR:
+                return "Hexakill";
+            case URF_5X5:
+                return "URF";
+            case ONE_FOR_ALL_MIRROR:
+                return "One for All Mirror Mode";
+            case BOT_URF_5X5:
+                return "URF VS AI";
+            case NIGHTMARE_BOT_5X5_RANK1:
+            case NIGHTMARE_BOT_5X5_RANK2:
+            case NIGHTMARE_BOT_5X5_RANK5:
+                return "Doombots";
+            case ASCENSION_5X5:
+                return "Ascension";
+            case KING_PORO_5X5:
+                return "King Poro";
+            case COUNTER_PICK:
+                return "Nemesis";
+            case BILGEWATER_5X5:
+                return "Blackmarket Brawlers";
+            case NEXUS_SIEGE_OLD:
+                return "Nexus Siege";
+            case DEFINITELY_NOT_DOMINION_5X5:
+                return "Definitely Not Dominion";
+            case ALL_RANDOM_URF:
+            case SNOW_BATTLE_ARURF:
+                return "ARURF";
+            case OVERCHARGE:
+                return "Overcharge";
+            case RANKED_FLEX_SR:
+                return "5v5 Ranked Flex Queue";
+            case ARAM:
+                return "ARAM";
+            case NORMAL_3X3_BLIND_PICK:
+                return "3v3 Normal Flex Queue";
+            case ASSASSINATE_5X5:
+                return "Blood Hunt Assassin";
+            case DARKSTAR_3X3:
+                return "Darkstar";
+            case CLASH:
+                return "Clash";
+            case NEXUS_SIEGE:
+                return "Nexus Siege";
+            case NIGHTMARE_BOT_5X5_VOTE:
+            case NIGHTMARE_BOT_5X5:
+                return "Doombots";
+            case INVASION_NORMAL:
+            case INVASION_ONSLAUGHT:
+                return "Invasion";
+            case NEXUS_BLITZ:
+                return "Nexus Blitz";
+            case ODYSSEY_INTRO:
+            case ODYSSEY_CADET:
+            case ODYSSEY_CREWMEMBER:
+            case ODYSSEY_CAPTAIN:
+            case ODYSSEY_ONSLAUGHT:
+                return "Odyssey";
+            case TUTORIAL_MODULE_1:
+            case TUTORIAL_MODULE_2:
+            case TUTORIAL_MODULE_3:
+                return "Tutorial";
+            case TEAMFIGHT_TACTICS:
+            case TEAMFIGHT_TACTICS_RANKED:
+                return "Teamfight Tactics";
+            default:
+                return "This enum does not have a pretty name";
+        }
+    }
+    
     public static Optional<GameQueueType> getFromString(final String value)
     {
         return Stream.of(GameQueueType.values()).filter(t -> t.name().equalsIgnoreCase(value) || t.apiname.equalsIgnoreCase(value)).findFirst();
