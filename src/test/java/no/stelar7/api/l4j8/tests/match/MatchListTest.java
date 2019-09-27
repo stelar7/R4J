@@ -122,6 +122,30 @@ public class MatchListTest
     }
     
     @Test
+    public void testBloop()
+    {
+        Summoner                 summoner = Summoner.byName(Platform.EUN1, "coust");
+        LazyList<MatchReference> matches  = summoner.getGames().getLazy();
+        matches.loadFully();
+        
+        int inted = matches
+                .stream()
+                .limit(100)
+                .map(MatchReference::getFullMatch)
+                .map(m -> m.getParticipantFromSummonerId(summoner.getSummonerId()).getStats())
+                .mapToInt(stat -> {
+                    float ka = stat.getKills() + stat.getAssists();
+                    float d  = stat.getDeaths();
+                    
+                    float kda = d > 0 ? ka / d : 1_000_000f;
+                    return (kda > 1) ? 0 : 1;
+                })
+                .sum();
+        
+        System.out.println("Inted in " + inted + " games of 100 checked");
+    }
+    
+    @Test
     public void testNoDuplicates()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
