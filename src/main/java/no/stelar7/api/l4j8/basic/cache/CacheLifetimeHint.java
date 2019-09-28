@@ -46,6 +46,7 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V3_THIRD_PARTY_CODE, MINUTES_10);
         
         DEFAULTS.add(URLEndpoint.V3_MATCHLIST, MINUTES_10);
+        DEFAULTS.add(URLEndpoint.V4_GAMHS_MATCHLIST, MINUTES_10);
         
         DEFAULTS.add(URLEndpoint.V3_SPECTATOR_CURRENT, MINUTES_1);
         DEFAULTS.add(URLEndpoint.V3_SPECTATOR_FEATURED, MINUTES_1);

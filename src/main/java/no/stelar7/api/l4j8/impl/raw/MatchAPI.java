@@ -118,6 +118,29 @@ public final class MatchAPI
         return match.getMatches();
     }
     
+    public List<String> getGAMHSMatchList(Platform server, String PUUID)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
+                                                       .withEndpoint(URLEndpoint.V4_GAMHS_MATCHLIST)
+                                                       .withPlatform(server);
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_GAMHS_MATCHLIST, server, PUUID);
+        if (chl.isPresent())
+        {
+            return (List<String>) chl.get();
+        }
+        
+        Object matchObj = builder.build();
+        if (matchObj instanceof Pair)
+        {
+            return Collections.emptyList();
+        }
+        
+        List<String> matchList = (List<String>) matchObj;
+        DataCall.getCacheProvider().store(URLEndpoint.V4_GAMHS_MATCHLIST, matchList, server, PUUID);
+        return matchList;
+    }
+    
     /**
      * Returns a list of all games avaliable in the api
      * This list is updated lazily!
@@ -145,6 +168,32 @@ public final class MatchAPI
         return new MatchIterator(getMatchList(server, accountId));
     }
     
+    public GAMHSMatch getGAMHSMatch(String gameId)
+    {
+        String   region   = gameId.split("_")[0].split("-")[1];
+        Platform platform = Platform.fromString(region).get();
+        
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
+                                                       .withEndpoint(URLEndpoint.V4_GAMHS_MATCH)
+                                                       .withPlatform(platform);
+        
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_GAMHS_MATCH, platform, gameId);
+        if (chl.isPresent())
+        {
+            return (GAMHSMatch) chl.get();
+        }
+        
+        try
+        {
+            GAMHSMatch match = (GAMHSMatch) builder.build();
+            DataCall.getCacheProvider().store(URLEndpoint.V4_GAMHS_MATCH, match, platform, gameId);
+            return match;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
+    }
+    
     
     /**
      * Returns the match data from a match id
@@ -163,16 +212,7 @@ public final class MatchAPI
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
         if (chl.isPresent())
         {
-            Match m = (Match) chl.get();
-            if (m.getGameQueueType() != null &&
-                m.getSeason() != null &&
-                m.getMatchMode() != null &&
-                m.getMatchType() != null &&
-                m.getParticipants().stream().noneMatch(p -> (p.getSpell1() == null || p.getSpell2() == null)))
-            {
-                return m;
-            }
-            
+            return (Match) chl.get();
         }
         
         try
@@ -182,7 +222,6 @@ public final class MatchAPI
             return match;
         } catch (ClassCastException e)
         {
-            
             return null;
         }
     }

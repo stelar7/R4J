@@ -74,6 +74,10 @@ public enum URLEndpoint
     V3_MATCHLIST("lol", "match", "v4", "matchlists/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, MatchList.class),
     V3_TIMELINE("lol", "match", "v4", "timelines/by-match/" + Constants.MATCH_ID_PLACEHOLDER, MatchTimeline.class),
     
+    // TODO
+    V4_GAMHS_MATCH("lol", "match", "v4", "match/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
+    V4_GAMHS_MATCHLIST("lol", "match", "v4", "matchlists/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, new TypeToken<List<String>>() {}.getType()),
+    
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}/entry
     // api/lol/{region}/v2.5/league/challenger
