@@ -39,6 +39,8 @@ public class StaticTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         StaticChampion list = api.getChampion(1);
+        double r = list.getSpells().get(0).getRange().get(0);
+        System.out.println(r);
         Assert.assertEquals("ok?", list.getId(), 1);
     }
     

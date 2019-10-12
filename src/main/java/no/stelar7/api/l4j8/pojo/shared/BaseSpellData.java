@@ -163,10 +163,9 @@ public class BaseSpellData implements Serializable
      *
      * @return the range
      */
-    @SuppressWarnings("unchecked")
-    public List<Integer> getRange()
+    public List<Double> getRange()
     {
-        return (this.range instanceof List) ? (List<Integer>) this.range : Collections.singletonList(Integer.parseInt((String) range));
+        return (this.range instanceof List) ? (List<Double>) this.range : Collections.singletonList(Double.parseDouble((String) range));
     }
     
     /**
@@ -312,102 +311,31 @@ public class BaseSpellData implements Serializable
         {
             return false;
         }
-        
         BaseSpellData that = (BaseSpellData) o;
-        
-        if (maxrank != that.maxrank)
-        {
-            return false;
-        }
-        if ((cooldown != null) ? !cooldown.equals(that.cooldown) : (that.cooldown != null))
-        {
-            return false;
-        }
-        if ((cooldownBurn != null) ? !cooldownBurn.equals(that.cooldownBurn) : (that.cooldownBurn != null))
-        {
-            return false;
-        }
-        if ((cost != null) ? !cost.equals(that.cost) : (that.cost != null))
-        {
-            return false;
-        }
-        if ((costBurn != null) ? !costBurn.equals(that.costBurn) : (that.costBurn != null))
-        {
-            return false;
-        }
-        if ((costType != null) ? !costType.equals(that.costType) : (that.costType != null))
-        {
-            return false;
-        }
-        if ((description != null) ? !description.equals(that.description) : (that.description != null))
-        {
-            return false;
-        }
-        if ((effect != null) ? !effect.equals(that.effect) : (that.effect != null))
-        {
-            return false;
-        }
-        if ((effectBurn != null) ? !effectBurn.equals(that.effectBurn) : (that.effectBurn != null))
-        {
-            return false;
-        }
-        if ((image != null) ? !image.equals(that.image) : (that.image != null))
-        {
-            return false;
-        }
-        if ((key != null) ? !key.equals(that.key) : (that.key != null))
-        {
-            return false;
-        }
-        if ((leveltip != null) ? !leveltip.equals(that.leveltip) : (that.leveltip != null))
-        {
-            return false;
-        }
-        if ((name != null) ? !name.equals(that.name) : (that.name != null))
-        {
-            return false;
-        }
-        if ((range != null) ? !range.equals(that.range) : (that.range != null))
-        {
-            return false;
-        }
-        if ((rangeBurn != null) ? !rangeBurn.equals(that.rangeBurn) : (that.rangeBurn != null))
-        {
-            return false;
-        }
-        if ((resource != null) ? !resource.equals(that.resource) : (that.resource != null))
-        {
-            return false;
-        }
-        if ((tooltip != null) ? !tooltip.equals(that.tooltip) : (that.tooltip != null))
-        {
-            return false;
-        }
-        return (vars != null) ? vars.equals(that.vars) : (that.vars == null);
+        return maxrank == that.maxrank &&
+               Objects.equals(cooldown, that.cooldown) &&
+               Objects.equals(cooldownBurn, that.cooldownBurn) &&
+               Objects.equals(cost, that.cost) &&
+               Objects.equals(costBurn, that.costBurn) &&
+               Objects.equals(costType, that.costType) &&
+               Objects.equals(description, that.description) &&
+               Objects.equals(effect, that.effect) &&
+               Objects.equals(effectBurn, that.effectBurn) &&
+               Objects.equals(image, that.image) &&
+               Objects.equals(key, that.key) &&
+               Objects.equals(leveltip, that.leveltip) &&
+               Objects.equals(name, that.name) &&
+               Objects.equals(range, that.range) &&
+               Objects.equals(rangeBurn, that.rangeBurn) &&
+               Objects.equals(resource, that.resource) &&
+               Objects.equals(tooltip, that.tooltip) &&
+               Objects.equals(vars, that.vars);
     }
     
     @Override
     public int hashCode()
     {
-        int result = cooldown != null ? cooldown.hashCode() : 0;
-        result = 31 * result + (cooldownBurn != null ? cooldownBurn.hashCode() : 0);
-        result = 31 * result + (cost != null ? cost.hashCode() : 0);
-        result = 31 * result + (costBurn != null ? costBurn.hashCode() : 0);
-        result = 31 * result + (costType != null ? costType.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (effect != null ? effect.hashCode() : 0);
-        result = 31 * result + (effectBurn != null ? effectBurn.hashCode() : 0);
-        result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (key != null ? key.hashCode() : 0);
-        result = 31 * result + (leveltip != null ? leveltip.hashCode() : 0);
-        result = 31 * result + maxrank;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (range != null ? range.hashCode() : 0);
-        result = 31 * result + (rangeBurn != null ? rangeBurn.hashCode() : 0);
-        result = 31 * result + (resource != null ? resource.hashCode() : 0);
-        result = 31 * result + (tooltip != null ? tooltip.hashCode() : 0);
-        result = 31 * result + (vars != null ? vars.hashCode() : 0);
-        return result;
+        return Objects.hash(cooldown, cooldownBurn, cost, costBurn, costType, description, effect, effectBurn, image, key, leveltip, maxrank, name, range, rangeBurn, resource, tooltip, vars);
     }
     
     @Override
