@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.basic.utils;
+package no.stelar7.api.l4j8.basic.utils.sql;
 
 import java.sql.*;
 

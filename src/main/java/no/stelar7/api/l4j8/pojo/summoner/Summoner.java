@@ -2,7 +2,8 @@ package no.stelar7.api.l4j8.pojo.summoner;
 
 
 import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.utils.Utils;
+import no.stelar7.api.l4j8.basic.utils.*;
+import no.stelar7.api.l4j8.basic.utils.sql.*;
 import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
 import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
@@ -261,5 +262,22 @@ public final class Summoner implements Serializable
                ", revisionDate=" + revisionDate +
                ", platform=" + platform +
                '}';
+    }
+    
+    @SQLTypeMap
+    public static Map<String, String> toTypeMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        returnMap.put("profileIconId", "int16");
+        returnMap.put("name", "text");
+        returnMap.put("summonerLevel", "int16");
+        returnMap.put("accountId", "text");
+        returnMap.put("puuid", "text");
+        returnMap.put("id", "text");
+        returnMap.put("revisionDate", "int64");
+        returnMap.put("platform", "API_PLATFORM");
+        
+        return returnMap;
     }
 }

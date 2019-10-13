@@ -23,7 +23,7 @@ public class CacheTest
 {
     
     final L4J8                    l4j8        = new L4J8(SecretFile.CREDS);
-    final MySQLCacheProvider      sqlCache    = new MySQLCacheProvider("localhost", 3306, "lolcachetest", "root", "");
+    final MySQLCacheProvider      sqlCache    = new MySQLCacheProvider("localhost", 3306, "root", "");
     final FileSystemCacheProvider fileCache   = new FileSystemCacheProvider(5);
     final MemoryCacheProvider     memCache    = new MemoryCacheProvider(5);
     final TieredCacheProvider     tieredCache = new TieredCacheProvider(memCache, fileCache, sqlCache);
@@ -45,7 +45,12 @@ public class CacheTest
     {
         DataCall.setCacheProvider(sqlCache);
         
-        doCacheStuff();
+        Summoner s = Summoner.byName(Platform.EUW1, "stelar7");
+        System.out.println(s);
+        s = Summoner.byName(Platform.EUW1, "stelar7");
+        System.out.println(s);
+        
+        //    doCacheStuff();
     }
     
     

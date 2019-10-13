@@ -1,6 +1,7 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.utils.sql.SQLTypeMap;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -10,7 +11,7 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
     /**
      * Unknown platform, used for bots in participant identities
      */
-    UNKNOWN("", ""),
+    UNKNOWN("", "", "unknown"),
     /**
      * BRAZIL platform.
      */
@@ -204,4 +205,20 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
         return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2, SG, PH, ID1, VN, TH, TW);
     }
     
+    
+    @SQLTypeMap
+    public Map<String, String> toTypeMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        returnMap.put("name", "tinytext");
+        returnMap.put("key", "tinytext");
+        
+        return returnMap;
+    }
+    
+    public String[] getKeys()
+    {
+        return this.keys;
+    }
 }
