@@ -2,6 +2,7 @@ package no.stelar7.api.l4j8.basic.constants.api;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import no.stelar7.api.l4j8.impl.lor.*;
 import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
@@ -156,7 +157,11 @@ public enum URLEndpoint
     REPLAY_RECORDING("replay/recording", "", "", "", ReplayRecordingInfo.class),
     REPLAY_RENDER("replay/render", "", "", "", ReplayRenderInfo.class),
     REPLAY_SEQUENCE("replay/sequence", "", "", "", ReplayKeyframeSequence.class),
-    ;
+    
+    
+    LOR_STATIC_ACTIVE_DECK("static-decklist", "", "", "", JsonObject.class),
+    LOR_CARD_POSITIONS("positional-rectangles", "", "", "", LoRGameInfo.class),
+    LOR_GAME_RESULT("game-result", "", "", "", LoRGameResult.class);
     
     
     private final String game;

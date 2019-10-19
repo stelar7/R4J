@@ -5,6 +5,7 @@ import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 import no.stelar7.api.l4j8.basic.ratelimiting.RateLimit;
 import no.stelar7.api.l4j8.basic.serializer.*;
+import no.stelar7.api.l4j8.impl.lor.*;
 
 import java.io.*;
 import java.net.*;
@@ -25,6 +26,7 @@ public final class Utils
         GsonBuilder builder = new GsonBuilder();
         
         // Register enum types with GSON
+        builder.registerTypeAdapter(LoRGameState.class, new GenericEnumSerializer<LoRGameState>());
         builder.registerTypeAdapter(AscencionType.class, new GenericEnumSerializer<AscencionType>());
         builder.registerTypeAdapter(BuildingType.class, new GenericEnumSerializer<BuildingType>());
         builder.registerTypeAdapter(EventType.class, new GenericEnumSerializer<EventType>());
