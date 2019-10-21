@@ -14,13 +14,14 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.security.*;
 import java.security.cert.X509Certificate;
 import java.time.*;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.*;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiFunction;
 import java.util.prefs.BackingStoreException;
@@ -78,6 +79,8 @@ public class DataCallBuilder
         limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint));
     }
     
+    private static Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
+    
     /**
      * Puts together all the data, and then returns an object representing the JSON from the call
      *
@@ -115,6 +118,19 @@ public class DataCallBuilder
             case 204:
             {
                 String returnValue = response.getResponseData();
+                
+                if (false)
+                {
+                    try
+                    {
+                        Path output = Paths.get("D:\\requests\\" + this.dc.getEndpoint().name() + "\\" + requestCount.computeIfAbsent(this.dc.getEndpoint(), (k) -> new AtomicLong(0)).getAndIncrement() + ".json");
+                        Files.createDirectories(output.getParent());
+                        Files.write(output, returnValue.getBytes(StandardCharsets.UTF_8));
+                    } catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
                 
                 if (this.dc.getEndpoint() != null)
                 {
