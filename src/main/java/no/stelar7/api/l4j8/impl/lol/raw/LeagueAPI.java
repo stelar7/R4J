@@ -23,7 +23,6 @@ public final class LeagueAPI
         // Hide public constructor
     }
     
-    /*
     /**
      * Get master tier leagues.
      * Valid queues are: RANKED_SOLO_5x5, RANKED_FLEX_SR, RANKED_FLEX_TT
@@ -31,7 +30,8 @@ public final class LeagueAPI
      * @param server region to get data from
      * @param queue  queueType to get data for
      * @return LeagueList
-    public LeagueList getMasterLeague(Platform server, GameQueueType queue)
+     */
+    private LeagueList getMasterLeague(Platform server, GameQueueType queue)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -64,7 +64,8 @@ public final class LeagueAPI
      * @param server region to get data from
      * @param queue  queueType to get data for
      * @return LeagueList
-    public LeagueList getGrandmasterLeague(Platform server, GameQueueType queue)
+     */
+    private LeagueList getGrandmasterLeague(Platform server, GameQueueType queue)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -98,7 +99,8 @@ public final class LeagueAPI
      * @param server region to get data from
      * @param queue  queueType to get data for
      * @return LeagueList
-    public LeagueList getChallengerLeague(Platform server, GameQueueType queue)
+     */
+    private LeagueList getChallengerLeague(Platform server, GameQueueType queue)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
@@ -123,7 +125,6 @@ public final class LeagueAPI
             return null;
         }
     }
-    */
     
     
     /**
@@ -203,7 +204,7 @@ public final class LeagueAPI
      * @param page    the page to query (first page is 1)
      * @return LeagueList
      */
-    public List<LeagueEntry> getLeagueByTierDivision(Platform server, GameQueueType queue, TierDivisionType tierdiv, int page)
+    public List<? extends LeagueItem> getLeagueByTierDivision(Platform server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
@@ -212,6 +213,26 @@ public final class LeagueAPI
                                                        .withURLData(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE_RANK)
                                                        .withPlatform(server);
+        
+        if (Arrays.asList(TierDivisionType.MASTER_I, TierDivisionType.GRANDMASTER_I, TierDivisionType.CHALLENGER_I).contains(tierdiv))
+        {
+            
+            if (page > 1)
+            {
+                return Collections.emptyList();
+            }
+            
+            switch (tierdiv)
+            {
+                case MASTER_I:
+                    return getMasterLeague(server, queue).getEntries();
+                case GRANDMASTER_I:
+                    return getGrandmasterLeague(server, queue).getEntries();
+                case CHALLENGER_I:
+                    return getChallengerLeague(server, queue).getEntries();
+            }
+        }
+        
         
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_RANK, server, queue, tierdiv, page);
         if (chl.isPresent())
@@ -242,7 +263,7 @@ public final class LeagueAPI
      * @param tierdiv the tier and division to query
      * @return LeagueList
      */
-    public LazyList<LeagueEntry> getLeagueByTierDivisionLazy(Platform server, GameQueueType queue, TierDivisionType tierdiv)
+    public LazyList<? extends LeagueItem> getLeagueByTierDivisionLazy(Platform server, GameQueueType queue, TierDivisionType tierdiv)
     {
         return new LazyList<>(1, prevValue -> getLeagueByTierDivision(server, queue, tierdiv, prevValue + 1));
     }

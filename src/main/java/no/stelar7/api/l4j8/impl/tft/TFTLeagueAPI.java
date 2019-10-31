@@ -205,15 +205,22 @@ public class TFTLeagueAPI
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RANK)
                                                        .withPlatform(server);
         
-        
-        switch (tierdiv)
+        if (Arrays.asList(TierDivisionType.MASTER_I, TierDivisionType.GRANDMASTER_I, TierDivisionType.CHALLENGER_I).contains(tierdiv))
         {
-            case MASTER_I:
-                return getMasterLeague(server).getEntries();
-            case GRANDMASTER_I:
-                return getGrandmasterLeague(server).getEntries();
-            case CHALLENGER_I:
-                return getChallengerLeague(server).getEntries();
+            if (page > 1)
+            {
+                return Collections.emptyList();
+            }
+            
+            switch (tierdiv)
+            {
+                case MASTER_I:
+                    return getMasterLeague(server).getEntries();
+                case GRANDMASTER_I:
+                    return getGrandmasterLeague(server).getEntries();
+                case CHALLENGER_I:
+                    return getChallengerLeague(server).getEntries();
+            }
         }
         
         

@@ -19,6 +19,7 @@ public class TestTFTLeague
     public void testSilver()
     {
         List<? extends LeagueItem> tierDiv = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.SILVER_I, 1);
+        List<? extends LeagueItem> tierDiv2 = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.SILVER_I, 5);
         System.out.println();
     }
     
@@ -26,6 +27,7 @@ public class TestTFTLeague
     public void testChallenger()
     {
         List<? extends LeagueItem> tierDiv = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.CHALLENGER_I, 1);
+        List<? extends LeagueItem> tierDiv2 = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.CHALLENGER_I, 5);
         System.out.println();
     }
     
