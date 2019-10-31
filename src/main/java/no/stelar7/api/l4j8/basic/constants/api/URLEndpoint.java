@@ -7,6 +7,7 @@ import no.stelar7.api.l4j8.pojo.champion.*;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.match.lol.*;
 import no.stelar7.api.l4j8.pojo.replay.*;
 import no.stelar7.api.l4j8.pojo.spectator.*;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
@@ -74,10 +75,6 @@ public enum URLEndpoint
     V3_MATCH("lol", "match", "v4", "matches/" + Constants.MATCH_ID_PLACEHOLDER, Match.class),
     V3_MATCHLIST("lol", "match", "v4", "matchlists/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, MatchList.class),
     V3_TIMELINE("lol", "match", "v4", "timelines/by-match/" + Constants.MATCH_ID_PLACEHOLDER, MatchTimeline.class),
-    
-    // TODO
-    V4_GAMHS_MATCH("lol", "match", "v4", "match/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
-    V4_GAMHS_MATCHLIST("lol", "match", "v4", "matchlists/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, new TypeToken<List<String>>() {}.getType()),
     
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}/entry
@@ -161,7 +158,27 @@ public enum URLEndpoint
     
     LOR_STATIC_ACTIVE_DECK("static-decklist", "", "", "", JsonObject.class),
     LOR_CARD_POSITIONS("positional-rectangles", "", "", "", LoRGameInfo.class),
-    LOR_GAME_RESULT("game-result", "", "", "", LoRGameResult.class);
+    LOR_GAME_RESULT("game-result", "", "", "", LoRGameResult.class),
+    
+    
+    V1_TFT_SUMMONER_BY_ACCOUNT("tft", "summoner", "v1", "summoners/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, Summoner.class),
+    V1_TFT_SUMMONER_BY_PUUID("tft", "summoner", "v1", "summoners/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Summoner.class),
+    V1_TFT_SUMMONER_BY_NAME("tft", "summoner", "v1", "summoners/by-name/" + Constants.SUMMONER_NAME_PLACEHOLDER, Summoner.class),
+    V1_TFT_SUMMONER_BY_ID("tft", "summoner", "v1", "summoners/" + Constants.SUMMONER_ID_PLACEHOLDER, Summoner.class),
+    
+    V1_TFT_MATCHLIST("tft", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", new TypeToken<List<String>>() {}.getType()),
+    V1_TFT_MATCH("tft", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
+    
+    
+    V1_TFT_LEAGUE("tft", "league", "v1", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
+    V1_TFT_LEAGUE_ENTRY("tft", "league", "v1", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
+    V1_TFT_LEAGUE_RANK("tft", "league", "v1", "entries/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
+    V1_TFT_LEAGUE_MASTER("tft", "league", "v1", "master", LeagueList.class),
+    V1_TFT_LEAGUE_GRANDMASTER("tft", "league", "v1", "grandmaster", LeagueList.class),
+    V1_TFT_LEAGUE_CHALLENGER("tft", "league", "v1", "challenger", LeagueList.class),
+    
+    
+    ;
     
     
     private final String game;

@@ -1,17 +1,18 @@
 package no.stelar7.api.l4j8.pojo.summoner;
 
 
-import no.stelar7.api.l4j8.basic.constants.api.*;
-import no.stelar7.api.l4j8.basic.utils.*;
-import no.stelar7.api.l4j8.basic.utils.sql.*;
-import no.stelar7.api.l4j8.impl.builders.league.LeagueBuilder;
-import no.stelar7.api.l4j8.impl.builders.championmastery.ChampionMasteryBuilder;
-import no.stelar7.api.l4j8.impl.builders.match.MatchListBuilder;
-import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
-import no.stelar7.api.l4j8.impl.builders.thirdparty.ThirdPartyCodeBuilder;
-import no.stelar7.api.l4j8.impl.raw.*;
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.utils.Utils;
+import no.stelar7.api.l4j8.basic.utils.sql.SQLTypeMap;
+import no.stelar7.api.l4j8.impl.lol.builders.championmastery.ChampionMasteryBuilder;
+import no.stelar7.api.l4j8.impl.lol.builders.league.LeagueBuilder;
+import no.stelar7.api.l4j8.impl.lol.builders.match.MatchListBuilder;
+import no.stelar7.api.l4j8.impl.lol.builders.spectator.SpectatorBuilder;
+import no.stelar7.api.l4j8.impl.lol.builders.thirdparty.ThirdPartyCodeBuilder;
+import no.stelar7.api.l4j8.impl.lol.raw.SummonerAPI;
+import no.stelar7.api.l4j8.impl.tft.TFTMatchAPI;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
-import no.stelar7.api.l4j8.pojo.league.*;
+import no.stelar7.api.l4j8.pojo.league.LeagueEntry;
 import no.stelar7.api.l4j8.pojo.spectator.SpectatorGameInfo;
 
 import java.io.Serializable;
@@ -142,11 +143,20 @@ public final class Summoner implements Serializable
      *
      * @return MatchListBuilder
      */
-    public MatchListBuilder getGames()
+    public MatchListBuilder getLeagueGames()
     {
         return new MatchListBuilder().withPlatform(platform).withAccountId(accountId);
     }
     
+    /**
+     * This method has the same function as the main one but with the accountId and platform already set
+     *
+     * @return {@code List<String>}
+     */
+    public List<String> getTFTGames()
+    {
+        return TFTMatchAPI.getInstance().getMatchList(platform.toRegionalEnum(), puuid);
+    }
     
     /**
      * Returns the mastery of the provided championid
@@ -221,15 +231,15 @@ public final class Summoner implements Serializable
         {
             return false;
         }
-        if ((id != null) ? !id.equals(summoner.id) : (summoner.id != null))
+        if (!Objects.equals(id, summoner.id))
         {
             return false;
         }
-        if ((accountId != null) ? !accountId.equals(summoner.accountId) : (summoner.accountId != null))
+        if (!Objects.equals(accountId, summoner.accountId))
         {
             return false;
         }
-        if ((puuid != null) ? !puuid.equals(summoner.puuid) : (summoner.puuid != null))
+        if (!Objects.equals(puuid, summoner.puuid))
         {
             return false;
         }
@@ -237,7 +247,7 @@ public final class Summoner implements Serializable
         {
             return false;
         }
-        if ((name != null) ? !name.equals(summoner.name) : (summoner.name != null))
+        if (!Objects.equals(name, summoner.name))
         {
             return false;
         }

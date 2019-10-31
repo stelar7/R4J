@@ -22,7 +22,15 @@ public enum ServicePlatform implements RealmSpesificEnum
     /**
      * Asia platform.
      */
-    ASIA("ASIA", "asia");
+    ASIA("ASIA", "asia"),
+    /**
+     * GARENA platform.
+     */
+    GARENA("GARENA", "garena"),
+    /**
+     * PBE platform.
+     */
+    PBE("PBE", "pbe");
     
     private String[] key;
     

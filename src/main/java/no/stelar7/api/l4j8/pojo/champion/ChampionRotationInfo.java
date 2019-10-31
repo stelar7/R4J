@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.pojo.champion;
 
-import no.stelar7.api.l4j8.impl.raw.DDragonAPI;
+import no.stelar7.api.l4j8.impl.lol.raw.DDragonAPI;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 
 import java.io.Serializable;

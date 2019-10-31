@@ -22,6 +22,7 @@ public class TestLoRAPI
     
     
     @Test
+    @Ignore
     public void testActiveDeck()
     {
         LoRDeck deck = LoRApi.getActiveDeck();
@@ -29,6 +30,7 @@ public class TestLoRAPI
     }
     
     @Test
+    @Ignore
     public void testGameResult()
     {
         LoRGameResult result = LoRApi.getLastGameResult();
@@ -36,6 +38,7 @@ public class TestLoRAPI
     }
     
     @Test
+    @Ignore
     public void testGameState()
     {
         LoRGameInfo state = LoRApi.getCurrentGameState();

@@ -1,28 +1,30 @@
 package no.stelar7.api.l4j8.pojo.match;
 
+import com.google.gson.JsonObject;
 import no.stelar7.api.l4j8.basic.utils.Utils;
+import no.stelar7.api.l4j8.pojo.match.tft.TFTMatch;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 public class GAMHSMatch implements Serializable
 {
-    private String metadata;
-    private String json;
+    private Object metadata;
+    private Object info;
     
     public TFTMatch toTFTMatch()
     {
-        return Utils.getGson().fromJson(json, TFTMatch.class);
+        return Utils.getGson().fromJson(Utils.getGson().toJsonTree(info), TFTMatch.class);
     }
     
-    public String getMetadata()
+    public JsonObject getMetadata()
     {
-        return metadata;
+        return Utils.getGson().toJsonTree(metadata).getAsJsonObject();
     }
     
-    public String getJson()
+    public JsonObject getInfo()
     {
-        return json;
+        return Utils.getGson().toJsonTree(info).getAsJsonObject();
     }
     
     @Override
@@ -38,13 +40,13 @@ public class GAMHSMatch implements Serializable
         }
         GAMHSMatch that = (GAMHSMatch) o;
         return Objects.equals(metadata, that.metadata) &&
-               Objects.equals(json, that.json);
+               Objects.equals(info, that.info);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(metadata, json);
+        return Objects.hash(metadata, info);
     }
     
     @Override
@@ -52,7 +54,7 @@ public class GAMHSMatch implements Serializable
     {
         return "GAMHSMatch{" +
                "metadata='" + metadata + '\'' +
-               ", json='" + json + '\'' +
+               ", json='" + info + '\'' +
                '}';
     }
 }

@@ -8,17 +8,17 @@ public class LeagueItem implements Serializable
 {
     private static final long serialVersionUID = -6639741183354914597L;
     
-    private String     rank;
-    private boolean    hotStreak;
-    private MiniSeries miniSeries;
-    private int        wins;
-    private boolean    veteran;
-    private int        losses;
-    private String     summonerId;
-    private String     summonerName;
-    private boolean    inactive;
-    private boolean    freshBlood;
-    private int        leaguePoints;
+    protected String     rank;
+    protected boolean    hotStreak;
+    protected MiniSeries miniSeries;
+    protected int        wins;
+    protected boolean    veteran;
+    protected int        losses;
+    protected String     summonerId;
+    protected String     summonerName;
+    protected boolean    inactive;
+    protected boolean    freshBlood;
+    protected int        leaguePoints;
     
     /**
      * Takes in a Tier, and returns the TierDivisionType created from it.

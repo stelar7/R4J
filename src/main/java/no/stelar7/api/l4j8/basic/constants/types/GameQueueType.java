@@ -313,10 +313,16 @@ public enum GameQueueType implements CodedEnum
         this.apiname = apiName;
     }
     
-    public Optional<GameQueueType> getFromCode(final String value)
+    public Optional<GameQueueType> getFromCode(String value)
     {
         try
         {
+            
+            if (value.contains("."))
+            {
+                value = value.substring(0, value.indexOf("."));
+            }
+            
             return getFromId(Integer.parseInt(value));
         } catch (NumberFormatException e)
         {

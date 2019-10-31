@@ -1,6 +1,8 @@
 package no.stelar7.api.l4j8.basic.constants.api;
 
+import com.google.gson.JsonPrimitive;
 import no.stelar7.api.l4j8.basic.constants.types.*;
+import no.stelar7.api.l4j8.basic.exceptions.APIEnumNotUpToDateException;
 import no.stelar7.api.l4j8.basic.utils.sql.SQLTypeMap;
 
 import java.util.*;
@@ -177,6 +179,41 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
     public String getRealmValue()
     {
         return this.keys[1];
+    }
+    
+    public ServicePlatform toRegionalEnum()
+    {
+        switch (this)
+        {
+            
+            case UNKNOWN:
+                return ServicePlatform.UNKNOWN;
+            case BR1:
+            case NA1:
+            case LA1:
+            case LA2:
+            case OC1:
+                return ServicePlatform.AMERICAS;
+            case EUN1:
+            case EUW1:
+            case TR1:
+            case RU:
+                return ServicePlatform.EUROPE;
+            case JP1:
+            case KR:
+                return ServicePlatform.ASIA;
+            case PBE1:
+                return ServicePlatform.PBE;
+            case SG:
+            case PH:
+            case ID1:
+            case VN:
+            case TH:
+            case TW:
+                return ServicePlatform.GARENA;
+            default:
+                throw new APIEnumNotUpToDateException(ServicePlatform.class, new JsonPrimitive(this.toString()));
+        }
     }
     
     @Override

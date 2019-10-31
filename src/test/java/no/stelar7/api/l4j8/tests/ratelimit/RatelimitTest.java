@@ -2,8 +2,8 @@ package no.stelar7.api.l4j8.tests.ratelimit;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.L4J8;
-import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
-import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
+import no.stelar7.api.l4j8.impl.lol.builders.spectator.SpectatorBuilder;
+import no.stelar7.api.l4j8.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
 import org.junit.*;

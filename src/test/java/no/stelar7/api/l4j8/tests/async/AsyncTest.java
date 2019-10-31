@@ -2,9 +2,9 @@ package no.stelar7.api.l4j8.tests.async;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.L4J8;
-import no.stelar7.api.l4j8.impl.async.*;
-import no.stelar7.api.l4j8.impl.raw.SpectatorAPI;
-import no.stelar7.api.l4j8.pojo.match.MatchReference;
+import no.stelar7.api.l4j8.impl.lol.async.*;
+import no.stelar7.api.l4j8.impl.lol.raw.SpectatorAPI;
+import no.stelar7.api.l4j8.pojo.match.lol.MatchReference;
 import no.stelar7.api.l4j8.pojo.spectator.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;

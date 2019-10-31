@@ -1,6 +1,6 @@
 package no.stelar7.api.l4j8.tests.LCUTest;
 
-import no.stelar7.api.l4j8.impl.lcu.*;
+import no.stelar7.api.l4j8.impl.lol.lcu.*;
 import org.junit.*;
 
 public class LCURunningTest

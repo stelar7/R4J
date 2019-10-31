@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.tests.staticdata;
 import no.stelar7.api.l4j8.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.impl.L4J8;
-import no.stelar7.api.l4j8.impl.raw.DDragonAPI;
+import no.stelar7.api.l4j8.impl.lol.raw.DDragonAPI;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.staticdata.item.Item;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapDetails;

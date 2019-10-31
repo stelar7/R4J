@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.pojo.league;
 import no.stelar7.api.l4j8.basic.constants.types.*;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 public class LeagueList implements Serializable
 {
@@ -56,11 +56,11 @@ public class LeagueList implements Serializable
         
         LeagueList that = (LeagueList) o;
         
-        if ((entries != null) ? !entries.equals(that.entries) : (that.entries != null))
+        if (!Objects.equals(entries, that.entries))
         {
             return false;
         }
-        if ((name != null) ? !name.equals(that.name) : (that.name != null))
+        if (!Objects.equals(name, that.name))
         {
             return false;
         }
@@ -72,7 +72,7 @@ public class LeagueList implements Serializable
         {
             return false;
         }
-        return (leagueId != null) ? leagueId.equals(that.leagueId) : (that.leagueId == null);
+        return Objects.equals(leagueId, that.leagueId);
     }
     
     @Override
