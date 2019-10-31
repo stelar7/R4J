@@ -3,6 +3,7 @@ package no.stelar7.api.l4j8.tests.tft;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.tft.TFTMatchAPI;
+import no.stelar7.api.l4j8.pojo.match.GAMHSMatch;
 import no.stelar7.api.l4j8.pojo.match.tft.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -27,6 +28,13 @@ public class TestTFTMatch
     public void testFetchMatch()
     {
         TFTMatch stelar7 = api.getMatch(ServicePlatform.EUROPE, "EUW1_4240052361");
+        System.out.println();
+    }
+    
+    @Test
+    public void testFetchMatchRAW()
+    {
+        GAMHSMatch stelar7 = api.getMatchRAW(ServicePlatform.EUROPE, "EUW1_4240052361");
         System.out.println();
     }
     
