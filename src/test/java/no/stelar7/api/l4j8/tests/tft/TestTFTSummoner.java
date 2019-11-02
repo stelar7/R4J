@@ -4,7 +4,6 @@ import no.stelar7.api.l4j8.basic.cache.impl.*;
 import no.stelar7.api.l4j8.basic.calling.DataCall;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.L4J8;
-import no.stelar7.api.l4j8.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.tft.TFTSummonerAPI;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
@@ -12,6 +11,7 @@ import org.junit.*;
 
 import java.util.function.Consumer;
 
+// assume that byName works, since we cant get any summoner ids otherwise..
 public class TestTFTSummoner
 {
     private final Consumer<Summoner> doAssertions = (final Summoner value) ->
@@ -34,38 +34,37 @@ public class TestTFTSummoner
     }
     
     @Test
+    @Ignore
     public void testById()
     {
-        // assume that byName works, since we cant get any summoner ids otherwise..
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
         Summoner s  = api.getSummonerByName(Platform.EUW1, "stelar7");
         Summoner s2 = api.getSummonerById(Platform.EUW1, s.getSummonerId());
         doAssertions.accept(s2);
     }
     
     @Test
+    @Ignore
     public void testByName()
     {
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = api.getSummonerByName(Platform.EUW1, "stelar7");
+        Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
         doAssertions.accept(s);
     }
     
     @Test
+    @Ignore
     public void testByAccount()
     {
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = api.getSummonerByName(Platform.EUW1, "stelar7");
+        Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
         
         Summoner optional = api.getSummonerByAccount(Platform.EUW1, s.getAccountId());
         doAssertions.accept(optional);
     }
     
     @Test
+    @Ignore
     public void testByPUUID()
     {
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = api.getSummonerByName(Platform.EUW1, "stelar7");
+        Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
         
         Summoner optional = api.getSummonerByPUUID(Platform.EUW1, s.getPUUID());
         doAssertions.accept(optional);

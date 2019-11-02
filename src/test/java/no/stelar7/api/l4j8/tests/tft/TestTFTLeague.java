@@ -6,7 +6,7 @@ import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.league.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class TestTFTLeague
     final L4J8 l4j8 = new L4J8(SecretFile.CREDS);
     
     @Test
+    @Ignore
     public void testSilver()
     {
         List<? extends LeagueItem> tierDiv = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.SILVER_I, 1);
@@ -24,6 +25,7 @@ public class TestTFTLeague
     }
     
     @Test
+    @Ignore
     public void testChallenger()
     {
         List<? extends LeagueItem> tierDiv = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.CHALLENGER_I, 1);
@@ -32,6 +34,7 @@ public class TestTFTLeague
     }
     
     @Test
+    @Ignore
     public void testEntries()
     {
         List<LeagueEntry> entries = l4j8.getTFTAPI().getLeagueAPI().getLeagueEntries(Platform.EUW1, Summoner.byName(Platform.EUW1, "stelar7").getSummonerId());
@@ -39,6 +42,7 @@ public class TestTFTLeague
     }
     
     @Test
+    @Ignore
     public void testList()
     {
         LeagueList entries = l4j8.getTFTAPI().getLeagueAPI().getLeague(Platform.EUW1, "f72c0910-aa73-11e9-93ca-c81f66dacb22");
