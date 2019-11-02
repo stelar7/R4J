@@ -18,7 +18,6 @@ public class TestTFTMatch
     
     
     @Test
-    @Ignore
     public void testFetchList()
     {
         List<String> stelar7 = api.getMatchList(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID());
@@ -26,7 +25,6 @@ public class TestTFTMatch
     }
     
     @Test
-    @Ignore
     public void testFetchMatch()
     {
         TFTMatch stelar7 = api.getMatch(ServicePlatform.EUROPE, "EUW1_4240052361");
@@ -34,7 +32,6 @@ public class TestTFTMatch
     }
     
     @Test
-    @Ignore
     public void testFetchMatchRAW()
     {
         GAMHSMatch stelar7 = api.getMatchRAW(ServicePlatform.EUROPE, "EUW1_4240052361");
@@ -42,7 +39,6 @@ public class TestTFTMatch
     }
     
     @Test
-    @Ignore
     public void testMatchIterator()
     {
         MatchIterator stelar7 = api.getMatchIterator(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID());

@@ -93,11 +93,11 @@ public enum TierDivisionType implements CodedEnum
         switch (this)
         {
             case CHALLENGER_I:
-                return "Challenger I";
+                return "Challenger";
             case GRANDMASTER_I:
-                return "Grandmaster I";
+                return "Grandmaster";
             case MASTER_I:
-                return "Master I";
+                return "Master";
             case DIAMOND_I:
                 return "Diamond I";
             case DIAMOND_II:

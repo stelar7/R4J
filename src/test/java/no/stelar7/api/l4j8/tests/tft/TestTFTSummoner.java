@@ -34,7 +34,6 @@ public class TestTFTSummoner
     }
     
     @Test
-    @Ignore
     public void testById()
     {
         Summoner s  = api.getSummonerByName(Platform.EUW1, "stelar7");
@@ -43,7 +42,6 @@ public class TestTFTSummoner
     }
     
     @Test
-    @Ignore
     public void testByName()
     {
         Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
@@ -51,7 +49,6 @@ public class TestTFTSummoner
     }
     
     @Test
-    @Ignore
     public void testByAccount()
     {
         Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
@@ -61,7 +58,6 @@ public class TestTFTSummoner
     }
     
     @Test
-    @Ignore
     public void testByPUUID()
     {
         Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
