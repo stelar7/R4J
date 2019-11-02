@@ -17,6 +17,11 @@ public class GAMHSMatch implements Serializable
         return Utils.getGson().fromJson(Utils.getGson().toJsonTree(info), TFTMatch.class);
     }
     
+    public TFTMetadata toTFTMetadata()
+    {
+        return Utils.getGson().fromJson(Utils.getGson().toJsonTree(metadata), TFTMetadata.class);
+    }
+    
     public JsonObject getMetadata()
     {
         return Utils.getGson().toJsonTree(metadata).getAsJsonObject();

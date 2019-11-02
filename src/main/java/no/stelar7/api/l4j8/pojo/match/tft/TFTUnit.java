@@ -5,9 +5,11 @@ import java.util.*;
 
 public class TFTUnit implements Serializable
 {
-    private String       name;
-    private int          tier;
-    private List<Object> items;
+    private String        name;
+    private int           tier;
+    private int           rarity;
+    private String        character_id;
+    private List<Integer> items;
     
     public String getName()
     {
@@ -19,7 +21,17 @@ public class TFTUnit implements Serializable
         return tier;
     }
     
-    public List<Object> getItems()
+    public int getRarity()
+    {
+        return rarity;
+    }
+    
+    public String getCharacterId()
+    {
+        return character_id;
+    }
+    
+    public List<Integer> getItems()
     {
         return items;
     }
@@ -37,14 +49,16 @@ public class TFTUnit implements Serializable
         }
         TFTUnit tftUnit = (TFTUnit) o;
         return tier == tftUnit.tier &&
+               rarity == tftUnit.rarity &&
                Objects.equals(name, tftUnit.name) &&
+               Objects.equals(character_id, tftUnit.character_id) &&
                Objects.equals(items, tftUnit.items);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(name, tier, items);
+        return Objects.hash(name, tier, rarity, character_id, items);
     }
     
     @Override
@@ -53,6 +67,8 @@ public class TFTUnit implements Serializable
         return "TFTUnit{" +
                "name='" + name + '\'' +
                ", tier=" + tier +
+               ", rarity=" + rarity +
+               ", character_id='" + character_id + '\'' +
                ", items=" + items +
                '}';
     }

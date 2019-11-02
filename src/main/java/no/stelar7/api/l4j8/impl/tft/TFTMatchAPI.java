@@ -3,7 +3,7 @@ package no.stelar7.api.l4j8.impl.tft;
 import no.stelar7.api.l4j8.basic.calling.*;
 import no.stelar7.api.l4j8.basic.constants.api.*;
 import no.stelar7.api.l4j8.basic.utils.Pair;
-import no.stelar7.api.l4j8.pojo.match.GAMHSMatch;
+import no.stelar7.api.l4j8.pojo.match.*;
 import no.stelar7.api.l4j8.pojo.match.tft.*;
 
 import java.util.*;
@@ -49,8 +49,8 @@ public class TFTMatchAPI
     /**
      * Returns an iterator that transforms all {@code MatchReference} to {@code Match}
      *
-     * @param server    the platform the account is on
-     * @param puuid the account to check
+     * @param server the platform the account is on
+     * @param puuid  the account to check
      * @return {@code MatchIterator}
      */
     public MatchIterator getMatchIterator(ServicePlatform server, String puuid)
@@ -61,6 +61,11 @@ public class TFTMatchAPI
     public TFTMatch getMatch(ServicePlatform platform, String gameId)
     {
         return getMatchRAW(platform, gameId).toTFTMatch();
+    }
+    
+    public TFTMetadata getMetadata(ServicePlatform platform, String gameId)
+    {
+        return getMatchRAW(platform, gameId).toTFTMetadata();
     }
     
     public GAMHSMatch getMatchRAW(ServicePlatform platform, String gameId)
