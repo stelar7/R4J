@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.impl.lol.lcu;
+package no.stelar7.api.l4j8.impl.lol.replay;
 
 import no.stelar7.api.l4j8.basic.calling.DataCallBuilder;
 import no.stelar7.api.l4j8.basic.constants.api.*;
@@ -6,9 +6,10 @@ import no.stelar7.api.l4j8.basic.exceptions.APIResponseException;
 import no.stelar7.api.l4j8.basic.utils.Utils;
 import no.stelar7.api.l4j8.pojo.replay.*;
 
+import java.util.Map;
+
 public class ReplayAPI
 {
-    
     public static ReplayGameClientProcessInfo getProcessInfo()
     {
         try
@@ -17,6 +18,40 @@ public class ReplayAPI
                     .withLimiters(false)
                     .withProxy(Constants.RECORDING_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_GAME)
+                    .withRequestMethod("GET")
+                    .build();
+        } catch (APIResponseException e)
+        {
+            return null;
+        }
+    }
+    
+    public static void setParticleVisibility(Map<String, Boolean> particles)
+    {
+        try
+        {
+            new DataCallBuilder()
+                    .withLimiters(false)
+                    .withProxy(Constants.RECORDING_PROXY)
+                    .withEndpoint(URLEndpoint.REPLAY_PARTICLES)
+                    .withRequestMethod("POST")
+                    .withPostData(Utils.getGson().toJson(particles))
+                    .build();
+            
+        } catch (APIResponseException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public static Map<String, Boolean> getParticleVisibility()
+    {
+        try
+        {
+            return (Map<String, Boolean>) new DataCallBuilder()
+                    .withLimiters(false)
+                    .withProxy(Constants.RECORDING_PROXY)
+                    .withEndpoint(URLEndpoint.REPLAY_PARTICLES)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)

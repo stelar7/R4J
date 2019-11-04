@@ -3,28 +3,28 @@ package no.stelar7.api.l4j8.basic.constants.api;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.l4j8.impl.lor.*;
-import no.stelar7.api.l4j8.pojo.champion.*;
+import no.stelar7.api.l4j8.pojo.champion.ChampionRotationInfo;
 import no.stelar7.api.l4j8.pojo.championmastery.ChampionMastery;
 import no.stelar7.api.l4j8.pojo.league.*;
-import no.stelar7.api.l4j8.pojo.match.*;
+import no.stelar7.api.l4j8.pojo.match.GAMHSMatch;
 import no.stelar7.api.l4j8.pojo.match.lol.*;
 import no.stelar7.api.l4j8.pojo.replay.*;
 import no.stelar7.api.l4j8.pojo.spectator.*;
-import no.stelar7.api.l4j8.pojo.staticdata.champion.*;
-import no.stelar7.api.l4j8.pojo.staticdata.item.*;
+import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampionList;
+import no.stelar7.api.l4j8.pojo.staticdata.item.ItemList;
 import no.stelar7.api.l4j8.pojo.staticdata.language.LanguageStrings;
 import no.stelar7.api.l4j8.pojo.staticdata.map.MapData;
-import no.stelar7.api.l4j8.pojo.staticdata.mastery.*;
+import no.stelar7.api.l4j8.pojo.staticdata.mastery.StaticMasteryList;
 import no.stelar7.api.l4j8.pojo.staticdata.perk.*;
 import no.stelar7.api.l4j8.pojo.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.l4j8.pojo.staticdata.realm.Realm;
-import no.stelar7.api.l4j8.pojo.staticdata.rune.*;
-import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.*;
+import no.stelar7.api.l4j8.pojo.staticdata.rune.StaticRuneList;
+import no.stelar7.api.l4j8.pojo.staticdata.summonerspell.StaticSummonerSpellList;
 import no.stelar7.api.l4j8.pojo.status.ShardStatus;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.pojo.tournament.*;
 
-import java.util.List;
+import java.util.*;
 
 public enum URLEndpoint
 {
@@ -150,10 +150,24 @@ public enum URLEndpoint
     
     // REPLAY
     REPLAY_GAME("replay/game", "", "", "", ReplayGameClientProcessInfo.class),
+    REPLAY_PARTICLES("replay/particles", "", "", "", new TypeToken<Map<String, Boolean>>() {}.getType()),
     REPLAY_PLAYBACK("replay/playback", "", "", "", ReplayPlaybackInfo.class),
     REPLAY_RECORDING("replay/recording", "", "", "", ReplayRecordingInfo.class),
     REPLAY_RENDER("replay/render", "", "", "", ReplayRenderInfo.class),
     REPLAY_SEQUENCE("replay/sequence", "", "", "", ReplayKeyframeSequence.class),
+    
+    REPLAY_ACTIVE_PLAYER("liveclientdata/activeplayer", "", "", "", JsonElement.class),
+    REPLAY_ACTIVE_PLAYER_ABILITIES("liveclientdata/activeplayerabilities", "", "", "", JsonElement.class),
+    REPLAY_ACTIVE_PLAYER_NAME("liveclientdata/activeplayername", "", "", "", JsonElement.class),
+    REPLAY_ACTIVE_PLAYER_RUNES("liveclientdata/activeplayerrunes", "", "", "", JsonElement.class),
+    REPLAY_PLAYER_LIST("liveclientdata/playerlist", "", "", "", JsonElement.class),
+    REPLAY_EVENT_DATA("liveclientdata/eventdata", "", "", "", JsonElement.class),
+    REPLAY_GAME_DATA("liveclientdata/allgamedata", "", "", "", JsonElement.class),
+    REPLAY_GAME_STATS("liveclientdata/gamestats", "", "", "", JsonElement.class),
+    REPLAY_PLAYER_RUNES("liveclientdata/playermainrunes", "", "", "", JsonElement.class),
+    REPLAY_PLAYER_ITEMS("liveclientdata/playeritems", "", "", "", JsonElement.class),
+    REPLAY_PLAYER_SCORES("liveclientdata/playerscores", "", "", "", JsonElement.class),
+    REPLAY_PLAYER_SUMMONERS("liveclientdata/playersummonerspells", "", "", "", JsonElement.class),
     
     
     LOR_STATIC_ACTIVE_DECK("static-decklist", "", "", "", JsonObject.class),
