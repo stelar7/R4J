@@ -12,7 +12,7 @@ public class TestLoRAPI
     {
         while (true)
         {
-            LoRApi.getCurrentGameState();
+            LoRApi.getCardPositions();
             LoRApi.getLastGameResult();
             LoRApi.getActiveDeck();
             
@@ -41,7 +41,7 @@ public class TestLoRAPI
     @Ignore
     public void testGameState()
     {
-        LoRGameInfo state = LoRApi.getCurrentGameState();
+        LoRGameInfo state = LoRApi.getCardPositions();
         System.out.println();
     }
 }

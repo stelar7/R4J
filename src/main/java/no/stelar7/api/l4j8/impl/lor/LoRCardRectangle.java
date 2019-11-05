@@ -4,14 +4,15 @@ import no.stelar7.lor.types.LoRCard;
 
 import java.util.Objects;
 
-public class LoRGameRectangle
+public class LoRCardRectangle
 {
-    private String CardID;
-    private String CardCode;
-    private int    TopLeftX;
-    private int    TopLeftY;
-    private int    Width;
-    private int    Height;
+    private String  CardID;
+    private String  CardCode;
+    private boolean localPlayer;
+    private int     TopLeftX;
+    private int     TopLeftY;
+    private int     Width;
+    private int     Height;
     
     private LoRCard card;
     
@@ -35,6 +36,11 @@ public class LoRGameRectangle
         return CardCode;
     }
     
+    public boolean isLocalPlayer()
+    {
+        return localPlayer;
+    }
+    
     public int getTopLeftX()
     {
         return TopLeftX;
@@ -55,6 +61,7 @@ public class LoRGameRectangle
         return Height;
     }
     
+    
     @Override
     public boolean equals(Object o)
     {
@@ -66,31 +73,35 @@ public class LoRGameRectangle
         {
             return false;
         }
-        LoRGameRectangle that = (LoRGameRectangle) o;
-        return TopLeftX == that.TopLeftX &&
+        LoRCardRectangle that = (LoRCardRectangle) o;
+        return localPlayer == that.localPlayer &&
+               TopLeftX == that.TopLeftX &&
                TopLeftY == that.TopLeftY &&
                Width == that.Width &&
                Height == that.Height &&
                Objects.equals(CardID, that.CardID) &&
-               Objects.equals(CardCode, that.CardCode);
+               Objects.equals(CardCode, that.CardCode) &&
+               Objects.equals(card, that.card);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(CardID, CardCode, TopLeftX, TopLeftY, Width, Height);
+        return Objects.hash(CardID, CardCode, localPlayer, TopLeftX, TopLeftY, Width, Height, card);
     }
     
     @Override
     public String toString()
     {
-        return "LoRGameRectangle{" +
+        return "LoRCardRectangle{" +
                "CardID='" + CardID + '\'' +
-               ", Card='" + (getCard() == null ? CardCode : card) + '\'' +
+               ", CardCode='" + CardCode + '\'' +
+               ", localPlayer=" + localPlayer +
                ", TopLeftX=" + TopLeftX +
                ", TopLeftY=" + TopLeftY +
                ", Width=" + Width +
                ", Height=" + Height +
+               ", card=" + card +
                '}';
     }
 }

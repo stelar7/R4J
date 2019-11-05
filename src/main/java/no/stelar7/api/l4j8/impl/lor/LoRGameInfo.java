@@ -8,7 +8,7 @@ public class LoRGameInfo
     private String                 OpponentName;
     private LoRGameState           GameState;
     private LoRGameScreen          Screen;
-    private List<LoRGameRectangle> Rectangles;
+    private List<LoRCardRectangle> Rectangles;
     
     public String getPlayerName()
     {
@@ -30,7 +30,7 @@ public class LoRGameInfo
         return Screen;
     }
     
-    public List<LoRGameRectangle> getRectangles()
+    public List<LoRCardRectangle> getRectangles()
     {
         return Rectangles;
     }

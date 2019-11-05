@@ -173,6 +173,7 @@ public enum URLEndpoint
     LOR_STATIC_ACTIVE_DECK("static-decklist", "", "", "", JsonObject.class),
     LOR_CARD_POSITIONS("positional-rectangles", "", "", "", LoRGameInfo.class),
     LOR_GAME_RESULT("game-result", "", "", "", LoRGameResult.class),
+    LOR_EXPEDITIONS_STATE("expeditions-state", "", "", "", LoRExpeditionInfo.class),
     
     
     V1_TFT_SUMMONER_BY_ACCOUNT("tft", "summoner", "v1", "summoners/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, Summoner.class),

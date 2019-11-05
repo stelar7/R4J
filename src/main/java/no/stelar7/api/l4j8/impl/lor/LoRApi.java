@@ -43,12 +43,21 @@ public class LoRApi
                 .build();
     }
     
-    public static LoRGameInfo getCurrentGameState()
+    public static LoRGameInfo getCardPositions()
     {
         return (LoRGameInfo) new DataCallBuilder()
                 .withLimiters(false)
                 .withProxy(LoRConnection.getConnectionString() + Constants.GSVR)
                 .withEndpoint(URLEndpoint.LOR_CARD_POSITIONS)
+                .build();
+    }
+    
+    public static LoRExpeditionInfo getExpeditionsState()
+    {
+        return (LoRExpeditionInfo) new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(LoRConnection.getConnectionString() + Constants.GSVR)
+                .withEndpoint(URLEndpoint.LOR_EXPEDITIONS_STATE)
                 .build();
     }
     

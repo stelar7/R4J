@@ -238,7 +238,28 @@ public class DataCallBuilder
             returnValue = postProcessSummoner(returnValue);
         }
         
+        final List<URLEndpoint> apexEndpoints = Arrays.asList(URLEndpoint.V3_LEAGUE_MASTER, URLEndpoint.V3_LEAGUE_GRANDMASTER, URLEndpoint.V3_LEAGUE_CHALLENGER,
+                                                              URLEndpoint.V1_TFT_LEAGUE_MASTER, URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, URLEndpoint.V1_TFT_LEAGUE_CHALLENGER);
+        if (apexEndpoints.contains(this.dc.getEndpoint()))
+        {
+            returnValue = postProcessApex(returnValue);
+        }
+        
         return returnValue;
+    }
+    
+    private String postProcessApex(String returnValue)
+    {
+        JsonObject elem    = (JsonObject) new JsonParser().parse(returnValue);
+        JsonArray  entries = elem.getAsJsonArray("entries");
+        entries.forEach(e -> {
+            JsonObject ob = (JsonObject) e;
+            ob.add("leagueId", elem.get("leagueId"));
+            ob.add("queueType", elem.get("queue"));
+            ob.add("tier", elem.get("tier"));
+        });
+        
+        return Utils.getGson().toJson(elem);
     }
     
     private String postProcessDDragonMany(String returnValue)

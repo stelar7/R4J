@@ -204,7 +204,7 @@ public final class LeagueAPI
      * @param page    the page to query (first page is 1)
      * @return LeagueList
      */
-    public List<? extends LeagueItem> getLeagueByTierDivision(Platform server, GameQueueType queue, TierDivisionType tierdiv, int page)
+    public List<LeagueEntry> getLeagueByTierDivision(Platform server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
@@ -263,7 +263,7 @@ public final class LeagueAPI
      * @param tierdiv the tier and division to query
      * @return LeagueList
      */
-    public LazyList<? extends LeagueItem> getLeagueByTierDivisionLazy(Platform server, GameQueueType queue, TierDivisionType tierdiv)
+    public LazyList<LeagueEntry> getLeagueByTierDivisionLazy(Platform server, GameQueueType queue, TierDivisionType tierdiv)
     {
         return new LazyList<>(1, prevValue -> getLeagueByTierDivision(server, queue, tierdiv, prevValue + 1));
     }

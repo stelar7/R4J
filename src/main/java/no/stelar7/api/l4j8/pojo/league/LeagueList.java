@@ -9,11 +9,11 @@ public class LeagueList implements Serializable
 {
     private static final long serialVersionUID = -5998948570024210475L;
     
-    private List<LeagueItem> entries;
-    private String           name;
-    private GameQueueType    queue;
-    private TierType         tier;
-    private String           leagueId;
+    private List<LeagueEntry> entries;
+    private String            name;
+    private GameQueueType     queue;
+    private TierType          tier;
+    private String            leagueId;
     
     
     /**
@@ -25,19 +25,19 @@ public class LeagueList implements Serializable
      */
     public TierDivisionType getTierDivisionType(String id)
     {
-        LeagueItem pos = getLeagueItem(id);
+        LeagueEntry pos = getLeagueEntry(id);
         
         return pos == null ? TierDivisionType.UNRANKED : pos.getTierDivisionType(tier);
     }
     
     /**
-     * Takes in a summonerId, and returns the LeagueItem found in the list.
+     * Takes in a summonerId, and returns the LeagueEntry found in the list.
      * Returns null if not found
      *
      * @param id the Tier to use for construction
-     * @return LeagueItem
+     * @return LeagueEntry
      */
-    public LeagueItem getLeagueItem(String id)
+    public LeagueEntry getLeagueEntry(String id)
     {
         return entries.stream().filter(s -> s.getSummonerId().equals(id)).findFirst().orElse(null);
     }
@@ -91,7 +91,7 @@ public class LeagueList implements Serializable
      *
      * @return the entries
      */
-    public List<LeagueItem> getEntries()
+    public List<LeagueEntry> getEntries()
     {
         return this.entries;
     }

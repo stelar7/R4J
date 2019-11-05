@@ -30,15 +30,14 @@ public class LeagueTest
     @Test
     public void testMasterLeague()
     {
-        LazyList<? extends LeagueItem> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.MASTER_I);
-        data.loadFully();
+        List<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivision(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.MASTER_I, 1);
         System.out.println(data.size());
     }
     
     @Test
     public void testGrandmasterLeague()
     {
-        LazyList<? extends LeagueItem> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GRANDMASTER_I);
+        LazyList<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GRANDMASTER_I);
         data.loadFully();
         System.out.println(data.size());
     }
@@ -46,7 +45,7 @@ public class LeagueTest
     @Test
     public void testChallengerLeague()
     {
-        LazyList<? extends LeagueItem> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.CHALLENGER_I);
+        LazyList<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.CHALLENGER_I);
         data.loadFully();
         System.out.println(data.size());
     }
@@ -65,7 +64,7 @@ public class LeagueTest
     @Ignore
     public void testPositionalRanks()
     {
-        LazyList<? extends LeagueItem> data = l4j8.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.DIAMOND_I);
+        LazyList<LeagueEntry> data = l4j8.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.DIAMOND_I);
         data.loadFully();
         System.out.println(data.size());
     }
@@ -74,7 +73,7 @@ public class LeagueTest
     @Ignore
     public void testPositionalRanksTFT()
     {
-        LazyList<? extends LeagueItem> data = l4j8.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.TEAMFIGHT_TACTICS_RANKED, TierDivisionType.GOLD_I);
+        LazyList<LeagueEntry> data = l4j8.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.TEAMFIGHT_TACTICS_RANKED, TierDivisionType.GOLD_I);
         data.loadFully();
         System.out.println(data.size());
     }

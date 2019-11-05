@@ -196,7 +196,7 @@ public class TFTLeagueAPI
      * @param page    the page to query (first page is 1)
      * @return LeagueList
      */
-    public List<? extends LeagueItem> getLeagueByTierDivision(Platform server, TierDivisionType tierdiv, int page)
+    public List<LeagueEntry> getLeagueByTierDivision(Platform server, TierDivisionType tierdiv, int page)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
@@ -252,7 +252,7 @@ public class TFTLeagueAPI
      * @param tierdiv the tier and division to query
      * @return LeagueList
      */
-    public LazyList<? extends LeagueItem> getLeagueByTierDivisionLazy(Platform server, TierDivisionType tierdiv)
+    public LazyList<LeagueEntry> getLeagueByTierDivisionLazy(Platform server, TierDivisionType tierdiv)
     {
         return new LazyList<>(1, prevValue -> getLeagueByTierDivision(server, tierdiv, prevValue + 1));
     }
