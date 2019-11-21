@@ -120,6 +120,7 @@ public final class MasteryAPI
                 level.setAccessible(true);
                 level.set(mastery, 0);
                 DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery, server, summonerId, championId);
+                return mastery;
                 
             } catch (NoSuchFieldException | IllegalAccessException e)
             {

@@ -15,6 +15,7 @@ public class TestLoRAPI
             LoRApi.getCardPositions();
             LoRApi.getLastGameResult();
             LoRApi.getActiveDeck();
+            LoRApi.getExpeditionsState();
             
             Thread.sleep(1000);
         }
