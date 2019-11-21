@@ -184,6 +184,14 @@ public class FileSystemCacheProvider implements CacheProvider
         {
             logger.info("Loaded data from cache ({} {} {})", this.getClass().getName(), type, Arrays.toString(data));
             Object o = in.readObject();
+            
+            // if the object we are trying to load is not valid, remove it
+            if (o == null)
+            {
+                Files.deleteIfExists(filepath);
+                return Optional.empty();
+            }
+            
             return Optional.of(o);
             
         } catch (IOException | ClassNotFoundException e)
