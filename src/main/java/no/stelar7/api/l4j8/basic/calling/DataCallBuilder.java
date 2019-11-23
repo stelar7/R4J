@@ -436,7 +436,7 @@ public class DataCallBuilder
             if (totalSleepDuration > this.dc.getMaxSleep())
             {
                 throw new APINoValidResponseException(String.format("API did not return a valid response in time. Total sleep time is over the max sleep value %s > %s...\n" +
-                                                                    "Try setting try setting `DataCall.setDefaultMaxSleep(long)` to a larger number (default is 10000)",
+                                                                    "Try setting `DataCall.setDefaultMaxSleep(long)` to a larger number (default is 10000)",
                                                                     (nextSleepDuration + totalSleepDuration), this.dc.getMaxSleep()));
             }
             
