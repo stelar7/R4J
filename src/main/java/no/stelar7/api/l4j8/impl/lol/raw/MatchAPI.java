@@ -62,7 +62,7 @@ public final class MatchAPI
         
         if (beginIndex != null)
         {
-            builder.withURLData(Constants.BEGININDEX_PLACEHOLDER_DATA, beginIndex.toString());
+            builder.withQueryParameter(Constants.BEGININDEX_PLACEHOLDER_DATA, beginIndex.toString());
         }
         if (endIndex != null)
         {
@@ -71,12 +71,12 @@ public final class MatchAPI
                 throw new IllegalArgumentException("begin-endindex out of range! (difference between beginIndex and endIndex is more than 100)");
             }
             
-            builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, endIndex.toString());
+            builder.withQueryParameter(Constants.ENDINDEX_PLACEHOLDER_DATA, endIndex.toString());
         }
         
         if (beginTime != null)
         {
-            builder.withURLData(Constants.BEGINTIME_PLACEHOLDER_DATA, beginTime.toString());
+            builder.withQueryParameter(Constants.BEGINTIME_PLACEHOLDER_DATA, beginTime.toString());
         }
         if (endTime != null)
         {
@@ -86,7 +86,7 @@ public final class MatchAPI
                 throw new IllegalArgumentException("begin-endtime out of range! (difference between beginTime and endTime is more than one week)");
             }
             
-            builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, endTime.toString());
+            builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, endTime.toString());
         }
         if (rankedQueue != null)
         {

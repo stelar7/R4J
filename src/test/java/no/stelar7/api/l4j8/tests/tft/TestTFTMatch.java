@@ -20,7 +20,7 @@ public class TestTFTMatch
     @Test
     public void testFetchList()
     {
-        List<String> stelar7 = api.getMatchList(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID());
+        List<String> stelar7 = api.getMatchList(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID(), 20);
         System.out.println();
     }
     
@@ -41,7 +41,7 @@ public class TestTFTMatch
     @Test
     public void testMatchIterator()
     {
-        MatchIterator stelar7 = api.getMatchIterator(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID());
+        MatchIterator stelar7 = api.getMatchIterator(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID(), 20);
         for (TFTMatch m : stelar7)
         {
             System.out.println(m);

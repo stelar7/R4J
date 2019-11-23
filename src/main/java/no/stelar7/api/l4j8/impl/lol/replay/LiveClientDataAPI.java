@@ -113,7 +113,7 @@ public class LiveClientDataAPI
                     .withLimiters(false)
                     .withProxy(Constants.RECORDING_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PLAYER_LIST)
-                    .withURLData("teamID", team.getValue())
+                    .withQueryParameter("teamID", team.getValue())
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -130,7 +130,7 @@ public class LiveClientDataAPI
                     .withLimiters(false)
                     .withProxy(Constants.RECORDING_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PLAYER_RUNES)
-                    .withURLData("summonerName", summoner)
+                    .withQueryParameter("summonerName", summoner)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -147,7 +147,7 @@ public class LiveClientDataAPI
                     .withLimiters(false)
                     .withProxy(Constants.RECORDING_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PLAYER_ITEMS)
-                    .withURLData("summonerName", summoner)
+                    .withQueryParameter("summonerName", summoner)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -164,7 +164,7 @@ public class LiveClientDataAPI
                     .withLimiters(false)
                     .withProxy(Constants.RECORDING_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PLAYER_SCORES)
-                    .withURLData("summonerName", summoner)
+                    .withQueryParameter("summonerName", summoner)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -181,7 +181,7 @@ public class LiveClientDataAPI
                     .withLimiters(false)
                     .withProxy(Constants.RECORDING_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PLAYER_SUMMONERS)
-                    .withURLData("summonerName", summoner)
+                    .withQueryParameter("summonerName", summoner)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)

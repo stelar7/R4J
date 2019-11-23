@@ -50,8 +50,8 @@ public final class TournamentAPI
     public List<String> generateTournamentCodes(final TournamentCodeParameters params, final long tournamentId, Integer count)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withURLData(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
-                                                       .withURLData(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
+                                                       .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
+                                                       .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
@@ -131,7 +131,7 @@ public final class TournamentAPI
     public TournamentCode getTournamentInfo(final String tournamentCode)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withQueryParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES_BY_CODE)
                                                        .withPlatform(ServicePlatform.AMERICAS);
         
@@ -249,7 +249,7 @@ public final class TournamentAPI
     public void updateTournament(final String tournamentCode, final TournamentCodeUpdateParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withURLData(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withQueryParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_PUT)

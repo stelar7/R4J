@@ -886,7 +886,7 @@ public class DataCallBuilder
      * @param value the value to add after the parameter (ie. 6fa459ea-ee8a-3ca4-894e-db77e160355e)
      * @return this
      */
-    public DataCallBuilder withURLData(final String key, final String value)
+    public DataCallBuilder withQueryParameter(final String key, final String value)
     {
         this.dc.getUrlData().merge(key, value, MERGE);
         return this;

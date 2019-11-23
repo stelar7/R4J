@@ -210,7 +210,7 @@ public final class LeagueAPI
                                                        .withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
-                                                       .withURLData(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                       .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
                                                        .withEndpoint(URLEndpoint.V3_LEAGUE_RANK)
                                                        .withPlatform(server);
         

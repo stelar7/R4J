@@ -46,7 +46,7 @@ public class LCUApi
                              .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
                              .withEndpoint(URLEndpoint.LCU_RESTART)
                              .withHeader(header.getKey(), header.getValue())
-                             .withURLData("delaySeconds", String.valueOf(waitTimeout))
+                             .withQueryParameter("delaySeconds", String.valueOf(waitTimeout))
                              .withRequestMethod("POST")
                              .build();
     }
@@ -149,7 +149,7 @@ public class LCUApi
         JsonArray arr = (JsonArray) new DataCallBuilder()
                 .withLimiters(false)
                 .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
-                .withURLData("name", name)
+                .withQueryParameter("name", name)
                 .withEndpoint(URLEndpoint.LCU_SUMMONER_BY_NAME)
                 .withRequestMethod("GET")
                 .withHeader(header.getKey(), header.getValue())

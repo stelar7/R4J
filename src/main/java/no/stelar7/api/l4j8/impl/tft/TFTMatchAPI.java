@@ -22,13 +22,14 @@ public class TFTMatchAPI
         // Hide public constructor
     }
     
-    public List<String> getMatchList(ServicePlatform server, String PUUID)
+    public List<String> getMatchList(ServicePlatform server, String PUUID, int count)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCHLIST)
+                                                       .withQueryParameter(Constants.COUNT_PLACEHOLDER_DATA, String.valueOf(count))
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCHLIST, server, PUUID);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCHLIST, server, PUUID, count);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -41,7 +42,7 @@ public class TFTMatchAPI
         }
         
         List<String> matchList = (List<String>) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_MATCHLIST, matchList, server, PUUID);
+        DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_MATCHLIST, matchList, server, PUUID, count);
         return matchList;
     }
     
@@ -49,13 +50,14 @@ public class TFTMatchAPI
     /**
      * Returns an iterator that transforms all {@code MatchReference} to {@code Match}
      *
+     * @deprecated
      * @param server the platform the account is on
      * @param puuid  the account to check
      * @return {@code MatchIterator}
      */
-    public MatchIterator getMatchIterator(ServicePlatform server, String puuid)
+    public MatchIterator getMatchIterator(ServicePlatform server, String puuid, int count)
     {
-        return new MatchIterator(getMatchList(server, puuid));
+        return new MatchIterator(getMatchList(server, puuid, count));
     }
     
     public TFTMatch getMatch(ServicePlatform platform, String gameId)

@@ -201,7 +201,7 @@ public class TFTLeagueAPI
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
-                                                       .withURLData(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                       .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RANK)
                                                        .withPlatform(server);
         

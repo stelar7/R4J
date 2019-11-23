@@ -149,7 +149,7 @@ public class MatchListBuilder
         
         if (this.beginIndex != null)
         {
-            builder.withURLData(Constants.BEGININDEX_PLACEHOLDER_DATA, String.valueOf(this.beginIndex));
+            builder.withQueryParameter(Constants.BEGININDEX_PLACEHOLDER_DATA, String.valueOf(this.beginIndex));
         }
         if (this.endIndex != null)
         {
@@ -158,12 +158,12 @@ public class MatchListBuilder
                 throw new IllegalArgumentException("begin-endindex out of range! (difference between beginIndex and endIndex is more than 100)");
             }
             
-            builder.withURLData(Constants.ENDINDEX_PLACEHOLDER_DATA, String.valueOf(this.endIndex));
+            builder.withQueryParameter(Constants.ENDINDEX_PLACEHOLDER_DATA, String.valueOf(this.endIndex));
         }
         
         if (this.beginTime != null)
         {
-            builder.withURLData(Constants.BEGINTIME_PLACEHOLDER_DATA, String.valueOf(this.beginTime));
+            builder.withQueryParameter(Constants.BEGINTIME_PLACEHOLDER_DATA, String.valueOf(this.beginTime));
         }
         if (this.endTime != null)
         {
@@ -173,7 +173,7 @@ public class MatchListBuilder
                 throw new IllegalArgumentException("begin-endtime out of range! (difference between beginTime and endTime is more than one week)");
             }
             
-            builder.withURLData(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(this.endTime));
+            builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(this.endTime));
         }
         if (this.queues != null)
         {
