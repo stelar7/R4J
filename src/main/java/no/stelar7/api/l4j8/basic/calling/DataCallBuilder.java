@@ -20,7 +20,7 @@ import java.security.cert.X509Certificate;
 import java.time.*;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiFunction;
@@ -435,16 +435,16 @@ public class DataCallBuilder
             
             if (totalSleepDuration > this.dc.getMaxSleep())
             {
-                logger.info("Total sleep time is over the max sleep value {} > {}... Returning null instead", (nextSleepDuration + totalSleepDuration), this.dc.getMaxSleep());
-                return null;
+                throw new APINoValidResponseException(String.format("API did not return a valid response in time. Total sleep time is over the max sleep value %s > %s...\n" +
+                                                                    "Try setting try setting `DataCall.setDefaultMaxSleep(long)` to a larger number (default is 10000)",
+                                                                    (nextSleepDuration + totalSleepDuration), this.dc.getMaxSleep()));
             }
             
             Thread.sleep(nextSleepDuration);
             return this.build(attempts);
         } catch (InterruptedException e)
         {
-            e.printStackTrace();
-            return null;
+            throw new APINoValidResponseException("Something interupted the API timeout;" + e.getMessage());
         }
     }
     
