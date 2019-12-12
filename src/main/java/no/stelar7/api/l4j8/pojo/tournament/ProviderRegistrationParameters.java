@@ -17,6 +17,11 @@ public class ProviderRegistrationParameters implements Serializable
         this.url = callbackUrl;
     }
     
+    public String toJson()
+    {
+        return String.format("{\"region\":\"%s\",\"url\":\"%s\"}", region.getRealmValue().toUpperCase(), url);
+    }
+    
     /**
      * The provider's callback URL to which tournament game results in this region should be posted.
      * The URL must be well-formed, use the http or https protocol, and use the default port for the protocol (http URLs must use port 80, https URLs must use port 443).

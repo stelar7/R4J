@@ -193,7 +193,7 @@ public final class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withEndpoint(URLEndpoint.V3_TOURNAMENT_PROVIDER)
-                                                       .withPostData(Utils.getGson().toJson(params))
+                                                       .withPostData(params.toJson())
                                                        .withRequestMethod(Constants.METHOD_POST)
                                                        .withPlatform(ServicePlatform.AMERICAS);
         

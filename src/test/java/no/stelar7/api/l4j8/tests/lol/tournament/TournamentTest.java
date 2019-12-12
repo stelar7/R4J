@@ -21,8 +21,8 @@ public class TournamentTest
     
     final TournamentAPI api = new L4J8(SecretFile.CREDS).getLoLAPI().getTournamentAPI(true);
     
-    
     @Test
+    @Ignore
     public void testAllRegistrations()
     {
         final ProviderRegistrationParameters params     = new ProviderRegistrationParameters(Platform.EUW1, "http://stelar7.no/loltest/provider.php");
