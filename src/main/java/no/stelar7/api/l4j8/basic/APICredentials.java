@@ -11,13 +11,13 @@ public class APICredentials
     /**
      * Instantiates new API credentials.
      *
-     * @param api        the api key
-     * @param tft        the tft api key
+     * @param lol        the lol key
+     * @param tft        the tft lol key
      * @param tournament the tournament key
      */
-    public APICredentials(final String api, final String tft, final String tournament)
+    public APICredentials(final String lol, final String tft, final String tournament)
     {
-        this.lolAPIKey = api;
+        this.lolAPIKey = lol;
         this.TFTAPIKey = tft;
         this.tournamentApiKey = tournament;
     }
@@ -25,13 +25,13 @@ public class APICredentials
     /**
      * Instantiates new API credentials.
      *
-     * @param api        the api key
+     * @param lol        the lol key
      * @param tournament the tournament key
      */
-    public APICredentials(final String api, final String tournament)
+    public APICredentials(final String lol, final String tournament)
     {
-        this.lolAPIKey = api;
-        this.TFTAPIKey = api;
+        this.lolAPIKey = lol;
+        this.TFTAPIKey = lol;
         this.tournamentApiKey = tournament;
     }
     
