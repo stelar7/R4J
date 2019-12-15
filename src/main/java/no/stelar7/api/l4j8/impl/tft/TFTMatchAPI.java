@@ -25,6 +25,7 @@ public class TFTMatchAPI
     public List<String> getMatchList(ServicePlatform server, String PUUID, int count)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCHLIST)
                                                        .withQueryParameter(Constants.COUNT_PLACEHOLDER_DATA, String.valueOf(count))
                                                        .withPlatform(server);
@@ -73,6 +74,7 @@ public class TFTMatchAPI
     public GAMHSMatch getMatchRAW(ServicePlatform platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCH)
                                                        .withPlatform(platform);
         

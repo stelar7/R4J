@@ -28,8 +28,8 @@ public class MySQLCacheProvider implements CacheProvider
         try
         {
             sql.open();
-            sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", DataCall.getCredentials().getBaseAPIKey()));
-            sql.getConnection().setCatalog(DataCall.getCredentials().getBaseAPIKey());
+            sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", DataCall.getCredentials().getUniqueKeyCombination()));
+            sql.getConnection().setCatalog(DataCall.getCredentials().getUniqueKeyCombination());
             
             logger.info("Created new database!");
             

@@ -33,6 +33,7 @@ public class TFTLeagueAPI
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_MASTER)
                                                        .withPlatform(server);
         
@@ -65,6 +66,7 @@ public class TFTLeagueAPI
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER)
                                                        .withPlatform(server);
         
@@ -97,6 +99,7 @@ public class TFTLeagueAPI
     private LeagueList getChallengerLeague(Platform server)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
         
@@ -130,6 +133,7 @@ public class TFTLeagueAPI
     public LeagueList getLeague(Platform server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(leagueId))
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE)
                                                        .withPlatform(server);
@@ -163,6 +167,7 @@ public class TFTLeagueAPI
     public List<LeagueEntry> getLeagueEntries(Platform server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_ENTRY)
                                                        .withPlatform(server);
@@ -201,6 +206,7 @@ public class TFTLeagueAPI
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RANK)
                                                        .withPlatform(server);

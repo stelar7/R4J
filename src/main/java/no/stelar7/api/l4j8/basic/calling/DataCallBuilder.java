@@ -99,7 +99,7 @@ public class DataCallBuilder
                 throw new APIUnsupportedActionException("No API Creds set!");
             }
             
-            dc.getUrlHeaders().put("X-Riot-Token", DataCall.getCredentials().getBaseAPIKey());
+            dc.getUrlHeaders().putIfAbsent("X-Riot-Token", DataCall.getCredentials().getLoLAPIKey());
             
             // app limit
             applyLimit(this.dc.getPlatform(), this.dc.getPlatform());

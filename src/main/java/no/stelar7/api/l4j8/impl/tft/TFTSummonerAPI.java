@@ -35,6 +35,7 @@ public class TFTSummonerAPI
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
+                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_ID)
                 .withPlatform(server);
         
@@ -67,6 +68,7 @@ public class TFTSummonerAPI
     public Summoner getSummonerByName(final Platform server, String summonerName)
     {
         DataCallBuilder builder = new DataCallBuilder()
+                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                 .withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeString(summonerName))
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_NAME)
                 .withPlatform(server);
@@ -100,6 +102,7 @@ public class TFTSummonerAPI
     public Summoner getSummonerByAccount(final Platform server, String accountId)
     {
         DataCallBuilder builder = new DataCallBuilder()
+                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                 .withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, accountId)
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
@@ -133,6 +136,7 @@ public class TFTSummonerAPI
     public Summoner getSummonerByPUUID(final Platform server, String PUUID)
     {
         DataCallBuilder builder = new DataCallBuilder()
+                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                 .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID)
                 .withPlatform(server);

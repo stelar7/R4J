@@ -4,8 +4,23 @@ import no.stelar7.api.l4j8.basic.exceptions.APIUnsupportedActionException;
 
 public class APICredentials
 {
-    private String baseApiKey;
+    private String lolAPIKey;
+    private String TFTAPIKey;
     private String tournamentApiKey;
+    
+    /**
+     * Instantiates new API credentials.
+     *
+     * @param api        the api key
+     * @param tft        the tft api key
+     * @param tournament the tournament key
+     */
+    public APICredentials(final String api, final String tft, final String tournament)
+    {
+        this.lolAPIKey = api;
+        this.TFTAPIKey = tft;
+        this.tournamentApiKey = tournament;
+    }
     
     /**
      * Instantiates new API credentials.
@@ -15,7 +30,8 @@ public class APICredentials
      */
     public APICredentials(final String api, final String tournament)
     {
-        this.baseApiKey = api;
+        this.lolAPIKey = api;
+        this.TFTAPIKey = api;
         this.tournamentApiKey = tournament;
     }
     
@@ -26,7 +42,8 @@ public class APICredentials
      */
     public APICredentials(final String api)
     {
-        this.baseApiKey = api;
+        this.lolAPIKey = api;
+        this.TFTAPIKey = api;
         this.tournamentApiKey = api;
     }
     
@@ -35,13 +52,27 @@ public class APICredentials
      *
      * @return the key
      */
-    public String getBaseAPIKey()
+    public String getLoLAPIKey()
     {
-        if (this.baseApiKey == null)
+        if (this.lolAPIKey == null)
         {
             throw new APIUnsupportedActionException("API key not set!");
         }
-        return this.baseApiKey;
+        return this.lolAPIKey;
+    }
+    
+    /**
+     * Gets the tft key.
+     *
+     * @return the key
+     */
+    public String getTFTAPIKey()
+    {
+        if (this.TFTAPIKey == null)
+        {
+            throw new APIUnsupportedActionException("API key not set!");
+        }
+        return this.TFTAPIKey;
     }
     
     /**
@@ -56,6 +87,11 @@ public class APICredentials
             throw new APIUnsupportedActionException("TOURNAMENT key not set!");
         }
         return this.tournamentApiKey;
+    }
+    
+    public String getUniqueKeyCombination()
+    {
+        return lolAPIKey + TFTAPIKey + tournamentApiKey;
     }
     
 }
