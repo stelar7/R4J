@@ -32,10 +32,10 @@ public final class SpectatorAPI
      */
     public List<SpectatorGameInfo> getFeaturedGames(Platform server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SPECTATOR_FEATURED)
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V4_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SPECTATOR_FEATURED, server);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_FEATURED, server);
         if (chl.isPresent())
         {
             return ((FeaturedGames) chl.get()).getGameList();
@@ -50,7 +50,7 @@ public final class SpectatorAPI
             }
             
             FeaturedGames fg = (FeaturedGames) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_FEATURED, fg, server);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_FEATURED, fg, server);
             return fg.getGameList();
         } catch (ClassCastException e)
         {
@@ -70,10 +70,10 @@ public final class SpectatorAPI
     public SpectatorGameInfo getCurrentGame(Platform server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_SPECTATOR_CURRENT)
+                                                       .withEndpoint(URLEndpoint.V4_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SPECTATOR_CURRENT, server, summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_CURRENT, server, summonerId);
         if (chl.isPresent())
         {
             return (SpectatorGameInfo) chl.get();
@@ -82,7 +82,7 @@ public final class SpectatorAPI
         try
         {
             SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_SPECTATOR_CURRENT, fg, server, summonerId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_CURRENT, fg, server, summonerId);
             return fg;
         } catch (ClassCastException e)
         {

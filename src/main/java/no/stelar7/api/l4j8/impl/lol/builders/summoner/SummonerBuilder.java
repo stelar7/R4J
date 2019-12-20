@@ -74,28 +74,28 @@ public class SummonerBuilder
         if (accId.length() > 0)
         {
             builder.withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, String.valueOf(this.accId));
-            endpoint = URLEndpoint.V3_SUMMONER_BY_ACCOUNT;
+            endpoint = URLEndpoint.V4_SUMMONER_BY_ACCOUNT;
             index = this.accId;
         }
         
         if (puuid.length() > 0)
         {
             builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, String.valueOf(this.puuid));
-            endpoint = URLEndpoint.V3_SUMMONER_BY_PUUID;
+            endpoint = URLEndpoint.V4_SUMMONER_BY_PUUID;
             index = this.puuid;
         }
         
         if (sumId.length() > 0)
         {
             builder.withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.sumId));
-            endpoint = URLEndpoint.V3_SUMMONER_BY_ID;
+            endpoint = URLEndpoint.V4_SUMMONER_BY_ID;
             index = this.sumId;
         }
         
         if (name.length() > 0)
         {
             builder.withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeString(this.name));
-            endpoint = URLEndpoint.V3_SUMMONER_BY_NAME;
+            endpoint = URLEndpoint.V4_SUMMONER_BY_NAME;
             index = this.name;
         }
         

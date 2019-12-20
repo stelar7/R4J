@@ -10,6 +10,7 @@ import no.stelar7.api.l4j8.basic.utils.Pair;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 public class LCUApi
 {
@@ -371,6 +372,14 @@ public class LCUApi
                 .build();
         
         return obj;
+    }
+    
+    public static Set<String> getWebsocketEvents()
+    {
+        String      obj2   = (String) LCUApi.customUrl("help", null);
+        JsonElement parsed = new JsonParser().parse(obj2);
+        JsonObject  events = parsed.getAsJsonObject().getAsJsonObject("events");
+        return events.keySet();
     }
     
     

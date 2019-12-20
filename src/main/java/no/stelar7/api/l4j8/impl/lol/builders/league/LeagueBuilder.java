@@ -66,10 +66,10 @@ public class LeagueBuilder
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
                                                        .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_ENTRY)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY)
                                                        .withPlatform(this.platform);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_ENTRY, this.platform, this.summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY, this.platform, this.summonerId);
         if (chl.isPresent())
         {
             return (List<LeagueEntry>) chl.get();
@@ -84,7 +84,7 @@ public class LeagueBuilder
             }
             
             List<LeagueEntry> list = (List<LeagueEntry>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, this.platform, this.summonerId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY, list, this.platform, this.summonerId);
             return list;
         } catch (ClassCastException e)
         {
@@ -103,10 +103,10 @@ public class LeagueBuilder
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
                                                        .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(this.leagueId))
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE)
                                                        .withPlatform(this.platform);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE, this.platform, this.leagueId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE, this.platform, this.leagueId);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -115,7 +115,7 @@ public class LeagueBuilder
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list, this.platform, this.leagueId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE, list, this.platform, this.leagueId);
             return list;
         } catch (ClassCastException e)
         {

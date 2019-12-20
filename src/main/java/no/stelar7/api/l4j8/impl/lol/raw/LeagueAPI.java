@@ -36,10 +36,10 @@ public final class LeagueAPI
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_MASTER)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_MASTER)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_MASTER, server, queue);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_MASTER, server, queue);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -48,7 +48,7 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_MASTER, list, server, queue);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_MASTER, list, server, queue);
             return list;
         } catch (ClassCastException e)
         {
@@ -70,10 +70,10 @@ public final class LeagueAPI
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_GRANDMASTER)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_GRANDMASTER)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_GRANDMASTER, server, queue);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_GRANDMASTER, server, queue);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -82,7 +82,7 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_GRANDMASTER, list, server, queue);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_GRANDMASTER, list, server, queue);
             return list;
         } catch (ClassCastException e)
         {
@@ -104,11 +104,11 @@ public final class LeagueAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_CHALLENGER)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_CHALLENGER, server, queue);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_CHALLENGER, server, queue);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -117,7 +117,7 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_CHALLENGER, list, server, queue);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_CHALLENGER, list, server, queue);
             return list;
         } catch (ClassCastException e)
         {
@@ -138,10 +138,10 @@ public final class LeagueAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(leagueId))
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE, server, leagueId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE, server, leagueId);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -150,7 +150,7 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE, list, server, leagueId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE, list, server, leagueId);
             return list;
         } catch (ClassCastException e)
         {
@@ -171,10 +171,10 @@ public final class LeagueAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_ENTRY)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_ENTRY, server, summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY, server, summonerId);
         if (chl.isPresent())
         {
             return (List<LeagueEntry>) chl.get();
@@ -189,7 +189,7 @@ public final class LeagueAPI
             }
             
             List<LeagueEntry> list = (List<LeagueEntry>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_ENTRY, list, server, summonerId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY, list, server, summonerId);
             return list;
         } catch (ClassCastException e)
         {
@@ -211,7 +211,7 @@ public final class LeagueAPI
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
                                                        .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
-                                                       .withEndpoint(URLEndpoint.V3_LEAGUE_RANK)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_RANK)
                                                        .withPlatform(server);
         
         if (Arrays.asList(TierDivisionType.MASTER_I, TierDivisionType.GRANDMASTER_I, TierDivisionType.CHALLENGER_I).contains(tierdiv))
@@ -234,7 +234,7 @@ public final class LeagueAPI
         }
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_LEAGUE_RANK, server, queue, tierdiv, page);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_RANK, server, queue, tierdiv, page);
         if (chl.isPresent())
         {
             return (List<LeagueEntry>) chl.get();
@@ -249,7 +249,7 @@ public final class LeagueAPI
             }
             
             List<LeagueEntry> list = (List<LeagueEntry>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_LEAGUE_RANK, list, server, queue, tierdiv, page);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_RANK, list, server, queue, tierdiv, page);
             return list;
         } catch (ClassCastException e)
         {

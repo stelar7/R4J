@@ -1,4 +1,4 @@
-package no.stelar7.api.l4j8.impl.lol.replay;
+package no.stelar7.api.l4j8.impl.lol.liveclient;
 
 import com.google.gson.JsonElement;
 import no.stelar7.api.l4j8.basic.calling.DataCallBuilder;
@@ -14,8 +14,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_EVENT_DATA)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_EVENT_DATA)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -30,8 +30,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_GAME_STATS)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_GAME_STATS)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -47,8 +47,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_ACTIVE_PLAYER)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_ACTIVE_PLAYER)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -63,8 +63,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_ACTIVE_PLAYER_ABILITIES)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_ACTIVE_PLAYER_ABILITIES)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -79,8 +79,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_ACTIVE_PLAYER_RUNES)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_ACTIVE_PLAYER_RUNES)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -95,8 +95,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_ACTIVE_PLAYER_NAME)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_ACTIVE_PLAYER_NAME)
                     .withRequestMethod("GET")
                     .build();
         } catch (APIResponseException e)
@@ -111,8 +111,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_PLAYER_LIST)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_PLAYER_LIST)
                     .withQueryParameter("teamID", team.getValue())
                     .withRequestMethod("GET")
                     .build();
@@ -128,8 +128,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_PLAYER_RUNES)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_PLAYER_RUNES)
                     .withQueryParameter("summonerName", summoner)
                     .withRequestMethod("GET")
                     .build();
@@ -145,8 +145,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_PLAYER_ITEMS)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_PLAYER_ITEMS)
                     .withQueryParameter("summonerName", summoner)
                     .withRequestMethod("GET")
                     .build();
@@ -162,8 +162,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_PLAYER_SCORES)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_PLAYER_SCORES)
                     .withQueryParameter("summonerName", summoner)
                     .withRequestMethod("GET")
                     .build();
@@ -179,8 +179,8 @@ public class LiveClientDataAPI
         {
             return (JsonElement) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
-                    .withEndpoint(URLEndpoint.REPLAY_PLAYER_SUMMONERS)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_PLAYER_SUMMONERS)
                     .withQueryParameter("summonerName", summoner)
                     .withRequestMethod("GET")
                     .build();

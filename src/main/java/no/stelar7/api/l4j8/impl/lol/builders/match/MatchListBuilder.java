@@ -143,7 +143,7 @@ public class MatchListBuilder
         }
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, this.id)
-                                                       .withEndpoint(URLEndpoint.V3_MATCHLIST)
+                                                       .withEndpoint(URLEndpoint.V4_MATCHLIST)
                                                        .withPlatform(this.platform);
         
         
@@ -188,7 +188,7 @@ public class MatchListBuilder
             this.champions.forEach(champ -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(champ)));
         }
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, this.platform, this.id, beginTime, endTime, beginIndex, endIndex, queues, seasons, champions);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCHLIST, this.platform, this.id, beginTime, endTime, beginIndex, endIndex, queues, seasons, champions);
         if (chl.isPresent())
         {
             return ((MatchList) chl.get()).getMatches();
@@ -201,7 +201,7 @@ public class MatchListBuilder
         }
         
         MatchList match = (MatchList) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, match, this.platform, this.id, beginTime, endTime, beginIndex, endIndex, queues, seasons, champions);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MATCHLIST, match, this.platform, this.id, beginTime, endTime, beginIndex, endIndex, queues, seasons, champions);
         return match.getMatches();
     }
     

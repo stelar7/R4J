@@ -37,7 +37,7 @@ public class ThirdPartyCodeBuilder
     public boolean checkCode()
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_THIRD_PARTY_CODE)
+                                                       .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
                                                        .withPlatform(this.platform);
         
         try
@@ -58,7 +58,7 @@ public class ThirdPartyCodeBuilder
     public String getCode()
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_THIRD_PARTY_CODE)
+                                                       .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
                                                        .withPlatform(this.platform);
         
         try

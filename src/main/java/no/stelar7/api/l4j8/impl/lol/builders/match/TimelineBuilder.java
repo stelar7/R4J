@@ -47,10 +47,10 @@ public class TimelineBuilder
         }
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(this.id))
-                                                       .withEndpoint(URLEndpoint.V3_TIMELINE)
+                                                       .withEndpoint(URLEndpoint.V4_TIMELINE)
                                                        .withPlatform(this.platform);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_TIMELINE, this.platform, this.id);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_TIMELINE, this.platform, this.id);
         if (chl.isPresent())
         {
             return (MatchTimeline) chl.get();
@@ -59,7 +59,7 @@ public class TimelineBuilder
         try
         {
             MatchTimeline timeline = (MatchTimeline) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline, this.platform, this.id);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_TIMELINE, timeline, this.platform, this.id);
             return timeline;
         } catch (ClassCastException e)
         {

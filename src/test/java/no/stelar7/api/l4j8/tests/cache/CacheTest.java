@@ -98,14 +98,14 @@ public class CacheTest
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         
-        DataCall.getCacheProvider().clear(URLEndpoint.V3_SUMMONER_BY_NAME, Platform.EUW1, id);
+        DataCall.getCacheProvider().clear(URLEndpoint.V4_SUMMONER_BY_NAME, Platform.EUW1, id);
         
         System.out.println("Fetching summoner after deleting entry");
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         
         CacheLifetimeHint defaults = CacheLifetimeHint.DEFAULTS;
-        defaults.add(URLEndpoint.V3_SUMMONER_BY_NAME, TimeUnit.SECONDS.toMillis(1));
+        defaults.add(URLEndpoint.V4_SUMMONER_BY_NAME, TimeUnit.SECONDS.toMillis(1));
         DataCall.getCacheProvider().setTimeToLive(defaults);
         Thread.sleep(1000);
         
@@ -165,7 +165,7 @@ public class CacheTest
         
         System.out.println("clearing cache");
         System.out.println();
-        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
+        DataCall.getCacheProvider().clear(URLEndpoint.V4_MATCH);
         
         start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         ref.getFullMatch();
@@ -184,12 +184,12 @@ public class CacheTest
         recents.get(2).getFullMatch();
         recents.get(3).getFullMatch();
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V3_MATCH));
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH));
         
         System.out.println("Waiting for cache timeout");
         TimeUnit.SECONDS.sleep(6);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V3_MATCH));
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH));
         
         System.out.println("Re-fetching cached items");
         start = stopwatch.runtime(TimeUnit.NANOSECONDS);
@@ -199,7 +199,7 @@ public class CacheTest
         recents.get(3).getFullMatch();
         System.out.printf("4x fetches took: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V3_MATCH));
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH));
         System.out.println();
     }
     

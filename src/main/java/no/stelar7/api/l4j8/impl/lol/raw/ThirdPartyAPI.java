@@ -22,7 +22,7 @@ public final class ThirdPartyAPI
     public boolean checkCode(Platform platform, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_THIRD_PARTY_CODE)
+                                                       .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
                                                        .withPlatform(platform);
         
         try
@@ -43,7 +43,7 @@ public final class ThirdPartyAPI
     public String getCode(Platform platform, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_THIRD_PARTY_CODE)
+                                                       .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
                                                        .withPlatform(platform);
         
         try

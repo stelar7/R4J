@@ -16,7 +16,7 @@ public class ReplayAPI
         {
             return (ReplayGameClientProcessInfo) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_GAME)
                     .withRequestMethod("GET")
                     .build();
@@ -32,7 +32,7 @@ public class ReplayAPI
         {
             new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PARTICLES)
                     .withRequestMethod("POST")
                     .withPostData(Utils.getGson().toJson(particles))
@@ -50,7 +50,7 @@ public class ReplayAPI
         {
             return (Map<String, Boolean>) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PARTICLES)
                     .withRequestMethod("GET")
                     .build();
@@ -66,7 +66,7 @@ public class ReplayAPI
         {
             new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PLAYBACK)
                     .withRequestMethod("POST")
                     .withPostData(Utils.getGson().toJson(info))
@@ -84,7 +84,7 @@ public class ReplayAPI
         {
             return (ReplayPlaybackInfo) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_PLAYBACK)
                     .withRequestMethod("GET")
                     .build();
@@ -100,7 +100,7 @@ public class ReplayAPI
         {
             new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_RECORDING)
                     .withRequestMethod("POST")
                     .withPostData(Utils.getGson().toJson(info))
@@ -118,7 +118,7 @@ public class ReplayAPI
         {
             return (ReplayRecordingInfo) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_RECORDING)
                     .withRequestMethod("GET")
                     .build();
@@ -134,7 +134,7 @@ public class ReplayAPI
         {
             new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_RENDER)
                     .withRequestMethod("POST")
                     .withPostData(Utils.getGson().toJson(info))
@@ -152,7 +152,7 @@ public class ReplayAPI
         {
             return (ReplayRenderInfo) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_RENDER)
                     .withRequestMethod("GET")
                     .build();
@@ -168,7 +168,7 @@ public class ReplayAPI
         {
             new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_SEQUENCE)
                     .withRequestMethod("POST")
                     .withPostData(Utils.getGson().toJson(info))
@@ -186,7 +186,7 @@ public class ReplayAPI
         {
             return (ReplayKeyframeSequence) new DataCallBuilder()
                     .withLimiters(false)
-                    .withProxy(Constants.RECORDING_PROXY)
+                    .withProxy(Constants.CLIENT_PROXY)
                     .withEndpoint(URLEndpoint.REPLAY_SEQUENCE)
                     .withRequestMethod("GET")
                     .build();

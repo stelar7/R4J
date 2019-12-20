@@ -52,14 +52,14 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
                                                        .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
-                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)
+                                                       .withEndpoint(URLEndpoint.V4_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
                                                        .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
         {
-            builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_CODES);
+            builder.withEndpoint(URLEndpoint.V4_TOURNAMENT_STUB_CODES);
         }
         
         try
@@ -82,7 +82,7 @@ public final class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCHLIST)
+                                                       .withEndpoint(URLEndpoint.V4_TOURNAMENT_MATCHLIST)
                                                        .withPlatform(platform);
         
         try
@@ -110,7 +110,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
-                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_MATCH)
+                                                       .withEndpoint(URLEndpoint.V4_TOURNAMENT_MATCH)
                                                        .withPlatform(server);
         try
         {
@@ -132,7 +132,7 @@ public final class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withQueryParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES_BY_CODE)
+                                                       .withEndpoint(URLEndpoint.V4_TOURNAMENT_CODES_BY_CODE)
                                                        .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
@@ -160,12 +160,12 @@ public final class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_LOBBY_EVENTS)
+                                                       .withEndpoint(URLEndpoint.V4_TOURNAMENT_LOBBY_EVENTS)
                                                        .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
         {
-            builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_LOBBY_EVENTS);
+            builder.withEndpoint(URLEndpoint.V4_TOURNAMENT_STUB_LOBBY_EVENTS);
         }
         
         try
@@ -192,7 +192,7 @@ public final class TournamentAPI
     public Long registerAsProvider(final ProviderRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_PROVIDER)
+                                                       .withEndpoint(URLEndpoint.V4_TOURNAMENT_PROVIDER)
                                                        .withPostData(params.toJson())
                                                        .withRequestMethod(Constants.METHOD_POST)
                                                        .withPlatform(ServicePlatform.AMERICAS);
@@ -200,7 +200,7 @@ public final class TournamentAPI
         
         if (useStub)
         {
-            builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_PROVIDER);
+            builder.withEndpoint(URLEndpoint.V4_TOURNAMENT_STUB_PROVIDER);
         }
         
         try
@@ -221,14 +221,14 @@ public final class TournamentAPI
     public Long registerTournament(final TournamentRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_TOURNAMENT)
+                                                       .withEndpoint(URLEndpoint.V4_TOURNAMENT_TOURNAMENT)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
                                                        .withPlatform(ServicePlatform.AMERICAS);
         
         if (useStub)
         {
-            builder.withEndpoint(URLEndpoint.V3_TOURNAMENT_STUB_TOURNAMENT);
+            builder.withEndpoint(URLEndpoint.V4_TOURNAMENT_STUB_TOURNAMENT);
         }
         
         try
@@ -250,7 +250,7 @@ public final class TournamentAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withQueryParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                       .withEndpoint(URLEndpoint.V3_TOURNAMENT_CODES)
+                                                       .withEndpoint(URLEndpoint.V4_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_PUT)
                                                        .withPlatform(ServicePlatform.AMERICAS);

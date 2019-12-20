@@ -64,7 +64,7 @@ public class AsyncMatchAPI
                                                                 Set<Integer> championId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, accountId)
-                                                       .withEndpoint(URLEndpoint.V3_MATCHLIST)
+                                                       .withEndpoint(URLEndpoint.V4_MATCHLIST)
                                                        .withPlatform(server);
         
         
@@ -167,11 +167,11 @@ public class AsyncMatchAPI
     public CompletableFuture<Match> getMatch(Platform server, long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
-                                                       .withEndpoint(URLEndpoint.V3_MATCH)
+                                                       .withEndpoint(URLEndpoint.V4_MATCH)
                                                        .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCH, server, matchId);
         if (chl.isPresent())
         {
             Match m = (Match) chl.get();
@@ -185,7 +185,7 @@ public class AsyncMatchAPI
             try
             {
                 Match match = (Match) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, server, matchId);
+                DataCall.getCacheProvider().store(URLEndpoint.V4_MATCH, match, server, matchId);
                 return match;
             } catch (ClassCastException e)
             {
@@ -205,10 +205,10 @@ public class AsyncMatchAPI
     public CompletableFuture<MatchTimeline> getTimeline(Platform server, long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
-                                                       .withEndpoint(URLEndpoint.V3_TIMELINE)
+                                                       .withEndpoint(URLEndpoint.V4_TIMELINE)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_TIMELINE, server, matchId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_TIMELINE, server, matchId);
         if (chl.isPresent())
         {
             return CompletableFuture.completedFuture((MatchTimeline) chl.get());
@@ -218,7 +218,7 @@ public class AsyncMatchAPI
             try
             {
                 MatchTimeline timeline = (MatchTimeline) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline, server, matchId);
+                DataCall.getCacheProvider().store(URLEndpoint.V4_TIMELINE, timeline, server, matchId);
                 return timeline;
             } catch (ClassCastException e)
             {

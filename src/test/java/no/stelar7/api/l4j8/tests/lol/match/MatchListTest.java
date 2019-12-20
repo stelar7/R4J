@@ -183,7 +183,7 @@ public class MatchListTest
     public void testMatchlistAllLazy()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCHLIST);
+        DataCall.getCacheProvider().clear(URLEndpoint.V4_MATCHLIST);
         String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
         Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         

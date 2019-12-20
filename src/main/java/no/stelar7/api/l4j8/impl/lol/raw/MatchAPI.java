@@ -56,7 +56,7 @@ public final class MatchAPI
                                              Set<Integer> championId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, accountId)
-                                                       .withEndpoint(URLEndpoint.V3_MATCHLIST)
+                                                       .withEndpoint(URLEndpoint.V4_MATCHLIST)
                                                        .withPlatform(server);
         
         
@@ -101,7 +101,7 @@ public final class MatchAPI
             championId.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
         }
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCHLIST, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCHLIST, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
         if (chl.isPresent())
         {
             return ((MatchList) chl.get()).getMatches();
@@ -114,7 +114,7 @@ public final class MatchAPI
         }
         
         MatchList match = (MatchList) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCHLIST, match, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MATCHLIST, match, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
         return match.getMatches();
     }
     
@@ -155,11 +155,11 @@ public final class MatchAPI
     public Match getMatch(Platform server, long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
-                                                       .withEndpoint(URLEndpoint.V3_MATCH)
+                                                       .withEndpoint(URLEndpoint.V4_MATCH)
                                                        .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, server, matchId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCH, server, matchId);
         if (chl.isPresent())
         {
             return (Match) chl.get();
@@ -168,7 +168,7 @@ public final class MatchAPI
         try
         {
             Match match = (Match) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, server, matchId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MATCH, match, server, matchId);
             return match;
         } catch (ClassCastException e)
         {
@@ -187,10 +187,10 @@ public final class MatchAPI
     public MatchTimeline getTimeline(Platform server, long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
-                                                       .withEndpoint(URLEndpoint.V3_TIMELINE)
+                                                       .withEndpoint(URLEndpoint.V4_TIMELINE)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_TIMELINE, server, matchId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_TIMELINE, server, matchId);
         if (chl.isPresent())
         {
             return (MatchTimeline) chl.get();
@@ -199,7 +199,7 @@ public final class MatchAPI
         try
         {
             MatchTimeline timeline = (MatchTimeline) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_TIMELINE, timeline, server, matchId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_TIMELINE, timeline, server, matchId);
             return timeline;
         } catch (ClassCastException e)
         {

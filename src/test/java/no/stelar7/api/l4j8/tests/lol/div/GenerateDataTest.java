@@ -6,7 +6,7 @@ import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.pojo.match.lol.*;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import no.stelar7.api.l4j8.tests.SecretFile;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +16,7 @@ import java.util.*;
 public class GenerateDataTest
 {
     @Test
+    @Ignore
     public void generateStuff() throws IOException
     {
         L4J8          api      = new L4J8(SecretFile.CREDS);

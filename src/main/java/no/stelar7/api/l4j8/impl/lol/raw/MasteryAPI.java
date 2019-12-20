@@ -37,11 +37,11 @@ public final class MasteryAPI
     public Integer getMasteryScore(Platform server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_MASTERY_SCORE)
+                                                       .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_SCORE, server, summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, server, summonerId);
         if (chl.isPresent())
         {
             return (Integer) chl.get();
@@ -50,7 +50,7 @@ public final class MasteryAPI
         try
         {
             Integer list = (Integer) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list, server, summonerId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, list, server, summonerId);
             return list;
         } catch (ClassCastException e)
         {
@@ -91,11 +91,11 @@ public final class MasteryAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(championId))
-                                                       .withEndpoint(URLEndpoint.V3_MASTERY_BY_CHAMPION)
+                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_BY_CHAMPION, server, summonerId, championId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, server, summonerId, championId);
         if (chl.isPresent())
         {
             return (ChampionMastery) chl.get();
@@ -119,7 +119,7 @@ public final class MasteryAPI
                 Field level = mastery.getClass().getDeclaredField("championLevel");
                 level.setAccessible(true);
                 level.set(mastery, 0);
-                DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery, server, summonerId, championId);
+                DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, mastery, server, summonerId, championId);
                 return mastery;
                 
             } catch (NoSuchFieldException | IllegalAccessException e)
@@ -127,7 +127,7 @@ public final class MasteryAPI
                 Logger.getGlobal().warning("Class has changed, please fix me");
             }
         }
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, masteryObj, server, summonerId, championId);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, masteryObj, server, summonerId, championId);
         return (ChampionMastery) masteryObj;
     }
     
@@ -143,11 +143,11 @@ public final class MasteryAPI
     public List<ChampionMastery> getChampionMasteries(Platform server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V3_MASTERY_BY_ID)
+                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_BY_ID, server, summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, server, summonerId);
         if (chl.isPresent())
         {
             return (List<ChampionMastery>) chl.get();
@@ -162,7 +162,7 @@ public final class MasteryAPI
             }
             
             List<ChampionMastery> list = (List<ChampionMastery>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list, server, summonerId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_ID, list, server, summonerId);
             return list;
         } catch (ClassCastException e)
         {

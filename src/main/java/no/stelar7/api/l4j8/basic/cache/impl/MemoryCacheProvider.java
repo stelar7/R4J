@@ -78,12 +78,12 @@ public class MemoryCacheProvider implements CacheProvider
         
         switch (type)
         {
-            case V3_SUMMONER_BY_ACCOUNT:
-            case V3_SUMMONER_BY_NAME:
-            case V3_SUMMONER_BY_ID:
+            case V4_SUMMONER_BY_ACCOUNT:
+            case V4_SUMMONER_BY_NAME:
+            case V4_SUMMONER_BY_ID:
                 summoners.put((Summoner) obj[0], LocalDateTime.now());
                 break;
-            case V3_MATCH:
+            case V4_MATCH:
                 matches.put((Match) obj[0], LocalDateTime.now());
                 break;
             default:
@@ -106,22 +106,22 @@ public class MemoryCacheProvider implements CacheProvider
         
         switch (type)
         {
-            case V3_SUMMONER_BY_ACCOUNT:
-            case V3_SUMMONER_BY_NAME:
-            case V3_SUMMONER_BY_ID:
+            case V4_SUMMONER_BY_ACCOUNT:
+            case V4_SUMMONER_BY_NAME:
+            case V4_SUMMONER_BY_ID:
             {
                 Object value = data[1];
                 
                 Stream<Summoner> sums = summoners.keySet().stream().filter(s -> s.getPlatform().equals(platform));
-                if (type == URLEndpoint.V3_SUMMONER_BY_ID)
+                if (type == URLEndpoint.V4_SUMMONER_BY_ID)
                 {
                     sums = sums.filter(s -> value.equals(s.getSummonerId()));
                 }
-                if (type == URLEndpoint.V3_SUMMONER_BY_ACCOUNT)
+                if (type == URLEndpoint.V4_SUMMONER_BY_ACCOUNT)
                 {
                     sums = sums.filter(s -> value.equals(s.getAccountId()));
                 }
-                if (type == URLEndpoint.V3_SUMMONER_BY_NAME)
+                if (type == URLEndpoint.V4_SUMMONER_BY_NAME)
                 {
                     sums = sums.filter(s -> value.equals(s.getName()));
                 }
@@ -129,7 +129,7 @@ public class MemoryCacheProvider implements CacheProvider
                 opt = sums.findFirst();
                 break;
             }
-            case V3_MATCH:
+            case V4_MATCH:
             {
                 Object matchId = data[1];
                 
@@ -160,12 +160,12 @@ public class MemoryCacheProvider implements CacheProvider
         // TODO: respect filters
         switch (type)
         {
-            case V3_SUMMONER_BY_ACCOUNT:
-            case V3_SUMMONER_BY_NAME:
-            case V3_SUMMONER_BY_ID:
+            case V4_SUMMONER_BY_ACCOUNT:
+            case V4_SUMMONER_BY_NAME:
+            case V4_SUMMONER_BY_ID:
                 summoners.clear();
                 break;
-            case V3_MATCH:
+            case V4_MATCH:
                 matches.clear();
                 break;
             default:
@@ -181,10 +181,10 @@ public class MemoryCacheProvider implements CacheProvider
             return;
         }
         
-        clearOldCache(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, summoners);
-        clearOldCache(URLEndpoint.V3_SUMMONER_BY_NAME, summoners);
-        clearOldCache(URLEndpoint.V3_SUMMONER_BY_ID, summoners);
-        clearOldCache(URLEndpoint.V3_MATCH, matches);
+        clearOldCache(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, summoners);
+        clearOldCache(URLEndpoint.V4_SUMMONER_BY_NAME, summoners);
+        clearOldCache(URLEndpoint.V4_SUMMONER_BY_ID, summoners);
+        clearOldCache(URLEndpoint.V4_MATCH, matches);
     }
     
     @Override

@@ -227,18 +227,18 @@ public class DataCallBuilder
             returnValue = postProcessDDragonAddId(returnValue);
         }
         
-        if (this.dc.getEndpoint() == URLEndpoint.V3_MATCH)
+        if (this.dc.getEndpoint() == URLEndpoint.V4_MATCH)
         {
             returnValue = postProcessMatch(returnValue);
         }
         
-        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V3_SUMMONER_BY_ACCOUNT, URLEndpoint.V3_SUMMONER_BY_ID, URLEndpoint.V3_SUMMONER_BY_NAME, URLEndpoint.V3_SUMMONER_BY_PUUID);
+        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, URLEndpoint.V4_SUMMONER_BY_ID, URLEndpoint.V4_SUMMONER_BY_NAME, URLEndpoint.V4_SUMMONER_BY_PUUID);
         if (summonerEndpoints.contains(this.dc.getEndpoint()))
         {
             returnValue = postProcessSummoner(returnValue);
         }
         
-        final List<URLEndpoint> apexEndpoints = Arrays.asList(URLEndpoint.V3_LEAGUE_MASTER, URLEndpoint.V3_LEAGUE_GRANDMASTER, URLEndpoint.V3_LEAGUE_CHALLENGER,
+        final List<URLEndpoint> apexEndpoints = Arrays.asList(URLEndpoint.V4_LEAGUE_MASTER, URLEndpoint.V4_LEAGUE_GRANDMASTER, URLEndpoint.V4_LEAGUE_CHALLENGER,
                                                               URLEndpoint.V1_TFT_LEAGUE_MASTER, URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, URLEndpoint.V1_TFT_LEAGUE_CHALLENGER);
         if (apexEndpoints.contains(this.dc.getEndpoint()))
         {

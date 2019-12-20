@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.tests.replay;
 
+import no.stelar7.api.l4j8.impl.lol.liveclient.LiveClientDataAPI;
 import no.stelar7.api.l4j8.impl.lol.replay.*;
 import no.stelar7.api.l4j8.pojo.replay.ReplayTeamType;
 import org.junit.*;

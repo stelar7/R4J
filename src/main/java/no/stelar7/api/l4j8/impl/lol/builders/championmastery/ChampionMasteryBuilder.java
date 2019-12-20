@@ -57,11 +57,11 @@ public class ChampionMasteryBuilder
         
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
-                                                       .withEndpoint(URLEndpoint.V3_MASTERY_SCORE)
+                                                       .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(this.platform);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_SCORE, this.platform, this.summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, this.platform, this.summonerId);
         if (chl.isPresent())
         {
             return (Integer) chl.get();
@@ -70,7 +70,7 @@ public class ChampionMasteryBuilder
         try
         {
             Integer list = (Integer) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_SCORE, list, this.platform, this.summonerId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, list, this.platform, this.summonerId);
             return list;
         } catch (ClassCastException e)
         {
@@ -87,11 +87,11 @@ public class ChampionMasteryBuilder
         }
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
-                                                       .withEndpoint(URLEndpoint.V3_MASTERY_BY_ID)
+                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
                                                        .withPlatform(this.platform);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_BY_ID, this.platform, this.summonerId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, this.platform, this.summonerId);
         if (chl.isPresent())
         {
             return (List<ChampionMastery>) chl.get();
@@ -106,7 +106,7 @@ public class ChampionMasteryBuilder
             }
             
             List<ChampionMastery> list = (List<ChampionMastery>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_ID, list, this.platform, this.summonerId);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_ID, list, this.platform, this.summonerId);
             return list;
         } catch (ClassCastException e)
         {
@@ -134,11 +134,11 @@ public class ChampionMasteryBuilder
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(this.championId))
-                                                       .withEndpoint(URLEndpoint.V3_MASTERY_BY_CHAMPION)
+                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(this.platform);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MASTERY_BY_CHAMPION, this.platform, this.summonerId, this.championId);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, this.platform, this.summonerId, this.championId);
         if (chl.isPresent())
         {
             return (ChampionMastery) chl.get();
@@ -164,7 +164,7 @@ public class ChampionMasteryBuilder
                 level.setAccessible(true);
                 level.set(mastery, 0);
                 
-                DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, mastery, this.platform, this.summonerId, this.championId);
+                DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, mastery, this.platform, this.summonerId, this.championId);
                 return mastery;
                 
             } catch (NoSuchFieldException | IllegalAccessException e)
@@ -173,7 +173,7 @@ public class ChampionMasteryBuilder
             }
         }
         
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MASTERY_BY_CHAMPION, masterObj, this.platform, this.summonerId, this.championId);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, masterObj, this.platform, this.summonerId, this.championId);
         return (ChampionMastery) masterObj;
     }
 }

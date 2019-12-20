@@ -49,11 +49,11 @@ public class MatchBuilder
         }
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(this.id))
-                                                       .withEndpoint(URLEndpoint.V3_MATCH)
+                                                       .withEndpoint(URLEndpoint.V4_MATCH)
                                                        .withPlatform(this.platform);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_MATCH, this.platform, this.id);
+        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCH, this.platform, this.id);
         if (chl.isPresent())
         {
             Match m = (Match) chl.get();
@@ -70,7 +70,7 @@ public class MatchBuilder
         }
         
         Match match = (Match) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V3_MATCH, match, this.platform, this.id);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MATCH, match, this.platform, this.id);
         return match;
     }
 }
