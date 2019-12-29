@@ -1,5 +1,6 @@
 package no.stelar7.api.l4j8.tests.LCUTest;
 
+import com.google.gson.JsonObject;
 import no.stelar7.api.l4j8.impl.lol.lcu.*;
 import org.junit.*;
 
@@ -31,6 +32,14 @@ public class LCURunningTest
         LCUApi.downloadReplay(3042295790L);
         LCUApi.spectateGame(3042295790L);
         System.out.println(LCUApi.getReplaySavePath());
+    }
+    
+    @Test
+    @Ignore
+    public void testbyId()
+    {
+        JsonObject summoner = LCUApi.getSummoner(19613950);
+        System.out.println();
     }
     
     @Test

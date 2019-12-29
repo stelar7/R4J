@@ -139,7 +139,7 @@ public enum URLEndpoint
     LCU_RESTART("process-control/v1/process/restart", "", "", "", Void.class),
     
     LCU_SUMMONER_BY_NAME("lol-summoner/v2/summoners", "", "", "", JsonArray.class),
-    LCU_SUMMONER_BY_ID("lol-summoner/v1/summoners/" + Constants.ID_PLACEHOLDER, "", "", "", JsonArray.class),
+    LCU_SUMMONER_BY_ID("lol-summoner/v1/summoners/" + Constants.ID_PLACEHOLDER, "", "", "", JsonObject.class),
     
     LCU_LOGIN("lol-login/v1/session", "", "", "", JsonObject.class),
     
