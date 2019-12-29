@@ -162,6 +162,26 @@ public class LCUApi
     }
     
     /**
+     * Fetches summoner info
+     */
+    public static JsonObject getSummoner(long id)
+    {
+        Pair<String, String> header = LCUConnection.getAuthorizationHeader();
+        JsonArray arr = (JsonArray) new DataCallBuilder()
+                .withLimiters(false)
+                .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
+                .withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
+                .withEndpoint(URLEndpoint.LCU_SUMMONER_BY_ID)
+                .withRequestMethod("GET")
+                .withHeader(header.getKey(), header.getValue())
+                .build();
+        
+        JsonObject obj = arr.get(0).getAsJsonObject();
+        
+        return obj;
+    }
+    
+    /**
      * Creates a notification
      *
      * @param title       title of notification
