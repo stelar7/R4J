@@ -8,6 +8,22 @@ import no.stelar7.api.l4j8.pojo.replay.ReplayTeamType;
 
 public class LiveClientDataAPI
 {
+    public static JsonElement getGameData()
+    {
+        try
+        {
+            return (JsonElement) new DataCallBuilder()
+                    .withLimiters(false)
+                    .withProxy(Constants.CLIENT_PROXY)
+                    .withEndpoint(URLEndpoint.LIVECLIENT_GAME_DATA)
+                    .withRequestMethod("GET")
+                    .build();
+        } catch (APIResponseException e)
+        {
+            return null;
+        }
+    }
+    
     public static JsonElement getEventData()
     {
         try
