@@ -167,7 +167,7 @@ public class LCUApi
     public static JsonObject getSummoner(long id)
     {
         Pair<String, String> header = LCUConnection.getAuthorizationHeader();
-        JsonArray arr = (JsonArray) new DataCallBuilder()
+        JsonObject arr = (JsonObject) new DataCallBuilder()
                 .withLimiters(false)
                 .withProxy(LCUConnection.getConnectionString() + Constants.GSVR)
                 .withURLParameter(Constants.ID_PLACEHOLDER, String.valueOf(id))
@@ -176,9 +176,7 @@ public class LCUApi
                 .withHeader(header.getKey(), header.getValue())
                 .build();
         
-        JsonObject obj = arr.get(0).getAsJsonObject();
-        
-        return obj;
+        return arr;
     }
     
     /**
