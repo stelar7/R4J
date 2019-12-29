@@ -64,6 +64,7 @@ public class LCURunningTest
                     socket.subscribe(key, k -> {
                         try
                         {
+                            Files.createDirectories(Paths.get("D:\\lcu"));
                             Files.write(Paths.get("D:\\lcu", key + ".json"), k.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                         } catch (IOException e)
                         {

@@ -13,7 +13,8 @@ import java.util.function.Consumer;
 public class LCUSocketReader
 {
     private WebSocket                           socket;
-    private Map<String, List<Consumer<String>>> handlers = new HashMap<>();
+    private Map<String, List<Consumer<String>>> headerHandlers = new HashMap<>();
+    private Map<String, List<Consumer<String>>> rawHandlers    = new HashMap<>();
     private boolean                             connected;
     
     private Thread ping = new Thread(() -> {
@@ -63,7 +64,8 @@ public class LCUSocketReader
                     String event   = data.get(1).getAsString();
                     String content = data.get(2).getAsJsonObject().toString();
                     
-                    List<Consumer<String>> consumers = handlers.get(event);
+                    List<Consumer<String>> headerConsumers = headerHandlers.get(event);
+                    List<Consumer<String>> rawConsumers    = rawHandlers.get(event);
                     try
                     {
                         StringWriter holder = new StringWriter();
@@ -74,7 +76,8 @@ public class LCUSocketReader
                         jw.flush();
                         jw.close();
                         
-                        consumers.forEach(c -> c.accept(holder.toString()));
+                        headerConsumers.forEach(c -> c.accept(holder.toString()));
+                        rawConsumers.forEach(c -> c.accept(content));
                     } catch (IOException e)
                     {
                         e.printStackTrace();
@@ -119,7 +122,14 @@ public class LCUSocketReader
     public void subscribe(String event, Consumer<String> consumer)
     {
         sendMessage(5, event);
-        handlers.computeIfAbsent(event, (key) -> new ArrayList<>()).add(consumer);
+        headerHandlers.computeIfAbsent(event, (key) -> new ArrayList<>()).add(consumer);
+        System.out.println("Subscribed to " + event);
+    }
+    
+    public void subscribeRaw(String event, Consumer<String> consumer)
+    {
+        sendMessage(5, event);
+        rawHandlers.computeIfAbsent(event, (key) -> new ArrayList<>()).add(consumer);
         System.out.println("Subscribed to " + event);
     }
     
@@ -127,7 +137,14 @@ public class LCUSocketReader
     public void unsubscribe(String event)
     {
         sendMessage(6, event);
-        handlers.remove(event);
+        headerHandlers.remove(event);
+        System.out.println("Unsubscribed to " + event);
+    }
+    
+    public void unsubscribeRaw(String event)
+    {
+        sendMessage(6, event);
+        rawHandlers.remove(event);
         System.out.println("Unsubscribed to " + event);
     }
     
