@@ -26,6 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiFunction;
 import java.util.prefs.BackingStoreException;
 
+@SuppressWarnings("rawtypes")
 public class DataCallBuilder
 {
     private static final Logger logger = LoggerFactory.getLogger(DataCallBuilder.class);
@@ -200,6 +201,11 @@ public class DataCallBuilder
             case 504:
             {
                 return sleepAndRetry(retrys, response.getResponseCode());
+            }
+            
+            case 599:
+            {
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_599, response.getResponseData());
             }
             
             default:
@@ -686,8 +692,7 @@ public class DataCallBuilder
             return new DataCallResponse(con.getResponseCode(), data.toString());
         } catch (final IOException e)
         {
-            e.printStackTrace();
-            return new DataCallResponse(APIHTTPErrorReason.ERROR_599.getCode(), APIHTTPErrorReason.ERROR_599.getReason());
+            throw new APIResponseException(APIHTTPErrorReason.ERROR_599, APIHTTPErrorReason.ERROR_599.getReason());
         }
     }
     

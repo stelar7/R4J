@@ -1,7 +1,7 @@
 package no.stelar7.api.l4j8.tests.replay;
 
 import no.stelar7.api.l4j8.impl.lol.liveclient.LiveClientDataAPI;
-import no.stelar7.api.l4j8.impl.lol.replay.*;
+import no.stelar7.api.l4j8.impl.lol.replay.ReplayAPI;
 import no.stelar7.api.l4j8.pojo.replay.ReplayTeamType;
 import org.junit.*;
 
@@ -22,6 +22,7 @@ public class ReplayAPITest
         System.out.println(LiveClientDataAPI.getActivePlayerAbilities());
         System.out.println(LiveClientDataAPI.getActivePlayerName());
         System.out.println(LiveClientDataAPI.getActivePlayerRunes());
+        System.out.println(LiveClientDataAPI.getGameData());
         System.out.println(LiveClientDataAPI.getEventData());
         System.out.println(LiveClientDataAPI.getGameStats());
         System.out.println(LiveClientDataAPI.getPlayerList(ReplayTeamType.ALL));
