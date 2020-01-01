@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.stream.JsonWriter;
 import com.neovisionaries.ws.client.*;
 import no.stelar7.api.l4j8.basic.utils.Pair;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +13,8 @@ import java.util.function.Consumer;
 
 public class LCUSocketReader
 {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(LCUSocketReader.class);
+    
     private WebSocket                           socket;
     private Map<String, List<Consumer<String>>> headerHandlers = new HashMap<>();
     private Map<String, List<Consumer<String>>> rawHandlers    = new HashMap<>();
@@ -98,7 +101,7 @@ public class LCUSocketReader
             socket.connect();
             ping.start();
             connected = true;
-            System.out.println("Connected!");
+            logger.debug("Connected!");
             
         } catch (WebSocketException e)
         {
@@ -111,7 +114,7 @@ public class LCUSocketReader
         ping.interrupt();
         socket.disconnect();
         connected = false;
-        System.out.println("Disconnected!");
+        logger.debug("Disconnected!");
     }
     
     private void sendMessage(int eventCode, String data)
@@ -123,14 +126,14 @@ public class LCUSocketReader
     {
         sendMessage(5, event);
         headerHandlers.computeIfAbsent(event, (key) -> new ArrayList<>()).add(consumer);
-        System.out.println("Subscribed to " + event);
+        logger.info("Subscribed to " + event);
     }
     
     public void subscribeRaw(String event, Consumer<String> consumer)
     {
         sendMessage(5, event);
         rawHandlers.computeIfAbsent(event, (key) -> new ArrayList<>()).add(consumer);
-        System.out.println("Subscribed to " + event);
+        logger.info("Subscribed to " + event);
     }
     
     
@@ -138,14 +141,14 @@ public class LCUSocketReader
     {
         sendMessage(6, event);
         headerHandlers.remove(event);
-        System.out.println("Unsubscribed to " + event);
+        logger.info("Unsubscribed to " + event);
     }
     
     public void unsubscribeRaw(String event)
     {
         sendMessage(6, event);
         rawHandlers.remove(event);
-        System.out.println("Unsubscribed to " + event);
+        logger.info("Unsubscribed to " + event);
     }
     
     public boolean isConnected()
