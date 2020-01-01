@@ -41,7 +41,15 @@ public class LCUSocketReader
     public LCUSocketReader()
     {
         Pair<String, String> connection = LCUConnection.getConnectionData();
-        setupConnection(connection.getKey(), connection.getValue());
+        if (connection != null)
+        {
+            setupConnection(connection.getKey(), connection.getValue());
+        }
+    }
+    
+    public LCUSocketReader(String password, String port)
+    {
+        setupConnection(password, port);
     }
     
     private void setupConnection(String password, String port)
@@ -98,6 +106,12 @@ public class LCUSocketReader
     {
         try
         {
+            if (socket == null)
+            {
+                logger.error("Failed to initialize reader, this method will not work...");
+                return;
+            }
+            
             socket.connect();
             ping.start();
             connected = true;
