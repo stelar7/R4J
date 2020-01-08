@@ -67,7 +67,7 @@ public final class ImageAPI
      * @param skinNum    the skin num
      * @return the splash art
      */
-    public String getSplashArt(String championId, int skinNum)
+    public String getSplashArt(int championId, int skinNum)
     {
         // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
         return buildImageURL(null, "img/champion/splash", championId + "_" + skinNum + ".png");
