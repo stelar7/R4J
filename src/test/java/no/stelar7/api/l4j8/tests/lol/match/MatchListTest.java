@@ -224,7 +224,6 @@ public class MatchListTest
     @Test
     public void testMatchDart()
     {
-        
         Match detail = new MatchBuilder().withId(3984304842L).withPlatform(Platform.EUW1).get();
         System.out.println();
     }

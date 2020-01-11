@@ -174,11 +174,7 @@ public class AsyncMatchAPI
         Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCH, server, matchId);
         if (chl.isPresent())
         {
-            Match m = (Match) chl.get();
-            if (m.getParticipants().stream().noneMatch(p -> (p.getSpell1() == null || p.getSpell2() == null)))
-            {
-                return CompletableFuture.completedFuture(m);
-            }
+            return CompletableFuture.completedFuture((Match) chl.get());
         }
         
         return CompletableFuture.supplyAsync(() -> {

@@ -9,11 +9,11 @@ import java.util.*;
 
 public class Participant implements Serializable
 {
-    private static final long serialVersionUID = 4416173192578454833L;
+    
+    private static final long serialVersionUID = -5435750033777444439L;
     
     private int                 participantId;
     private int                 championId;
-    private TierType            highestAchievedSeasonTier;
     private List<MatchRune>     runes;
     private List<MatchMastery>  masteries;
     private MatchPerks          perks;
@@ -49,17 +49,6 @@ public class Participant implements Serializable
     public StaticChampion getChampion()
     {
         return DDragonAPI.getInstance().getChampion(championId);
-    }
-    
-    
-    /**
-     * Highest ranked tier achieved for the previous season, if any, otherwise null. Used to display border in game loading screen. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE, UNRANKED)
-     *
-     * @return String
-     */
-    public TierType getHighestAchievedSeasonTier()
-    {
-        return this.highestAchievedSeasonTier;
     }
     
     
@@ -157,73 +146,34 @@ public class Participant implements Serializable
         {
             return false;
         }
-        
         Participant that = (Participant) o;
-        
-        if (championId != that.championId)
-        {
-            return false;
-        }
-        if (participantId != that.participantId)
-        {
-            return false;
-        }
-        if (highestAchievedSeasonTier != that.highestAchievedSeasonTier)
-        {
-            return false;
-        }
-        if ((masteries != null) ? !masteries.equals(that.masteries) : (that.masteries != null))
-        {
-            return false;
-        }
-        if ((runes != null) ? !runes.equals(that.runes) : (that.runes != null))
-        {
-            return false;
-        }
-        if (spell1Id != that.spell1Id)
-        {
-            return false;
-        }
-        if (spell2Id != that.spell2Id)
-        {
-            return false;
-        }
-        if ((stats != null) ? !stats.equals(that.stats) : (that.stats != null))
-        {
-            return false;
-        }
-        if (teamId != that.teamId)
-        {
-            return false;
-        }
-        return (timeline != null) ? timeline.equals(that.timeline) : (that.timeline == null);
+        return participantId == that.participantId &&
+               championId == that.championId &&
+               Objects.equals(runes, that.runes) &&
+               Objects.equals(masteries, that.masteries) &&
+               Objects.equals(perks, that.perks) &&
+               spell1Id == that.spell1Id &&
+               spell2Id == that.spell2Id &&
+               Objects.equals(stats, that.stats) &&
+               teamId == that.teamId &&
+               Objects.equals(timeline, that.timeline);
     }
     
     @Override
     public int hashCode()
     {
-        int result = championId;
-        result = 31 * result + (highestAchievedSeasonTier != null ? highestAchievedSeasonTier.hashCode() : 0);
-        result = 31 * result + (masteries != null ? masteries.hashCode() : 0);
-        result = 31 * result + participantId;
-        result = 31 * result + (runes != null ? runes.hashCode() : 0);
-        result = 31 * result + (spell1Id != null ? spell1Id.hashCode() : 0);
-        result = 31 * result + (spell2Id != null ? spell2Id.hashCode() : 0);
-        result = 31 * result + (stats != null ? stats.hashCode() : 0);
-        result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
-        result = 31 * result + (timeline != null ? timeline.hashCode() : 0);
-        return result;
+        return Objects.hash(participantId, championId, runes, masteries, perks, spell1Id, spell2Id, stats, teamId, timeline);
     }
     
     @Override
     public String toString()
     {
         return "Participant{" +
-               "championId=" + championId +
-               ", highestAchievedSeasonTier=" + highestAchievedSeasonTier +
-               ", masteries=" + masteries +
-               ", participantId=" + participantId +
+               "participantId=" + participantId +
+               ", championId=" + championId +
                ", runes=" + runes +
+               ", masteries=" + masteries +
+               ", perks=" + perks +
                ", spell1Id=" + spell1Id +
                ", spell2Id=" + spell2Id +
                ", stats=" + stats +
