@@ -1,5 +1,6 @@
 target/
 javadoc/
 \.*/
+SecretFile.java
 *.iml
 /l4j8cache/
