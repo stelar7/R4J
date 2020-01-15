@@ -2,10 +2,10 @@ package no.stelar7.api.r4j.basic.constants.api;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import no.stelar7.api.r4j.impl.lol.liveclient.*;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 import no.stelar7.api.r4j.pojo.lol.league.*;
+import no.stelar7.api.r4j.pojo.lol.liveclient.*;
 import no.stelar7.api.r4j.pojo.lol.match.GAMHSMatch;
 import no.stelar7.api.r4j.pojo.lol.match.lol.*;
 import no.stelar7.api.r4j.pojo.lol.replay.*;

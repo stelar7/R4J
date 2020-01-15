@@ -6,7 +6,8 @@ import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.exceptions.APIResponseException;
 import no.stelar7.api.r4j.basic.utils.*;
-import no.stelar7.api.r4j.impl.lol.liveclient.GameEvent.*;
+import no.stelar7.api.r4j.pojo.lol.liveclient.*;
+import no.stelar7.api.r4j.pojo.lol.liveclient.events.*;
 import no.stelar7.api.r4j.pojo.lol.replay.ReplayTeamType;
 
 import java.util.*;
@@ -31,11 +32,11 @@ public class LiveClientDataAPI
             
             JsonObject obj = ((JsonElement) data).getAsJsonObject();
             
-            ActiveGameData returnMe = new ActiveGameData();
-            returnMe.activePlayer = Utils.getGson().fromJson(obj.get("activePlayer"), ActiveGameClientPlayer.class);
-            returnMe.allPlayers = Utils.getGson().fromJson(obj.get("allPlayers"), new TypeToken<List<ActiveGamePlayer>>() {}.getType());
-            returnMe.events = parseEventObjectToList(obj.get("events"));
-            returnMe.gameData = Utils.getGson().fromJson(obj.get("gameData"), ActiveGameState.class);
+            ActiveGameData returnMe = new ActiveGameData(
+                    Utils.getGson().fromJson(obj.get("activePlayer"), ActiveGameClientPlayer.class),
+                    Utils.getGson().fromJson(obj.get("allPlayers"), new TypeToken<List<ActiveGamePlayer>>() {}.getType()),
+                    parseEventObjectToList(obj.get("events")),
+                    Utils.getGson().fromJson(obj.get("gameData"), ActiveGameState.class));
             
             return returnMe;
             
