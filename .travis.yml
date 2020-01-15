@@ -15,7 +15,7 @@ deploy:
   file: "*/*.jar"
   file_glob: true
   on:
-    repo: "stelar7/L4J8"
+    repo: "stelar7/R4J"
     tags: true
 
 notifications:

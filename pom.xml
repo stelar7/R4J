@@ -26,13 +26,6 @@
             <version>2.3</version>
         </dependency>
 
-        <!-- LoR API Types -->
-        <dependency>
-            <groupId>com.github.stelar7</groupId>
-            <artifactId>lordeckcodes</artifactId>
-            <version>efde096319</version>
-        </dependency>
-
         <!-- Logging facade -->
         <dependency>
             <groupId>org.slf4j</groupId>
