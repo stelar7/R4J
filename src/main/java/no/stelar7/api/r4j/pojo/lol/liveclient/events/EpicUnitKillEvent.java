@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class EpicUnitKillEvent extends KillEvent
 {
-    private boolean Stolen;
+    protected boolean Stolen;
     
     public boolean isStolen()
     {

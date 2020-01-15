@@ -1,7 +1,5 @@
 package no.stelar7.api.r4j.pojo.lol.liveclient.events;
 
-import no.stelar7.api.r4j.pojo.lol.liveclient.events.GameEvent.EpicUnitKillEvent;
-
 import java.util.Objects;
 
 public class DragonKillEvent extends EpicUnitKillEvent
