@@ -52,72 +52,82 @@ public class LiveClientDataAPI
         JsonArray       obj    = data.getAsJsonObject().getAsJsonArray("Events");
         for (JsonElement elem : obj)
         {
-            String eventType = elem.getAsJsonObject().get("EventName").getAsString();
-            switch (eventType)
+            String        eventName = elem.getAsJsonObject().get("EventName").getAsString();
+            GameEventType type      = GameEventType.getFromCode(eventName);
+            
+            switch (type)
             {
-                case "GameStart":
-                case "GameEnd":
-                case "MinionsSpawning":
+                case GAME_START:
+                case GAME_END:
+                case MINIONS_SPAWNING:
                 {
                     events.add(Utils.getGson().fromJson(elem, GameEvent.class));
                     break;
                 }
-                case "ChampionKill":
+                case CHAMPION_KILL:
                 {
                     events.add(Utils.getGson().fromJson(elem, ChampionKillEvent.class));
                     break;
                 }
-                case "FirstBlood":
-                case "FirstBrick":
+                case FIRST_BLOOD:
+                case FIRST_TOWER:
                 {
                     events.add(Utils.getGson().fromJson(elem, RewardEvent.class));
                     break;
                 }
                 
-                case "TurretKilled":
+                case TOWER_KILLED:
                 {
                     events.add(Utils.getGson().fromJson(elem, TurretKillEvent.class));
                     break;
                 }
                 
-                case "InhibKilled":
+                case INHIBITOR_KILLED:
                 {
                     events.add(Utils.getGson().fromJson(elem, InhibKillEvent.class));
                     break;
                 }
                 
-                case "HeraldKill":
-                case "BaronKill":
+                case HERALD_KILLED:
+                case BARON_KILLED:
                 {
                     events.add(Utils.getGson().fromJson(elem, EpicUnitKillEvent.class));
                     break;
                 }
                 
-                case "DragonKill":
+                case DRAGON_KILLED:
                 {
                     events.add(Utils.getGson().fromJson(elem, DragonKillEvent.class));
                     break;
                 }
                 
-                case "InhibRespawningSoon":
+                case INHIBITOR_RESPAWNING_SOON:
                 {
                     events.add(Utils.getGson().fromJson(elem, InhibRespawningSoonEvent.class));
                     break;
                 }
                 
-                case "InhibRespawned":
+                case INHIBITOR_RESPAWNED:
                 {
                     events.add(Utils.getGson().fromJson(elem, InhibRespawnedEvent.class));
                     break;
                 }
                 
-                case "Multikill":
+                case MULTIKILL:
                 {
                     events.add(Utils.getGson().fromJson(elem, MultikillEvent.class));
                     break;
                 }
+                
+                case TEAM_ACE:
+                {
+                    events.add(Utils.getGson().fromJson(elem, AceEvent.class));
+                    break;
+                }
+                
+                case UNKNOWN:
                 default:
-                    System.out.println("Unknown event: " + eventType);
+                    System.out.println("Unknown event: " + elem.toString());
             }
         }
         return events;
