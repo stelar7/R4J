@@ -87,10 +87,15 @@ public class LiveClientDataAPI
                 }
                 
                 case "HeraldKill":
-                case "DragonKill":
                 case "BaronKill":
                 {
                     events.add(Utils.getGson().fromJson(elem, EpicUnitKillEvent.class));
+                    break;
+                }
+                
+                case "DragonKill":
+                {
+                    events.add(Utils.getGson().fromJson(elem, DragonKillEvent.class));
                     break;
                 }
                 
@@ -106,7 +111,8 @@ public class LiveClientDataAPI
                     break;
                 }
                 
-                case "Multikill": {
+                case "Multikill":
+                {
                     events.add(Utils.getGson().fromJson(elem, MultikillEvent.class));
                     break;
                 }
