@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.stelar7</groupId>
-    <artifactId>l4j8</artifactId>
-    <version>1.6.42</version>
-    <name>League of Legends 4 Java 8</name>
-    <description>A Java8 version of L4J</description>
+    <artifactId>R4J</artifactId>
+    <version>1.7.3</version>
+    <name>Java Riot Library</name>
+    <description>A Java library containing the API for every Riot game</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.language>java</sonar.language>

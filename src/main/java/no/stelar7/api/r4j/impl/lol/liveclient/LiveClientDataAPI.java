@@ -105,6 +105,11 @@ public class LiveClientDataAPI
                     events.add(Utils.getGson().fromJson(elem, InhibRespawnedEvent.class));
                     break;
                 }
+                
+                case "Multikill": {
+                    events.add(Utils.getGson().fromJson(elem, MultikillEvent.class));
+                    break;
+                }
                 default:
                     System.out.println("Unknown event: " + eventType);
             }
