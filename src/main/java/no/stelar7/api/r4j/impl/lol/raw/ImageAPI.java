@@ -7,6 +7,7 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.champion.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.Item;
 import no.stelar7.api.r4j.pojo.lol.staticdata.mastery.StaticMastery;
 import no.stelar7.api.r4j.pojo.lol.staticdata.rune.StaticRune;
+import no.stelar7.api.r4j.pojo.lol.staticdata.summonerspell.StaticSummonerSpell;
 
 public final class ImageAPI
 {
@@ -180,7 +181,7 @@ public final class ImageAPI
     /**
      * Gets ability.
      *
-     * @param imageFull the spell.getImage().getFull()
+     * @param imageFull the spell
      * @param version   the version
      * @return the ability
      */
@@ -201,6 +202,19 @@ public final class ImageAPI
     {
         //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
         return buildImageURL(version, "img/spell", spell.getApiName() + ".png");
+    }
+    
+    /**
+     * Gets summoner spell.
+     *
+     * @param spell   the spell
+     * @param version the version
+     * @return the summoner spell
+     */
+    public String getSummonerSpell(StaticSummonerSpell spell, String version)
+    {
+        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
+        return buildImageURL(version, "img/spell", spell.getImage().getFull());
     }
     
     /**
