@@ -1,6 +1,4 @@
-package no.stelar7.api.r4j.impl.lol.liveclient;
-
-import no.stelar7.api.r4j.pojo.lol.liveclient.events.GameEvent;
+package no.stelar7.api.r4j.pojo.lol.liveclient.events;
 
 import java.util.Objects;
 
