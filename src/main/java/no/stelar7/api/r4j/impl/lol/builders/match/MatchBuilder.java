@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.impl.lol.builders.match;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.utils.Pair;
-import no.stelar7.api.r4j.pojo.lol.match.lol.Match;
+import no.stelar7.api.r4j.pojo.lol.match.Match;
 
 import java.util.Optional;
 

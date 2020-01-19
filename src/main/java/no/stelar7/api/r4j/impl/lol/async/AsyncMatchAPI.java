@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.utils.*;
-import no.stelar7.api.r4j.pojo.lol.match.lol.*;
+import no.stelar7.api.r4j.pojo.lol.match.*;
 
 import java.util.*;
 import java.util.concurrent.*;

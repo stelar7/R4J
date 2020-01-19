@@ -9,7 +9,7 @@ import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.match.MatchListBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
-import no.stelar7.api.r4j.pojo.lol.match.lol.*;
+import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.Item;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;

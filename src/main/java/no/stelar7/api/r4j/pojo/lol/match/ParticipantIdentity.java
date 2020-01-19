@@ -1,4 +1,4 @@
-package no.stelar7.api.r4j.pojo.lol.match.lol;
+package no.stelar7.api.r4j.pojo.lol.match;
 
 import no.stelar7.api.r4j.basic.constants.api.Platform;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;

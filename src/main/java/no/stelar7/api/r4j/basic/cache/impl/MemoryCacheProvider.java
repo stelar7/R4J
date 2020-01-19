@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.basic.cache.impl;
 import no.stelar7.api.r4j.basic.cache.*;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.utils.Pair;
-import no.stelar7.api.r4j.pojo.lol.match.lol.Match;
+import no.stelar7.api.r4j.pojo.lol.match.Match;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import org.slf4j.*;

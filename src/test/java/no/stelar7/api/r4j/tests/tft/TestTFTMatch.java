@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.tests.tft;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.tft.TFTMatchAPI;
-import no.stelar7.api.r4j.pojo.lol.match.GAMHSMatch;
+import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.pojo.tft.*;
 import no.stelar7.api.r4j.tests.SecretFile;

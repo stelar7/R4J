@@ -1,4 +1,4 @@
-package no.stelar7.api.r4j.pojo.lol.match;
+package no.stelar7.api.r4j.pojo.shared;
 
 import com.google.gson.JsonObject;
 import no.stelar7.api.r4j.basic.utils.Utils;

@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.constants.api.Platform;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.ImageAPI;
-import no.stelar7.api.r4j.pojo.lol.match.lol.*;
+import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
@@ -34,8 +34,8 @@ public class DivTests
         Match          match      = recentGame.getFullMatch();
         Participant    self       = match.getParticipantFromSummonerId(summoner.getSummonerId()); //game data for user (summs, champ etc)
         StaticChampion champion   = champData.get(recentGame.getChampionId());
-        MatchPerks           summs         = self.getPerks();
-        boolean              won           = match.didWin(self);
+        MatchPerks     summs      = self.getPerks();
+        boolean        won        = match.didWin(self);
         ParticipantIdentity  opponentId    = match.getLaneOpponentIdentity(self); //get lane opponent id
         Participant          opponent      = match.getParticipantFromParticipantId(opponentId.getParticipantId()); //summs, champ, etc for lane opponent
         StaticChampion       opponentChamp = champData.get(opponent.getChampionId());

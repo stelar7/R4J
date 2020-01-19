@@ -10,7 +10,7 @@ import no.stelar7.api.r4j.impl.lol.builders.match.*;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
-import no.stelar7.api.r4j.pojo.lol.match.lol.*;
+import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.*;

@@ -6,7 +6,7 @@ import no.stelar7.api.r4j.basic.constants.types.TeamType;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.match.*;
-import no.stelar7.api.r4j.pojo.lol.match.lol.*;
+import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.shared.BannedChampion;
 import no.stelar7.api.r4j.tests.SecretFile;
 

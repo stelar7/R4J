@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.basic.utils;
 
 import no.stelar7.api.r4j.impl.lol.raw.LeagueAPI;
-import no.stelar7.api.r4j.pojo.lol.match.lol.ParticipantIdentity;
+import no.stelar7.api.r4j.pojo.lol.match.ParticipantIdentity;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
 import java.util.*;
