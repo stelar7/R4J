@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.types.*;
-import no.stelar7.api.r4j.basic.utils.LazyList;
+import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.match.*;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
@@ -101,6 +101,26 @@ public class MatchListTest
         MatchListBuilder     mlb  = new MatchListBuilder();
         List<MatchReference> list = mlb.withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).get();
         Assert.assertFalse("api didnt load data?!", list.isEmpty());
+    }
+    
+    @Test
+    public void testMatchlistCrawler()
+    {
+        Summoner s = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        
+        SummonerCrawler crawler = new SummonerCrawler(s);
+        crawler.crawlLeague();
+        crawler.crawlGames();
+        
+        MatchListBuilder mlb = new MatchListBuilder();
+        crawler.get().forEach(summoner -> {
+            List<MatchReference> list = mlb.withAccountId(summoner.getAccountId()).withPlatform(summoner.getPlatform()).get();
+            for (MatchReference ref : list)
+            {
+                ref.getFullMatch();
+                ref.getTimeline();
+            }
+        });
     }
     
     @Test
