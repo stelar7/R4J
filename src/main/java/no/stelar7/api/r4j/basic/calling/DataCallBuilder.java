@@ -491,16 +491,8 @@ public class DataCallBuilder
         String      firstKey = "first/" + baseKey;
         String      callKey  = "call/" + baseKey;
         
-        try
-        {
-            DataCall.getRatelimiterCache().put(limitKey, Utils.getGson().toJson(limiter.getLimits()));
-            DataCall.getRatelimiterCache().put(firstKey, Utils.getGson().toJson(limiter.getFirstCallInTime()));
-            DataCall.getRatelimiterCache().put(callKey, Utils.getGson().toJson(limiter.getCallCountInTime()));
-            DataCall.getRatelimiterCache().sync();
-        } catch (BackingStoreException e)
-        {
-            e.printStackTrace();
-        }
+        DataCall.getRatelimiterCache().put(firstKey, Utils.getGson().toJson(limiter.getFirstCallInTime()));
+        DataCall.getRatelimiterCache().put(callKey, Utils.getGson().toJson(limiter.getCallCountInTime()));
     }
     
     private void loadLimiterFromCache(Enum platform, Enum endpoint, Map<Enum, RateLimiter> child)
