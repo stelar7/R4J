@@ -75,8 +75,8 @@ public class LCUSocketReader
                     String event   = data.get(1).getAsString();
                     String content = data.get(2).getAsJsonObject().toString();
                     
-                    List<Consumer<String>> headerConsumers = headerHandlers.get(event);
-                    List<Consumer<String>> rawConsumers    = rawHandlers.get(event);
+                    List<Consumer<String>> headerConsumers = headerHandlers.getOrDefault(event, Collections.emptyList());
+                    List<Consumer<String>> rawConsumers    = rawHandlers.getOrDefault(event, Collections.emptyList());
                     try
                     {
                         StringWriter holder = new StringWriter();
