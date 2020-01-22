@@ -28,6 +28,7 @@ public class LORRankedAPI
     public List<LoRPlayerRank> getLeaderboard(ServicePlatform server)
     {
         DataCallBuilder builder = new DataCallBuilder()
+                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getLORAPIKey())
                 .withEndpoint(URLEndpoint.V1_LOR_RANKED_LEADERBOARD)
                 .withPlatform(server);
         
