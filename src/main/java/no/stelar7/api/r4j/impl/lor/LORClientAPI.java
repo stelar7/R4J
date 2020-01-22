@@ -4,12 +4,19 @@ import com.google.gson.JsonObject;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.pojo.lor.LoRConnection;
-import no.stelar7.api.r4j.pojo.lor.card.LoRDeck;
-import no.stelar7.api.r4j.pojo.lor.expedition.LoRExpeditionInfo;
-import no.stelar7.api.r4j.pojo.lor.game.*;
+import no.stelar7.api.r4j.pojo.lor.offline.card.LoRDeck;
+import no.stelar7.api.r4j.pojo.lor.offline.expedition.LoRExpeditionInfo;
+import no.stelar7.api.r4j.pojo.lor.offline.game.*;
 
-public class LoRApi
+public class LORClientAPI
 {
+    private static final LORClientAPI INSTANCE = new LORClientAPI();
+    
+    public static LORClientAPI getInstance()
+    {
+        return INSTANCE;
+    }
+    
     /**
      * Gets the players active deck, this deck is static and does not change during a game.
      * <p>

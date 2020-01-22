@@ -1,6 +1,6 @@
-package no.stelar7.api.r4j.pojo.lor.game;
+package no.stelar7.api.r4j.pojo.lor.offline.game;
 
-import no.stelar7.api.r4j.pojo.lor.card.LoRCard;
+import no.stelar7.api.r4j.pojo.lor.offline.card.LoRCard;
 
 import java.util.Objects;
 

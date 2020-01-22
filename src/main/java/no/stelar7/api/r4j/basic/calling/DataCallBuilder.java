@@ -768,7 +768,7 @@ public class DataCallBuilder
         }
         if (dc.getPlatform() != null)
         {
-            url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString());
+            url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString().toLowerCase());
             url[0] = url[0].replace(Constants.REGION_PLACEHOLDER, ((RealmSpesificEnum) dc.getPlatform()).getRealmValue());
         }
         dc.getUrlParams().forEach((k, v) -> url[0] = url[0].replace(k, v));

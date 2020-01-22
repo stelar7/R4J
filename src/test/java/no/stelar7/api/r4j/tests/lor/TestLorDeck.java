@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.tests.lor;
 
 import no.stelar7.api.r4j.impl.lor.LoRDeckCode;
-import no.stelar7.api.r4j.pojo.lor.card.*;
+import no.stelar7.api.r4j.pojo.lor.offline.card.*;
 import org.junit.*;
 
 import java.io.InputStream;

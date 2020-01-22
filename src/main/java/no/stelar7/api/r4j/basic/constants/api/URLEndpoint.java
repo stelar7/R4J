@@ -7,7 +7,6 @@ import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 import no.stelar7.api.r4j.pojo.lol.league.*;
 import no.stelar7.api.r4j.pojo.lol.liveclient.*;
 import no.stelar7.api.r4j.pojo.lol.match.*;
-import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
 import no.stelar7.api.r4j.pojo.lol.replay.*;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
@@ -23,8 +22,10 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.summonerspell.StaticSummonerSpellL
 import no.stelar7.api.r4j.pojo.lol.status.ShardStatus;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
-import no.stelar7.api.r4j.pojo.lor.expedition.LoRExpeditionInfo;
-import no.stelar7.api.r4j.pojo.lor.game.*;
+import no.stelar7.api.r4j.pojo.lor.api.ranked.LoRRankedPlayerList;
+import no.stelar7.api.r4j.pojo.lor.offline.expedition.LoRExpeditionInfo;
+import no.stelar7.api.r4j.pojo.lor.offline.game.*;
+import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
 
 import java.util.*;
 
@@ -195,6 +196,8 @@ public enum URLEndpoint
     V1_TFT_LEAGUE_GRANDMASTER("tft", "league", "v1", "grandmaster", LeagueList.class),
     V1_TFT_LEAGUE_CHALLENGER("tft", "league", "v1", "challenger", LeagueList.class),
     
+    
+    V1_LOR_RANKED_LEADERBOARD("lor", "ranked", "v1", "leaderboard", LoRRankedPlayerList.class),
     
     ;
     

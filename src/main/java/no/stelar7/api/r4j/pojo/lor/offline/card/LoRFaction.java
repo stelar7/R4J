@@ -1,4 +1,4 @@
-package no.stelar7.api.r4j.pojo.lor.card;
+package no.stelar7.api.r4j.pojo.lor.offline.card;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
-package no.stelar7.api.r4j.pojo.lor.expedition;
+package no.stelar7.api.r4j.pojo.lor.offline.expedition;
 
-import no.stelar7.api.r4j.pojo.lor.card.LoRCard;
+import no.stelar7.api.r4j.pojo.lor.offline.card.LoRCard;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,6 +1,6 @@
-package no.stelar7.api.r4j.pojo.lor.game;
+package no.stelar7.api.r4j.pojo.lor.offline.game;
 
-import no.stelar7.api.r4j.pojo.lor.game.LoRGameScreen.LoRCardRectangle;
+import no.stelar7.api.r4j.pojo.lor.offline.game.LoRGameScreen.LoRCardRectangle;
 
 import java.util.*;
 

@@ -4,6 +4,7 @@ import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.impl.lol.raw.*;
+import no.stelar7.api.r4j.impl.lor.*;
 import no.stelar7.api.r4j.impl.tft.*;
 
 /**
@@ -108,16 +109,52 @@ public class R4J
         }
     }
     
+    public LORAPI getLORAPI()
+    {
+        return LORAPI.INSTANCE;
+    }
+    
+    public static final class LORAPI
+    {
+        private LORAPI()
+        {
+        }
+        
+        private static final R4J.LORAPI INSTANCE = new R4J.LORAPI();
+        
+        /**
+         * Gets ranked api.
+         *
+         * @return the ranked api
+         */
+        public LORRankedAPI getRankedAPI()
+        {
+            return LORRankedAPI.getInstance();
+        }
+        
+        /**
+         * Gets client api.
+         *
+         * @return the client api
+         */
+        public LORClientAPI getClientAPI()
+        {
+            return LORClientAPI.getInstance();
+        }
+        
+    }
+    
     public TFTAPI getTFTAPI()
     {
         return TFTAPI.INSTANCE;
     }
+    
     public static final class TFTAPI
     {
         private TFTAPI()
         {
         }
-    
+        
         private static final TFTAPI INSTANCE = new TFTAPI();
         
         /**

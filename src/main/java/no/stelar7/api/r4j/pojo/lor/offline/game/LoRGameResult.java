@@ -1,4 +1,4 @@
-package no.stelar7.api.r4j.pojo.lor.game;
+package no.stelar7.api.r4j.pojo.lor.offline.game;
 
 import java.util.Objects;
 

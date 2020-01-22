@@ -1,8 +1,11 @@
 package no.stelar7.api.r4j.tests.lor;
 
-import no.stelar7.api.r4j.impl.lor.LoRApi;
-import no.stelar7.api.r4j.pojo.lor.card.LoRDeck;
-import no.stelar7.api.r4j.pojo.lor.game.*;
+import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.impl.R4J;
+import no.stelar7.api.r4j.impl.lor.*;
+import no.stelar7.api.r4j.pojo.lor.offline.card.LoRDeck;
+import no.stelar7.api.r4j.pojo.lor.offline.game.*;
+import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.*;
 
 public class TestLoRAPI
@@ -13,10 +16,10 @@ public class TestLoRAPI
     {
         while (true)
         {
-            LoRApi.getCardPositions();
-            LoRApi.getLastGameResult();
-            LoRApi.getActiveDeck();
-            LoRApi.getExpeditionsState();
+            LORClientAPI.getCardPositions();
+            LORClientAPI.getLastGameResult();
+            LORClientAPI.getActiveDeck();
+            LORClientAPI.getExpeditionsState();
             
             Thread.sleep(1000);
         }
@@ -25,9 +28,18 @@ public class TestLoRAPI
     
     @Test
     @Ignore
+    public void testLeaderboard()
+    {
+        LORRankedAPI api = new R4J(SecretFile.CREDS).getLORAPI().getRankedAPI();
+        api.getLeaderboard(ServicePlatform.EUROPE);
+        System.out.println();
+    }
+    
+    @Test
+    @Ignore
     public void testActiveDeck()
     {
-        LoRDeck deck = LoRApi.getActiveDeck();
+        LoRDeck deck = LORClientAPI.getActiveDeck();
         System.out.println();
     }
     
@@ -35,7 +47,7 @@ public class TestLoRAPI
     @Ignore
     public void testGameResult()
     {
-        LoRGameResult result = LoRApi.getLastGameResult();
+        LoRGameResult result = LORClientAPI.getLastGameResult();
         System.out.println();
     }
     
@@ -43,7 +55,7 @@ public class TestLoRAPI
     @Ignore
     public void testGameState()
     {
-        LoRGameInfo state = LoRApi.getCardPositions();
+        LoRGameInfo state = LORClientAPI.getCardPositions();
         System.out.println();
     }
 }

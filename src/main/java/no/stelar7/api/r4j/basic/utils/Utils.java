@@ -6,7 +6,7 @@ import no.stelar7.api.r4j.basic.serializer.GenericEnumSerializer;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.serializer.*;
-import no.stelar7.api.r4j.pojo.lor.game.LoRGameState;
+import no.stelar7.api.r4j.pojo.lor.offline.game.LoRGameState;
 
 import java.io.*;
 import java.net.*;

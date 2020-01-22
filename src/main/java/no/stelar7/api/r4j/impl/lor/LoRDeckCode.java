@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.impl.lor;
 
 
 import no.stelar7.api.r4j.basic.utils.*;
-import no.stelar7.api.r4j.pojo.lor.card.*;
+import no.stelar7.api.r4j.pojo.lor.offline.card.*;
 
 import java.util.*;
 import java.util.Map.Entry;
