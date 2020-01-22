@@ -133,4 +133,8 @@ public final class Utils
         return joiner.toString();
     }
     
+    public static Object getLastItem(List<Object> list)
+    {
+        return list.size() > 0 ? list.get(list.size() - 1) : null;
+    }
 }

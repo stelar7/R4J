@@ -9,7 +9,6 @@ import org.slf4j.*;
 
 import java.util.*;
 
-@SuppressWarnings("unchecked")
 public class LeagueBuilder
 {
     
@@ -65,11 +64,14 @@ public class LeagueBuilder
         }
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
+                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY)
                                                        .withPlatform(this.platform);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("id", summonerId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY, this.platform, this.summonerId);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY, data);
         if (chl.isPresent())
         {
             return (List<LeagueEntry>) chl.get();
@@ -77,14 +79,17 @@ public class LeagueBuilder
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
-            List<LeagueEntry> list = (List<LeagueEntry>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY, list, this.platform, this.summonerId);
+            List<LeagueEntry> list = (List<LeagueEntry>) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -102,11 +107,15 @@ public class LeagueBuilder
         }
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
-                                                       .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(this.leagueId))
+                                                       .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, this.leagueId)
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE)
                                                        .withPlatform(this.platform);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE, this.platform, this.leagueId);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("id", leagueId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -115,7 +124,10 @@ public class LeagueBuilder
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE, list, this.platform, this.leagueId);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE, data);
+            
             return list;
         } catch (ClassCastException e)
         {

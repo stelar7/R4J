@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("unchecked")
 public final class MasteryAPI
 {
     
@@ -40,8 +39,11 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("id", summonerId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, server, summonerId);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, data);
         if (chl.isPresent())
         {
             return (Integer) chl.get();
@@ -50,7 +52,10 @@ public final class MasteryAPI
         try
         {
             Integer list = (Integer) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, list, server, summonerId);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -94,8 +99,12 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("id", summonerId);
+        data.put("champion", championId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, server, summonerId, championId);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
         if (chl.isPresent())
         {
             return (ChampionMastery) chl.get();
@@ -119,7 +128,10 @@ public final class MasteryAPI
                 Field level = mastery.getClass().getDeclaredField("championLevel");
                 level.setAccessible(true);
                 level.set(mastery, 0);
-                DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, mastery, server, summonerId, championId);
+                
+                data.put("value", mastery);
+                DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
+                
                 return mastery;
                 
             } catch (NoSuchFieldException | IllegalAccessException e)
@@ -127,7 +139,10 @@ public final class MasteryAPI
                 Logger.getGlobal().warning("Class has changed, please fix me");
             }
         }
-        DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, masteryObj, server, summonerId, championId);
+        
+        data.put("value", masteryObj);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
+        
         return (ChampionMastery) masteryObj;
     }
     
@@ -146,8 +161,11 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("id", summonerId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, server, summonerId);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, data);
         if (chl.isPresent())
         {
             return (List<ChampionMastery>) chl.get();
@@ -155,14 +173,17 @@ public final class MasteryAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
-            List<ChampionMastery> list = (List<ChampionMastery>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_ID, list, server, summonerId);
+            List<ChampionMastery> list = (List<ChampionMastery>) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_ID, data);
+            
             return list;
         } catch (ClassCastException e)
         {

@@ -395,7 +395,7 @@ public class LCUApi
     public static Set<String> getWebsocketEvents()
     {
         String      obj2   = (String) LCUApi.customUrl("help", null);
-        JsonElement parsed = new JsonParser().parse(obj2);
+        JsonElement parsed = JsonParser.parseString(obj2);
         JsonObject  events = parsed.getAsJsonObject().getAsJsonObject("events");
         return events.keySet();
     }

@@ -1,6 +1,7 @@
 package no.stelar7.api.r4j.tests.cache;
 
 import ch.qos.logback.classic.*;
+import no.stelar7.api.r4j.basic.cache.impl.MongoDBCacheProvider;
 import no.stelar7.api.r4j.basic.cache.CacheLifetimeHint;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
@@ -16,17 +17,19 @@ import org.junit.*;
 import org.junit.rules.Stopwatch;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public class CacheTest
 {
     
-    final R4J                r4J      = new R4J(SecretFile.CREDS);
-    final MySQLCacheProvider sqlCache = new MySQLCacheProvider("localhost", 3306, "root", "");
-    final FileSystemCacheProvider fileCache   = new FileSystemCacheProvider(5);
-    final MemoryCacheProvider     memCache    = new MemoryCacheProvider(5);
-    final TieredCacheProvider     tieredCache = new TieredCacheProvider(memCache, fileCache, sqlCache);
+    final R4J r4J = new R4J(SecretFile.CREDS);
+    Supplier<MySQLCacheProvider>      sqlCache    = () -> new MySQLCacheProvider("localhost", 3306, "root", "");
+    Supplier<MongoDBCacheProvider>    mongoCache  = () -> new MongoDBCacheProvider("mongodb://localhost:27017");
+    Supplier<FileSystemCacheProvider> fileCache   = () -> new FileSystemCacheProvider(5);
+    Supplier<MemoryCacheProvider>     memCache    = () -> new MemoryCacheProvider(5);
+    Supplier<TieredCacheProvider>     tieredCache = () -> new TieredCacheProvider(memCache.get(), fileCache.get(), sqlCache.get());
     
     @Rule
     public Stopwatch stopwatch = new Stopwatch() {};
@@ -41,9 +44,9 @@ public class CacheTest
     
     @Test
     @Ignore
-    public void testSQLCache() throws InterruptedException
+    public void testSQLCache()
     {
-        DataCall.setCacheProvider(sqlCache);
+        DataCall.setCacheProvider(sqlCache.get());
         
         Summoner s = Summoner.byName(Platform.EUW1, "stelar7");
         System.out.println(s);
@@ -53,11 +56,20 @@ public class CacheTest
         //    doCacheStuff();
     }
     
+    @Test
+    @Ignore
+    public void testMongoCache() throws InterruptedException
+    {
+        DataCall.setCacheProvider(mongoCache.get());
+        
+        doCacheStuff();
+    }
+    
     
     @Test
     public void testFileSystemCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(fileCache);
+        DataCall.setCacheProvider(fileCache.get());
         
         doCacheStuff();
     }
@@ -67,7 +79,7 @@ public class CacheTest
     @Ignore
     public void testTieredMemoryCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(tieredCache);
+        DataCall.setCacheProvider(tieredCache.get());
         
         doCacheStuff();
     }
@@ -76,7 +88,7 @@ public class CacheTest
     public void testStaticDataCache()
     {
         
-        DataCall.setCacheProvider(fileCache);
+        DataCall.setCacheProvider(fileCache.get());
         r4J.getDDragonAPI().getChampions();
         r4J.getDDragonAPI().getChampions(null, null);
     }
@@ -88,7 +100,7 @@ public class CacheTest
         root.setLevel(Level.INFO);
         
         System.out.println("Fetching summoner for the first time");
-        DataCall.setCacheProvider(fileCache);
+        DataCall.setCacheProvider(fileCache.get());
         String id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
@@ -98,7 +110,11 @@ public class CacheTest
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_SUMMONER_BY_NAME, Platform.EUW1, id);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", Platform.EUW1);
+        data.put("name", id);
+        
+        DataCall.getCacheProvider().clear(URLEndpoint.V4_SUMMONER_BY_NAME, data);
         
         System.out.println("Fetching summoner after deleting entry");
         new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
@@ -124,6 +140,13 @@ public class CacheTest
     private void doCacheStuff() throws InterruptedException
     {
         // DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
+        
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.INFO);
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.OFF);
+        
+        System.out.println("Fetching a random summoner and their match list");
+        
         String               id      = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
         Summoner             s       = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         List<MatchReference> recents = new MatchListBuilder().withPlatform(Platform.EUW1).withAccountId(s.getAccountId()).get();
@@ -165,7 +188,7 @@ public class CacheTest
         
         System.out.println("clearing cache");
         System.out.println();
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_MATCH);
+        DataCall.getCacheProvider().clear(URLEndpoint.V4_MATCH, Collections.emptyMap());
         
         start = stopwatch.runtime(TimeUnit.NANOSECONDS);
         ref.getFullMatch();
@@ -176,7 +199,7 @@ public class CacheTest
         {
             ref.getFullMatch();
         }
-        System.out.printf("10x cache fetch time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
+        System.out.printf("10x cache fetch same item time: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         System.out.println();
         
         System.out.println("Fetching 3 aditional matches");
@@ -184,12 +207,12 @@ public class CacheTest
         recents.get(2).getFullMatch();
         recents.get(3).getFullMatch();
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH));
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH, Collections.emptyMap()));
         
         System.out.println("Waiting for cache timeout");
         TimeUnit.SECONDS.sleep(6);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH));
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH, Collections.emptyMap()));
         
         System.out.println("Re-fetching cached items");
         start = stopwatch.runtime(TimeUnit.NANOSECONDS);
@@ -199,7 +222,7 @@ public class CacheTest
         recents.get(3).getFullMatch();
         System.out.printf("4x fetches took: %dns%n", stopwatch.runtime(TimeUnit.NANOSECONDS) - start);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH));
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH, Collections.emptyMap()));
         System.out.println();
     }
     

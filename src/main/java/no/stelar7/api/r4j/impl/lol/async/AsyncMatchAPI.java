@@ -170,24 +170,28 @@ public class AsyncMatchAPI
                                                        .withEndpoint(URLEndpoint.V4_MATCH)
                                                        .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("gameid", matchId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCH, server, matchId);
-        if (chl.isPresent())
-        {
-            return CompletableFuture.completedFuture((Match) chl.get());
-        }
+        return DataCall.getCacheProvider()
+                       .get(URLEndpoint.V4_MATCH, data)
+                       .map(o -> CompletableFuture.completedFuture((Match) o))
+                       .orElseGet(() -> CompletableFuture.supplyAsync(() -> {
+                           try
+                           {
+                               Match match = (Match) builder.build();
+                
+                               data.put("value", match);
+                               DataCall.getCacheProvider().store(URLEndpoint.V4_MATCH, data);
+                
+                               return match;
+                           } catch (ClassCastException e)
+                           {
+                               return null;
+                           }
+                       }, threadPool.get(server)));
         
-        return CompletableFuture.supplyAsync(() -> {
-            try
-            {
-                Match match = (Match) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V4_MATCH, match, server, matchId);
-                return match;
-            } catch (ClassCastException e)
-            {
-                return null;
-            }
-        }, threadPool.get(server));
     }
     
     /**
@@ -204,22 +208,27 @@ public class AsyncMatchAPI
                                                        .withEndpoint(URLEndpoint.V4_TIMELINE)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_TIMELINE, server, matchId);
-        if (chl.isPresent())
-        {
-            return CompletableFuture.completedFuture((MatchTimeline) chl.get());
-        }
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("gameid", matchId);
         
-        return CompletableFuture.supplyAsync(() -> {
-            try
-            {
-                MatchTimeline timeline = (MatchTimeline) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V4_TIMELINE, timeline, server, matchId);
-                return timeline;
-            } catch (ClassCastException e)
-            {
-                return null;
-            }
-        }, threadPool.get(server));
+        return DataCall.getCacheProvider()
+                       .get(URLEndpoint.V4_TIMELINE, data)
+                       .map(o -> CompletableFuture.completedFuture((MatchTimeline) o))
+                       .orElseGet(() -> CompletableFuture.supplyAsync(() -> {
+                           try
+                           {
+                               MatchTimeline timeline = (MatchTimeline) builder.build();
+                
+                               data.put("value", timeline);
+                               DataCall.getCacheProvider().store(URLEndpoint.V4_TIMELINE, data);
+                
+                               return timeline;
+                           } catch (ClassCastException e)
+                           {
+                               return null;
+                           }
+                       }, threadPool.get(server)));
+        
     }
 }

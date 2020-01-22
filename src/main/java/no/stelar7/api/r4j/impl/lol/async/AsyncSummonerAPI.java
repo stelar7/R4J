@@ -18,7 +18,7 @@ public class AsyncSummonerAPI
         return AsyncSummonerAPI.INSTANCE;
     }
     
-    private static final Map<Platform, ExecutorService> threadPool = new EnumMap(Platform.class)
+    private static final Map<Platform, ExecutorService> threadPool = new EnumMap<Platform, ExecutorService>(Platform.class)
     {{
         for (Platform platform : Platform.values())
         {
@@ -46,24 +46,28 @@ public class AsyncSummonerAPI
                 .withEndpoint(URLEndpoint.V4_SUMMONER_BY_ID)
                 .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("is", summonerId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SUMMONER_BY_ID, server, summonerId);
-        if (chl.isPresent())
-        {
-            return CompletableFuture.completedFuture((Summoner) chl.get());
-        }
+        return DataCall.getCacheProvider()
+                       .get(URLEndpoint.V4_SUMMONER_BY_ID, data)
+                       .map(o -> CompletableFuture.completedFuture((Summoner) o))
+                       .orElseGet(() -> CompletableFuture.supplyAsync(() -> {
+                           try
+                           {
+                               Summoner summoner = (Summoner) builder.build();
+                
+                               data.put("value", summoner);
+                               DataCall.getCacheProvider().store(URLEndpoint.V4_SUMMONER_BY_ID, data);
+                
+                               return summoner;
+                           } catch (ClassCastException e)
+                           {
+                               return null;
+                           }
+                       }, threadPool.get(server)));
         
-        return CompletableFuture.supplyAsync(() -> {
-            try
-            {
-                Summoner summoner = (Summoner) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V4_SUMMONER_BY_ID, summoner, server, summonerId);
-                return summoner;
-            } catch (ClassCastException e)
-            {
-                return null;
-            }
-        }, threadPool.get(server));
     }
     
     /**
@@ -80,24 +84,29 @@ public class AsyncSummonerAPI
                 .withEndpoint(URLEndpoint.V4_SUMMONER_BY_NAME)
                 .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("name", summonerName);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SUMMONER_BY_NAME, server, summonerName);
-        if (chl.isPresent())
-        {
-            return CompletableFuture.completedFuture((Summoner) chl.get());
-        }
         
-        return CompletableFuture.supplyAsync(() -> {
-            try
-            {
-                Summoner summoner = (Summoner) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V4_SUMMONER_BY_NAME, summoner, server, summonerName);
-                return summoner;
-            } catch (ClassCastException e)
-            {
-                return null;
-            }
-        }, threadPool.get(server));
+        return DataCall.getCacheProvider()
+                       .get(URLEndpoint.V4_SUMMONER_BY_NAME, data)
+                       .map(o -> CompletableFuture.completedFuture((Summoner) o))
+                       .orElseGet(() -> CompletableFuture.supplyAsync(() -> {
+                           try
+                           {
+                               Summoner summoner = (Summoner) builder.build();
+                
+                               data.put("value", summoner);
+                               DataCall.getCacheProvider().store(URLEndpoint.V4_SUMMONER_BY_NAME, data);
+                
+                               return summoner;
+                           } catch (ClassCastException e)
+                           {
+                               return null;
+                           }
+                       }, threadPool.get(server)));
+        
     }
     
     /**
@@ -114,23 +123,28 @@ public class AsyncSummonerAPI
                 .withEndpoint(URLEndpoint.V4_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, server, accountId);
-        if (chl.isPresent())
-        {
-            return CompletableFuture.completedFuture((Summoner) chl.get());
-        }
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("accountid", accountId);
         
-        return CompletableFuture.supplyAsync(() -> {
-            try
-            {
-                Summoner summoner = (Summoner) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, summoner, server, accountId);
-                return summoner;
-            } catch (ClassCastException e)
-            {
-                return null;
-            }
-        }, threadPool.get(server));
+        return DataCall.getCacheProvider()
+                       .get(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, data)
+                       .map(o -> CompletableFuture.completedFuture((Summoner) o))
+                       .orElseGet(() -> CompletableFuture.supplyAsync(() -> {
+                           try
+                           {
+                               Summoner summoner = (Summoner) builder.build();
+                
+                               data.put("value", summoner);
+                               DataCall.getCacheProvider().store(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, data);
+                
+                               return summoner;
+                           } catch (ClassCastException e)
+                           {
+                               return null;
+                           }
+                       }, threadPool.get(server)));
+        
     }
     
     
@@ -148,22 +162,27 @@ public class AsyncSummonerAPI
                 .withEndpoint(URLEndpoint.V4_SUMMONER_BY_PUUID)
                 .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SUMMONER_BY_PUUID, server, PUUID);
-        if (chl.isPresent())
-        {
-            return CompletableFuture.completedFuture((Summoner) chl.get());
-        }
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("puuid", PUUID);
         
-        return CompletableFuture.supplyAsync(() -> {
-            try
-            {
-                Summoner summoner = (Summoner) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V4_SUMMONER_BY_PUUID, summoner, server, PUUID);
-                return summoner;
-            } catch (ClassCastException e)
-            {
-                return null;
-            }
-        }, threadPool.get(server));
+        return DataCall.getCacheProvider()
+                       .get(URLEndpoint.V4_SUMMONER_BY_PUUID, data)
+                       .map(o -> CompletableFuture.completedFuture((Summoner) o))
+                       .orElseGet(() -> CompletableFuture.supplyAsync(() -> {
+                           try
+                           {
+                               Summoner summoner = (Summoner) builder.build();
+                
+                               data.put("value", summoner);
+                               DataCall.getCacheProvider().store(URLEndpoint.V4_SUMMONER_BY_PUUID, data);
+                
+                               return summoner;
+                           } catch (ClassCastException e)
+                           {
+                               return null;
+                           }
+                       }, threadPool.get(server)));
+        
     }
 }

@@ -11,7 +11,6 @@ import org.slf4j.*;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.lang.reflect.Type;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -135,10 +134,10 @@ public class DataCallBuilder
                 
                 if (this.dc.getEndpoint() != null)
                 {
-                    final Object returnType = this.dc.getEndpoint().getType();
+                    final Class<?> returnType = this.dc.getEndpoint().getType();
                     returnValue = postProcess(returnValue);
                     
-                    return Utils.getGson().fromJson(returnValue, (returnType instanceof Class<?>) ? (Class<?>) returnType : (Type) returnType);
+                    return Utils.getGson().fromJson(returnValue, returnType);
                 } else
                 {
                     return returnValue;
@@ -258,7 +257,7 @@ public class DataCallBuilder
     
     private String postProcessApex(String returnValue)
     {
-        JsonObject elem    = (JsonObject) new JsonParser().parse(returnValue);
+        JsonObject elem    = (JsonObject) JsonParser.parseString(returnValue);
         JsonArray  entries = elem.getAsJsonArray("entries");
         entries.forEach(e -> {
             JsonObject ob = (JsonObject) e;
@@ -272,7 +271,7 @@ public class DataCallBuilder
     
     private String postProcessDDragonMany(String returnValue)
     {
-        JsonObject elem   = (JsonObject) new JsonParser().parse(returnValue);
+        JsonObject elem   = (JsonObject) JsonParser.parseString(returnValue);
         JsonObject parent = elem.getAsJsonObject("data");
         for (String key : new HashSet<>(parent.keySet()))
         {
@@ -289,7 +288,7 @@ public class DataCallBuilder
     
     private String postProcessDDragonAddId(String returnValue)
     {
-        JsonObject elem   = (JsonObject) new JsonParser().parse(returnValue);
+        JsonObject elem   = (JsonObject) JsonParser.parseString(returnValue);
         JsonObject parent = elem.getAsJsonObject("data");
         for (String key : new HashSet<>(parent.keySet()))
         {
@@ -302,7 +301,7 @@ public class DataCallBuilder
     
     private String postProcessPerkPath(String returnValue)
     {
-        JsonObject elem     = (JsonObject) new JsonParser().parse(returnValue);
+        JsonObject elem     = (JsonObject) JsonParser.parseString(returnValue);
         String     pathName = elem.get("name").getAsString();
         String     pathId   = elem.get("id").getAsString();
         
@@ -323,7 +322,7 @@ public class DataCallBuilder
     
     private String postProcessPerkPaths(String returnValue)
     {
-        JsonArray element = (JsonArray) new JsonParser().parse(returnValue);
+        JsonArray element = (JsonArray) JsonParser.parseString(returnValue);
         
         for (JsonElement elem : element)
         {
@@ -348,14 +347,14 @@ public class DataCallBuilder
     
     private String postProcessSummoner(String returnValue)
     {
-        JsonObject element = (JsonObject) new JsonParser().parse(returnValue);
+        JsonObject element = (JsonObject) JsonParser.parseString(returnValue);
         element.addProperty("platform", this.dc.getPlatform().toString());
         return Utils.getGson().toJson(element);
     }
     
     private String postProcessMatch(String returnValue)
     {
-        JsonObject element = (JsonObject) new JsonParser().parse(returnValue);
+        JsonObject element = (JsonObject) JsonParser.parseString(returnValue);
         
         JsonArray participantIds = element.getAsJsonArray("participantIdentities");
         for (JsonElement participant : participantIds)

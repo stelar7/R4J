@@ -18,19 +18,19 @@ public class TieredCacheProvider implements CacheProvider
     
     
     @Override
-    public void store(URLEndpoint type, Object... obj)
+    public void store(URLEndpoint type, Map<String, Object> obj)
     {
         providers.forEach(p -> p.store(type, obj));
     }
     
     @Override
-    public void update(URLEndpoint type, Object... obj)
+    public void update(URLEndpoint type, Map<String, Object> obj)
     {
         providers.forEach(p -> p.update(type, obj));
     }
     
     @Override
-    public Optional<?> get(URLEndpoint type, Object... data)
+    public Optional<?> get(URLEndpoint type, Map<String, Object> data)
     {
         
         for (CacheProvider provider : providers)
@@ -41,7 +41,8 @@ public class TieredCacheProvider implements CacheProvider
             {
                 logger.debug("Loaded from: {}", provider.getClass().getName());
                 
-                restoreCache(provider, type, returnValue.get());
+                data.put("value", returnValue.get());
+                restoreCache(provider, type, data);
                 return returnValue;
             }
         }
@@ -49,7 +50,7 @@ public class TieredCacheProvider implements CacheProvider
         return Optional.empty();
     }
     
-    private void restoreCache(CacheProvider cacheDepth, URLEndpoint type, Object obj)
+    private void restoreCache(CacheProvider cacheDepth, URLEndpoint type, Map<String, Object> data)
     {
         
         boolean shouldUpdate = false;
@@ -65,17 +66,17 @@ public class TieredCacheProvider implements CacheProvider
             if (!shouldUpdate)
             {
                 logger.debug("Saved to: {}", provider.getClass().getName());
-                provider.store(type, obj);
+                provider.store(type, data);
             } else
             {
                 logger.debug("Updating timestamp: {}", provider.getClass().getName());
-                provider.update(type, obj);
+                provider.update(type, data);
             }
         }
     }
     
     @Override
-    public void clear(URLEndpoint type, Object... filter)
+    public void clear(URLEndpoint type, Map<String, Object> filter)
     {
         providers.forEach(p -> p.clear(type, filter));
     }
@@ -93,9 +94,9 @@ public class TieredCacheProvider implements CacheProvider
     }
     
     @Override
-    public long getSize(URLEndpoint type)
+    public long getSize(URLEndpoint type, Map<String, Object> filter)
     {
-        return providers.stream().mapToLong(provider -> provider.getSize(type)).sum();
+        return providers.stream().mapToLong(provider -> provider.getSize(type, filter)).sum();
     }
     
     @Override

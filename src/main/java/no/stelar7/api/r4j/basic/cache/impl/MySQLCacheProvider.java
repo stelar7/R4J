@@ -1,7 +1,6 @@
 package no.stelar7.api.r4j.basic.cache.impl;
 
 import no.stelar7.api.r4j.basic.cache.*;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.utils.sql.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
@@ -18,12 +17,13 @@ public class MySQLCacheProvider implements CacheProvider
     
     private       long              timeToLive;
     private       CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
-    private final MySQL             sql;
+    private final MySQL             sql   = null;
     
     private static final String COLUMN_EXPIRES_AT = "expires_at";
     
     public MySQLCacheProvider(String host, int port, String username, String password)
     {
+        /*
         sql = new MySQL(host, port, username, password);
         try
         {
@@ -38,9 +38,10 @@ public class MySQLCacheProvider implements CacheProvider
         {
             e.printStackTrace();
         }
+        */
     }
     
-    private Method getAnnotatedMethod(Class c)
+    private Method getAnnotatedMethod(Class<?> c)
     {
         for (Method method : c.getDeclaredMethods())
         {
@@ -53,7 +54,7 @@ public class MySQLCacheProvider implements CacheProvider
         throw new RuntimeException("Tried to fetch typemap for class: " + c + ", but none was present.");
     }
     
-    private Map<String, String> getTypeMapForClass(Class c, Optional<?> invokee)
+    private Map<String, String> getTypeMapForClass(Class<?> c, Optional<?> invokee)
     {
         Method m = getAnnotatedMethod(c);
         try
@@ -138,27 +139,27 @@ public class MySQLCacheProvider implements CacheProvider
     }
     
     @Override
-    public void store(URLEndpoint type, Object... obj)
+    public void store(URLEndpoint type, Map<String, Object> obj)
     {
         // todo
     }
     
     
     @Override
-    public Optional<?> get(URLEndpoint type, Object... data)
+    public Optional<?> get(URLEndpoint type, Map<String, Object> data)
     {
         return Optional.empty();
     }
     
     
     @Override
-    public void update(URLEndpoint type, Object... obj)
+    public void update(URLEndpoint type, Map<String, Object> obj)
     {
         // todo
     }
     
     @Override
-    public void clear(URLEndpoint type, Object... obj)
+    public void clear(URLEndpoint type, Map<String, Object> obj)
     {
         sql.clearTable(type.name());
     }
@@ -193,7 +194,7 @@ public class MySQLCacheProvider implements CacheProvider
     }
     
     @Override
-    public long getSize(URLEndpoint type)
+    public long getSize(URLEndpoint type, Map<String, Object> filter)
     {
         try
         {

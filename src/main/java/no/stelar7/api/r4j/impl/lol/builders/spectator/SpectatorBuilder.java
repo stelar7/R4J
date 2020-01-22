@@ -43,7 +43,10 @@ public class SpectatorBuilder
             return Collections.emptyList();
         }
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_FEATURED, this.platform);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_FEATURED, data);
         if (chl.isPresent())
         {
             return ((FeaturedGames) chl.get()).getGameList();
@@ -53,14 +56,17 @@ public class SpectatorBuilder
                                                        .withPlatform(this.platform);
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
-            FeaturedGames fg = (FeaturedGames) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_FEATURED, fg, this.platform);
+            FeaturedGames fg = (FeaturedGames) ret;
+            
+            data.put("value", fg);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_FEATURED, data);
+            
             return fg.getGameList();
         } catch (ClassCastException e)
         {
@@ -75,7 +81,11 @@ public class SpectatorBuilder
             return null;
         }
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_CURRENT, this.platform, this.summonerId);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("id", this.summonerId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_CURRENT, data);
         if (chl.isPresent())
         {
             return (SpectatorGameInfo) chl.get();
@@ -89,7 +99,10 @@ public class SpectatorBuilder
         try
         {
             SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_CURRENT, fg, this.platform, this.summonerId);
+            
+            data.put("value", fg);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_CURRENT, data);
+            
             return fg;
         } catch (ClassCastException e)
         {

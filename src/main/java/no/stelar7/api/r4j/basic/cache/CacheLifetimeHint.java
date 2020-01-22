@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class CacheLifetimeHint
 {
     private static final long YEARS_1    = TimeUnit.DAYS.toMillis(365);
+    private static final long DAYS_7     = TimeUnit.DAYS.toMillis(7);
     private static final long DAYS_1     = TimeUnit.DAYS.toMillis(1);
     private static final long HOURS_12   = TimeUnit.HOURS.toMillis(12);
     private static final long HOURS_6    = TimeUnit.HOURS.toMillis(6);
@@ -42,16 +43,17 @@ public class CacheLifetimeHint
         {
             DEFAULTS.add(endpoint, YEARS_1);
         }
-    
+        
         DEFAULTS.add(URLEndpoint.DDRAGON_REALMS, DAYS_1);
+        DEFAULTS.add(URLEndpoint.DDRAGON_VERSIONS, DAYS_1);
         
         DEFAULTS.add(URLEndpoint.V4_THIRD_PARTY_CODE, MINUTES_10);
         
         DEFAULTS.add(URLEndpoint.V4_MATCHLIST, MINUTES_10);
         DEFAULTS.add(URLEndpoint.V1_TFT_MATCHLIST, MINUTES_10);
         
-        DEFAULTS.add(URLEndpoint.V4_SPECTATOR_CURRENT, MINUTES_1);
-        DEFAULTS.add(URLEndpoint.V4_SPECTATOR_FEATURED, MINUTES_1);
+        DEFAULTS.add(URLEndpoint.V4_SPECTATOR_CURRENT, MINUTES_30);
+        DEFAULTS.add(URLEndpoint.V4_SPECTATOR_FEATURED, MINUTES_30);
         
         DEFAULTS.add(URLEndpoint.V4_MASTERY_BY_CHAMPION, MINUTES_10);
         DEFAULTS.add(URLEndpoint.V4_MASTERY_BY_ID, MINUTES_10);
@@ -69,6 +71,5 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V4_LEAGUE, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V4_LEAGUE_ENTRY, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V4_LEAGUE_RANK, MINUTES_30);
-        
     }
 }

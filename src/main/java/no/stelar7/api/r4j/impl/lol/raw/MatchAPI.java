@@ -1,15 +1,12 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
-import no.stelar7.api.r4j.basic.utils.Pair;
-import no.stelar7.api.r4j.basic.calling.*;
-import no.stelar7.api.r4j.basic.constants.api.*;
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.api.Platform;
 import no.stelar7.api.r4j.basic.utils.LazyList;
+import no.stelar7.api.r4j.impl.lol.builders.match.*;
 import no.stelar7.api.r4j.pojo.lol.match.*;
 
-import java.util.*;
+import java.util.List;
 
-@SuppressWarnings("unchecked")
 public final class MatchAPI
 {
     private static final MatchAPI INSTANCE = new MatchAPI();
@@ -24,99 +21,9 @@ public final class MatchAPI
         // Hide public constructor
     }
     
-    /**
-     * Returns a list of the accounts games
-     * <p>
-     * A number of optional parameters are provided for filtering.
-     * It is up to the caller to ensure that the combination of filter parameters provided is valid for the requested account, otherwise, no matches may be returned.
-     * If beginIndex is specified, but not endIndex, then endIndex defaults to beginIndex+100.
-     * If endIndex is specified, but not beginIndex, then beginIndex defaults to 0.
-     * If both are specified, then endIndex must be greater than beginIndex.
-     * The maximum range allowed is 100, otherwise a 400 error code is returned.
-     * If beginTime is specified, but not endTime, then these parameters are ignored.
-     * If endTime is specified, but not beginTime, then beginTime defaults to the start of the account's match history.
-     * If both are specified, then endTime should be greater than beginTime.
-     * The maximum time range allowed is one week, otherwise a 400 error code is returned.
-     *
-     * @param server      the platform the account is on
-     * @param accountId   the account to check
-     * @param beginTime   optional filter the games started after this time
-     * @param endTime     optional filter for games started before this time
-     * @param beginIndex  optional filter for skipping the first x games
-     * @param endIndex    optional filter for skipping only showing x games
-     * @param rankedQueue optional filter for selecting the queue
-     * @param season      optional filter for selecting the season
-     * @param championId  optional filter for selecting the champion played
-     * @return MatchList
-     */
-    public List<MatchReference> getMatchList(Platform server, String accountId,
-                                             Long beginTime, Long endTime,
-                                             Integer beginIndex, Integer endIndex,
-                                             Set<GameQueueType> rankedQueue,
-                                             Set<SeasonType> season,
-                                             Set<Integer> championId)
+    private List<MatchReference> getMatchList(Platform server, String accountId, Integer beginIndex, Integer endIndex)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, accountId)
-                                                       .withEndpoint(URLEndpoint.V4_MATCHLIST)
-                                                       .withPlatform(server);
-        
-        
-        if (beginIndex != null)
-        {
-            builder.withQueryParameter(Constants.BEGININDEX_PLACEHOLDER_DATA, beginIndex.toString());
-        }
-        if (endIndex != null)
-        {
-            if ((beginIndex != null ? beginIndex : 0) + 100 - endIndex < 0)
-            {
-                throw new IllegalArgumentException("begin-endindex out of range! (difference between beginIndex and endIndex is more than 100)");
-            }
-            
-            builder.withQueryParameter(Constants.ENDINDEX_PLACEHOLDER_DATA, endIndex.toString());
-        }
-        
-        if (beginTime != null)
-        {
-            builder.withQueryParameter(Constants.BEGINTIME_PLACEHOLDER_DATA, beginTime.toString());
-        }
-        if (endTime != null)
-        {
-            
-            if ((beginTime != null ? beginTime : 0) + 604800000 - endTime < 0)
-            {
-                throw new IllegalArgumentException("begin-endtime out of range! (difference between beginTime and endTime is more than one week)");
-            }
-            
-            builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, endTime.toString());
-        }
-        if (rankedQueue != null)
-        {
-            rankedQueue.forEach(queue -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(queue.getValues()[0])));
-        }
-        if (season != null)
-        {
-            season.forEach(sea -> builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(sea.getValue())));
-        }
-        if (championId != null)
-        {
-            championId.forEach(id -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(id)));
-        }
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCHLIST, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
-        if (chl.isPresent())
-        {
-            return ((MatchList) chl.get()).getMatches();
-        }
-        
-        Object matchObj = builder.build();
-        if (matchObj instanceof Pair)
-        {
-            return Collections.emptyList();
-        }
-        
-        MatchList match = (MatchList) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V4_MATCHLIST, match, server, accountId, beginTime, endTime, beginIndex, endIndex, rankedQueue, season, championId);
-        return match.getMatches();
+        return new MatchListBuilder(server, accountId, beginIndex, endIndex).get();
     }
     
     /**
@@ -131,7 +38,7 @@ public final class MatchAPI
     public LazyList<MatchReference> getMatchList(Platform server, String accountId)
     {
         int increment = 100;
-        return new LazyList<>(increment, prevValue -> getMatchList(server, accountId, null, null, prevValue, prevValue + increment, null, null, null));
+        return new LazyList<>(increment, prevValue -> getMatchList(server, accountId, prevValue, prevValue + increment));
     }
     
     /**
@@ -155,26 +62,7 @@ public final class MatchAPI
      */
     public Match getMatch(Platform server, long matchId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
-                                                       .withEndpoint(URLEndpoint.V4_MATCH)
-                                                       .withPlatform(server);
-        
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCH, server, matchId);
-        if (chl.isPresent())
-        {
-            return (Match) chl.get();
-        }
-        
-        try
-        {
-            Match match = (Match) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MATCH, match, server, matchId);
-            return match;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return new MatchBuilder(server, matchId).get();
     }
     
     /**
@@ -187,25 +75,6 @@ public final class MatchAPI
      */
     public MatchTimeline getTimeline(Platform server, long matchId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
-                                                       .withEndpoint(URLEndpoint.V4_TIMELINE)
-                                                       .withPlatform(server);
-        
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_TIMELINE, server, matchId);
-        if (chl.isPresent())
-        {
-            return (MatchTimeline) chl.get();
-        }
-        
-        try
-        {
-            MatchTimeline timeline = (MatchTimeline) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_TIMELINE, timeline, server, matchId);
-            return timeline;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return new TimelineBuilder(server, matchId).get();
     }
 }

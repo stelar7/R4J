@@ -30,7 +30,12 @@ public class TFTMatchAPI
                                                        .withQueryParameter(Constants.COUNT_PLACEHOLDER_DATA, String.valueOf(count))
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCHLIST, server, PUUID, count);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("puuid", PUUID);
+        data.put("count", count);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCHLIST, data);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -43,7 +48,10 @@ public class TFTMatchAPI
         }
         
         List<String> matchList = (List<String>) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_MATCHLIST, matchList, server, PUUID, count);
+        
+        data.put("value", matchList);
+        DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_MATCHLIST, data);
+        
         return matchList;
     }
     
@@ -77,7 +85,11 @@ public class TFTMatchAPI
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCH)
                                                        .withPlatform(platform);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCH, platform, gameId);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("gameid", gameId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCH, data);
         if (chl.isPresent())
         {
             return (GAMHSMatch) chl.get();
@@ -86,7 +98,10 @@ public class TFTMatchAPI
         try
         {
             GAMHSMatch match = (GAMHSMatch) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_MATCH, match, platform, gameId);
+            
+            data.put("value", match);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_MATCH, data);
+            
             return match;
         } catch (ClassCastException e)
         {

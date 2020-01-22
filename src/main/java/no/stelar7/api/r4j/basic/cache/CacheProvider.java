@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.basic.cache;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 
 import java.nio.file.Path;
-import java.util.Optional;
+import java.util.*;
 
 public interface CacheProvider
 {
@@ -18,7 +18,7 @@ public interface CacheProvider
      * @param type the endpoint to store the cache in
      * @param obj  the object to store
      */
-    void store(URLEndpoint type, Object... obj);
+    void store(URLEndpoint type, Map<String, Object> obj);
     
     
     /**
@@ -27,7 +27,7 @@ public interface CacheProvider
      * @param type the endpoint to store the cache in
      * @param obj  the object to store
      */
-    void update(URLEndpoint type, Object... obj);
+    void update(URLEndpoint type, Map<String, Object> obj);
     
     /**
      * Returns data from the cache if found, otherwise Optional.empty();
@@ -36,7 +36,7 @@ public interface CacheProvider
      * @param data the data to look for
      * @return return type depends on the endpoint called
      */
-    Optional<?> get(URLEndpoint type, Object... data);
+    Optional<?> get(URLEndpoint type, Map<String, Object> data);
     
     /**
      * Empties the entire cache for that endpoint
@@ -44,7 +44,15 @@ public interface CacheProvider
      * @param type   the endpoint
      * @param filter optional filter to clear specific data
      */
-    void clear(URLEndpoint type, Object... filter);
+    void clear(URLEndpoint type, Map<String, Object> filter);
+    
+    /**
+     * Returns the count of items in the cache (or the size in bytes)
+     *
+     * @param type the endpoint
+     * @return long
+     */
+    long getSize(URLEndpoint type, Map<String, Object> filter);
     
     /**
      * Removes any old items frcm the cache
@@ -58,14 +66,6 @@ public interface CacheProvider
      * @return long
      */
     long getTimeToLive(URLEndpoint type);
-    
-    /**
-     * Returns the count of items in the cache (or the size in bytes)
-     *
-     * @param type the endpoint
-     * @return long
-     */
-    long getSize(URLEndpoint type);
     
     
     /**

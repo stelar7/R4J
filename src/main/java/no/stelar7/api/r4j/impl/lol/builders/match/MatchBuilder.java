@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.match.Match;
 
-import java.util.Optional;
+import java.util.*;
 
 public class MatchBuilder
 {
@@ -19,7 +19,7 @@ public class MatchBuilder
         this.platform = Platform.UNKNOWN;
     }
     
-    private MatchBuilder(Platform platform, long id)
+    public MatchBuilder(Platform platform, long id)
     {
         this.id = id;
         this.platform = platform;
@@ -52,8 +52,11 @@ public class MatchBuilder
                                                        .withEndpoint(URLEndpoint.V4_MATCH)
                                                        .withPlatform(this.platform);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", this.platform);
+        data.put("gameid", this.id);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCH, this.platform, this.id);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCH, data);
         if (chl.isPresent())
         {
             return (Match) chl.get();
@@ -66,7 +69,10 @@ public class MatchBuilder
         }
         
         Match match = (Match) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V4_MATCH, match, this.platform, this.id);
+        
+        data.put("value", match);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MATCH, data);
+        
         return match;
     }
 }

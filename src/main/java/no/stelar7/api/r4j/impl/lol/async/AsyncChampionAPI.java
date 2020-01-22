@@ -35,22 +35,26 @@ public class AsyncChampionAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPION_ROTATIONS, server);
-        if (chl.isPresent())
-        {
-            return CompletableFuture.completedFuture((ChampionRotationInfo) chl.get());
-        }
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
         
-        return CompletableFuture.supplyAsync(() -> {
-            try
-            {
-                ChampionRotationInfo cl = (ChampionRotationInfo) builder.build();
-                DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPION_ROTATIONS, cl, server);
-                return cl;
-            } catch (ClassCastException e)
-            {
-                return null;
-            }
-        }, threadPool.get(server));
+        return DataCall.getCacheProvider()
+                       .get(URLEndpoint.V3_CHAMPION_ROTATIONS, data)
+                       .map(o -> CompletableFuture.completedFuture((ChampionRotationInfo) o))
+                       .orElseGet(() -> CompletableFuture.supplyAsync(() -> {
+                           try
+                           {
+                               ChampionRotationInfo cl = (ChampionRotationInfo) builder.build();
+                
+                               data.put("value", cl);
+                               DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
+                
+                               return cl;
+                           } catch (ClassCastException e)
+                           {
+                               return null;
+                           }
+                       }, threadPool.get(server)));
+        
     }
 }

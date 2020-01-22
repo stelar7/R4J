@@ -12,16 +12,16 @@ public class SpectatorGameInfo implements Serializable
 {
     private static final long serialVersionUID = -5466430258379033702L;
     
-    private List<BannedChampion>                            bannedChampions;
-    private long                                            gameId;
+    private List<BannedChampion>       bannedChampions;
+    private long                       gameId;
     private long                       gameLength;
     private GameModeType               gameMode;
     private GameQueueType              gameQueueConfigId;
     private long                       gameStartTime;
     private GameType                   gameType;
-    private MapType                                         mapId;
-    private Observer observers;
-    private List<SpectatorParticipant>                      participants;
+    private MapType                    mapId;
+    private Observer                   observers;
+    private List<SpectatorParticipant> participants;
     private Platform                   platformId;
     
     

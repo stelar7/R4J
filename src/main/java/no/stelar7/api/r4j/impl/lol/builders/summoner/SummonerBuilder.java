@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
-import java.util.Optional;
+import java.util.*;
 
 public class SummonerBuilder
 {
@@ -68,41 +68,42 @@ public class SummonerBuilder
     {
         DataCallBuilder builder  = new DataCallBuilder().withPlatform(this.platform);
         URLEndpoint     endpoint = null;
-        Object          index    = "";
         
+        
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
         
         if (accId.length() > 0)
         {
             builder.withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, this.accId);
             endpoint = URLEndpoint.V4_SUMMONER_BY_ACCOUNT;
-            index = this.accId;
+            data.put("accountid", this.accId);
         }
         
         if (puuid.length() > 0)
         {
             builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid);
             endpoint = URLEndpoint.V4_SUMMONER_BY_PUUID;
-            index = this.puuid;
+            data.put("puuid", this.puuid);
         }
         
         if (sumId.length() > 0)
         {
             builder.withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.sumId);
             endpoint = URLEndpoint.V4_SUMMONER_BY_ID;
-            index = this.sumId;
+            data.put("id", this.sumId);
         }
         
         if (name.length() > 0)
         {
             builder.withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeString(this.name));
             endpoint = URLEndpoint.V4_SUMMONER_BY_NAME;
-            index = this.name;
+            data.put("name", this.name);
         }
         
         builder.withEndpoint(endpoint);
         
-        
-        Optional chl = DataCall.getCacheProvider().get(endpoint, this.platform, index);
+        Optional<?> chl = DataCall.getCacheProvider().get(endpoint, data);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -116,7 +117,9 @@ public class SummonerBuilder
             return null;
         }
         
-        DataCall.getCacheProvider().store(endpoint, sob, this.platform, index);
+        data.put("value", sob);
+        DataCall.getCacheProvider().store(endpoint, data);
+        
         return (Summoner) sob;
     }
 }
