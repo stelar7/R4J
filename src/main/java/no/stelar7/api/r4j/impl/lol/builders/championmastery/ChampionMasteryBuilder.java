@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("unchecked")
 public class ChampionMasteryBuilder
 {
     
@@ -56,12 +55,16 @@ public class ChampionMasteryBuilder
         }
         
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(this.platform);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", this.platform);
+        data.put("id", summonerId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, this.platform, this.summonerId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, data);
         if (chl.isPresent())
         {
             return (Integer) chl.get();
@@ -70,7 +73,9 @@ public class ChampionMasteryBuilder
         try
         {
             Integer list = (Integer) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, list, this.platform, this.summonerId);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, data);
             return list;
         } catch (ClassCastException e)
         {
@@ -86,12 +91,15 @@ public class ChampionMasteryBuilder
             return Collections.emptyList();
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
                                                        .withPlatform(this.platform);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("id", summonerId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, this.platform, this.summonerId);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, data);
         if (chl.isPresent())
         {
             return (List<ChampionMastery>) chl.get();
@@ -99,14 +107,17 @@ public class ChampionMasteryBuilder
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
-            List<ChampionMastery> list = (List<ChampionMastery>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_ID, list, this.platform, this.summonerId);
+            List<ChampionMastery> list = (List<ChampionMastery>) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_ID, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -132,13 +143,18 @@ public class ChampionMasteryBuilder
             return null;
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, String.valueOf(this.summonerId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(this.championId))
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(this.platform);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("id", summonerId);
+        data.put("champion", championId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, this.platform, this.summonerId, this.championId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
         if (chl.isPresent())
         {
             return (ChampionMastery) chl.get();
@@ -164,7 +180,9 @@ public class ChampionMasteryBuilder
                 level.setAccessible(true);
                 level.set(mastery, 0);
                 
-                DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, mastery, this.platform, this.summonerId, this.championId);
+                data.put("value", mastery);
+                DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
+                
                 return mastery;
                 
             } catch (NoSuchFieldException | IllegalAccessException e)
@@ -173,7 +191,9 @@ public class ChampionMasteryBuilder
             }
         }
         
-        DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, masterObj, this.platform, this.summonerId, this.championId);
+        data.put("value", masterObj);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
+        
         return (ChampionMastery) masterObj;
     }
 }

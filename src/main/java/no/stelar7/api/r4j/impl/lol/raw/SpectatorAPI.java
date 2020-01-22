@@ -7,7 +7,6 @@ import no.stelar7.api.r4j.pojo.lol.spectator.*;
 
 import java.util.*;
 
-@SuppressWarnings("unchecked")
 public final class SpectatorAPI
 {
     
@@ -35,7 +34,10 @@ public final class SpectatorAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V4_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_FEATURED, server);
+        Map<String, Object> data = new HashMap<>();
+        data.put("platform", server);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_FEATURED, data);
         if (chl.isPresent())
         {
             return ((FeaturedGames) chl.get()).getGameList();
@@ -43,14 +45,17 @@ public final class SpectatorAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
             FeaturedGames fg = (FeaturedGames) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_FEATURED, fg, server);
+            
+            data.put("value", fg);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_FEATURED, data);
+            
             return fg.getGameList();
         } catch (ClassCastException e)
         {
@@ -73,7 +78,11 @@ public final class SpectatorAPI
                                                        .withEndpoint(URLEndpoint.V4_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_CURRENT, server, summonerId);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("summoner", summonerId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_CURRENT, data);
         if (chl.isPresent())
         {
             return (SpectatorGameInfo) chl.get();
@@ -82,7 +91,10 @@ public final class SpectatorAPI
         try
         {
             SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_CURRENT, fg, server, summonerId);
+            
+            data.put("value", fg);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_CURRENT, data);
+            
             return fg;
         } catch (ClassCastException e)
         {

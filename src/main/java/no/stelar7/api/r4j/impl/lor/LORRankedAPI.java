@@ -31,8 +31,10 @@ public class LORRankedAPI
                 .withEndpoint(URLEndpoint.V1_LOR_RANKED_LEADERBOARD)
                 .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, server);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);
         if (chl.isPresent())
         {
             return ((LoRRankedPlayerList) chl.get()).getPlayers();
@@ -41,7 +43,10 @@ public class LORRankedAPI
         try
         {
             LoRRankedPlayerList list = (LoRRankedPlayerList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, list, server);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);
+            
             return list.getPlayers();
         } catch (ClassCastException e)
         {

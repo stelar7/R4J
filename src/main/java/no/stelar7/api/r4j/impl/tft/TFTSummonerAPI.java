@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
-import java.util.Optional;
+import java.util.*;
 
 public class TFTSummonerAPI
 {
@@ -39,8 +39,11 @@ public class TFTSummonerAPI
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_ID)
                 .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("id", summonerId);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_ID, server, summonerId);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_ID, data);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -49,7 +52,10 @@ public class TFTSummonerAPI
         try
         {
             Summoner summoner = (Summoner) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_ID, summoner, server, summonerId);
+            
+            data.put("value", summoner);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_ID, data);
+            
             return summoner;
         } catch (ClassCastException e)
         {
@@ -73,8 +79,11 @@ public class TFTSummonerAPI
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_NAME)
                 .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("name", summonerName);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_NAME, server, summonerName);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_NAME, data);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -83,7 +92,10 @@ public class TFTSummonerAPI
         try
         {
             Summoner summoner = (Summoner) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_NAME, summoner, server, summonerName);
+            
+            data.put("value", summoner);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_NAME, data);
+            
             return summoner;
         } catch (ClassCastException e)
         {
@@ -107,7 +119,11 @@ public class TFTSummonerAPI
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_ACCOUNT, server, accountId);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("accountid", accountId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_ACCOUNT, data);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -116,7 +132,10 @@ public class TFTSummonerAPI
         try
         {
             Summoner summoner = (Summoner) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_ACCOUNT, summoner, server, accountId);
+            
+            data.put("value", summoner);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_ACCOUNT, data);
+            
             return summoner;
         } catch (ClassCastException e)
         {
@@ -141,7 +160,11 @@ public class TFTSummonerAPI
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID)
                 .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, server, PUUID);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("puuid", PUUID);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -150,7 +173,10 @@ public class TFTSummonerAPI
         try
         {
             Summoner summoner = (Summoner) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, summoner, server, PUUID);
+            
+            data.put("value", summoner);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, data);
+            
             return summoner;
         } catch (ClassCastException e)
         {

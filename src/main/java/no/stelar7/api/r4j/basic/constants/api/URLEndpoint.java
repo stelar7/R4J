@@ -1,9 +1,9 @@
 package no.stelar7.api.r4j.basic.constants.api;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
-import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
+import no.stelar7.api.r4j.pojo.lol.championmastery.*;
 import no.stelar7.api.r4j.pojo.lol.league.*;
 import no.stelar7.api.r4j.pojo.lol.liveclient.*;
 import no.stelar7.api.r4j.pojo.lol.match.*;
@@ -27,8 +27,6 @@ import no.stelar7.api.r4j.pojo.lor.offline.expedition.LoRExpeditionInfo;
 import no.stelar7.api.r4j.pojo.lor.offline.game.*;
 import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
 
-import java.util.*;
-
 public enum URLEndpoint
 {
     // lol/summoner/v3/summoners/by-account/{accountId}
@@ -47,7 +45,7 @@ public enum URLEndpoint
     // lol/champion-mastery/v3/champion-masteries/by-summoner/{summonerId}
     // lol/champion-mastery/v3/champion-masteries/by-summoner/{summonerId}/by-champion/{championId}
     // lol/champion-mastery/v3/scores/by-summoner/{summonerId}
-    V4_MASTERY_BY_ID("lol", "champion-mastery", "v4", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<ChampionMastery>>() {}.getType()),
+    V4_MASTERY_BY_ID("lol", "champion-mastery", "v4", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, ChampionMasteryList.class),
     V4_MASTERY_BY_CHAMPION("lol", "champion-mastery", "v4", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER + "/by-champion/" + Constants.CHAMPION_ID_PLACEHOLDER, ChampionMastery.class),
     V4_MASTERY_SCORE("lol", "champion-mastery", "v4", "scores/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, Integer.class),
     
@@ -60,15 +58,15 @@ public enum URLEndpoint
     DDRAGON_CHAMPION_MANY("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/championFull.json", StaticChampionList.class),
     DDRAGON_ITEMS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/item.json", ItemList.class),
     DDRAGON_LANGUAGE_STRINGS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/language.json", LanguageStrings.class),
-    DDRAGON_LANGUAGES("cdn/", "", "", "languages.json", new TypeToken<List<String>>() {}.getType()),
+    DDRAGON_LANGUAGES("cdn/", "", "", "languages.json", StringList.class),
     DDRAGON_MAPS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/map.json", MapData.class),
     DDRAGON_MASTERIES("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/mastery.json", StaticMasteryList.class),
     DDRAGON_PROFILEICONS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/profileicon.json", ProfileIconData.class),
     DDRAGON_RUNES("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/rune.json", StaticRuneList.class),
-    DDRAGON_PERKS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/runesReforged.json", new TypeToken<List<StaticPerk>>() {}.getType()),
-    DDRAGON_PERKPATHS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/runesReforged.json", new TypeToken<List<PerkPath>>() {}.getType()),
+    DDRAGON_PERKS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/runesReforged.json", StaticPerkList.class),
+    DDRAGON_PERKPATHS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/runesReforged.json", PerkPathList.class),
     DDRAGON_SUMMONER_SPELLS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/summoner.json", StaticSummonerSpellList.class),
-    DDRAGON_VERSIONS("api/", "", "", "versions.json", new TypeToken<List<String>>() {}.getType()),
+    DDRAGON_VERSIONS("api/", "", "", "versions.json", StringList.class),
     DDRAGON_REALMS("realms/", "", Constants.REGION_PLACEHOLDER, ".json", Realm.class),
     DDRAGON_TARBALL("", "", "", "", String.class),
     
@@ -84,9 +82,9 @@ public enum URLEndpoint
     // api/lol/{region}/v2.5/league/challenger
     // api/lol/{region}/v2.5/league/master
     V4_LEAGUE("lol", "league", "v4", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
-    V4_LEAGUE_ENTRY("lol", "league", "v4", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
-    //V3_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
-    V4_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
+    V4_LEAGUE_ENTRY("lol", "league", "v4", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, LeagueEntryList.class),
+    //V3_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, LeagueEntryList.class),
+    V4_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, LeagueEntryList.class),
     V4_LEAGUE_MASTER("lol", "league", "v4", "masterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V4_LEAGUE_GRANDMASTER("lol", "league", "v4", "grandmasterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V4_LEAGUE_CHALLENGER("lol", "league", "v4", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
@@ -99,7 +97,7 @@ public enum URLEndpoint
     // GET  lol/tournament-stub/v3/lobby-events/by-code/{tournamentCode} Gets a mock list of lobby events by tournament code.
     // POST lol/tournament-stub/v3/providers Creates a mock tournament provider and returns its ID.
     // POST lol/tournament-stub/v3/tournaments Creates a mock tournament and returns its ID.
-    V4_STUB_TOURNAMENT_CODES("lol", "tournament-stub", "v4", "codes", new TypeToken<List<String>>() {}.getType()),
+    V4_STUB_TOURNAMENT_CODES("lol", "tournament-stub", "v4", "codes", StringList.class),
     V4_STUB_TOURNAMENT_LOBBY_EVENTS("lol", "tournament-stub", "v4", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V4_STUB_TOURNAMENT_PROVIDER("lol", "tournament-stub", "v4", "providers", Integer.class),
     V4_STUB_TOURNAMENT_TOURNAMENT("lol", "tournament-stub", "v4", "tournaments", Integer.class),
@@ -108,7 +106,7 @@ public enum URLEndpoint
     // GET  lol/match/v3/matches/{matchId}/by-tournament-code/{tournamentCode}
     // GET  lol/match/v3/matches/by-tournament-code/{tournamentCode}/ids
     V4_TOURNAMENT_MATCH("lol", "match", "v4", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, Match.class),
-    V4_TOURNAMENT_MATCHLIST("lol", "match", "v4", "matches/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER + "/ids", new TypeToken<List<Long>>() {}.getType()),
+    V4_TOURNAMENT_MATCHLIST("lol", "match", "v4", "matches/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER + "/ids", LongList.class),
     
     // POST lol/tournament/v3/codes Create a tournament code for the given tournament.
     // PUT  lol/tournament/v3/codes/{tournamentCode} Update the pick type, map, spectator type, or allowed summoners for a code.
@@ -116,7 +114,7 @@ public enum URLEndpoint
     // GET  lol/tournament/v3/lobby-events/by-code/{tournamentCode} Gets a list of lobby events by tournament code.
     // POST lol/tournament/v3/providers Creates a tournament provider and returns its ID.
     // POST lol/tournament/v3/tournaments Creates a tournament and returns its ID.
-    V4_TOURNAMENT_CODES("lol", "tournament", "v4", "codes", new TypeToken<List<String>>() {}.getType()),
+    V4_TOURNAMENT_CODES("lol", "tournament", "v4", "codes", StringList.class),
     V4_TOURNAMENT_CODES_BY_CODE("lol", "tournament", "v4", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
     V4_TOURNAMENT_LOBBY_EVENTS("lol", "tournament", "v4", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V4_TOURNAMENT_PROVIDER("lol", "tournament", "v4", "providers", Integer.class),
@@ -127,7 +125,7 @@ public enum URLEndpoint
     // GET  lol/tournament/v3/lobby-events/by-code/{tournamentCode} Gets a list of lobby events by tournament code.
     // POST lol/tournament/v3/providers Creates a tournament provider and returns its ID.
     // POST lol/tournament/v3/tournaments Creates a tournament and returns its ID.
-    V4_TOURNAMENT_STUB_CODES("lol", "tournament-stub", "v4", "codes", new TypeToken<List<String>>() {}.getType()),
+    V4_TOURNAMENT_STUB_CODES("lol", "tournament-stub", "v4", "codes", StringList.class),
     V4_TOURNAMENT_STUB_LOBBY_EVENTS("lol", "tournament-stub", "v4", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V4_TOURNAMENT_STUB_PROVIDER("lol", "tournament-stub", "v4", "providers", Integer.class),
     V4_TOURNAMENT_STUB_TOURNAMENT("lol", "tournament-stub", "v4", "tournaments", Integer.class),
@@ -154,7 +152,7 @@ public enum URLEndpoint
     
     // REPLAY
     REPLAY_GAME("replay/game", "", "", "", ReplayGameClientProcessInfo.class),
-    REPLAY_PARTICLES("replay/particles", "", "", "", new TypeToken<Map<String, Boolean>>() {}.getType()),
+    REPLAY_PARTICLES("replay/particles", "", "", "", BooleanMap.class),
     REPLAY_PLAYBACK("replay/playback", "", "", "", ReplayPlaybackInfo.class),
     REPLAY_RECORDING("replay/recording", "", "", "", ReplayRecordingInfo.class),
     REPLAY_RENDER("replay/render", "", "", "", ReplayRenderInfo.class),
@@ -164,12 +162,12 @@ public enum URLEndpoint
     LIVECLIENT_ACTIVE_PLAYER_ABILITIES("liveclientdata/activeplayerabilities", "", "", "", ActiveGameClientPlayerAbilities.class),
     LIVECLIENT_ACTIVE_PLAYER_NAME("liveclientdata/activeplayername", "", "", "", String.class),
     LIVECLIENT_ACTIVE_PLAYER_RUNES("liveclientdata/activeplayerrunes", "", "", "", ActiveGameClientPlayerPerks.class),
-    LIVECLIENT_PLAYER_LIST("liveclientdata/playerlist", "", "", "", new TypeToken<List<ActiveGamePlayer>>() {}.getType()),
+    LIVECLIENT_PLAYER_LIST("liveclientdata/playerlist", "", "", "", ActiveGamePlayerList.class),
     LIVECLIENT_EVENT_DATA("liveclientdata/eventdata", "", "", "", JsonElement.class),
     LIVECLIENT_GAME_DATA("liveclientdata/allgamedata", "", "", "", JsonElement.class),
     LIVECLIENT_GAME_STATS("liveclientdata/gamestats", "", "", "", ActiveGameState.class),
     LIVECLIENT_PLAYER_RUNES("liveclientdata/playermainrunes", "", "", "", ActiveGamePlayerPerks.class),
-    LIVECLIENT_PLAYER_ITEMS("liveclientdata/playeritems", "", "", "", new TypeToken<List<ActiveGameItem>>() {}.getType()),
+    LIVECLIENT_PLAYER_ITEMS("liveclientdata/playeritems", "", "", "", ActiveGameItemList.class),
     LIVECLIENT_PLAYER_SCORES("liveclientdata/playerscores", "", "", "", ActiveGamePlayerScores.class),
     LIVECLIENT_PLAYER_SUMMONERS("liveclientdata/playersummonerspells", "", "", "", ActiveGamePlayerSummonerSpells.class),
     
@@ -185,30 +183,30 @@ public enum URLEndpoint
     V1_TFT_SUMMONER_BY_NAME("tft", "summoner", "v1", "summoners/by-name/" + Constants.SUMMONER_NAME_PLACEHOLDER, Summoner.class),
     V1_TFT_SUMMONER_BY_ID("tft", "summoner", "v1", "summoners/" + Constants.SUMMONER_ID_PLACEHOLDER, Summoner.class),
     
-    V1_TFT_MATCHLIST("tft", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", new TypeToken<List<String>>() {}.getType()),
+    V1_TFT_MATCHLIST("tft", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),
     V1_TFT_MATCH("tft", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
     
     
     V1_TFT_LEAGUE("tft", "league", "v1", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
-    V1_TFT_LEAGUE_ENTRY("tft", "league", "v1", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
-    V1_TFT_LEAGUE_RANK("tft", "league", "v1", "entries/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, new TypeToken<List<LeagueEntry>>() {}.getType()),
+    V1_TFT_LEAGUE_ENTRY("tft", "league", "v1", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, LeagueEntryList.class),
+    V1_TFT_LEAGUE_RANK("tft", "league", "v1", "entries/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, LeagueEntryList.class),
     V1_TFT_LEAGUE_MASTER("tft", "league", "v1", "master", LeagueList.class),
     V1_TFT_LEAGUE_GRANDMASTER("tft", "league", "v1", "grandmaster", LeagueList.class),
     V1_TFT_LEAGUE_CHALLENGER("tft", "league", "v1", "challenger", LeagueList.class),
     
     
-    V1_LOR_RANKED_LEADERBOARD("lor", "ranked", "v1", "leaderboard", LoRRankedPlayerList.class),
+    V1_LOR_RANKED_LEADERBOARD("lor", "ranked", "v1", "leaderboards", LoRRankedPlayerList.class),
     
     ;
     
     
-    private final String game;
-    private final String service;
-    private final String version;
-    private final String resource;
-    private final Object type;
+    private final String   game;
+    private final String   service;
+    private final String   version;
+    private final String   resource;
+    private final Class<?> type;
     
-    URLEndpoint(String game, String service, String version, String resource, Object type)
+    URLEndpoint(String game, String service, String version, String resource, Class<?> type)
     {
         this.game = game;
         this.service = service;
@@ -237,7 +235,7 @@ public enum URLEndpoint
         return resource;
     }
     
-    public Object getType()
+    public Class<?> getType()
     {
         return type;
     }

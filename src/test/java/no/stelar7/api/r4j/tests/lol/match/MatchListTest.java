@@ -50,22 +50,11 @@ public class MatchListTest
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Set<GameQueueType> queue      = null;//EnumSet.of(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
-        Set<SeasonType>    season     = null;//EnumSet.of(SeasonType.SEASON_2018);
-        Set<Integer>       champ      = null;//new HashSet<>(Collections.singletonList(40));
-        Long               beginTime  = null;//LocalDateTime.now().withHour(0).toEpochSecond(ZoneOffset.UTC) * 1000;//1481108400000L; // start of season 2017
-        Long               endTime    = null;//LocalDateTime.now().withHour(0).plusWeeks(1).toEpochSecond(ZoneOffset.UTC) * 1000; // 604800000 is one week in ms
-        Long               beginIndex = null;//0;
-        Long               endIndex   = null;//100;
         
         MatchListBuilder builder = new MatchListBuilder();
         Summoner         sum     = Summoner.byName(Platform.EUW1, "stelar7");
-        builder = builder.withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId());
-        builder = builder.withBeginTime(beginTime).withEndTime(endTime);
-        builder = builder.withBeginIndex(beginIndex).withEndIndex(endIndex);
-        builder = builder.withQueues(queue).withSeasons(season).withChampions(champ);
         
-        LazyList<MatchReference> all = builder.getLazy();
+        LazyList<MatchReference> all = sum.getLeagueGames().getLazy();
         all.loadFully();
         
         MatchBuilder    mb = new MatchBuilder();
@@ -104,6 +93,7 @@ public class MatchListTest
     }
     
     @Test
+    @Ignore
     public void testMatchlistCrawler()
     {
         Summoner s = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
@@ -146,11 +136,14 @@ public class MatchListTest
     {
         Summoner                 summoner = Summoner.byName(Platform.EUN1, "coust");
         LazyList<MatchReference> matches  = summoner.getLeagueGames().getLazy();
-        matches.loadFully();
+        
+        // ensure that the list atleast has 100 elements
+        int historyLength = 100;
+        matches.get(historyLength);
         
         int inted = matches
                 .stream()
-                .limit(100)
+                .limit(historyLength)
                 .map(MatchReference::getFullMatch)
                 .map(m -> m.getParticipantFromSummonerId(summoner.getSummonerId()).getStats())
                 .mapToInt(stat -> {
@@ -194,7 +187,7 @@ public class MatchListTest
         Set<GameQueueType> queueTypes = new HashSet<>();
         queueTypes.add(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         
-        List<MatchReference> refs = r4J.getLoLAPI().getMatchAPI().getMatchList(region, accountId, null, null, null, null, queueTypes, null, null);
+        LazyList<MatchReference> refs = r4J.getLoLAPI().getMatchAPI().getMatchList(region, accountId);
         System.out.println(refs);
     }
     
@@ -203,7 +196,7 @@ public class MatchListTest
     public void testMatchlistAllLazy()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_MATCHLIST);
+        DataCall.getCacheProvider().clear(URLEndpoint.V4_MATCHLIST, Collections.emptyMap());
         String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
         Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         
@@ -216,17 +209,13 @@ public class MatchListTest
     @Test
     public void testMatchlistSeasons()
     {
-        Set<SeasonType> sixList      = EnumSet.of(SeasonType.SEASON_2016);
-        Set<SeasonType> preSevenList = EnumSet.of(SeasonType.PRE_SEASON_2017);
-        Set<SeasonType> sevenList    = EnumSet.of(SeasonType.SEASON_2017);
-        String          id           = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner        s            = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
         
-        MatchListBuilder mlb = new MatchListBuilder().withAccountId(s.getAccountId()).withPlatform(s.getPlatform());
+        LazyList<MatchReference> lazy = new MatchListBuilder().withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).getLazy();
+        lazy.loadFully();
         
-        List<MatchReference> twosix   = mlb.withSeasons(sixList).get();
-        List<MatchReference> preseven = mlb.withSeasons(preSevenList).get();
-        List<MatchReference> twoseven = mlb.withSeasons(sevenList).get();
+        List<MatchReference> season2016 = lazy.stream().filter(m -> m.getSeason() == SeasonType.SEASON_2016).collect(Collectors.toList());
     }
     
     

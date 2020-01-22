@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.pojo.lol.match.MatchTimeline;
 
-import java.util.Optional;
+import java.util.*;
 
 public class TimelineBuilder
 {
@@ -17,7 +17,7 @@ public class TimelineBuilder
         platform = Platform.UNKNOWN;
     }
     
-    private TimelineBuilder(Platform platform, long id)
+    public TimelineBuilder(Platform platform, long id)
     {
         this.id = id;
         this.platform = platform;
@@ -50,7 +50,11 @@ public class TimelineBuilder
                                                        .withEndpoint(URLEndpoint.V4_TIMELINE)
                                                        .withPlatform(this.platform);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_TIMELINE, this.platform, this.id);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("gameid", this.id);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_TIMELINE, data);
         if (chl.isPresent())
         {
             return (MatchTimeline) chl.get();
@@ -59,7 +63,10 @@ public class TimelineBuilder
         try
         {
             MatchTimeline timeline = (MatchTimeline) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_TIMELINE, timeline, this.platform, this.id);
+            
+            data.put("value", timeline);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_TIMELINE, data);
+            
             return timeline;
         } catch (ClassCastException e)
         {

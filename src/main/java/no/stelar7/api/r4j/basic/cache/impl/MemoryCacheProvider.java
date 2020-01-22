@@ -68,10 +68,10 @@ public class MemoryCacheProvider implements CacheProvider
     
     
     @Override
-    public void store(URLEndpoint type, Object... obj)
+    public void store(URLEndpoint type, Map<String, Object> obj)
     {
         // if the object we are trying to store is not valid, dont store it.
-        if (obj[0] == null)
+        if (obj.get("value") == null)
         {
             return;
         }
@@ -81,10 +81,10 @@ public class MemoryCacheProvider implements CacheProvider
             case V4_SUMMONER_BY_ACCOUNT:
             case V4_SUMMONER_BY_NAME:
             case V4_SUMMONER_BY_ID:
-                summoners.put((Summoner) obj[0], LocalDateTime.now());
+                summoners.put((Summoner) obj.get("value"), LocalDateTime.now());
                 break;
             case V4_MATCH:
-                matches.put((Match) obj[0], LocalDateTime.now());
+                matches.put((Match) obj.get("value"), LocalDateTime.now());
                 break;
             default:
                 break;
@@ -93,15 +93,15 @@ public class MemoryCacheProvider implements CacheProvider
     
     
     @Override
-    public void update(URLEndpoint type, Object... obj)
+    public void update(URLEndpoint type, Map<String, Object> obj)
     {
         store(type, obj);
     }
     
     @Override
-    public Optional<?> get(URLEndpoint type, Object... data)
+    public Optional<?> get(URLEndpoint type, Map<String, Object> data)
     {
-        Object      platform = data[0];
+        Object      platform = data.get("platform");
         Optional<?> opt;
         
         switch (type)
@@ -110,7 +110,7 @@ public class MemoryCacheProvider implements CacheProvider
             case V4_SUMMONER_BY_NAME:
             case V4_SUMMONER_BY_ID:
             {
-                Object value = data[1];
+                Object value = data.getOrDefault("name", data.getOrDefault("id", data.getOrDefault("accountid", data.getOrDefault("puuid", null))));
                 
                 Stream<Summoner> sums = summoners.keySet().stream().filter(s -> s.getPlatform().equals(platform));
                 if (type == URLEndpoint.V4_SUMMONER_BY_ID)
@@ -131,7 +131,7 @@ public class MemoryCacheProvider implements CacheProvider
             }
             case V4_MATCH:
             {
-                Object matchId = data[1];
+                Object matchId = data.get("gameid");
                 
                 opt = matches.keySet().stream()
                              .filter(m -> m.getPlatform().equals(platform))
@@ -148,14 +148,14 @@ public class MemoryCacheProvider implements CacheProvider
         
         if (opt.isPresent())
         {
-            logger.info("Loaded data from cache ({} {} {})", this.getClass().getName(), type, Arrays.toString(data));
+            logger.info("Loaded data from cache ({} {} {})", this.getClass().getName(), type, data.toString());
         }
         
         return opt;
     }
     
     @Override
-    public void clear(URLEndpoint type, Object... filter)
+    public void clear(URLEndpoint type, Map<String, Object> filter)
     {
         // TODO: respect filters
         switch (type)
@@ -194,7 +194,7 @@ public class MemoryCacheProvider implements CacheProvider
     }
     
     @Override
-    public long getSize(URLEndpoint type)
+    public long getSize(URLEndpoint type, Map<String, Object> filter)
     {
         long size = 0;
         size += summoners.size();
@@ -205,6 +205,9 @@ public class MemoryCacheProvider implements CacheProvider
     private void clearOldCache(URLEndpoint endpoint, Map<?, LocalDateTime> data)
     {
         List<Entry<?, LocalDateTime>> list = new ArrayList<>(data.entrySet());
+        
+        // cant do that because of a wildcard
+        //noinspection RedundantComparatorComparing
         list.sort(Comparator.comparing(Entry::getValue));
         
         for (Entry<?, LocalDateTime> entry : list)

@@ -41,7 +41,11 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_CHAMPION_MANY, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_CHAMPION_MANY, data);
         if (chl.isPresent())
         {
             return ((StaticChampionList) chl.get()).getData();
@@ -49,14 +53,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            StaticChampionList list = (StaticChampionList) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_CHAMPION_MANY, list, version, locale);
+            StaticChampionList list = (StaticChampionList) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_CHAMPION_MANY, data);
+            
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -123,7 +130,11 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_ITEMS, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_ITEMS, data);
         if (chl.isPresent())
         {
             return ((ItemList) chl.get()).getData();
@@ -131,14 +142,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            ItemList list = (ItemList) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_ITEMS, list, version, locale);
+            ItemList list = (ItemList) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_ITEMS, data);
+            
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -172,8 +186,11 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, version, locale);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, data);
         if (chl.isPresent())
         {
             return ((LanguageStrings) chl.get()).getData();
@@ -181,14 +198,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            LanguageStrings list = (LanguageStrings) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, list, version, locale);
+            LanguageStrings list = (LanguageStrings) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, data);
+            
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -206,7 +226,6 @@ public final class DDragonAPI
      *
      * @return a list of strings avaliable in this language
      */
-    @SuppressWarnings("unchecked")
     public List<String> getLanguages()
     {
         DataCallBuilder builder = new DataCallBuilder()
@@ -218,21 +237,25 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, "");
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGES);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGES, Collections.emptyMap());
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
         }
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
-            List<String> list = (List<String>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGES, list);
+            List<String> list = (List<String>) ret;
+            
+            Map<String, Object> data = new TreeMap<>();
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGES, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -250,7 +273,11 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MAPS, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MAPS, data);
         if (chl.isPresent())
         {
             return ((MapData) chl.get()).getData();
@@ -258,14 +285,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            MapData list = (MapData) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MAPS, list, version, locale);
+            MapData list = (MapData) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MAPS, data);
+            
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -285,10 +315,14 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, data);
         if (chl.isPresent())
         {
             return ((StaticMasteryList) chl.get()).getData();
@@ -296,14 +330,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            StaticMasteryList list = (StaticMasteryList) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, list, version, locale);
+            StaticMasteryList list = (StaticMasteryList) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, data);
+            
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -323,10 +360,14 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, data);
         if (chl.isPresent())
         {
             return ((StaticMasteryList) chl.get()).getTree();
@@ -334,14 +375,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            StaticMasteryList list = (StaticMasteryList) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, list, version, locale);
+            StaticMasteryList list = (StaticMasteryList) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, data);
+            
             return list.getTree();
         } catch (ClassCastException e)
         {
@@ -374,7 +418,11 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PROFILEICONS, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PROFILEICONS, data);
         if (chl.isPresent())
         {
             return ((ProfileIconData) chl.get()).getData();
@@ -382,14 +430,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            ProfileIconData list = (ProfileIconData) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PROFILEICONS, list, version, locale);
+            ProfileIconData list = (ProfileIconData) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PROFILEICONS, data);
+            
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -418,7 +469,7 @@ public final class DDragonAPI
                 .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
                 .withEndpoint(URLEndpoint.DDRAGON_REALMS);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS, Collections.emptyMap());
         if (chl.isPresent())
         {
             return (Realm) chl.get();
@@ -427,7 +478,11 @@ public final class DDragonAPI
         try
         {
             Realm list = (Realm) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_REALMS, list);
+            
+            Map<String, Object> data = new TreeMap<>();
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_REALMS, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -442,10 +497,14 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_RUNES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? "7.23.1" : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("rune") : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_RUNES, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_RUNES, data);
         if (chl.isPresent())
         {
             return ((StaticRuneList) chl.get()).getData();
@@ -453,14 +512,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            StaticRuneList list = (StaticRuneList) data;
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_RUNES, list, version, locale);
+            StaticRuneList list = (StaticRuneList) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_RUNES, data);
+            
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -495,7 +557,11 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_SUMMONER_SPELLS, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_SUMMONER_SPELLS, data);
         if (chl.isPresent())
         {
             return ((StaticSummonerSpellList) chl.get()).getData();
@@ -503,14 +569,17 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            StaticSummonerSpellList list = (StaticSummonerSpellList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_SUMMONER_SPELLS, list, version, locale);
+            StaticSummonerSpellList list = (StaticSummonerSpellList) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_SUMMONER_SPELLS, data);
+            
             return list.getData();
         } catch (ClassCastException e)
         {
@@ -533,7 +602,6 @@ public final class DDragonAPI
         return getSummonerSpell(id, null, null);
     }
     
-    @SuppressWarnings("unchecked")
     public List<String> getVersions()
     {
         DataCallBuilder builder = new DataCallBuilder()
@@ -542,7 +610,7 @@ public final class DDragonAPI
                 .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
         
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS, Collections.emptyMap());
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -550,14 +618,18 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
-            List<String> list = (List<String>) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_VERSIONS, list);
+            List<String> list = (List<String>) ret;
+            
+            Map<String, Object> data = new TreeMap<>();
+            data.put("value", list);
+            
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_VERSIONS, data);
             return list;
         } catch (ClassCastException e)
         {
@@ -565,10 +637,13 @@ public final class DDragonAPI
         }
     }
     
-    @SuppressWarnings("unchecked")
     public Map<Integer, StaticPerk> getPerks(String version, String locale)
     {
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PERKS, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PERKS, data);
         if (chl.isPresent())
         {
             return (Map<Integer, StaticPerk>) chl.get();
@@ -586,7 +661,8 @@ public final class DDragonAPI
             }
         }
         
-        DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PERKS, perks, version, locale);
+        data.put("value", perks);
+        DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PERKS, data);
         return perks;
     }
     
@@ -605,7 +681,6 @@ public final class DDragonAPI
         return getPerk(id, null, null);
     }
     
-    @SuppressWarnings("unchecked")
     public Map<Integer, PerkPath> getPerkPaths(String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder()
@@ -616,7 +691,11 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PERKPATHS, version, locale);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("version", version);
+        data.put("locale", locale);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_PERKPATHS, data);
         if (chl.isPresent())
         {
             return (Map<Integer, PerkPath>) chl.get();
@@ -624,20 +703,22 @@ public final class DDragonAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyMap();
             }
             
-            List<PerkPath>         list  = (List<PerkPath>) data;
+            List<PerkPath>         list  = (List<PerkPath>) ret;
             Map<Integer, PerkPath> paths = new HashMap<>();
             for (PerkPath path : list)
             {
                 paths.put(path.getId(), path);
             }
             
-            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PERKPATHS, paths, version, locale);
+            data.put("value", paths);
+            DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_PERKPATHS, data);
+            
             return paths;
         } catch (ClassCastException e)
         {

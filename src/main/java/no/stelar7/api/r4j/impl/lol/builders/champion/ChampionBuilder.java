@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 
-import java.util.Optional;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class ChampionBuilder
@@ -36,7 +36,10 @@ public class ChampionBuilder
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)
                                                        .withPlatform(this.platform);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPION_ROTATIONS, this.platform);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", this.platform);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
         if (chl.isPresent())
         {
             return (ChampionRotationInfo) chl.get();
@@ -45,7 +48,10 @@ public class ChampionBuilder
         try
         {
             ChampionRotationInfo cl = (ChampionRotationInfo) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPION_ROTATIONS, cl, this.platform);
+            
+            data.put("value", cl);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
+            
             return cl;
         } catch (ClassCastException e)
         {

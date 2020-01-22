@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.basic.cache.impl;
 import no.stelar7.api.r4j.basic.cache.*;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 
-import java.util.Optional;
+import java.util.*;
 
 public final class EmptyCacheProvider implements CacheProvider
 {
@@ -27,25 +27,25 @@ public final class EmptyCacheProvider implements CacheProvider
     }
     
     @Override
-    public void store(URLEndpoint clazz, Object... obj)
+    public void store(URLEndpoint clazz, Map<String, Object> obj)
     {
         /*void cache*/
     }
     
     @Override
-    public void update(URLEndpoint type, Object... obj)
+    public void update(URLEndpoint type, Map<String, Object> obj)
     {
         /*void cache*/
     }
     
     @Override
-    public Optional<?> get(URLEndpoint type, Object... data)
+    public Optional<?> get(URLEndpoint type, Map<String, Object> data)
     {
         return Optional.empty();
     }
     
     @Override
-    public void clear(URLEndpoint type, Object... filter)
+    public void clear(URLEndpoint type, Map<String, Object> filter)
     {
         /*void cache*/
     }
@@ -63,7 +63,7 @@ public final class EmptyCacheProvider implements CacheProvider
     }
     
     @Override
-    public long getSize(URLEndpoint type)
+    public long getSize(URLEndpoint type, Map<String, Object> filter)
     {
         return 0;
     }

@@ -2,121 +2,55 @@ package no.stelar7.api.r4j.impl.lol.builders.match;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
-import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.match.*;
 
 import java.util.*;
 
-@SuppressWarnings("unchecked")
 public class MatchListBuilder
 {
     
-    private final Platform           platform;
-    private       String             id;
-    private final Long               beginTime;
-    private final Long               endTime;
-    private final Long               beginIndex;
-    private final Long               endIndex;
-    private final Set<GameQueueType> queues;
-    private final Set<SeasonType>    seasons;
-    private final Set<Integer>       champions;
+    private final Platform platform;
+    private       String   id;
+    private final Integer  beginIndex;
+    private final Integer  endIndex;
     
     public MatchListBuilder()
     {
         this.platform = Platform.UNKNOWN;
         this.id = null;
-        this.beginTime = null;
-        this.endTime = null;
         this.beginIndex = null;
         this.endIndex = null;
-        this.queues = EnumSet.noneOf(GameQueueType.class);
-        this.seasons = EnumSet.noneOf(SeasonType.class);
-        this.champions = new HashSet<>();
     }
     
-    private MatchListBuilder(Platform platform, String id, Long beginTime, Long endTime, Long beginIndex, Long endIndex, Set<GameQueueType> queues, Set<SeasonType> seasons, Set<Integer> champions)
+    public MatchListBuilder(Platform platform, String id, Integer beginIndex, Integer endIndex)
     {
         this.platform = platform;
         this.id = id;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
         this.beginIndex = beginIndex;
         this.endIndex = endIndex;
-        this.queues = queues;
-        this.seasons = seasons;
-        this.champions = champions;
     }
     
     public MatchListBuilder withPlatform(Platform platform)
     {
-        return new MatchListBuilder(platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
+        return new MatchListBuilder(platform, this.id, this.beginIndex, this.endIndex);
     }
     
     public MatchListBuilder withAccountId(String accountId)
     {
-        return new MatchListBuilder(this.platform, accountId, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
+        return new MatchListBuilder(this.platform, accountId, this.beginIndex, this.endIndex);
     }
     
-    public MatchListBuilder withBeginTime(Long time)
+    public MatchListBuilder withBeginIndex(Integer index)
     {
-        return new MatchListBuilder(this.platform, this.id, time, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
+        return new MatchListBuilder(this.platform, this.id, index, this.endIndex);
     }
     
-    public MatchListBuilder withEndTime(Long time)
+    public MatchListBuilder withEndIndex(Integer index)
     {
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, time, this.beginIndex, this.endIndex, this.queues, this.seasons, this.champions);
+        return new MatchListBuilder(this.platform, this.id, this.beginIndex, index);
     }
     
-    public MatchListBuilder withBeginIndex(Long index)
-    {
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, index, this.endIndex, this.queues, this.seasons, this.champions);
-    }
-    
-    public MatchListBuilder withEndIndex(Long index)
-    {
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, this.beginIndex, index, this.queues, this.seasons, this.champions);
-    }
-    
-    public MatchListBuilder withQueues(Set<GameQueueType> queues)
-    {
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, queues, this.seasons, this.champions);
-    }
-    
-    public MatchListBuilder addQueue(GameQueueType queue)
-    {
-        Set<GameQueueType> local = EnumSet.copyOf(this.queues);
-        local.add(queue);
-        
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, local, this.seasons, this.champions);
-    }
-    
-    
-    public MatchListBuilder withSeasons(Set<SeasonType> seasons)
-    {
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, seasons, this.champions);
-    }
-    
-    public MatchListBuilder addSeason(SeasonType season)
-    {
-        Set<SeasonType> local = EnumSet.copyOf(this.seasons);
-        local.add(season);
-        
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, local, this.champions);
-    }
-    
-    public MatchListBuilder withChampions(Set<Integer> champions)
-    {
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, champions);
-    }
-    
-    public MatchListBuilder addChampion(Integer champ)
-    {
-        Set<Integer> local = new HashSet<>(this.champions);
-        local.add(champ);
-        
-        return new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, this.beginIndex, this.endIndex, this.queues, this.seasons, local);
-    }
     
     /**
      * Returns a list of the games played on this account with the given filters<br>
@@ -161,34 +95,13 @@ public class MatchListBuilder
             builder.withQueryParameter(Constants.ENDINDEX_PLACEHOLDER_DATA, String.valueOf(this.endIndex));
         }
         
-        if (this.beginTime != null)
-        {
-            builder.withQueryParameter(Constants.BEGINTIME_PLACEHOLDER_DATA, String.valueOf(this.beginTime));
-        }
-        if (this.endTime != null)
-        {
-            
-            if ((this.beginTime != null ? this.beginTime : 0) + 604800000 - this.endTime < 0)
-            {
-                throw new IllegalArgumentException("begin-endtime out of range! (difference between beginTime and endTime is more than one week)");
-            }
-            
-            builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(this.endTime));
-        }
-        if (this.queues != null)
-        {
-            this.queues.forEach(queue -> builder.withURLDataAsSet(Constants.QUEUE_PLACEHOLDER_DATA, String.valueOf(queue.getValues()[0])));
-        }
-        if (this.seasons != null)
-        {
-            this.seasons.forEach(sea -> builder.withURLDataAsSet(Constants.SEASON_PLACEHOLDER_DATA, String.valueOf(sea.getValue())));
-        }
-        if (this.champions != null)
-        {
-            this.champions.forEach(champ -> builder.withURLDataAsSet(Constants.CHAMPION_PLACEHOLDER_DATA, String.valueOf(champ)));
-        }
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("accountid", id);
+        data.put("beginindex", beginIndex);
+        data.put("endindex", endIndex);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCHLIST, this.platform, this.id, beginTime, endTime, beginIndex, endIndex, queues, seasons, champions);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MATCHLIST, data);
         if (chl.isPresent())
         {
             return ((MatchList) chl.get()).getMatches();
@@ -201,7 +114,10 @@ public class MatchListBuilder
         }
         
         MatchList match = (MatchList) matchObj;
-        DataCall.getCacheProvider().store(URLEndpoint.V4_MATCHLIST, match, this.platform, this.id, beginTime, endTime, beginIndex, endIndex, queues, seasons, champions);
+        
+        data.put("value", match);
+        DataCall.getCacheProvider().store(URLEndpoint.V4_MATCHLIST, data);
+        
         return match.getMatches();
     }
     
@@ -227,10 +143,10 @@ public class MatchListBuilder
     {
         int increment = 100;
         return new LazyList<>(increment, prevValue -> {
-            Long begin = (this.beginIndex != null ? this.beginIndex : 0) + prevValue;
-            Long end   = (this.endIndex != null ? this.endIndex : 0) + increment + prevValue;
+            Integer begin = (this.beginIndex != null ? this.beginIndex : 0) + prevValue;
+            Integer end   = (this.endIndex != null ? this.endIndex : 0) + increment + prevValue;
             
-            MatchListBuilder local = new MatchListBuilder(this.platform, this.id, this.beginTime, this.endTime, begin, end, this.queues, this.seasons, this.champions);
+            MatchListBuilder local = new MatchListBuilder(this.platform, this.id, begin, end);
             return local.get();
         });
         

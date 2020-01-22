@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.pojo.lol.status.ShardStatus;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 
-import java.util.Optional;
+import java.util.*;
 
 public final class StatusAPI
 {
@@ -25,7 +25,10 @@ public final class StatusAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SHARD_STATUS)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SHARD_STATUS, server);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V3_SHARD_STATUS, data);
         if (chl.isPresent())
         {
             return (ShardStatus) chl.get();
@@ -34,7 +37,10 @@ public final class StatusAPI
         try
         {
             ShardStatus list = (ShardStatus) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V3_SHARD_STATUS, list, server);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V3_SHARD_STATUS, data);
+            
             return list;
         } catch (ClassCastException e)
         {

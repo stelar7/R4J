@@ -9,7 +9,6 @@ import no.stelar7.api.r4j.pojo.lol.league.*;
 
 import java.util.*;
 
-@SuppressWarnings("unchecked")
 public final class LeagueAPI
 {
     private static final LeagueAPI INSTANCE = new LeagueAPI();
@@ -40,7 +39,11 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_MASTER)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_MASTER, server, queue);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("queue", queue);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_MASTER, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -49,7 +52,10 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_MASTER, list, server, queue);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_MASTER, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -74,7 +80,12 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_GRANDMASTER)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_GRANDMASTER, server, queue);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("queue", queue);
+        
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_GRANDMASTER, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -83,7 +94,10 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_GRANDMASTER, list, server, queue);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_GRANDMASTER, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -108,8 +122,11 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("queue", queue);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_CHALLENGER, server, queue);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_CHALLENGER, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -118,7 +135,10 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_CHALLENGER, list, server, queue);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_CHALLENGER, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -142,7 +162,11 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE, server, leagueId);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("leagueid", leagueId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -151,7 +175,10 @@ public final class LeagueAPI
         try
         {
             LeagueList list = (LeagueList) builder.build();
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE, list, server, leagueId);
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -175,7 +202,11 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY)
                                                        .withPlatform(server);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY, server, summonerId);
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("id", summonerId);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY, data);
         if (chl.isPresent())
         {
             return (List<LeagueEntry>) chl.get();
@@ -183,14 +214,17 @@ public final class LeagueAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
-            List<LeagueEntry> list = (List<LeagueEntry>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY, list, server, summonerId);
+            List<LeagueEntry> list = (List<LeagueEntry>) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY, data);
+            
             return list;
         } catch (ClassCastException e)
         {
@@ -234,8 +268,13 @@ public final class LeagueAPI
             }
         }
         
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", server);
+        data.put("queue", queue);
+        data.put("tierdiv", tierdiv);
+        data.put("page", page);
         
-        Optional chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_RANK, server, queue, tierdiv, page);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_RANK, data);
         if (chl.isPresent())
         {
             return (List<LeagueEntry>) chl.get();
@@ -243,14 +282,17 @@ public final class LeagueAPI
         
         try
         {
-            Object data = builder.build();
-            if (data instanceof Pair)
+            Object ret = builder.build();
+            if (ret instanceof Pair)
             {
                 return Collections.emptyList();
             }
             
-            List<LeagueEntry> list = (List<LeagueEntry>) data;
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_RANK, list, server, queue, tierdiv, page);
+            List<LeagueEntry> list = (List<LeagueEntry>) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_RANK, data);
+            
             return list;
         } catch (ClassCastException e)
         {

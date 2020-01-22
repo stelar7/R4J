@@ -18,8 +18,8 @@ public class FileSystemCacheProvider implements CacheProvider
     private static final Logger logger = LoggerFactory.getLogger(FileSystemCacheProvider.class);
     
     private final Path              home;
-    private long              timeToLive;
-    private CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
+    private       long              timeToLive;
+    private       CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
     
     private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?>       clearTask;
@@ -69,22 +69,29 @@ public class FileSystemCacheProvider implements CacheProvider
     }
     
     @Override
-    public void store(URLEndpoint type, Object... obj)
+    public void store(URLEndpoint type, Map<String, Object> obj)
     {
         try
         {
+            if (!obj.containsKey("value"))
+            {
+                throw new RuntimeException("Invalid cache insert!");
+            }
+            
+            List<Object> vals      = new ArrayList<>(obj.values());
+            Object       storeItem = obj.get("value");
+            vals.remove(storeItem);
+            
             // if the object we are trying to store is not valid, dont store it.
-            if (obj[0] == null)
+            if (vals.size() == 0 || storeItem == null)
             {
                 return;
             }
             
             // inject api key so cache still works in v4
-            List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
-            pathData.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
-            pathData.remove(0);
+            vals.add(0, DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
             
-            Path storePath = resolvePath(type, pathData);
+            Path storePath = resolvePath(type, vals);
             Files.createDirectories(storePath.getParent());
             try
             {
@@ -93,7 +100,7 @@ public class FileSystemCacheProvider implements CacheProvider
             {
                 // ignore it
             }
-            writeObject(storePath, obj[0]);
+            writeObject(storePath, storeItem);
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -118,6 +125,7 @@ public class FileSystemCacheProvider implements CacheProvider
         Path storePath = home.resolve(type.toString());
         
         List<Object> pathData = new ArrayList<>(obj);
+        Collections.reverse(pathData);
         
         for (Object datum : pathData)
         {
@@ -128,20 +136,28 @@ public class FileSystemCacheProvider implements CacheProvider
     }
     
     @Override
-    public void update(URLEndpoint type, Object... obj)
+    public void update(URLEndpoint type, Map<String, Object> obj)
     {
         try
         {
+            if (!obj.containsKey("value"))
+            {
+                throw new RuntimeException("Invalid cache insert!");
+            }
+            
+            List<Object> vals      = new ArrayList<>(obj.values());
+            Object       storeItem = obj.get("value");
+            vals.remove(storeItem);
+            
             // if the object we are trying to store is not valid, dont store it.
-            if (obj[0] == null)
+            if (vals.size() == 0 || storeItem == null)
             {
                 return;
             }
             
-            List<Object> pathData = new ArrayList<>(Arrays.asList(obj));
-            pathData.add(DataCall.getCredentials().getUniqueKeyCombination());
+            vals.add(0, DataCall.getCredentials().getUniqueKeyCombination());
             
-            Path storePath = resolvePath(type, pathData);
+            Path storePath = resolvePath(type, vals);
             if (Files.exists(storePath))
             {
                 Files.setLastModifiedTime(storePath, FileTime.from(Instant.now()));
@@ -156,12 +172,17 @@ public class FileSystemCacheProvider implements CacheProvider
     }
     
     @Override
-    public Optional<?> get(URLEndpoint type, Object... data)
+    public Optional<?> get(URLEndpoint type, Map<String, Object> obj)
     {
+        List<Object> vals = new ArrayList<>(obj.values());
+        if (vals.size() == 0)
+        {
+            return Optional.empty();
+        }
+        
         // inject api key so cache still works in v4
-        List<Object> pathData = new ArrayList<>(Arrays.asList(data));
-        pathData.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
-        Path filepath = resolvePath(type, pathData);
+        vals.add(0, DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
+        Path filepath = resolvePath(type, vals);
         
         try
         {
@@ -174,15 +195,11 @@ public class FileSystemCacheProvider implements CacheProvider
         if (!Files.exists(filepath))
         {
             return Optional.empty();
-        } else
-        {
-            // need to find a way to refetch the data for this...?
-            // update(type, data);
         }
         
         try (ByteArrayInputStream bis = new ByteArrayInputStream(Files.readAllBytes(filepath)); ObjectInput in = new ObjectInputStream(bis))
         {
-            logger.info("Loaded data from cache ({} {} {})", this.getClass().getName(), type, Arrays.toString(data));
+            logger.info("Loaded data from cache ({} {} {})", this.getClass().getName(), type, vals.toString());
             Object o = in.readObject();
             
             // if the object we are trying to load is not valid, remove it
@@ -196,19 +213,19 @@ public class FileSystemCacheProvider implements CacheProvider
             
         } catch (IOException | ClassNotFoundException e)
         {
-            logger.info("Data in cache is from an older version of the library, re-fetching");
+            logger.info("Data in cache is from an older version of the library, removing it");
             return Optional.empty();
         }
     }
     
     @Override
-    public void clear(URLEndpoint type, Object... filter)
+    public void clear(URLEndpoint type, Map<String, Object> filter)
     {
         try
         {
             Path pathToWalk = home.resolve(type.toString());
             
-            for (Object o : filter)
+            for (Object o : filter.values())
             {
                 pathToWalk = pathToWalk.resolve(Utils.normalizeString(o.toString()));
             }
@@ -273,7 +290,7 @@ public class FileSystemCacheProvider implements CacheProvider
                     return;
                 }
                 
-                logger.debug("Data in cache is outdated, deleting then re-fetching");
+                logger.debug("Data in cache is outdated, deleting...");
                 Files.deleteIfExists(p);
             }
         } else
@@ -295,7 +312,7 @@ public class FileSystemCacheProvider implements CacheProvider
                     return;
                 }
                 
-                logger.debug("Data in cache is outdated, deleting then re-fetching");
+                logger.debug("Data in cache is outdated, deleting...");
                 Files.deleteIfExists(p);
             }
             
@@ -309,11 +326,18 @@ public class FileSystemCacheProvider implements CacheProvider
     }
     
     @Override
-    public long getSize(URLEndpoint type)
+    public long getSize(URLEndpoint type, Map<String, Object> filter)
     {
         try
         {
-            return Files.size(home.resolve(type.toString()));
+            Path pathToWalk = home.resolve(type.toString());
+            
+            for (Object o : filter.values())
+            {
+                pathToWalk = pathToWalk.resolve(Utils.normalizeString(o.toString()));
+            }
+            
+            return Files.walk(pathToWalk).filter(p -> !Files.isDirectory(p)).count();
         } catch (IOException e)
         {
             e.printStackTrace();
