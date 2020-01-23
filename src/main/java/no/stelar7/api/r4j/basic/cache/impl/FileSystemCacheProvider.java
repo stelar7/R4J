@@ -195,7 +195,7 @@ public class FileSystemCacheProvider implements CacheProvider
         
         try (ByteArrayInputStream bis = new ByteArrayInputStream(Files.readAllBytes(filepath)); ObjectInput in = new ObjectInputStream(bis))
         {
-            logger.info("Loaded data from cache ({} {} {})", this.getClass().getName(), type, vals.toString());
+            logger.debug("Loaded data from cache ({} {} {})", this.getClass().getName(), type, vals.toString());
             Object o = in.readObject();
             
             // if the object we are trying to load is not valid, remove it

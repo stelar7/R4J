@@ -148,7 +148,7 @@ public class MemoryCacheProvider implements CacheProvider
         
         if (opt.isPresent())
         {
-            logger.info("Loaded data from cache ({} {} {})", this.getClass().getName(), type, data.toString());
+            logger.debug("Loaded data from cache ({} {} {})", this.getClass().getName(), type, data.toString());
         }
         
         return opt;

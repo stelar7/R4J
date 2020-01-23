@@ -123,14 +123,20 @@ public class MatchListTest
         
         LazyList<MatchReference> sgames = stelar.getLeagueGames().getLazy();
         sgames.loadFully();
-        sgames.forEach(MatchReference::getFullMatch);
         
-        LazyList<MatchReference> dgames = dart.getLeagueGames().getLazy();
-        dgames.loadFully();
-        dgames.forEach(MatchReference::getFullMatch);
+        float wins = sgames.stream()
+                           .map(MatchReference::getFullMatch)
+                           .filter(m -> m.getParticipant(dart.getSummonerId()).isPresent())
+                           .mapToLong(m -> m.didWin(m.getParticipant(stelar.getSummonerId()).get()) ? 1 : 0)
+                           .sum();
         
-        System.out.println("Total stelar count:" + sgames.size());
-        System.out.println("Total dart count:" + dgames.size());
+        float count = sgames.stream()
+                            .map(MatchReference::getFullMatch)
+                            .filter(m -> m.getParticipant(dart.getSummonerId()).isPresent())
+                            .count();
+        
+        System.out.println("Winrate " + (wins / count));
+        
     }
     
     @Test
