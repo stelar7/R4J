@@ -27,15 +27,15 @@ public class UseageTest
         
         Map<Integer, StaticRune>     runeData      = api.getDDragonAPI().getRunes();
         Map<Integer, StaticMastery>  masteriesData = api.getDDragonAPI().getMasteries();
-        Map<Integer, StaticChampion> championData = api.getDDragonAPI().getChampions();
-        Map<Integer, StaticPerk>     perkData     = api.getDDragonAPI().getPerks();
+        Map<Integer, StaticChampion> championData  = api.getDDragonAPI().getChampions();
+        Map<Integer, StaticPerk>     perkData      = api.getDDragonAPI().getPerks();
         
         Summoner             stelar7        = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         List<MatchReference> some           = stelar7.getLeagueGames().get();
         MatchReference       mostRecentGame = some.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
         
         Match       match = mostRecentGame.getFullMatch();
-        Participant self  = match.getParticipantFromSummonerId(stelar7.getSummonerId());
+        Participant self  = match.getParticipant(stelar7.getSummonerId()).get();
         
         List<MatchRune>    runes     = self.getRunes();
         List<MatchMastery> masteries = self.getMasteries();
@@ -55,11 +55,12 @@ public class UseageTest
         System.out.format("They %s that game%n", didWin ? "won" : "lost");
         
         
-        ParticipantIdentity opponentIdentity = match.getLaneOpponentIdentity(self);
-        if (opponentIdentity != null)
+        Optional<Participant> opponentOptional = match.getLaneOpponent(self);
+        if (opponentOptional.isPresent())
         {
-            Participant    opponent         = match.getParticipantFromParticipantId(opponentIdentity.getParticipantId());
-            StaticChampion opponentChampion = championData.get(opponent.getChampionId());
+            Participant         opponent         = opponentOptional.get();
+            ParticipantIdentity opponentIdentity = match.getParticipantIdentity(opponent.getParticipantId()).get();
+            StaticChampion      opponentChampion = championData.get(opponent.getChampionId());
             
             System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getSummonerName(), opponentChampion.getName());
         }

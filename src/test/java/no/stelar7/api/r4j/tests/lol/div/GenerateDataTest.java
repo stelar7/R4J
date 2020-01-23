@@ -19,7 +19,7 @@ public class GenerateDataTest
     @Ignore
     public void generateStuff() throws IOException
     {
-        R4J      api  = new R4J(SecretFile.CREDS);
+        R4J           api      = new R4J(SecretFile.CREDS);
         Summoner      self     = Summoner.byName(Platform.EUW1, "stelar7");
         MatchIterator iterator = self.getLeagueGames().getMatchIterator();
         
@@ -27,7 +27,7 @@ public class GenerateDataTest
         List<InternalMatchData> matchData = new ArrayList<>();
         for (Match m : iterator)
         {
-            Participant       lookup = m.getParticipantFromSummonerId(self.getSummonerId());
+            Participant       lookup = m.getParticipant(self.getSummonerId()).get();
             InternalMatchData data   = new InternalMatchData();
             data.queue = m.getGameQueueType().commonName();
             data.win = m.didWin(lookup);
@@ -37,7 +37,7 @@ public class GenerateDataTest
             for (Participant p : m.getParticipants())
             {
                 InternalMatchSummoner sum = new InternalMatchSummoner();
-                sum.name = m.getParticipantIdentityFromParticipantId(p.getParticipantId()).getSummonerName();
+                sum.name = m.getParticipantIdentity(p.getParticipantId()).get().getSummonerName();
                 sum.champion = p.getChampionId();
                 sum.summoner1 = p.getSpell1().getValue();
                 sum.summoner2 = p.getSpell2().getValue();

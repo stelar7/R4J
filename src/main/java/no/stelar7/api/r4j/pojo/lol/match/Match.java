@@ -145,33 +145,19 @@ public class Match implements Serializable
         return this.participants;
     }
     
-    public Participant getParticipantFromParticipantId(int participantId)
-    {
-        for (Participant participant : participants)
-        {
-            if (participant.getParticipantId() == participantId)
-            {
-                return participant;
-            }
-        }
-        return null;
-    }
-    
     public List<Participant> getParticipants(TeamType team)
     {
         return getParticipants().stream().filter(p -> p.getTeam() == team).collect(Collectors.toList());
     }
     
-    public ParticipantIdentity getParticipantIdentityFromParticipantId(int participantId)
+    public Optional<Participant> getParticipant(int participantId)
     {
-        for (ParticipantIdentity participant : participantIdentities)
-        {
-            if (participant.getParticipantId() == participantId)
-            {
-                return participant;
-            }
-        }
-        return null;
+        return participants.stream().filter(p -> p.getParticipantId() == participantId).findFirst();
+    }
+    
+    public Optional<ParticipantIdentity> getParticipantIdentity(int participantId)
+    {
+        return participantIdentities.stream().filter(p -> p.getParticipantId() == participantId).findFirst();
     }
     
     /**
@@ -180,16 +166,11 @@ public class Match implements Serializable
      * @param summonerId the id to check
      * @return ParticipantIdentity
      */
-    public ParticipantIdentity getParticipantIdentityFromSummonerId(String summonerId)
+    public Optional<ParticipantIdentity> getParticipantIdentity(String summonerId)
     {
-        for (ParticipantIdentity identity : participantIdentities)
-        {
-            if (identity.getSummonerId().equals(summonerId))
-            {
-                return identity;
-            }
-        }
-        return null;
+        return participantIdentities.stream()
+                                    .filter(p -> p.getSummonerId().equals(summonerId))
+                                    .findFirst();
     }
     
     /**
@@ -198,19 +179,12 @@ public class Match implements Serializable
      * @param summonerId the id to check
      * @return Participant
      */
-    public Participant getParticipantFromSummonerId(String summonerId)
+    public Optional<Participant> getParticipant(String summonerId)
     {
-        ParticipantIdentity id = getParticipantIdentityFromSummonerId(summonerId);
-        
-        for (Participant participant : participants)
-        {
-            if (participant.getParticipantId() == id.getParticipantId())
-            {
-                return participant;
-            }
-        }
-        
-        return null;
+        return getParticipantIdentity(summonerId)
+                .flatMap(pid -> participants.stream()
+                                            .filter(par -> pid.getParticipantId() == par.getParticipantId())
+                                            .findFirst());
     }
     
     public boolean didWin(Participant participant)
@@ -224,33 +198,14 @@ public class Match implements Serializable
      * @param self the participant to find the opponent of
      * @return ParticipantIdentity
      */
-    public ParticipantIdentity getLaneOpponentIdentity(Participant self)
+    public Optional<Participant> getLaneOpponent(Participant self)
     {
-        LaneType selfLane = self.getTimeline().getLane();
-        RoleType selfRole = self.getTimeline().getRole();
-        
-        for (Participant participant : participants)
-        {
-            if (participant.getParticipantId() == self.getParticipantId())
-            {
-                continue;
-            }
-            
-            if (participant.getTeam() == self.getTeam())
-            {
-                continue;
-            }
-            
-            LaneType otherLane = participant.getTimeline().getLane();
-            RoleType otherRole = participant.getTimeline().getRole();
-            
-            if (selfLane == otherLane && selfRole == otherRole)
-            {
-                return getParticipantIdentityFromParticipantId(participant.getParticipantId());
-            }
-        }
-        
-        return null;
+        return participants.stream()
+                           .filter(p -> p.getParticipantId() != self.getParticipantId())
+                           .filter(p -> p.getTeam() != self.getTeam())
+                           .filter(p -> p.getTimeline().getLane() == self.getTimeline().getLane())
+                           .filter(p -> p.getTimeline().getRole() == self.getTimeline().getRole())
+                           .findFirst();
     }
     
     
@@ -284,8 +239,11 @@ public class Match implements Serializable
      */
     public List<TeamStats> getTeamStats(TeamType... team)
     {
-        List<TeamType> types = Stream.of(team).collect(Collectors.toList());
-        return this.teams.stream().filter(t -> types.contains(t.getTeamType())).collect(Collectors.toList());
+        List<TeamType> types = Arrays.asList(team);
+        
+        return this.teams.stream()
+                         .filter(t -> types.contains(t.getTeamType()))
+                         .collect(Collectors.toList());
     }
     
     /**

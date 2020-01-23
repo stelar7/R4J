@@ -17,7 +17,7 @@ import org.junit.*;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 public class MatchListTest
 {
@@ -115,20 +115,22 @@ public class MatchListTest
     
     @Test
     @Ignore
-    public void testMatchlistSummoner() throws InterruptedException
+    public void testMatchlistSummoner()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getLeagueGames().getLazy();
-        list.loadFully();
+        Summoner stelar = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner dart   = new SummonerBuilder().withPlatform(Platform.EUW1).withName("FrankenDaemon").get();
         
-        List<MatchReference> filtered = list.stream()
-                                            .filter(r -> r.getSeason() == SeasonType.SEASON_2018)
-                                            .filter(r -> r.getQueue() == GameQueueType.TEAM_BUILDER_RANKED_SOLO)
-                                            .collect(Collectors.toList());
+        LazyList<MatchReference> lazy = stelar.getLeagueGames().getLazy();
+        lazy.loadFully();
+        lazy.forEach(MatchReference::getFullMatch);
         
-        Thread.sleep(500);
-        System.out.println("Total game count:" + list.size());
-        System.out.println(filtered.size());
+        LazyList<MatchReference> lazy1 = dart.getLeagueGames().getLazy();
+        lazy1.loadFully();
+        lazy1.forEach(MatchReference::getFullMatch);
+        
+        System.out.println("Total stelar count:" + lazy.size());
+        System.out.println("Total dart count:" + lazy1.size());
     }
     
     @Test
@@ -145,7 +147,9 @@ public class MatchListTest
                 .stream()
                 .limit(historyLength)
                 .map(MatchReference::getFullMatch)
-                .map(m -> m.getParticipantFromSummonerId(summoner.getSummonerId()).getStats())
+                .map(m -> m.getParticipant(summoner.getSummonerId()))
+                .flatMap(o -> o.map(Stream::of).orElseGet(Stream::empty))
+                .map(Participant::getStats)
                 .mapToInt(stat -> {
                     float ka = stat.getKills() + stat.getAssists();
                     float d  = stat.getDeaths();

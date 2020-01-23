@@ -4,6 +4,7 @@ package no.stelar7.api.r4j.tests.lol.crawler;
 import no.stelar7.api.r4j.basic.constants.api.Platform;
 import no.stelar7.api.r4j.basic.constants.types.TeamType;
 import no.stelar7.api.r4j.basic.utils.Pair;
+import no.stelar7.api.r4j.basic.utils.sql.MySQL;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.match.*;
 import no.stelar7.api.r4j.pojo.lol.match.*;
@@ -16,7 +17,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("unchecked")
 public class MatchHistoryCrawler
 {
     
@@ -152,7 +152,7 @@ public class MatchHistoryCrawler
                 
                 for (Participant participant : match.getParticipants())
                 {
-                    ParticipantIdentity p             = match.getParticipantIdentityFromParticipantId(participant.getParticipantId());
+                    ParticipantIdentity p             = match.getParticipantIdentity(participant.getParticipantId()).get();
                     long                summonerid    = insertSummoner(p);
                     long                participantid = insertParticipant(matchid, participant);
                     insertParticipantIdentity(participantid, summonerid);
@@ -181,10 +181,6 @@ public class MatchHistoryCrawler
         {
             Thread.sleep(5000);
             match = mb.get();
-            if (match == null)
-            {
-                return null;
-            }
         }
         return match;
     }
@@ -200,7 +196,7 @@ public class MatchHistoryCrawler
         {
             while (rs.next())
             {
-                data.add(new Pair(rs.getLong("gameid"), Platform.fromString(rs.getString("platformid")).get()));
+                data.add(new Pair<>(rs.getLong("gameid"), Platform.fromString(rs.getString("platformid")).get()));
             }
             
             return data;
@@ -470,7 +466,7 @@ public class MatchHistoryCrawler
             {
                 int                          key   = rlist.getInt("page");
                 List<Pair<Integer, Integer>> rdata = localRunes.getOrDefault(key, new ArrayList<>());
-                rdata.add(new Pair(rlist.getInt("runeid"), rlist.getInt("rank")));
+                rdata.add(new Pair<>(rlist.getInt("runeid"), rlist.getInt("rank")));
                 localRunes.put(key, rdata);
             }
             return localRunes;
@@ -511,7 +507,7 @@ public class MatchHistoryCrawler
             {
                 int                          key   = mlist.getInt("page");
                 List<Pair<Integer, Integer>> mdata = localMasteries.getOrDefault(key, new ArrayList<>());
-                mdata.add(new Pair(mlist.getInt("masteryid"), mlist.getInt("rank")));
+                mdata.add(new Pair<>(mlist.getInt("masteryid"), mlist.getInt("rank")));
                 localMasteries.put(key, mdata);
             }
             return localMasteries;
@@ -544,7 +540,7 @@ public class MatchHistoryCrawler
     }
     
     private static final R4J   api = new R4J(SecretFile.CREDS);
-    private static final MySQL sql = new MySQL("localhost", "3306", "leagueoflegends", "root", "");
+    private static final MySQL sql = new MySQL("localhost", 3306, "leagueoflegends", "root");
     
     
     private static final String MM_SELECT = "SELECT * FROM `leagueoflegends`.`matchmasteries_in_page`";
@@ -597,41 +593,4 @@ public class MatchHistoryCrawler
     {
         new MatchHistoryCrawler();
     }
-    
-    static class MySQL
-    {
-        private   String     hostname;
-        private   String     portnmbr;
-        private   String     username;
-        private   String     password;
-        private   String     database;
-        protected Connection connection = null;
-        
-        public MySQL(final String hostname, final String portnmbr, final String database, final String username, final String password)
-        {
-            super();
-            this.hostname = hostname;
-            this.portnmbr = portnmbr;
-            this.database = database;
-            this.username = username;
-            this.password = password;
-            
-            try
-            {
-                final String url = String.format("jdbc:mysql://%s:%s/%s?useUnicode=true&characterEncoding=UTF-8&useServerPrepStmts=false&rewriteBatchedStatements=true&serverTimezone=UTC", this.hostname, this.portnmbr, this.database);
-                this.connection = DriverManager.getConnection(url, this.username, this.password);
-            } catch (final SQLException e)
-            {
-                System.out.print("Could not connect to MySQL server! ");
-                System.out.println(e.getMessage());
-            }
-        }
-        
-        public Connection getConnection()
-        {
-            return this.connection;
-        }
-        
-    }
-    
 }

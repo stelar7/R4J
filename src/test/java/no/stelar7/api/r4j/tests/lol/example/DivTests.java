@@ -17,8 +17,8 @@ public class DivTests
     @Test
     public void test()
     {
-        R4J    api  = new R4J(SecretFile.CREDS);
-        String user = "Kalturi";
+        R4J      api    = new R4J(SecretFile.CREDS);
+        String   user   = "Kalturi";
         Platform region = Platform.NA1;
         
         Summoner                     summoner  = new SummonerBuilder().withPlatform(region).withName(user).get();
@@ -26,18 +26,17 @@ public class DivTests
         //pfp
         String pfp = ImageAPI.getInstance().getProfileIcon(region, user);
         //name and lv
-        Integer level = summoner.getSummonerLevel();
-        String  name  = summoner.getName();
+        int    level = summoner.getSummonerLevel();
+        String name  = summoner.getName();
         //most recent game
         List<MatchReference> matches       = summoner.getLeagueGames().get();
-        MatchReference recentGame = matches.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
-        Match          match      = recentGame.getFullMatch();
-        Participant    self       = match.getParticipantFromSummonerId(summoner.getSummonerId()); //game data for user (summs, champ etc)
-        StaticChampion champion   = champData.get(recentGame.getChampionId());
-        MatchPerks     summs      = self.getPerks();
-        boolean        won        = match.didWin(self);
-        ParticipantIdentity  opponentId    = match.getLaneOpponentIdentity(self); //get lane opponent id
-        Participant          opponent      = match.getParticipantFromParticipantId(opponentId.getParticipantId()); //summs, champ, etc for lane opponent
+        MatchReference       recentGame    = matches.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
+        Match                match         = recentGame.getFullMatch();
+        Participant          self          = match.getParticipant(summoner.getSummonerId()).get(); //game data for user (summs, champ etc)
+        StaticChampion       champion      = champData.get(recentGame.getChampionId());
+        MatchPerks           summs         = self.getPerks();
+        boolean              won           = match.didWin(self);
+        Participant          opponent      = match.getLaneOpponent(self).get(); //get lane opponent id
         StaticChampion       opponentChamp = champData.get(opponent.getChampionId());
         
         

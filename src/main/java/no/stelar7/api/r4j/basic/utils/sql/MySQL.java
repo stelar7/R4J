@@ -74,6 +74,7 @@ public class MySQL
     {
         try
         {
+            //noinspection SqlWithoutWhere
             getConnection().createStatement().executeUpdate("DELETE FROM " + table);
         } catch (final SQLException e)
         {

@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.basic.utils;
 
 
 import java.util.*;
-import java.util.function.Function;
+import java.util.function.*;
 
 public class LazyList<T> extends ArrayList<T>
 {
@@ -62,6 +62,20 @@ public class LazyList<T> extends ArrayList<T>
     public ListIterator<T> listIterator(int index)
     {
         return new LazyListIterator(index);
+    }
+    
+    @Override
+    public Spliterator<T> spliterator()
+    {
+        // todo .stream() loading
+        return super.spliterator();
+    }
+    
+    @Override
+    public void forEach(Consumer<? super T> action)
+    {
+        // todo .stream() loading
+        super.forEach(action);
     }
     
     @Override
