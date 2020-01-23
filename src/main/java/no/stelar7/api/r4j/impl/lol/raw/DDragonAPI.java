@@ -236,11 +236,8 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, "");
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, "");
         
-        // add some basic data so its cached
         Map<String, Object> data = new TreeMap<>();
-        data.put("platform", Platform.UNKNOWN);
-        
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGES, data);
+        Optional<?>         chl  = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGES, data);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -614,11 +611,8 @@ public final class DDragonAPI
                 .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
         
         
-        // add some basic data so its cached
         Map<String, Object> data = new TreeMap<>();
-        data.put("platform", Platform.UNKNOWN);
-        
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS, data);
+        Optional<?>         chl  = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS, data);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();

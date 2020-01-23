@@ -83,7 +83,7 @@ public class FileSystemCacheProvider implements CacheProvider
             vals.remove(storeItem);
             
             // if the object we are trying to store is not valid, dont store it.
-            if (vals.size() == 0 || storeItem == null)
+            if (storeItem == null)
             {
                 return;
             }
@@ -150,7 +150,7 @@ public class FileSystemCacheProvider implements CacheProvider
             vals.remove(storeItem);
             
             // if the object we are trying to store is not valid, dont store it.
-            if (vals.size() == 0 || storeItem == null)
+            if (storeItem == null)
             {
                 return;
             }
@@ -175,10 +175,6 @@ public class FileSystemCacheProvider implements CacheProvider
     public Optional<?> get(URLEndpoint type, Map<String, Object> obj)
     {
         List<Object> vals = new ArrayList<>(obj.values());
-        if (vals.size() == 0)
-        {
-            return Optional.empty();
-        }
         
         // inject api key so cache still works in v4
         vals.add(0, DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
