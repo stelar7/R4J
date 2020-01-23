@@ -325,7 +325,7 @@ public class LCUApi
      * @param postData null if not a POST call
      * @return whatever the api returns
      */
-    public static Object customUrl(String url, String postData)
+    public static Object customUrl(String url, String postData, String method)
     {
         Pair<String, String> header = LCUConnection.getAuthorizationHeader();
         
@@ -336,7 +336,7 @@ public class LCUApi
         
         if (postData != null)
         {
-            obj = obj.withRequestMethod("POST")
+            obj = obj.withRequestMethod(method)
                      .withPostData(postData);
             
         }
@@ -394,7 +394,7 @@ public class LCUApi
     
     public static Set<String> getWebsocketEvents()
     {
-        String      obj2   = (String) LCUApi.customUrl("help", null);
+        String      obj2   = (String) LCUApi.customUrl("help", null, "GET");
         JsonElement parsed = JsonParser.parseString(obj2);
         JsonObject  events = parsed.getAsJsonObject().getAsJsonObject("events");
         return events.keySet();

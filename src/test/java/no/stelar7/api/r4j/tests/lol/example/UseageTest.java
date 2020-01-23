@@ -4,7 +4,6 @@ import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.Platform;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
@@ -30,7 +29,7 @@ public class UseageTest
         Map<Integer, StaticChampion> championData  = api.getDDragonAPI().getChampions();
         Map<Integer, StaticPerk>     perkData      = api.getDDragonAPI().getPerks();
         
-        Summoner             stelar7        = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner             stelar7        = Summoner.byName(Platform.EUW1, "stelar7");
         List<MatchReference> some           = stelar7.getLeagueGames().get();
         MatchReference       mostRecentGame = some.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
         
@@ -43,15 +42,11 @@ public class UseageTest
         StaticChampion     champion  = championData.get(mostRecentGame.getChampionId());
         
         ChampionMastery mastery = stelar7.getChampionMastery(champion.getId());
-        
-        boolean didWin = match.didWin(self);
+        boolean         didWin  = match.didWin(self);
         
         System.out.format("Player '%s' played their latest game as '%s'%n", stelar7.getName(), champion.getName());
-        
         System.out.format("They have a masteryscore of %s on that champion%n", mastery.getChampionPoints());
-        
         System.out.format("They played in %s, their role was: %s%n", self.getTimeline().getLane(), self.getTimeline().getRole());
-        
         System.out.format("They %s that game%n", didWin ? "won" : "lost");
         
         
@@ -65,7 +60,7 @@ public class UseageTest
             System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getSummonerName(), opponentChampion.getName());
         }
         
-        if (!runes.isEmpty() && !masteries.isEmpty())
+        if (!runes.isEmpty())
         {
             System.out.format("%nThey used the following runes:%n");
             for (MatchRune rune : runes)
@@ -73,7 +68,10 @@ public class UseageTest
                 String name = runeData.get(rune.getRuneId()).getName();
                 System.out.format("Name: '%-45s' Count: %s%n", name, rune.getRank());
             }
-            
+        }
+        
+        if (!masteries.isEmpty())
+        {
             System.out.format("%nThey used the following masteries:%n");
             for (MatchMastery matchMastery : masteries)
             {

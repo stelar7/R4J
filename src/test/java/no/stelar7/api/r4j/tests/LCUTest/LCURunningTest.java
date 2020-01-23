@@ -46,8 +46,8 @@ public class LCURunningTest
     @Ignore
     public void testCustomURL()
     {
-        Object obj  = LCUApi.customUrl("lol-lobby/v2/lobby", "{\"queueId\":420}");
-        Object obj2 = LCUApi.customUrl("lol-email-verification/v1/email", null);
+        Object obj  = LCUApi.customUrl("lol-champ-select/v1/session/my-selection", "{\"queueId\":420}", "POST");
+        Object obj2 = LCUApi.customUrl("lol-email-verification/v1/email", null, "GET");
         System.out.println(obj);
         System.out.println(obj2);
     }

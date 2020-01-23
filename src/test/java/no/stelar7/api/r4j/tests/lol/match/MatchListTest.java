@@ -121,16 +121,16 @@ public class MatchListTest
         Summoner stelar = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         Summoner dart   = new SummonerBuilder().withPlatform(Platform.EUW1).withName("FrankenDaemon").get();
         
-        LazyList<MatchReference> lazy = stelar.getLeagueGames().getLazy();
-        lazy.loadFully();
-        lazy.forEach(MatchReference::getFullMatch);
+        LazyList<MatchReference> sgames = stelar.getLeagueGames().getLazy();
+        sgames.loadFully();
+        sgames.forEach(MatchReference::getFullMatch);
         
-        LazyList<MatchReference> lazy1 = dart.getLeagueGames().getLazy();
-        lazy1.loadFully();
-        lazy1.forEach(MatchReference::getFullMatch);
+        LazyList<MatchReference> dgames = dart.getLeagueGames().getLazy();
+        dgames.loadFully();
+        dgames.forEach(MatchReference::getFullMatch);
         
-        System.out.println("Total stelar count:" + lazy.size());
-        System.out.println("Total dart count:" + lazy1.size());
+        System.out.println("Total stelar count:" + sgames.size());
+        System.out.println("Total dart count:" + dgames.size());
     }
     
     @Test
