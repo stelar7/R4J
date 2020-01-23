@@ -236,8 +236,11 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, "");
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, "");
         
+        // add some basic data so its cached
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", Platform.UNKNOWN);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGES, Collections.emptyMap());
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGES, data);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -252,7 +255,6 @@ public final class DDragonAPI
             
             List<String> list = (List<String>) ret;
             
-            Map<String, Object> data = new TreeMap<>();
             data.put("value", list);
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGES, data);
             
@@ -469,7 +471,10 @@ public final class DDragonAPI
                 .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
                 .withEndpoint(URLEndpoint.DDRAGON_REALMS);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS, Collections.emptyMap());
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", region);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS, data);
         if (chl.isPresent())
         {
             return (Realm) chl.get();
@@ -479,7 +484,6 @@ public final class DDragonAPI
         {
             Realm list = (Realm) builder.build();
             
-            Map<String, Object> data = new TreeMap<>();
             data.put("value", list);
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_REALMS, data);
             
@@ -610,7 +614,11 @@ public final class DDragonAPI
                 .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
         
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS, Collections.emptyMap());
+        // add some basic data so its cached
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", Platform.UNKNOWN);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS, data);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -626,10 +634,9 @@ public final class DDragonAPI
             
             List<String> list = (List<String>) ret;
             
-            Map<String, Object> data = new TreeMap<>();
             data.put("value", list);
-            
             DataCall.getCacheProvider().store(URLEndpoint.DDRAGON_VERSIONS, data);
+            
             return list;
         } catch (ClassCastException e)
         {
