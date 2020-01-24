@@ -7,40 +7,41 @@ import java.util.stream.Collectors;
 
 public class LoRExpeditionInfo
 {
-    private boolean         isActive;
-    private ExpeditionState state;
-    private List<String>    record;
-    private List<LoRCard>   deckReal;
-    private List<String>    deck;
-    private int             games;
-    private int             wins;
-    private int             losses;
+    private boolean           IsActive;
+    private ExpeditionState   State;
+    private List<DraftAction> DraftPicks;
+    private List<String>      Record;
+    private List<LoRCard>     deckReal;
+    private List<String>      Deck;
+    private int               Games;
+    private int               Wins;
+    private int               Losses;
     
     public boolean isActive()
     {
-        return isActive;
+        return IsActive;
     }
     
     public ExpeditionState getState()
     {
-        return state;
+        return State;
     }
     
     public List<String> getRecord()
     {
-        return record;
+        return Record;
     }
     
     public List<String> getDeckAsCodes()
     {
-        return deck;
+        return Deck;
     }
     
     public List<LoRCard> getDeck()
     {
         if (deckReal == null)
         {
-            deckReal = deck.stream().map(LoRCard::create).collect(Collectors.toList());
+            deckReal = Deck.stream().map(LoRCard::create).collect(Collectors.toList());
         }
         
         return deckReal;
@@ -48,17 +49,22 @@ public class LoRExpeditionInfo
     
     public int getGames()
     {
-        return games;
+        return Games;
     }
     
     public int getWins()
     {
-        return wins;
+        return Wins;
     }
     
     public int getLosses()
     {
-        return losses;
+        return Losses;
+    }
+    
+    public List<DraftAction> getDraftPicks()
+    {
+        return DraftPicks;
     }
     
     @Override
@@ -73,32 +79,36 @@ public class LoRExpeditionInfo
             return false;
         }
         LoRExpeditionInfo that = (LoRExpeditionInfo) o;
-        return isActive == that.isActive &&
-               games == that.games &&
-               wins == that.wins &&
-               losses == that.losses &&
-               state == that.state &&
-               Objects.equals(record, that.record) &&
-               Objects.equals(deck, that.deck);
+        return IsActive == that.IsActive &&
+               Games == that.Games &&
+               Wins == that.Wins &&
+               Losses == that.Losses &&
+               State == that.State &&
+               Objects.equals(DraftPicks, that.DraftPicks) &&
+               Objects.equals(Record, that.Record) &&
+               Objects.equals(deckReal, that.deckReal) &&
+               Objects.equals(Deck, that.Deck);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(isActive, state, record, deck, games, wins, losses);
+        return Objects.hash(IsActive, State, DraftPicks, Record, deckReal, Deck, Games, Wins, Losses);
     }
     
     @Override
     public String toString()
     {
         return "LoRExpeditionInfo{" +
-               "isActive=" + isActive +
-               ", state=" + state +
-               ", record=" + record +
-               ", deck=" + deck +
-               ", games=" + games +
-               ", wins=" + wins +
-               ", losses=" + losses +
+               "isActive=" + IsActive +
+               ", state=" + State +
+               ", draftPicks=" + DraftPicks +
+               ", record=" + Record +
+               ", deckReal=" + deckReal +
+               ", deck=" + Deck +
+               ", games=" + Games +
+               ", wins=" + Wins +
+               ", losses=" + Losses +
                '}';
     }
 }

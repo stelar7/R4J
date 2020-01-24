@@ -6,6 +6,7 @@ import no.stelar7.api.r4j.basic.serializer.GenericEnumSerializer;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.serializer.*;
+import no.stelar7.api.r4j.pojo.lor.offline.expedition.ExpeditionState;
 import no.stelar7.api.r4j.pojo.lor.offline.game.LoRGameState;
 
 import java.io.*;
@@ -31,6 +32,7 @@ public final class Utils
         builder.registerTypeAdapter(AscencionType.class, new GenericEnumSerializer<AscencionType>());
         builder.registerTypeAdapter(BuildingType.class, new GenericEnumSerializer<BuildingType>());
         builder.registerTypeAdapter(EventType.class, new GenericEnumSerializer<EventType>());
+        builder.registerTypeAdapter(ExpeditionState.class, new GenericEnumSerializer<ExpeditionState>());
         builder.registerTypeAdapter(GameModeType.class, new GenericEnumSerializer<GameModeType>());
         builder.registerTypeAdapter(GameQueueType.class, new GenericEnumSerializer<GameQueueType>());
         builder.registerTypeAdapter(GameSubType.class, new GenericEnumSerializer<GameSubType>());

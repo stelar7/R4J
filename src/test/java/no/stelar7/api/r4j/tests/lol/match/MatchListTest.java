@@ -135,7 +135,7 @@ public class MatchListTest
                             .filter(m -> m.getParticipant(dart.getSummonerId()).isPresent())
                             .count();
         
-        System.out.println("Winrate " + (wins / count));
+        System.out.println("Winrate " + (wins / count) * 100 + "%");
         
     }
     
