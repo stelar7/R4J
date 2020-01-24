@@ -9,10 +9,12 @@ public class DraftAction
 {
     private boolean      IsSwap;
     private List<String> Picks;
-    private String       SwappedIn;
-    private String       SwappedOut;
+    private List<String> SwappedIn;
+    private List<String> SwappedOut;
     
     private List<LoRCard> realPicks;
+    private List<LoRCard> realSwapIn;
+    private List<LoRCard> realSwapOut;
     
     public List<LoRCard> getPicksAsCards()
     {
@@ -24,6 +26,27 @@ public class DraftAction
         return realPicks;
     }
     
+    public List<LoRCard> getSwapInAsCards()
+    {
+        if (realSwapIn == null)
+        {
+            realSwapIn = SwappedIn.stream().map(LoRCard::create).collect(Collectors.toList());
+        }
+        
+        return realSwapIn;
+    }
+    
+    public List<LoRCard> getSwapOutAsCards()
+    {
+        if (realSwapOut == null)
+        {
+            realSwapOut = SwappedOut.stream().map(LoRCard::create).collect(Collectors.toList());
+        }
+        
+        return realSwapOut;
+    }
+    
+    
     public boolean isSwap()
     {
         return IsSwap;
@@ -34,12 +57,12 @@ public class DraftAction
         return Picks;
     }
     
-    public String getSwappedIn()
+    public List<String> getSwappedIn()
     {
         return SwappedIn;
     }
     
-    public String getSwappedOut()
+    public List<String> getSwappedOut()
     {
         return SwappedOut;
     }
@@ -74,8 +97,8 @@ public class DraftAction
         return "DraftAction{" +
                "isSwap=" + IsSwap +
                ", picks=" + Picks +
-               ", swappedIn='" + SwappedIn + '\'' +
-               ", swappedOut='" + SwappedOut + '\'' +
+               ", swappedIn=" + SwappedIn +
+               ", swappedOut=" + SwappedOut +
                '}';
     }
 }

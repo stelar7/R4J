@@ -27,6 +27,9 @@ public class LoRExpeditionInfo
         return State;
     }
     
+    /**
+     * List of either "win" or "loss"
+     */
     public List<String> getRecord()
     {
         return Record;
