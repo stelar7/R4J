@@ -182,9 +182,7 @@ public class Match implements Serializable
      */
     public Optional<ParticipantIdentity> getParticipantIdentity(Summoner summoner)
     {
-        return participantIdentities.stream()
-                                    .filter(p -> p.getSummonerId().equals(summoner.getSummonerId()))
-                                    .findFirst();
+        return getParticipantIdentity(summoner.getSummonerId());
     }
     
     
@@ -210,10 +208,7 @@ public class Match implements Serializable
      */
     public Optional<Participant> getParticipant(Summoner summoner)
     {
-        return getParticipantIdentity(summoner.getSummonerId())
-                .flatMap(pid -> participants.stream()
-                                            .filter(par -> pid.getParticipantId() == par.getParticipantId())
-                                            .findFirst());
+        return getParticipant(summoner.getSummonerId());
     }
     
     
