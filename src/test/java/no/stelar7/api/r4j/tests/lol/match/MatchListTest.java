@@ -132,7 +132,7 @@ public class MatchListTest
               .limit(100)
               .forEach(g -> {
                   MatchTimeline t           = g.getTimeline();
-                  Participant   participant = g.getParticipant(dart.getSummonerId()).get();
+                  Participant   participant = g.getParticipant(dart).get();
                   long deathsPreTenMin = t.getFrames()
                                           .stream()
                                           .flatMap(f -> f.getEvents().stream())
@@ -143,7 +143,7 @@ public class MatchListTest
             
                   long deathsTotal = participant.getStats().getDeaths();
             
-                  System.out.println("GameID: " + g.getMatchId() + "; With stelar: " + g.getParticipant(stelar.getSummonerId()).isPresent() + "; Deaths before 10min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal);
+                  System.out.println("GameID: " + g.getMatchId() + "; With stelar: " + g.getParticipant(stelar).isPresent() + "; Deaths before 10min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal);
             
             
               });

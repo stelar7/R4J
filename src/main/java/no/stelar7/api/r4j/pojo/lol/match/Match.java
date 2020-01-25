@@ -1,15 +1,16 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
-import no.stelar7.api.r4j.impl.lol.builders.match.TimelineBuilder;
 import no.stelar7.api.r4j.basic.constants.api.Platform;
 import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.impl.lol.builders.match.TimelineBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.MatchAPI;
+import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
 import java.io.Serializable;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 public class Match implements Serializable
 {
@@ -174,6 +175,20 @@ public class Match implements Serializable
     }
     
     /**
+     * Returns the participantidentity that has this summonerid, or null if it cant be determined
+     *
+     * @param summoner the id to check
+     * @return ParticipantIdentity
+     */
+    public Optional<ParticipantIdentity> getParticipantIdentity(Summoner summoner)
+    {
+        return participantIdentities.stream()
+                                    .filter(p -> p.getSummonerId().equals(summoner.getSummonerId()))
+                                    .findFirst();
+    }
+    
+    
+    /**
      * Returns the participant that has this summonerid, or null if it cant be determined
      *
      * @param summonerId the id to check
@@ -186,6 +201,21 @@ public class Match implements Serializable
                                             .filter(par -> pid.getParticipantId() == par.getParticipantId())
                                             .findFirst());
     }
+    
+    /**
+     * Returns the participant that has this summonerid, or null if it cant be determined
+     *
+     * @param summoner the summoner to check
+     * @return Participant
+     */
+    public Optional<Participant> getParticipant(Summoner summoner)
+    {
+        return getParticipantIdentity(summoner.getSummonerId())
+                .flatMap(pid -> participants.stream()
+                                            .filter(par -> pid.getParticipantId() == par.getParticipantId())
+                                            .findFirst());
+    }
+    
     
     public boolean didWin(Participant participant)
     {
