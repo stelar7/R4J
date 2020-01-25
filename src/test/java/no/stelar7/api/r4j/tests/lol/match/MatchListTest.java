@@ -115,27 +115,39 @@ public class MatchListTest
     
     @Test
     @Ignore
-    public void testMatchlistSummoner()
+    public void proveThatDartWasInting()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         Summoner stelar = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         Summoner dart   = new SummonerBuilder().withPlatform(Platform.EUW1).withName("FrankenDaemon").get();
         
-        LazyList<MatchReference> sgames = stelar.getLeagueGames().getLazy();
-        sgames.loadFully();
+        LazyList<MatchReference> dgames = dart.getLeagueGames().getLazy();
+        dgames.loadFully();
         
-        float wins = sgames.stream()
-                           .map(MatchReference::getFullMatch)
-                           .filter(m -> m.getParticipant(dart.getSummonerId()).isPresent())
-                           .mapToLong(m -> m.didWin(m.getParticipant(stelar.getSummonerId()).get()) ? 1 : 0)
-                           .sum();
+        int timeOffset = 15;
         
-        float count = sgames.stream()
-                            .map(MatchReference::getFullMatch)
-                            .filter(m -> m.getParticipant(dart.getSummonerId()).isPresent())
-                            .count();
+        dgames.stream()
+              .map(MatchReference::getFullMatch)
+              .filter(g -> g.getGameQueueType() == GameQueueType.getFromId(420).get())
+              .limit(100)
+              .forEach(g -> {
+                  MatchTimeline t           = g.getTimeline();
+                  Participant   participant = g.getParticipant(dart.getSummonerId()).get();
+                  long deathsPreTenMin = t.getFrames()
+                                          .stream()
+                                          .flatMap(f -> f.getEvents().stream())
+                                          .filter(e -> e.getEventType() == EventType.CHAMPION_KILL)
+                                          .filter(e -> e.getVictimId() == participant.getParticipantId())
+                                          .filter(e -> e.getTimestamp() < timeOffset * 60 * 1000)
+                                          .count();
+            
+                  long deathsTotal = participant.getStats().getDeaths();
+            
+                  System.out.println("GameID: " + g.getMatchId() + "; With stelar: " + g.getParticipant(stelar.getSummonerId()).isPresent() + "; Deaths before 10min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal);
+            
+            
+              });
         
-        System.out.println("Winrate " + (wins / count) * 100 + "%");
         
     }
     

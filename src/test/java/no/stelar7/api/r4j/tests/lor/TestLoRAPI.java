@@ -16,9 +16,9 @@ public class TestLoRAPI
     {
         while (true)
         {
-         //   LORClientAPI.getCardPositions();
-           // LORClientAPI.getLastGameResult();
-            //LORClientAPI.getActiveDeck();
+            System.out.println(LORClientAPI.getCardPositions());
+            LORClientAPI.getLastGameResult();
+            LORClientAPI.getActiveDeck();
             System.out.println(LORClientAPI.getExpeditionsState());
             
             Thread.sleep(1000);
