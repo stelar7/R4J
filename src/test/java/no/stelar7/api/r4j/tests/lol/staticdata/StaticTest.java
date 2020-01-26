@@ -2,9 +2,10 @@ package no.stelar7.api.r4j.tests.lol.staticdata;
 
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
+import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
-import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
+import no.stelar7.api.r4j.impl.lol.raw.*;
+import no.stelar7.api.r4j.pojo.lol.staticdata.champion.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.Item;
 import no.stelar7.api.r4j.pojo.lol.staticdata.map.MapDetails;
 import no.stelar7.api.r4j.pojo.lol.staticdata.mastery.StaticMastery;
@@ -16,6 +17,11 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.summonerspell.StaticSummonerSpell;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.*;
 
+import javax.net.ssl.SSLException;
+import java.io.*;
+import java.net.URL;
+import java.nio.channels.*;
+import java.nio.file.*;
 import java.util.*;
 
 public class StaticTest
@@ -23,6 +29,48 @@ public class StaticTest
     
     final R4J r4J = new R4J(SecretFile.CREDS);
     DDragonAPI api = r4J.getDDragonAPI();
+    
+    @Test
+    public void fetchAllImagesWithIdName()
+    {
+        Path outputFolder = Paths.get("C:\\Users\\Steffen\\Desktop\\cs\\src\\assets\\splash");
+        
+        api.getChampions()
+           .entrySet()
+           .stream()
+           .parallel()
+           .forEach(e -> {
+               for (Skin skin : e.getValue().getSkins())
+               {
+                   String url  = "https://cdn.communitydragon.org/latest/champion/" + e.getKey() + "/splash-art/centered/skin/" + skin.getNum();
+                   Path   file = outputFolder.resolve(Utils.padLeft(String.valueOf(skin.getId()), "0", 6) + ".png");
+                
+                   downloadFile(url, file);
+                   System.out.println();
+               }
+           });
+    }
+    
+    private void downloadFile(String url, Path outputFile)
+    {
+        try
+        {
+            Files.createDirectories(outputFile.getParent());
+            URL u = new URL(url);
+            try (InputStream is = u.openStream();
+                 ReadableByteChannel rbc = Channels.newChannel(is);
+                 FileOutputStream fos = new FileOutputStream(outputFile.toFile()))
+            {
+                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            }
+        } catch (SSLException e)
+        {
+            downloadFile(url, outputFile);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
     
     @Test
     public void testChampionList()
@@ -39,7 +87,7 @@ public class StaticTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         StaticChampion list = api.getChampion(1);
-        double r = list.getSpells().get(0).getRange().get(0);
+        double         r    = list.getSpells().get(0).getRange().get(0);
         System.out.println(r);
         Assert.assertEquals("ok?", list.getId(), 1);
     }

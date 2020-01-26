@@ -16,9 +16,29 @@ public class TestLoRAPI
     {
         while (true)
         {
+            long start = System.currentTimeMillis();
+            System.out.println(LORClientAPI.getActiveDeck());
+            long end = System.currentTimeMillis();
+            System.out.println("active deck: " + (end - start));
+            
+            start = System.currentTimeMillis();
             System.out.println(LORClientAPI.getCardPositions());
-            LORClientAPI.getLastGameResult();
-            LORClientAPI.getActiveDeck();
+            end = System.currentTimeMillis();
+            System.out.println("card pos: " + (end - start));
+            
+            start = System.currentTimeMillis();
+            System.out.println(LORClientAPI.getLastGameResult());
+            end = System.currentTimeMillis();
+            System.out.println("last game: " + (end - start));
+            
+            start = System.currentTimeMillis();
+            System.out.println(LORClientAPI.getExpeditionsState());
+            end = System.currentTimeMillis();
+            System.out.println("exp state: " + (end - start));
+            
+            System.out.println(LORClientAPI.getActiveDeck());
+            System.out.println(LORClientAPI.getCardPositions());
+            System.out.println(LORClientAPI.getLastGameResult());
             System.out.println(LORClientAPI.getExpeditionsState());
             
             Thread.sleep(1000);

@@ -11,11 +11,13 @@ import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
 import no.stelar7.api.r4j.pojo.lol.match.*;
+import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.*;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.*;
 
@@ -143,12 +145,67 @@ public class MatchListTest
             
                   long deathsTotal = participant.getStats().getDeaths();
             
-                  System.out.println("GameID: " + g.getMatchId() + "; With stelar: " + g.getParticipant(stelar).isPresent() + "; Deaths before 10min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal);
+                  System.out.println("GameID: " + g.getMatchId() + "; With stelar: " + g.getParticipant(stelar).isPresent() + "; Deaths before " + timeOffset + "min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal);
             
             
               });
+    }
+    
+    @Test
+    @Ignore
+    public void testSomeStatsAboutInting()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        Summoner                 stelar = new SummonerBuilder().withPlatform(Platform.EUW1).withName("FrankenDaemon").get();
+        LazyList<MatchReference> dgames = stelar.getLeagueGames().getLazy();
+        dgames.loadFully();
         
+        int timeOffset = 15;
         
+        StaticChampion champion = DDragonAPI.getInstance()
+                                            .getChampions()
+                                            .values()
+                                            .stream()
+                                            .filter(c -> c.getName().equalsIgnoreCase("Master Yi"))
+                                            .findFirst()
+                                            .get();
+        
+        List<Match> rankedGames = dgames.stream()
+                                        .map(MatchReference::getFullMatch)
+                                        .filter(g -> g.getGameQueueType() == GameQueueType.getFromId(420).get())
+                                        .collect(Collectors.toList());
+        
+        AtomicInteger intCounter = new AtomicInteger();
+        
+        rankedGames.forEach(g -> {
+            Participant myPid = g.getParticipant(stelar).get();
+            
+            // ignore games where the champ is not on my team
+            boolean hasChampion = g.getParticipants(myPid.getTeam()).stream().anyMatch(p -> p.getChampionId() == champion.getId());
+            if (!hasChampion)
+            {
+                return;
+            }
+            
+            MatchTimeline t = g.getTimeline();
+            long deathsPreTenMin = t.getFrames()
+                                    .stream()
+                                    .flatMap(f -> f.getEvents().stream())
+                                    .filter(e -> e.getTimestamp() < timeOffset * 60 * 1000)
+                                    .filter(e -> e.getEventType() == EventType.CHAMPION_KILL)
+                                    .map(e -> g.getParticipant(e.getVictimId()).get())
+                                    .filter(e -> e.getTeam() == myPid.getTeam())
+                                    .filter(e -> e.getChampionId() == champion.getId())
+                                    .count();
+            
+            if (deathsPreTenMin >= 5)
+            {
+                long deathsTotal = myPid.getStats().getDeaths();
+                System.out.println("GameID: " + g.getMatchId() + "; Played at: " + g.getMatchCreationAsDate() + "; Deaths before " + timeOffset + "min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal);
+                intCounter.getAndIncrement();
+            }
+        });
+        System.out.println(intCounter.get() + "/" + rankedGames.size());
     }
     
     @Test
