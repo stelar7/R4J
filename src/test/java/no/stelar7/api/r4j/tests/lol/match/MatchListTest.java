@@ -238,6 +238,25 @@ public class MatchListTest
     }
     
     @Test
+    public void testLazyForEach()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getLeagueGames().getLazy();
+        Set<MatchReference>      ref  = new HashSet<>();
+        list.forEach(reference -> System.out.print("a"));
+    }
+    
+    @Test
+    public void testLazyStream()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getLeagueGames().getLazy();
+        Set<MatchReference>      ref  = new HashSet<>();
+        list.stream().peek(reference -> System.out.print("a"));
+    }
+    
+    
+    @Test
     public void testNoDuplicates()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());

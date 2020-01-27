@@ -157,7 +157,7 @@ public class MatchEvent implements Serializable
     }
     
     /**
-     * The monster type of the event. Only present if relevant. (Legal values: EARTH_DRAGON, FIRE_DRAGON, WATER_DRAGON, AIR_DRAGON, ELDER_DRAGON)
+     * The monster subtype of the event. Only present if relevant. (Legal values: EARTH_DRAGON, FIRE_DRAGON, WATER_DRAGON, AIR_DRAGON, ELDER_DRAGON)
      *
      * @return MonsterSubType
      */

@@ -67,15 +67,25 @@ public class LazyList<T> extends ArrayList<T>
     @Override
     public Spliterator<T> spliterator()
     {
-        // todo .stream() loading
+        loadFully();
         return super.spliterator();
     }
     
     @Override
     public void forEach(Consumer<? super T> action)
     {
-        // todo .stream() loading
-        super.forEach(action);
+        int startIndex = 0;
+        do
+        {
+            LazyListIterator it = new LazyListIterator(startIndex);
+            while (it.hasNext())
+            {
+                action.accept(it.next());
+            }
+            
+            startIndex = it.index;
+            hasMore = loadMoreData();
+        } while (hasMore);
     }
     
     @Override

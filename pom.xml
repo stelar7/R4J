@@ -51,12 +51,14 @@
         </dependency>
 
         <!-- Dependencies used for tests -->
+        <!--
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
             <version>1.8.0-beta4</version>
             <scope>test</scope>
         </dependency>
+        -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
