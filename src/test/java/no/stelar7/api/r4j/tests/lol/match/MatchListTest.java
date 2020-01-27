@@ -252,7 +252,7 @@ public class MatchListTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getLeagueGames().getLazy();
         Set<MatchReference>      ref  = new HashSet<>();
-        list.stream().peek(reference -> System.out.print("a"));
+        list.stream().forEach(reference -> System.out.print("a"));
     }
     
     
