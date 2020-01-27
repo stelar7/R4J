@@ -46,10 +46,15 @@ public class LCURunningTest
     @Ignore
     public void testCustomURL()
     {
-        Object obj  = LCUApi.customUrl("lol-champ-select/v1/session/my-selection", "{\"queueId\":420}", "POST");
-        Object obj2 = LCUApi.customUrl("lol-email-verification/v1/email", null, "GET");
-        System.out.println(obj);
+        Object obj2 = LCUApi.customUrl("lol-champ-select-legacy/v1/session", null, "GET");
         System.out.println(obj2);
+    }
+    
+    @Test
+    @Ignore
+    public void testStartInfiniteChampSelect()
+    {
+        //LCUApi.createLobby()
     }
     
     @Test

@@ -9,12 +9,12 @@ public class MatchEvent implements Serializable
 {
     private static final long serialVersionUID = 5385878555903938057L;
     
-    private int           afterId;
-    private int           beforeId;
-    private AscencionType ascendedType;
-    private List<Integer> assistingParticipantIds;
-    private BuildingType  buildingType;
-    private int           creatorId;
+    private int            afterId;
+    private int            beforeId;
+    private AscencionType  ascendedType;
+    private List<Integer>  assistingParticipantIds;
+    private BuildingType   buildingType;
+    private int            creatorId;
     private EventType      type;
     private EventType      eventType;
     private int            itemId;
@@ -83,7 +83,7 @@ public class MatchEvent implements Serializable
      */
     public EventType getEventType()
     {
-        return this.type != null ? this.type : eventType;
+        return this.type != null ? this.type : this.eventType;
     }
     
     /**
@@ -149,11 +149,21 @@ public class MatchEvent implements Serializable
     /**
      * The monster type of the event. Only present if relevant. (Legal values: BARON_NASHOR, BLUE_GOLEM, DRAGON, RED_LIZARD, VILEMAW)
      *
-     * @return String
+     * @return MonsterType
      */
     public MonsterType getMonsterType()
     {
         return this.monsterType;
+    }
+    
+    /**
+     * The monster type of the event. Only present if relevant. (Legal values: EARTH_DRAGON, FIRE_DRAGON, WATER_DRAGON, AIR_DRAGON, ELDER_DRAGON)
+     *
+     * @return MonsterSubType
+     */
+    public MonsterSubType getMonsterSubType()
+    {
+        return this.monsterSubType;
     }
     
     /**

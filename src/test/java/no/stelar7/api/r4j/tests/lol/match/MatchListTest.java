@@ -145,7 +145,7 @@ public class MatchListTest
             
                   long deathsTotal = participant.getStats().getDeaths();
             
-                  System.out.println("GameID: " + g.getMatchId() + "; With stelar: " + g.getParticipant(stelar).isPresent() + "; Deaths before " + timeOffset + "min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal);
+                  System.out.println("GameID: " + g.getMatchId() + "; Played at: " + g.getMatchCreationAsDate() + "; Deaths before " + timeOffset + "min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal + "; Game duration: " + g.getMatchDuration());
             
             
               });

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.staticdata;
 
+import com.google.gson.*;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.utils.Utils;
@@ -19,7 +20,7 @@ import org.junit.*;
 
 import javax.net.ssl.SSLException;
 import java.io.*;
-import java.net.URL;
+import java.net.*;
 import java.nio.channels.*;
 import java.nio.file.*;
 import java.util.*;
@@ -51,7 +52,83 @@ public class StaticTest
            });
     }
     
-    private void downloadFile(String url, Path outputFile)
+    
+    @Test
+    public void fetchAllImagesWithIdNameCdragon()
+    {
+        Path outputFolder = Paths.get("C:\\Users\\Steffen\\Desktop\\cs\\src\\assets\\splash");
+        
+        
+        api.getChampions()
+           .entrySet()
+           .stream()
+           .parallel()
+           .forEach(e -> {
+               String     url   = "http://raw.communitydragon.org/pbe/plugins/rcp-be-lol-game-data/global/default/v1/champions/" + e.getKey() + ".json";
+               String     data  = readWeb(url);
+               JsonObject obj   = JsonParser.parseString(data).getAsJsonObject();
+               JsonArray  skins = obj.getAsJsonArray("skins");
+               for (JsonElement skin : skins)
+               {
+                   JsonObject skinObj = skin.getAsJsonObject();
+                   String     id      = skinObj.get("id").getAsString();
+                   id = id.substring(id.length() - 3);
+                
+                   downloadFromCDragon(outputFolder, e.getKey(), id, skinObj.get("id").getAsString());
+                
+                   if (skinObj.has("chromas"))
+                   {
+                       JsonArray chromas = skinObj.getAsJsonArray("chromas");
+                       for (JsonElement chroma : chromas)
+                       {
+                           JsonObject chromaObj = chroma.getAsJsonObject();
+                           downloadFromCDragon(outputFolder, e.getKey(), id, chromaObj.get("id").getAsString());
+                       }
+                   }
+               }
+            
+           });
+    }
+    
+    private static void downloadFromCDragon(Path outputFolder, int champ, String skin, String name)
+    {
+        String url  = "https://cdn.communitydragon.org/latest/champion/" + champ + "/splash-art/centered/skin/" + skin;
+        Path   file = outputFolder.resolve(Utils.padLeft(name, "0", 6) + ".png");
+        
+        downloadFile(url, file);
+    }
+    
+    public static String readWeb(String url)
+    {
+        try
+        {
+            HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+            if (con.getResponseCode() == 503)
+            {
+                Thread.sleep(500);
+                return readWeb(url);
+            }
+            
+            try (InputStreamReader isr = new InputStreamReader(con.getInputStream());
+                 BufferedReader in = new BufferedReader(isr))
+            {
+                StringBuilder response = new StringBuilder();
+                String        inputLine;
+                
+                while ((inputLine = in.readLine()) != null)
+                {
+                    response.append(inputLine).append("\n");
+                }
+                return response.toString();
+            }
+        } catch (IOException | InterruptedException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    private static void downloadFile(String url, Path outputFile)
     {
         try
         {
