@@ -67,25 +67,15 @@ public class LazyList<T> extends ArrayList<T>
     @Override
     public Spliterator<T> spliterator()
     {
-        loadFully();
-        return super.spliterator();
+        return Spliterators.spliterator(this.iterator(), this.size(), 0);
     }
     
     @Override
     public void forEach(Consumer<? super T> action)
     {
-        int startIndex = 0;
-        do
-        {
-            LazyListIterator it = new LazyListIterator(startIndex);
-            while (it.hasNext())
-            {
-                action.accept(it.next());
-            }
-            
-            startIndex = it.index;
-            hasMore = loadMoreData();
-        } while (hasMore);
+        // this is easier than implementing it myself lol
+        //noinspection SimplifyStreamApiCallChains
+        this.stream().forEach(action);
     }
     
     @Override
