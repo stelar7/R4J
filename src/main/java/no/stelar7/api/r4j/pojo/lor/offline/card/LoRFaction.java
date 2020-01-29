@@ -1,8 +1,10 @@
 package no.stelar7.api.r4j.pojo.lor.offline.card;
 
+import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
+
 import java.util.*;
 
-public enum LoRFaction
+public enum LoRFaction implements CodedEnum<LoRFaction>
 {
     DEMACIA("DE", 0),
     FRELJORD("FR", 1),
@@ -38,5 +40,55 @@ public enum LoRFaction
     public static LoRFaction fromCode(String code)
     {
         return Arrays.stream(values()).filter(a -> a.shortCode.equalsIgnoreCase(code)).findFirst().orElseThrow(NoSuchElementException::new);
+    }
+    
+    @Override
+    public Optional<LoRFaction> getFromCode(String code)
+    {
+        return Arrays.stream(values()).filter(a -> a.shortCode.equalsIgnoreCase(code)).findFirst();
+    }
+    
+    @Override
+    public String prettyName()
+    {
+        switch (this)
+        {
+            case DEMACIA:
+                return "Demacia";
+            case FRELJORD:
+                return "Freljord";
+            case IONIA:
+                return "Ionia";
+            case NOXUS:
+                return "Noxus";
+            case PILTOVER_AND_ZAUN:
+                return "Piltover & Zaun";
+            case SHADOW_ILES:
+                return "Shadow Isles";
+            default:
+                throw new RuntimeException("Unknown region; please alert the API maintainer!");
+        }
+    }
+    
+    @Override
+    public String commonName()
+    {
+        switch (this)
+        {
+            case DEMACIA:
+                return "Demacia";
+            case FRELJORD:
+                return "Freljord";
+            case IONIA:
+                return "Ionia";
+            case NOXUS:
+                return "Noxus";
+            case PILTOVER_AND_ZAUN:
+                return "PiltoverZaun";
+            case SHADOW_ILES:
+                return "ShadowIsles";
+            default:
+                throw new RuntimeException("Unknown region; please alert the API maintainer!");
+        }
     }
 }
