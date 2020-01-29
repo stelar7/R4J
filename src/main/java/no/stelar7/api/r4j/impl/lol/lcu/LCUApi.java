@@ -332,14 +332,14 @@ public class LCUApi
         DataCallBuilder obj = new DataCallBuilder()
                 .withLimiters(false)
                 .withProxy(LCUConnection.getConnectionString() + url)
+                .withRequestMethod(method)
                 .withHeader(header.getKey(), header.getValue());
         
         if (postData != null)
         {
-            obj = obj.withRequestMethod(method)
-                     .withPostData(postData);
-            
+            obj = obj.withPostData(postData);
         }
+        
         return obj.build();
     }
     
