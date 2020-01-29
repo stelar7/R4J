@@ -1,6 +1,5 @@
 package no.stelar7.api.r4j.pojo.lor.staticdata;
 
-import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.r4j.basic.utils.Utils;
 
 import java.io.*;
@@ -8,22 +7,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
-public class LoRSetInstance
+public class LoRCoreInstance
 {
-    private String set;
     private String language;
     private Path   folderLocation;
     
-    public LoRSetInstance(Path folderLocation, String set, String language)
+    public LoRCoreInstance(Path folderLocation, String language)
     {
-        this.set = set;
         this.language = language;
         this.folderLocation = folderLocation;
-    }
-    
-    public String getSet()
-    {
-        return set;
     }
     
     public String getLanguage()
@@ -39,7 +31,7 @@ public class LoRSetInstance
     public Path getSourceFileLocation()
     {
         String basePath = getLanguage() + File.separator + "data" + File.separator;
-        String filename = basePath + getSet() + "-" + getLanguage() + ".json";
+        String filename = basePath + "globals-" + getLanguage() + ".json";
         return getFolderLocation().resolve(filename);
     }
     
@@ -49,13 +41,13 @@ public class LoRSetInstance
     }
     
     
-    public List<StaticLoRCard> loadData()
+    public StaticLoRCoreInfo loadData()
     {
         try
         {
-            byte[]              content     = Files.readAllBytes(getSourceFileLocation());
-            String              contentJSON = new String(content, StandardCharsets.UTF_8);
-            List<StaticLoRCard> cards       = Utils.getGson().fromJson(contentJSON, new TypeToken<List<StaticLoRCard>>() {}.getType());
+            byte[]            content     = Files.readAllBytes(getSourceFileLocation());
+            String            contentJSON = new String(content, StandardCharsets.UTF_8);
+            StaticLoRCoreInfo cards       = Utils.getGson().fromJson(contentJSON, StaticLoRCoreInfo.class);
             return cards;
         } catch (IOException e)
         {
@@ -75,23 +67,21 @@ public class LoRSetInstance
         {
             return false;
         }
-        LoRSetInstance that = (LoRSetInstance) o;
-        return Objects.equals(set, that.set) &&
-               Objects.equals(language, that.language) &&
+        LoRCoreInstance that = (LoRCoreInstance) o;
+        return Objects.equals(language, that.language) &&
                Objects.equals(folderLocation, that.folderLocation);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(set, language, folderLocation);
+        return Objects.hash(language, folderLocation);
     }
     
     @Override
     public String toString()
     {
-        return "LoRSetInstance{" +
-               "set='" + set + '\'' +
+        return "LoRCoreInstance{" +
                ", language='" + language + '\'' +
                ", folderLocation=" + folderLocation +
                '}';

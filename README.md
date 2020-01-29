@@ -4,7 +4,7 @@
 
 ## How do I use it?
 
-Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src/test/java/no/stelar7/api/l4j8/tests), as they provide good examples.
+Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src/test/java/no/stelar7/api/r4j/tests), as they provide good examples.
 
 ##### What features does it have?
 
@@ -15,8 +15,8 @@ Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src
 
 | Cache           | Supported |
 | :------------: | :-------: |
-| Memory            | Partly...     |
 | FileSystem            | Yes!      |
+| Memory            | Partly...     |
 | SQL         | Not yet :(     |
 
 
@@ -41,7 +41,7 @@ private void handleSummonerCallback(Summoner u)
 }
 ```
 
-[more examples here](https://github.com/stelar7/R4J/blob/master/src/test/java/no/stelar7/api/r4j/tests/async/AsyncTest.java)
+[more examples here](https://github.com/stelar7/R4J/tree/master/src/test/java/no/stelar7/api/r4j/tests/async/AsyncTest.java)
 
 
 #### TODO:
