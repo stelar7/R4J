@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.match;
 
+import ch.qos.logback.classic.*;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -15,6 +16,7 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.*;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -119,11 +121,16 @@ public class MatchListTest
     @Ignore
     public void proveThatDartWasInting()
     {
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.INFO);
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.OFF);
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider").setLevel(Level.OFF);
+        
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         Summoner stelar = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         Summoner dart   = new SummonerBuilder().withPlatform(Platform.EUW1).withName("FrankenDaemon").get();
         
-        LazyList<MatchReference> dgames = dart.getLeagueGames().getLazy();
+        LazyList<MatchReference> dgames = stelar.getLeagueGames().getLazy();
         dgames.loadFully();
         
         int timeOffset = 15;
@@ -134,7 +141,7 @@ public class MatchListTest
               .limit(100)
               .forEach(g -> {
                   MatchTimeline t           = g.getTimeline();
-                  Participant   participant = g.getParticipant(dart).get();
+                  Participant   participant = g.getParticipant(stelar).get();
                   long deathsPreTenMin = t.getFrames()
                                           .stream()
                                           .flatMap(f -> f.getEvents().stream())
