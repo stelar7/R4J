@@ -21,7 +21,7 @@ public final class MatchAPI
         // Hide public constructor
     }
     
-    private List<MatchReference> getMatchList(Platform server, String accountId, Integer beginIndex, Integer endIndex)
+    public List<MatchReference> getMatchList(Platform server, String accountId, Integer beginIndex, Integer endIndex)
     {
         return new MatchListBuilder(server, accountId, beginIndex, endIndex).get();
     }

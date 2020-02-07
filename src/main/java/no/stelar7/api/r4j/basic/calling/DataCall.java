@@ -34,7 +34,6 @@ public final class DataCall
     private        String      urlProxy         = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/r4j");
     
-    
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter()
     {
         return limiter;

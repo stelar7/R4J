@@ -129,30 +129,42 @@ public class MatchListTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         Summoner stelar = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         Summoner dart   = new SummonerBuilder().withPlatform(Platform.EUW1).withName("FrankenDaemon").get();
+        Summoner dart2  = new SummonerBuilder().withPlatform(Platform.EUW1).withName("Dr Rick Report").get();
+        Summoner bipai  = new SummonerBuilder().withPlatform(Platform.EUN1).withName("TLP Bipai").get();
         
-        LazyList<MatchReference> dgames = stelar.getLeagueGames().getLazy();
+        Summoner target = stelar;
+        
+        LazyList<MatchReference> dgames = target.getLeagueGames().getLazy();
         dgames.loadFully();
         
         int timeOffset = 15;
         
         dgames.stream()
+              .filter(g -> g.getQueue() == GameQueueType.getFromId(420).get())
               .map(MatchReference::getFullMatch)
-              .filter(g -> g.getGameQueueType() == GameQueueType.getFromId(420).get())
               .limit(100)
               .forEach(g -> {
-                  MatchTimeline t           = g.getTimeline();
-                  Participant   participant = g.getParticipant(stelar).get();
+                  MatchTimeline t                 = g.getTimeline();
+                  Participant   targetParticipant = g.getParticipant(target).get();
                   long deathsPreTenMin = t.getFrames()
                                           .stream()
                                           .flatMap(f -> f.getEvents().stream())
                                           .filter(e -> e.getEventType() == EventType.CHAMPION_KILL)
-                                          .filter(e -> e.getVictimId() == participant.getParticipantId())
+                                          .filter(e -> e.getVictimId() == targetParticipant.getParticipantId())
                                           .filter(e -> e.getTimestamp() < timeOffset * 60 * 1000)
                                           .count();
             
-                  long deathsTotal = participant.getStats().getDeaths();
+                  long deathsTotal = targetParticipant.getStats().getDeaths();
             
-                  System.out.println("GameID: " + g.getMatchId() + "; Played at: " + g.getMatchCreationAsDate() + "; Deaths before " + timeOffset + "min: " + deathsPreTenMin + "; Deaths total: " + deathsTotal + "; Game duration: " + g.getMatchDuration());
+                  StringBuilder output = new StringBuilder()
+                          .append("GameID: ").append(g.getMatchId())
+                          .append("; Played at: ").append(g.getMatchCreationAsDate())
+                          .append("; Deaths before ").append(timeOffset).append("min: ").append(deathsPreTenMin)
+                          .append("; Deaths total: ").append(deathsTotal)
+                          .append("; Game duration: ").append(g.getMatchDuration())
+                          .append("; Mode: ").append(g.getGameQueueType().commonName());
+            
+                  System.out.println(output.toString());
             
             
               });
