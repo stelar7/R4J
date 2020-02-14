@@ -46,8 +46,7 @@ public class LCURunningTest
     @Ignore
     public void testCustomURL()
     {
-        // start infinite champselect with ashe and garen
-        Object obj2 = LCUApi.customUrl("lol-gameflow/v1/battle-training/start", null, "POST");
+        Object obj2 = LCUApi.customUrl("lol-clubs/v1/clubs/e1c2f384-9447-4aac-b7d6-56604a50f2d4", "{\"tag\":\"\uD83D\uDC36\"}", "GET");
         System.out.println(obj2);
     }
     

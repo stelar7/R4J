@@ -43,11 +43,15 @@ public class StaticTest
            .forEach(e -> {
                for (Skin skin : e.getValue().getSkins())
                {
+                   if (skin.getNum() != 0)
+                   {
+                       return;
+                   }
+                   
                    String url  = "https://cdn.communitydragon.org/latest/champion/" + e.getKey() + "/splash-art/centered/skin/" + skin.getNum();
                    Path   file = outputFolder.resolve(Utils.padLeft(String.valueOf(skin.getId()), "0", 6) + ".png");
                 
                    downloadFile(url, file);
-                   System.out.println();
                }
            });
     }
