@@ -2,10 +2,11 @@ package no.stelar7.api.r4j.pojo.tft;
 
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.impl.tft.TFTMatchAPI;
+import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
 
 import java.util.*;
 
-public class MatchIterator implements Iterable<TFTMatch>
+public class MatchIterator implements Iterable<GAMHSMatch>
 {
     private Iterator<String> refs;
     
@@ -15,12 +16,12 @@ public class MatchIterator implements Iterable<TFTMatch>
     }
     
     @Override
-    public Iterator<TFTMatch> iterator()
+    public Iterator<GAMHSMatch> iterator()
     {
         return new LazyListIterator();
     }
     
-    private class LazyListIterator implements Iterator<TFTMatch>
+    private class LazyListIterator implements Iterator<GAMHSMatch>
     {
         @Override
         public boolean hasNext()
@@ -29,12 +30,12 @@ public class MatchIterator implements Iterable<TFTMatch>
         }
         
         @Override
-        public TFTMatch next()
+        public GAMHSMatch next()
         {
             String          id     = refs.next();
             ServicePlatform region = Platform.fromString(id.split("_")[0]).get().toRegionalEnum();
             
-            return TFTMatchAPI.getInstance().getMatch(region, id);
+            return TFTMatchAPI.getInstance().getMatchRAW(region, id);
         }
     }
 }

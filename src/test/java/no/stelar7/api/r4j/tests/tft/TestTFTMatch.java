@@ -42,9 +42,10 @@ public class TestTFTMatch
     public void testMatchIterator()
     {
         MatchIterator stelar7 = api.getMatchIterator(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID(), 20);
-        for (TFTMatch m : stelar7)
+        for (GAMHSMatch m : stelar7)
         {
-            System.out.println(m);
+            System.out.println(m.toTFTMatch());
+            System.out.println(m.toTFTMetadata());
         }
         System.out.println();
     }
