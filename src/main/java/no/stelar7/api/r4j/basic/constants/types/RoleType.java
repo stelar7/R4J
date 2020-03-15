@@ -19,11 +19,11 @@ public enum RoleType implements CodedEnum
      */
     SOLO,
     /**
-     * When there are 2 participants in a lane, this person farmed
+     * When there are 2 participants in a lane, this character farmed
      */
     DUO_CARRY,
     /**
-     * When there are 2 participants in a lane, this parson did not farm
+     * When there are 2 participants in a lane, this character did not farm
      */
     DUO_SUPPORT;
     

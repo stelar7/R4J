@@ -22,10 +22,26 @@ public enum TeamType implements CodedEnum
         return Stream.of(TeamType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
     }
     
+    public TeamType opposite()
+    {
+        switch (this)
+        {
+            case RED:
+                return BLUE;
+            case BLUE:
+                return RED;
+            case AI:
+                return AI;
+            default:
+                return null;
+        }
+    }
+    
     @Override
     public String prettyName()
     {
-        switch (this) {
+        switch (this)
+        {
             case BLUE:
                 return "Blue";
             case RED:
