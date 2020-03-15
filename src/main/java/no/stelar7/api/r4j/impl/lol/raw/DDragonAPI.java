@@ -454,6 +454,7 @@ public final class DDragonAPI
     
     /**
      * Always returns euw
+     * @return realm euw
      */
     public Realm getRealm()
     {

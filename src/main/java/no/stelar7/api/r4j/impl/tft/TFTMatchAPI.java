@@ -61,6 +61,7 @@ public class TFTMatchAPI
      *
      * @param server the platform the account is on
      * @param puuid  the account to check
+     * @param count the amount of games to fetch
      * @return {@code MatchIterator}
      */
     public MatchIterator getMatchIterator(ServicePlatform server, String puuid, int count)

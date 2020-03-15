@@ -19,8 +19,7 @@ public class LORClientAPI
     
     /**
      * Gets the players active deck, this deck is static and does not change during a game.
-     * <p>
-     * Returns null of not in a game
+     * @return the active game, or null if not ingame
      */
     public static LoRDeck getActiveDeck()
     {
@@ -42,6 +41,7 @@ public class LORClientAPI
     
     /**
      * Gets the result from the last played game
+     * @return the result from the last game
      */
     public static LoRGameResult getLastGameResult()
     {

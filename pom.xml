@@ -115,6 +115,7 @@
                     <encoding>utf8</encoding>
                     <docencoding>utf8</docencoding>
                     <charset>utf8</charset>
+                    <source>8</source>
                 </configuration>
             </plugin>
         </plugins>

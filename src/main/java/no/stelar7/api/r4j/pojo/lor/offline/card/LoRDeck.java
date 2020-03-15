@@ -9,6 +9,8 @@ public class LoRDeck
     
     /**
      * Adds a card to the deck
+     * @param count the amount to add
+     * @param card the card to add
      */
     public void addCard(LoRCard card, int count)
     {
@@ -22,6 +24,7 @@ public class LoRDeck
     
     /**
      * Removes a card from the deck
+     * @param card the card to remove
      */
     public void removeCard(LoRCard card)
     {
@@ -30,6 +33,8 @@ public class LoRDeck
     
     /**
      * Count the instances of a specified card in the deck
+     * @param card the card to count
+     * @return the count
      */
     public int count(LoRCard card)
     {
@@ -46,6 +51,7 @@ public class LoRDeck
     
     /**
      * Count the total amount of cards in the deck
+     * @return the total
      */
     public int deckSize()
     {

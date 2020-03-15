@@ -14,6 +14,7 @@ public class ChampionRotationInfo implements Serializable
     
     /**
      * List of championIds that players over {maxNewPlayerLevel} players get to play for free
+     * @return ids of the f2p champs
      */
     public List<Integer> getFreeChampionIds()
     {
@@ -22,6 +23,7 @@ public class ChampionRotationInfo implements Serializable
     
     /**
      * List of championIds that new players get to play for free
+     * @return ids of the f2p champs
      */
     public List<Integer> getFreeChampionIdsForNewPlayers()
     {
@@ -30,6 +32,7 @@ public class ChampionRotationInfo implements Serializable
     
     /**
      * Above this level you will get the champions from {freeChampionIds} instead of {freeChampionIdsForNewPlayers}
+     * @return level where you get other new champs
      */
     public int getMaxNewPlayerLevel()
     {
@@ -38,6 +41,7 @@ public class ChampionRotationInfo implements Serializable
     
     /**
      * List of champions that players over {maxNewPlayerLevel} get to play for free
+     * @return f2p champs
      */
     public List<StaticChampion> getFreeChampions()
     {
@@ -46,6 +50,7 @@ public class ChampionRotationInfo implements Serializable
     
     /**
      * List of champions that players below {maxNewPlayerLevel} get to play for free
+     * @return f2p champs
      */
     public List<StaticChampion> getFreeChampionsForNewPlayers()
     {

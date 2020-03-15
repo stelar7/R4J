@@ -19,7 +19,7 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
      */
     BR1("BR1", "br"),
     /**
-     * Europe Nordic & East platform.
+     * Europe Nordic &amp; East platform.
      */
     EUN1("EUN1", "eune"),
     /**

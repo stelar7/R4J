@@ -76,6 +76,7 @@ public final class TournamentAPI
      * A list of all games played with this tournament code.
      *
      * @param tournamentCode The tournament code of the match
+     * @param platform the platform
      * @return a list of matchIds played with this code
      */
     public List<Long> getMatchIds(final Platform platform, final String tournamentCode)

@@ -50,6 +50,7 @@ public interface CacheProvider
      * Returns the count of items in the cache (or the size in bytes)
      *
      * @param type the endpoint
+     * @param filter the keys to filter to
      * @return long
      */
     long getSize(URLEndpoint type, Map<String, Object> filter);

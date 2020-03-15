@@ -16,6 +16,8 @@ public class LCUApi
 {
     /**
      * Creates a lobby for the gamemode supplied
+     * @param queue the queue to create
+     * @return the partyid
      */
     public static String createLobby(GameQueueType queue)
     {
@@ -38,6 +40,7 @@ public class LCUApi
     
     /**
      * Restarts the client after waitTimeout seconds
+     * @param waitTimeout the time to wait in seconds
      */
     public static void restart(int waitTimeout)
     {
@@ -54,6 +57,7 @@ public class LCUApi
     
     /**
      * Invites the summoner to your game
+     * @param name the name
      */
     public static void inviteSummoner(String name)
     {
@@ -88,7 +92,8 @@ public class LCUApi
     /**
      * Starts the queue
      * <p>
-     * returns true if able, false if unable to start
+     * @return true if able, false if unable to start
+     *
      */
     public static boolean startMatchmaking()
     {
@@ -112,6 +117,8 @@ public class LCUApi
     
     /**
      * Sets your roles in the lobby
+     * @param primary first role
+     * @param secondary second role
      */
     public static void setLobbyPositions(LCULobbyPositionType primary, LCULobbyPositionType secondary)
     {
@@ -143,6 +150,8 @@ public class LCUApi
     
     /**
      * Fetches summoner info
+     * @param name the name to get info about
+     * @return the info
      */
     public static JsonObject getSummoner(String name)
     {
@@ -163,6 +172,8 @@ public class LCUApi
     
     /**
      * Fetches summoner info
+     * @param id the id to fetch info about
+     * @return the info
      */
     public static JsonObject getSummoner(long id)
     {
@@ -188,6 +199,7 @@ public class LCUApi
      * @param background  background image of notification
      * @param dismissable true if able to dismiss
      * @param state       read or unread
+     * @return the notification id
      */
     public static int createNotification(String title, String content, String icon, String background, boolean dismissable, String state)
     {
@@ -229,6 +241,8 @@ public class LCUApi
      * Joins the lobby with the specified id
      * <p>
      * returns true if lobby exists, and we are able to join
+     * @param id the lobbyid
+     * @return true if able to join
      */
     public static boolean joinLobby(String id)
     {
@@ -256,6 +270,7 @@ public class LCUApi
      *
      * @param username your username
      * @param password your password
+     * @return the login object
      */
     public static JsonObject login(String username, String password)
     {
@@ -289,6 +304,7 @@ public class LCUApi
     
     /**
      * Downloads replay
+     * @param gameid the id to download
      */
     public static void downloadReplay(Long gameid)
     {
@@ -323,6 +339,7 @@ public class LCUApi
      *
      * @param url      the url to call
      * @param postData null if not a POST call
+     * @param method the http method to use
      * @return whatever the api returns
      */
     public static Object customUrl(String url, String postData, String method)
@@ -342,6 +359,7 @@ public class LCUApi
     
     /**
      * Start spectator on game
+     * @param gameid the id to spectate
      */
     public static void spectateGame(Long gameid)
     {
@@ -373,6 +391,7 @@ public class LCUApi
     
     /**
      * Fetches the replay save path
+     * @return the path
      */
     public static String getReplaySavePath()
     {
@@ -400,6 +419,7 @@ public class LCUApi
     
     /**
      * Creates a new websocket to the LCU
+     * @return a websocket
      */
     public static LCUSocketReader createWebSocket()
     {

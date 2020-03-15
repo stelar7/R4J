@@ -16,8 +16,9 @@ public class APICredentials
      * Instantiates new API credentials.
      *
      * @param lol        the lol key
-     * @param tft        the tft lol key
      * @param tournament the tournament key
+     * @param tft        the tft lol key
+     * @param lor        the lor lol key
      */
     public APICredentials(final String lol, final String tournament, final String tft, final String lor)
     {

@@ -29,6 +29,7 @@ public class LoRExpeditionInfo
     
     /**
      * List of either "win" or "loss"
+     * @return the list
      */
     public List<String> getRecord()
     {
