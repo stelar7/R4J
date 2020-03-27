@@ -97,7 +97,7 @@ public class R4J
         {
             return MatchAPI.getInstance();
         }
-        
+    
         /**
          * Gets league api.
          *
@@ -106,6 +106,16 @@ public class R4J
         public LeagueAPI getLeagueAPI()
         {
             return LeagueAPI.getInstance();
+        }
+    
+        /**
+         * Gets clash api.
+         *
+         * @return the clash api
+         */
+        public ClashAPI getClashAPI()
+        {
+            return ClashAPI.getInstance();
         }
     }
     
