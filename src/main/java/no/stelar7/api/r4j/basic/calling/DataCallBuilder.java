@@ -30,8 +30,8 @@ public class DataCallBuilder
 {
     private static final Logger logger = LoggerFactory.getLogger(DataCallBuilder.class);
     
-    private final DataCall dc = new DataCall();
-    
+    private final        DataCall dc   = new DataCall();
+
     private static final BiFunction<String, String, String> MERGE        = (o, n) -> o + "," + n;
     private static final BiFunction<String, String, String> MERGE_AS_SET = (o, n) -> o + n;
     
@@ -616,8 +616,10 @@ public class DataCallBuilder
                 logger.debug("Header 'X-App-Rate-Limit' missing from call: {} ", getURL());
             } else
             {
+                lock.lock();
                 createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
                 saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
+                lock.unlock();
             }
             
             if (methodA == null)
@@ -625,8 +627,10 @@ public class DataCallBuilder
                 logger.debug("Header 'X-Method-Rate-Limit' missing from call: {}", getURL());
             } else
             {
+                lock.lock();
                 createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
                 saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
+                lock.unlock();
             }
             
             String deprecationHeader = con.getHeaderField("X-Riot-Deprecated");
@@ -708,7 +712,7 @@ public class DataCallBuilder
         DataCall.getLimiter().put(platform, child);
     }
     
-    private synchronized void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
+    private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
     {
         Map<Enum, Map<Integer, Integer>> parent = DataCall.getCallData().getOrDefault(platform, new HashMap<>());
         Map<Integer, Integer>            child  = parent.getOrDefault(endpoint, new HashMap<>());
