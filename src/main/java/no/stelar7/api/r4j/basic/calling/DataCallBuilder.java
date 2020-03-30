@@ -708,7 +708,7 @@ public class DataCallBuilder
         DataCall.getLimiter().put(platform, child);
     }
     
-    private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
+    private synchronized void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
     {
         Map<Enum, Map<Integer, Integer>> parent = DataCall.getCallData().getOrDefault(platform, new HashMap<>());
         Map<Integer, Integer>            child  = parent.getOrDefault(endpoint, new HashMap<>());
