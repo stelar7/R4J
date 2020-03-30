@@ -214,7 +214,7 @@ public class Match implements Serializable
     
     public boolean didWin(Participant participant)
     {
-        return getTeamStats(participant.getTeam()).get(0).isWinner();
+        return participant.getStats().isWinner();
     }
     
     /**
