@@ -188,6 +188,11 @@ public class TeamStats implements Serializable
         return "Win".equalsIgnoreCase(this.win);
     }
     
+    public String getWinString()
+    {
+        return this.win;
+    }
+    
     
     @Override
     public boolean equals(Object o)

@@ -100,9 +100,14 @@ public class MatchListTest
     @Ignore
     public void testMatchlistCrawler()
     {
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.OFF);
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.OFF);
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider").setLevel(Level.OFF);
+    
         Summoner s = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
         
-        SummonerCrawler crawler = new SummonerCrawler(s);
+        SummonerCrawler crawler = new SummonerCrawler(s, 1000);
         crawler.crawlLeague();
         crawler.crawlGames();
         
@@ -111,8 +116,8 @@ public class MatchListTest
             List<MatchReference> list = mlb.withAccountId(summoner.getAccountId()).withPlatform(summoner.getPlatform()).get();
             for (MatchReference ref : list)
             {
-                ref.getFullMatch();
-                ref.getTimeline();
+                System.out.println(ref.getFullMatch().getTeamStats(TeamType.BLUE).get(0).getWinString());
+                //ref.getTimeline();
             }
         });
     }

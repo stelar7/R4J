@@ -14,6 +14,12 @@ public class TFTMatch implements Serializable
     private GameQueueType        queue_id;
     private int                  tft_set_number;
     private List<TFTParticipant> participants;
+    private String               game_variation;
+    
+    public String getGameVariation()
+    {
+        return this.game_variation;
+    }
     
     public long getMatchCreation()
     {
@@ -67,13 +73,14 @@ public class TFTMatch implements Serializable
                tft_set_number == tftMatch.tft_set_number &&
                Objects.equals(game_version, tftMatch.game_version) &&
                queue_id == tftMatch.queue_id &&
-               Objects.equals(participants, tftMatch.participants);
+               Objects.equals(participants, tftMatch.participants) &&
+               Objects.equals(game_variation, tftMatch.game_variation);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(game_datetime, game_length, game_version, queue_id, tft_set_number, participants);
+        return Objects.hash(game_datetime, game_length, game_version, queue_id, tft_set_number, participants, game_variation);
     }
     
     @Override
@@ -86,6 +93,7 @@ public class TFTMatch implements Serializable
                ", queue_id=" + queue_id +
                ", tft_set_number=" + tft_set_number +
                ", participants=" + participants +
+               ", game_variation='" + game_variation + '\'' +
                '}';
     }
 }

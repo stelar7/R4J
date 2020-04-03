@@ -10,10 +10,17 @@ import java.util.stream.Collectors;
 public class SummonerCrawler
 {
     private final Set<Summoner> results = new HashSet<>();
+    private       int           limit   = -1;
     
     public SummonerCrawler(Summoner start)
     {
+        this(start, -1);
+    }
+    
+    public SummonerCrawler(Summoner start, int limit)
+    {
         results.add(start);
+        this.limit = limit;
     }
     
     public Set<Summoner> get()
@@ -24,14 +31,38 @@ public class SummonerCrawler
     public void crawlGames()
     {
         results.iterator().forEachRemaining(summoner -> {
-            summoner.getLeagueGames().getMatchIterator().forEach(g -> results.addAll(g.getParticipantIdentities().stream().map(ParticipantIdentity::getCurrentSummoner).collect(Collectors.toSet())));
+            if (limit > 0 && results.size() > limit)
+            {
+                return;
+            }
+            
+            summoner.getLeagueGames().getMatchIterator().forEach(g -> {
+                if (limit > 0 && results.size() > limit)
+                {
+                    return;
+                }
+                
+                results.addAll(g.getParticipantIdentities().stream().map(ParticipantIdentity::getCurrentSummoner).collect(Collectors.toSet()));
+            });
         });
     }
     
     public void crawlLeague()
     {
         results.iterator().forEachRemaining(summoner -> summoner.getLeagueEntry().forEach(l -> {
-            LeagueAPI.getInstance().getLeague(summoner.getPlatform(), l.getLeagueId()).getEntries().forEach(e -> results.add(Summoner.bySummonerId(summoner.getPlatform(), e.getSummonerId())));
+            if (limit > 0 && results.size() > limit)
+            {
+                return;
+            }
+            
+            LeagueAPI.getInstance().getLeague(summoner.getPlatform(), l.getLeagueId()).getEntries().forEach(e -> {
+                if (limit > 0 && results.size() > limit)
+                {
+                    return;
+                }
+                
+                results.add(Summoner.bySummonerId(summoner.getPlatform(), e.getSummonerId()));
+            });
         }));
     }
     
