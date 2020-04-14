@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.impl.lor;
 
+import com.google.gson.reflect.TypeToken;
+import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRFaction;
 import no.stelar7.api.r4j.pojo.lor.staticdata.*;
 
@@ -12,118 +14,132 @@ public class LoRStaticAPI
     {
     }
     
-    private static Map<LoRSetInstance, List<StaticLoRCard>> setCards = new HashMap<>();
-    private static Map<LoRCoreInstance, StaticLoRCoreInfo>  coreInfo = new HashMap<>();
+    public List<StaticLoRCard> cards = new ArrayList<>();
+    public StaticLoRCoreInfo   core;
     
-    private static LoRSetInstance  setInstance;
-    private static LoRCoreInstance coreInstance;
+    private String set;
+    private String language;
+    private String version;
     
-    public static LoRSetInstance getSetInstance()
+    public LoRStaticAPI(String set)
     {
-        return setInstance;
+        this(set, "en_us");
     }
     
-    public static void setSetInstance(LoRSetInstance setInstance)
+    public LoRStaticAPI(String set, String language)
     {
-        LoRStaticAPI.setInstance = setInstance;
-        setCards.put(setInstance, setInstance.loadData());
+        this(set, language, "latest");
     }
     
-    public static LoRCoreInstance getCoreInstance()
+    public LoRStaticAPI(String set, String language, String version)
     {
-        return coreInstance;
-    }
-    
-    public static void setCoreInstance(LoRCoreInstance coreInstance)
-    {
-        LoRStaticAPI.coreInstance = coreInstance;
-        coreInfo.put(coreInstance, coreInstance.loadData());
-    }
-    
-    public static List<StaticLoRCard> getCards()
-    {
-        if (setInstance == null || !setInstance.isValid())
-        {
-            throw new RuntimeException("No active instance set for this data, please set it and try again!");
-        }
+        this.set = set;
+        this.language = language;
+        this.version = version;
         
-        return setCards.get(setInstance);
+        this.cards = loadCards();
+        this.core = loadCore();
     }
     
-    public static Optional<StaticLoRCard> getCard(String cardcode)
+    private String getSetPath()
     {
-        if (setInstance == null || !setInstance.isValid())
-        {
-            throw new RuntimeException("No active instance set for this data, please set it and try again!");
-        }
-        
-        return setCards.get(setInstance)
-                       .stream()
-                       .filter(c -> c.getCardCode().equalsIgnoreCase(cardcode))
-                       .findFirst();
+        return "https://dd.b.pvp.net/" + version + "/" + set + "/" + language + "/data/" + set + "-" + language + ".json";
     }
     
-    public static List<StaticLoRCard> getCards(LoRFaction faction)
+    private String getCorePath()
     {
-        if (setInstance == null || !setInstance.isValid())
-        {
-            throw new RuntimeException("No active instance set for this data, please set it and try again!");
-        }
-        
-        return setCards.get(setInstance)
-                       .stream()
-                       .filter(c -> c.getRegionRef().equalsIgnoreCase(faction.commonName()))
-                       .collect(Collectors.toList());
+        return "https://dd.b.pvp.net/" + version + "/core/" + language + "/data/globals-" + language + ".json";
     }
     
-    public static List<StaticLoRKeyword> getKeywords()
+    private List<StaticLoRCard> loadCards()
     {
-        if (coreInstance == null || !coreInstance.isValid())
-        {
-            throw new RuntimeException("No active instance set for core data, please set it and try again!");
-        }
-        
-        return coreInfo.get(coreInstance).getKeywords();
-    }
-    
-    public static List<StaticLoRRegion> getRegions()
-    {
-        if (coreInstance == null || !coreInstance.isValid())
-        {
-            throw new RuntimeException("No active instance set for core data, please set it and try again!");
-        }
-        
-        return coreInfo.get(coreInstance).getRegions();
-    }
-    
-    public static List<StaticLoRRarity> getRarities()
-    {
-        if (coreInstance == null || !coreInstance.isValid())
-        {
-            throw new RuntimeException("No active instance set for core data, please set it and try again!");
-        }
-        
-        return coreInfo.get(coreInstance).getRarities();
-    }
-    
-    public static List<StaticLoRSpellSpeed> getSpellSpeeds()
-    {
-        if (coreInstance == null || !coreInstance.isValid())
-        {
-            throw new RuntimeException("No active instance set for core data, please set it and try again!");
-        }
-        
-        return coreInfo.get(coreInstance).getSpellSpeeds();
+        return Utils.getGson().fromJson(Utils.getURLData(getSetPath()), new TypeToken<List<StaticLoRCard>>() {}.getType());
     }
     
     
-    public static StaticLoRCoreInfo getCoreInfo()
+    private StaticLoRCoreInfo loadCore()
     {
-        if (coreInstance == null || !coreInstance.isValid())
-        {
-            throw new RuntimeException("No active instance set for core data, please set it and try again!");
-        }
+        return Utils.getGson().fromJson(Utils.getURLData(getCorePath()), StaticLoRCoreInfo.class);
+    }
+    
+    public List<StaticLoRCard> getCards()
+    {
+        return cards;
+    }
+    
+    public Optional<StaticLoRCard> getCard(String cardcode)
+    {
+        return cards
+                .stream()
+                .filter(c -> c.getCardCode().equalsIgnoreCase(cardcode))
+                .findFirst();
+    }
+    
+    public List<StaticLoRCard> getCards(LoRFaction faction)
+    {
+        return cards
+                .stream()
+                .filter(c -> c.getRegionRef().equalsIgnoreCase(faction.commonName()))
+                .collect(Collectors.toList());
+    }
+    
+    public List<StaticLoRKeyword> getKeywords()
+    {
+        return core.getKeywords();
+    }
+    
+    public List<StaticLoRRegion> getRegions()
+    {
         
-        return coreInfo.get(coreInstance);
+        return core.getRegions();
+    }
+    
+    public List<StaticLoRRarity> getRarities()
+    {
+        return core.getRarities();
+    }
+    
+    public List<StaticLoRSpellSpeed> getSpellSpeeds()
+    {
+        return core.getSpellSpeeds();
+    }
+    
+    
+    public StaticLoRCoreInfo getCoreInfo()
+    {
+        return core;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        LoRStaticAPI that = (LoRStaticAPI) o;
+        return Objects.equals(set, that.set) &&
+               Objects.equals(language, that.language) &&
+               Objects.equals(version, that.version);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(set, language, version);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "LoRStaticAPI{" +
+               "set='" + set + '\'' +
+               ", language='" + language + '\'' +
+               ", version='" + version + '\'' +
+               '}';
     }
 }

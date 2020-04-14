@@ -1,8 +1,6 @@
 package no.stelar7.api.r4j.pojo.lor.offline.card;
 
 import no.stelar7.api.r4j.basic.utils.Utils;
-import no.stelar7.api.r4j.impl.lor.LoRStaticAPI;
-import no.stelar7.api.r4j.pojo.lor.staticdata.StaticLoRCard;
 
 import java.util.Objects;
 
@@ -43,11 +41,6 @@ public class LoRCard
         this.set = set;
         this.faction = faction;
         this.id = id;
-    }
-    
-    public StaticLoRCard getAsStaticCard()
-    {
-        return LoRStaticAPI.getCard(this.getCardCode()).orElseThrow(() -> new RuntimeException("The LOR static data source youve specified does not contain any info about this card!"));
     }
     
     public String getCardCode()
