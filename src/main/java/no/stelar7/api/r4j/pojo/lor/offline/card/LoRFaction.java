@@ -11,10 +11,11 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
     IONIA("IO", 2),
     NOXUS("NX", 3),
     PILTOVER_AND_ZAUN("PZ", 4),
-    SHADOW_ILES("SI", 5);
+    SHADOW_ILES("SI", 5),
+    BILGEWATER("BW", 6);
     
-    private String shortCode;
-    private int    id;
+    private final String shortCode;
+    private final int    id;
     
     LoRFaction(String shortCode, int id)
     {
@@ -65,6 +66,8 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
                 return "Piltover & Zaun";
             case SHADOW_ILES:
                 return "Shadow Isles";
+            case BILGEWATER:
+                return "Bilgewater";
             default:
                 throw new RuntimeException("Unknown region; please alert the API maintainer!");
         }
@@ -87,6 +90,8 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
                 return "PiltoverZaun";
             case SHADOW_ILES:
                 return "ShadowIsles";
+            case BILGEWATER:
+                return "Bilgewater";
             default:
                 throw new RuntimeException("Unknown region; please alert the API maintainer!");
         }

@@ -110,6 +110,21 @@ public class TestLorDeck
     {
         LoRDeck deck = new LoRDeck();
         deck.addCard(LoRCard.create("01DE002"), 4);
+        deck.addCard(LoRCard.create("02BW003"), 2);
+        deck.addCard(LoRCard.create("02BW010"), 3);
+        deck.addCard(LoRCard.create("01DE004"), 5);
+        
+        String  code    = LoRDeckCode.encode(deck);
+        LoRDeck decoded = LoRDeckCode.decode(code);
+        
+        Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(deck, decoded));
+    }
+    
+    @Test
+    public void testBilgewater()
+    {
+        LoRDeck deck = new LoRDeck();
+        deck.addCard(LoRCard.create("01DE002"), 4);
         
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);

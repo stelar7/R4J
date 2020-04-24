@@ -30,8 +30,8 @@ public class DataCallBuilder
 {
     private static final Logger logger = LoggerFactory.getLogger(DataCallBuilder.class);
     
-    private final        DataCall dc   = new DataCall();
-
+    private final DataCall dc = new DataCall();
+    
     private static final BiFunction<String, String, String> MERGE        = (o, n) -> o + "," + n;
     private static final BiFunction<String, String, String> MERGE_AS_SET = (o, n) -> o + n;
     
@@ -570,8 +570,13 @@ public class DataCallBuilder
             con.setRequestProperty("Content-Type", "application/json");
             this.dc.getUrlHeaders().forEach(con::setRequestProperty);
             
-            con.setRequestMethod(requestMethod);
-            
+            if(requestMethod.equalsIgnoreCase("PATCH")) {
+                con.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+                con.setRequestMethod("POST");
+            } else
+            {
+                con.setRequestMethod(requestMethod);
+            }
             
             StringBuilder sb = new StringBuilder();
             con.getRequestProperties().forEach((key, value) -> sb.append(String.format(Constants.TABBED2X_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
@@ -586,7 +591,7 @@ public class DataCallBuilder
             logger.debug(printMe);
             
             
-            if (!this.postData.isEmpty())
+            if (null != this.postData && !this.postData.isEmpty())
             {
                 con.setDoOutput(true);
                 final DataOutputStream writer = new DataOutputStream(con.getOutputStream());
@@ -670,6 +675,11 @@ public class DataCallBuilder
                 }
                 
                 return new DataCallResponse(con.getResponseCode(), reason);
+            }
+            
+            if (con.getResponseCode() == 204)
+            {
+                return new DataCallResponse(con.getResponseCode(), "");
             }
             
             InputStream stream = (con.getResponseCode() <= 399) ? con.getInputStream() : con.getErrorStream();

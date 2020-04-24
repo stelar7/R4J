@@ -19,7 +19,7 @@ public class LoRDeckCode
         int format    = firstByte >>> 4;
         int version   = firstByte & 0xF;
         
-        int MAX_KNOWN_VERSION = 1;
+        int MAX_KNOWN_VERSION = 2;
         if (version > MAX_KNOWN_VERSION)
         {
             throw new IllegalArgumentException("The provided code requires a higher version of this library; please update");
