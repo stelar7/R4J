@@ -10,11 +10,11 @@ import java.util.*;
 public class SummonerBuilder
 {
     
-    private final String   name;
-    private final String   sumId;
-    private final String   accId;
-    private final String   puuid;
-    private final Platform platform;
+    private String   name;
+    private String   sumId;
+    private String   accId;
+    private String   puuid;
+    private Platform platform;
     
     public SummonerBuilder()
     {
@@ -59,8 +59,42 @@ public class SummonerBuilder
         return new SummonerBuilder(this.name, this.sumId, this.accId, this.puuid, platform);
     }
     
+    public SummonerBuilder setSummonerId(String id)
+    {
+        this.sumId = id;
+        return this;
+    }
+    
+    public SummonerBuilder setAccountId(String id)
+    {
+        this.accId = id;
+        return this;
+    }
+    
+    public SummonerBuilder setName(String name)
+    {
+        this.name = name;
+        return this;
+    }
+    
+    public SummonerBuilder setPUUID(String puuid)
+    {
+        this.puuid = puuid;
+        return this;
+    }
+    
+    public SummonerBuilder setPlatform(Platform platform)
+    {
+        this.platform = platform;
+        return this;
+    }
+    
+    
     /**
      * gets a summoner based on the parameters passed to the builder
+     * <p>
+     * If variables are set using a setXXX method, they are parsed with name having the highest priority, and accountid the lowest. as shown in the "list below"
+     * name > id > puuid > accountid
      *
      * @return Summoner
      */
