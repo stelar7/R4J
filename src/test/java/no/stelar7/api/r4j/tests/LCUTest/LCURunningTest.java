@@ -46,11 +46,12 @@ public class LCURunningTest
     @Ignore
     public void testCustomURL()
     {
-        String json = "{\"actorCellId\":0,\"championId\":51,\"completed\":false,\"id\":1,\"isAllyAction\":true,\"isInProgress\":true,\"pickTurn\":1,\"type\":\"pick\"}";
+        Object a = LCUApi.customUrl("​entitlements​/v1​/token", null, "GET");
+        System.out.println(a);
+        //String json = "{\"actorCellId\":0,\"championId\":51,\"completed\":false,\"id\":1,\"isAllyAction\":true,\"isInProgress\":true,\"pickTurn\":1,\"type\":\"pick\"}";
         
         //Object obj = LCUApi.customUrl("lol-champ-select/v1/session/", null, "GET");
-        LCUApi.customUrl("lol-champ-select/v1/session/actions/1", json, "PATCH");
-        LCUApi.customUrl("lol-champ-select/v1/session/actions/1/complete", null, "POST");
+        //LCUApi.customUrl("lol-champ-select/v1/session/actions/1/complete", null, "POST");
     }
     
     @Test
