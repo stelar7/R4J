@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class LoRGameResult
 {
-    private String  GameId;
+    private String  GameID;
     private boolean LocalPlayerWon;
     
     public String getGameId()
     {
-        return GameId;
+        return GameID;
     }
     
     public boolean isLocalPlayerWon()
@@ -30,20 +30,20 @@ public class LoRGameResult
         }
         LoRGameResult that = (LoRGameResult) o;
         return LocalPlayerWon == that.LocalPlayerWon &&
-               Objects.equals(GameId, that.GameId);
+               Objects.equals(GameID, that.GameID);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(GameId, LocalPlayerWon);
+        return Objects.hash(GameID, LocalPlayerWon);
     }
     
     @Override
     public String toString()
     {
         return "LoRGameResult{" +
-               "GameId='" + GameId + '\'' +
+               "GameId='" + GameID + '\'' +
                ", LocalPlayerWon=" + LocalPlayerWon +
                '}';
     }
