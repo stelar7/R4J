@@ -38,7 +38,7 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_CHAMPION_MANY);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new TreeMap<>();
@@ -127,7 +127,7 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new TreeMap<>();
@@ -183,7 +183,7 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new TreeMap<>();
@@ -269,7 +269,7 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_MAPS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new TreeMap<>();
@@ -414,7 +414,7 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_PROFILEICONS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new TreeMap<>();
@@ -556,7 +556,7 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_SUMMONER_SPELLS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new TreeMap<>();
@@ -690,7 +690,7 @@ public final class DDragonAPI
                 .withProxy(Constants.DDRAGON_PROXY)
                 .withEndpoint(URLEndpoint.DDRAGON_PERKPATHS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new TreeMap<>();
@@ -745,7 +745,7 @@ public final class DDragonAPI
     
     public String getTarball(String version)
     {
-        return "https://ddragon.leagueoflegends.com/cdn/dragontail-{version}.tgz".replace(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getDD() : version);
+        return "https://ddragon.leagueoflegends.com/cdn/dragontail-{version}.tgz".replace(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
     }
     
     public String getTarball()
