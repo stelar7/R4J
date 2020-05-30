@@ -32,8 +32,8 @@ public class MatchIterator implements Iterable<GAMHSMatch>
         @Override
         public GAMHSMatch next()
         {
-            String       id     = refs.next();
-            RegionalName region = LeagueShard.fromString(id.split("_")[0]).get().toRegionalEnum();
+            String      id     = refs.next();
+            RegionShard region = LeagueShard.fromString(id.split("_")[0]).get().toRegionShard();
             
             return TFTMatchAPI.getInstance().getMatchRAW(region, id);
         }

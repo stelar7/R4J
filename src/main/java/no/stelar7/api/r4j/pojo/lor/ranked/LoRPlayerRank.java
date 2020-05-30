@@ -1,9 +1,11 @@
 package no.stelar7.api.r4j.pojo.lor.ranked;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LoRPlayerRank
+public class LoRPlayerRank implements Serializable
 {
+    private static final long serialVersionUID = 1648942165181218107L;
     private String name;
     private int    rank;
     

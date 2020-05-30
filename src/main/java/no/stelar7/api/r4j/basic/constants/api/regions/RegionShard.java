@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.constants.types.RealmSpesificEnum;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public enum RegionalName implements RealmSpesificEnum
+public enum RegionShard implements RealmSpesificEnum
 {
     /**
      * Unknown platform, used for bots in participant identities
@@ -34,7 +34,7 @@ public enum RegionalName implements RealmSpesificEnum
     
     private String[] key;
     
-    RegionalName(String... s)
+    RegionShard(String... s)
     {
         this.key = s;
     }
@@ -45,9 +45,9 @@ public enum RegionalName implements RealmSpesificEnum
      * @param code the lookup key
      * @return Platform from code
      */
-    public static Optional<RegionalName> getFromCode(final String code)
+    public static Optional<RegionShard> getFromCode(final String code)
     {
-        return Stream.of(RegionalName.values()).filter(t -> t.key[0].equalsIgnoreCase(code)).findFirst();
+        return Stream.of(RegionShard.values()).filter(t -> t.key[0].equalsIgnoreCase(code)).findFirst();
     }
     
     

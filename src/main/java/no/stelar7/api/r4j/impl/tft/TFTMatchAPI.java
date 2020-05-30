@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.impl.tft;
 
-import no.stelar7.api.r4j.basic.constants.api.regions.RegionalName;
+import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -23,7 +23,7 @@ public class TFTMatchAPI
         // Hide public constructor
     }
     
-    public List<String> getMatchList(RegionalName server, String PUUID, int count)
+    public List<String> getMatchList(RegionShard server, String PUUID, int count)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
@@ -65,22 +65,22 @@ public class TFTMatchAPI
      * @param count the amount of games to fetch
      * @return {@code MatchIterator}
      */
-    public MatchIterator getMatchIterator(RegionalName server, String puuid, int count)
+    public MatchIterator getMatchIterator(RegionShard server, String puuid, int count)
     {
         return new MatchIterator(getMatchList(server, puuid, count));
     }
     
-    public TFTMatch getMatch(RegionalName platform, String gameId)
+    public TFTMatch getMatch(RegionShard platform, String gameId)
     {
         return getMatchRAW(platform, gameId).toTFTMatch();
     }
     
-    public TFTMetadata getMetadata(RegionalName platform, String gameId)
+    public TFTMetadata getMetadata(RegionShard platform, String gameId)
     {
         return getMatchRAW(platform, gameId).toTFTMetadata();
     }
     
-    public GAMHSMatch getMatchRAW(RegionalName platform, String gameId)
+    public GAMHSMatch getMatchRAW(RegionShard platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())

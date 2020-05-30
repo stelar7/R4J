@@ -8,6 +8,7 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Burst ratelimiter will use as many calls as possible, then wait when it reaches the limit
@@ -118,7 +119,10 @@ public class BurstRateLimiter extends RateLimiter
         Instant now = Instant.now();
         for (RateLimit limit : limits)
         {
-            if ((firstCallInTime.get(limit).get() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
+            AtomicLong firstCall = firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
+            AtomicLong counter = callCountInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
+            
+            if ((firstCall.get() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
             {
                 firstCallInTime.get(limit).set(now.toEpochMilli());
                 callCountInTime.get(limit).set(0);

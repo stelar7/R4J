@@ -234,6 +234,7 @@ public class MatchListTest
     }
     
     @Test
+    @Ignore
     public void testBloop()
     {
         Summoner                 summoner = Summoner.byName(LeagueShard.EUN1, "coust");
@@ -277,7 +278,7 @@ public class MatchListTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         LazyList<MatchReference> list = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("coust").get().getLeagueGames().getLazy();
         Set<MatchReference>      ref  = new HashSet<>();
-        //noinspection StreamToLoop
+        //noinspection StreamToLoop,SimplifyStreamApiCallChains,SimplifyStreamApiCallChains
         list.stream().forEach(reference -> System.out.print("a"));
     }
     

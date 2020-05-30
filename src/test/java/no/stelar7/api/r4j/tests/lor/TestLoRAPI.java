@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lor;
 
-import no.stelar7.api.r4j.basic.constants.api.regions.RegionalName;
+import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lor.*;
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRDeck;
@@ -51,7 +51,7 @@ public class TestLoRAPI
     public void testLeaderboard()
     {
         LORRankedAPI api = new R4J(SecretFile.CREDS).getLORAPI().getRankedAPI();
-        api.getLeaderboard(RegionalName.EUROPE);
+        api.getLeaderboard(RuneterraShard.EUROPE);
         System.out.println();
     }
     

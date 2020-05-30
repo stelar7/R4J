@@ -155,7 +155,7 @@ public final class Summoner implements Serializable
      */
     public List<String> getTFTGames()
     {
-        return TFTMatchAPI.getInstance().getMatchList(platform.toRegionalEnum(), puuid, 20);
+        return TFTMatchAPI.getInstance().getMatchList(platform.toRegionShard(), puuid, 20);
     }
     
     /**

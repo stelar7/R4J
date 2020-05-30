@@ -32,6 +32,7 @@ public class StaticTest
     DDragonAPI api = r4J.getDDragonAPI();
     
     @Test
+    @Ignore
     public void fetchAllImagesWithIdName()
     {
         Path outputFolder = Paths.get("C:\\Users\\Steffen\\Desktop\\cs\\src\\assets\\splash");
@@ -58,6 +59,7 @@ public class StaticTest
     
     
     @Test
+    @Ignore
     public void fetchAllImagesWithIdNameCdragon()
     {
         Path outputFolder = Paths.get("C:\\Users\\Steffen\\Desktop\\cs\\src\\assets\\splash");

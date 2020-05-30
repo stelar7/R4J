@@ -20,28 +20,28 @@ public class TestTFTMatch
     @Test
     public void testFetchList()
     {
-        List<String> stelar7 = api.getMatchList(RegionalName.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 20);
+        List<String> stelar7 = api.getMatchList(RegionShard.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 20);
         System.out.println();
     }
     
     @Test
     public void testFetchMatch()
     {
-        TFTMatch stelar7 = api.getMatch(RegionalName.EUROPE, "EUW1_4240052361");
+        TFTMatch stelar7 = api.getMatch(RegionShard.EUROPE, "EUW1_4240052361");
         System.out.println();
     }
     
     @Test
     public void testFetchMatchRAW()
     {
-        GAMHSMatch stelar7 = api.getMatchRAW(RegionalName.EUROPE, "EUW1_4240052361");
+        GAMHSMatch stelar7 = api.getMatchRAW(RegionShard.EUROPE, "EUW1_4240052361");
         System.out.println();
     }
     
     @Test
     public void testMatchIterator()
     {
-        MatchIterator stelar7 = api.getMatchIterator(RegionalName.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 20);
+        MatchIterator stelar7 = api.getMatchIterator(RegionShard.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 20);
         for (GAMHSMatch m : stelar7)
         {
             System.out.println(m.toTFTMatch());

@@ -56,7 +56,7 @@ public final class Utils
         builder.registerTypeAdapter(TowerType.class, new GenericEnumSerializer<TowerType>());
         builder.registerTypeAdapter(WardType.class, new GenericEnumSerializer<WardType>());
         builder.registerTypeAdapter(RealmSpesificEnum.class, new RealmSpesificEnumSerializer());
-        builder.registerTypeAdapter(RegionalName.class, new RealmSpesificEnumSerializer());
+        builder.registerTypeAdapter(RegionShard.class, new RealmSpesificEnumSerializer());
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
     }
     
