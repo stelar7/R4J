@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.staticdata.realm.Realm;
 import no.stelar7.api.r4j.basic.calling.*;
@@ -458,10 +459,10 @@ public final class DDragonAPI
      */
     public Realm getRealm()
     {
-        return getRealm(Platform.EUW1);
+        return getRealm(LeagueShard.EUW1);
     }
     
-    public Realm getRealm(Platform region)
+    public Realm getRealm(LeagueShard region)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withLimiters(false)

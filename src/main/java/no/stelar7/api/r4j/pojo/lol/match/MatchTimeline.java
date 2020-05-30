@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.lol.raw.MatchAPI;
 
 import java.io.Serializable;
@@ -13,7 +13,7 @@ public class MatchTimeline implements Serializable
     private long             frameInterval;
     private List<MatchFrame> frames;
     
-    public static MatchTimeline byId(Long id, Platform platform)
+    public static MatchTimeline byId(Long id, LeagueShard platform)
     {
         return MatchAPI.getInstance().getTimeline(platform, id);
     }

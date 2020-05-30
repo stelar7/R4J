@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.tft;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
@@ -31,7 +32,7 @@ public class TFTSummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerById(final Platform server, String summonerId)
+    public Summoner getSummonerById(final LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
@@ -71,7 +72,7 @@ public class TFTSummonerAPI
      * @param summonerName summoner name  associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerByName(final Platform server, String summonerName)
+    public Summoner getSummonerByName(final LeagueShard server, String summonerName)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
@@ -111,7 +112,7 @@ public class TFTSummonerAPI
      * @param accountId accountId associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerByAccount(final Platform server, String accountId)
+    public Summoner getSummonerByAccount(final LeagueShard server, String accountId)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
@@ -152,7 +153,7 @@ public class TFTSummonerAPI
      * @param PUUID  puuid associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerByPUUID(final Platform server, String PUUID)
+    public Summoner getSummonerByPUUID(final LeagueShard server, String PUUID)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())

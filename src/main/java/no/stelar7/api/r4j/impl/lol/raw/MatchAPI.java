@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.LazyList;
 import no.stelar7.api.r4j.impl.lol.builders.match.*;
 import no.stelar7.api.r4j.pojo.lol.match.*;
@@ -21,7 +21,7 @@ public final class MatchAPI
         // Hide public constructor
     }
     
-    public List<MatchReference> getMatchList(Platform server, String accountId, Integer beginIndex, Integer endIndex)
+    public List<MatchReference> getMatchList(LeagueShard server, String accountId, Integer beginIndex, Integer endIndex)
     {
         return new MatchListBuilder(server, accountId, beginIndex, endIndex).get();
     }
@@ -35,7 +35,7 @@ public final class MatchAPI
      * @param accountId the account to check
      * @return {@code List<MatchReference>}
      */
-    public LazyList<MatchReference> getMatchList(Platform server, String accountId)
+    public LazyList<MatchReference> getMatchList(LeagueShard server, String accountId)
     {
         int increment = 100;
         return new LazyList<>(increment, prevValue -> getMatchList(server, accountId, prevValue, prevValue + increment));
@@ -48,7 +48,7 @@ public final class MatchAPI
      * @param accountId the account to check
      * @return {@code MatchIterator}
      */
-    public MatchIterator getMatchIterator(Platform server, String accountId)
+    public MatchIterator getMatchIterator(LeagueShard server, String accountId)
     {
         return new MatchIterator(getMatchList(server, accountId));
     }
@@ -60,7 +60,7 @@ public final class MatchAPI
      * @param matchId the id to check
      * @return Match
      */
-    public Match getMatch(Platform server, long matchId)
+    public Match getMatch(LeagueShard server, long matchId)
     {
         return new MatchBuilder(server, matchId).get();
     }
@@ -73,7 +73,7 @@ public final class MatchAPI
      * @param matchId the matchId to find timeline for
      * @return MatchTimeline if avaliable
      */
-    public MatchTimeline getTimeline(Platform server, long matchId)
+    public MatchTimeline getTimeline(LeagueShard server, long matchId)
     {
         return new TimelineBuilder(server, matchId).get();
     }

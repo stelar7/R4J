@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.div;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.pojo.lol.match.*;
@@ -20,7 +20,7 @@ public class GenerateDataTest
     public void generateStuff() throws IOException
     {
         R4J           api      = new R4J(SecretFile.CREDS);
-        Summoner      self     = Summoner.byName(Platform.EUW1, "stelar7");
+        Summoner      self     = Summoner.byName(LeagueShard.EUW1, "stelar7");
         MatchIterator iterator = self.getLeagueGames().getMatchIterator();
         
         int                     i         = 0;

@@ -1,4 +1,4 @@
-package no.stelar7.api.r4j.basic.constants.api;
+package no.stelar7.api.r4j.basic.constants.api.regions;
 
 import com.google.gson.JsonPrimitive;
 import no.stelar7.api.r4j.basic.exceptions.APIEnumNotUpToDateException;
@@ -8,7 +8,7 @@ import no.stelar7.api.r4j.basic.utils.sql.SQLTypeMap;
 import java.util.*;
 import java.util.stream.Stream;
 
-public enum Platform implements CodedEnum, RealmSpesificEnum
+public enum LeagueShard implements CodedEnum, RealmSpesificEnum
 {
     /**
      * Unknown platform, used for bots in participant identities
@@ -90,7 +90,7 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
     
     private String[] keys;
     
-    Platform(String... s)
+    LeagueShard(String... s)
     {
         this.keys = s;
     }
@@ -101,7 +101,7 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
      * @param code the lookup key
      * @return Platform from code
      */
-    public Optional<Platform> getFromCode(final String code)
+    public Optional<LeagueShard> getFromCode(final String code)
     {
         return fromString(code);
     }
@@ -154,9 +154,9 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
         }
     }
     
-    public static Optional<Platform> fromString(final String code)
+    public static Optional<LeagueShard> fromString(final String code)
     {
-        return Stream.of(Platform.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
+        return Stream.of(LeagueShard.values()).filter(t -> Stream.of(t.keys).anyMatch(s -> s.equalsIgnoreCase(code))).findFirst();
     }
     
     
@@ -181,38 +181,38 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
         return this.keys[1];
     }
     
-    public ServicePlatform toRegionalEnum()
+    public RegionalName toRegionalEnum()
     {
         switch (this)
         {
             
             case UNKNOWN:
-                return ServicePlatform.UNKNOWN;
+                return RegionalName.UNKNOWN;
             case BR1:
             case NA1:
             case LA1:
             case LA2:
             case OC1:
-                return ServicePlatform.AMERICAS;
+                return RegionalName.AMERICAS;
             case EUN1:
             case EUW1:
             case TR1:
             case RU:
-                return ServicePlatform.EUROPE;
+                return RegionalName.EUROPE;
             case JP1:
             case KR:
-                return ServicePlatform.ASIA;
+                return RegionalName.ASIA;
             case PBE1:
-                return ServicePlatform.PBE;
+                return RegionalName.PBE;
             case SG:
             case PH:
             case ID1:
             case VN:
             case TH:
             case TW:
-                return ServicePlatform.GARENA;
+                return RegionalName.GARENA;
             default:
-                throw new APIEnumNotUpToDateException(ServicePlatform.class, new JsonPrimitive(this.toString()));
+                throw new APIEnumNotUpToDateException(RegionalName.class, new JsonPrimitive(this.toString()));
         }
     }
     
@@ -222,22 +222,22 @@ public enum Platform implements CodedEnum, RealmSpesificEnum
         return this.getValue();
     }
     
-    public static List<Platform> getDefaultPlatforms()
+    public static List<LeagueShard> getDefaultPlatforms()
     {
         return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2);
     }
     
-    public static List<Platform> getSpectatorPlatforms()
+    public static List<LeagueShard> getSpectatorPlatforms()
     {
         return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1);
     }
     
-    public static List<Platform> getGarenaPlatforms()
+    public static List<LeagueShard> getGarenaPlatforms()
     {
         return Arrays.asList(SG, PH, ID1, VN, TH, TW);
     }
     
-    public static List<Platform> getValidPlatforms()
+    public static List<LeagueShard> getValidPlatforms()
     {
         return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2, SG, PH, ID1, VN, TH, TW);
     }

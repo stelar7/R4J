@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.example;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.ImageAPI;
@@ -18,8 +18,8 @@ public class DivTests
     public void test()
     {
         R4J      api    = new R4J(SecretFile.CREDS);
-        String   user   = "Kalturi";
-        Platform region = Platform.NA1;
+        String      user   = "Kalturi";
+        LeagueShard region = LeagueShard.NA1;
         
         Summoner                     summoner  = new SummonerBuilder().withPlatform(region).withName(user).get();
         Map<Integer, StaticChampion> champData = api.getDDragonAPI().getChampions();

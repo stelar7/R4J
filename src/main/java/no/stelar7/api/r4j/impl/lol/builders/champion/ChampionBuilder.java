@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.champion;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -9,26 +10,26 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class ChampionBuilder
 {
-    private final Platform platform;
+    private final LeagueShard platform;
     
     public ChampionBuilder()
     {
-        this.platform = Platform.UNKNOWN;
+        this.platform = LeagueShard.UNKNOWN;
     }
     
-    private ChampionBuilder(Platform platform)
+    private ChampionBuilder(LeagueShard platform)
     {
         this.platform = platform;
     }
     
-    public ChampionBuilder withPlatform(Platform platform)
+    public ChampionBuilder withPlatform(LeagueShard platform)
     {
         return new ChampionBuilder(platform);
     }
     
     public ChampionRotationInfo getFreeToPlayRotation()
     {
-        if (this.platform == Platform.UNKNOWN)
+        if (this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }

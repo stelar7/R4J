@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -33,7 +34,7 @@ public final class MasteryAPI
      * @param summonerId the summonerId
      * @return Optional FeaturedGames
      */
-    public Integer getMasteryScore(Platform server, String summonerId)
+    public Integer getMasteryScore(LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
@@ -72,7 +73,7 @@ public final class MasteryAPI
      * @param count      the amount of champions to get
      * @return A sorted list of ChampionMastery
      */
-    public List<ChampionMastery> getTopChampions(Platform server, String summonerId, Integer count)
+    public List<ChampionMastery> getTopChampions(LeagueShard server, String summonerId, Integer count)
     {
         List<ChampionMastery> list = getChampionMasteries(server, summonerId);
         
@@ -92,7 +93,7 @@ public final class MasteryAPI
      * @param championId the championId
      * @return Optional ChampionMastery
      */
-    public ChampionMastery getChampionMastery(Platform server, String summonerId, int championId)
+    public ChampionMastery getChampionMastery(LeagueShard server, String summonerId, int championId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(championId))
@@ -155,7 +156,7 @@ public final class MasteryAPI
      * @param summonerId the summonerId
      * @return Optional ChampionMastery
      */
-    public List<ChampionMastery> getChampionMasteries(Platform server, String summonerId)
+    public List<ChampionMastery> getChampionMasteries(LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)

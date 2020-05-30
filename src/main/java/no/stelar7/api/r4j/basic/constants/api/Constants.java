@@ -75,6 +75,7 @@ public final class Constants
     public static final String URL_PARAM_FOR_ACCOUNT_ID      = "forAccountId";
     
     public static final String X_RIOT_TOKEN_HEADER_KEY = "X-Riot-Token";
+    public static final String AUTHORIZATION           = "Authorization";
     
     public static final String VERBOSE_STRING_FORMAT          = "%1$-35s: %2$-40s";
     public static final String TABBED_VERBOSE_STRING_FORMAT   = "\t%1$-35s: %2$-40s";

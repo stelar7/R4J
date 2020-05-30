@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.spectator;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
@@ -35,7 +35,7 @@ public class CurrentGameTest
     public void testCurrentGame()
     {
         final R4J        r4J = new R4J(SecretFile.CREDS);
-        SpectatorBuilder sb  = new SpectatorBuilder().withPlatform(Platform.EUW1);
+        SpectatorBuilder sb  = new SpectatorBuilder().withPlatform(LeagueShard.EUW1);
         
         // Get a game in progess
         final List<SpectatorGameInfo> game = sb.getFeaturedGames();
@@ -56,7 +56,7 @@ public class CurrentGameTest
     public void testCurrentGameFame()
     {
         final R4J r4J = new R4J(SecretFile.CREDS);
-        Summoner  s   = Summoner.byName(Platform.EUW1, "Klospülautomat");
+        Summoner  s   = Summoner.byName(LeagueShard.EUW1, "Klospülautomat");
         SpectatorGameInfo game = s.getCurrentGame();
         
         System.out.format("%s is %sin game%n", s.getName(), game != null ? "" : "not ");

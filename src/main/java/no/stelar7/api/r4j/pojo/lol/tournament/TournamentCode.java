@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.tournament;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class TournamentCode implements Serializable
     private String                  password;
     private TournamentPickType      pickType;
     private int                     providerId;
-    private Platform                region;
+    private LeagueShard             region;
     private TournamentSpectatorType spectators;
     private int                     teamSize;
     private int                     tournamentId;
@@ -120,7 +120,7 @@ public class TournamentCode implements Serializable
      *
      * @return platform
      */
-    public Platform getRegion()
+    public LeagueShard getRegion()
     {
         return this.region;
     }

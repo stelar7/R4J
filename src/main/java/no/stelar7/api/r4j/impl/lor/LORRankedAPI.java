@@ -2,7 +2,8 @@ package no.stelar7.api.r4j.impl.lor;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
-import no.stelar7.api.r4j.pojo.lor.api.ranked.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.RuneterraShard;
+import no.stelar7.api.r4j.pojo.lor.ranked.*;
 
 import java.util.*;
 
@@ -25,7 +26,7 @@ public class LORRankedAPI
      * @param server region to get data from
      * @return LeagueList
      */
-    public List<LoRPlayerRank> getLeaderboard(ServicePlatform server)
+    public List<LoRPlayerRank> getLeaderboard(RuneterraShard server)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getLORAPIKey())

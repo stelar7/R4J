@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.staticdata.realm.Realm;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.types.*;
@@ -55,7 +56,7 @@ public final class ImageAPI
      * @param summonerName the summoner name
      * @return the profile icon
      */
-    public String getProfileIcon(Platform region, String summonerName)
+    public String getProfileIcon(LeagueShard region, String summonerName)
     {
         // http://avatar.leagueoflegends.com/region/summonername.png
         return "http://avatar.leagueoflegends.com/" + region.toString() + Constants.SEPARATOR + summonerName.replace(" ", "%20") + ".png";

@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.status;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.*;
 import no.stelar7.api.r4j.impl.lol.raw.StatusAPI;
 import no.stelar7.api.r4j.pojo.lol.status.ShardStatus;
@@ -16,7 +16,7 @@ public class StatusTest
     @Test
     public void testStats()
     {
-        ShardStatus status = api.getShardStatus(Platform.EUW1);
+        ShardStatus status = api.getShardStatus(LeagueShard.EUW1);
     }
     
     @Test

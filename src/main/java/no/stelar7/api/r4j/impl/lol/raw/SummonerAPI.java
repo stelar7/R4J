@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
@@ -31,7 +31,7 @@ public final class SummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerById(final Platform server, String summonerId)
+    public Summoner getSummonerById(final LeagueShard server, String summonerId)
     {
         return builder.withPlatform(server).withSummonerId(summonerId).get();
     }
@@ -43,7 +43,7 @@ public final class SummonerAPI
      * @param summonerName summoner name  associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerByName(final Platform server, String summonerName)
+    public Summoner getSummonerByName(final LeagueShard server, String summonerName)
     {
         return builder.withPlatform(server).withName(summonerName).get();
     }
@@ -55,7 +55,7 @@ public final class SummonerAPI
      * @param accountId accountId associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerByAccount(final Platform server, String accountId)
+    public Summoner getSummonerByAccount(final LeagueShard server, String accountId)
     {
         return builder.withPlatform(server).withAccountId(accountId).get();
     }
@@ -68,7 +68,7 @@ public final class SummonerAPI
      * @param PUUID  puuid associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public Summoner getSummonerByPUUID(final Platform server, String PUUID)
+    public Summoner getSummonerByPUUID(final LeagueShard server, String PUUID)
     {
         return builder.withPlatform(server).withPUUID(PUUID).get();
     }

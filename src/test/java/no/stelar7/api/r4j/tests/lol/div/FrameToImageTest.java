@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.tests.lol.div;
 
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.utils.Rectangle;
 import no.stelar7.api.r4j.basic.utils.*;
@@ -51,7 +51,7 @@ public class FrameToImageTest
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Summoner                 sum  = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner                 sum  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("stelar7").get();
         LazyList<MatchReference> refs = new MatchListBuilder().withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId()).getLazy();
         Match                    full = refs.get(0).getFullMatch();
         

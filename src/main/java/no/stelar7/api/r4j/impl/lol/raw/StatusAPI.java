@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.status.ShardStatus;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -20,7 +21,7 @@ public final class StatusAPI
         // Hide public constructor
     }
     
-    public ShardStatus getShardStatus(Platform server)
+    public ShardStatus getShardStatus(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_SHARD_STATUS)
                                                        .withPlatform(server);

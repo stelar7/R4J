@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.tournament;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
@@ -25,7 +25,7 @@ public class TournamentTest
     @Ignore
     public void testAllRegistrations()
     {
-        final ProviderRegistrationParameters params     = new ProviderRegistrationParameters(Platform.EUW1, "http://stelar7.no/loltest/provider.php");
+        final ProviderRegistrationParameters params     = new ProviderRegistrationParameters(LeagueShard.EUW1, "http://stelar7.no/loltest/provider.php");
         final long                           providerId = this.api.registerAsProvider(params);
         
         final TournamentRegistrationParameters trparams     = new TournamentRegistrationParameters("THE BEST TOURNAMENT EVER", providerId);
@@ -33,11 +33,11 @@ public class TournamentTest
         
         final int teamSize = 5;
         
-        SpectatorBuilder        spectatorBuilder = new SpectatorBuilder().withPlatform(Platform.EUW1);
+        SpectatorBuilder        spectatorBuilder = new SpectatorBuilder().withPlatform(LeagueShard.EUW1);
         final SpectatorGameInfo game             = spectatorBuilder.getFeaturedGames().get(0);
         List<String>            names            = game.getParticipants().stream().map(SpectatorParticipant::getSummonerName).collect(Collectors.toList());
         List<String>            ids              = new ArrayList<>();
-        SummonerBuilder         sb               = new SummonerBuilder().withPlatform(Platform.EUW1);
+        SummonerBuilder         sb               = new SummonerBuilder().withPlatform(LeagueShard.EUW1);
         for (String name : names)
         {
             ids.add(sb.withName(name).get().getSummonerId());
@@ -57,8 +57,8 @@ public class TournamentTest
         {
             this.api.updateTournament(codes.get(0), tcuparams);
             final TournamentCode id                     = this.api.getTournamentInfo(codes.get(0));
-            final List<Long>     tournamentCodeMatchIds = this.api.getMatchIds(Platform.EUW1, codes.get(0));
-            final Match          matchDetail            = this.api.getMatchInfo(Platform.EUW1, codes.get(0), tournamentCodeMatchIds.get(0));
+            final List<Long>     tournamentCodeMatchIds = this.api.getMatchIds(LeagueShard.EUW1, codes.get(0));
+            final Match          matchDetail            = this.api.getMatchInfo(LeagueShard.EUW1, codes.get(0), tournamentCodeMatchIds.get(0));
         }
     }
 }

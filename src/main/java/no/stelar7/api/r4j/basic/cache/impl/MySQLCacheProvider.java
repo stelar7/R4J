@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.basic.cache.impl;
 
 import no.stelar7.api.r4j.basic.cache.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.sql.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import org.slf4j.*;
@@ -82,7 +83,7 @@ public class MySQLCacheProvider implements CacheProvider
     
     private void createPlatformTable() throws SQLException
     {
-        Map<String, String> typeMap = getTypeMapForClass(Platform.class, Optional.of(Platform.UNKNOWN));
+        Map<String, String> typeMap = getTypeMapForClass(LeagueShard.class, Optional.of(LeagueShard.UNKNOWN));
         StringBuilder       sb      = new StringBuilder();
         sb.append("CREATE TABLE IF NOT EXISTS `API_PLATFORM` ");
         sb.append("(");
@@ -104,7 +105,7 @@ public class MySQLCacheProvider implements CacheProvider
         //TODO replace this with a select->insert instead of a insert-ignore, since that increments the AI key...
         PreparedStatement primary   = sql.getConnection().prepareStatement("INSERT IGNORE INTO `API_PLATFORM` VALUES (null, ?)", Statement.RETURN_GENERATED_KEYS);
         PreparedStatement secondary = sql.getConnection().prepareStatement("INSERT IGNORE INTO `API_PLATFORM_KEYS` VALUES (null, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-        for (Platform value : Platform.values())
+        for (LeagueShard value : LeagueShard.values())
         {
             primary.setString(1, value.name());
             primary.execute();

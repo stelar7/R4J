@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.tft;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.TierDivisionType;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.league.*;
@@ -29,7 +30,7 @@ public class TFTLeagueAPI
      * @param server region to get data from
      * @return LeagueList
      */
-    private LeagueList getMasterLeague(Platform server)
+    private LeagueList getMasterLeague(LeagueShard server)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -68,7 +69,7 @@ public class TFTLeagueAPI
      * @param server region to get data from
      * @return LeagueList
      */
-    private LeagueList getGrandmasterLeague(Platform server)
+    private LeagueList getGrandmasterLeague(LeagueShard server)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -107,7 +108,7 @@ public class TFTLeagueAPI
      * @param server region to get data from
      * @return LeagueList
      */
-    private LeagueList getChallengerLeague(Platform server)
+    private LeagueList getChallengerLeague(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
@@ -146,7 +147,7 @@ public class TFTLeagueAPI
      * @param leagueId league to get data for
      * @return LeagueList
      */
-    public LeagueList getLeague(Platform server, String leagueId)
+    public LeagueList getLeague(LeagueShard server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
@@ -187,7 +188,7 @@ public class TFTLeagueAPI
      * @param summonerId summoner to get data for
      * @return List of LeagueEntry
      */
-    public List<LeagueEntry> getLeagueEntries(Platform server, String summonerId)
+    public List<LeagueEntry> getLeagueEntries(LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
@@ -231,7 +232,7 @@ public class TFTLeagueAPI
      * @param page    the page to query (first page is 1)
      * @return LeagueList
      */
-    public List<LeagueEntry> getLeagueByTierDivision(Platform server, TierDivisionType tierdiv, int page)
+    public List<LeagueEntry> getLeagueByTierDivision(LeagueShard server, TierDivisionType tierdiv, int page)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
@@ -295,7 +296,7 @@ public class TFTLeagueAPI
      * @param tierdiv the tier and division to query
      * @return LeagueList
      */
-    public LazyList<LeagueEntry> getLeagueByTierDivisionLazy(Platform server, TierDivisionType tierdiv)
+    public LazyList<LeagueEntry> getLeagueByTierDivisionLazy(LeagueShard server, TierDivisionType tierdiv)
     {
         return new LazyList<>(1, prevValue -> getLeagueByTierDivision(server, tierdiv, prevValue + 1));
     }

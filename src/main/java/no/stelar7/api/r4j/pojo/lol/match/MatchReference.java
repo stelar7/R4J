@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.impl.lol.builders.match.MatchBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.match.TimelineBuilder;
@@ -16,9 +16,9 @@ public class MatchReference implements Serializable
     
     private LaneType      lane;
     private long          gameId;
-    private int           champion;
-    private Platform      platformId;
-    private long          timestamp;
+    private int         champion;
+    private LeagueShard platformId;
+    private long        timestamp;
     private GameQueueType queue;
     private RoleType      role;
     private SeasonType    season;
@@ -76,7 +76,7 @@ public class MatchReference implements Serializable
      *
      * @return String
      */
-    public Platform getPlatform()
+    public LeagueShard getPlatform()
     {
         return this.platformId;
     }

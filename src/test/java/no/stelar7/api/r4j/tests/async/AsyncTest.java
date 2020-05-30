@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.async;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.async.*;
 import no.stelar7.api.r4j.impl.lol.raw.SpectatorAPI;
@@ -28,15 +28,15 @@ public class AsyncTest
         List<CompletableFuture> futures = new ArrayList<>();
         
         List<Summoner> summoners = new ArrayList<>();
-        for (Platform p : Platform.getSpectatorPlatforms())
+        for (LeagueShard p : LeagueShard.getSpectatorPlatforms())
         {
             List<SpectatorGameInfo>    games        = SpectatorAPI.getInstance().getFeaturedGames(p);
             SpectatorGameInfo          gameInfo     = games.get(0);
             List<SpectatorParticipant> participants = gameInfo.getParticipants();
             SpectatorParticipant       participant  = participants.get(0);
             
-            String   id = participant.getSummonerName();
-            Platform pl = gameInfo.getPlatform();
+            String      id = participant.getSummonerName();
+            LeagueShard pl = gameInfo.getPlatform();
             
             Summoner s = Summoner.byName(pl, id);
             summoners.add(s);

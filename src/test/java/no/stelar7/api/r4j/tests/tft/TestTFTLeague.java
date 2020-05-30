@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.tft;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.TierDivisionType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.pojo.lol.league.*;
@@ -18,30 +18,30 @@ public class TestTFTLeague
     @Test
     public void testSilver()
     {
-        List<LeagueEntry> tierDiv  = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.SILVER_I, 1);
-        List<LeagueEntry> tierDiv2 = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.SILVER_I, 5);
+        List<LeagueEntry> tierDiv  = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(LeagueShard.EUW1, TierDivisionType.SILVER_I, 1);
+        List<LeagueEntry> tierDiv2 = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(LeagueShard.EUW1, TierDivisionType.SILVER_I, 5);
         System.out.println();
     }
     
     @Test
     public void testChallenger()
     {
-        List<LeagueEntry> tierDiv = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.CHALLENGER_I, 1);
-        List<LeagueEntry> tierDiv2 = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(Platform.EUW1, TierDivisionType.CHALLENGER_I, 5);
+        List<LeagueEntry> tierDiv = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(LeagueShard.EUW1, TierDivisionType.CHALLENGER_I, 1);
+        List<LeagueEntry> tierDiv2 = l4j8.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(LeagueShard.EUW1, TierDivisionType.CHALLENGER_I, 5);
         System.out.println();
     }
     
     @Test
     public void testEntries()
     {
-        List<LeagueEntry> entries = l4j8.getTFTAPI().getLeagueAPI().getLeagueEntries(Platform.EUW1, Summoner.byName(Platform.EUW1, "stelar7").getSummonerId());
+        List<LeagueEntry> entries = l4j8.getTFTAPI().getLeagueAPI().getLeagueEntries(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
         System.out.println();
     }
     
     @Test
     public void testList()
     {
-        LeagueList entries = l4j8.getTFTAPI().getLeagueAPI().getLeague(Platform.EUW1, "f72c0910-aa73-11e9-93ca-c81f66dacb22");
+        LeagueList entries = l4j8.getTFTAPI().getLeagueAPI().getLeague(LeagueShard.EUW1, "f72c0910-aa73-11e9-93ca-c81f66dacb22");
         System.out.println();
     }
 }

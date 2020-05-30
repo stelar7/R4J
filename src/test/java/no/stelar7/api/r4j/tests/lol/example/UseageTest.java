@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.tests.lol.example;
 
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 import no.stelar7.api.r4j.pojo.lol.match.*;
@@ -29,7 +29,7 @@ public class UseageTest
         Map<Integer, StaticChampion> championData  = api.getDDragonAPI().getChampions();
         Map<Integer, StaticPerk>     perkData      = api.getDDragonAPI().getPerks();
         
-        Summoner             stelar7        = Summoner.byName(Platform.EUW1, "stelar7");
+        Summoner             stelar7        = Summoner.byName(LeagueShard.EUW1, "stelar7");
         List<MatchReference> some           = stelar7.getLeagueGames().get();
         MatchReference       mostRecentGame = some.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
         

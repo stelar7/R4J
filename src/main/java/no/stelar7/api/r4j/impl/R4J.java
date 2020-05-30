@@ -147,9 +147,9 @@ public class R4J
          *
          * @return the client api
          */
-        public LORClientAPI getClientAPI()
+        public LoRClientAPI getClientAPI()
         {
-            return LORClientAPI.getInstance();
+            return LoRClientAPI.getInstance();
         }
         
     }

@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.builders.championmastery;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 
@@ -13,11 +14,11 @@ import java.util.stream.Collectors;
 public class ChampionMasteryBuilder
 {
     
-    private final Platform platform;
-    private       String   summonerId;
+    private final LeagueShard platform;
+    private       String      summonerId;
     private final Integer  championId;
     
-    private ChampionMasteryBuilder(Platform platform, String summonerId, Integer championId)
+    private ChampionMasteryBuilder(LeagueShard platform, String summonerId, Integer championId)
     {
         this.platform = platform;
         this.summonerId = summonerId;
@@ -26,7 +27,7 @@ public class ChampionMasteryBuilder
     
     public ChampionMasteryBuilder()
     {
-        this.platform = Platform.UNKNOWN;
+        this.platform = LeagueShard.UNKNOWN;
         this.summonerId = null;
         this.championId = null;
     }
@@ -42,14 +43,14 @@ public class ChampionMasteryBuilder
         return new ChampionMasteryBuilder(this.platform, this.summonerId, id);
     }
     
-    public ChampionMasteryBuilder withPlatform(Platform platform)
+    public ChampionMasteryBuilder withPlatform(LeagueShard platform)
     {
         return new ChampionMasteryBuilder(platform, this.summonerId, this.championId);
     }
     
     public Integer getMasteryScore()
     {
-        if (this.summonerId == null || this.platform == Platform.UNKNOWN)
+        if (this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }
@@ -86,7 +87,7 @@ public class ChampionMasteryBuilder
     
     public List<ChampionMastery> getChampionMasteries()
     {
-        if (this.summonerId == null || this.platform == Platform.UNKNOWN)
+        if (this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
         {
             return Collections.emptyList();
         }
@@ -138,7 +139,7 @@ public class ChampionMasteryBuilder
     
     public ChampionMastery getChampionMastery()
     {
-        if (this.championId == null || this.summonerId == null || this.platform == Platform.UNKNOWN)
+        if (this.championId == null || this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }

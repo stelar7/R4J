@@ -4,6 +4,7 @@ import ch.qos.logback.classic.*;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.impl.R4J;
@@ -56,7 +57,7 @@ public class MatchListTest
         
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = Summoner.byName(Platform.EUW1, "stelar7");
+        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "stelar7");
         
         LazyList<MatchReference> all = sum.getLeagueGames().getLazy();
         all.loadFully();
@@ -77,7 +78,7 @@ public class MatchListTest
     @Ignore
     public void testMatchlistIterator()
     {
-        Summoner      s     = Summoner.byName(Platform.EUW1, "stelar7");
+        Summoner      s     = Summoner.byName(LeagueShard.EUW1, "stelar7");
         MatchIterator games = s.getLeagueGames().getMatchIterator();
         for (Match m : games)
         {
@@ -89,8 +90,8 @@ public class MatchListTest
     @Test
     public void testMatchlistAll()
     {
-        String               id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner             s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String               id   = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner             s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         MatchListBuilder     mlb  = new MatchListBuilder();
         List<MatchReference> list = mlb.withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).get();
         Assert.assertFalse("api didnt load data?!", list.isEmpty());
@@ -105,7 +106,7 @@ public class MatchListTest
         loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.OFF);
         loggerContext.getLogger("no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider").setLevel(Level.OFF);
     
-        Summoner s = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
+        Summoner s = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("stelar7").get();
         
         SummonerCrawler crawler = new SummonerCrawler(s, 1000);
         crawler.crawlLeague();
@@ -132,10 +133,10 @@ public class MatchListTest
         loggerContext.getLogger("no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider").setLevel(Level.OFF);
         
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        Summoner stelar = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get();
-        Summoner dart   = new SummonerBuilder().withPlatform(Platform.EUW1).withName("FrankenDaemon").get();
-        Summoner dart2  = new SummonerBuilder().withPlatform(Platform.EUW1).withName("Dr Rick Report").get();
-        Summoner bipai  = new SummonerBuilder().withPlatform(Platform.EUN1).withName("TLP Bipai").get();
+        Summoner stelar = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("stelar7").get();
+        Summoner dart   = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("FrankenDaemon").get();
+        Summoner dart2  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("Dr Rick Report").get();
+        Summoner bipai  = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("TLP Bipai").get();
         
         Summoner target = stelar;
         
@@ -180,7 +181,7 @@ public class MatchListTest
     public void testSomeStatsAboutInting()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        Summoner                 stelar = new SummonerBuilder().withPlatform(Platform.EUW1).withName("FrankenDaemon").get();
+        Summoner                 stelar = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("FrankenDaemon").get();
         LazyList<MatchReference> dgames = stelar.getLeagueGames().getLazy();
         dgames.loadFully();
         
@@ -235,7 +236,7 @@ public class MatchListTest
     @Test
     public void testBloop()
     {
-        Summoner                 summoner = Summoner.byName(Platform.EUN1, "coust");
+        Summoner                 summoner = Summoner.byName(LeagueShard.EUN1, "coust");
         LazyList<MatchReference> matches  = summoner.getLeagueGames().getLazy();
         
         // ensure that the list atleast has 100 elements
@@ -265,7 +266,7 @@ public class MatchListTest
     public void testLazyForEach()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getLeagueGames().getLazy();
+        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("coust").get().getLeagueGames().getLazy();
         Set<MatchReference>      ref  = new HashSet<>();
         list.forEach(reference -> System.out.print("a"));
     }
@@ -274,7 +275,7 @@ public class MatchListTest
     public void testLazyStream()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getLeagueGames().getLazy();
+        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("coust").get().getLeagueGames().getLazy();
         Set<MatchReference>      ref  = new HashSet<>();
         //noinspection StreamToLoop
         list.stream().forEach(reference -> System.out.print("a"));
@@ -285,7 +286,7 @@ public class MatchListTest
     public void testNoDuplicates()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
-        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(Platform.EUN1).withName("coust").get().getLeagueGames().getLazy();
+        LazyList<MatchReference> list = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("coust").get().getLeagueGames().getLazy();
         Set<MatchReference>      ref  = new HashSet<>();
         for (MatchReference reference : list)
         {
@@ -301,11 +302,11 @@ public class MatchListTest
     {
         r4J.getDDragonAPI().getRealm();
         
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
-        Platform region    = s.getPlatform();
-        String   accountId = s.getAccountId();
+        LeagueShard region    = s.getPlatform();
+        String      accountId = s.getAccountId();
         
         Set<GameQueueType> queueTypes = new HashSet<>();
         queueTypes.add(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
@@ -320,8 +321,8 @@ public class MatchListTest
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         DataCall.getCacheProvider().clear(URLEndpoint.V4_MATCHLIST, Collections.emptyMap());
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         List<MatchReference> list = new MatchListBuilder().withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).getLazy();
         Assert.assertTrue("LazyList loaded data?!", list.isEmpty());
@@ -332,8 +333,8 @@ public class MatchListTest
     @Test
     public void testMatchlistSeasons()
     {
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         LazyList<MatchReference> lazy = new MatchListBuilder().withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).getLazy();
         lazy.loadFully();
@@ -345,8 +346,8 @@ public class MatchListTest
     @Test
     public void testMatch()
     {
-        String                   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner                 s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String                   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner                 s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         LazyList<MatchReference> m  = s.getLeagueGames().getLazy();
         
         Match detail  = new MatchBuilder().withId(m.get(0).getGameId()).withPlatform(m.get(0).getPlatform()).get();
@@ -356,14 +357,14 @@ public class MatchListTest
     @Test
     public void testMatchDart()
     {
-        Match detail = new MatchBuilder().withId(3984304842L).withPlatform(Platform.EUW1).get();
+        Match detail = new MatchBuilder().withId(3984304842L).withPlatform(LeagueShard.EUW1).get();
         System.out.println();
     }
     
     @Test
     public void testMatchDartCauseStelarDidntLikeOdyssey()
     {
-        Match detail = new MatchBuilder().withId(3768089306L).withPlatform(Platform.EUW1).get();
+        Match detail = new MatchBuilder().withId(3768089306L).withPlatform(LeagueShard.EUW1).get();
         System.out.println(detail.getParticipants().get(0).getSpell1().getApiName());
         System.out.println(detail.getParticipants().get(0).getSpell2().getApiName());
         System.out.println();
@@ -373,7 +374,7 @@ public class MatchListTest
     @Test
     public void testMatchTolkiIssue()
     {
-        Match detail = Match.byId(Platform.EUW1, 3961977905L);
+        Match detail = Match.byId(LeagueShard.EUW1, 3961977905L);
         detail.getParticipantIdentities().forEach(p -> {
             Summoner olda = new SummonerBuilder().withPlatform(p.getPlatform()).withAccountId(p.getAccountId()).get();
             Summoner newa = new SummonerBuilder().withPlatform(p.getCurrentPlatform()).withAccountId(p.getCurrentAccountId()).get();
@@ -392,7 +393,7 @@ public class MatchListTest
     @Ignore
     public void testLazyList()
     {
-        LazyList<MatchReference> refs = new SummonerBuilder().withPlatform(Platform.EUW1).withName("stelar7").get().getLeagueGames().getLazy();
+        LazyList<MatchReference> refs = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("stelar7").get().getLeagueGames().getLazy();
         Assert.assertTrue("LazyList is populated?", refs.isEmpty());
         refs.loadFully();
         Assert.assertFalse("LazyList is not populated?", refs.isEmpty());
@@ -402,14 +403,14 @@ public class MatchListTest
     public void testTutorialModules()
     {
         DataCall.setCacheProvider(EmptyCacheProvider.INSTANCE);
-        Match m = new MatchBuilder().withId(4002917402L).withPlatform(Platform.EUW1).get();
+        Match m = new MatchBuilder().withId(4002917402L).withPlatform(LeagueShard.EUW1).get();
         System.out.println();
     }
     
     @Test
     public void testLunatic()
     {
-        Match m = new MatchBuilder().withPlatform(Platform.NA1).withId(3042295790L).get();
+        Match m = new MatchBuilder().withPlatform(LeagueShard.NA1).withId(3042295790L).get();
         System.out.println(m.getParticipantIdentities().get(2));
         
         m.getTimeline().getFrames().stream()

@@ -8,11 +8,11 @@ import no.stelar7.api.r4j.pojo.lor.offline.card.LoRDeck;
 import no.stelar7.api.r4j.pojo.lor.offline.expedition.LoRExpeditionInfo;
 import no.stelar7.api.r4j.pojo.lor.offline.game.*;
 
-public class LORClientAPI
+public class LoRClientAPI
 {
-    private static final LORClientAPI INSTANCE = new LORClientAPI();
+    private static final LoRClientAPI INSTANCE = new LoRClientAPI();
     
-    public static LORClientAPI getInstance()
+    public static LoRClientAPI getInstance()
     {
         return INSTANCE;
     }

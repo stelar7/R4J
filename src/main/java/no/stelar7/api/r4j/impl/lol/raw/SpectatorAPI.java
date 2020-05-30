@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.raw;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 
@@ -29,7 +30,7 @@ public final class SpectatorAPI
      * @param server the region to execute against
      * @return Optional FeaturedGames
      */
-    public List<SpectatorGameInfo> getFeaturedGames(Platform server)
+    public List<SpectatorGameInfo> getFeaturedGames(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V4_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
@@ -72,7 +73,7 @@ public final class SpectatorAPI
      * @param summonerId the summonerId
      * @return SpectatorGameInfo
      */
-    public SpectatorGameInfo getCurrentGame(Platform server, String summonerId)
+    public SpectatorGameInfo getCurrentGame(LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V4_SPECTATOR_CURRENT)

@@ -23,9 +23,10 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.summonerspell.StaticSummonerSpellL
 import no.stelar7.api.r4j.pojo.lol.status.ShardStatus;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
-import no.stelar7.api.r4j.pojo.lor.api.ranked.LoRRankedPlayerList;
+import no.stelar7.api.r4j.pojo.lor.oauth.*;
 import no.stelar7.api.r4j.pojo.lor.offline.expedition.LoRExpeditionInfo;
 import no.stelar7.api.r4j.pojo.lor.offline.game.*;
+import no.stelar7.api.r4j.pojo.lor.ranked.LoRRankedPlayerList;
 import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
 
 public enum URLEndpoint
@@ -197,6 +198,9 @@ public enum URLEndpoint
     
     
     V1_LOR_RANKED_LEADERBOARD("lor", "ranked", "v1", "leaderboards", LoRRankedPlayerList.class),
+    V1_LOR_INVENTORY_CARDS_ME("lor", "inventory", "v1", "cards/me", LoRCardList.class),
+    V1_LOR_DECKS_ME_GET("lor", "deck", "v1", "decks/me", LoRDeckList.class),
+    V1_LOR_DECKS_ME_POST("lor", "deck", "v1", "decks/me", String.class),
     
     V1_CLASH_PLAYER_BY_SUMMONER("lol", "clash", "v1", "players/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, ClashPlayerList.class),
     V1_CLASH_TEAM_BY_ID("lol", "clash", "v1", "teams/" + Constants.TEAM_ID_PLACEHOLDER, ClashTeam.class),

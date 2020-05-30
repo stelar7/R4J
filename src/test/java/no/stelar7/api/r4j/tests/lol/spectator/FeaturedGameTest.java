@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.spectator;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.pojo.lol.spectator.SpectatorGameInfo;
@@ -31,7 +31,7 @@ public class FeaturedGameTest
     public void testCurrentGame()
     {
         final R4J        r4J = new R4J(SecretFile.CREDS);
-        SpectatorBuilder sb  = new SpectatorBuilder().withPlatform(Platform.EUW1);
+        SpectatorBuilder sb  = new SpectatorBuilder().withPlatform(LeagueShard.EUW1);
         
         
         final List<SpectatorGameInfo> game = sb.getFeaturedGames();

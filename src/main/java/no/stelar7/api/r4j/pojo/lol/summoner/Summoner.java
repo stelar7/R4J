@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.pojo.lol.summoner;
 
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.basic.utils.sql.SQLTypeMap;
 import no.stelar7.api.r4j.impl.lol.builders.championmastery.ChampionMasteryBuilder;
@@ -29,21 +29,21 @@ public final class Summoner implements Serializable
     private String   accountId;
     private String   puuid;
     private String   id;
-    private long     revisionDate;
-    private Platform platform;
+    private long        revisionDate;
+    private LeagueShard platform;
     
     
-    public static Summoner byName(Platform platform, String name)
+    public static Summoner byName(LeagueShard platform, String name)
     {
         return SummonerAPI.getInstance().getSummonerByName(platform, name);
     }
     
-    public static Summoner bySummonerId(Platform platform, String id)
+    public static Summoner bySummonerId(LeagueShard platform, String id)
     {
         return SummonerAPI.getInstance().getSummonerById(platform, id);
     }
     
-    public static Summoner byAccountId(Platform platform, String id)
+    public static Summoner byAccountId(LeagueShard platform, String id)
     {
         return SummonerAPI.getInstance().getSummonerByAccount(platform, id);
     }
@@ -204,7 +204,7 @@ public final class Summoner implements Serializable
      *
      * @return Platform
      */
-    public Platform getPlatform()
+    public LeagueShard getPlatform()
     {
         return platform;
     }

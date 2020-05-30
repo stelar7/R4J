@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.tests.tft;
 
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.tft.TFTSummonerAPI;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
@@ -36,33 +36,33 @@ public class TestTFTSummoner
     @Test
     public void testById()
     {
-        Summoner s  = api.getSummonerByName(Platform.EUW1, "stelar7");
-        Summoner s2 = api.getSummonerById(Platform.EUW1, s.getSummonerId());
+        Summoner s  = api.getSummonerByName(LeagueShard.EUW1, "stelar7");
+        Summoner s2 = api.getSummonerById(LeagueShard.EUW1, s.getSummonerId());
         doAssertions.accept(s2);
     }
     
     @Test
     public void testByName()
     {
-        Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
+        Summoner s = api.getSummonerByName(LeagueShard.EUW1, "stelar7");
         doAssertions.accept(s);
     }
     
     @Test
     public void testByAccount()
     {
-        Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
+        Summoner s = api.getSummonerByName(LeagueShard.EUW1, "stelar7");
         
-        Summoner optional = api.getSummonerByAccount(Platform.EUW1, s.getAccountId());
+        Summoner optional = api.getSummonerByAccount(LeagueShard.EUW1, s.getAccountId());
         doAssertions.accept(optional);
     }
     
     @Test
     public void testByPUUID()
     {
-        Summoner s = api.getSummonerByName(Platform.EUW1, "stelar7");
+        Summoner s = api.getSummonerByName(LeagueShard.EUW1, "stelar7");
         
-        Summoner optional = api.getSummonerByPUUID(Platform.EUW1, s.getPUUID());
+        Summoner optional = api.getSummonerByPUUID(LeagueShard.EUW1, s.getPUUID());
         doAssertions.accept(optional);
     }
 }

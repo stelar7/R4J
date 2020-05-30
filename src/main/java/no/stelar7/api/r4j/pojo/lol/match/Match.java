@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.impl.lol.builders.match.TimelineBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.MatchAPI;
@@ -20,9 +20,9 @@ public class Match implements Serializable
     private GameQueueType             queueId;
     private long                      gameId;
     private List<ParticipantIdentity> participantIdentities;
-    private String                    gameVersion;
-    private Platform                  platformId;
-    private GameModeType              gameMode;
+    private String       gameVersion;
+    private LeagueShard  platformId;
+    private GameModeType gameMode;
     private MapType                   mapId;
     private GameType                  gameType;
     private List<TeamStats>           teams;
@@ -30,7 +30,7 @@ public class Match implements Serializable
     private long                      gameCreation;
     private long                      gameDuration;
     
-    public static Match byId(Platform platform, Long id)
+    public static Match byId(LeagueShard platform, Long id)
     {
         return MatchAPI.getInstance().getMatch(platform, id);
     }
@@ -239,7 +239,7 @@ public class Match implements Serializable
      *
      * @return String
      */
-    public Platform getPlatform()
+    public LeagueShard getPlatform()
     {
         return this.platformId;
     }

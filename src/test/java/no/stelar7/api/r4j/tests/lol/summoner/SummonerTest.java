@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.tests.lol.summoner;
 
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.SummonerCrawler;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
@@ -45,16 +45,16 @@ public class SummonerTest
         Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
          */
         
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         doAssertions.accept(s);
     }
     
     @Test
     public void testByName()
     {
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withName(s.getNormalizedName()).get();
         doAssertions.accept(optional);
@@ -63,8 +63,8 @@ public class SummonerTest
     @Test
     public void testByAccount()
     {
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withAccountId(s.getAccountId()).get();
         doAssertions.accept(optional);
@@ -73,8 +73,8 @@ public class SummonerTest
     @Test
     public void testByPUUID()
     {
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID()).get();
         doAssertions.accept(optional);
@@ -84,8 +84,8 @@ public class SummonerTest
     public void testWadas()
     {
         DataCall.setCacheProvider(null);
-        Summoner s = new SummonerBuilder().withPlatform(Platform.EUN1).withName("GindenEU").get();
-        Summoner s2 = new SummonerBuilder().withPlatform(Platform.EUN1).withPUUID(s.getPUUID()).get();
+        Summoner s = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("GindenEU").get();
+        Summoner s2 = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withPUUID(s.getPUUID()).get();
         
         System.out.println(s);
         System.out.println(s2);
@@ -95,12 +95,12 @@ public class SummonerTest
     @Ignore
     public void testCrawler()
     {
-        SummonerCrawler crawler = new SummonerCrawler(Summoner.byName(Platform.EUW1, "stelar7"));
+        SummonerCrawler crawler = new SummonerCrawler(Summoner.byName(LeagueShard.EUW1, "stelar7"));
         System.out.println(crawler.get().size());
         crawler.crawlLeague();
         System.out.println(crawler.get().size());
         
-        crawler = new SummonerCrawler(Summoner.byName(Platform.EUW1, "stelar7"));
+        crawler = new SummonerCrawler(Summoner.byName(LeagueShard.EUW1, "stelar7"));
         System.out.println(crawler.get().size());
         crawler.crawlGames();
         System.out.println(crawler.get().size());

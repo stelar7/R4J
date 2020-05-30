@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lor;
 
-import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.RegionalName;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lor.*;
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRDeck;
@@ -17,29 +17,29 @@ public class TestLoRAPI
         while (true)
         {
             long start = System.currentTimeMillis();
-            System.out.println(LORClientAPI.getActiveDeck());
+            System.out.println(LoRClientAPI.getActiveDeck());
             long end = System.currentTimeMillis();
             System.out.println("active deck: " + (end - start));
             
             start = System.currentTimeMillis();
-            System.out.println(LORClientAPI.getCardPositions());
+            System.out.println(LoRClientAPI.getCardPositions());
             end = System.currentTimeMillis();
             System.out.println("card pos: " + (end - start));
             
             start = System.currentTimeMillis();
-            System.out.println(LORClientAPI.getLastGameResult());
+            System.out.println(LoRClientAPI.getLastGameResult());
             end = System.currentTimeMillis();
             System.out.println("last game: " + (end - start));
             
             start = System.currentTimeMillis();
-            System.out.println(LORClientAPI.getExpeditionsState());
+            System.out.println(LoRClientAPI.getExpeditionsState());
             end = System.currentTimeMillis();
             System.out.println("exp state: " + (end - start));
             
-            System.out.println(LORClientAPI.getActiveDeck());
-            System.out.println(LORClientAPI.getCardPositions());
-            System.out.println(LORClientAPI.getLastGameResult());
-            System.out.println(LORClientAPI.getExpeditionsState());
+            System.out.println(LoRClientAPI.getActiveDeck());
+            System.out.println(LoRClientAPI.getCardPositions());
+            System.out.println(LoRClientAPI.getLastGameResult());
+            System.out.println(LoRClientAPI.getExpeditionsState());
             
             Thread.sleep(1000);
         }
@@ -51,7 +51,7 @@ public class TestLoRAPI
     public void testLeaderboard()
     {
         LORRankedAPI api = new R4J(SecretFile.CREDS).getLORAPI().getRankedAPI();
-        api.getLeaderboard(ServicePlatform.EUROPE);
+        api.getLeaderboard(RegionalName.EUROPE);
         System.out.println();
     }
     
@@ -59,7 +59,7 @@ public class TestLoRAPI
     @Ignore
     public void testActiveDeck()
     {
-        LoRDeck deck = LORClientAPI.getActiveDeck();
+        LoRDeck deck = LoRClientAPI.getActiveDeck();
         System.out.println();
     }
     
@@ -67,7 +67,7 @@ public class TestLoRAPI
     @Ignore
     public void testGameResult()
     {
-        LoRGameResult result = LORClientAPI.getLastGameResult();
+        LoRGameResult result = LoRClientAPI.getLastGameResult();
         System.out.println();
     }
     
@@ -75,7 +75,7 @@ public class TestLoRAPI
     @Ignore
     public void testGameState()
     {
-        LoRGameInfo state = LORClientAPI.getCardPositions();
+        LoRGameInfo state = LoRClientAPI.getCardPositions();
         System.out.println();
     }
 }

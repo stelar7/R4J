@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.tests.lol.crawler;
 
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.TeamType;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.utils.sql.MySQL;
@@ -51,9 +51,9 @@ public class MatchHistoryCrawler
             {
                 do
                 {
-                    String                     accountid    = rs.getString("accountid");
-                    Platform                   platformid   = Platform.fromString(rs.getString("platformid")).get();
-                    List<Pair<Long, Platform>> filteredRefs = getAndFilter(accountid, platformid);
+                    String                        accountid    = rs.getString("accountid");
+                    LeagueShard                   platformid   = LeagueShard.fromString(rs.getString("platformid")).get();
+                    List<Pair<Long, LeagueShard>> filteredRefs = getAndFilter(accountid, platformid);
                     if (filteredRefs == null)
                     {
                         continue;
@@ -71,7 +71,7 @@ public class MatchHistoryCrawler
         }
     }
     
-    private void storeMatches(List<Pair<Long, Platform>> filteredRefs) throws InterruptedException, SQLException
+    private void storeMatches(List<Pair<Long, LeagueShard>> filteredRefs) throws InterruptedException, SQLException
     {
         System.out.println("Starting download pool...");
         ExecutorService pool = Executors.newFixedThreadPool(1);
@@ -81,13 +81,13 @@ public class MatchHistoryCrawler
         sql.getConnection().commit();
     }
     
-    private List<Pair<Long, Platform>> getAndFilter(String accountid, Platform platformid) throws SQLException
+    private List<Pair<Long, LeagueShard>> getAndFilter(String accountid, LeagueShard platformid) throws SQLException
     {
         System.out.format("%nLoading Accountid: %s Platform: %s%n", accountid, platformid);
         
-        List<MatchReference>       refs        = getRankedGames(accountid, platformid);
-        List<Pair<Long, Platform>> apiIds      = refs.stream().map(r -> new Pair<>(r.getGameId(), r.getPlatform())).collect(Collectors.toList());
-        List<Pair<Long, Platform>> databaseIds = getGamesFromDatabase(accountid, platformid);
+        List<MatchReference>          refs        = getRankedGames(accountid, platformid);
+        List<Pair<Long, LeagueShard>> apiIds      = refs.stream().map(r -> new Pair<>(r.getGameId(), r.getPlatform())).collect(Collectors.toList());
+        List<Pair<Long, LeagueShard>> databaseIds = getGamesFromDatabase(accountid, platformid);
         apiIds.removeAll(databaseIds);
         
         System.out.format("%s already stored, leaving %s games%n", databaseIds.size(), apiIds.size());
@@ -123,13 +123,13 @@ public class MatchHistoryCrawler
         psInsertStatement = sql.getConnection().prepareStatement(PS_INSERT, Statement.RETURN_GENERATED_KEYS);
     }
     
-    private void insertMatches(List<Pair<Long, Platform>> dataset)
+    private void insertMatches(List<Pair<Long, LeagueShard>> dataset)
     {
         try
         {
             for (int i = 0; i < dataset.size(); i++)
             {
-                Pair<Long, Platform> pair = dataset.get(i);
+                Pair<Long, LeagueShard> pair = dataset.get(i);
                 
                 
                 System.out.format("Loading match %s/%s, Id: %s Platform: %s%n", i + 1, dataset.size(), pair.getKey(), pair.getValue());
@@ -167,12 +167,12 @@ public class MatchHistoryCrawler
         }
     }
     
-    private List<MatchReference> getRankedGames(String accountid, Platform platformid)
+    private List<MatchReference> getRankedGames(String accountid, LeagueShard platformid)
     {
         return new MatchListBuilder().withPlatform(platformid).withAccountId(accountid).get();
     }
     
-    private Match getMatch(Long key, Platform value) throws InterruptedException
+    private Match getMatch(Long key, LeagueShard value) throws InterruptedException
     {
         MatchBuilder mb    = new MatchBuilder().withPlatform(value).withId(key);
         Match        match = mb.get();
@@ -185,9 +185,9 @@ public class MatchHistoryCrawler
         return match;
     }
     
-    private List<Pair<Long, Platform>> getGamesFromDatabase(String accountid, Platform platformid) throws SQLException
+    private List<Pair<Long, LeagueShard>> getGamesFromDatabase(String accountid, LeagueShard platformid) throws SQLException
     {
-        List<Pair<Long, Platform>> data = new ArrayList<>();
+        List<Pair<Long, LeagueShard>> data = new ArrayList<>();
         
         matchCheck.setString(1, accountid);
         matchCheck.setString(2, platformid.name());
@@ -196,7 +196,7 @@ public class MatchHistoryCrawler
         {
             while (rs.next())
             {
-                data.add(new Pair<>(rs.getLong("gameid"), Platform.fromString(rs.getString("platformid")).get()));
+                data.add(new Pair<>(rs.getLong("gameid"), LeagueShard.fromString(rs.getString("platformid")).get()));
             }
             
             return data;

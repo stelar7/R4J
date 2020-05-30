@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.tests.lol.league;
 
 import ch.qos.logback.classic.*;
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.utils.LazyList;
 import no.stelar7.api.r4j.impl.R4J;
@@ -30,14 +30,14 @@ public class LeagueTest
     @Test
     public void testMasterLeague()
     {
-        List<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivision(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.MASTER_I, 1);
+        List<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivision(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.MASTER_I, 1);
         System.out.println(data.size());
     }
     
     @Test
     public void testGrandmasterLeague()
     {
-        LazyList<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GRANDMASTER_I);
+        LazyList<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GRANDMASTER_I);
         data.loadFully();
         System.out.println(data.size());
     }
@@ -45,7 +45,7 @@ public class LeagueTest
     @Test
     public void testChallengerLeague()
     {
-        LazyList<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.CHALLENGER_I);
+        LazyList<LeagueEntry> data = LeagueAPI.getInstance().getLeagueByTierDivisionLazy(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.CHALLENGER_I);
         data.loadFully();
         System.out.println(data.size());
     }
@@ -54,9 +54,9 @@ public class LeagueTest
     @Test
     public void testLeagueEntry()
     {
-        String            id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner          s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
-        List<LeagueEntry> data = new LeagueBuilder().withPlatform(Platform.EUW1).withSummonerId(s.getSummonerId()).getLeagueEntries();
+        String            id   = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner          s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        List<LeagueEntry> data = new LeagueBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(s.getSummonerId()).getLeagueEntries();
         System.out.println(data.size());
     }
     
@@ -64,7 +64,7 @@ public class LeagueTest
     @Ignore
     public void testPositionalRanks()
     {
-        LazyList<LeagueEntry> data = r4J.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.DIAMOND_I);
+        LazyList<LeagueEntry> data = r4J.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.DIAMOND_I);
         data.loadFully();
         System.out.println(data.size());
     }
@@ -73,7 +73,7 @@ public class LeagueTest
     @Ignore
     public void testPositionalRanksTFT()
     {
-        LazyList<LeagueEntry> data = r4J.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(Platform.EUW1, GameQueueType.TEAMFIGHT_TACTICS_RANKED, TierDivisionType.GOLD_I);
+        LazyList<LeagueEntry> data = r4J.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(LeagueShard.EUW1, GameQueueType.TEAMFIGHT_TACTICS_RANKED, TierDivisionType.GOLD_I);
         data.loadFully();
         System.out.println(data.size());
     }

@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.tft;
 
-import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.tft.TFTMatchAPI;
 import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
@@ -20,28 +20,28 @@ public class TestTFTMatch
     @Test
     public void testFetchList()
     {
-        List<String> stelar7 = api.getMatchList(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID(), 20);
+        List<String> stelar7 = api.getMatchList(RegionalName.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 20);
         System.out.println();
     }
     
     @Test
     public void testFetchMatch()
     {
-        TFTMatch stelar7 = api.getMatch(ServicePlatform.EUROPE, "EUW1_4240052361");
+        TFTMatch stelar7 = api.getMatch(RegionalName.EUROPE, "EUW1_4240052361");
         System.out.println();
     }
     
     @Test
     public void testFetchMatchRAW()
     {
-        GAMHSMatch stelar7 = api.getMatchRAW(ServicePlatform.EUROPE, "EUW1_4240052361");
+        GAMHSMatch stelar7 = api.getMatchRAW(RegionalName.EUROPE, "EUW1_4240052361");
         System.out.println();
     }
     
     @Test
     public void testMatchIterator()
     {
-        MatchIterator stelar7 = api.getMatchIterator(ServicePlatform.EUROPE, Summoner.byName(Platform.EUW1, "stelar7").getPUUID(), 20);
+        MatchIterator stelar7 = api.getMatchIterator(RegionalName.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 20);
         for (GAMHSMatch m : stelar7)
         {
             System.out.println(m.toTFTMatch());

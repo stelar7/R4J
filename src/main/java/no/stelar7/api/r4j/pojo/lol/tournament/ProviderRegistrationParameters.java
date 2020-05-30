@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.tournament;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 
 import java.io.Serializable;
 
@@ -8,10 +8,10 @@ public class ProviderRegistrationParameters implements Serializable
 {
     private static final long serialVersionUID = 7896252954178900155L;
     
-    private Platform region;
-    private String   url;
+    private LeagueShard region;
+    private String      url;
     
-    public ProviderRegistrationParameters(final Platform region, final String callbackUrl)
+    public ProviderRegistrationParameters(final LeagueShard region, final String callbackUrl)
     {
         this.region = region;
         this.url = callbackUrl;
@@ -43,12 +43,12 @@ public class ProviderRegistrationParameters implements Serializable
      *
      * @return platform
      */
-    public Platform getRegion()
+    public LeagueShard getRegion()
     {
         return this.region;
     }
     
-    public void setRegion(final Platform region)
+    public void setRegion(final LeagueShard region)
     {
         this.region = region;
     }

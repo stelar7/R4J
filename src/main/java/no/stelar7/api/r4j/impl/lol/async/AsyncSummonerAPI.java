@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.async;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
@@ -18,9 +19,9 @@ public class AsyncSummonerAPI
         return AsyncSummonerAPI.INSTANCE;
     }
     
-    private static final Map<Platform, ExecutorService> threadPool = new EnumMap<Platform, ExecutorService>(Platform.class)
+    private static final Map<LeagueShard, ExecutorService> threadPool = new EnumMap<LeagueShard, ExecutorService>(LeagueShard.class)
     {{
-        for (Platform platform : Platform.values())
+        for (LeagueShard platform : LeagueShard.values())
         {
             put(platform, Executors.newFixedThreadPool(1));
         }
@@ -39,7 +40,7 @@ public class AsyncSummonerAPI
      * @param summonerId summonerId associated with summoners to retrieve.
      * @return Optional Summoner
      */
-    public CompletableFuture<Summoner> getSummonerById(final Platform server, String summonerId)
+    public CompletableFuture<Summoner> getSummonerById(final LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
@@ -77,7 +78,7 @@ public class AsyncSummonerAPI
      * @param summonerName summoner name  associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public CompletableFuture<Summoner> getSummonerByName(final Platform server, String summonerName)
+    public CompletableFuture<Summoner> getSummonerByName(final LeagueShard server, String summonerName)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeString(summonerName))
@@ -116,7 +117,7 @@ public class AsyncSummonerAPI
      * @param accountId accountId associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public CompletableFuture<Summoner> getSummonerByAccount(final Platform server, String accountId)
+    public CompletableFuture<Summoner> getSummonerByAccount(final LeagueShard server, String accountId)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.ACCOUNT_ID_PLACEHOLDER, accountId)
@@ -155,7 +156,7 @@ public class AsyncSummonerAPI
      * @param PUUID  puuid associated with summoner to retrieve.
      * @return Optional Summoner
      */
-    public CompletableFuture<Summoner> getSummonerByPUUID(final Platform server, String PUUID)
+    public CompletableFuture<Summoner> getSummonerByPUUID(final LeagueShard server, String PUUID)
     {
         DataCallBuilder builder = new DataCallBuilder()
                 .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)

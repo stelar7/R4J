@@ -1,6 +1,9 @@
 package no.stelar7.api.r4j.pojo.lor.offline.card;
 
 
+import no.stelar7.api.r4j.impl.lor.*;
+import no.stelar7.api.r4j.pojo.lor.oauth.LoRRequestDeck;
+
 import java.util.*;
 
 public class LoRDeck
@@ -9,8 +12,9 @@ public class LoRDeck
     
     /**
      * Adds a card to the deck
+     *
      * @param count the amount to add
-     * @param card the card to add
+     * @param card  the card to add
      */
     public void addCard(LoRCard card, int count)
     {
@@ -24,6 +28,7 @@ public class LoRDeck
     
     /**
      * Removes a card from the deck
+     *
      * @param card the card to remove
      */
     public void removeCard(LoRCard card)
@@ -33,6 +38,7 @@ public class LoRDeck
     
     /**
      * Count the instances of a specified card in the deck
+     *
      * @param card the card to count
      * @return the count
      */
@@ -51,6 +57,7 @@ public class LoRDeck
     
     /**
      * Count the total amount of cards in the deck
+     *
      * @return the total
      */
     public int deckSize()
@@ -75,6 +82,14 @@ public class LoRDeck
         return sj.toString();
     }
     
+    public String getDeckCode() {
+        return LoRDeckCode.encode(this);
+    }
+    
+    public LoRRequestDeck toRequestDeck(String name) {
+        return new LoRRequestDeck(name, this.getDeckCode());
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -86,7 +101,6 @@ public class LoRDeck
         {
             return false;
         }
-        
         LoRDeck loRDeck = (LoRDeck) o;
         return Objects.equals(cards, loRDeck.cards);
     }

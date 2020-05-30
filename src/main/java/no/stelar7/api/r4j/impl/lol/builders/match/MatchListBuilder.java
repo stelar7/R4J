@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.builders.match;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.match.*;
 
@@ -10,20 +11,20 @@ import java.util.*;
 public class MatchListBuilder
 {
     
-    private final Platform platform;
-    private       String   id;
+    private final LeagueShard platform;
+    private       String      id;
     private final Integer  beginIndex;
     private final Integer  endIndex;
     
     public MatchListBuilder()
     {
-        this.platform = Platform.UNKNOWN;
+        this.platform = LeagueShard.UNKNOWN;
         this.id = null;
         this.beginIndex = null;
         this.endIndex = null;
     }
     
-    public MatchListBuilder(Platform platform, String id, Integer beginIndex, Integer endIndex)
+    public MatchListBuilder(LeagueShard platform, String id, Integer beginIndex, Integer endIndex)
     {
         this.platform = platform;
         this.id = id;
@@ -31,7 +32,7 @@ public class MatchListBuilder
         this.endIndex = endIndex;
     }
     
-    public MatchListBuilder withPlatform(Platform platform)
+    public MatchListBuilder withPlatform(LeagueShard platform)
     {
         return new MatchListBuilder(platform, this.id, this.beginIndex, this.endIndex);
     }
@@ -71,7 +72,7 @@ public class MatchListBuilder
      */
     public List<MatchReference> get()
     {
-        if (this.id.length() < 0 || this.platform == Platform.UNKNOWN)
+        if (this.id.length() < 0 || this.platform == LeagueShard.UNKNOWN)
         {
             return Collections.emptyList();
         }

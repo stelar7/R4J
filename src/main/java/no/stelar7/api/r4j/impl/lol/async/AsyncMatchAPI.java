@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.async;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.match.*;
@@ -18,9 +19,9 @@ public class AsyncMatchAPI
         return AsyncMatchAPI.INSTANCE;
     }
     
-    private static final Map<Platform, ExecutorService> threadPool = new EnumMap(Platform.class)
+    private static final Map<LeagueShard, ExecutorService> threadPool = new EnumMap(LeagueShard.class)
     {{
-        for (Platform platform : Platform.values())
+        for (LeagueShard platform : LeagueShard.values())
         {
             put(platform, Executors.newFixedThreadPool(1));
         }
@@ -56,7 +57,7 @@ public class AsyncMatchAPI
      * @param championId  optional filter for selecting the champion played
      * @return MatchList
      */
-    public CompletableFuture<List<MatchReference>> getMatchList(Platform server, String accountId,
+    public CompletableFuture<List<MatchReference>> getMatchList(LeagueShard server, String accountId,
                                                                 Long beginTime, Long endTime,
                                                                 Integer beginIndex, Integer endIndex,
                                                                 Set<GameQueueType> rankedQueue,
@@ -127,7 +128,7 @@ public class AsyncMatchAPI
      * @param accountId the account to check
      * @return {@code List<MatchReference>}
      */
-    public CompletableFuture<List<MatchReference>> getMatchList(Platform server, String accountId)
+    public CompletableFuture<List<MatchReference>> getMatchList(LeagueShard server, String accountId)
     {
         return getMatchList(server, accountId, null, null, null, null, null, null, null);
     }
@@ -141,7 +142,7 @@ public class AsyncMatchAPI
      * @param accountId the account to check
      * @return {@code List<MatchReference>}
      */
-    public LazyList<MatchReference> getMatchListLazy(Platform server, String accountId)
+    public LazyList<MatchReference> getMatchListLazy(LeagueShard server, String accountId)
     {
         int increment = 100;
         return new LazyList<>(increment, prevValue -> {
@@ -164,7 +165,7 @@ public class AsyncMatchAPI
      * @param matchId the id to check
      * @return Match
      */
-    public CompletableFuture<Match> getMatch(Platform server, long matchId)
+    public CompletableFuture<Match> getMatch(LeagueShard server, long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V4_MATCH)
@@ -202,7 +203,7 @@ public class AsyncMatchAPI
      * @param matchId the matchId to find timeline for
      * @return MatchTimeline if avaliable
      */
-    public CompletableFuture<MatchTimeline> getTimeline(Platform server, long matchId)
+    public CompletableFuture<MatchTimeline> getTimeline(LeagueShard server, long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, String.valueOf(matchId))
                                                        .withEndpoint(URLEndpoint.V4_TIMELINE)

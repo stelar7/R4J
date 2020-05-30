@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.impl.lol.builders.spectator;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 
@@ -11,10 +12,10 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class SpectatorBuilder
 {
-    private final Platform platform;
-    private final String   summonerId;
+    private final LeagueShard platform;
+    private final String      summonerId;
     
-    private SpectatorBuilder(Platform platform, String summonerId)
+    private SpectatorBuilder(LeagueShard platform, String summonerId)
     {
         this.platform = platform;
         this.summonerId = summonerId;
@@ -22,11 +23,11 @@ public class SpectatorBuilder
     
     public SpectatorBuilder()
     {
-        this.platform = Platform.UNKNOWN;
+        this.platform = LeagueShard.UNKNOWN;
         this.summonerId = null;
     }
     
-    public SpectatorBuilder withPlatform(Platform platform)
+    public SpectatorBuilder withPlatform(LeagueShard platform)
     {
         return new SpectatorBuilder(platform, this.summonerId);
     }
@@ -38,7 +39,7 @@ public class SpectatorBuilder
     
     public List<SpectatorGameInfo> getFeaturedGames()
     {
-        if (this.platform == Platform.UNKNOWN)
+        if (this.platform == LeagueShard.UNKNOWN)
         {
             return Collections.emptyList();
         }
@@ -76,7 +77,7 @@ public class SpectatorBuilder
     
     public SpectatorGameInfo getCurrentGame()
     {
-        if (this.platform == Platform.UNKNOWN || this.summonerId == null)
+        if (this.platform == LeagueShard.UNKNOWN || this.summonerId == null)
         {
             return null;
         }

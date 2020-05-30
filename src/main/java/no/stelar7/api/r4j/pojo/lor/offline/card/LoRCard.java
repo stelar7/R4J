@@ -36,6 +36,13 @@ public class LoRCard
         }
     }
     
+    private LoRCard(String cardCode)
+    {
+        this.set = Integer.parseInt(cardCode.substring(0, 2));
+        this.faction = LoRFaction.fromCode(cardCode.substring(2, 4));
+        this.id = Integer.parseInt(cardCode.substring(4, 7));
+    }
+    
     private LoRCard(int set, LoRFaction faction, int id)
     {
         this.set = set;

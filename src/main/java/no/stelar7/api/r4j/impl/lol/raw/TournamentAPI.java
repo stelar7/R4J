@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.raw;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.match.Match;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
@@ -55,7 +56,7 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V4_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
-                                                       .withPlatform(ServicePlatform.AMERICAS);
+                                                       .withPlatform(RegionalName.AMERICAS);
         
         if (useStub)
         {
@@ -79,7 +80,7 @@ public final class TournamentAPI
      * @param platform the platform
      * @return a list of matchIds played with this code
      */
-    public List<Long> getMatchIds(final Platform platform, final String tournamentCode)
+    public List<Long> getMatchIds(final LeagueShard platform, final String tournamentCode)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
@@ -106,7 +107,7 @@ public final class TournamentAPI
      * @param matchId        the ID of the match.
      * @return Match
      */
-    public Match getMatchInfo(final Platform server, final String tournamentCode, final Long matchId)
+    public Match getMatchInfo(final LeagueShard server, final String tournamentCode, final Long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
@@ -134,7 +135,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withQueryParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V4_TOURNAMENT_CODES_BY_CODE)
-                                                       .withPlatform(ServicePlatform.AMERICAS);
+                                                       .withPlatform(RegionalName.AMERICAS);
         
         if (useStub)
         {
@@ -162,7 +163,7 @@ public final class TournamentAPI
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V4_TOURNAMENT_LOBBY_EVENTS)
-                                                       .withPlatform(ServicePlatform.AMERICAS);
+                                                       .withPlatform(RegionalName.AMERICAS);
         
         if (useStub)
         {
@@ -196,7 +197,7 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V4_TOURNAMENT_PROVIDER)
                                                        .withPostData(params.toJson())
                                                        .withRequestMethod(Constants.METHOD_POST)
-                                                       .withPlatform(ServicePlatform.AMERICAS);
+                                                       .withPlatform(RegionalName.AMERICAS);
         
         
         if (useStub)
@@ -225,7 +226,7 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V4_TOURNAMENT_TOURNAMENT)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
-                                                       .withPlatform(ServicePlatform.AMERICAS);
+                                                       .withPlatform(RegionalName.AMERICAS);
         
         if (useStub)
         {
@@ -254,7 +255,7 @@ public final class TournamentAPI
                                                        .withEndpoint(URLEndpoint.V4_TOURNAMENT_CODES)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_PUT)
-                                                       .withPlatform(ServicePlatform.AMERICAS);
+                                                       .withPlatform(RegionalName.AMERICAS);
         
         if (useStub)
         {

@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.spectator;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.pojo.lol.shared.BannedChampion;
 
@@ -22,7 +22,7 @@ public class SpectatorGameInfo implements Serializable
     private MapType                    mapId;
     private Observer                   observers;
     private List<SpectatorParticipant> participants;
-    private Platform                   platformId;
+    private LeagueShard                platformId;
     
     
     /**
@@ -131,7 +131,7 @@ public class SpectatorGameInfo implements Serializable
      *
      * @return String
      */
-    public Platform getPlatform()
+    public LeagueShard getPlatform()
     {
         return this.platformId;
     }

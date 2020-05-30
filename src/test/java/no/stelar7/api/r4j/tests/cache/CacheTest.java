@@ -6,6 +6,7 @@ import no.stelar7.api.r4j.basic.cache.CacheLifetimeHint;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.match.MatchListBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
@@ -48,9 +49,9 @@ public class CacheTest
     {
         DataCall.setCacheProvider(sqlCache.get());
         
-        Summoner s = Summoner.byName(Platform.EUW1, "stelar7");
+        Summoner s = Summoner.byName(LeagueShard.EUW1, "stelar7");
         System.out.println(s);
-        s = Summoner.byName(Platform.EUW1, "stelar7");
+        s = Summoner.byName(LeagueShard.EUW1, "stelar7");
         System.out.println(s);
         
         //    doCacheStuff();
@@ -101,24 +102,24 @@ public class CacheTest
         
         System.out.println("Fetching summoner for the first time");
         DataCall.setCacheProvider(fileCache.get());
-        String id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
-        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         Thread.sleep(6000);
         System.out.println("Fetching summoner after cache timeout");
-        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
-        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         Map<String, Object> data = new TreeMap<>();
-        data.put("platform", Platform.EUW1);
+        data.put("platform", LeagueShard.EUW1);
         data.put("name", id);
         
         DataCall.getCacheProvider().clear(URLEndpoint.V4_SUMMONER_BY_NAME, data);
         
         System.out.println("Fetching summoner after deleting entry");
-        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
-        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         CacheLifetimeHint defaults = CacheLifetimeHint.DEFAULTS;
         defaults.add(URLEndpoint.V4_SUMMONER_BY_NAME, TimeUnit.SECONDS.toMillis(1));
@@ -126,8 +127,8 @@ public class CacheTest
         Thread.sleep(1000);
         
         System.out.println("Fetching summoner after setting lifetime to a lower limit");
-        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
-        new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
     }
     
     @After
@@ -148,9 +149,9 @@ public class CacheTest
         
         System.out.println("Fetching a random summoner and their match list");
         
-        String               id      = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner             s       = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
-        List<MatchReference> recents = new MatchListBuilder().withPlatform(Platform.EUW1).withAccountId(s.getAccountId()).get();
+        String               id      = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner             s       = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        List<MatchReference> recents = new MatchListBuilder().withPlatform(LeagueShard.EUW1).withAccountId(s.getAccountId()).get();
         
         if (recents.isEmpty())
         {

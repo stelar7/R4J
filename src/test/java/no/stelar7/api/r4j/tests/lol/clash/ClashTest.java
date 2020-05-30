@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.clash;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.ClashAPI;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
@@ -18,17 +18,17 @@ public class ClashTest
     @Test
     public void testGetPlayerData()
     {
-        List<ClashPlayer> stelar7 = api.getPlayerInfo(Platform.EUW1, Summoner.byName(Platform.EUW1, "stelar7").getSummonerId());
+        List<ClashPlayer> stelar7 = api.getPlayerInfo(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
         System.out.println(stelar7);
     }
     
     @Test
     public void getTeams()
     {
-        List<ClashPlayer> stelar7 = api.getPlayerInfo(Platform.EUW1, Summoner.byName(Platform.EUW1, "stelar7").getSummonerId());
+        List<ClashPlayer> stelar7 = api.getPlayerInfo(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
         for (ClashPlayer clashPlayer : stelar7)
         {
-            ClashTeam team = api.getTeam(Platform.EUW1, clashPlayer.getTeamId());
+            ClashTeam team = api.getTeam(LeagueShard.EUW1, clashPlayer.getTeamId());
             System.out.println(team);
         }
     }
@@ -36,18 +36,18 @@ public class ClashTest
     @Test
     public void testGetTournaments()
     {
-        List<ClashTournament> tournaments = api.getTournaments(Platform.EUW1);
+        List<ClashTournament> tournaments = api.getTournaments(LeagueShard.EUW1);
         System.out.println(tournaments);
     }
     
     @Test
     public void testGetTournamentsByTeam()
     {
-        List<ClashPlayer> stelar7 = api.getPlayerInfo(Platform.EUW1, Summoner.byName(Platform.EUW1, "stelar7").getSummonerId());
+        List<ClashPlayer> stelar7 = api.getPlayerInfo(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
         for (ClashPlayer clashPlayer : stelar7)
         {
-            ClashTeam       team             = api.getTeam(Platform.EUW1, clashPlayer.getTeamId());
-            ClashTournament tournamentByTeam = api.getTournamentByTeam(Platform.EUW1, team.getId());
+            ClashTeam       team             = api.getTeam(LeagueShard.EUW1, clashPlayer.getTeamId());
+            ClashTournament tournamentByTeam = api.getTournamentByTeam(LeagueShard.EUW1, team.getId());
             System.out.println(tournamentByTeam);
         }
     }
@@ -55,11 +55,11 @@ public class ClashTest
     @Test
     public void testGetTournamentsById()
     {
-        List<ClashPlayer> stelar7 = api.getPlayerInfo(Platform.EUW1, Summoner.byName(Platform.EUW1, "stelar7").getSummonerId());
+        List<ClashPlayer> stelar7 = api.getPlayerInfo(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
         for (ClashPlayer clashPlayer : stelar7)
         {
-            ClashTeam       team           = api.getTeam(Platform.EUW1, clashPlayer.getTeamId());
-            ClashTournament tournamentById = api.getTournamentById(Platform.EUW1, team.getTournamentId());
+            ClashTeam       team           = api.getTeam(LeagueShard.EUW1, clashPlayer.getTeamId());
+            ClashTournament tournamentById = api.getTournamentById(LeagueShard.EUW1, team.getTournamentId());
             System.out.println(tournamentById);
         }
     }

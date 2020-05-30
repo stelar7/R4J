@@ -2,16 +2,17 @@ package no.stelar7.api.r4j.impl.lol.builders.thirdparty;
 
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 
 @SuppressWarnings("unchecked")
 public class ThirdPartyCodeBuilder
 {
     
-    private final Platform platform;
-    private final String   summonerId;
+    private final LeagueShard platform;
+    private final String      summonerId;
     
-    private ThirdPartyCodeBuilder(Platform platform, String summonerId)
+    private ThirdPartyCodeBuilder(LeagueShard platform, String summonerId)
     {
         this.platform = platform;
         this.summonerId = summonerId;
@@ -19,11 +20,11 @@ public class ThirdPartyCodeBuilder
     
     public ThirdPartyCodeBuilder()
     {
-        this.platform = Platform.UNKNOWN;
+        this.platform = LeagueShard.UNKNOWN;
         this.summonerId = null;
     }
     
-    public ThirdPartyCodeBuilder withPlatform(Platform platform)
+    public ThirdPartyCodeBuilder withPlatform(LeagueShard platform)
     {
         return new ThirdPartyCodeBuilder(platform, this.summonerId);
     }

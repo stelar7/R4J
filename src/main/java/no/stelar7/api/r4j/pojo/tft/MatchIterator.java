@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.tft;
 
-import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.impl.tft.TFTMatchAPI;
 import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
 
@@ -32,8 +32,8 @@ public class MatchIterator implements Iterable<GAMHSMatch>
         @Override
         public GAMHSMatch next()
         {
-            String          id     = refs.next();
-            ServicePlatform region = Platform.fromString(id.split("_")[0]).get().toRegionalEnum();
+            String       id     = refs.next();
+            RegionalName region = LeagueShard.fromString(id.split("_")[0]).get().toRegionalEnum();
             
             return TFTMatchAPI.getInstance().getMatchRAW(region, id);
         }

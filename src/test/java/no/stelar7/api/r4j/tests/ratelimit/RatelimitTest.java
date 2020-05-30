@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.ratelimit;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
@@ -57,12 +57,12 @@ public class RatelimitTest
     {
         try
         {
-            String          name   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-            Summoner        s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(name).get();
+            String          name   = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+            Summoner        s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(name).get();
             ExecutorService pool = Executors.newFixedThreadPool(8);
             for (int i2 = 0; i2 < 130; i2++)
             {
-                pool.execute(() -> new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(s.getSummonerId()).get());
+                pool.execute(() -> new SummonerBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(s.getSummonerId()).get());
             }
             pool.shutdown();
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
@@ -78,11 +78,11 @@ public class RatelimitTest
     public void testRateLimit()
     {
         final R4J test = new R4J(SecretFile.CREDS);
-        String    id   = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner   s    = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String    id   = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner   s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         for (int i2 = 0; i2 < 130; i2++)
         {
-            new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+            new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         }
     }
     
@@ -90,19 +90,19 @@ public class RatelimitTest
     @Ignore
     public void testRateLimitWithSleep() throws InterruptedException
     {
-        String   id = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withName(id).get();
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
-        new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(id).get();
         TimeUnit.SECONDS.sleep(10);
-        new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(id).get();
     }
     
     @Test
     @Ignore
     public void testRateLimitStatic()
     {
-        Platform plat = Platform.values()[1];
+        LeagueShard plat = LeagueShard.values()[1];
         for (int i = 0; i < 30; i++)
         {
             r4J.getDDragonAPI().getRealm();
@@ -110,7 +110,7 @@ public class RatelimitTest
             r4J.getDDragonAPI().getLanguages();
             if (i % 9 == 0)
             {
-                plat = Platform.values()[plat.ordinal() + 1];
+                plat = LeagueShard.values()[plat.ordinal() + 1];
             }
             System.out.format("call no. %s Total time: %sms%n", i + 1, stopwatch.runtime(TimeUnit.MILLISECONDS));
         }

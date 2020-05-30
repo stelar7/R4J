@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.div;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.match.MatchListBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
@@ -21,8 +21,8 @@ public class CheckNormalGameForWinTest
     @Ignore
     public void testFindSelfInNormalGame()
     {
-        Summoner             dev  = new SummonerBuilder().withPlatform(Platform.NA1).withName("devitgg").get();
-        List<MatchReference> refs = new MatchListBuilder().withPlatform(Platform.NA1).withAccountId(dev.getAccountId()).get();
+        Summoner             dev  = new SummonerBuilder().withPlatform(LeagueShard.NA1).withName("devitgg").get();
+        List<MatchReference> refs = new MatchListBuilder().withPlatform(LeagueShard.NA1).withAccountId(dev.getAccountId()).get();
         
         for (MatchReference current : refs)
         {
@@ -57,9 +57,9 @@ public class CheckNormalGameForWinTest
     @Ignore
     public void testFindSelfAfterNormalGame()
     {
-        Summoner dev = new SummonerBuilder().withPlatform(Platform.NA1).withName("devitgg").get();
+        Summoner dev = new SummonerBuilder().withPlatform(LeagueShard.NA1).withName("devitgg").get();
         
-        while (new SpectatorBuilder().withPlatform(Platform.NA1).withSummonerId(dev.getSummonerId()).getCurrentGame() != null)
+        while (new SpectatorBuilder().withPlatform(LeagueShard.NA1).withSummonerId(dev.getSummonerId()).getCurrentGame() != null)
         {
             try
             {
@@ -70,7 +70,7 @@ public class CheckNormalGameForWinTest
             }
         }
         
-        List<MatchReference> refs = new MatchListBuilder().withPlatform(Platform.NA1).withAccountId(dev.getAccountId()).get();
+        List<MatchReference> refs = new MatchListBuilder().withPlatform(LeagueShard.NA1).withAccountId(dev.getAccountId()).get();
         
         for (MatchReference current : refs)
         {

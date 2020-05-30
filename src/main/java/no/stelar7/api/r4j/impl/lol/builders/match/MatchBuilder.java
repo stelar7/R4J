@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.builders.match;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.match.Match;
 
@@ -10,16 +11,16 @@ import java.util.*;
 public class MatchBuilder
 {
     
-    private final long     id;
-    private final Platform platform;
+    private final long        id;
+    private final LeagueShard platform;
     
     public MatchBuilder()
     {
         this.id = -1;
-        this.platform = Platform.UNKNOWN;
+        this.platform = LeagueShard.UNKNOWN;
     }
     
-    public MatchBuilder(Platform platform, long id)
+    public MatchBuilder(LeagueShard platform, long id)
     {
         this.id = id;
         this.platform = platform;
@@ -30,7 +31,7 @@ public class MatchBuilder
         return new MatchBuilder(this.platform, id);
     }
     
-    public MatchBuilder withPlatform(Platform platform)
+    public MatchBuilder withPlatform(LeagueShard platform)
     {
         return new MatchBuilder(platform, this.id);
     }
@@ -43,7 +44,7 @@ public class MatchBuilder
      */
     public Match get()
     {
-        if (this.id < 0 || this.platform == Platform.UNKNOWN)
+        if (this.id < 0 || this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }

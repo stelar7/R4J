@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.raw;
 
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 
 @SuppressWarnings("unchecked")
@@ -19,7 +20,7 @@ public final class ThirdPartyAPI
         // Hide public constructor
     }
     
-    public boolean checkCode(Platform platform, String summonerId)
+    public boolean checkCode(LeagueShard platform, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
@@ -40,7 +41,7 @@ public final class ThirdPartyAPI
         }
     }
     
-    public String getCode(Platform platform, String summonerId)
+    public String getCode(LeagueShard platform, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)

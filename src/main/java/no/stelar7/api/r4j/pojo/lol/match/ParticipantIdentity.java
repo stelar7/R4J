@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
-import no.stelar7.api.r4j.basic.constants.api.Platform;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
 import java.io.Serializable;
@@ -14,10 +14,10 @@ public class ParticipantIdentity implements Serializable
     private String   matchHistoryUri;
     private int      profileIcon;
     private String   summonerId;
-    private String   summonerName;
-    private Platform currentPlatformId;
-    private Platform platformId;
-    private String   accountId;
+    private String      summonerName;
+    private LeagueShard currentPlatformId;
+    private LeagueShard platformId;
+    private String      accountId;
     private String   currentAccountId;
     
     public Summoner getCurrentSummoner()
@@ -55,12 +55,12 @@ public class ParticipantIdentity implements Serializable
         return summonerName;
     }
     
-    public Platform getCurrentPlatform()
+    public LeagueShard getCurrentPlatform()
     {
         return currentPlatformId;
     }
     
-    public Platform getPlatform()
+    public LeagueShard getPlatform()
     {
         return platformId;
     }

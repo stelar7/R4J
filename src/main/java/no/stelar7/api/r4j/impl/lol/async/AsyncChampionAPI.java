@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.async;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 
 import java.util.*;
@@ -16,9 +17,9 @@ public class AsyncChampionAPI
         return AsyncChampionAPI.INSTANCE;
     }
     
-    private static final Map<Platform, ExecutorService> threadPool = new EnumMap(Platform.class)
+    private static final Map<LeagueShard, ExecutorService> threadPool = new EnumMap(LeagueShard.class)
     {{
-        for (Platform platform : Platform.values())
+        for (LeagueShard platform : LeagueShard.values())
         {
             put(platform, Executors.newFixedThreadPool(1));
         }
@@ -30,7 +31,7 @@ public class AsyncChampionAPI
         // Hide public constructor
     }
     
-    public CompletableFuture<ChampionRotationInfo> getFreeToPlayRotation(Platform server)
+    public CompletableFuture<ChampionRotationInfo> getFreeToPlayRotation(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)
                                                        .withPlatform(server);

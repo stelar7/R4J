@@ -5,6 +5,7 @@ import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.cache.CacheProvider;
 import no.stelar7.api.r4j.basic.cache.impl.EmptyCacheProvider;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.ratelimiting.RateLimiter;
 
 import java.util.*;
@@ -29,9 +30,9 @@ public final class DataCall
     private        Enum        platform;
     private        URLEndpoint endpoint;
     private        boolean     useLimiters      = true;
-    private        long        sleep            = -1;
-    private        Platform    defaultPlatform  = Platform.EUW1;
-    private        String      urlProxy         = Constants.REQUEST_URL;
+    private long        sleep           = -1;
+    private LeagueShard defaultPlatform = LeagueShard.EUW1;
+    private String      urlProxy        = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/r4j");
     
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter()
@@ -70,7 +71,7 @@ public final class DataCall
         {
             return defaultPlatform;
         }
-        if (platform == Platform.UNKNOWN)
+        if (platform == LeagueShard.UNKNOWN)
         {
             return defaultPlatform;
         }
@@ -155,12 +156,12 @@ public final class DataCall
         return urlProxy;
     }
     
-    public Platform getDefaultPlatform()
+    public LeagueShard getDefaultPlatform()
     {
         return defaultPlatform;
     }
     
-    public void setDefaultPlatform(Platform defaultPlatform)
+    public void setDefaultPlatform(LeagueShard defaultPlatform)
     {
         this.defaultPlatform = defaultPlatform;
     }

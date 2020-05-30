@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -31,7 +32,7 @@ public final class LeagueAPI
      * @param queue  queueType to get data for
      * @return LeagueList
      */
-    private LeagueList getMasterLeague(Platform server, GameQueueType queue)
+    private LeagueList getMasterLeague(LeagueShard server, GameQueueType queue)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -72,7 +73,7 @@ public final class LeagueAPI
      * @param queue  queueType to get data for
      * @return LeagueList
      */
-    private LeagueList getGrandmasterLeague(Platform server, GameQueueType queue)
+    private LeagueList getGrandmasterLeague(LeagueShard server, GameQueueType queue)
     {
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
@@ -115,7 +116,7 @@ public final class LeagueAPI
      * @param queue  queueType to get data for
      * @return LeagueList
      */
-    private LeagueList getChallengerLeague(Platform server, GameQueueType queue)
+    private LeagueList getChallengerLeague(LeagueShard server, GameQueueType queue)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
@@ -155,7 +156,7 @@ public final class LeagueAPI
      * @param leagueId league to get data for
      * @return LeagueList
      */
-    public LeagueList getLeague(Platform server, String leagueId)
+    public LeagueList getLeague(LeagueShard server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(leagueId))
@@ -195,7 +196,7 @@ public final class LeagueAPI
      * @param summonerId summoner to get data for
      * @return List of LeagueEntry
      */
-    public List<LeagueEntry> getLeagueEntries(Platform server, String summonerId)
+    public List<LeagueEntry> getLeagueEntries(LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
@@ -239,7 +240,7 @@ public final class LeagueAPI
      * @param page    the page to query (first page is 1)
      * @return LeagueList
      */
-    public List<LeagueEntry> getLeagueByTierDivision(Platform server, GameQueueType queue, TierDivisionType tierdiv, int page)
+    public List<LeagueEntry> getLeagueByTierDivision(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
@@ -306,7 +307,7 @@ public final class LeagueAPI
      * @param tierdiv the tier and division to query
      * @return LeagueList
      */
-    public LazyList<LeagueEntry> getLeagueByTierDivisionLazy(Platform server, GameQueueType queue, TierDivisionType tierdiv)
+    public LazyList<LeagueEntry> getLeagueByTierDivisionLazy(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv)
     {
         return new LazyList<>(1, prevValue -> getLeagueByTierDivision(server, queue, tierdiv, prevValue + 1));
     }

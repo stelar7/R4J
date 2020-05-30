@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.raw;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
 
 import java.util.*;
@@ -23,7 +24,7 @@ public class ClashAPI
     /**
      * Returns a list of player data for all active tournaments you are registered in
      */
-    public List<ClashPlayer> getPlayerInfo(final Platform server, String summonerId)
+    public List<ClashPlayer> getPlayerInfo(final LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CLASH_PLAYER_BY_SUMMONER)
                                                        .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
@@ -56,7 +57,7 @@ public class ClashAPI
     /**
      * Returns the team you played in
      */
-    public ClashTeam getTeam(final Platform server, String teamId)
+    public ClashTeam getTeam(final LeagueShard server, String teamId)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CLASH_TEAM_BY_ID)
                                                        .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
@@ -89,7 +90,7 @@ public class ClashAPI
     /**
      * Returns a list of active tournaments
      */
-    public List<ClashTournament> getTournaments(final Platform server)
+    public List<ClashTournament> getTournaments(final LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS)
                                                        .withPlatform(server);
@@ -120,7 +121,7 @@ public class ClashAPI
     /**
      * Returns a tournament
      */
-    public ClashTournament getTournamentByTeam(final Platform server, String teamId)
+    public ClashTournament getTournamentByTeam(final LeagueShard server, String teamId)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_TEAM)
                                                        .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
@@ -153,7 +154,7 @@ public class ClashAPI
     /**
      * Returns a tournament
      */
-    public ClashTournament getTournamentById(final Platform server, int tournamentId)
+    public ClashTournament getTournamentById(final LeagueShard server, int tournamentId)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_ID)
                                                        .withURLParameter(Constants.TOURNAMENT_ID_PLACEHOLDER, String.valueOf(tournamentId))

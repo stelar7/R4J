@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.builders.summoner;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
@@ -13,8 +14,8 @@ public class SummonerBuilder
     private String   name;
     private String   sumId;
     private String   accId;
-    private String   puuid;
-    private Platform platform;
+    private String      puuid;
+    private LeagueShard platform;
     
     public SummonerBuilder()
     {
@@ -22,10 +23,10 @@ public class SummonerBuilder
         this.sumId = "";
         this.accId = "";
         this.puuid = "";
-        this.platform = Platform.UNKNOWN;
+        this.platform = LeagueShard.UNKNOWN;
     }
     
-    private SummonerBuilder(String name, String sumId, String accId, String puuid, Platform platform)
+    private SummonerBuilder(String name, String sumId, String accId, String puuid, LeagueShard platform)
     {
         this.name = name;
         this.sumId = sumId;
@@ -54,7 +55,7 @@ public class SummonerBuilder
         return new SummonerBuilder(name, "", "", puuid, this.platform);
     }
     
-    public SummonerBuilder withPlatform(Platform platform)
+    public SummonerBuilder withPlatform(LeagueShard platform)
     {
         return new SummonerBuilder(this.name, this.sumId, this.accId, this.puuid, platform);
     }
@@ -83,7 +84,7 @@ public class SummonerBuilder
         return this;
     }
     
-    public SummonerBuilder setPlatform(Platform platform)
+    public SummonerBuilder setPlatform(LeagueShard platform)
     {
         this.platform = platform;
         return this;

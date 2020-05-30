@@ -1,9 +1,9 @@
 package no.stelar7.api.r4j.basic.utils;
 
 import com.google.gson.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.ratelimiting.RateLimit;
 import no.stelar7.api.r4j.basic.serializer.GenericEnumSerializer;
-import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.serializer.*;
 import no.stelar7.api.r4j.pojo.lor.offline.expedition.ExpeditionState;
@@ -42,7 +42,7 @@ public final class Utils
         builder.registerTypeAdapter(MapType.class, new GenericEnumSerializer<MapType>());
         builder.registerTypeAdapter(MonsterType.class, new GenericEnumSerializer<MonsterType>());
         builder.registerTypeAdapter(MonsterSubType.class, new GenericEnumSerializer<MonsterSubType>());
-        builder.registerTypeAdapter(Platform.class, new GenericEnumSerializer<Platform>());
+        builder.registerTypeAdapter(LeagueShard.class, new GenericEnumSerializer<LeagueShard>());
         builder.registerTypeAdapter(PointType.class, new GenericEnumSerializer<PointType>());
         builder.registerTypeAdapter(RateLimit.class, new RatelimitDeserializer());
         builder.registerTypeAdapter(RoleType.class, new GenericEnumSerializer<RoleType>());
@@ -56,7 +56,7 @@ public final class Utils
         builder.registerTypeAdapter(TowerType.class, new GenericEnumSerializer<TowerType>());
         builder.registerTypeAdapter(WardType.class, new GenericEnumSerializer<WardType>());
         builder.registerTypeAdapter(RealmSpesificEnum.class, new RealmSpesificEnumSerializer());
-        builder.registerTypeAdapter(ServicePlatform.class, new RealmSpesificEnumSerializer());
+        builder.registerTypeAdapter(RegionalName.class, new RealmSpesificEnumSerializer());
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
     }
     

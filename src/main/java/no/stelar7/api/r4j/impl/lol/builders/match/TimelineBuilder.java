@@ -2,22 +2,23 @@ package no.stelar7.api.r4j.impl.lol.builders.match;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.match.MatchTimeline;
 
 import java.util.*;
 
 public class TimelineBuilder
 {
-    private final long     id;
-    private final Platform platform;
+    private final long        id;
+    private final LeagueShard platform;
     
     public TimelineBuilder()
     {
         id = -1;
-        platform = Platform.UNKNOWN;
+        platform = LeagueShard.UNKNOWN;
     }
     
-    public TimelineBuilder(Platform platform, long id)
+    public TimelineBuilder(LeagueShard platform, long id)
     {
         this.id = id;
         this.platform = platform;
@@ -28,7 +29,7 @@ public class TimelineBuilder
         return new TimelineBuilder(this.platform, id);
     }
     
-    public TimelineBuilder withPlatform(Platform platform)
+    public TimelineBuilder withPlatform(LeagueShard platform)
     {
         return new TimelineBuilder(platform, this.id);
     }
@@ -41,7 +42,7 @@ public class TimelineBuilder
      */
     public MatchTimeline get()
     {
-        if (this.id == -1 || this.platform == Platform.UNKNOWN)
+        if (this.id == -1 || this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }

@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.impl.lol.builders.league;
 
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.GameQueueType;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.league.*;
@@ -14,20 +15,20 @@ public class LeagueBuilder
     
     private static final Logger logger = LoggerFactory.getLogger(LeagueBuilder.class);
     
-    private final Platform      platform;
+    private final LeagueShard   platform;
     private final GameQueueType queue;
     private final String        summonerId;
     private final String        leagueId;
     
     public LeagueBuilder()
     {
-        this.platform = Platform.UNKNOWN;
+        this.platform = LeagueShard.UNKNOWN;
         this.queue = GameQueueType.RANKED_SOLO_5X5;
         this.summonerId = null;
         this.leagueId = null;
     }
     
-    private LeagueBuilder(Platform platform, GameQueueType queue, String summonerId, String leagueId)
+    private LeagueBuilder(LeagueShard platform, GameQueueType queue, String summonerId, String leagueId)
     {
         this.platform = platform;
         this.queue = queue;
@@ -35,7 +36,7 @@ public class LeagueBuilder
         this.leagueId = leagueId;
     }
     
-    public LeagueBuilder withPlatform(Platform platform)
+    public LeagueBuilder withPlatform(LeagueShard platform)
     {
         return new LeagueBuilder(platform, this.queue, this.summonerId, this.leagueId);
     }
@@ -57,7 +58,7 @@ public class LeagueBuilder
     
     public List<LeagueEntry> getLeagueEntries()
     {
-        if (this.platform == Platform.UNKNOWN || this.summonerId == null)
+        if (this.platform == LeagueShard.UNKNOWN || this.summonerId == null)
         {
             logger.warn("GET called with invalid platform or summonerId");
             return Collections.emptyList();
@@ -100,7 +101,7 @@ public class LeagueBuilder
     public LeagueList getLeague()
     {
         
-        if (this.platform == Platform.UNKNOWN || this.leagueId == null)
+        if (this.platform == LeagueShard.UNKNOWN || this.leagueId == null)
         {
             logger.warn("GET called with invalid platform or leagueId");
             return null;
