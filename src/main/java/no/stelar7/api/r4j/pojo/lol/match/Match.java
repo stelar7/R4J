@@ -217,6 +217,11 @@ public class Match implements Serializable
         return participant.getStats().isWinner();
     }
     
+    public boolean didWin(TeamType team)
+    {
+        return getTeamStats(team).get(0).isWinner();
+    }
+    
     /**
      * Returns your lane opponent based on role and lane, or null if it cant be determined
      *

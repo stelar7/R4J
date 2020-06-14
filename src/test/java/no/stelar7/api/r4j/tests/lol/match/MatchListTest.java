@@ -98,6 +98,25 @@ public class MatchListTest
     }
     
     @Test
+    public void testMatchlistTrump() {
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.OFF);
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.OFF);
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider").setLevel(Level.OFF);
+        
+        Summoner summoner = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        List<MatchReference> refs = summoner.getLeagueGames().get();
+        for (int i = 0; i < 20; i++)
+        {
+            Match m = refs.get(i).getFullMatch();
+            Participant participant = m.getParticipant(summoner).get();
+            boolean didWinShort = m.didWin(participant);
+            boolean didWinLong = participant.getStats().isWinner();
+            assert (didWinShort == didWinLong);
+        }
+    }
+    
+    @Test
     @Ignore
     public void testMatchlistCrawler()
     {
