@@ -5,9 +5,10 @@ import java.util.Objects;
 
 public class LoRPlayerRank implements Serializable
 {
-    private static final long serialVersionUID = 1648942165181218107L;
-    private String name;
-    private int    rank;
+    private static final long   serialVersionUID = 1648942165181218107L;
+    private              String name;
+    private              int    rank;
+    private              int    lp;
     
     public String getName()
     {
@@ -17,6 +18,11 @@ public class LoRPlayerRank implements Serializable
     public int getRank()
     {
         return rank;
+    }
+    
+    public int getLP()
+    {
+        return lp;
     }
     
     @Override
@@ -32,13 +38,14 @@ public class LoRPlayerRank implements Serializable
         }
         LoRPlayerRank that = (LoRPlayerRank) o;
         return rank == that.rank &&
+               lp == that.lp &&
                Objects.equals(name, that.name);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(name, rank);
+        return Objects.hash(name, rank, lp);
     }
     
     @Override
@@ -47,6 +54,7 @@ public class LoRPlayerRank implements Serializable
         return "LoRPlayerRank{" +
                "name='" + name + '\'' +
                ", rank=" + rank +
+               ", lp=" + lp +
                '}';
     }
 }
