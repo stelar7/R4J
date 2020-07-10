@@ -6,6 +6,7 @@ import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.impl.lol.raw.*;
 import no.stelar7.api.r4j.impl.lor.*;
 import no.stelar7.api.r4j.impl.tft.*;
+import no.stelar7.api.r4j.impl.val.*;
 
 /**
  * The base class for calling anything from this api wrapper
@@ -197,6 +198,40 @@ public class R4J
             return TFTLeagueAPI.getInstance();
         }
         
+    }
+    
+    public VALAPI getVALAPI()
+    {
+        return VALAPI.INSTANCE;
+    }
+    
+    public static final class VALAPI
+    {
+        private VALAPI()
+        {
+        }
+        
+        private static final VALAPI INSTANCE = new VALAPI();
+        
+        /**
+         * Gets summoner api.
+         *
+         * @return the summoner api
+         */
+        public VALContentAPI getContentAPI()
+        {
+            return VALContentAPI.getInstance();
+        }
+        
+        /**
+         * Gets match api.
+         *
+         * @return the match api
+         */
+        public VALMatchAPI getMatchAPI()
+        {
+            return VALMatchAPI.getInstance();
+        }
     }
     
     /**

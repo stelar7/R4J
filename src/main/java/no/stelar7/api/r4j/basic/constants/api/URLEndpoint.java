@@ -28,6 +28,7 @@ import no.stelar7.api.r4j.pojo.lor.offline.expedition.LoRExpeditionInfo;
 import no.stelar7.api.r4j.pojo.lor.offline.game.*;
 import no.stelar7.api.r4j.pojo.lor.ranked.LoRRankedPlayerList;
 import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
+import no.stelar7.api.r4j.pojo.val.content.Content;
 
 public enum URLEndpoint
 {
@@ -206,7 +207,11 @@ public enum URLEndpoint
     V1_CLASH_TEAM_BY_ID("lol", "clash", "v1", "teams/" + Constants.TEAM_ID_PLACEHOLDER, ClashTeam.class),
     V1_CLASH_TOURNAMENTS("lol", "clash", "v1", "tournaments", ClashTournamentList.class),
     V1_CLASH_TOURNAMENTS_BY_TEAM("lol", "clash", "v1", "tournaments/by-team/" + Constants.TEAM_ID_PLACEHOLDER, ClashTournament.class),
-    V1_CLASH_TOURNAMENTS_BY_ID("lol", "clash", "v1", "tournaments/"+ Constants.TOURNAMENT_ID_PLACEHOLDER, ClashTournament.class),
+    V1_CLASH_TOURNAMENTS_BY_ID("lol", "clash", "v1", "tournaments/" + Constants.TOURNAMENT_ID_PLACEHOLDER, ClashTournament.class),
+    
+    V1_VAL_CONTENT("val", "content", "v1", "contents", Content.class),
+    V1_VAL_MATCH_BY_ID("val", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, no.stelar7.api.r4j.pojo.val.match.Match.class),
+    V1_VAL_MATCHLIST_BY_PUUID("val", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, no.stelar7.api.r4j.pojo.val.matchlist.MatchList.class),
     
     
     ;

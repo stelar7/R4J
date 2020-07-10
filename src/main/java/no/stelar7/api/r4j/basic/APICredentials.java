@@ -7,10 +7,11 @@ import java.security.*;
 
 public class APICredentials
 {
-    private String lolAPIKey;
-    private String TFTAPIKey;
-    private String LORAPIKey;
-    private String tournamentApiKey;
+    private final String lolAPIKey;
+    private final String TFTAPIKey;
+    private final String LORAPIKey;
+    private final String VALAPIKey;
+    private final String tournamentApiKey;
     
     /**
      * Instantiates new API credentials.
@@ -19,14 +20,17 @@ public class APICredentials
      * @param tournament the tournament key
      * @param tft        the tft lol key
      * @param lor        the lor lol key
+     * @param val        the val lol key
      */
-    public APICredentials(final String lol, final String tournament, final String tft, final String lor)
+    public APICredentials(final String lol, final String tournament, final String tft, final String lor, final String val)
     {
         this.lolAPIKey = lol;
         this.tournamentApiKey = tournament;
         this.TFTAPIKey = tft;
         this.LORAPIKey = lor;
+        this.VALAPIKey = val;
     }
+    
     
     /**
      * Instantiates new API credentials.
@@ -36,7 +40,7 @@ public class APICredentials
      */
     public APICredentials(final String key, final String tournament)
     {
-        this(key, tournament, key, key);
+        this(key, tournament, key, key, key);
     }
     
     /**
@@ -46,7 +50,7 @@ public class APICredentials
      */
     public APICredentials(final String api)
     {
-        this(api, api, api, api);
+        this(api, api, api, api, api);
     }
     
     /**
@@ -93,6 +97,20 @@ public class APICredentials
     }
     
     /**
+     * Gets the val key.
+     *
+     * @return the key
+     */
+    public String getVALAPIKey()
+    {
+        if (this.VALAPIKey == null)
+        {
+            throw new APIUnsupportedActionException("API key not set!");
+        }
+        return this.VALAPIKey;
+    }
+    
+    /**
      * Gets the tournament key.
      *
      * @return the key
@@ -108,7 +126,7 @@ public class APICredentials
     
     public String getUniqueKeyCombination()
     {
-        String unique = lolAPIKey + "separator" + tournamentApiKey + "separator" + TFTAPIKey + "separator" + LORAPIKey;
+        String unique = lolAPIKey + "separator" + tournamentApiKey + "separator" + TFTAPIKey + "separator" + LORAPIKey + "separator" + VALAPIKey;
         try
         {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

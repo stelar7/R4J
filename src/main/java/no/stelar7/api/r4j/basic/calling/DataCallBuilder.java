@@ -164,9 +164,10 @@ public class DataCallBuilder
             {
                 
                 String reasonText = "The API denied your request!\n";
-                reasonText += "Your API key might be invalid\n";
-                reasonText += "You may be trying to call a endpoint you dont have access to\n";
-                reasonText += "or if you just regenerated it; wait a few seconds, then try again\n";
+                reasonText += "Possible reasons:\n";
+                reasonText += " - Your API key is invalid\n";
+                reasonText += " - You just regenerated the key; wait a few seconds, then try again\n";
+                reasonText += " - You are trying to call a endpoint you dont have access to\n";
                 throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
             }
             

@@ -16,6 +16,10 @@ public enum ValorantShard implements RealmSpesificEnum
      */
     NA("NA", "na"),
     /**
+     * North america
+     */
+    PBE1("PBE1", "pbe1"),
+    /**
      * Europe
      */
     EU("EU", "eu"),
