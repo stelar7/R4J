@@ -62,6 +62,8 @@ public final class Constants
     public static final String DIVISION_PLACEHOLDER         = "{division}";
     public static final String LANE_PLACEHOLDER             = "{lane}";
     public static final String PAGE_PLACEHOLDER             = "{page}";
+    public static final String GAME_NAME_PLACEHOLDER        = "{gameName}";
+    public static final String TAG_LINE_PLACEHOLDER         = "{tagLine}";
     
     
     public static final String URL_PARAM_TOURNAMENT_ID       = "tournamentId";

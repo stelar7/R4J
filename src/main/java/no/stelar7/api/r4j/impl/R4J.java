@@ -5,6 +5,7 @@ import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.impl.lol.raw.*;
 import no.stelar7.api.r4j.impl.lor.*;
+import no.stelar7.api.r4j.impl.shared.AccountAPI;
 import no.stelar7.api.r4j.impl.tft.*;
 import no.stelar7.api.r4j.impl.val.*;
 
@@ -243,6 +244,18 @@ public class R4J
     {
         return ImageAPI.getInstance();
     }
+    
+    
+    /**
+     * Gets account api.
+     *
+     * @return the account api
+     */
+    public AccountAPI getAccountAPI()
+    {
+        return AccountAPI.getInstance();
+    }
+    
     
     /**
      * Gets status api.

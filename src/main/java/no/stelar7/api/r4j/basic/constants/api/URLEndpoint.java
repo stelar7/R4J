@@ -27,7 +27,7 @@ import no.stelar7.api.r4j.pojo.lor.oauth.*;
 import no.stelar7.api.r4j.pojo.lor.offline.expedition.LoRExpeditionInfo;
 import no.stelar7.api.r4j.pojo.lor.offline.game.*;
 import no.stelar7.api.r4j.pojo.lor.ranked.LoRRankedPlayerList;
-import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
+import no.stelar7.api.r4j.pojo.shared.*;
 import no.stelar7.api.r4j.pojo.val.content.Content;
 
 public enum URLEndpoint
@@ -212,6 +212,10 @@ public enum URLEndpoint
     V1_VAL_CONTENT("val", "content", "v1", "contents", Content.class),
     V1_VAL_MATCH_BY_ID("val", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, no.stelar7.api.r4j.pojo.val.match.Match.class),
     V1_VAL_MATCHLIST_BY_PUUID("val", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, no.stelar7.api.r4j.pojo.val.matchlist.MatchList.class),
+    
+    V1_SHARED_ACCOUNT_BY_PUUID("riot", "account", "v1", "accounts/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, RiotAccount.class),
+    V1_SHARED_ACCOUNT_BY_TAG("riot", "account", "v1", "accounts/by-riot-id/" + Constants.GAME_NAME_PLACEHOLDER + "/" + Constants.TAG_LINE_PLACEHOLDER, RiotAccount.class),
+    V1_SHARED_SHARD_BY_PUUID("riot", "account", "v1", "active-shards/by-game/" + Constants.GAME_PLACEHOLDER + "/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, RiotAccount.class),
     
     
     ;
