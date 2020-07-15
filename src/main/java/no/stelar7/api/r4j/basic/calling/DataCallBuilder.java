@@ -569,6 +569,8 @@ public class DataCallBuilder
             con.setRequestProperty("Pragma", "no-cache");
             con.setRequestProperty("Connection", "keep-alive");
             con.setRequestProperty("Content-Type", "application/json");
+            con.setConnectTimeout(this.dc.getConnectTimeout());
+            con.setReadTimeout(this.dc.getReadTimeout());
             this.dc.getUrlHeaders().forEach(con::setRequestProperty);
             
             if(requestMethod.equalsIgnoreCase("PATCH")) {

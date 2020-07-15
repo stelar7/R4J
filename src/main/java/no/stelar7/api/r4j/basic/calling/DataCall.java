@@ -22,6 +22,7 @@ public final class DataCall
     private static int            callStackSkip  = 5;
     private static int            callStackLimit = 5;
     private static long           maxSleep       = 10000;
+    private static int            globalTimeout  = 0;
     
     private final Map<String, String> urlParams  = new TreeMap<>();
     private final Map<String, String> urlData    = new TreeMap<>();
@@ -30,9 +31,11 @@ public final class DataCall
     private        Enum        platform;
     private        URLEndpoint endpoint;
     private        boolean     useLimiters      = true;
-    private long        sleep           = -1;
-    private LeagueShard defaultPlatform = LeagueShard.EUW1;
-    private String      urlProxy        = Constants.REQUEST_URL;
+    private        long        sleep            = -1;
+    private        int         readTimeout      = 0;
+    private        int         connectTimeout   = 0;
+    private        LeagueShard defaultPlatform  = LeagueShard.EUW1;
+    private        String      urlProxy         = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/r4j");
     
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter()
@@ -201,4 +204,33 @@ public final class DataCall
         return DataCall.maxSleep;
     }
     
+    public int getReadTimeout()
+    {
+        return readTimeout == 0 ? globalTimeout : readTimeout;
+    }
+    
+    public void setReadTimeout(int readTimeout)
+    {
+        this.readTimeout = readTimeout;
+    }
+    
+    public int getConnectTimeout()
+    {
+        return connectTimeout == 0 ? globalTimeout : connectTimeout;
+    }
+    
+    public void setConnectTimeout(int connectTimeout)
+    {
+        this.connectTimeout = connectTimeout;
+    }
+    
+    public static int getGlobalTimeout()
+    {
+        return globalTimeout;
+    }
+    
+    public static void setGlobalTimeout(int globalTimeout)
+    {
+        DataCall.globalTimeout = globalTimeout;
+    }
 }
