@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.tests.lol.match;
 import ch.qos.logback.classic.*;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
-import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.utils.*;
@@ -16,7 +16,7 @@ import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
@@ -28,29 +28,29 @@ public class MatchListTest
 {
     private final Consumer<MatchReference> doAssertions = (final MatchReference match) ->
     {
-        Assert.assertNotNull("lane is null", match.getLane());
-        Assert.assertNotNull("platform is null", match.getPlatform());
-        Assert.assertNotNull("queue is null", match.getQueue());
-        Assert.assertNotNull("role is null", match.getRole());
-        Assert.assertNotNull("season is null", match.getSeason());
+        Assertions.assertNotNull(match.getLane(), "lane is null");
+        Assertions.assertNotNull(match.getPlatform(), "platform is null");
+        Assertions.assertNotNull(match.getQueue(), "queue is null");
+        Assertions.assertNotNull(match.getRole(), "role is null");
+        Assertions.assertNotNull(match.getSeason(), "season is null");
         
-        Assert.assertNotNull("TIMESTAMP is null", match.getTimestampAsDate());
-        Assert.assertNotNull("LANE is null", match.getLane());
-        Assert.assertNotNull("QUEUE is null", match.getQueue());
-        Assert.assertNotNull("ROLE is null", match.getRole());
-        Assert.assertNotNull("SEASON is null", match.getSeason());
+        Assertions.assertNotNull(match.getTimestampAsDate(), "TIMESTAMP is null");
+        Assertions.assertNotNull(match.getLane(), "LANE is null");
+        Assertions.assertNotNull(match.getQueue(), "QUEUE is null");
+        Assertions.assertNotNull(match.getRole(), "ROLE is null");
+        Assertions.assertNotNull(match.getSeason(), "SEASON is null");
         
-        Assert.assertNotNull("lane is null", match.getLane());
-        Assert.assertNotNull("queue is null", match.getQueue());
-        Assert.assertNotNull("role is null", match.getRole());
-        Assert.assertNotNull("season is null", match.getSeason());
+        Assertions.assertNotNull(match.getLane(), "Lane is null");
+        Assertions.assertNotNull(match.getQueue(), "queue is null");
+        Assertions.assertNotNull(match.getRole(), "role is null");
+        Assertions.assertNotNull(match.getSeason(), "season is null");
     };
     
     final R4J r4J = new R4J(SecretFile.CREDS);
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testMatchAndMatchList()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
@@ -75,7 +75,7 @@ public class MatchListTest
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testMatchlistIterator()
     {
         Summoner      s     = Summoner.byName(LeagueShard.EUW1, "stelar7");
@@ -94,37 +94,38 @@ public class MatchListTest
         Summoner             s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         MatchListBuilder     mlb  = new MatchListBuilder();
         List<MatchReference> list = mlb.withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).get();
-        Assert.assertFalse("api didnt load data?!", list.isEmpty());
+        Assertions.assertFalse(list.isEmpty(), "api didnt load data?!");
     }
     
     @Test
-    public void testMatchlistTrump() {
+    public void testMatchlistTrump()
+    {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.OFF);
         loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.OFF);
         loggerContext.getLogger("no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider").setLevel(Level.OFF);
         
-        Summoner summoner = Summoner.byName(LeagueShard.EUW1, "stelar7");
-        List<MatchReference> refs = summoner.getLeagueGames().get();
+        Summoner             summoner = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        List<MatchReference> refs     = summoner.getLeagueGames().get();
         for (int i = 0; i < 20; i++)
         {
-            Match m = refs.get(i).getFullMatch();
+            Match       m           = refs.get(i).getFullMatch();
             Participant participant = m.getParticipant(summoner).get();
-            boolean didWinShort = m.didWin(participant);
-            boolean didWinLong = participant.getStats().isWinner();
+            boolean     didWinShort = m.didWin(participant);
+            boolean     didWinLong  = participant.getStats().isWinner();
             assert (didWinShort == didWinLong);
         }
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testMatchlistCrawler()
     {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.OFF);
         loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.OFF);
         loggerContext.getLogger("no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider").setLevel(Level.OFF);
-    
+        
         Summoner s = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("stelar7").get();
         
         SummonerCrawler crawler = new SummonerCrawler(s, 1000);
@@ -143,7 +144,7 @@ public class MatchListTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void proveThatDartWasInting()
     {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -196,7 +197,7 @@ public class MatchListTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testSomeStatsAboutInting()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
@@ -253,7 +254,7 @@ public class MatchListTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testBloop()
     {
         Summoner                 summoner = Summoner.byName(LeagueShard.EUN1, "coust");
@@ -312,7 +313,7 @@ public class MatchListTest
         {
             if (!ref.add(reference))
             {
-                Assert.fail("Same game is collected when looping matchlist");
+                Assertions.fail("Same game is collected when looping matchlist");
             }
         }
     }
@@ -345,9 +346,9 @@ public class MatchListTest
         Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         List<MatchReference> list = new MatchListBuilder().withAccountId(s.getAccountId()).withPlatform(s.getPlatform()).getLazy();
-        Assert.assertTrue("LazyList loaded data?!", list.isEmpty());
+        Assertions.assertTrue(list.isEmpty(), "LazyList loaded data?!");
         list.get(51);
-        Assert.assertFalse("LazyList didnt load data?!", list.isEmpty());
+        Assertions.assertFalse(list.isEmpty(), "LazyList didnt load data?!");
     }
     
     @Test
@@ -410,13 +411,13 @@ public class MatchListTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testLazyList()
     {
         LazyList<MatchReference> refs = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("stelar7").get().getLeagueGames().getLazy();
-        Assert.assertTrue("LazyList is populated?", refs.isEmpty());
+        Assertions.assertTrue(refs.isEmpty(), "LazyList is populated?");
         refs.loadFully();
-        Assert.assertFalse("LazyList is not populated?", refs.isEmpty());
+        Assertions.assertFalse(refs.isEmpty(), "LazyList is not populated?");
     }
     
     @Test

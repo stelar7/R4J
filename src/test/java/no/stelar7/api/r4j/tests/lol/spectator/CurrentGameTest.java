@@ -7,7 +7,7 @@ import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.spectator.SpectatorGameInfo;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -18,17 +18,17 @@ public class CurrentGameTest
     Consumer<SpectatorGameInfo> doAssertions = (final SpectatorGameInfo currentGame) ->
     {
         
-        Assert.assertNotNull("bannedchampion is null", currentGame.getBannedChampions());
-        Assert.assertNotNull("gamemode is null", currentGame.getGameMode());
-        Assert.assertNotNull("gamequeuecongifid is null", currentGame.getGameQueueConfig());
-        Assert.assertNotNull("gamestarttime is null", currentGame.getGameStartAsDate());
-        Assert.assertNotNull("gametype is null", currentGame.getGameType());
-        Assert.assertNotNull("mapid is null", currentGame.getMap());
-        Assert.assertNotNull("observers is null", currentGame.getObservers());
-        Assert.assertNotNull("participants is null", currentGame.getParticipants());
+        Assertions.assertNotNull(currentGame.getBannedChampions(), "bannedchampion is null");
+        Assertions.assertNotNull(currentGame.getGameMode(), "gamemode is null");
+        Assertions.assertNotNull(currentGame.getGameQueueConfig(), "gamequeuecongifid is null");
+        Assertions.assertNotNull(currentGame.getGameStartAsDate(), "gamestarttime is null");
+        Assertions.assertNotNull(currentGame.getGameType(), "gametype is null");
+        Assertions.assertNotNull(currentGame.getMap(), "mapid is null");
+        Assertions.assertNotNull(currentGame.getObservers(), "observers is null");
+        Assertions.assertNotNull(currentGame.getParticipants(), "participants is null");
         
         // this was an issue somehow??
-        Assert.assertNotNull("participants has null id", currentGame.getParticipants().get(0).getSummonerId());
+        Assertions.assertNotNull(currentGame.getParticipants().get(0).getSummonerId(), "participants has null id");
     };
     
     @Test
@@ -55,8 +55,8 @@ public class CurrentGameTest
     @Test
     public void testCurrentGameFame()
     {
-        final R4J r4J = new R4J(SecretFile.CREDS);
-        Summoner  s   = Summoner.byName(LeagueShard.EUW1, "Klospülautomat");
+        final R4J         r4J  = new R4J(SecretFile.CREDS);
+        Summoner          s    = Summoner.byName(LeagueShard.EUW1, "Klospülautomat");
         SpectatorGameInfo game = s.getCurrentGame();
         
         System.out.format("%s is %sin game%n", s.getName(), game != null ? "" : "not ");

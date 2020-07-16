@@ -6,7 +6,7 @@ import no.stelar7.api.r4j.impl.lol.raw.ClashAPI;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

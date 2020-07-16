@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.pojo.lol.spectator.SpectatorGameInfo;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -16,14 +16,14 @@ public class FeaturedGameTest
     {
         for (SpectatorGameInfo featured : currentGames)
         {
-            Assert.assertNotNull("bannedchampion is null", featured.getBannedChampions());
-            Assert.assertNotNull("gamemode is null", featured.getGameMode());
-            Assert.assertNotNull("gamequeuecongifid is null", featured.getGameQueueConfig());
-            Assert.assertNotNull("gamestarttime is null", featured.getGameStartAsDate());
-            Assert.assertNotNull("gametype is null", featured.getGameType());
-            Assert.assertNotNull("mapid is null", featured.getMap());
-            Assert.assertNotNull("observers is null", featured.getObservers());
-            Assert.assertNotNull("participantsis null", featured.getParticipants());
+            Assertions.assertNotNull(featured.getBannedChampions(), "bannedchampion is null");
+            Assertions.assertNotNull(featured.getGameMode(), "gamemode is null");
+            Assertions.assertNotNull(featured.getGameQueueConfig(), "gamequeuecongifid is null");
+            Assertions.assertNotNull(featured.getGameStartAsDate(), "gamestarttime is null");
+            Assertions.assertNotNull(featured.getGameType(), "gametype is null");
+            Assertions.assertNotNull(featured.getMap(), "mapid is null");
+            Assertions.assertNotNull(featured.getObservers(), "observers is null");
+            Assertions.assertNotNull(featured.getParticipants(), "participants is null");
         }
     };
     

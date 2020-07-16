@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Kill
+public class Kill implements Serializable
 {
-    private int                  gameTime;
+    private static final long serialVersionUID = 3645173464463247386L;
+    
+    private int gameTime;
     private int                  roundTime;
     private String               killer;
     private String               victim;

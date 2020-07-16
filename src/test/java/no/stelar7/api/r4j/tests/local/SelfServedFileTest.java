@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.tests.local;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.*;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,9 +14,8 @@ import java.util.regex.*;
 
 public class SelfServedFileTest
 {
-    
     @Test
-    @Ignore
+    @Disabled
     public void doTest() throws IOException
     {
         Path filepath = Paths.get("src/test/java/no/stelar7/api/r4j/tests/local", "championFull.json");
@@ -55,7 +54,7 @@ public class SelfServedFileTest
     public void testStaticDataIntegrety(StaticChampionList clist)
     {
         Map<Integer, StaticChampion> list = clist.getData();
-        Assert.assertTrue("less than 100?", list.size() > 100);
+        Assertions.assertTrue(list.size() > 100, "less than 100?");
         
         Pattern pat = Pattern.compile("(\\{\\{ .*? }})");
         
@@ -105,7 +104,7 @@ public class SelfServedFileTest
         }
         errors.forEach(System.out::println);
         
-        Assert.assertFalse("Static data is fixed!?", errors.isEmpty());
+        Assertions.assertFalse(errors.isEmpty(), "Static data is fixed!?");
     }
     
     private String getFromSublist(StaticChampionSpell find, Map<String, List<StaticChampionSpell>> data)

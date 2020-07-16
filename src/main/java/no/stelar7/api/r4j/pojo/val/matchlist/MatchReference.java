@@ -1,9 +1,12 @@
 package no.stelar7.api.r4j.pojo.val.matchlist;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class MatchListMatch
+public class MatchReference implements Serializable
 {
+    private static final long serialVersionUID = -5301457261872587385L;
+    
     private String matchId;
     private Long   gameStartTime;
     private String teamId;
@@ -34,7 +37,7 @@ public class MatchListMatch
         {
             return false;
         }
-        MatchListMatch match = (MatchListMatch) o;
+        MatchReference match = (MatchReference) o;
         return Objects.equals(matchId, match.matchId) &&
                Objects.equals(gameStartTime, match.gameStartTime) &&
                Objects.equals(teamId, match.teamId);

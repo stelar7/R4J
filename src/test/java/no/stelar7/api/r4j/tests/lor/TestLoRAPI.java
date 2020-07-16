@@ -1,17 +1,17 @@
 package no.stelar7.api.r4j.tests.lor;
 
-import no.stelar7.api.r4j.basic.constants.api.regions.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.RuneterraShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lor.*;
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRDeck;
 import no.stelar7.api.r4j.pojo.lor.offline.game.*;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 public class TestLoRAPI
 {
     @Test
-    @Ignore
+    @Disabled
     public void testStuff() throws InterruptedException
     {
         while (true)
@@ -47,7 +47,7 @@ public class TestLoRAPI
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testLeaderboard()
     {
         LORRankedAPI api = new R4J(SecretFile.CREDS).getLORAPI().getRankedAPI();
@@ -56,7 +56,7 @@ public class TestLoRAPI
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testActiveDeck()
     {
         LoRDeck deck = LoRClientAPI.getActiveDeck();
@@ -64,7 +64,7 @@ public class TestLoRAPI
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testGameResult()
     {
         LoRGameResult result = LoRClientAPI.getLastGameResult();
@@ -72,7 +72,7 @@ public class TestLoRAPI
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testGameState()
     {
         LoRGameInfo state = LoRClientAPI.getCardPositions();

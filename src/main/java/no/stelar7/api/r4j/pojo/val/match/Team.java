@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Team
+public class Team implements Serializable
 {
-    private String  teamId;
+    private static final long serialVersionUID = -1562243042489225119L;
+    
+    private String teamId;
     private Boolean won;
     private Integer roundsPlayed;
     private Integer roundsWon;

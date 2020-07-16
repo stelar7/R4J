@@ -8,7 +8,7 @@ import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 

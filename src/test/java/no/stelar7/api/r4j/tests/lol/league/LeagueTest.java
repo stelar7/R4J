@@ -12,7 +12,7 @@ import no.stelar7.api.r4j.impl.lol.raw.LeagueAPI;
 import no.stelar7.api.r4j.pojo.lol.league.LeagueEntry;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class LeagueTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testPositionalRanks()
     {
         LazyList<LeagueEntry> data = r4J.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.DIAMOND_I);
@@ -70,7 +70,7 @@ public class LeagueTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testPositionalRanksTFT()
     {
         LazyList<LeagueEntry> data = r4J.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(LeagueShard.EUW1, GameQueueType.TEAMFIGHT_TACTICS_RANKED, TierDivisionType.GOLD_I);

@@ -1,14 +1,14 @@
 package no.stelar7.api.r4j.tests.lol.championmastery;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.impl.*;
+import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class ChampionMasteryTest
         Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
         Integer score = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withSummonerId(s.getSummonerId()).getMasteryScore();
-        Assert.assertNotNull("no data", score);
+        Assertions.assertNotNull(score, "no data");
     }
     
 }

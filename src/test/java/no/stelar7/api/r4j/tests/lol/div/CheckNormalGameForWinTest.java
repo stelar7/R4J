@@ -8,7 +8,7 @@ import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class CheckNormalGameForWinTest
     final R4J r4J = new R4J(SecretFile.CREDS);
     
     @Test
-    @Ignore
+    @Disabled
     public void testFindSelfInNormalGame()
     {
         Summoner             dev  = new SummonerBuilder().withPlatform(LeagueShard.NA1).withName("devitgg").get();
@@ -54,7 +54,7 @@ public class CheckNormalGameForWinTest
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testFindSelfAfterNormalGame()
     {
         Summoner dev = new SummonerBuilder().withPlatform(LeagueShard.NA1).withName("devitgg").get();

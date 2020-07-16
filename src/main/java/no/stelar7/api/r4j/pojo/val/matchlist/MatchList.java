@@ -1,18 +1,21 @@
 package no.stelar7.api.r4j.pojo.val.matchlist;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class MatchList
+public class MatchList implements Serializable
 {
-    private String               puuid;
-    private List<MatchListMatch> history;
+    private static final long serialVersionUID = -6256637993112869814L;
+    
+    private String puuid;
+    private List<MatchReference> history;
     
     public String getPuuid()
     {
         return puuid;
     }
     
-    public List<MatchListMatch> getHistory()
+    public List<MatchReference> getHistory()
     {
         return history;
     }

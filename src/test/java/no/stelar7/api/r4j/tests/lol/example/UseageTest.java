@@ -12,7 +12,7 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.perk.StaticPerk;
 import no.stelar7.api.r4j.pojo.lol.staticdata.rune.StaticRune;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 

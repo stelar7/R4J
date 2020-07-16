@@ -7,7 +7,7 @@ import no.stelar7.api.r4j.impl.lol.raw.ChampionAPI;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ChampionTest
 {

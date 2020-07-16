@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PlayerLocation
+public class PlayerLocation implements Serializable
 {
-    private String   puuid;
+    private static final long serialVersionUID = -722332664254204236L;
+    
+    private String puuid;
     private float    viewRadians;
     private Location location;
     

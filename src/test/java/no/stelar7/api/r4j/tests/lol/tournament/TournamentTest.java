@@ -10,19 +10,18 @@ import no.stelar7.api.r4j.pojo.lol.match.Match;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Ignore
 public class TournamentTest
 {
     
     final TournamentAPI api = new R4J(SecretFile.CREDS).getLoLAPI().getTournamentAPI(true);
     
     @Test
-    @Ignore
+    @Disabled
     public void testAllRegistrations()
     {
         final ProviderRegistrationParameters params     = new ProviderRegistrationParameters(LeagueShard.EUW1, "http://stelar7.no/loltest/provider.php");

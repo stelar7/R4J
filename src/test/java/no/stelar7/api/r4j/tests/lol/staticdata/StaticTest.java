@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.raw.*;
+import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.Item;
 import no.stelar7.api.r4j.pojo.lol.staticdata.map.MapDetails;
@@ -16,7 +16,7 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.realm.Realm;
 import no.stelar7.api.r4j.pojo.lol.staticdata.rune.StaticRune;
 import no.stelar7.api.r4j.pojo.lol.staticdata.summonerspell.StaticSummonerSpell;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import javax.net.ssl.SSLException;
 import java.io.*;
@@ -32,7 +32,7 @@ public class StaticTest
     DDragonAPI api = r4J.getDDragonAPI();
     
     @Test
-    @Ignore
+    @Disabled
     public void fetchAllImagesWithIdName()
     {
         Path outputFolder = Paths.get("C:\\Users\\Steffen\\Desktop\\cs\\src\\assets\\splash");
@@ -48,7 +48,7 @@ public class StaticTest
                    {
                        return;
                    }
-                   
+                
                    String url  = "https://cdn.communitydragon.org/latest/champion/" + e.getKey() + "/splash-art/centered/skin/" + skin.getNum();
                    Path   file = outputFolder.resolve(Utils.padLeft(String.valueOf(skin.getId()), "0", 6) + ".png");
                 
@@ -59,7 +59,7 @@ public class StaticTest
     
     
     @Test
-    @Ignore
+    @Disabled
     public void fetchAllImagesWithIdNameCdragon()
     {
         Path outputFolder = Paths.get("C:\\Users\\Steffen\\Desktop\\cs\\src\\assets\\splash");
@@ -161,7 +161,7 @@ public class StaticTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         Map<Integer, StaticChampion> list = api.getChampions();
-        Assert.assertTrue("less than 100?", list.size() > 100);
+        Assertions.assertTrue(list.size() > 100, "less than 100?");
     }
     
     @Test
@@ -172,7 +172,7 @@ public class StaticTest
         StaticChampion list = api.getChampion(1);
         double         r    = list.getSpells().get(0).getRange().get(0);
         System.out.println(r);
-        Assert.assertEquals("ok?", list.getId(), 1);
+        Assertions.assertEquals(list.getId(), 1);
     }
     
     @Test
@@ -181,7 +181,7 @@ public class StaticTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         Map<Integer, Item> list = api.getItems();
-        Assert.assertTrue("less than 100?", list.size() > 100);
+        Assertions.assertTrue(list.size() > 100);
     }
     
     
@@ -192,7 +192,7 @@ public class StaticTest
         
         
         Item list = api.getItem(3147);
-        Assert.assertEquals("ok?", 3147, list.getId());
+        Assertions.assertEquals(3147, list.getId());
     }
     
     
@@ -241,7 +241,7 @@ public class StaticTest
         
         
         StaticMastery list = api.getMastery(6131);
-        Assert.assertEquals("ok?", 6131, list.getId());
+        Assertions.assertEquals(6131, list.getId());
     }
     
     @Test
@@ -280,13 +280,13 @@ public class StaticTest
         
         StaticRune rune = api.getRune(5023);
         
-        Assert.assertEquals("missing id?", 5023, rune.getId());
-        Assert.assertNotNull("missing stats?", rune.getStats());
-        Assert.assertNotNull("missing desc?", rune.getDescription());
-        Assert.assertNotNull("missing tags?", rune.getTags());
-        Assert.assertNotNull("missing image?", rune.getImage());
-        Assert.assertNotNull("missing rune?", rune.getRune());
-        Assert.assertNotNull("missing name?", rune.getName());
+        Assertions.assertEquals(5023, rune.getId(), "missing id?");
+        Assertions.assertNotNull(rune.getStats(), "missing stats?");
+        Assertions.assertNotNull(rune.getDescription(), "missing desc?");
+        Assertions.assertNotNull(rune.getTags(), "missing tags?");
+        Assertions.assertNotNull(rune.getImage(), "missing image?");
+        Assertions.assertNotNull(rune.getRune(), "missing rune?");
+        Assertions.assertNotNull(rune.getName(), "missing name?");
     }
     
     @Test
@@ -306,7 +306,7 @@ public class StaticTest
         
         
         StaticSummonerSpell list = api.getSummonerSpell(21);
-        Assert.assertEquals("ok?", 21, list.getId());
+        Assertions.assertEquals(21, list.getId());
     }
     
     

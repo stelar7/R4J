@@ -5,54 +5,20 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
-import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
-import org.junit.rules.Stopwatch;
-import org.junit.runner.Description;
+import no.stelar7.api.r4j.tests.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.concurrent.*;
 
+@ExtendWith(TimingExtension.class)
 public class RatelimitTest
 {
-    
-    private static void logInfo(Description description, String status, long nanos)
-    {
-        String testName = description.getMethodName();
-        System.out.println(String.format("Test %s %s, spent %d milliseconds", testName, status, TimeUnit.NANOSECONDS.toMillis(nanos)));
-    }
-    
-    @Rule
-    public Stopwatch stopwatch = new Stopwatch()
-    {
-        @Override
-        protected void succeeded(long nanos, Description description)
-        {
-            logInfo(description, "succeeded", nanos);
-        }
-        
-        @Override
-        protected void failed(long nanos, Throwable e, Description description)
-        {
-            logInfo(description, "failed", nanos);
-        }
-        
-        @Override
-        protected void skipped(long nanos, AssumptionViolatedException e, Description description)
-        {
-            logInfo(description, "skipped", nanos);
-        }
-        
-        @Override
-        protected void finished(long nanos, Description description)
-        {
-            logInfo(description, "finished", nanos);
-        }
-    };
     
     final R4J r4J = new R4J(SecretFile.CREDS);
     
     @Test
-    @Ignore
+    @Disabled
     public void testRateLimitThreaded()
     {
         try
@@ -74,7 +40,7 @@ public class RatelimitTest
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testRateLimit()
     {
         final R4J test = new R4J(SecretFile.CREDS);
@@ -87,7 +53,7 @@ public class RatelimitTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testRateLimitWithSleep() throws InterruptedException
     {
         String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
@@ -99,9 +65,10 @@ public class RatelimitTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testRateLimitStatic()
     {
+        long start = System.currentTimeMillis();
         LeagueShard plat = LeagueShard.values()[1];
         for (int i = 0; i < 30; i++)
         {
@@ -112,7 +79,7 @@ public class RatelimitTest
             {
                 plat = LeagueShard.values()[plat.ordinal() + 1];
             }
-            System.out.format("call no. %s Total time: %sms%n", i + 1, stopwatch.runtime(TimeUnit.MILLISECONDS));
+            System.out.format("call no. %s Total time: %sms%n", i + 1, System.currentTimeMillis() - start);
         }
     }
 }

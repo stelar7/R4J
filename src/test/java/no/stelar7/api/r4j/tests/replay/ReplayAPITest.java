@@ -3,12 +3,12 @@ package no.stelar7.api.r4j.tests.replay;
 import no.stelar7.api.r4j.impl.lol.liveclient.LiveClientDataAPI;
 import no.stelar7.api.r4j.impl.lol.replay.ReplayAPI;
 import no.stelar7.api.r4j.pojo.lol.replay.ReplayTeamType;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 public class ReplayAPITest
 {
     @Test
-    @Ignore
+    @Disabled
     public void testReplay()
     {
         System.out.println(ReplayAPI.getParticleVisibility());
@@ -16,7 +16,7 @@ public class ReplayAPITest
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testLiveClient()
     {
         System.out.println(LiveClientDataAPI.getActivePlayer());

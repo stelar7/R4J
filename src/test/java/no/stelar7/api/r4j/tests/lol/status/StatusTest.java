@@ -1,11 +1,11 @@
 package no.stelar7.api.r4j.tests.lol.status;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.impl.*;
+import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.StatusAPI;
 import no.stelar7.api.r4j.pojo.lol.status.ShardStatus;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StatusTest
 {

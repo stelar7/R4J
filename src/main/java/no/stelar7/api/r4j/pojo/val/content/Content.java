@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.content;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Content
+public class Content implements Serializable
 {
-    private String            version;
+    private static final long serialVersionUID = 4439671460876034863L;
+    
+    private String version;
     private List<ContentItem> characters;
     private List<ContentItem> maps;
     private List<ContentItem> chromas;

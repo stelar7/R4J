@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Damage
+public class Damage implements Serializable
 {
-    private String  receiver;
+    private static final long serialVersionUID = -1161514106876666671L;
+    
+    private String receiver;
     private Integer damage;
     private Integer legshots;
     private Integer bodyshots;

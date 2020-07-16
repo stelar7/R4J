@@ -26,7 +26,7 @@ public class AccountAPI
     public RiotAccount getAccountByPUUID(RegionShard server, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new TreeMap<>();
@@ -56,7 +56,7 @@ public class AccountAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_NAME_PLACEHOLDER, name)
                                                        .withURLParameter(Constants.TAG_LINE_PLACEHOLDER, tag)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG)
                                                        .withPlatform(server);
         Map<String, Object> data = new TreeMap<>();
@@ -86,7 +86,7 @@ public class AccountAPI
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_SHARED_SHARD_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new TreeMap<>();

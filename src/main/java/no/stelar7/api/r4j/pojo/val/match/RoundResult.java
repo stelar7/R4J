@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class RoundResult
+public class RoundResult implements Serializable
 {
-    private Integer              roundNum;
+    private static final long serialVersionUID = -7840217641700030054L;
+    
+    private Integer roundNum;
     private String               roundResult;
     private String               roundCeremony;
     private String               winningTeam;

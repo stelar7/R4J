@@ -6,7 +6,7 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.pojo.lol.league.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

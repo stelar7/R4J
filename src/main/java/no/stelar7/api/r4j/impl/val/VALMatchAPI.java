@@ -23,7 +23,7 @@ public class VALMatchAPI
         // Hide public constructor
     }
     
-    public List<MatchListMatch> getMatchList(ValorantShard server, String PUUID)
+    public List<MatchReference> getMatchList(ValorantShard server, String PUUID)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())

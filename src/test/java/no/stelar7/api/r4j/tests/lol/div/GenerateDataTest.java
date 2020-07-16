@@ -6,7 +6,7 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,7 +16,7 @@ import java.util.*;
 public class GenerateDataTest
 {
     @Test
-    @Ignore
+    @Disabled
     public void generateStuff() throws IOException
     {
         R4J           api      = new R4J(SecretFile.CREDS);

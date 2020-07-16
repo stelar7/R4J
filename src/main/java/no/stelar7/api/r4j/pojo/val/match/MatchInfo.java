@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class MatchInfo
+public class MatchInfo implements Serializable
 {
-    private String  matchId;
+    private static final long serialVersionUID = -5536569302071536933L;
+    
+    private String matchId;
     private String  mapId;
     private Long    gameLengthMillis;
     private Long    gameStartMillis;

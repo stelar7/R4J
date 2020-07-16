@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.tests.lor;
 
 import no.stelar7.api.r4j.impl.lor.LoRDeckCode;
 import no.stelar7.api.r4j.pojo.lor.offline.card.*;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.io.InputStream;
 import java.util.*;
@@ -42,10 +42,10 @@ public class TestLorDeck
         for (int i = 0; i < decks.size(); i++)
         {
             String encoded = LoRDeckCode.encode(decks.get(i));
-            Assert.assertEquals("Decks are not equal", codes.get(i), encoded);
+            Assertions.assertEquals(codes.get(i), encoded, "Decks are not equal");
             
             LoRDeck decoded = LoRDeckCode.decode(encoded);
-            Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(decks.get(i), decoded));
+            Assertions.assertTrue(checkSameDeck(decks.get(i), decoded), "Did not produce same deck when re-coded");
         }
     }
     
@@ -57,7 +57,7 @@ public class TestLorDeck
         LoRDeck deck   = LoRDeckCode.decode(DECK_CODE);
         String  result = LoRDeckCode.encode(deck);
         
-        Assert.assertEquals("Did not transform code to match!", DECK_CODE, result);
+        Assertions.assertEquals(DECK_CODE, result, "Did not transform code to match!");
     }
     
     
@@ -70,7 +70,7 @@ public class TestLorDeck
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);
         
-        Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(deck, decoded));
+        Assertions.assertTrue(checkSameDeck(deck, decoded), "Did not produce same deck when re-coded");
     }
     
     @Test
@@ -101,7 +101,7 @@ public class TestLorDeck
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);
         
-        Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(deck, decoded));
+        Assertions.assertTrue(checkSameDeck(deck, decoded), "Did not produce same deck when re-coded");
     }
     
     
@@ -117,7 +117,7 @@ public class TestLorDeck
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);
         
-        Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(deck, decoded));
+        Assertions.assertTrue(checkSameDeck(deck, decoded), "Did not produce same deck when re-coded");
     }
     
     @Test
@@ -129,7 +129,7 @@ public class TestLorDeck
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);
         
-        Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(deck, decoded));
+        Assertions.assertTrue(checkSameDeck(deck, decoded), "Did not produce same deck when re-coded");
     }
     
     @Test
@@ -160,7 +160,7 @@ public class TestLorDeck
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);
         
-        Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(deck, decoded));
+        Assertions.assertTrue(checkSameDeck(deck, decoded), "Did not produce same deck when re-coded");
     }
     
     @Test
@@ -172,7 +172,7 @@ public class TestLorDeck
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);
         
-        Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(deck, decoded));
+        Assertions.assertTrue(checkSameDeck(deck, decoded), "Did not produce same deck when re-coded");
     }
     
     @Test
@@ -203,7 +203,7 @@ public class TestLorDeck
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);
         
-        Assert.assertTrue("Did not produce same deck when re-coded", checkSameDeck(deck, decoded));
+        Assertions.assertTrue(checkSameDeck(deck, decoded), "Did not produce same deck when re-coded");
     }
     
     @Test
@@ -222,7 +222,7 @@ public class TestLorDeck
         String code  = LoRDeckCode.encode(deck);
         String code2 = LoRDeckCode.encode(deck2);
         
-        Assert.assertEquals("Order matters?", code, code2);
+        Assertions.assertEquals(code, code2, "Order matters?");
     }
     
     @Test
@@ -243,7 +243,7 @@ public class TestLorDeck
         String code  = LoRDeckCode.encode(deck);
         String code2 = LoRDeckCode.encode(deck2);
         
-        Assert.assertEquals("Order matters?", code, code2);
+        Assertions.assertEquals(code, code2, "Order matters?");
     }
     
     @Test
@@ -254,12 +254,12 @@ public class TestLorDeck
         
         deck.addCard(LoRCard.create("01DE02"), 1);
         String code = LoRDeckCode.encode(deck);
-        Assert.assertNull("Code was 6 chars, but didnt fail", code);
+        Assertions.assertNull(code, "Code was 6 chars, but didnt fail");
         
         deck.clear();
         deck.addCard(LoRCard.create("01XX202"), 1);
         code = LoRDeckCode.encode(deck);
-        Assert.assertNull("Faction was invalid, but didnt fail", code);
+        Assertions.assertNull(code, "Faction was invalid, but didnt fail");
         
         try
         {
@@ -267,7 +267,7 @@ public class TestLorDeck
             deck.addCard(LoRCard.create("01DE002"), 0);
             LoRDeckCode.encode(deck);
             
-            Assert.fail("Count is 0, so it shouldnt return a valid card");
+            Assertions.fail("Count is 0, so it shouldnt return a valid card");
         } catch (IllegalArgumentException e)
         {
             // ok
@@ -279,7 +279,7 @@ public class TestLorDeck
             deck.addCard(LoRCard.create("01DE002"), -1);
             LoRDeckCode.encode(deck);
             
-            Assert.fail("Count is less than 1, but didnt fail");
+            Assertions.fail("Count is less than 1, but didnt fail");
         } catch (IllegalArgumentException e)
         {
             // ok
@@ -303,13 +303,13 @@ public class TestLorDeck
         try
         {
             LoRDeck deck = LoRDeckCode.decode(code);
-            Assert.fail("Invalid code did not produce an error");
+            Assertions.fail("Invalid code did not produce an error");
         } catch (IllegalArgumentException e)
         {
             // ok
         } catch (Exception e)
         {
-            Assert.fail("Invalid code produced the wrong exception");
+            Assertions.fail("Invalid code produced the wrong exception");
         }
     }
     

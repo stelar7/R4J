@@ -10,7 +10,7 @@ import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.util.function.Consumer;
 
@@ -19,18 +19,18 @@ public class SummonerTest
     
     private final Consumer<Summoner> doAssertions = (final Summoner value) ->
     {
-        Assert.assertNotNull("Summoner name is NULL", value.getName());
-        Assert.assertNotEquals("Summoner profile icon is NULL", value.getProfileIconId(), 0);
-        Assert.assertNotEquals("Summoner revision date is NULL", value.getRevisionDate(), 0L);
-        Assert.assertNotEquals("Summoner level is NULL", value.getSummonerLevel(), 0);
-        Assert.assertNotNull("Summoner revison date DATE is NULL", value.getRevisionDateAsDate());
-        Assert.assertNotNull("Summoner PUUID is null", value.getPUUID());
+        Assertions.assertNotNull(value.getName(), "Summoner name is NULL");
+        Assertions.assertNotEquals(value.getProfileIconId(), 0, "Summoner profile icon is NULL");
+        Assertions.assertNotEquals(value.getRevisionDate(), 0L, "Summoner revision date is NULL");
+        Assertions.assertNotEquals(value.getSummonerLevel(), 0, "Summoner level is NULL");
+        Assertions.assertNotNull(value.getRevisionDateAsDate(), "Summoner revison date DATE is NULL");
+        Assertions.assertNotNull(value.getPUUID(), "Summoner PUUID is null");
     };
     
     final R4J r4J = new R4J(SecretFile.CREDS);
     
-    @Before
-    public void before()
+    @BeforeAll
+    static void before()
     {
         DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
     }
@@ -84,7 +84,7 @@ public class SummonerTest
     public void testWadas()
     {
         DataCall.setCacheProvider(null);
-        Summoner s = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("GindenEU").get();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("GindenEU").get();
         Summoner s2 = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withPUUID(s.getPUUID()).get();
         
         System.out.println(s);
@@ -92,7 +92,7 @@ public class SummonerTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testCrawler()
     {
         SummonerCrawler crawler = new SummonerCrawler(Summoner.byName(LeagueShard.EUW1, "stelar7"));

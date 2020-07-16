@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class FinishingDamage
+public class FinishingDamage implements Serializable
 {
-    private String  damageType;
+    private static final long serialVersionUID = -2055229548751293072L;
+    
+    private String damageType;
     private String  damageItem;
     private Boolean isSecondaryFireMode;
     

@@ -14,7 +14,7 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.Item;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -46,7 +46,7 @@ public class FrameToImageTest
     R4J api = new R4J(SecretFile.CREDS);
     
     @Test
-    @Ignore
+    @Disabled
     public void testStuff()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());

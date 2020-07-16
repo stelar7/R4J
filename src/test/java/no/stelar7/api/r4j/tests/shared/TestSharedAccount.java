@@ -3,24 +3,27 @@ package no.stelar7.api.r4j.tests.shared;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.RealmSpesificEnum;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.Test;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.*;
 
+@TestMethodOrder(OrderAnnotation.class)
 public class TestSharedAccount
 {
     @Test
+    @Order(2)
     public void getByPUUID()
     {
         R4J         api     = new R4J(SecretFile.CREDS);
-        Summoner    stelar7 = Summoner.byName(LeagueShard.EUW1, "stelar7");
-        RiotAccount account = api.getAccountAPI().getAccountByPUUID(RegionShard.EUROPE, stelar7.getPUUID());
+        RiotAccount accountTag = api.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "stelar7", "STL7");
+        RiotAccount account = api.getAccountAPI().getAccountByPUUID(RegionShard.EUROPE, accountTag.getPUUID());
         
         System.out.println(account);
     }
     
     @Test
+    @Order(1)
     public void getByTag()
     {
         R4J         api     = new R4J(SecretFile.CREDS);
@@ -30,6 +33,7 @@ public class TestSharedAccount
     }
     
     @Test
+    @Order(3)
     public void getShards()
     {
         R4J               api     = new R4J(SecretFile.CREDS);

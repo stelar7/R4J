@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.tests.lor;
 
 import no.stelar7.api.r4j.impl.lor.LoRStaticAPI;
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRFaction;
-import org.junit.*;
+import org.junit.jupiter.api.Test;
 
 public class TestStaticLoRData
 {

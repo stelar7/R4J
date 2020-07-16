@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.tests.lor;
 
 import no.stelar7.api.r4j.basic.utils.Base32;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.nio.charset.StandardCharsets;
 
@@ -18,6 +18,6 @@ public class TestBase32
         
         String original = new String(decoded, StandardCharsets.UTF_8);
         
-        Assert.assertEquals("THe input is not the same as the output", test, original);
+        Assertions.assertEquals(test, original);
     }
 }

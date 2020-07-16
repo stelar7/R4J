@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Economy
+public class Economy implements Serializable
 {
-    private int    loadoutValue;
+    private static final long serialVersionUID = 8795392679461398269L;
+    
+    private int loadoutValue;
     private String weapon;
     private String armor;
     private int    remaining;

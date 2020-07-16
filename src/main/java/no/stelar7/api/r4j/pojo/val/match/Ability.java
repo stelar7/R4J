@@ -1,9 +1,12 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Ability
+public class Ability implements Serializable
 {
+    private static final long serialVersionUID = -1967721053588165202L;
+    
     private String grenadeEffects;
     private String ability1Effects;
     private String ability2Effects;

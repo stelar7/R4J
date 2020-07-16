@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.tests.LCUTest;
 
 import com.google.gson.JsonObject;
 import no.stelar7.api.r4j.impl.lol.lcu.*;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -11,22 +11,22 @@ import java.nio.file.*;
 public class LCURunningTest
 {
     @Test
-    @Ignore
+    @Disabled
     public void testRunning()
     {
-        Assert.assertNotNull("Unable to fecth connection string from league client... Is it running?", LCUConnection.getConnectionString());
+        Assertions.assertNotNull(LCUConnection.getConnectionString(), "Unable to fecth connection string from league client... Is it running?");
     }
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testLogin()
     {
         LCUApi.login("myusername", "mypassword");
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testReplay()
     {
         LCUApi.downloadReplay(3042295790L);
@@ -35,7 +35,7 @@ public class LCURunningTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testbyId()
     {
         JsonObject summoner = LCUApi.getSummoner(19613950);
@@ -43,7 +43,7 @@ public class LCURunningTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testCustomURL()
     {
         Object a = LCUApi.customUrl("​entitlements​/v1​/token", null, "GET");
@@ -55,14 +55,14 @@ public class LCURunningTest
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testStartInfiniteChampSelect()
     {
         //LCUApi.createLobby()
     }
     
     @Test
-    @Ignore
+    @Disabled
     public void testLogAllEvents() throws InterruptedException
     {
         Thread th = new Thread(() -> {
@@ -107,7 +107,7 @@ public class LCURunningTest
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testCreateSocket() throws InterruptedException
     {
         Thread th = new Thread(() -> {
@@ -132,7 +132,7 @@ public class LCURunningTest
     
     
     @Test
-    @Ignore
+    @Disabled
     public void testLogChampselectSession() throws InterruptedException
     {
         Thread th = new Thread(() -> {

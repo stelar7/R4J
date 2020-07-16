@@ -5,9 +5,9 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.val.VALMatchAPI;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.pojo.val.match.Match;
-import no.stelar7.api.r4j.pojo.val.matchlist.MatchListMatch;
+import no.stelar7.api.r4j.pojo.val.matchlist.MatchReference;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class TestVALMatch
         R4J           api     = new R4J(SecretFile.CREDS);
         VALMatchAPI   matchAPI = api.getVALAPI().getMatchAPI();
     
-        List<MatchListMatch> matchlist = matchAPI.getMatchList(ValorantShard.EU, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID());
+        List<MatchReference> matchlist = matchAPI.getMatchList(ValorantShard.EU, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID());
         System.out.println(matchlist);
     }
     
@@ -27,8 +27,8 @@ public class TestVALMatch
     public void getGetSingle()
     {
         R4J           api     = new R4J(SecretFile.CREDS);
-        VALMatchAPI   matchAPI = api.getVALAPI().getMatchAPI();
-        List<MatchListMatch> matchlist = matchAPI.getMatchList(ValorantShard.EU, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID());
+        VALMatchAPI          matchAPI  = api.getVALAPI().getMatchAPI();
+        List<MatchReference> matchlist = matchAPI.getMatchList(ValorantShard.EU, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID());
     
         Match match = matchAPI.getMatch(ValorantShard.EU, matchlist.get(0).getMatchId());
         System.out.println(match);
