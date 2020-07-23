@@ -80,6 +80,7 @@ public enum GameModeType implements CodedEnum
      * Nexus Blitz mode
      */
     GAMEMODEX,
+    NEXUSBLITZ,
     /**
      * Odyssey: Extraction mode
      */
