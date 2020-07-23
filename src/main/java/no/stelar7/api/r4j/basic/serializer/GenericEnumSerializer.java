@@ -1,7 +1,8 @@
 package no.stelar7.api.r4j.basic.serializer;
 
 import com.google.gson.*;
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
+import no.stelar7.api.r4j.basic.exceptions.APIEnumNotUpToDateException;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -19,6 +20,6 @@ public class GenericEnumSerializer<T> implements JsonDeserializer<T>
                                       .map(Optional::get)
                                       .findFirst();
         
-        return retu.map(o -> (T) o).orElseGet(() -> (T) CodedEnum.printError(t, id));
+        return retu.map(o -> (T) o).orElseThrow(() -> new APIEnumNotUpToDateException(t, json));
     }
 }

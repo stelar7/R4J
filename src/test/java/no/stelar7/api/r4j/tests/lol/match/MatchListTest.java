@@ -75,10 +75,9 @@ public class MatchListTest
     
     
     @Test
-    @Disabled
     public void testMatchlistIterator()
     {
-        Summoner      s     = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        Summoner      s     = Summoner.byName(LeagueShard.EUW1, "pupix");
         MatchIterator games = s.getLeagueGames().getMatchIterator();
         for (Match m : games)
         {
