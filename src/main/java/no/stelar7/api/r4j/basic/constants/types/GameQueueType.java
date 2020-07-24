@@ -301,6 +301,10 @@ public enum GameQueueType implements CodedEnum
      * Teamfight Tactics (Tutorial)
      */
     TEAMFIGHT_TACTICS_TUTORIAL(new Integer[]{1110}),
+    /**
+     * Teamfight Tactics (Test)
+     */
+    TEAMFIGHT_TACTICS_1V0(new Integer[]{1111}),
     ;
     
     private final Integer[] codes;
