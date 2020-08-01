@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.tft;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class TFTMetadata
+public class TFTMetadata implements Serializable
 {
-    private String       data_version;
+    private static final long serialVersionUID = -3115202216410815454L;
+    
+    private String data_version;
     private List<String> participants;
     private String       match_id;
     

@@ -1,10 +1,12 @@
 package no.stelar7.api.r4j.pojo.lor.staticdata;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class StaticLoRCard
+public class StaticLoRCard implements Serializable
 {
-    private List<String>             associatedCards;
+    private static final long serialVersionUID = 2237963538719986242L;
+    private List<String> associatedCards;
     private List<String>             associatedCardRefs;
     private List<StaticLoRCardAsset> assets;
     private String                   region;

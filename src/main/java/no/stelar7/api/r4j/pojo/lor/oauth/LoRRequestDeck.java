@@ -1,9 +1,11 @@
 package no.stelar7.api.r4j.pojo.lor.oauth;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LoRRequestDeck
+public class LoRRequestDeck implements Serializable
 {
+    private static final long serialVersionUID = 5606481575576230766L;
     private final String name;
     private final String code;
     

@@ -1,10 +1,13 @@
 package no.stelar7.api.r4j.pojo.tft;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class TFTCompanion
+public class TFTCompanion implements Serializable
 {
-    private int    skin_ID;
+    private static final long serialVersionUID = 2734930073363345323L;
+    
+    private int skin_ID;
     private String content_ID;
     private String species;
     

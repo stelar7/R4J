@@ -1,10 +1,12 @@
 package no.stelar7.api.r4j.pojo.lor.staticdata;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class StaticLoRCoreInfo
+public class StaticLoRCoreInfo implements Serializable
 {
-    private List<StaticLoRKeyword>    keywords;
+    private static final long serialVersionUID = -755283493769025055L;
+    private List<StaticLoRKeyword> keywords;
     private List<StaticLoRRegion>     regions;
     private List<StaticLoRSpellSpeed> spellSpeeds;
     private List<StaticLoRRarity>     rarities;

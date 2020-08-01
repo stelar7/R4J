@@ -2,12 +2,14 @@ package no.stelar7.api.r4j.pojo.lor.offline.expedition;
 
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRCard;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DraftAction
+public class DraftAction implements Serializable
 {
-    private boolean      IsSwap;
+    private static final long serialVersionUID = 1801267320768200999L;
+    private boolean IsSwap;
     private List<String> Picks;
     private List<String> SwappedIn;
     private List<String> SwappedOut;

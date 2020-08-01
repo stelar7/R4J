@@ -3,10 +3,12 @@ package no.stelar7.api.r4j.pojo.lor.oauth;
 import no.stelar7.api.r4j.impl.lor.LoRDeckCode;
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRDeck;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LoRResponseDeck
+public class LoRResponseDeck implements Serializable
 {
+    private static final long serialVersionUID = 5653104149673111606L;
     private final String id;
     private final String name;
     private final String code;

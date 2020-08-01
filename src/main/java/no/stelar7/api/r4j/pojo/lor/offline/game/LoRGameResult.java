@@ -1,11 +1,13 @@
 package no.stelar7.api.r4j.pojo.lor.offline.game;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LoRGameResult
+public class LoRGameResult implements Serializable
 {
-    private String  GameID;
-    private boolean LocalPlayerWon;
+    private static final long    serialVersionUID = -7123352486444349580L;
+    private              String  GameID;
+    private              boolean LocalPlayerWon;
     
     public String getGameId()
     {

@@ -1,9 +1,11 @@
 package no.stelar7.api.r4j.pojo.lor.staticdata;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class StaticLoRSpellSpeed
+public class StaticLoRSpellSpeed implements Serializable
 {
+    private static final long serialVersionUID = -8371965603455715824L;
     private String name;
     private String nameRef;
     

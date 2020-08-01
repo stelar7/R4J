@@ -1,9 +1,12 @@
 package no.stelar7.api.r4j.pojo.shared;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class RiotAccount
+public class RiotAccount implements Serializable
 {
+    private static final long serialVersionUID = 5822016483540841587L;
+    
     private String puuid;
     private String gameName;
     private String tagLine;

@@ -1,9 +1,11 @@
 package no.stelar7.api.r4j.pojo.lor.staticdata;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class StaticLoRCardAsset
+public class StaticLoRCardAsset implements Serializable
 {
+    private static final long serialVersionUID = -1066662532087610840L;
     private String gameAbsolutePath;
     private String fullAbsolutePath;
     

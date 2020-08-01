@@ -2,12 +2,14 @@ package no.stelar7.api.r4j.pojo.lor.offline.expedition;
 
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRCard;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class LoRExpeditionInfo
+public class LoRExpeditionInfo implements Serializable
 {
-    private boolean           IsActive;
+    private static final long serialVersionUID = -4021370386876229136L;
+    private boolean IsActive;
     private ExpeditionState   State;
     private List<DraftAction> DraftPicks;
     private List<String>      Record;

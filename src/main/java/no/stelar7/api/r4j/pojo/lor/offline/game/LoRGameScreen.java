@@ -2,10 +2,12 @@ package no.stelar7.api.r4j.pojo.lor.offline.game;
 
 import no.stelar7.api.r4j.pojo.lor.offline.card.LoRCard;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LoRGameScreen
+public class LoRGameScreen implements Serializable
 {
+    private static final long serialVersionUID = 8604441099984405595L;
     private int ScreenWidth;
     private int ScreenHeight;
     

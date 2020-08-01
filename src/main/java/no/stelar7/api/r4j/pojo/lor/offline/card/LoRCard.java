@@ -2,11 +2,13 @@ package no.stelar7.api.r4j.pojo.lor.offline.card;
 
 import no.stelar7.api.r4j.basic.utils.Utils;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LoRCard
+public class LoRCard implements Serializable
 {
-    private final int        set;
+    private static final long serialVersionUID = -4125146164438742249L;
+    private final int set;
     private final LoRFaction faction;
     private final int        id;
     

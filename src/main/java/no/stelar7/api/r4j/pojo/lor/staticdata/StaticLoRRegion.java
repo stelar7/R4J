@@ -1,9 +1,11 @@
 package no.stelar7.api.r4j.pojo.lor.staticdata;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class StaticLoRRegion
+public class StaticLoRRegion implements Serializable
 {
+    private static final long serialVersionUID = -4006390145311503980L;
     private String name;
     private String nameRef;
     private String iconAbsolutePath;

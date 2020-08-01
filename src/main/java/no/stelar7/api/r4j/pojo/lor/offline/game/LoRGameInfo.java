@@ -2,11 +2,13 @@ package no.stelar7.api.r4j.pojo.lor.offline.game;
 
 import no.stelar7.api.r4j.pojo.lor.offline.game.LoRGameScreen.LoRCardRectangle;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class LoRGameInfo
+public class LoRGameInfo implements Serializable
 {
-    private String                 PlayerName;
+    private static final long serialVersionUID = 6387985743594804427L;
+    private String PlayerName;
     private String                 OpponentName;
     private LoRGameState           GameState;
     private LoRGameScreen          Screen;

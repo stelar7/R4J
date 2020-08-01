@@ -4,10 +4,12 @@ package no.stelar7.api.r4j.pojo.lor.offline.card;
 import no.stelar7.api.r4j.impl.lor.*;
 import no.stelar7.api.r4j.pojo.lor.oauth.LoRRequestDeck;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class LoRDeck
+public class LoRDeck implements Serializable
 {
+    private static final long serialVersionUID = 6814216288232575932L;
     private final Map<LoRCard, Integer> cards = new HashMap<>();
     
     /**
