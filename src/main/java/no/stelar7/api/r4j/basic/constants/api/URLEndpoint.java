@@ -215,7 +215,7 @@ public enum URLEndpoint
     
     V1_SHARED_ACCOUNT_BY_PUUID("riot", "account", "v1", "accounts/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, RiotAccount.class),
     V1_SHARED_ACCOUNT_BY_TAG("riot", "account", "v1", "accounts/by-riot-id/" + Constants.GAME_NAME_PLACEHOLDER + "/" + Constants.TAG_LINE_PLACEHOLDER, RiotAccount.class),
-    V1_SHARED_SHARD_BY_PUUID("riot", "account", "v1", "active-shards/by-game/" + Constants.GAME_PLACEHOLDER + "/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, RiotAccount.class),
+    V1_SHARED_SHARD_BY_PUUID("riot", "account", "v1", "active-shards/by-game/" + Constants.GAME_PLACEHOLDER + "/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, RiotAccountShard.class),
     
     
     ;

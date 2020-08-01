@@ -1,9 +1,8 @@
 package no.stelar7.api.r4j.tests.shared;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
-import no.stelar7.api.r4j.basic.constants.types.RealmSpesificEnum;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.pojo.shared.RiotAccount;
+import no.stelar7.api.r4j.pojo.shared.*;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.*;
@@ -37,9 +36,10 @@ public class TestSharedAccount
     public void getShards()
     {
         R4J               api     = new R4J(SecretFile.CREDS);
-        RiotAccount       account = api.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "stelar7", "STL7");
-        RealmSpesificEnum shard   = api.getAccountAPI().getActiveShard(RegionShard.EUROPE, ShardableGame.LOR, account.getPUUID());
+        RiotAccount      account = api.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "stelar7", "STL7");
+        RiotAccountShard shard   = api.getAccountAPI().getActiveShard(RegionShard.AMERICAS, ShardableGame.LOR, account.getPUUID());
         
         System.out.println(shard);
+        System.out.println(shard.getShardAsEnum());
     }
 }

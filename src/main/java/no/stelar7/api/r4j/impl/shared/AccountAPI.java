@@ -3,8 +3,7 @@ package no.stelar7.api.r4j.impl.shared;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
-import no.stelar7.api.r4j.basic.constants.types.RealmSpesificEnum;
-import no.stelar7.api.r4j.pojo.shared.RiotAccount;
+import no.stelar7.api.r4j.pojo.shared.*;
 
 import java.util.*;
 
@@ -31,6 +30,7 @@ public class AccountAPI
                                                        .withPlatform(server);
         Map<String, Object> data = new TreeMap<>();
         data.put("platform", server);
+        data.put("puuid", puuid);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, data);
         if (chl.isPresent())
@@ -61,6 +61,8 @@ public class AccountAPI
                                                        .withPlatform(server);
         Map<String, Object> data = new TreeMap<>();
         data.put("platform", server);
+        data.put("name", name);
+        data.put("tag", tag);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
         if (chl.isPresent())
@@ -82,7 +84,7 @@ public class AccountAPI
         }
     }
     
-    public RealmSpesificEnum getActiveShard(RegionShard server, ShardableGame game, String puuid)
+    public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
@@ -91,16 +93,18 @@ public class AccountAPI
                                                        .withPlatform(server);
         Map<String, Object> data = new TreeMap<>();
         data.put("platform", server);
+        data.put("game", game);
+        data.put("puuid", puuid);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, data);
         if (chl.isPresent())
         {
-            return (RealmSpesificEnum) chl.get();
+            return (RiotAccountShard) chl.get();
         }
         
         try
         {
-            RealmSpesificEnum list = (RealmSpesificEnum) builder.build();
+            RiotAccountShard list = (RiotAccountShard) builder.build();
             
             data.put("value", list);
             DataCall.getCacheProvider().store(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, data);
