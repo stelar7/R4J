@@ -7,7 +7,7 @@ public class PlayerLocation implements Serializable
 {
     private static final long serialVersionUID = -722332664254204236L;
     
-    private String puuid;
+    private String   puuid;
     private float    viewRadians;
     private Location location;
     

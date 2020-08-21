@@ -3,11 +3,11 @@ package no.stelar7.api.r4j.pojo.val.match;
 import java.io.Serializable;
 import java.util.*;
 
-public class PlayerStats implements Serializable
+public class PlayerRoundStats implements Serializable
 {
-    private static final long serialVersionUID = 7828780999489612623L;
+    private static final long serialVersionUID = -8892321230434651879L;
     
-    private String puuid;
+    private String       puuid;
     private List<Kill>   kills;
     private List<Damage> damage;
     private int          score;
@@ -55,7 +55,7 @@ public class PlayerStats implements Serializable
         {
             return false;
         }
-        PlayerStats that = (PlayerStats) o;
+        PlayerRoundStats that = (PlayerRoundStats) o;
         return score == that.score &&
                Objects.equals(puuid, that.puuid) &&
                Objects.equals(kills, that.kills) &&
@@ -73,7 +73,7 @@ public class PlayerStats implements Serializable
     @Override
     public String toString()
     {
-        return "PlayerStats{" +
+        return "PlayerRoundStats{" +
                "puuid='" + puuid + '\'' +
                ", kills=" + kills +
                ", damage=" + damage +

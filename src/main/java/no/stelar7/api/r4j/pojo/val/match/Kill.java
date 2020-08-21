@@ -7,7 +7,7 @@ public class Kill implements Serializable
 {
     private static final long serialVersionUID = 3645173464463247386L;
     
-    private int gameTime;
+    private int                  gameTime;
     private int                  roundTime;
     private String               killer;
     private String               victim;

@@ -7,7 +7,7 @@ public class MatchInfo implements Serializable
 {
     private static final long serialVersionUID = -5536569302071536933L;
     
-    private String matchId;
+    private String  matchId;
     private String  mapId;
     private Long    gameLengthMillis;
     private Long    gameStartMillis;

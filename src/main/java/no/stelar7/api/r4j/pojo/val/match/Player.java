@@ -7,12 +7,12 @@ public class Player implements Serializable
 {
     private static final long serialVersionUID = 6640355688349553215L;
     
-    private String puuid;
+    private String      puuid;
     private String      teamId;
     private String      partyId;
-    private String      characterId;
-    private PlayerStats stats;
-    private Integer     competitiveTier;
+    private String           characterId;
+    private PlayerTotalStats stats;
+    private Integer          competitiveTier;
     private String      playerCard;
     private String      playerTitle;
     
@@ -36,7 +36,7 @@ public class Player implements Serializable
         return characterId;
     }
     
-    public PlayerStats getStats()
+    public PlayerTotalStats getStats()
     {
         return stats;
     }

@@ -7,12 +7,12 @@ public class Match implements Serializable
 {
     private static final long serialVersionUID = 8170523652285088932L;
     
-    private List<MatchInfo> matchInfo;
+    private MatchInfo         matchInfo;
     private List<Player>      players;
-    private List<Team>        teams;
     private List<RoundResult> roundResults;
+    private List<Team>        teams;
     
-    public List<MatchInfo> getMatchInfo()
+    public MatchInfo getMatchInfo()
     {
         return matchInfo;
     }

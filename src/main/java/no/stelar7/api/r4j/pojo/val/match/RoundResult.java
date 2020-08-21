@@ -7,21 +7,21 @@ public class RoundResult implements Serializable
 {
     private static final long serialVersionUID = -7840217641700030054L;
     
-    private Integer roundNum;
-    private String               roundResult;
-    private String               roundCeremony;
-    private String               winningTeam;
-    private String               bombPlanter;
-    private String               bombDefuser;
-    private Integer              plantRoundTime;
-    private List<PlayerLocation> plantPlayerLocations;
-    private Location             plantLocation;
-    private String               plantSite;
-    private Integer              defuseRoundTime;
-    private List<PlayerLocation> defusePlayerLocations;
-    private Location             defuseLocation;
-    private List<PlayerStats>    playerStats;
-    private String               roundResultCode;
+    private Integer                roundNum;
+    private String                 roundResult;
+    private String                 roundCeremony;
+    private String                 winningTeam;
+    private String                 bombPlanter;
+    private String                 bombDefuser;
+    private Integer                plantRoundTime;
+    private List<PlayerLocation>   plantPlayerLocations;
+    private Location               plantLocation;
+    private String                 plantSite;
+    private Integer                defuseRoundTime;
+    private List<PlayerLocation>   defusePlayerLocations;
+    private Location               defuseLocation;
+    private List<PlayerRoundStats> playerStats;
+    private String                 roundResultCode;
     
     public Integer getRoundNum()
     {
@@ -88,7 +88,7 @@ public class RoundResult implements Serializable
         return defuseLocation;
     }
     
-    public List<PlayerStats> getPlayerStats()
+    public List<PlayerRoundStats> getPlayerStats()
     {
         return playerStats;
     }

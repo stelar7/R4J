@@ -7,7 +7,7 @@ public class Economy implements Serializable
 {
     private static final long serialVersionUID = 8795392679461398269L;
     
-    private int loadoutValue;
+    private int    loadoutValue;
     private String weapon;
     private String armor;
     private int    remaining;

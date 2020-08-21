@@ -7,7 +7,7 @@ public class FinishingDamage implements Serializable
 {
     private static final long serialVersionUID = -2055229548751293072L;
     
-    private String damageType;
+    private String  damageType;
     private String  damageItem;
     private Boolean isSecondaryFireMode;
     
