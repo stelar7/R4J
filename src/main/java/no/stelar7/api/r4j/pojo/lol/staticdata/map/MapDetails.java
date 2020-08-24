@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.staticdata.map;
 
-import no.stelar7.api.r4j.basic.constants.types.MapType;
+import no.stelar7.api.r4j.basic.constants.types.lol.MapType;
 import no.stelar7.api.r4j.pojo.lol.staticdata.shared.Image;
 
 import java.io.Serializable;

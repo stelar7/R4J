@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.tests.lol.tournament;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;

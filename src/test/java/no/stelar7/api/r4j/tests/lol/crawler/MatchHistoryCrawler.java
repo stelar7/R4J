@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.tests.lol.crawler;
 
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.types.TeamType;
+import no.stelar7.api.r4j.basic.constants.types.lol.TeamType;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.utils.sql.MySQL;
 import no.stelar7.api.r4j.impl.R4J;

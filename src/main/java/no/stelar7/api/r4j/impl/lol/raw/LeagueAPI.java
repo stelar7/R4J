@@ -1,10 +1,10 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
-import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.utils.LazyList;
 import no.stelar7.api.r4j.pojo.lol.league.*;
 

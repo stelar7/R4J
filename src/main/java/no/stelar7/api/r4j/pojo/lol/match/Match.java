@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.impl.lol.builders.match.TimelineBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.MatchAPI;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
@@ -16,14 +16,14 @@ public class Match implements Serializable
 {
     private static final long serialVersionUID = -2199053222630714286L;
     
-    private SeasonType                seasonId;
-    private GameQueueType             queueId;
-    private long                      gameId;
+    private SeasonType    seasonId;
+    private GameQueueType queueId;
+    private long          gameId;
     private List<ParticipantIdentity> participantIdentities;
     private String       gameVersion;
-    private LeagueShard  platformId;
-    private GameModeType gameMode;
-    private MapType                   mapId;
+    private LeagueShard   platformId;
+    private GameModeType  gameMode;
+    private MapType       mapId;
     private GameType                  gameType;
     private List<TeamStats>           teams;
     private List<Participant>         participants;

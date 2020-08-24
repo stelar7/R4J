@@ -1,9 +1,9 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.realm.Realm;
 import no.stelar7.api.r4j.basic.constants.api.*;
-import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.Item;
 import no.stelar7.api.r4j.pojo.lol.staticdata.mastery.StaticMastery;

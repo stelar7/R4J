@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.basic.utils;
 
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.ratelimiting.RateLimit;
 import no.stelar7.api.r4j.basic.serializer.GenericEnumSerializer;
 import no.stelar7.api.r4j.basic.constants.types.*;
@@ -28,6 +29,8 @@ public final class Utils
         GsonBuilder builder = new GsonBuilder();
         
         // Register enum types with GSON
+        
+        // league
         builder.registerTypeAdapter(LoRGameState.class, new GenericEnumSerializer<LoRGameState>());
         builder.registerTypeAdapter(AscencionType.class, new GenericEnumSerializer<AscencionType>());
         builder.registerTypeAdapter(BuildingType.class, new GenericEnumSerializer<BuildingType>());
@@ -57,6 +60,18 @@ public final class Utils
         builder.registerTypeAdapter(WardType.class, new GenericEnumSerializer<WardType>());
         builder.registerTypeAdapter(RealmSpesificEnum.class, new RealmSpesificEnumSerializer());
         builder.registerTypeAdapter(RegionShard.class, new RealmSpesificEnumSerializer());
+    
+        // valorant
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.GameModeType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.GameModeType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.GameQueueType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.GameQueueType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.MapType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.MapType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.PlantSiteType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.PlantSiteType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.ProvisioningFlowType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.ProvisioningFlowType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.RoundResultCodeType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.RoundResultCodeType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.RoundResultType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.RoundResultType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.TeamType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.TeamType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.TierDivisionType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.TierDivisionType>());
+        
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
     }
     

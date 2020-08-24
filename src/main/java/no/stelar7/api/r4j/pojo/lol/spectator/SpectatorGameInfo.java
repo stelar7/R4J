@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.pojo.lol.spectator;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.pojo.lol.shared.BannedChampion;
 
 import java.io.Serializable;
@@ -14,10 +14,10 @@ public class SpectatorGameInfo implements Serializable
     
     private List<BannedChampion>       bannedChampions;
     private long                       gameId;
-    private long                       gameLength;
-    private GameModeType               gameMode;
-    private GameQueueType              gameQueueConfigId;
-    private long                       gameStartTime;
+    private long          gameLength;
+    private GameModeType  gameMode;
+    private GameQueueType gameQueueConfigId;
+    private long          gameStartTime;
     private GameType                   gameType;
     private MapType                    mapId;
     private Observer                   observers;

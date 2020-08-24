@@ -1,8 +1,8 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
-import no.stelar7.api.r4j.basic.constants.types.*;
 
 import java.io.Serializable;
 import java.util.*;

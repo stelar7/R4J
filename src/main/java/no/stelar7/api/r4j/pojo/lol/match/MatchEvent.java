@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,11 +10,11 @@ public class MatchEvent implements Serializable
     private static final long serialVersionUID = 5385878555903938057L;
     
     private int            afterId;
-    private int            beforeId;
-    private AscencionType  ascendedType;
-    private List<Integer>  assistingParticipantIds;
-    private BuildingType   buildingType;
-    private int            creatorId;
+    private int           beforeId;
+    private AscencionType ascendedType;
+    private List<Integer> assistingParticipantIds;
+    private BuildingType  buildingType;
+    private int           creatorId;
     private EventType      type;
     private EventType      eventType;
     private int            itemId;

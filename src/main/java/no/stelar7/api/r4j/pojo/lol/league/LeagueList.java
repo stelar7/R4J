@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.league;
 
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
 import java.util.*;
@@ -10,9 +10,9 @@ public class LeagueList implements Serializable
     private static final long serialVersionUID = -5998948570024210475L;
     
     private List<LeagueEntry> entries;
-    private String            name;
-    private GameQueueType     queue;
-    private TierType          tier;
+    private String        name;
+    private GameQueueType queue;
+    private TierType      tier;
     private String            leagueId;
     
     

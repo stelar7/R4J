@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.constants.types.val.*;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -9,19 +11,19 @@ public class RoundResult implements Serializable
     
     private Integer                roundNum;
     private String                 roundResult;
-    private String                 roundCeremony;
-    private String                 winningTeam;
+    private RoundResultType        roundCeremony;
+    private TeamType               winningTeam;
     private String                 bombPlanter;
     private String                 bombDefuser;
     private Integer                plantRoundTime;
     private List<PlayerLocation>   plantPlayerLocations;
     private Location               plantLocation;
-    private String                 plantSite;
+    private PlantSiteType          plantSite;
     private Integer                defuseRoundTime;
     private List<PlayerLocation>   defusePlayerLocations;
     private Location               defuseLocation;
     private List<PlayerRoundStats> playerStats;
-    private String                 roundResultCode;
+    private RoundResultCodeType    roundResultCode;
     
     public Integer getRoundNum()
     {
@@ -33,12 +35,12 @@ public class RoundResult implements Serializable
         return roundResult;
     }
     
-    public String getRoundCeremony()
+    public RoundResultType getRoundCeremony()
     {
         return roundCeremony;
     }
     
-    public String getWinningTeam()
+    public TeamType getWinningTeam()
     {
         return winningTeam;
     }
@@ -68,7 +70,7 @@ public class RoundResult implements Serializable
         return plantLocation;
     }
     
-    public String getPlantSite()
+    public PlantSiteType getPlantSite()
     {
         return plantSite;
     }
@@ -93,7 +95,7 @@ public class RoundResult implements Serializable
         return playerStats;
     }
     
-    public String getRoundResultCode()
+    public RoundResultCodeType getRoundResultCode()
     {
         return roundResultCode;
     }

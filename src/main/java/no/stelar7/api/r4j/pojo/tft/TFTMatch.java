@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.tft;
 
-import no.stelar7.api.r4j.basic.constants.types.GameQueueType;
+import no.stelar7.api.r4j.basic.constants.types.lol.GameQueueType;
 
 import java.io.Serializable;
 import java.time.*;

@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.impl.lol.builders.match.MatchBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.match.TimelineBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
@@ -18,7 +18,7 @@ public class MatchReference implements Serializable
     private long          gameId;
     private int         champion;
     private LeagueShard platformId;
-    private long        timestamp;
+    private long          timestamp;
     private GameQueueType queue;
     private RoleType      role;
     private SeasonType    season;

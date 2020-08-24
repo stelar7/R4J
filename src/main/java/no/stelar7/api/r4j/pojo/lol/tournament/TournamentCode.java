@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.pojo.lol.tournament;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
 import java.util.Set;

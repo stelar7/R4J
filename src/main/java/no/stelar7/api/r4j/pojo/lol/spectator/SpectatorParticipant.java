@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.spectator;
 
-import no.stelar7.api.r4j.basic.constants.types.*;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
 import java.util.*;
@@ -10,13 +10,13 @@ public class SpectatorParticipant implements Serializable
     private static final long serialVersionUID = -4280093223886492229L;
     
     private int                                    championId;
-    private long                                   profileIconId;
-    private SummonerSpellType                      spell1Id;
-    private SummonerSpellType                      spell2Id;
+    private long              profileIconId;
+    private SummonerSpellType spell1Id;
+    private SummonerSpellType spell2Id;
     private String                                 summonerName;
-    private String                                 summonerId;
-    private TeamType                               teamId;
-    private boolean                                bot;
+    private String            summonerId;
+    private TeamType          teamId;
+    private boolean           bot;
     private SpectatorPerks                         perks;
     private List<SpectatorGameCustomizationObject> gameCustomizationObjects;
     

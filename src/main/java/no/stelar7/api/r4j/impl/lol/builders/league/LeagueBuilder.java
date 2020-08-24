@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.impl.lol.builders.league;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.types.GameQueueType;
+import no.stelar7.api.r4j.basic.constants.types.lol.GameQueueType;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.league.*;
 import org.slf4j.*;

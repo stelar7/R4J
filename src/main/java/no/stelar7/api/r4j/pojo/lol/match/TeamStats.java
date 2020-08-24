@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
-import no.stelar7.api.r4j.basic.constants.types.TeamType;
+import no.stelar7.api.r4j.basic.constants.types.lol.TeamType;
 import no.stelar7.api.r4j.pojo.lol.shared.BannedChampion;
 
 import java.io.Serializable;
