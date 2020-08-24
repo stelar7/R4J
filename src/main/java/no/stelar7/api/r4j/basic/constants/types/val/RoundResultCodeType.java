@@ -12,6 +12,7 @@ public enum RoundResultCodeType implements CodedEnum<RoundResultCodeType>
     DEFUSE("Defuse"),
     ELIMINATION("Elimination"),
     DETONATE("Detonate"),
+    SURRENDERED("Surrendered"),
     
     ;
     
