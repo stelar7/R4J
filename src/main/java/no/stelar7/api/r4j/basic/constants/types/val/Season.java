@@ -5,27 +5,23 @@ import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public enum MapType implements CodedEnum<MapType>
+public enum Season implements CodedEnum<Season>
 {
-    
-    BIND("/Game/Maps/Duality/Duality"),
-    HAVEN("/Game/Maps/Triad/Triad"),
-    SPLIT("/Game/Maps/Bonsai/Bonsai"),
-    ASCENT("/Game/Maps/Ascent/Ascent"),
-    THE_RANGE("/Game/Maps/Poveglia/Range")
+    ACT_1("3f61c772-4560-cd3f-5d3f-a7ab5abda6b3"),
+    ACT_2("0530b9c4-4980-f2ee-df5d-09864cd00542"),
     ;
     
     
-    private final String mapId;
+    private final String mode;
     
     /**
      * Constructor for MapType
      *
      * @param code the mapId
      */
-    MapType(final String code)
+    Season(final String code)
     {
-        this.mapId = code;
+        this.mode = code;
     }
     
     /**
@@ -34,9 +30,9 @@ public enum MapType implements CodedEnum<MapType>
      * @param mapId the map id
      * @return the from code
      */
-    public Optional<MapType> getFromCode(final String mapId)
+    public Optional<Season> getFromCode(final String mapId)
     {
-        return Stream.of(MapType.values()).filter(t -> t.mapId.equals(mapId)).findFirst();
+        return Stream.of(Season.values()).filter(t -> t.mode.equals(mapId)).findFirst();
     }
     
     @Override
@@ -56,7 +52,7 @@ public enum MapType implements CodedEnum<MapType>
      */
     public String getId()
     {
-        return this.mapId;
+        return this.mode;
     }
     
     

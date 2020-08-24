@@ -60,7 +60,7 @@ public final class Utils
         builder.registerTypeAdapter(WardType.class, new GenericEnumSerializer<WardType>());
         builder.registerTypeAdapter(RealmSpesificEnum.class, new RealmSpesificEnumSerializer());
         builder.registerTypeAdapter(RegionShard.class, new RealmSpesificEnumSerializer());
-    
+        
         // valorant
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.GameModeType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.GameModeType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.GameQueueType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.GameQueueType>());
@@ -71,6 +71,12 @@ public final class Utils
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.RoundResultType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.RoundResultType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.TeamType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.TeamType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.TierDivisionType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.TierDivisionType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Season.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Season>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Character.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Character>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Weapon.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Weapon>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Armor.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Armor>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.FinishingDamageType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.FinishingDamageType>());
+        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Skill.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Skill>());
         
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
     }

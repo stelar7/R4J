@@ -19,7 +19,7 @@ public class MatchInfo implements Serializable
     private GameQueueType        queueId;
     private GameModeType         gameMode;
     private Boolean              isRanked;
-    private String               seasonId;
+    private Season               seasonId;
     
     public String getMatchId()
     {
@@ -41,7 +41,7 @@ public class MatchInfo implements Serializable
         return gameStartMillis;
     }
     
-    public ProvisioningFlowType getProvisioningFlowId()
+    public ProvisioningFlowType getProvisioningFlow()
     {
         return provisioningFlowId;
     }
@@ -56,7 +56,7 @@ public class MatchInfo implements Serializable
         return customGameName;
     }
     
-    public GameQueueType getQueueId()
+    public GameQueueType getGameQueue()
     {
         return queueId;
     }
@@ -71,7 +71,7 @@ public class MatchInfo implements Serializable
         return isRanked;
     }
     
-    public String getSeasonId()
+    public Season getSeason()
     {
         return seasonId;
     }

@@ -5,27 +5,23 @@ import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public enum MapType implements CodedEnum<MapType>
+public enum Skill implements CodedEnum<Skill>
 {
-    
-    BIND("/Game/Maps/Duality/Duality"),
-    HAVEN("/Game/Maps/Triad/Triad"),
-    SPLIT("/Game/Maps/Bonsai/Bonsai"),
-    ASCENT("/Game/Maps/Ascent/Ascent"),
-    THE_RANGE("/Game/Maps/Poveglia/Range")
+    NONE(""),
+    ULTIMATE("Ultimate"),
     ;
     
     
-    private final String mapId;
+    private final String mode;
     
     /**
      * Constructor for MapType
      *
      * @param code the mapId
      */
-    MapType(final String code)
+    Skill(final String code)
     {
-        this.mapId = code;
+        this.mode = code;
     }
     
     /**
@@ -34,9 +30,9 @@ public enum MapType implements CodedEnum<MapType>
      * @param mapId the map id
      * @return the from code
      */
-    public Optional<MapType> getFromCode(final String mapId)
+    public Optional<Skill> getFromCode(final String mapId)
     {
-        return Stream.of(MapType.values()).filter(t -> t.mapId.equals(mapId)).findFirst();
+        return Stream.of(Skill.values()).filter(t -> t.mode.equals(mapId)).findFirst();
     }
     
     @Override
@@ -56,7 +52,7 @@ public enum MapType implements CodedEnum<MapType>
      */
     public String getId()
     {
-        return this.mapId;
+        return this.mode;
     }
     
     

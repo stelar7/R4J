@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.constants.types.val.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -8,8 +10,8 @@ public class Economy implements Serializable
     private static final long serialVersionUID = 8795392679461398269L;
     
     private int    loadoutValue;
-    private String weapon;
-    private String armor;
+    private Weapon weapon;
+    private Armor  armor;
     private int    remaining;
     private int    spent;
     
@@ -18,12 +20,12 @@ public class Economy implements Serializable
         return loadoutValue;
     }
     
-    public String getWeapon()
+    public Weapon getWeapon()
     {
         return weapon;
     }
     
-    public String getArmor()
+    public Armor getArmor()
     {
         return armor;
     }

@@ -5,27 +5,27 @@ import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public enum MapType implements CodedEnum<MapType>
+public enum FinishingDamageType implements CodedEnum<FinishingDamageType>
 {
+    WEAPON("Weapon"),
+    ABILITY("Ability"),
+    MELEE("Melee"),
+    BOMB("Bomb"),
+    FALL("Fall"),
     
-    BIND("/Game/Maps/Duality/Duality"),
-    HAVEN("/Game/Maps/Triad/Triad"),
-    SPLIT("/Game/Maps/Bonsai/Bonsai"),
-    ASCENT("/Game/Maps/Ascent/Ascent"),
-    THE_RANGE("/Game/Maps/Poveglia/Range")
     ;
     
     
-    private final String mapId;
+    private final String mode;
     
     /**
      * Constructor for MapType
      *
      * @param code the mapId
      */
-    MapType(final String code)
+    FinishingDamageType(final String code)
     {
-        this.mapId = code;
+        this.mode = code;
     }
     
     /**
@@ -34,9 +34,9 @@ public enum MapType implements CodedEnum<MapType>
      * @param mapId the map id
      * @return the from code
      */
-    public Optional<MapType> getFromCode(final String mapId)
+    public Optional<FinishingDamageType> getFromCode(final String mapId)
     {
-        return Stream.of(MapType.values()).filter(t -> t.mapId.equals(mapId)).findFirst();
+        return Stream.of(FinishingDamageType.values()).filter(t -> t.mode.equals(mapId)).findFirst();
     }
     
     @Override
@@ -56,7 +56,7 @@ public enum MapType implements CodedEnum<MapType>
      */
     public String getId()
     {
-        return this.mapId;
+        return this.mode;
     }
     
     

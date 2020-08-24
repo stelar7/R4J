@@ -1,6 +1,7 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
-import no.stelar7.api.r4j.basic.constants.types.val.TierDivisionType;
+import no.stelar7.api.r4j.basic.constants.types.val.*;
+import no.stelar7.api.r4j.basic.constants.types.val.Character;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,9 +11,9 @@ public class Player implements Serializable
     private static final long serialVersionUID = 6640355688349553215L;
     
     private String           puuid;
-    private String           teamId;
+    private TeamType         teamId;
     private String           partyId;
-    private String           characterId;
+    private Character        characterId;
     private PlayerTotalStats stats;
     private TierDivisionType competitiveTier;
     private String           playerCard;
@@ -23,7 +24,7 @@ public class Player implements Serializable
         return puuid;
     }
     
-    public String getTeamId()
+    public TeamType getTeam()
     {
         return teamId;
     }
@@ -33,7 +34,7 @@ public class Player implements Serializable
         return partyId;
     }
     
-    public String getCharacterId()
+    public Character getCharacter()
     {
         return characterId;
     }

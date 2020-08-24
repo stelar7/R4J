@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.constants.types.val.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -7,18 +9,23 @@ public class FinishingDamage implements Serializable
 {
     private static final long serialVersionUID = -2055229548751293072L;
     
-    private String  damageType;
-    private String  damageItem;
-    private Boolean isSecondaryFireMode;
+    private FinishingDamageType damageType;
+    private String              damageItem;
+    private Boolean             isSecondaryFireMode;
     
-    public String getDamageType()
+    public FinishingDamageType getDamageType()
     {
         return damageType;
     }
     
-    public String getDamageItem()
+    public Weapon getDamageItemAsWeapon()
     {
-        return damageItem;
+        return Weapon.valueOf(damageItem);
+    }
+    
+    public Skill getDamageItemAsSkill()
+    {
+        return Skill.valueOf(damageItem);
     }
     
     public Boolean getSecondaryFireMode()
