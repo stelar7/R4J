@@ -13,6 +13,7 @@ public enum Skill implements CodedEnum<Skill>
     ABILITY_1("Ability1"),
     ABILITY_2("Ability2"),
     ABILITY_3("Ability3"),
+    PRIMARY("Primary"),
     GRENADE("GrenadeAbility"),
     ULTIMATE("Ultimate"),
     ;
