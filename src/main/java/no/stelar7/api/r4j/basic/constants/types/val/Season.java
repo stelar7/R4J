@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 public enum Season implements CodedEnum<Season>
 {
+    NONE(""),
     ACT_1("3f61c772-4560-cd3f-5d3f-a7ab5abda6b3"),
     ACT_2("0530b9c4-4980-f2ee-df5d-09864cd00542"),
     ;
