@@ -1,10 +1,11 @@
 package no.stelar7.api.r4j.tests.val;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
+import no.stelar7.api.r4j.basic.constants.types.val.FinishingDamageType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.val.VALMatchAPI;
 import no.stelar7.api.r4j.pojo.shared.RiotAccount;
-import no.stelar7.api.r4j.pojo.val.match.Match;
+import no.stelar7.api.r4j.pojo.val.match.*;
 import no.stelar7.api.r4j.pojo.val.matchlist.MatchReference;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,18 @@ public class TestVALMatch
             List<MatchReference> matches = matchAPI.getMatchList(ValorantShard.EU, puuid);
             matches.forEach(m -> {
                 Match match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
+                match.getRoundResults().forEach(r -> {
+                    r.getPlayerStats().forEach(s -> {
+                        for (Kill kill : s.getKills())
+                        {
+                            FinishingDamage dmg = kill.getFinishingDamage();
+                            if (dmg.getDamageType() == FinishingDamageType.ABILITY)
+                            {
+                                dmg.getDamageItemAsSkill();
+                            }
+                        }
+                    });
+                });
             });
         });
     }

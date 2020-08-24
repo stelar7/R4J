@@ -1,6 +1,8 @@
 package no.stelar7.api.r4j.basic.constants.types.val;
 
+import com.google.gson.JsonPrimitive;
 import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
+import no.stelar7.api.r4j.basic.exceptions.APIEnumNotUpToDateException;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -51,6 +53,11 @@ public enum Weapon implements CodedEnum<Weapon>
     public Optional<Weapon> getFromCode(final String mapId)
     {
         return Stream.of(Weapon.values()).filter(t -> t.mode.equals(mapId)).findFirst();
+    }
+    
+    public static Weapon fromCode(final String mapId)
+    {
+        return Stream.of(Weapon.values()).filter(t -> t.mode.equals(mapId)).findFirst().orElseThrow(() -> new APIEnumNotUpToDateException(Weapon.class, new JsonPrimitive(mapId)));
     }
     
     @Override

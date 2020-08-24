@@ -20,12 +20,12 @@ public class FinishingDamage implements Serializable
     
     public Weapon getDamageItemAsWeapon()
     {
-        return Weapon.valueOf(damageItem);
+        return Weapon.fromCode(damageItem);
     }
     
     public Skill getDamageItemAsSkill()
     {
-        return Skill.valueOf(damageItem);
+        return Skill.fromCode(damageItem);
     }
     
     public Boolean getSecondaryFireMode()

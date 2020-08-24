@@ -1,6 +1,8 @@
 package no.stelar7.api.r4j.basic.constants.types.val;
 
+import com.google.gson.JsonPrimitive;
 import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
+import no.stelar7.api.r4j.basic.exceptions.APIEnumNotUpToDateException;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -8,6 +10,10 @@ import java.util.stream.Stream;
 public enum Skill implements CodedEnum<Skill>
 {
     NONE(""),
+    ABILITY_1("Ability1"),
+    ABILITY_2("Ability2"),
+    ABILITY_3("Ability3"),
+    GRENADE("GrenadeAbility"),
     ULTIMATE("Ultimate"),
     ;
     
@@ -33,6 +39,11 @@ public enum Skill implements CodedEnum<Skill>
     public Optional<Skill> getFromCode(final String mapId)
     {
         return Stream.of(Skill.values()).filter(t -> t.mode.equals(mapId)).findFirst();
+    }
+    
+    public static Skill fromCode(final String mapId)
+    {
+        return Stream.of(Skill.values()).filter(t -> t.mode.equals(mapId)).findFirst().orElseThrow(() -> new APIEnumNotUpToDateException(Skill.class, new JsonPrimitive(mapId)));
     }
     
     @Override
