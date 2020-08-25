@@ -19,7 +19,7 @@ public class LoRDeckCode
         int format    = firstByte >>> 4;
         int version   = firstByte & 0xF;
         
-        int MAX_KNOWN_VERSION = 2;
+        int MAX_KNOWN_VERSION = 3;
         if (version > MAX_KNOWN_VERSION)
         {
             throw new IllegalArgumentException("The provided code requires a higher version of this library; please update");
@@ -73,8 +73,8 @@ public class LoRDeckCode
             return null;
         }
         
-        // format and version = 0b00010001 = 0x11 = 17
-        result.add(0x11);
+        // format and version = 0001 0011
+        result.add(0b00010011);
         
         Map<Integer, List<Map.Entry<LoRCard, Integer>>> counts = deck.getDeck().entrySet().stream()
                                                                      .collect(Collectors.groupingBy(Entry::getValue));

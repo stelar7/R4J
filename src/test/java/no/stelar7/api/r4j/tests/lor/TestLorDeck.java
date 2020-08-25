@@ -373,4 +373,19 @@ public class TestLorDeck
         
         return true;
     }
+    
+    @Test
+    public void testTargon()
+    {
+        LoRDeck deck = new LoRDeck();
+        deck.addCard(LoRCard.create("01DE002"), 4);
+        deck.addCard(LoRCard.create("03MT003"), 2);
+        deck.addCard(LoRCard.create("03MT010"), 3);
+        deck.addCard(LoRCard.create("02BW004"), 5);
+        
+        String  code    = deck.getDeckCode();
+        LoRDeck decoded = LoRDeckCode.decode(code);
+        Assertions.assertTrue(checkSameDeck(deck, decoded));
+    }
+    
 }

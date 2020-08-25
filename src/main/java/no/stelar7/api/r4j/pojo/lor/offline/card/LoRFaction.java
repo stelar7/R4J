@@ -12,7 +12,8 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
     NOXUS("NX", 3),
     PILTOVER_AND_ZAUN("PZ", 4),
     SHADOW_ILES("SI", 5),
-    BILGEWATER("BW", 6);
+    BILGEWATER("BW", 6),
+    MOUNT_TARGON("MT", 9);
     
     private final String shortCode;
     private final int    id;
@@ -68,6 +69,8 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
                 return "Shadow Isles";
             case BILGEWATER:
                 return "Bilgewater";
+            case MOUNT_TARGON:
+                return "Mount Targon";
             default:
                 throw new RuntimeException("Unknown region; please alert the API maintainer!");
         }
@@ -92,6 +95,8 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
                 return "ShadowIsles";
             case BILGEWATER:
                 return "Bilgewater";
+            case MOUNT_TARGON:
+                return "Mount Targon";
             default:
                 throw new RuntimeException("Unknown region; please alert the API maintainer!");
         }
