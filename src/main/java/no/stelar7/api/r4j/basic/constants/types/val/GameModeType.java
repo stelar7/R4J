@@ -10,6 +10,9 @@ public enum GameModeType implements CodedEnum<GameModeType>
     DEFAULT("/Game/GameModes/Bomb/BombGameMode.BombGameMode_C"),
     DEATHMATCH("/Game/GameModes/Deathmatch/DeathmatchGameMode.DeathmatchGameMode_C"),
     SPIKE_RUSH("/Game/GameModes/QuickBomb/QuickBombGameMode.QuickBombGameMode_C"),
+    SHOOTING_RANGE("/Game/GameModes/ShootingRange/ShootingRangeGameMode.ShootingRangeGameMode_C"),
+    NEW_PLAYER_EXPERIENCE("/Game/GameModes/NewPlayerExperience/NPEGameMode.NPEGameMode_C"),
+    
     ;
     
     

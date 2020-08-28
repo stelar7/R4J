@@ -12,7 +12,8 @@ public enum MapType implements CodedEnum<MapType>
     HAVEN("/Game/Maps/Triad/Triad"),
     SPLIT("/Game/Maps/Bonsai/Bonsai"),
     ASCENT("/Game/Maps/Ascent/Ascent"),
-    THE_RANGE("/Game/Maps/Poveglia/Range")
+    THE_RANGE("/Game/Maps/Poveglia/Range"),
+    THE_RANGE_NPE("/Game/Maps/Poveglia/Range_NewPlayerExperience_Master"),
     ;
     
     

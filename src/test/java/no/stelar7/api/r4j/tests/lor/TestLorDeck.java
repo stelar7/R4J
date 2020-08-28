@@ -378,10 +378,10 @@ public class TestLorDeck
     public void testTargon()
     {
         LoRDeck deck = new LoRDeck();
-        deck.addCard(LoRCard.create("01DE002"), 4);
-        deck.addCard(LoRCard.create("03MT003"), 2);
-        deck.addCard(LoRCard.create("03MT010"), 3);
-        deck.addCard(LoRCard.create("02BW004"), 5);
+        deck.addCard(LoRCard.create("01DE002"), 1);
+        deck.addCard(LoRCard.create("03MT003"), 1);
+        deck.addCard(LoRCard.create("03MT010"), 1);
+        deck.addCard(LoRCard.create("02BW004"), 1);
         
         String  code    = deck.getDeckCode();
         LoRDeck decoded = LoRDeckCode.decode(code);

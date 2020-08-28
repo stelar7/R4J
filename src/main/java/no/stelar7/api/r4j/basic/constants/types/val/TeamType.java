@@ -10,7 +10,7 @@ public enum TeamType implements CodedEnum<TeamType>
     RED("Red"),
     BLUE("Blue"),
     NEUTRAL("Neutral"),
-    SOLO("THIS IS SOME BS VALUE"),
+    SOLO("THIS IS THE PLAYERS UUID"),
     ;
     
     

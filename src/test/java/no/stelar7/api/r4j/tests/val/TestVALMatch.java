@@ -41,8 +41,6 @@ public class TestVALMatch
     @Test
     public void getDeep()
     {
-        //DataCall.setCacheProvider(new FileSystemCacheProvider(1));
-        
         R4J         api      = new R4J(SecretFile.CREDS);
         VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
         RiotAccount account  = api.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "Jbzz", "EUW");

@@ -71,5 +71,8 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V4_LEAGUE, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V4_LEAGUE_ENTRY, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V4_LEAGUE_RANK, MINUTES_30);
+    
+        DEFAULTS.add(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, MINUTES_30);
+        DEFAULTS.add(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, MINUTES_30);
     }
 }

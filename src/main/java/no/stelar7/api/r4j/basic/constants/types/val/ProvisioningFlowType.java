@@ -8,8 +8,16 @@ import java.util.stream.Stream;
 public enum ProvisioningFlowType implements CodedEnum<ProvisioningFlowType>
 {
     
+    UNKNOWN(""),
     MATCHMAKING("Matchmaking"),
-    CUSTOM_GAME("CustomGame");
+    CUSTOM_GAME("CustomGame"),
+    SHOOTING_RANGE("ShootingRange"),
+    SKILL_TEST("SkillTest"),
+    NEW_PLAYER_EXPERIENCE("NewPlayerExperience"),
+    
+    ;
+    
+    
     
     
     private final String flow;

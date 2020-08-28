@@ -13,6 +13,8 @@ public enum RoundResultCodeType implements CodedEnum<RoundResultCodeType>
     ELIMINATION("Elimination"),
     DETONATE("Detonate"),
     SURRENDERED("Surrendered"),
+    TIME_EXPIRED("TimeExpired"),
+    CHEAT("Cheat"),
     
     ;
     
