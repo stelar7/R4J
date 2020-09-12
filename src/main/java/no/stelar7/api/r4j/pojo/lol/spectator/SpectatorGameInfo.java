@@ -14,10 +14,10 @@ public class SpectatorGameInfo implements Serializable
     
     private List<BannedChampion>       bannedChampions;
     private long                       gameId;
-    private long          gameLength;
-    private GameModeType  gameMode;
-    private GameQueueType gameQueueConfigId;
-    private long          gameStartTime;
+    private long                       gameLength;
+    private GameModeType               gameMode;
+    private GameQueueType              gameQueueConfigId;
+    private long                       gameStartTime;
     private GameType                   gameType;
     private MapType                    mapId;
     private Observer                   observers;
