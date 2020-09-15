@@ -1,12 +1,12 @@
 package no.stelar7.api.r4j.tests.val;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
-import no.stelar7.api.r4j.basic.constants.types.val.FinishingDamageType;
+import no.stelar7.api.r4j.basic.constants.types.val.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.val.VALMatchAPI;
 import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.pojo.val.match.*;
-import no.stelar7.api.r4j.pojo.val.matchlist.MatchReference;
+import no.stelar7.api.r4j.pojo.val.matchlist.*;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +14,16 @@ import java.util.*;
 
 public class TestVALMatch
 {
+    @Test
+    public void getRecent()
+    {
+        R4J         api      = new R4J(SecretFile.CREDS);
+        VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
+    
+        RecentMatchList recentMatches = matchAPI.getRecentMatches(ValorantShard.EU, GameQueueType.COMPETITIVE);
+        System.out.println(recentMatches);
+    }
+    
     @Test
     public void getList()
     {

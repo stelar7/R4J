@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.impl.val;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
+import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.val.match.Match;
 import no.stelar7.api.r4j.pojo.val.matchlist.*;
@@ -45,13 +46,45 @@ public class VALMatchAPI
         {
             return Collections.emptyList();
         }
-    
+        
         MatchList matchList = (MatchList) matchObj;
         
         data.put("value", matchList);
         DataCall.getCacheProvider().store(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, data);
         
         return matchList.getHistory();
+    }
+    
+    
+    public RecentMatchList getRecentMatches(ValorantShard platform, GameQueueType queue)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getValue())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withEndpoint(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE)
+                                                       .withPlatform(platform);
+        
+        Map<String, Object> data = new TreeMap<>();
+        data.put("platform", platform);
+        data.put("queue", queue);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, data);
+        if (chl.isPresent())
+        {
+            return (RecentMatchList) chl.get();
+        }
+        
+        try
+        {
+            RecentMatchList match = (RecentMatchList) builder.build();
+            
+            data.put("value", match);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, data);
+            
+            return match;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
     }
     
     

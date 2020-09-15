@@ -74,5 +74,6 @@ public class CacheLifetimeHint
     
         DEFAULTS.add(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, MINUTES_30);
+        DEFAULTS.add(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, MINUTES_10);
     }
 }
