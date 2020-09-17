@@ -61,6 +61,13 @@ public class TestVALMatch
         List<MatchReference> matchlist = matchAPI.getMatchList(ValorantShard.EU, account.getPUUID());
         matchlist.forEach(m -> {
             Match match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
+            match.getRoundResults().forEach(r -> {
+                r.getPlayerStats().forEach(s -> {
+                    if(s.getAbility().getGrenadeEffects() != null && !s.getAbility().getGrenadeEffects().equals("null")) {
+                        System.out.println();
+                    }
+                });
+            });
             match.getPlayers().forEach(p -> ids.add(p.getPUUID()));
         });
         
@@ -70,13 +77,8 @@ public class TestVALMatch
                 Match match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
                 match.getRoundResults().forEach(r -> {
                     r.getPlayerStats().forEach(s -> {
-                        for (Kill kill : s.getKills())
-                        {
-                            FinishingDamage dmg = kill.getFinishingDamage();
-                            if (dmg.getDamageType() == FinishingDamageType.ABILITY)
-                            {
-                                dmg.getDamageItemAsSkill();
-                            }
+                        if(s.getAbility().getGrenadeEffects() != null && !s.getAbility().getGrenadeEffects().equals("null")) {
+                            System.out.println();
                         }
                     });
                 });

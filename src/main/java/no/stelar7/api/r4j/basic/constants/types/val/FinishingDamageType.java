@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 public enum FinishingDamageType implements CodedEnum<FinishingDamageType>
 {
+    UNKNOWN(""),
     WEAPON("Weapon"),
     ABILITY("Ability"),
     MELEE("Melee"),
