@@ -11,6 +11,17 @@ public class ContentItem implements Serializable
     private String              name;
     private Map<String, String> localizedNames;
     private String              assetName;
+    private String              assetPath;
+    
+    public String getId()
+    {
+        return id;
+    }
+    
+    public String getAssetPath()
+    {
+        return assetPath;
+    }
     
     public String getName()
     {
@@ -39,24 +50,28 @@ public class ContentItem implements Serializable
             return false;
         }
         ContentItem that = (ContentItem) o;
-        return Objects.equals(name, that.name) &&
+        return Objects.equals(id, that.id) &&
+               Objects.equals(name, that.name) &&
                Objects.equals(localizedNames, that.localizedNames) &&
-               Objects.equals(assetName, that.assetName);
+               Objects.equals(assetName, that.assetName) &&
+               Objects.equals(assetPath, that.assetPath);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(name, localizedNames, assetName);
+        return Objects.hash(id, name, localizedNames, assetName, assetPath);
     }
     
     @Override
     public String toString()
     {
         return "ContentItem{" +
-               "name='" + name + '\'' +
+               "id='" + id + '\'' +
+               ", name='" + name + '\'' +
                ", localizedNames=" + localizedNames +
                ", assetName='" + assetName + '\'' +
+               ", assetPath='" + assetPath + '\'' +
                '}';
     }
 }
