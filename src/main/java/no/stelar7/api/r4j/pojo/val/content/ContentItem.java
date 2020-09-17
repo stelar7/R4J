@@ -7,7 +7,8 @@ public class ContentItem implements Serializable
 {
     private static final long serialVersionUID = 1462032373801535374L;
     
-    private String name;
+    private String              id;
+    private String              name;
     private Map<String, String> localizedNames;
     private String              assetName;
     
