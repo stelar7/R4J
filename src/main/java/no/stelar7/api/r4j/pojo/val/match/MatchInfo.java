@@ -1,23 +1,26 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
 import no.stelar7.api.r4j.basic.constants.types.val.*;
+import no.stelar7.api.r4j.impl.val.VALContentAPI;
+import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 public class MatchInfo implements Serializable
 {
     private static final long serialVersionUID = -5536569302071536933L;
     
     private String               matchId;
-    private MapType              mapId;
+    private String               mapId;
     private Long                 gameLengthMillis;
     private Long                 gameStartMillis;
     private ProvisioningFlowType provisioningFlowId;
     private Boolean              isCompleted;
     private String               customGameName;
     private GameQueueType        queueId;
-    private GameModeType         gameMode;
+    private String               gameMode;
     private Boolean              isRanked;
     private Season               seasonId;
     
@@ -26,9 +29,19 @@ public class MatchInfo implements Serializable
         return matchId;
     }
     
-    public MapType getMap()
+    public String getMap()
     {
         return mapId;
+    }
+    
+    public Optional<ContentItem> getMapAsContent()
+    {
+        return VALContentAPI.getInstance()
+                            .getContent(ValorantShard.EU, Optional.empty())
+                            .getMaps()
+                            .stream()
+                            .filter(c -> c.getAssetPath().equalsIgnoreCase(this.mapId))
+                            .findFirst();
     }
     
     public Long getGameLengthMillis()
@@ -61,9 +74,19 @@ public class MatchInfo implements Serializable
         return queueId;
     }
     
-    public GameModeType getGameMode()
+    public String getGameMode()
     {
         return gameMode;
+    }
+    
+    public Optional<ContentItem> getGameModeAsContent()
+    {
+        return VALContentAPI.getInstance()
+                            .getContent(ValorantShard.EU, Optional.empty())
+                            .getGameModes()
+                            .stream()
+                            .filter(c -> c.getAssetPath().equalsIgnoreCase(this.gameMode))
+                            .findFirst();
     }
     
     public Boolean getRanked()

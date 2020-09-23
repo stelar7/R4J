@@ -1,9 +1,12 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
 import no.stelar7.api.r4j.basic.constants.types.val.*;
+import no.stelar7.api.r4j.impl.val.VALContentAPI;
+import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 public class FinishingDamage implements Serializable
 {
@@ -18,9 +21,19 @@ public class FinishingDamage implements Serializable
         return damageType;
     }
     
-    public Weapon getDamageItemAsWeapon()
+    public String getDamageItem()
     {
-        return Weapon.fromCode(damageItem);
+        return damageItem;
+    }
+    
+    public Optional<ContentItem> getDamageItemAsWeaponContent()
+    {
+        return VALContentAPI.getInstance()
+                            .getContent(ValorantShard.EU, Optional.empty())
+                            .getEquips()
+                            .stream()
+                            .filter(c -> c.getId().equals(this.damageItem))
+                            .findFirst();
     }
     
     public Skill getDamageItemAsSkill()

@@ -62,9 +62,7 @@ public final class Utils
         builder.registerTypeAdapter(RegionShard.class, new RealmSpesificEnumSerializer());
         
         // valorant
-        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.GameModeType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.GameModeType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.GameQueueType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.GameQueueType>());
-        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.MapType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.MapType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.PlantSiteType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.PlantSiteType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.ProvisioningFlowType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.ProvisioningFlowType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.RoundResultCodeType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.RoundResultCodeType>());
@@ -72,8 +70,6 @@ public final class Utils
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.TeamType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.TeamType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.TierDivisionType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.TierDivisionType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Season.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Season>());
-        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Character.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Character>());
-        builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Weapon.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Weapon>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Armor.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Armor>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.FinishingDamageType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.FinishingDamageType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Skill.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Skill>());

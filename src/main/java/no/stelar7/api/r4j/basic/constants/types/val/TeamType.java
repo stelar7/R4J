@@ -19,7 +19,7 @@ public enum TeamType implements CodedEnum<TeamType>
     /**
      * Constructor for MapType
      *
-     * @param code the mapId
+     * @param code the teamId
      */
     TeamType(final String code)
     {
@@ -29,17 +29,17 @@ public enum TeamType implements CodedEnum<TeamType>
     /**
      * Gets from code.
      *
-     * @param mapId the map id
+     * @param teamId the map id
      * @return the from code
      */
-    public Optional<TeamType> getFromCode(final String mapId)
+    public Optional<TeamType> getFromCode(final String teamId)
     {
-        if (mapId.length() > 15)
+        if (teamId.length() > 15)
         {
             return Optional.of(SOLO);
         }
         
-        return Stream.of(TeamType.values()).filter(t -> t.team.equals(mapId)).findFirst();
+        return Stream.of(TeamType.values()).filter(t -> t.team.equals(teamId)).findFirst();
     }
     
     @Override

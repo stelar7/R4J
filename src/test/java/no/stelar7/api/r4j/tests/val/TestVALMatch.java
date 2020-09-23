@@ -5,10 +5,11 @@ import no.stelar7.api.r4j.basic.constants.types.val.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.val.VALMatchAPI;
 import no.stelar7.api.r4j.pojo.shared.RiotAccount;
+import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 import no.stelar7.api.r4j.pojo.val.match.*;
 import no.stelar7.api.r4j.pojo.val.matchlist.*;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class TestVALMatch
     {
         R4J         api      = new R4J(SecretFile.CREDS);
         VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
-    
+        
         RecentMatchList recentMatches = matchAPI.getRecentMatches(ValorantShard.EU, GameQueueType.COMPETITIVE);
         System.out.println(recentMatches);
     }
@@ -60,10 +61,19 @@ public class TestVALMatch
         
         List<MatchReference> matchlist = matchAPI.getMatchList(ValorantShard.EU, account.getPUUID());
         matchlist.forEach(m -> {
-            Match match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
+            Match                 match             = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
+            Optional<ContentItem> gameModeAsContent = match.getMatchInfo().getGameModeAsContent();
+            Optional<ContentItem> mapAsContent      = match.getMatchInfo().getMapAsContent();
+            match.getPlayers().forEach(p -> {
+                Optional<ContentItem> characterAsContent   = p.getCharacterAsContent();
+                Optional<ContentItem> playerCardAsContent  = p.getPlayerCardAsContent();
+                Optional<ContentItem> playerTitleAsContent = p.getPlayerTitleAsContent();
+            });
             match.getRoundResults().forEach(r -> {
                 r.getPlayerStats().forEach(s -> {
-                    if(s.getAbility().getGrenadeEffects() != null && !s.getAbility().getGrenadeEffects().equals("null")) {
+                    Optional<ContentItem> weaponAsContent = s.getEconomy().getWeaponAsContent();
+                    if (s.getAbility().getGrenadeEffects() != null && !s.getAbility().getGrenadeEffects().equals("null"))
+                    {
                         System.out.println();
                     }
                 });
@@ -77,7 +87,8 @@ public class TestVALMatch
                 Match match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
                 match.getRoundResults().forEach(r -> {
                     r.getPlayerStats().forEach(s -> {
-                        if(s.getAbility().getGrenadeEffects() != null && !s.getAbility().getGrenadeEffects().equals("null")) {
+                        if (s.getAbility().getGrenadeEffects() != null && !s.getAbility().getGrenadeEffects().equals("null"))
+                        {
                             System.out.println();
                         }
                     });

@@ -1,10 +1,12 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
 import no.stelar7.api.r4j.basic.constants.types.val.*;
-import no.stelar7.api.r4j.basic.constants.types.val.Character;
+import no.stelar7.api.r4j.impl.val.VALContentAPI;
+import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 public class Player implements Serializable
 {
@@ -13,7 +15,7 @@ public class Player implements Serializable
     private String           puuid;
     private TeamType         teamId;
     private String           partyId;
-    private Character        characterId;
+    private String           characterId;
     private PlayerTotalStats stats;
     private TierDivisionType competitiveTier;
     private String           playerCard;
@@ -34,9 +36,19 @@ public class Player implements Serializable
         return partyId;
     }
     
-    public Character getCharacter()
+    public String getCharacter()
     {
         return characterId;
+    }
+    
+    public Optional<ContentItem> getCharacterAsContent()
+    {
+        return VALContentAPI.getInstance()
+                            .getContent(ValorantShard.EU, Optional.empty())
+                            .getCharacters()
+                            .stream()
+                            .filter(c -> c.getId().equalsIgnoreCase(this.characterId))
+                            .findFirst();
     }
     
     public PlayerTotalStats getStats()
@@ -54,9 +66,29 @@ public class Player implements Serializable
         return playerCard;
     }
     
+    public Optional<ContentItem> getPlayerCardAsContent()
+    {
+        return VALContentAPI.getInstance()
+                            .getContent(ValorantShard.EU, Optional.empty())
+                            .getPlayerCards()
+                            .stream()
+                            .filter(c -> c.getId().equalsIgnoreCase(this.playerCard))
+                            .findFirst();
+    }
+    
     public String getPlayerTitle()
     {
         return playerTitle;
+    }
+    
+    public Optional<ContentItem> getPlayerTitleAsContent()
+    {
+        return VALContentAPI.getInstance()
+                            .getContent(ValorantShard.EU, Optional.empty())
+                            .getPlayerTitles()
+                            .stream()
+                            .filter(c -> c.getId().equalsIgnoreCase(this.playerTitle))
+                            .findFirst();
     }
     
     @Override
