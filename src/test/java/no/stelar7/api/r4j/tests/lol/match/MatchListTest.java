@@ -87,6 +87,16 @@ public class MatchListTest
     
     
     @Test
+    public void testDomiBun()
+    {
+        Summoner      s     = Summoner.byName(LeagueShard.EUN1, "DomiBun");
+        LazyList<MatchReference> lazy = s.getLeagueGames().getLazy();
+        lazy.loadFully();
+        System.out.println();
+    }
+    
+    
+    @Test
     public void testMatchlistAll()
     {
         String               id   = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();

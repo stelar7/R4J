@@ -1,15 +1,14 @@
 package no.stelar7.api.r4j.tests.val;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
-import no.stelar7.api.r4j.basic.constants.types.val.*;
+import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.val.VALMatchAPI;
 import no.stelar7.api.r4j.pojo.shared.RiotAccount;
-import no.stelar7.api.r4j.pojo.val.content.ContentItem;
-import no.stelar7.api.r4j.pojo.val.match.*;
+import no.stelar7.api.r4j.pojo.val.match.Match;
 import no.stelar7.api.r4j.pojo.val.matchlist.*;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
@@ -50,6 +49,18 @@ public class TestVALMatch
     }
     
     @Test
+    public void getId() {
+        R4J         api      = new R4J(SecretFile.CREDS);
+        VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
+        Match       match    = matchAPI.getMatch(ValorantShard.KR, "2e527b76-7f32-426d-b19b-f48e5641d44f");
+        match.getPlayers().forEach(p-> {
+            RiotAccount accountByPUUID = api.getAccountAPI().getAccountByPUUID(RegionShard.ASIA, p.getPUUID());
+            System.out.println();
+        });
+        System.out.println();
+    }
+    
+    @Test
     public void getDeep()
     {
         R4J         api      = new R4J(SecretFile.CREDS);
@@ -62,16 +73,11 @@ public class TestVALMatch
         List<MatchReference> matchlist = matchAPI.getMatchList(ValorantShard.EU, account.getPUUID());
         matchlist.forEach(m -> {
             Match                 match             = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
-            Optional<ContentItem> gameModeAsContent = match.getMatchInfo().getGameModeAsContent();
-            Optional<ContentItem> mapAsContent      = match.getMatchInfo().getMapAsContent();
-            match.getPlayers().forEach(p -> {
-                Optional<ContentItem> characterAsContent   = p.getCharacterAsContent();
-                Optional<ContentItem> playerCardAsContent  = p.getPlayerCardAsContent();
-                Optional<ContentItem> playerTitleAsContent = p.getPlayerTitleAsContent();
-            });
             match.getRoundResults().forEach(r -> {
+                if(match.getPlayers().stream().anyMatch(p->p.getCharacter() == null)) {
+                    System.out.println();
+                }
                 r.getPlayerStats().forEach(s -> {
-                    Optional<ContentItem> weaponAsContent = s.getEconomy().getWeaponAsContent();
                     if (s.getAbility().getGrenadeEffects() != null && !s.getAbility().getGrenadeEffects().equals("null"))
                     {
                         System.out.println();
