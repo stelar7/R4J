@@ -153,6 +153,16 @@ public class R4J
         {
             return LoRClientAPI.getInstance();
         }
+    
+        /**
+         * Gets match api.
+         *
+         * @return the match api
+         */
+        public LORMatchAPI getMatchAPI()
+        {
+            return LORMatchAPI.getInstance();
+        }
         
     }
     

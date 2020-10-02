@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.pojo.shared;
 
 import com.google.gson.JsonObject;
 import no.stelar7.api.r4j.basic.utils.Utils;
+import no.stelar7.api.r4j.pojo.lor.match.*;
 import no.stelar7.api.r4j.pojo.tft.*;
 
 import java.io.Serializable;
@@ -20,6 +21,16 @@ public class GAMHSMatch implements Serializable
     public TFTMetadata toTFTMetadata()
     {
         return Utils.getGson().fromJson(Utils.getGson().toJsonTree(metadata), TFTMetadata.class);
+    }
+    
+    public LORMatch toLORMatch()
+    {
+        return Utils.getGson().fromJson(Utils.getGson().toJsonTree(info), LORMatch.class);
+    }
+    
+    public LORMetadata toLORMetadata()
+    {
+        return Utils.getGson().fromJson(Utils.getGson().toJsonTree(metadata), LORMetadata.class);
     }
     
     public JsonObject getMetadata()
