@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.tft.TFTMatchAPI;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
-import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
+import no.stelar7.api.r4j.pojo.shared.*;
 import no.stelar7.api.r4j.pojo.tft.*;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,8 @@ public class TestTFTMatch
     @Test
     public void testMatchIterator()
     {
-        MatchIterator stelar7 = api.getMatchIterator(RegionShard.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 20);
+        RiotAccount acc = l4j8.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "Yisus", "yisus");
+        MatchIterator stelar7 = api.getMatchIterator(RegionShard.EUROPE, acc.getPUUID(), 20);
         for (GAMHSMatch m : stelar7)
         {
             System.out.println(m.toTFTMatch());

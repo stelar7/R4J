@@ -10,6 +10,7 @@ public class TFTUnit implements Serializable
     private int           rarity;
     private String        character_id;
     private List<Integer> items;
+    private String        chosen;
     
     public String getName()
     {
@@ -36,6 +37,11 @@ public class TFTUnit implements Serializable
         return items;
     }
     
+    public String getChosen()
+    {
+        return chosen;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -52,13 +58,14 @@ public class TFTUnit implements Serializable
                rarity == tftUnit.rarity &&
                Objects.equals(name, tftUnit.name) &&
                Objects.equals(character_id, tftUnit.character_id) &&
-               Objects.equals(items, tftUnit.items);
+               Objects.equals(items, tftUnit.items) &&
+               Objects.equals(chosen, tftUnit.chosen);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(name, tier, rarity, character_id, items);
+        return Objects.hash(name, tier, rarity, character_id, items, chosen);
     }
     
     @Override
@@ -70,6 +77,7 @@ public class TFTUnit implements Serializable
                ", rarity=" + rarity +
                ", character_id='" + character_id + '\'' +
                ", items=" + items +
+               ", chosen='" + chosen + '\'' +
                '}';
     }
 }
