@@ -11,7 +11,7 @@ public class PlayerLocation implements Serializable
     private float    viewRadians;
     private Location location;
     
-    public String getPuuid()
+    public String getPUUID()
     {
         return puuid;
     }
