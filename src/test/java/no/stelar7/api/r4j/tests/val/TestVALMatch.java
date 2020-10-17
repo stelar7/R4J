@@ -5,6 +5,7 @@ import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
+import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.val.VALMatchAPI;
 import no.stelar7.api.r4j.pojo.shared.RiotAccount;
@@ -17,6 +18,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.util.List;
 import java.util.*;
 
@@ -48,7 +51,7 @@ public class TestVALMatch
     }
     
     @Test
-    public void getSingle()
+    public void getSingle() throws IOException
     {
         R4J         api      = new R4J(SecretFile.CREDS);
         VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
@@ -56,6 +59,7 @@ public class TestVALMatch
         
         List<MatchReference> matchlist = matchAPI.getMatchList(ValorantShard.EU, account.getPUUID());
         Match                match     = matchAPI.getMatch(ValorantShard.EU, matchlist.get(0).getMatchId());
+        Files.write(Paths.get("C:\\Users\\Steffen\\Desktop\\game.json"), Utils.getGson().toJson(match).getBytes(StandardCharsets.UTF_8));
         System.out.println(match);
     }
     
