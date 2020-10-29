@@ -56,14 +56,14 @@ public class AccountAPI
     public RiotAccount getAccountByTag(RegionShard server, String name, String tag)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_NAME_PLACEHOLDER, Utils.normalizeString(name))
-                                                       .withURLParameter(Constants.TAG_LINE_PLACEHOLDER, tag)
+                                                       .withURLParameter(Constants.TAG_LINE_PLACEHOLDER, Utils.normalizeString(tag))
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG)
                                                        .withPlatform(server);
         Map<String, Object> data = new TreeMap<>();
         data.put("platform", server);
         data.put("name", Utils.normalizeString(name));
-        data.put("tag", tag);
+        data.put("tag", Utils.normalizeString(tag));
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
         if (chl.isPresent())

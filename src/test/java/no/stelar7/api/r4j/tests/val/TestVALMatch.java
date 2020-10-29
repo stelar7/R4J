@@ -181,4 +181,12 @@ public class TestVALMatch
             });
         });
     }
+    
+    @Test
+    public void testGetSingleById() {
+        R4J         api      = new R4J(SecretFile.CREDS);
+        VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
+        Match       match    = matchAPI.getMatch(ValorantShard.AP, "c4eb3e3d-d175-4b73-b7d4-279374d1b19b");
+        System.out.println();
+    }
 }
