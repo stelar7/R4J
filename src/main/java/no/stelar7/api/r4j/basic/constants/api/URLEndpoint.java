@@ -20,7 +20,7 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.profileicon.ProfileIconData;
 import no.stelar7.api.r4j.pojo.lol.staticdata.realm.Realm;
 import no.stelar7.api.r4j.pojo.lol.staticdata.rune.StaticRuneList;
 import no.stelar7.api.r4j.pojo.lol.staticdata.summonerspell.StaticSummonerSpellList;
-import no.stelar7.api.r4j.pojo.lol.status.ShardStatus;
+import no.stelar7.api.r4j.pojo.lol.status.PlatformData;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
 import no.stelar7.api.r4j.pojo.lor.oauth.*;
@@ -55,9 +55,6 @@ public enum URLEndpoint
     
     // lol/platform/v3/champion-rotations
     V3_CHAMPION_ROTATIONS("lol", "platform", "v3", "champion-rotations", ChampionRotationInfo.class),
-    
-    // lol/status/v3/shard-data
-    V3_SHARD_STATUS("lol", "status", "v3", "shard-data", ShardStatus.class),
     
     DDRAGON_CHAMPION_MANY("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/championFull.json", StaticChampionList.class),
     DDRAGON_ITEMS("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/item.json", ItemList.class),
@@ -221,6 +218,10 @@ public enum URLEndpoint
     
     V1_LOR_MATCHES_BY_PUUID("lor", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),
     V1_LOR_MATCH("lor", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
+    
+    V4_STATUS_LOL("lol", "status", "v4", "platform-data", PlatformData.class),
+    V1_STATUS_LOR("lor", "status", "v1", "platform-data", PlatformData.class),
+    V1_STATUS_VAL("val", "status", "v1", "platform-data", PlatformData.class),
     
     ;
     

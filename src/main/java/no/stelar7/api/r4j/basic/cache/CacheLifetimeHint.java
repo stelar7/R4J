@@ -60,7 +60,7 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V4_MASTERY_SCORE, MINUTES_10);
         
         DEFAULTS.add(URLEndpoint.V3_CHAMPION_ROTATIONS, DAYS_1);
-        
+    
         DEFAULTS.add(URLEndpoint.V1_TFT_LEAGUE, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V1_TFT_LEAGUE_ENTRY, MINUTES_30);
@@ -77,5 +77,10 @@ public class CacheLifetimeHint
         
         DEFAULTS.add(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V1_LOR_MATCHES_BY_PUUID, MINUTES_30);
+    
+        DEFAULTS.add(URLEndpoint.V4_STATUS_LOL, MINUTES_1);
+        DEFAULTS.add(URLEndpoint.V1_STATUS_LOR, MINUTES_1);
+        DEFAULTS.add(URLEndpoint.V1_STATUS_VAL, MINUTES_1);
+        
     }
 }
