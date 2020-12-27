@@ -30,13 +30,14 @@ public final class DataCall
     
     private        Enum        platform;
     private        URLEndpoint endpoint;
-    private        boolean     useLimiters      = true;
-    private        long        sleep            = -1;
-    private        int         readTimeout      = 0;
-    private        int         connectTimeout   = 0;
-    private        LeagueShard defaultPlatform  = LeagueShard.EUW1;
-    private        String      urlProxy         = Constants.REQUEST_URL;
-    private static Preferences ratelimiterCache = Preferences.userRoot().node("no/stelar7/r4j");
+    private        boolean     useLimiters       = true;
+    private        long        sleep             = -1;
+    private        int         readTimeout       = 0;
+    private        int         connectTimeout    = 0;
+    private        boolean     returnRawResponse = false;
+    private        LeagueShard defaultPlatform   = LeagueShard.EUW1;
+    private        String      urlProxy          = Constants.REQUEST_URL;
+    private static Preferences ratelimiterCache  = Preferences.userRoot().node("no/stelar7/r4j");
     
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter()
     {
@@ -232,5 +233,15 @@ public final class DataCall
     public static void setGlobalTimeout(int globalTimeout)
     {
         DataCall.globalTimeout = globalTimeout;
+    }
+    
+    public boolean shouldReturnRawResponse()
+    {
+        return returnRawResponse;
+    }
+    
+    public void setShouldReturnRawResponse(boolean returnRawResponse)
+    {
+        this.returnRawResponse = returnRawResponse;
     }
 }

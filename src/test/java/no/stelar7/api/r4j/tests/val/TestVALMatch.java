@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.tests.val;
 
+import ch.qos.logback.classic.*;
+import com.google.gson.*;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
@@ -13,6 +15,7 @@ import no.stelar7.api.r4j.pojo.val.match.*;
 import no.stelar7.api.r4j.pojo.val.matchlist.*;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.List;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TestVALMatch
 {
@@ -119,7 +123,7 @@ public class TestVALMatch
                     System.out.println(d.getY());
                     System.out.println(sliderY.getValue());
                     g.fillOval(x, y, 10, 10);
-                   // break;
+                    // break;
                 }
             }
         };
@@ -183,10 +187,63 @@ public class TestVALMatch
     }
     
     @Test
-    public void testGetSingleById() {
+    public void testGetSingleById()
+    {
         R4J         api      = new R4J(SecretFile.CREDS);
         VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
         Match       match    = matchAPI.getMatch(ValorantShard.AP, "c4eb3e3d-d175-4b73-b7d4-279374d1b19b");
         System.out.println();
+    }
+    
+    @Test
+    public void generateRecentGamesData() throws IOException
+    {
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.INFO);
+        loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.INFO);
+        
+        Map<String, JsonElement> matches = new HashMap<>();
+        Map<String, JsonElement> players = new HashMap<>();
+        
+        R4J             api           = new R4J(SecretFile.CREDS);
+        VALMatchAPI     matchAPI      = api.getVALAPI().getMatchAPI();
+        RecentMatchList recentMatches = matchAPI.getRecentMatches(ValorantShard.EU, GameQueueType.COMPETITIVE);
+        
+        List<String> matchIds = recentMatches.getMatchIds().stream().limit(100).collect(Collectors.toList());
+        int          max      = matchIds.size();
+        int          current  = 0;
+        for (String matchId : matchIds)
+        {
+            System.out.println("Working on match " + (++current) + "/" + max);
+            
+            Match       match     = matchAPI.getMatch(ValorantShard.EU, matchId);
+            JsonElement matchJson = Utils.getGson().toJsonTree(match);
+            matches.put(matchId, matchJson);
+            
+            for (Player player : match.getPlayers())
+            {
+                RiotAccount account     = api.getAccountAPI().getAccountByPUUID(RegionShard.EUROPE, player.getPUUID());
+                JsonElement accountJson = Utils.getGson().toJsonTree(account);
+                players.put(account.getPUUID(), accountJson);
+            }
+        }
+        
+        JsonArray matchJson = new JsonArray();
+        for (JsonElement value : matches.values())
+        {
+            matchJson.add(value);
+        }
+        
+        JsonArray playerJson = new JsonArray();
+        for (JsonElement value : players.values())
+        {
+            playerJson.add(value);
+        }
+        
+        JsonObject obj = new JsonObject();
+        obj.add("players", playerJson);
+        obj.add("matches", matchJson);
+        
+        Files.write(Paths.get("D:\\" + recentMatches.getGeneratedAt() + ".json"), Utils.getGson().toJson(obj).getBytes(StandardCharsets.UTF_8));
     }
 }

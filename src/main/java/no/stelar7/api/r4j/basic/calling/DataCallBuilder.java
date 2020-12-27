@@ -13,7 +13,6 @@ import javax.net.ssl.*;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
 import java.security.*;
 import java.security.cert.X509Certificate;
 import java.time.*;
@@ -119,17 +118,9 @@ public class DataCallBuilder
             {
                 String returnValue = response.getResponseData();
                 
-                if (false)
+                if (this.dc.shouldReturnRawResponse())
                 {
-                    try
-                    {
-                        Path output = Paths.get("D:\\requests\\" + this.dc.getEndpoint().name() + "\\" + requestCount.computeIfAbsent(this.dc.getEndpoint(), (k) -> new AtomicLong(0)).getAndIncrement() + ".json");
-                        Files.createDirectories(output.getParent());
-                        Files.write(output, returnValue.getBytes(StandardCharsets.UTF_8));
-                    } catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    return returnValue;
                 }
                 
                 if (this.dc.getEndpoint() != null)
@@ -573,7 +564,8 @@ public class DataCallBuilder
             con.setReadTimeout(this.dc.getReadTimeout());
             this.dc.getUrlHeaders().forEach(con::setRequestProperty);
             
-            if(requestMethod.equalsIgnoreCase("PATCH")) {
+            if (requestMethod.equalsIgnoreCase("PATCH"))
+            {
                 con.setRequestProperty("X-HTTP-Method-Override", "PATCH");
                 con.setRequestMethod("POST");
             } else
