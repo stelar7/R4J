@@ -5,10 +5,10 @@ import java.util.*;
 
 public class Kill implements Serializable
 {
-    private static final long serialVersionUID = 3645173464463247386L;
+    private static final long serialVersionUID = 5537015544246838162L;
     
-    private int                  gameTime;
-    private int                  roundTime;
+    private int                  timeSinceGameStartMillis;
+    private int                  timeSinceRoundStartMillis;
     private String               killer;
     private String               victim;
     private Location             victimLocation;
@@ -16,14 +16,14 @@ public class Kill implements Serializable
     private List<PlayerLocation> playerLocations;
     private FinishingDamage      finishingDamage;
     
-    public int getGameTime()
+    public int getTimeSinceGameStartMillis()
     {
-        return gameTime;
+        return timeSinceGameStartMillis;
     }
     
-    public int getRoundTime()
+    public int getTimeSinceRoundStartMillis()
     {
-        return roundTime;
+        return timeSinceRoundStartMillis;
     }
     
     public String getKiller()
@@ -68,8 +68,8 @@ public class Kill implements Serializable
             return false;
         }
         Kill kill = (Kill) o;
-        return gameTime == kill.gameTime &&
-               roundTime == kill.roundTime &&
+        return timeSinceGameStartMillis == kill.timeSinceGameStartMillis &&
+               timeSinceRoundStartMillis == kill.timeSinceRoundStartMillis &&
                Objects.equals(killer, kill.killer) &&
                Objects.equals(victim, kill.victim) &&
                Objects.equals(victimLocation, kill.victimLocation) &&
@@ -81,15 +81,15 @@ public class Kill implements Serializable
     @Override
     public int hashCode()
     {
-        return Objects.hash(gameTime, roundTime, killer, victim, victimLocation, assistants, playerLocations, finishingDamage);
+        return Objects.hash(timeSinceGameStartMillis, timeSinceRoundStartMillis, killer, victim, victimLocation, assistants, playerLocations, finishingDamage);
     }
     
     @Override
     public String toString()
     {
         return "Kill{" +
-               "gameTime=" + gameTime +
-               ", roundTime=" + roundTime +
+               "timeSinceGameStartMillis=" + timeSinceGameStartMillis +
+               ", timeSinceRoundStartMillis=" + timeSinceRoundStartMillis +
                ", killer='" + killer + '\'' +
                ", victim='" + victim + '\'' +
                ", victimLocation=" + victimLocation +

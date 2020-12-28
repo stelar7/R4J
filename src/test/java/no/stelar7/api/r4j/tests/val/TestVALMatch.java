@@ -202,48 +202,52 @@ public class TestVALMatch
         loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.INFO);
         loggerContext.getLogger("no.stelar7.api.r4j.basic.ratelimiting.BurstRateLimiter").setLevel(Level.INFO);
         
-        Map<String, JsonElement> matches = new HashMap<>();
-        Map<String, JsonElement> players = new HashMap<>();
-        
-        R4J             api           = new R4J(SecretFile.CREDS);
-        VALMatchAPI     matchAPI      = api.getVALAPI().getMatchAPI();
-        RecentMatchList recentMatches = matchAPI.getRecentMatches(ValorantShard.EU, GameQueueType.COMPETITIVE);
-        
-        List<String> matchIds = recentMatches.getMatchIds().stream().limit(100).collect(Collectors.toList());
-        int          max      = matchIds.size();
-        int          current  = 0;
-        for (String matchId : matchIds)
+        while (true)
         {
-            System.out.println("Working on match " + (++current) + "/" + max);
+            DataCall.getCacheProvider().clear(URLEndpoint.V1_VAL_MATCH_BY_ID, new HashMap<>());
+            Map<String, JsonElement> matches = new HashMap<>();
+            Map<String, JsonElement> players = new HashMap<>();
             
-            Match       match     = matchAPI.getMatch(ValorantShard.EU, matchId);
-            JsonElement matchJson = Utils.getGson().toJsonTree(match);
-            matches.put(matchId, matchJson);
+            R4J             api           = new R4J(SecretFile.CREDS);
+            VALMatchAPI     matchAPI      = api.getVALAPI().getMatchAPI();
+            RecentMatchList recentMatches = matchAPI.getRecentMatches(ValorantShard.EU, GameQueueType.COMPETITIVE);
             
-            for (Player player : match.getPlayers())
+            List<String> matchIds = recentMatches.getMatchIds().stream().limit(100).collect(Collectors.toList());
+            int          max      = matchIds.size();
+            int          current  = 0;
+            for (String matchId : matchIds)
             {
-                RiotAccount account     = api.getAccountAPI().getAccountByPUUID(RegionShard.EUROPE, player.getPUUID());
-                JsonElement accountJson = Utils.getGson().toJsonTree(account);
-                players.put(account.getPUUID(), accountJson);
+                System.out.println("Working on match " + (++current) + "/" + max);
+                
+                Match       match     = matchAPI.getMatch(ValorantShard.EU, matchId);
+                JsonElement matchJson = Utils.getGson().toJsonTree(match);
+                matches.put(matchId, matchJson);
+                
+                for (Player player : match.getPlayers())
+                {
+                    RiotAccount account     = api.getAccountAPI().getAccountByPUUID(RegionShard.EUROPE, player.getPUUID());
+                    JsonElement accountJson = Utils.getGson().toJsonTree(account);
+                    players.put(account.getPUUID(), accountJson);
+                }
             }
+            
+            JsonArray matchJson = new JsonArray();
+            for (JsonElement value : matches.values())
+            {
+                matchJson.add(value);
+            }
+            
+            JsonArray playerJson = new JsonArray();
+            for (JsonElement value : players.values())
+            {
+                playerJson.add(value);
+            }
+            
+            JsonObject obj = new JsonObject();
+            obj.add("players", playerJson);
+            obj.add("matches", matchJson);
+            
+            Files.write(Paths.get("D:\\valorant_dump\\" + recentMatches.getGeneratedAt() + ".json"), Utils.getGson().toJson(obj).getBytes(StandardCharsets.UTF_8));
         }
-        
-        JsonArray matchJson = new JsonArray();
-        for (JsonElement value : matches.values())
-        {
-            matchJson.add(value);
-        }
-        
-        JsonArray playerJson = new JsonArray();
-        for (JsonElement value : players.values())
-        {
-            playerJson.add(value);
-        }
-        
-        JsonObject obj = new JsonObject();
-        obj.add("players", playerJson);
-        obj.add("matches", matchJson);
-        
-        Files.write(Paths.get("D:\\" + recentMatches.getGeneratedAt() + ".json"), Utils.getGson().toJson(obj).getBytes(StandardCharsets.UTF_8));
     }
 }

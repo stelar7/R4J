@@ -82,5 +82,9 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V1_STATUS_LOR, MINUTES_1);
         DEFAULTS.add(URLEndpoint.V1_STATUS_VAL, MINUTES_1);
         
+        
+        DEFAULTS.add(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, DAYS_7);
+        DEFAULTS.add(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, DAYS_7);
+        DEFAULTS.add(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, DAYS_7);
     }
 }
