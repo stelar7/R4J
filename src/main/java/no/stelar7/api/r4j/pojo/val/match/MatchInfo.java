@@ -169,14 +169,13 @@ public class MatchInfo implements Serializable
         return returnMap;
     }
     
-    @SQLExtraMap
-    private static Map<String, String> getExtraMap()
+    @SQLForeignMap
+    private static Map<Class<?>, String> getForeignKeyMap()
     {
-        Map<String, String> returnMap = new HashMap<>();
+        Map<Class<?>, String> returnMap = new HashMap<>();
         
-        returnMap.put("matchId", "primary key");
+        returnMap.put(Match.class, "id");
         
         return returnMap;
     }
-    
 }

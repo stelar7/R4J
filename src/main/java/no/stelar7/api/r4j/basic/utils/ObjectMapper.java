@@ -7,8 +7,9 @@ import java.util.Map.Entry;
 public class ObjectMapper<T>
 {
     private final Class<T>           clazz;
-    private final Map<String, Field> fields             = new LinkedHashMap<>();
-    private final Map<String, Field> nonprimitiveFields = new LinkedHashMap<>();
+    private final Map<String, Field> fields          = new LinkedHashMap<>();
+    private final Map<String, Field> oneToOneFields  = new LinkedHashMap<>();
+    private final Map<String, Field> oneToManyFields = new LinkedHashMap<>();
     
     public ObjectMapper(Class<T> clazz)
     {
@@ -34,13 +35,25 @@ public class ObjectMapper<T>
         for (Field field : clazz.getDeclaredFields())
         {
             Class<?> returntype = field.getType();
-            if (!(!returntype.isEnum() && !returntype.isPrimitive() && !returntype.isAssignableFrom(String.class)))
+            if (!(!returntype.isEnum() && !returntype.isPrimitive() && !returntype.isAssignableFrom(String.class) && !returntype.isAssignableFrom(List.class)))
             {
                 continue;
             }
             
             field.setAccessible(true);
-            nonprimitiveFields.put(field.getName(), field);
+            oneToOneFields.put(field.getName(), field);
+        }
+        
+        for (Field field : clazz.getDeclaredFields())
+        {
+            Class<?> returntype = field.getType();
+            if (!returntype.isAssignableFrom(List.class))
+            {
+                continue;
+            }
+            
+            field.setAccessible(true);
+            oneToManyFields.put(field.getName(), field);
         }
     }
     
@@ -49,10 +62,19 @@ public class ObjectMapper<T>
         return new HashSet<>(fields.keySet());
     }
     
+    public HashMap<String, Field> getOneToOneFields()
+    {
+        return new HashMap<>(oneToOneFields);
+    }
+    
+    public HashMap<String, Field> getOneToManyFields()
+    {
+        return new HashMap<>(oneToManyFields);
+    }
+    
     public Map<String, Object> unmap(T object)
     {
         Map<String, Object> data = new HashMap<>();
-        
         for (Entry<String, Field> entry : fields.entrySet())
         {
             try

@@ -162,7 +162,7 @@ public class RoundResult implements Serializable
     private static Map<String, String> getTypeMap()
     {
         Map<String, String> returnMap = new HashMap<>();
-        
+    
         returnMap.put("roundNum", "int8");
         returnMap.put("roundResult", "text");
         returnMap.put("roundCeremony", "text");
@@ -177,10 +177,12 @@ public class RoundResult implements Serializable
         return returnMap;
     }
     
-    @SQLExtraMap
-    private static Map<String, String> getExtraMap()
+    @SQLForeignMap
+    private static Map<Class<?>, String> getForeignKeyMap()
     {
-        Map<String, String> returnMap = new HashMap<>();
+        Map<Class<?>, String> returnMap = new HashMap<>();
+        
+        returnMap.put(Match.class, "id");
         
         return returnMap;
     }

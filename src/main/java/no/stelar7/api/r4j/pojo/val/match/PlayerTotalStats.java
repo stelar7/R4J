@@ -94,7 +94,7 @@ public class PlayerTotalStats implements Serializable
     private static Map<String, String> getTypeMap()
     {
         Map<String, String> returnMap = new HashMap<>();
-    
+        
         returnMap.put("score", "int32");
         returnMap.put("roundsPlayed", "int32");
         returnMap.put("kills", "int32");
@@ -105,10 +105,13 @@ public class PlayerTotalStats implements Serializable
         return returnMap;
     }
     
-    @SQLExtraMap
-    private static Map<String, String> getExtraMap()
+    @SQLForeignMap
+    private static Map<Class<?>, String> getForeignKeyMap()
     {
-        Map<String, String> returnMap = new HashMap<>();
+        Map<Class<?>, String> returnMap = new HashMap<>();
+        
+        returnMap.put(Match.class, "id");
+        returnMap.put(Player.class, "puuid");
         
         return returnMap;
     }

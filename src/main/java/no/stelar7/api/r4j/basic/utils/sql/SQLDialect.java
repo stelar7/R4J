@@ -40,4 +40,28 @@ public enum SQLDialect
     {
         return types.stream().distinct().collect(Collectors.toMap(a -> a, a -> getTypeMap().getOrDefault(a, a)));
     }
+    
+    public String convertForInsert(String type, Object value)
+    {
+        if (value == null) {
+            return "null";
+        }
+        
+        if (type.equals("boolean"))
+        {
+            return ((boolean) value) ? "1" : "0";
+        }
+        
+        if (type.contains("text"))
+        {
+            return "\"" + value.toString() + "\"";
+        }
+        
+        if (type.contains("int"))
+        {
+            return value.toString();
+        }
+        
+        throw new RuntimeException("Unconvertable type " + type + "... value=" + value.toString());
+    }
 }

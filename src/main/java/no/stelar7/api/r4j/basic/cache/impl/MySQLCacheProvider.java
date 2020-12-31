@@ -12,11 +12,12 @@ import org.slf4j.*;
 import java.lang.reflect.*;
 import java.sql.*;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class MySQLCacheProvider implements CacheProvider
 {
-    private static final Logger logger            = LoggerFactory.getLogger(MySQLCacheProvider.class);
-    private static final String COLUMN_EXPIRES_AT = "expires_at";
+    private static final Logger logger             = LoggerFactory.getLogger(MySQLCacheProvider.class);
+    private static final String COLUMN_INSERTED_AT = "inserted_at";
     
     private long              timeToLive;
     private CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
@@ -63,21 +64,14 @@ public class MySQLCacheProvider implements CacheProvider
         sql.getConnection().setCatalog(DataCall.getCredentials().getVALAPIKey());
         
         createTableForClass(Match.class);
-        
-        List<Pair<Class<?>, String>> foreigns = new ArrayList<>();
-        foreigns.add(new Pair<>(Match.class, "id"));
         createTableForClass(MatchInfo.class);
-        createTableForClassWithParents(Player.class, foreigns);
-        createTableForClassWithParents(RoundResult.class, foreigns);
-        createTableForClassWithParents(Team.class, foreigns);
-        
-        foreigns.clear();
-        foreigns.add(new Pair<>(Match.class, "id"));
-        foreigns.add(new Pair<>(Player.class, "puuid"));
-        createTableForClassWithParents(PlayerTotalStats.class, foreigns);
+        createTableForClass(Player.class);
+        createTableForClass(PlayerTotalStats.class);
+        createTableForClass(RoundResult.class);
+        createTableForClass(Team.class);
     }
     
-    private Map<String, String> getTypeMapForClass(Class<?> c)
+    private Map<String, String> getUntranslatedTypeMap(Class<?> c)
     {
         try
         {
@@ -98,10 +92,46 @@ public class MySQLCacheProvider implements CacheProvider
             
             typeMapMethod.setAccessible(true);
             Map<String, String> preTrans = (Map<String, String>) typeMapMethod.invoke(null);
+            return preTrans;
+        } catch (IllegalAccessException | InvocationTargetException e)
+        {
+            e.printStackTrace();
+        }
+        
+        throw new RuntimeException("Tried to fetch typemap for class: " + c + ", but none was present.");
+    }
+    
+    private Map<String, String> getTypeMapForClass(Class<?> c)
+    {
+        Map<String, String> preTrans = getUntranslatedTypeMap(c);
+        
+        Map<String, String> translatedTypes = SQLDialect.MYSQL.translate(preTrans.values());
+        preTrans.forEach((k, v) -> preTrans.put(k, translatedTypes.get(v)));
+        
+        return preTrans;
+    }
+    
+    private Map<Class<?>, String> getForeignMapForClass(Class<?> c)
+    {
+        try
+        {
+            Method typeMapMethod = null;
+            for (Method method : c.getDeclaredMethods())
+            {
+                if (method.isAnnotationPresent(SQLForeignMap.class))
+                {
+                    typeMapMethod = method;
+                    break;
+                }
+            }
             
-            Map<String, String> translatedTypes = SQLDialect.MYSQL.translate(preTrans.values());
-            preTrans.forEach((k, v) -> preTrans.put(k, translatedTypes.get(v)));
+            if (typeMapMethod == null)
+            {
+                return new HashMap<>();
+            }
             
+            typeMapMethod.setAccessible(true);
+            Map<Class<?>, String> preTrans = (Map<Class<?>, String>) typeMapMethod.invoke(null);
             return preTrans;
         } catch (IllegalAccessException | InvocationTargetException e)
         {
@@ -127,7 +157,7 @@ public class MySQLCacheProvider implements CacheProvider
             
             if (extraMapMethod == null)
             {
-                throw new RuntimeException("Tried to fetch extramap for class: " + c + ", but none was present.");
+                return new HashMap<>();
             }
             
             extraMapMethod.setAccessible(true);
@@ -157,34 +187,27 @@ public class MySQLCacheProvider implements CacheProvider
         sql.getConnection().createStatement().execute(sb.toString());
     }
     
-    
-    private void createTableForClassWithParents(Class<?> clazz, List<Pair<Class<?>, String>> foreigns) throws SQLException
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE IF NOT EXISTS ");
-        sb.append("`").append(clazz.getName()).append("` ");
-        sb.append("(");
-        StringJoiner sj = new StringJoiner(",");
-        for (Pair<Class<?>, String> foreign : foreigns)
-        {
-            sj.add(getColumnInfoWithoutExtras(foreign.getKey(), foreign.getValue()));
-        }
-        sb.append(sj.toString());
-        sb.append(",");
-        sb.append(getColumnsForTable(clazz));
-        sb.append(")");
-        System.out.println(sb.toString());
-        sql.getConnection().createStatement().execute(sb.toString());
-    }
-    
     private String getColumnsForTable(Class<?> clazz)
     {
-        Map<String, String> typeMap  = getTypeMapForClass(clazz);
-        Map<String, String> extraMap = getExtraMapForClass(clazz);
-        ObjectMapper<?>     mapper   = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
-        StringJoiner        joiner   = new StringJoiner(",");
-        Set<String>         columns  = mapper.getFieldNames();
+        Map<String, String>   typeMap    = getTypeMapForClass(clazz);
+        Map<String, String>   extraMap   = getExtraMapForClass(clazz);
+        Map<Class<?>, String> foreignMap = getForeignMapForClass(clazz);
+        
+        ObjectMapper<?> mapper  = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
+        Set<String>     columns = mapper.getFieldNames();
         columns.addAll(typeMap.keySet());
+        StringJoiner joiner = new StringJoiner(",");
+        
+        for (Entry<Class<?>, String> foreignKeys : foreignMap.entrySet())
+        {
+            StringBuilder sb2        = new StringBuilder();
+            String        columnName = foreignKeys.getKey().getSimpleName().toLowerCase() + "_" + foreignKeys.getValue();
+            
+            sb2.append("`").append(columnName).append("` ");
+            sb2.append(getTypeMapForClass(foreignKeys.getKey()).get(foreignKeys.getValue())).append(" ");
+            joiner.add(sb2.toString());
+        }
+        
         for (String fieldName : columns)
         {
             StringBuilder sb2 = new StringBuilder();
@@ -197,35 +220,208 @@ public class MySQLCacheProvider implements CacheProvider
         return joiner.toString();
     }
     
-    private String getColumnInfoWithoutExtras(Class<?> clazz, String column)
+    private String insertGetId(Class<?> clazz, Object value, Map<String, Object> extras) throws SQLException, IllegalAccessException
     {
-        Map<String, String> typeMap  = getTypeMapForClass(clazz);
-        Map<String, String> extraMap = getExtraMapForClass(clazz);
-        ObjectMapper<?>     mapper   = typeMaps.get(clazz.getCanonicalName());
+        ObjectMapper      mapper = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
+        String            query  = generateInsertQuery(clazz, value, extras, new ArrayList<>());
+        PreparedStatement stmt   = this.sql.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.executeUpdate();
         
-        StringBuilder sb2 = new StringBuilder();
-        sb2.append("`").append(clazz.getSimpleName().toLowerCase()).append("_").append(column).append("` ");
-        sb2.append(typeMap.get(column));
+        List<Pair<Class<?>, String>> foreigns = new ArrayList<>();
         
-        return sb2.toString();
+        ResultSet rs = stmt.getGeneratedKeys();
+        if (rs.next())
+        {
+            long id = rs.getLong(1);
+            foreigns.add(new Pair<>(value.getClass(), String.valueOf(id)));
+        }
+        
+        for (Object erased : mapper.getOneToOneFields().entrySet())
+        {
+            Entry<String, Field> entry = (Entry<String, Field>) erased;
+            
+            String childId = insertGetIdWithParent(entry.getValue().getType(), entry.getValue().get(value), foreigns);
+        }
+        
+        for (Object erased : mapper.getOneToManyFields().entrySet())
+        {
+            Entry<String, Field> entry          = (Entry<String, Field>) erased;
+            ParameterizedType    realTypeHolder = (ParameterizedType) entry.getValue().getGenericType();
+            Class<?>             realType       = ((Class<?>) realTypeHolder.getActualTypeArguments()[0]);
+            
+            List<?> values = (List<?>) entry.getValue().get(value);
+            for (Object child : values)
+            {
+                String childId = insertGetIdWithParent(realType, child, foreigns);
+            }
+        }
+        
+        for (Pair<Class<?>, String> foreign : foreigns)
+        {
+            if (foreign.getKey().equals(clazz))
+            {
+                return foreign.getValue();
+            }
+        }
+        
+        return "-1";
+    }
+    
+    private String generateInsertQuery(Class<?> clazz, Object value, Map<String, Object> extras, List<Pair<Class<?>, String>> foreigns)
+    {
+        Map<String, String>   typemap    = getUntranslatedTypeMap(clazz);
+        Map<Class<?>, String> foreignMap = getForeignMapForClass(clazz);
+        
+        ObjectMapper        mapper   = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
+        Map<String, Object> unmapped = mapper.unmap(value);
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO `").append(clazz.getName()).append("` (");
+        
+        StringJoiner sj = new StringJoiner(",");
+        for (String key : unmapped.keySet())
+        {
+            sj.add("`" + key + "`");
+        }
+        for (String key : extras.keySet())
+        {
+            sj.add("`" + key + "`");
+        }
+        for (Pair<Class<?>, String> foreign : foreigns)
+        {
+            String columnName = foreign.getKey().getSimpleName().toLowerCase() + "_" + foreignMap.get(foreign.getKey());
+            sj.add("`" + columnName + "`");
+        }
+        sb.append(sj.toString());
+        
+        sb.append(") VALUES (");
+        
+        StringJoiner sj2 = new StringJoiner(",");
+        for (String key : unmapped.keySet())
+        {
+            sj2.add(SQLDialect.MYSQL.convertForInsert(typemap.get(key), unmapped.get(key)));
+        }
+        for (String key : extras.keySet())
+        {
+            sj2.add(SQLDialect.MYSQL.convertForInsert(typemap.get(key), extras.get(key)));
+        }
+        for (Pair<Class<?>, String> foreign : foreigns)
+        {
+            sj2.add(foreign.getValue());
+        }
+        sb.append(sj2.toString());
+        
+        sb.append(")");
+        
+        return sb.toString();
+    }
+    
+    private String insertGetIdWithParent(Class<?> clazz, Object value, List<Pair<Class<?>, String>> foreigns) throws SQLException, IllegalAccessException
+    {
+        ObjectMapper        mapper = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
+        Map<String, Object> unmap  = mapper.unmap(value);
+        
+        // TODO: player_puuid not working...
+        String            query = generateInsertQuery(clazz, value, new HashMap<>(), foreigns);
+        PreparedStatement stmt  = this.sql.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.executeUpdate();
+        
+        List<Pair<Class<?>, String>> localForeigns = new ArrayList<>(foreigns);
+        
+        ResultSet rs = stmt.getGeneratedKeys();
+        if (rs.next())
+        {
+            long id = rs.getLong(1);
+            localForeigns.add(new Pair<>(value.getClass(), String.valueOf(id)));
+        }
+        
+        for (Object erased : mapper.getOneToOneFields().entrySet())
+        {
+            Entry<String, Field> entry = (Entry<String, Field>) erased;
+            
+            String childId = insertGetIdWithParent(entry.getValue().getType(), entry.getValue().get(value), localForeigns);
+        }
+        
+        for (Object erased : mapper.getOneToManyFields().entrySet())
+        {
+            Entry<String, Field> entry          = (Entry<String, Field>) erased;
+            ParameterizedType    realTypeHolder = (ParameterizedType) entry.getValue().getGenericType();
+            Class<?>             realType       = ((Class<?>) realTypeHolder.getActualTypeArguments()[0]);
+            
+            List<?> values = (List<?>) entry.getValue().get(value);
+            for (Object child : values)
+            {
+                String childId = insertGetIdWithParent(realType, child, localForeigns);
+            }
+        }
+        
+        for (Pair<Class<?>, String> foreign : foreigns)
+        {
+            if (foreign.getKey().equals(clazz))
+            {
+                return foreign.getValue();
+            }
+        }
+        
+        return "-1";
     }
     
     @Override
     public void store(URLEndpoint type, Map<String, Object> obj)
     {
-        if (type == URLEndpoint.V1_VAL_MATCH_BY_ID)
+        try
         {
-            Object          value  = obj.get("value");
-            ObjectMapper<?> mapper = typeMaps.get(value.getClass().getCanonicalName());
-            System.out.println();
+            if (type == URLEndpoint.V1_VAL_MATCH_BY_ID)
+            {
+                Object              value  = obj.get("value");
+                Map<String, Object> extras = new HashMap<>(obj);
+                extras.remove("value");
+                insertGetId(value.getClass(), value, extras);
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
-    
     
     @Override
     public Optional<?> get(URLEndpoint type, Map<String, Object> data)
     {
+        try
+        {
+            if (type == URLEndpoint.V1_VAL_MATCH_BY_ID)
+            {
+                String            query     = generateExistsQuery(type.getType(), data);
+                PreparedStatement stmt      = this.sql.getConnection().prepareStatement(query);
+                ResultSet         resultSet = stmt.executeQuery();
+                if (resultSet.next() && resultSet.getBoolean(1))
+                {
+                    logger.info("Entry found in cache :)");
+                }
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
         return Optional.empty();
+    }
+    
+    private String generateExistsQuery(Class<?> clazz, Map<String, Object> data)
+    {
+        Map<String, String> typemap = getUntranslatedTypeMap(clazz);
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT EXISTS(SELECT 1 FROM `").append(clazz.getName()).append("` WHERE ");
+        StringJoiner sj = new StringJoiner(" AND ");
+        for (Entry<String, Object> entry : data.entrySet())
+        {
+            sj.add("`" + entry.getKey() + "`" + "=" + SQLDialect.MYSQL.convertForInsert(typemap.get(entry.getKey()), entry.getValue()));
+        }
+        sb.append(sj);
+        sb.append(")");
+        
+        return sb.toString();
     }
     
     
@@ -254,7 +450,7 @@ public class MySQLCacheProvider implements CacheProvider
             for (URLEndpoint endpoint : URLEndpoint.values())
             {
                 stmt.setString(1, endpoint.name());
-                stmt.setString(2, COLUMN_EXPIRES_AT);
+                stmt.setString(2, COLUMN_INSERTED_AT);
                 stmt.setLong(3, System.currentTimeMillis() + getTimeToLive(endpoint));
                 stmt.executeUpdate();
             }
