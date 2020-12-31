@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.pojo.val.match;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
 import no.stelar7.api.r4j.basic.constants.types.val.*;
+import no.stelar7.api.r4j.basic.utils.sql.*;
 import no.stelar7.api.r4j.impl.val.VALContentAPI;
 import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 
@@ -132,5 +133,29 @@ public class Player implements Serializable
                ", playerCard='" + playerCard + '\'' +
                ", playerTitle='" + playerTitle + '\'' +
                '}';
+    }
+    
+    @SQLTypeMap
+    private static Map<String, String> getTypeMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+    
+        returnMap.put("puuid", "text");
+        returnMap.put("teamId", "text");
+        returnMap.put("partyId", "text");
+        returnMap.put("characterId", "text");
+        returnMap.put("competitiveTier", "int8");
+        returnMap.put("playerCard", "text");
+        returnMap.put("playerTitle", "text");
+        
+        return returnMap;
+    }
+    
+    @SQLExtraMap
+    private static Map<String, String> getExtraMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        return returnMap;
     }
 }

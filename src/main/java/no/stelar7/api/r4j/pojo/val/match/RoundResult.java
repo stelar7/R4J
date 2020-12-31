@@ -1,6 +1,7 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
 import no.stelar7.api.r4j.basic.constants.types.val.*;
+import no.stelar7.api.r4j.basic.utils.sql.*;
 
 import java.io.Serializable;
 import java.util.*;
@@ -9,23 +10,23 @@ public class RoundResult implements Serializable
 {
     private static final long serialVersionUID = -7840217641700030054L;
     
-    private Integer                roundNum;
+    private int                    roundNum;
     private String                 roundResult;
     private RoundResultType        roundCeremony;
     private TeamType               winningTeam;
     private String                 bombPlanter;
     private String                 bombDefuser;
-    private Integer                plantRoundTime;
+    private int                    plantRoundTime;
     private List<PlayerLocation>   plantPlayerLocations;
     private Location               plantLocation;
     private PlantSiteType          plantSite;
-    private Integer                defuseRoundTime;
+    private int                    defuseRoundTime;
     private List<PlayerLocation>   defusePlayerLocations;
     private Location               defuseLocation;
     private List<PlayerRoundStats> playerStats;
     private RoundResultCodeType    roundResultCode;
     
-    public Integer getRoundNum()
+    public int getRoundNum()
     {
         return roundNum;
     }
@@ -55,7 +56,7 @@ public class RoundResult implements Serializable
         return bombDefuser;
     }
     
-    public Integer getPlantRoundTime()
+    public int getPlantRoundTime()
     {
         return plantRoundTime;
     }
@@ -75,7 +76,7 @@ public class RoundResult implements Serializable
         return plantSite;
     }
     
-    public Integer getDefuseRoundTime()
+    public int getDefuseRoundTime()
     {
         return defuseRoundTime;
     }
@@ -155,5 +156,32 @@ public class RoundResult implements Serializable
                ", playerStats=" + playerStats +
                ", roundResultCode='" + roundResultCode + '\'' +
                '}';
+    }
+    
+    @SQLTypeMap
+    private static Map<String, String> getTypeMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        returnMap.put("roundNum", "int8");
+        returnMap.put("roundResult", "text");
+        returnMap.put("roundCeremony", "text");
+        returnMap.put("winningTeam", "text");
+        returnMap.put("bombPlanter", "text");
+        returnMap.put("bombDefuser", "text");
+        returnMap.put("plantRoundTime", "int32");
+        returnMap.put("plantSite", "text");
+        returnMap.put("defuseRoundTime", "int32");
+        returnMap.put("roundResultCode", "text");
+        
+        return returnMap;
+    }
+    
+    @SQLExtraMap
+    private static Map<String, String> getExtraMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        return returnMap;
     }
 }

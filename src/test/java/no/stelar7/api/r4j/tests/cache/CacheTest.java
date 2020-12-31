@@ -5,14 +5,16 @@ import no.stelar7.api.r4j.basic.cache.CacheLifetimeHint;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
-import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.api.regions.*;
+import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.match.MatchListBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.match.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
-import no.stelar7.api.r4j.tests.*;
+import no.stelar7.api.r4j.pojo.val.matchlist.RecentMatchList;
+import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +25,7 @@ import java.util.function.Supplier;
 public class CacheTest
 {
     final R4J r4J = new R4J(SecretFile.CREDS);
-    Supplier<MySQLCacheProvider>      sqlCache    = () -> new MySQLCacheProvider("localhost", 3306, "root", "");
+    Supplier<MySQLCacheProvider>      sqlCache    = () -> new MySQLCacheProvider("localhost", 3306, "homestead", "secret");
     Supplier<MongoDBCacheProvider>    mongoCache  = () -> new MongoDBCacheProvider("mongodb://localhost:27017");
     Supplier<FileSystemCacheProvider> fileCache   = () -> new FileSystemCacheProvider(5);
     Supplier<MemoryCacheProvider>     memCache    = () -> new MemoryCacheProvider(5);
@@ -43,10 +45,15 @@ public class CacheTest
     {
         DataCall.setCacheProvider(sqlCache.get());
         
-        Summoner s = Summoner.byName(LeagueShard.EUW1, "stelar7");
-        System.out.println(s);
-        s = Summoner.byName(LeagueShard.EUW1, "stelar7");
-        System.out.println(s);
+        RecentMatchList list = r4J.getVALAPI().getMatchAPI().getRecentMatches(ValorantShard.EU, GameQueueType.COMPETITIVE);
+        r4J.getVALAPI().getMatchAPI().getMatch(ValorantShard.EU, list.getMatchIds().get(0));
+    
+        /*
+            Summoner s = Summoner.byName(LeagueShard.EUW1, "stelar7");
+            System.out.println(s);
+            s = Summoner.byName(LeagueShard.EUW1, "stelar7");
+            System.out.println(s);
+        */
         
         //    doCacheStuff();
     }

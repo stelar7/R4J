@@ -7,7 +7,7 @@ public enum SQLDialect
 {
     MYSQL
             {
-                Map<String, String> types = new HashMap<>();
+                final Map<String, String> types = new HashMap<>();
                 
                 public Map<String, String> getTypeMap()
                 {
@@ -27,6 +27,7 @@ public enum SQLDialect
                     types.put("date", "datetime");
                     types.put("double", "float");
                     types.put("float", "real");
+                    types.put("boolean", "tinyint(1)");
                     
                     return types;
                 }

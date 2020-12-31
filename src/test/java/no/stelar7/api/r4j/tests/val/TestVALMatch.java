@@ -247,7 +247,10 @@ public class TestVALMatch
             obj.add("players", playerJson);
             obj.add("matches", matchJson);
             
-            Files.write(Paths.get("D:\\valorant_dump\\" + recentMatches.getGeneratedAt() + ".json"), Utils.getGson().toJson(obj).getBytes(StandardCharsets.UTF_8));
+            Path outputPath = Paths.get("D:\\valorant_dump\\" + recentMatches.getGeneratedAt() + ".json");
+            Files.createDirectories(outputPath.getParent());
+            
+            Files.write(outputPath, Utils.getGson().toJson(obj).getBytes(StandardCharsets.UTF_8));
         }
     }
 }

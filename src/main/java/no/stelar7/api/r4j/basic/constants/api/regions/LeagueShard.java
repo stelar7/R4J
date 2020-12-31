@@ -244,7 +244,7 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
     
     
     @SQLTypeMap
-    public Map<String, String> toTypeMap()
+    private static Map<String, String> getTypeMap()
     {
         Map<String, String> returnMap = new HashMap<>();
         

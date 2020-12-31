@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.utils.sql.*;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -65,5 +67,28 @@ public class Match implements Serializable
                ", teams=" + teams +
                ", roundResults=" + roundResults +
                '}';
+    }
+    
+    
+    @SQLTypeMap
+    private static Map<String, String> getTypeMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        returnMap.put("id", "int64");
+        returnMap.put("matchId", "text");
+        returnMap.put("platform", "text");
+        
+        return returnMap;
+    }
+    
+    @SQLExtraMap
+    private static Map<String, String> getExtraMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        returnMap.put("id", "primary key auto_increment");
+        
+        return returnMap;
     }
 }

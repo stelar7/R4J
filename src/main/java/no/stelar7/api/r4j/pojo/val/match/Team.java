@@ -1,19 +1,21 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.utils.sql.*;
+
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 public class Team implements Serializable
 {
     private static final long serialVersionUID = -1562243042489225119L;
     
     private String  teamId;
-    private Boolean won;
-    private Integer roundsPlayed;
-    private Integer roundsWon;
-    private Integer numPoints;
+    private boolean won;
+    private int     roundsPlayed;
+    private int     roundsWon;
+    private int     numPoints;
     
-    public Integer getNumPoints()
+    public int getNumPoints()
     {
         return numPoints;
     }
@@ -23,17 +25,17 @@ public class Team implements Serializable
         return teamId;
     }
     
-    public Boolean getWon()
+    public boolean getWon()
     {
         return won;
     }
     
-    public Integer getRoundsPlayed()
+    public int getRoundsPlayed()
     {
         return roundsPlayed;
     }
     
-    public Integer getRoundsWon()
+    public int getRoundsWon()
     {
         return roundsWon;
     }
@@ -73,5 +75,27 @@ public class Team implements Serializable
                ", roundsWon=" + roundsWon +
                ", numPoints=" + numPoints +
                '}';
+    }
+    
+    @SQLTypeMap
+    private static Map<String, String> getTypeMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        returnMap.put("teamId", "text");
+        returnMap.put("won", "boolean");
+        returnMap.put("roundsPlayed", "int8");
+        returnMap.put("roundsWon", "int8");
+        returnMap.put("numPoints", "int8");
+        
+        return returnMap;
+    }
+    
+    @SQLExtraMap
+    private static Map<String, String> getExtraMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        return returnMap;
     }
 }

@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.pojo.val.match;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
 import no.stelar7.api.r4j.basic.constants.types.val.*;
+import no.stelar7.api.r4j.basic.utils.sql.*;
 import no.stelar7.api.r4j.impl.val.VALContentAPI;
 import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 
@@ -14,14 +15,14 @@ public class MatchInfo implements Serializable
     
     private String               matchId;
     private String               mapId;
-    private Long                 gameLengthMillis;
-    private Long                 gameStartMillis;
+    private long                 gameLengthMillis;
+    private long                 gameStartMillis;
     private ProvisioningFlowType provisioningFlowId;
-    private Boolean              isCompleted;
+    private boolean              isCompleted;
     private String               customGameName;
     private GameQueueType        queueId;
     private String               gameMode;
-    private Boolean              isRanked;
+    private boolean              isRanked;
     private Season               seasonId;
     
     public String getMatchId()
@@ -44,12 +45,12 @@ public class MatchInfo implements Serializable
                             .findFirst();
     }
     
-    public Long getGameLengthMillis()
+    public long getGameLengthMillis()
     {
         return gameLengthMillis;
     }
     
-    public Long getGameStartMillis()
+    public long getGameStartMillis()
     {
         return gameStartMillis;
     }
@@ -59,7 +60,7 @@ public class MatchInfo implements Serializable
         return provisioningFlowId;
     }
     
-    public Boolean getCompleted()
+    public boolean getCompleted()
     {
         return isCompleted;
     }
@@ -89,7 +90,7 @@ public class MatchInfo implements Serializable
                             .findFirst();
     }
     
-    public Boolean getRanked()
+    public boolean getRanked()
     {
         return isRanked;
     }
@@ -147,4 +148,35 @@ public class MatchInfo implements Serializable
                ", seasonId='" + seasonId + '\'' +
                '}';
     }
+    
+    @SQLTypeMap
+    private static Map<String, String> getTypeMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        returnMap.put("matchId", "text");
+        returnMap.put("mapId", "text");
+        returnMap.put("gameLengthMillis", "int32");
+        returnMap.put("gameStartMillis", "int64");
+        returnMap.put("provisioningFlowId", "text");
+        returnMap.put("isCompleted", "boolean");
+        returnMap.put("customGameName", "text");
+        returnMap.put("queueId", "text");
+        returnMap.put("gameMode", "text");
+        returnMap.put("isRanked", "boolean");
+        returnMap.put("seasonId", "text");
+        
+        return returnMap;
+    }
+    
+    @SQLExtraMap
+    private static Map<String, String> getExtraMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        returnMap.put("matchId", "primary key");
+        
+        return returnMap;
+    }
+    
 }

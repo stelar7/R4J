@@ -1,50 +1,52 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.utils.sql.*;
+
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 public class PlayerTotalStats implements Serializable
 {
     private static final long serialVersionUID = -2515335096414775653L;
     
-    private Integer score;
-    private Integer roundsPlayed;
-    private Integer kills;
-    private Integer deaths;
-    private Integer assists;
-    private Long    playtimeMillis;
+    private int  score;
+    private int  roundsPlayed;
+    private int  kills;
+    private int  deaths;
+    private int  assists;
+    private long playtimeMillis;
     
     public static long getSerialVersionUID()
     {
         return serialVersionUID;
     }
     
-    public Integer getScore()
+    public int getScore()
     {
         return score;
     }
     
-    public Integer getRoundsPlayed()
+    public int getRoundsPlayed()
     {
         return roundsPlayed;
     }
     
-    public Integer getKills()
+    public int getKills()
     {
         return kills;
     }
     
-    public Integer getDeaths()
+    public int getDeaths()
     {
         return deaths;
     }
     
-    public Integer getAssists()
+    public int getAssists()
     {
         return assists;
     }
     
-    public Long getPlaytimeMillis()
+    public long getPlaytimeMillis()
     {
         return playtimeMillis;
     }
@@ -86,5 +88,28 @@ public class PlayerTotalStats implements Serializable
                ", assists=" + assists +
                ", playtimeMillis=" + playtimeMillis +
                '}';
+    }
+    
+    @SQLTypeMap
+    private static Map<String, String> getTypeMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+    
+        returnMap.put("score", "int32");
+        returnMap.put("roundsPlayed", "int32");
+        returnMap.put("kills", "int32");
+        returnMap.put("deaths", "int32");
+        returnMap.put("assists", "int32");
+        returnMap.put("playtimeMillis", "int32");
+        
+        return returnMap;
+    }
+    
+    @SQLExtraMap
+    private static Map<String, String> getExtraMap()
+    {
+        Map<String, String> returnMap = new HashMap<>();
+        
+        return returnMap;
     }
 }

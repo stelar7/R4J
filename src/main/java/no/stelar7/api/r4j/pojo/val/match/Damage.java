@@ -8,32 +8,32 @@ public class Damage implements Serializable
     private static final long serialVersionUID = -1161514106876666671L;
     
     private String receiver;
-    private Integer damage;
-    private Integer legshots;
-    private Integer bodyshots;
-    private Integer headshots;
+    private int    damage;
+    private int    legshots;
+    private int    bodyshots;
+    private int    headshots;
     
     public String getReceiver()
     {
         return receiver;
     }
     
-    public Integer getDamage()
+    public int getDamage()
     {
         return damage;
     }
     
-    public Integer getLegshots()
+    public int getLegshots()
     {
         return legshots;
     }
     
-    public Integer getBodyshots()
+    public int getBodyshots()
     {
         return bodyshots;
     }
     
-    public Integer getHeadshots()
+    public int getHeadshots()
     {
         return headshots;
     }

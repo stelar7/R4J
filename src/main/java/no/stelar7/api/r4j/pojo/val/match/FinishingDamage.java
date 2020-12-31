@@ -14,7 +14,7 @@ public class FinishingDamage implements Serializable
     
     private FinishingDamageType damageType;
     private String              damageItem;
-    private Boolean             isSecondaryFireMode;
+    private boolean             isSecondaryFireMode;
     
     public FinishingDamageType getDamageType()
     {
@@ -41,7 +41,7 @@ public class FinishingDamage implements Serializable
         return Skill.fromCode(damageItem);
     }
     
-    public Boolean getSecondaryFireMode()
+    public boolean getSecondaryFireMode()
     {
         return isSecondaryFireMode;
     }
