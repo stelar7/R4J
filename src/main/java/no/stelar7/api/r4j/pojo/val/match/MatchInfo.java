@@ -149,26 +149,6 @@ public class MatchInfo implements Serializable
                '}';
     }
     
-    @SQLTypeMap
-    private static Map<String, String> getTypeMap()
-    {
-        Map<String, String> returnMap = new HashMap<>();
-        
-        returnMap.put("matchId", "text");
-        returnMap.put("mapId", "text");
-        returnMap.put("gameLengthMillis", "int32");
-        returnMap.put("gameStartMillis", "int64");
-        returnMap.put("provisioningFlowId", "text");
-        returnMap.put("isCompleted", "boolean");
-        returnMap.put("customGameName", "text");
-        returnMap.put("queueId", "text");
-        returnMap.put("gameMode", "text");
-        returnMap.put("isRanked", "boolean");
-        returnMap.put("seasonId", "text");
-        
-        return returnMap;
-    }
-    
     @SQLForeignMap
     private static Map<Class<?>, String> getForeignKeyMap()
     {

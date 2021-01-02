@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.utils.sql.*;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -7,6 +9,7 @@ public class PlayerRoundStats implements Serializable
 {
     private static final long serialVersionUID = -8892321230434651879L;
     
+    @SQLReturnKey
     private String       puuid;
     private List<Kill>   kills;
     private List<Damage> damage;
@@ -81,5 +84,16 @@ public class PlayerRoundStats implements Serializable
                ", economy=" + economy +
                ", ability=" + ability +
                '}';
+    }
+    
+    @SQLForeignMap
+    private static Map<Class<?>, String> getForeignKeyMap()
+    {
+        Map<Class<?>, String> returnMap = new HashMap<>();
+        
+        returnMap.put(Match.class, "id");
+        returnMap.put(RoundResult.class, "roundNum");
+        
+        return returnMap;
     }
 }

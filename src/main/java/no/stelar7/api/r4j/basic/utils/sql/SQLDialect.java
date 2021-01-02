@@ -16,17 +16,11 @@ public enum SQLDialect
                         return types;
                     }
                     
-                    types.put("int8", "tinyint");
-                    types.put("int16", "smallint");
-                    types.put("int32", "int");
-                    types.put("int64", "bigint");
-                    types.put("tinytext", "varchar(10)");
-                    types.put("text", "varchar(100)");
-                    types.put("bigtext", "varchar(1000)");
-                    types.put("binary", "varbinary");
-                    types.put("date", "datetime");
-                    types.put("double", "float");
-                    types.put("float", "real");
+                    types.put("int", "int");
+                    types.put("long", "bigint");
+                    types.put("string", "varchar(255)");
+                    types.put("float", "float");
+                    types.put("double", "double");
                     types.put("boolean", "tinyint(1)");
                     
                     return types;
@@ -43,7 +37,12 @@ public enum SQLDialect
     
     public String convertForInsert(String type, Object value)
     {
-        if (value == null) {
+        if (type == null) {
+            System.out.println();
+        }
+        
+        if (value == null)
+        {
             return "null";
         }
         
@@ -52,16 +51,31 @@ public enum SQLDialect
             return ((boolean) value) ? "1" : "0";
         }
         
-        if (type.contains("text"))
+        if (type.contains("string"))
         {
             return "\"" + value.toString() + "\"";
         }
-        
+    
         if (type.contains("int"))
         {
             return value.toString();
         }
-        
+    
+        if (type.contains("long"))
+        {
+            return value.toString();
+        }
+    
+        if (type.contains("float"))
+        {
+            return value.toString();
+        }
+    
+        if (type.contains("double"))
+        {
+            return value.toString();
+        }
+    
         throw new RuntimeException("Unconvertable type " + type + "... value=" + value.toString());
     }
 }

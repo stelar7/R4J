@@ -13,6 +13,7 @@ public class Player implements Serializable
 {
     private static final long serialVersionUID = 6640355688349553215L;
     
+    @SQLReturnKey
     private String           puuid;
     private TeamType         teamId;
     private String           partyId;
@@ -133,22 +134,6 @@ public class Player implements Serializable
                ", playerCard='" + playerCard + '\'' +
                ", playerTitle='" + playerTitle + '\'' +
                '}';
-    }
-    
-    @SQLTypeMap
-    private static Map<String, String> getTypeMap()
-    {
-        Map<String, String> returnMap = new HashMap<>();
-        
-        returnMap.put("puuid", "text");
-        returnMap.put("teamId", "text");
-        returnMap.put("partyId", "text");
-        returnMap.put("characterId", "text");
-        returnMap.put("competitiveTier", "text");
-        returnMap.put("playerCard", "text");
-        returnMap.put("playerTitle", "text");
-        
-        return returnMap;
     }
     
     @SQLForeignMap

@@ -1,12 +1,15 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.utils.sql.*;
+
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 public class PlayerLocation implements Serializable
 {
     private static final long serialVersionUID = -722332664254204236L;
     
+    @SQLReturnKey
     private String   puuid;
     private float    viewRadians;
     private Location location;
@@ -57,5 +60,17 @@ public class PlayerLocation implements Serializable
                ", viewRadians=" + viewRadians +
                ", location=" + location +
                '}';
+    }
+    
+    @SQLForeignMap
+    private static Map<Class<?>, String> getForeignKeyMap()
+    {
+        Map<Class<?>, String> returnMap = new HashMap<>();
+        
+        returnMap.put(Match.class, "id");
+        returnMap.put(RoundResult.class, "roundNum");
+        returnMap.put(PlayerRoundStats.class, "puuid");
+        
+        return returnMap;
     }
 }

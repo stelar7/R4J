@@ -14,6 +14,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.Map.Entry;
 
+@SuppressWarnings("rawtypes")
 public class MySQLCacheProvider implements CacheProvider
 {
     private static final Logger logger             = LoggerFactory.getLogger(MySQLCacheProvider.class);
@@ -69,110 +70,26 @@ public class MySQLCacheProvider implements CacheProvider
         createTableForClass(PlayerTotalStats.class);
         createTableForClass(RoundResult.class);
         createTableForClass(Team.class);
-    }
-    
-    private Map<String, String> getUntranslatedTypeMap(Class<?> c)
-    {
-        try
-        {
-            Method typeMapMethod = null;
-            for (Method method : c.getDeclaredMethods())
-            {
-                if (method.isAnnotationPresent(SQLTypeMap.class))
-                {
-                    typeMapMethod = method;
-                    break;
-                }
-            }
-            
-            if (typeMapMethod == null)
-            {
-                throw new RuntimeException("Tried to fetch typemap for class: " + c + ", but none was present.");
-            }
-            
-            typeMapMethod.setAccessible(true);
-            Map<String, String> preTrans = (Map<String, String>) typeMapMethod.invoke(null);
-            return preTrans;
-        } catch (IllegalAccessException | InvocationTargetException e)
-        {
-            e.printStackTrace();
-        }
-        
-        throw new RuntimeException("Tried to fetch typemap for class: " + c + ", but none was present.");
+        createTableForClass(Location.class);
+        createTableForClass(PlayerLocation.class);
+        createTableForClass(PlayerRoundStats.class);
+        createTableForClass(Economy.class);
+        createTableForClass(Ability.class);
+        createTableForClass(Damage.class);
+        createTableForClass(FinishingDamage.class);
+        createTableForClass(Kill.class);
+        createTableForClass(StringFacade.class);
     }
     
     private Map<String, String> getTypeMapForClass(Class<?> c)
     {
-        Map<String, String> preTrans = getUntranslatedTypeMap(c);
+        ObjectMapper<?>     mapper   = typeMaps.computeIfAbsent(c.getCanonicalName(), k -> new ObjectMapper<>(c));
+        Map<String, String> preTrans = mapper.getUntranslatedTypeMap();
         
         Map<String, String> translatedTypes = SQLDialect.MYSQL.translate(preTrans.values());
         preTrans.forEach((k, v) -> preTrans.put(k, translatedTypes.get(v)));
         
         return preTrans;
-    }
-    
-    private Map<Class<?>, String> getForeignMapForClass(Class<?> c)
-    {
-        try
-        {
-            Method typeMapMethod = null;
-            for (Method method : c.getDeclaredMethods())
-            {
-                if (method.isAnnotationPresent(SQLForeignMap.class))
-                {
-                    typeMapMethod = method;
-                    break;
-                }
-            }
-            
-            if (typeMapMethod == null)
-            {
-                return new HashMap<>();
-            }
-            
-            typeMapMethod.setAccessible(true);
-            Map<Class<?>, String> preTrans = (Map<Class<?>, String>) typeMapMethod.invoke(null);
-            return preTrans;
-        } catch (IllegalAccessException | InvocationTargetException e)
-        {
-            e.printStackTrace();
-        }
-        
-        throw new RuntimeException("Tried to fetch typemap for class: " + c + ", but none was present.");
-    }
-    
-    private Map<String, String> getExtraMapForClass(Class<?> c)
-    {
-        try
-        {
-            Method extraMapMethod = null;
-            for (Method method : c.getDeclaredMethods())
-            {
-                if (method.isAnnotationPresent(SQLExtraMap.class))
-                {
-                    extraMapMethod = method;
-                    break;
-                }
-            }
-            
-            if (extraMapMethod == null)
-            {
-                return new HashMap<>();
-            }
-            
-            extraMapMethod.setAccessible(true);
-            Map<String, String> preTrans = (Map<String, String>) extraMapMethod.invoke(null);
-            
-            Map<String, String> translatedTypes = SQLDialect.MYSQL.translate(preTrans.values());
-            preTrans.forEach((k, v) -> preTrans.put(k, translatedTypes.get(v)));
-            
-            return preTrans;
-        } catch (IllegalAccessException | InvocationTargetException e)
-        {
-            e.printStackTrace();
-        }
-        
-        throw new RuntimeException("Tried to fetch typemap for class: " + c + ", but none was present.");
     }
     
     private void createTableForClass(Class<?> clazz) throws SQLException
@@ -183,19 +100,20 @@ public class MySQLCacheProvider implements CacheProvider
         sb.append("(");
         sb.append(getColumnsForTable(clazz));
         sb.append(")");
-        System.out.println(sb.toString());
         sql.getConnection().createStatement().execute(sb.toString());
     }
     
     private String getColumnsForTable(Class<?> clazz)
     {
-        Map<String, String>   typeMap    = getTypeMapForClass(clazz);
-        Map<String, String>   extraMap   = getExtraMapForClass(clazz);
-        Map<Class<?>, String> foreignMap = getForeignMapForClass(clazz);
+        ObjectMapper<?> mapper = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
         
-        ObjectMapper<?> mapper  = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
-        Set<String>     columns = mapper.getFieldNames();
+        Map<String, String>   typeMap    = getTypeMapForClass(clazz);
+        Map<String, String>   extraMap   = mapper.getExtraMap();
+        Map<Class<?>, String> foreignMap = mapper.getForeignMap();
+        
+        Set<String> columns = mapper.getFieldNames();
         columns.addAll(typeMap.keySet());
+        columns.addAll(extraMap.keySet());
         StringJoiner joiner = new StringJoiner(",");
         
         for (Entry<Class<?>, String> foreignKeys : foreignMap.entrySet())
@@ -269,10 +187,10 @@ public class MySQLCacheProvider implements CacheProvider
     
     private String generateInsertQuery(Class<?> clazz, Object value, Map<String, Object> extras, List<Pair<Class<?>, String>> foreigns)
     {
-        Map<String, String>   typemap    = getUntranslatedTypeMap(clazz);
-        Map<Class<?>, String> foreignMap = getForeignMapForClass(clazz);
+        ObjectMapper          mapper     = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
+        Map<String, String>   typemap    = mapper.getUntranslatedTypeMap();
+        Map<Class<?>, String> foreignMap = mapper.getForeignMap();
         
-        ObjectMapper        mapper   = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
         Map<String, Object> unmapped = mapper.unmap(value);
         
         StringBuilder sb = new StringBuilder();
@@ -307,7 +225,10 @@ public class MySQLCacheProvider implements CacheProvider
         }
         for (Pair<Class<?>, String> foreign : foreigns)
         {
-            sj2.add(foreign.getValue());
+            ObjectMapper foreignMapper = typeMaps.computeIfAbsent(foreign.getKey().getCanonicalName(), k -> new ObjectMapper<>(foreign.getKey()));
+            String       lookupKey     = foreignMap.get(foreign.getKey());
+            String       mapToType     = (String) foreignMapper.getUntranslatedTypeMap().get(lookupKey);
+            sj2.add(SQLDialect.MYSQL.convertForInsert(mapToType, foreign.getValue()));
         }
         sb.append(sj2.toString());
         
@@ -321,12 +242,17 @@ public class MySQLCacheProvider implements CacheProvider
         ObjectMapper        mapper = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
         Map<String, Object> unmap  = mapper.unmap(value);
         
-        // TODO: player_puuid not working...
         String            query = generateInsertQuery(clazz, value, new HashMap<>(), foreigns);
         PreparedStatement stmt  = this.sql.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         stmt.executeUpdate();
         
         List<Pair<Class<?>, String>> localForeigns = new ArrayList<>(foreigns);
+        
+        Pair returnedKey = mapper.getReturnedKey(value);
+        if (returnedKey != null)
+        {
+            localForeigns.add(returnedKey);
+        }
         
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next())
@@ -349,9 +275,25 @@ public class MySQLCacheProvider implements CacheProvider
             Class<?>             realType       = ((Class<?>) realTypeHolder.getActualTypeArguments()[0]);
             
             List<?> values = (List<?>) entry.getValue().get(value);
+            if (values == null)
+            {
+                continue;
+            }
+            
             for (Object child : values)
             {
-                String childId = insertGetIdWithParent(realType, child, localForeigns);
+                Object realChild = child;
+                if (realType.isAssignableFrom(String.class))
+                {
+                    realType = StringFacade.class;
+                }
+                
+                if (realType.isAssignableFrom(StringFacade.class))
+                {
+                    realChild = new StringFacade((String) child);
+                }
+                
+                String childId = insertGetIdWithParent(realType, realChild, localForeigns);
             }
         }
         
@@ -397,6 +339,7 @@ public class MySQLCacheProvider implements CacheProvider
                 if (resultSet.next() && resultSet.getBoolean(1))
                 {
                     logger.info("Entry found in cache :)");
+                    System.exit(0);
                 }
             }
         } catch (Exception e)
@@ -409,7 +352,8 @@ public class MySQLCacheProvider implements CacheProvider
     
     private String generateExistsQuery(Class<?> clazz, Map<String, Object> data)
     {
-        Map<String, String> typemap = getUntranslatedTypeMap(clazz);
+        ObjectMapper<?>     mapper  = typeMaps.computeIfAbsent(clazz.getCanonicalName(), k -> new ObjectMapper<>(clazz));
+        Map<String, String> typemap = mapper.getUntranslatedTypeMap();
         
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT EXISTS(SELECT 1 FROM `").append(clazz.getName()).append("` WHERE ");

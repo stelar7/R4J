@@ -1,7 +1,9 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.utils.sql.SQLForeignMap;
+
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 public class Ability implements Serializable
 {
@@ -65,5 +67,17 @@ public class Ability implements Serializable
                ", ability2Effects='" + ability2Effects + '\'' +
                ", ultimateEffects='" + ultimateEffects + '\'' +
                '}';
+    }
+    
+    @SQLForeignMap
+    private static Map<Class<?>, String> getForeignKeyMap()
+    {
+        Map<Class<?>, String> returnMap = new HashMap<>();
+        
+        returnMap.put(Match.class, "id");
+        returnMap.put(RoundResult.class, "roundNum");
+        returnMap.put(PlayerRoundStats.class, "puuid");
+        
+        return returnMap;
     }
 }

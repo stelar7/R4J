@@ -77,20 +77,6 @@ public class Team implements Serializable
                '}';
     }
     
-    @SQLTypeMap
-    private static Map<String, String> getTypeMap()
-    {
-        Map<String, String> returnMap = new HashMap<>();
-        
-        returnMap.put("teamId", "text");
-        returnMap.put("won", "boolean");
-        returnMap.put("roundsPlayed", "int8");
-        returnMap.put("roundsWon", "int8");
-        returnMap.put("numPoints", "int8");
-        
-        return returnMap;
-    }
-    
     @SQLForeignMap
     private static Map<Class<?>, String> getForeignKeyMap()
     {

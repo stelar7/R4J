@@ -75,9 +75,9 @@ public class Match implements Serializable
     {
         Map<String, String> returnMap = new HashMap<>();
         
-        returnMap.put("id", "int64");
-        returnMap.put("gameid", "text");
-        returnMap.put("platform", "text");
+        returnMap.put("id", "long");
+        returnMap.put("gameid", "string");
+        returnMap.put("platform", "string");
         
         return returnMap;
     }

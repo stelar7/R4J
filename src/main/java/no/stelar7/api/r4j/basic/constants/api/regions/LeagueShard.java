@@ -1,9 +1,8 @@
 package no.stelar7.api.r4j.basic.constants.api.regions;
 
 import com.google.gson.JsonPrimitive;
-import no.stelar7.api.r4j.basic.exceptions.APIEnumNotUpToDateException;
 import no.stelar7.api.r4j.basic.constants.types.*;
-import no.stelar7.api.r4j.basic.utils.sql.SQLTypeMap;
+import no.stelar7.api.r4j.basic.exceptions.APIEnumNotUpToDateException;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -240,18 +239,6 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
     public static List<LeagueShard> getValidPlatforms()
     {
         return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2, SG, PH, ID1, VN, TH, TW);
-    }
-    
-    
-    @SQLTypeMap
-    private static Map<String, String> getTypeMap()
-    {
-        Map<String, String> returnMap = new HashMap<>();
-        
-        returnMap.put("name", "tinytext");
-        returnMap.put("key", "tinytext");
-        
-        return returnMap;
     }
     
     public String[] getKeys()

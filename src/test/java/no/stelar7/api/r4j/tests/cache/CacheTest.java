@@ -46,7 +46,10 @@ public class CacheTest
         DataCall.setCacheProvider(sqlCache.get());
         
         RecentMatchList list = r4J.getVALAPI().getMatchAPI().getRecentMatches(ValorantShard.EU, GameQueueType.COMPETITIVE);
-        r4J.getVALAPI().getMatchAPI().getMatch(ValorantShard.EU, list.getMatchIds().get(0));
+        for (String matchId : list.getMatchIds())
+        {
+            r4J.getVALAPI().getMatchAPI().getMatch(ValorantShard.EU, matchId);
+        }
     
         /*
             Summoner s = Summoner.byName(LeagueShard.EUW1, "stelar7");

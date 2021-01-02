@@ -10,6 +10,7 @@ public class RoundResult implements Serializable
 {
     private static final long serialVersionUID = -7840217641700030054L;
     
+    @SQLReturnKey
     private int                    roundNum;
     private String                 roundResult;
     private RoundResultType        roundCeremony;
@@ -156,25 +157,6 @@ public class RoundResult implements Serializable
                ", playerStats=" + playerStats +
                ", roundResultCode='" + roundResultCode + '\'' +
                '}';
-    }
-    
-    @SQLTypeMap
-    private static Map<String, String> getTypeMap()
-    {
-        Map<String, String> returnMap = new HashMap<>();
-    
-        returnMap.put("roundNum", "int8");
-        returnMap.put("roundResult", "text");
-        returnMap.put("roundCeremony", "text");
-        returnMap.put("winningTeam", "text");
-        returnMap.put("bombPlanter", "text");
-        returnMap.put("bombDefuser", "text");
-        returnMap.put("plantRoundTime", "int32");
-        returnMap.put("plantSite", "text");
-        returnMap.put("defuseRoundTime", "int32");
-        returnMap.put("roundResultCode", "text");
-        
-        return returnMap;
     }
     
     @SQLForeignMap

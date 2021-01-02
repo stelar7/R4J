@@ -90,21 +90,6 @@ public class PlayerTotalStats implements Serializable
                '}';
     }
     
-    @SQLTypeMap
-    private static Map<String, String> getTypeMap()
-    {
-        Map<String, String> returnMap = new HashMap<>();
-        
-        returnMap.put("score", "int32");
-        returnMap.put("roundsPlayed", "int32");
-        returnMap.put("kills", "int32");
-        returnMap.put("deaths", "int32");
-        returnMap.put("assists", "int32");
-        returnMap.put("playtimeMillis", "int32");
-        
-        return returnMap;
-    }
-    
     @SQLForeignMap
     private static Map<Class<?>, String> getForeignKeyMap()
     {
