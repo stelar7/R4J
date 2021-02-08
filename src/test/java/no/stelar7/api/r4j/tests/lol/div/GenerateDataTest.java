@@ -37,7 +37,7 @@ public class GenerateDataTest
             for (Participant p : m.getParticipants())
             {
                 InternalMatchSummoner sum = new InternalMatchSummoner();
-                sum.name = m.getParticipantIdentity(p.getParticipantId()).get().getSummonerName();
+                sum.name = m.getParticipantIdentity(p.getParticipantId()).get().getPlayer().getSummonerName();
                 sum.champion = p.getChampionId();
                 sum.summoner1 = p.getSpell1().getValue();
                 sum.summoner2 = p.getSpell2().getValue();

@@ -206,8 +206,8 @@ public class MatchHistoryCrawler
     
     private long insertSummoner(ParticipantIdentity summoner) throws SQLException
     {
-        sumCheck.setString(1, summoner.getCurrentAccountId());
-        sumCheck.setString(2, summoner.getCurrentPlatform().name());
+        sumCheck.setString(1, summoner.getPlayer().getCurrentAccountId());
+        sumCheck.setString(2, summoner.getPlayer().getCurrentPlatform().name());
         try (ResultSet result = sumCheck.executeQuery())
         {
             if (result.first())
@@ -216,11 +216,11 @@ public class MatchHistoryCrawler
             }
         }
         
-        sumInsertStatement.setString(1, summoner.getCurrentAccountId());
-        sumInsertStatement.setString(2, summoner.getSummonerId());
-        sumInsertStatement.setString(3, summoner.getCurrentPlatform().name());
-        sumInsertStatement.setString(4, summoner.getSummonerName());
-        sumInsertStatement.setLong(5, summoner.getProfileIcon());
+        sumInsertStatement.setString(1, summoner.getPlayer().getCurrentAccountId());
+        sumInsertStatement.setString(2, summoner.getPlayer().getSummonerId());
+        sumInsertStatement.setString(3, summoner.getPlayer().getCurrentPlatform().name());
+        sumInsertStatement.setString(4, summoner.getPlayer().getSummonerName());
+        sumInsertStatement.setLong(5, summoner.getPlayer().getProfileIcon());
         sumInsertStatement.executeUpdate();
         
         try (ResultSet pid = sumInsertStatement.getGeneratedKeys())

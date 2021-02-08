@@ -1,78 +1,23 @@
 package no.stelar7.api.r4j.pojo.lol.match;
 
-import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
-
 import java.io.Serializable;
 import java.util.Objects;
 
 public class ParticipantIdentity implements Serializable
 {
-    private static final long serialVersionUID = 1762488869710744332L;
+    private static final long serialVersionUID = -5368696475522411736L;
     
-    private int      participantId;
-    private String   matchHistoryUri;
-    private int      profileIcon;
-    private String   summonerId;
-    private String      summonerName;
-    private LeagueShard currentPlatformId;
-    private LeagueShard platformId;
-    private String      accountId;
-    private String   currentAccountId;
-    
-    public Summoner getCurrentSummoner()
-    {
-        return Summoner.byAccountId(currentPlatformId, currentAccountId);
-    }
-    
-    public Summoner getOldSummoner()
-    {
-        return Summoner.byAccountId(platformId, accountId);
-    }
+    private int               participantId;
+    private ParticipantPlayer player;
     
     public int getParticipantId()
     {
         return participantId;
     }
     
-    public String getMatchHistoryUri()
+    public ParticipantPlayer getPlayer()
     {
-        return matchHistoryUri;
-    }
-    
-    public int getProfileIcon()
-    {
-        return profileIcon;
-    }
-    
-    public String getSummonerId()
-    {
-        return summonerId;
-    }
-    
-    public String getSummonerName()
-    {
-        return summonerName;
-    }
-    
-    public LeagueShard getCurrentPlatform()
-    {
-        return currentPlatformId;
-    }
-    
-    public LeagueShard getPlatform()
-    {
-        return platformId;
-    }
-    
-    public String getAccountId()
-    {
-        return accountId;
-    }
-    
-    public String getCurrentAccountId()
-    {
-        return currentAccountId;
+        return player;
     }
     
     @Override
@@ -87,21 +32,13 @@ public class ParticipantIdentity implements Serializable
             return false;
         }
         ParticipantIdentity that = (ParticipantIdentity) o;
-        return participantId == that.participantId &&
-               profileIcon == that.profileIcon &&
-               Objects.equals(matchHistoryUri, that.matchHistoryUri) &&
-               Objects.equals(summonerId, that.summonerId) &&
-               Objects.equals(summonerName, that.summonerName) &&
-               currentPlatformId == that.currentPlatformId &&
-               platformId == that.platformId &&
-               Objects.equals(accountId, that.accountId) &&
-               Objects.equals(currentAccountId, that.currentAccountId);
+        return participantId == that.participantId && Objects.equals(player, that.player);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(participantId, matchHistoryUri, profileIcon, summonerId, summonerName, currentPlatformId, platformId, accountId, currentAccountId);
+        return Objects.hash(participantId, player);
     }
     
     @Override
@@ -109,14 +46,7 @@ public class ParticipantIdentity implements Serializable
     {
         return "ParticipantIdentity{" +
                "participantId=" + participantId +
-               ", matchHistoryUri='" + matchHistoryUri + '\'' +
-               ", profileIcon=" + profileIcon +
-               ", summonerId=" + summonerId +
-               ", summonerName='" + summonerName + '\'' +
-               ", currentPlatformId=" + currentPlatformId +
-               ", platformId=" + platformId +
-               ", accountId=" + accountId +
-               ", currentAccountId=" + currentAccountId +
+               ", player=" + player +
                '}';
     }
 }

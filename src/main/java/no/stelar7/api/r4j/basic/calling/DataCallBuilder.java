@@ -37,7 +37,7 @@ public class DataCallBuilder
     private String requestMethod = "GET";
     private String postData      = "";
     
-    private static TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
+    private static final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
     {
         public java.security.cert.X509Certificate[] getAcceptedIssuers()
         {
@@ -55,7 +55,7 @@ public class DataCallBuilder
     };
     
     // Create all-trusting host name verifier
-    private static HostnameVerifier allHostsValid = (hostname, session) -> true;
+    private static final HostnameVerifier allHostsValid = (hostname, session) -> true;
     
     static
     {
@@ -78,7 +78,7 @@ public class DataCallBuilder
         limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint));
     }
     
-    private static Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
+    private static final Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
     
     /**
      * Puts together all the data, and then returns an object representing the JSON from the call
@@ -348,21 +348,6 @@ public class DataCallBuilder
     {
         JsonObject element = (JsonObject) JsonParser.parseString(returnValue);
         
-        JsonArray participantIds = element.getAsJsonArray("participantIdentities");
-        for (JsonElement participant : participantIds)
-        {
-            JsonObject pid    = participant.getAsJsonObject();
-            JsonObject player = participant.getAsJsonObject().getAsJsonObject("player");
-            if (player != null)
-            {
-                for (String key : player.keySet())
-                {
-                    pid.add(key, player.get(key));
-                }
-                pid.remove("player");
-            }
-        }
-        
         JsonArray participants = element.getAsJsonArray("participants");
         for (JsonElement participant : participants)
         {
@@ -413,11 +398,11 @@ public class DataCallBuilder
         try
         {
             int  attempts           = (retrys != null && retrys.length == 1) ? ++retrys[0] : 1;
-            long nextSleepDuration  = attempts * 500;
+            long nextSleepDuration  = attempts * 500L;
             long totalSleepDuration = 0;
             for (int i = 1; i < attempts; i++)
             {
-                totalSleepDuration += 500 * i;
+                totalSleepDuration += i * 500L;
             }
             
             

@@ -339,8 +339,8 @@ public class MySQLCacheProvider implements CacheProvider
                 if (resultSet.next() && resultSet.getBoolean(1))
                 {
                     logger.info("Entry found in cache :)");
-                    System.exit(0);
                 }
+                System.exit(0);
             }
         } catch (Exception e)
         {

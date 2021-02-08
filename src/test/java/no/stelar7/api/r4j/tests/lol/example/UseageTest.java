@@ -57,7 +57,7 @@ public class UseageTest
             ParticipantIdentity opponentIdentity = match.getParticipantIdentity(opponent.getParticipantId()).get();
             StaticChampion      opponentChampion = championData.get(opponent.getChampionId());
             
-            System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getSummonerName(), opponentChampion.getName());
+            System.out.format("They laned against '%s' as '%s'%n", opponentIdentity.getPlayer().getSummonerName(), opponentChampion.getName());
         }
         
         if (!runes.isEmpty())

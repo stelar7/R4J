@@ -406,8 +406,8 @@ public class MatchListTest
     {
         Match detail = Match.byId(LeagueShard.EUW1, 3961977905L);
         detail.getParticipantIdentities().forEach(p -> {
-            Summoner olda = new SummonerBuilder().withPlatform(p.getPlatform()).withAccountId(p.getAccountId()).get();
-            Summoner newa = new SummonerBuilder().withPlatform(p.getCurrentPlatform()).withAccountId(p.getCurrentAccountId()).get();
+            Summoner olda = new SummonerBuilder().withPlatform(p.getPlayer().getPlatform()).withAccountId(p.getPlayer().getAccountId()).get();
+            Summoner newa = new SummonerBuilder().withPlatform(p.getPlayer().getCurrentPlatform()).withAccountId(p.getPlayer().getCurrentAccountId()).get();
             
             System.out.println(newa.getName() + ":");
             System.out.println(newa.getPlatform() + ":" + newa.getName());

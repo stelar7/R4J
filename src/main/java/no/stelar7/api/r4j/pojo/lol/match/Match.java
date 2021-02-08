@@ -16,14 +16,14 @@ public class Match implements Serializable
 {
     private static final long serialVersionUID = -2199053222630714286L;
     
-    private SeasonType    seasonId;
-    private GameQueueType queueId;
-    private long          gameId;
+    private SeasonType                seasonId;
+    private GameQueueType             queueId;
+    private long                      gameId;
     private List<ParticipantIdentity> participantIdentities;
-    private String       gameVersion;
-    private LeagueShard   platformId;
-    private GameModeType  gameMode;
-    private MapType       mapId;
+    private String                    gameVersion;
+    private LeagueShard               platformId;
+    private GameModeType              gameMode;
+    private MapType                   mapId;
     private GameType                  gameType;
     private List<TeamStats>           teams;
     private List<Participant>         participants;
@@ -170,7 +170,7 @@ public class Match implements Serializable
     public Optional<ParticipantIdentity> getParticipantIdentity(String summonerId)
     {
         return participantIdentities.stream()
-                                    .filter(p -> p.getSummonerId().equals(summonerId))
+                                    .filter(p -> p.getPlayer().getSummonerId().equals(summonerId))
                                     .findFirst();
     }
     
