@@ -13,6 +13,7 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
     PILTOVER_AND_ZAUN("PZ", 4),
     SHADOW_ILES("SI", 5),
     BILGEWATER("BW", 6),
+    SHURIMA("SH", 7),
     MOUNT_TARGON("MT", 9);
     
     private final String shortCode;

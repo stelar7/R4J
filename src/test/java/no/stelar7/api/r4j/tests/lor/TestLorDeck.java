@@ -388,4 +388,18 @@ public class TestLorDeck
         Assertions.assertTrue(checkSameDeck(deck, decoded));
     }
     
+    @Test
+    public void testShurima()
+    {
+        LoRDeck deck = new LoRDeck();
+        deck.addCard(LoRCard.create("01DE002"), 4);
+        deck.addCard(LoRCard.create("02BW003"), 2);
+        deck.addCard(LoRCard.create("02BW010"), 3);
+        deck.addCard(LoRCard.create("04SH047"), 5);
+    
+        String  code    = deck.getDeckCode();
+        LoRDeck decoded = LoRDeckCode.decode(code);
+        Assertions.assertTrue(checkSameDeck(deck, decoded));
+    }
+    
 }
