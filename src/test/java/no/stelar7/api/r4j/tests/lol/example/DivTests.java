@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.ImageAPI;
-import no.stelar7.api.r4j.pojo.lol.match.*;
+import no.stelar7.api.r4j.pojo.lol.match.v4.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
@@ -30,12 +30,12 @@ public class DivTests
         String name  = summoner.getName();
         //most recent game
         List<MatchReference> matches       = summoner.getLeagueGames().get();
-        MatchReference       recentGame    = matches.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
-        Match                match         = recentGame.getFullMatch();
-        Participant          self          = match.getParticipant(summoner.getSummonerId()).get(); //game data for user (summs, champ etc)
-        StaticChampion       champion      = champData.get(recentGame.getChampionId());
-        MatchPerks           summs         = self.getPerks();
-        boolean              won           = match.didWin(self);
+        MatchReference recentGame = matches.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
+        Match          match      = recentGame.getFullMatch();
+        Participant    self       = match.getParticipant(summoner.getSummonerId()).get(); //game data for user (summs, champ etc)
+        StaticChampion champion   = champData.get(recentGame.getChampionId());
+        MatchPerks     summs      = self.getPerks();
+        boolean        won        = match.didWin(self);
         Participant          opponent      = match.getLaneOpponent(self).get(); //get lane opponent id
         StaticChampion       opponentChamp = champData.get(opponent.getChampionId());
         

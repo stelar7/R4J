@@ -45,8 +45,8 @@ public class TestTFTMatch
         MatchIterator stelar7 = api.getMatchIterator(RegionShard.EUROPE, acc.getPUUID(), 20);
         for (GAMHSMatch m : stelar7)
         {
-            System.out.println(m.toTFTMatch());
-            System.out.println(m.toTFTMetadata());
+            System.out.println(m.asTFTMatch());
+            System.out.println(m.asTFTMetadata());
         }
         System.out.println();
     }

@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
-import no.stelar7.api.r4j.pojo.lol.match.*;
+import no.stelar7.api.r4j.pojo.lol.match.v4.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.staticdata.mastery.StaticMastery;
 import no.stelar7.api.r4j.pojo.lol.staticdata.perk.StaticPerk;

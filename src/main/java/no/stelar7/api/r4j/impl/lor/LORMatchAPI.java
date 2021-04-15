@@ -55,12 +55,12 @@ public class LORMatchAPI
     
     public LORMatch getMatch(RuneterraShard platform, String gameId)
     {
-        return getMatchRAW(platform, gameId).toLORMatch();
+        return getMatchRAW(platform, gameId).asLORMatch();
     }
     
     public LORMetadata getMetadata(RuneterraShard platform, String gameId)
     {
-        return getMatchRAW(platform, gameId).toLORMetadata();
+        return getMatchRAW(platform, gameId).asLORMetadata();
     }
     
     public GAMHSMatch getMatchRAW(RuneterraShard platform, String gameId)

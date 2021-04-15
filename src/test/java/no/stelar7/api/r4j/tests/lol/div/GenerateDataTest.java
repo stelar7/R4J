@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.tests.lol.div;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.pojo.lol.match.*;
+import no.stelar7.api.r4j.pojo.lol.match.v4.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;

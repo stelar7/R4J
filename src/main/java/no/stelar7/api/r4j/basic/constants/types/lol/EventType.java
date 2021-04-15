@@ -19,7 +19,15 @@ public enum EventType implements CodedEnum
     PORO_KING_SUMMON,
     SKILL_LEVEL_UP,
     WARD_KILL,
-    WARD_PLACED;
+    WARD_PLACED,
+    TURRET_PLATE_DESTROYED,
+    PAUSE_END,
+    LEVEL_UP,
+    CHAMPION_SPECIAL_KILL,
+    GAME_END,
+    DRAGON_SOUL_GIVEN,
+    CHAMPION_TRANSFORM,
+    ;
     
     /**
      * Returns an EventType from the provided value

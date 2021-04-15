@@ -6,7 +6,7 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.TournamentAPI;
-import no.stelar7.api.r4j.pojo.lol.match.Match;
+import no.stelar7.api.r4j.pojo.lol.match.v4.Match;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
 import no.stelar7.api.r4j.tests.SecretFile;

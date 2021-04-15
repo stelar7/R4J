@@ -19,9 +19,19 @@ public enum TeamType implements CodedEnum
         this.code = code;
     }
     
-    public Optional<TeamType> getFromCode(final String teamId)
+    public Optional<TeamType> getFromCode(String value)
     {
-        return Stream.of(TeamType.values()).filter(t -> t.code.equals(Integer.valueOf(teamId))).findFirst();
+        if (value.contains("."))
+        {
+            value = value.substring(0, value.indexOf("."));
+        }
+        
+        return getFromId(Integer.parseInt(value));
+    }
+    
+    public Optional<TeamType> getFromId(final int teamId)
+    {
+        return Stream.of(TeamType.values()).filter(t -> t.code.equals(teamId)).findFirst();
     }
     
     public TeamType opposite()

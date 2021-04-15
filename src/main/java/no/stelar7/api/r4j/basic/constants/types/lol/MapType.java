@@ -99,15 +99,26 @@ public enum MapType implements CodedEnum
      * @param mapId the map id
      * @return the from code
      */
-    public Optional<MapType> getFromCode(final String mapId)
+    public Optional<MapType> getFromCode(String value)
     {
-        return Stream.of(MapType.values()).filter(t -> t.mapId.equals(Integer.valueOf(mapId))).findFirst();
+        if (value.contains("."))
+        {
+            value = value.substring(0, value.indexOf("."));
+        }
+        
+        return getFromId(Integer.parseInt(value));
+    }
+    
+    public Optional<MapType> getFromId(final int mapId)
+    {
+        return Stream.of(MapType.values()).filter(t -> t.mapId.equals(mapId)).findFirst();
     }
     
     @Override
     public String prettyName()
     {
-        switch (this) {
+        switch (this)
+        {
             case SUMMONERS_RIFT_SUMMER_OLD:
                 return "Summoners Rift Old Skin";
             case SUMMONERS_RIFT_AUTUMN_OLD:

@@ -22,12 +22,12 @@ public final class Summoner implements Serializable
 {
     private static final long serialVersionUID = 7941348691314302772L;
     
-    private int      profileIconId;
-    private String   name;
-    private int      summonerLevel;
-    private String   accountId;
-    private String   puuid;
-    private String   id;
+    private int         profileIconId;
+    private String      name;
+    private int         summonerLevel;
+    private String      accountId;
+    private String      puuid;
+    private String      id;
     private long        revisionDate;
     private LeagueShard platform;
     
@@ -145,6 +145,16 @@ public final class Summoner implements Serializable
     public MatchListBuilder getLeagueGames()
     {
         return new MatchListBuilder().withPlatform(platform).withAccountId(accountId);
+    }
+    
+    /**
+     * This method has the same function as the main one but with the puuid and platform already set
+     *
+     * @return MatchListBuilder
+     */
+    public no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder getLeagueGamesV5()
+    {
+        return new no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder().withPlatform(platform).withPuuid(puuid);
     }
     
     /**

@@ -60,6 +60,9 @@ public final class Utils
         builder.registerTypeAdapter(WardType.class, new GenericEnumSerializer<WardType>());
         builder.registerTypeAdapter(RealmSpesificEnum.class, new RealmSpesificEnumSerializer());
         builder.registerTypeAdapter(RegionShard.class, new RealmSpesificEnumSerializer());
+        builder.registerTypeAdapter(SpellSlotType.class, new GenericEnumSerializer<SpellSlotType>());
+        builder.registerTypeAdapter(TimelineDamageType.class, new GenericEnumSerializer<TimelineDamageType>());
+        builder.registerTypeAdapter(TransformType.class, new GenericEnumSerializer<TransformType>());
         
         // valorant
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.GameQueueType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.GameQueueType>());

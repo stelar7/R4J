@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.async.*;
 import no.stelar7.api.r4j.impl.lol.raw.SpectatorAPI;
-import no.stelar7.api.r4j.pojo.lol.match.MatchReference;
+import no.stelar7.api.r4j.pojo.lol.match.v4.MatchReference;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;

@@ -72,12 +72,12 @@ public class TFTMatchAPI
     
     public TFTMatch getMatch(RegionShard platform, String gameId)
     {
-        return getMatchRAW(platform, gameId).toTFTMatch();
+        return getMatchRAW(platform, gameId).asTFTMatch();
     }
     
     public TFTMetadata getMetadata(RegionShard platform, String gameId)
     {
-        return getMatchRAW(platform, gameId).toTFTMetadata();
+        return getMatchRAW(platform, gameId).asTFTMetadata();
     }
     
     public GAMHSMatch getMatchRAW(RegionShard platform, String gameId)

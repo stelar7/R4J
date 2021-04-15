@@ -27,7 +27,16 @@ public enum RoleType implements CodedEnum
     /**
      * When there are 2 participants in a lane, this character did not farm
      */
-    DUO_SUPPORT;
+    DUO_SUPPORT,
+    /**
+     * This character farmed
+     */
+    CARRY,
+    /**
+     * This character did not farm
+     */
+    SUPPORT,
+    ;
     
     /**
      * Returns a RoleType from the provided value
@@ -43,7 +52,8 @@ public enum RoleType implements CodedEnum
     @Override
     public String prettyName()
     {
-        switch (this) {
+        switch (this)
+        {
             case DUO:
                 return "Duo";
             case NONE:

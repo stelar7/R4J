@@ -7,7 +7,7 @@ import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.utils.sql.MySQL;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.match.*;
-import no.stelar7.api.r4j.pojo.lol.match.*;
+import no.stelar7.api.r4j.pojo.lol.match.v4.*;
 import no.stelar7.api.r4j.pojo.lol.shared.BannedChampion;
 import no.stelar7.api.r4j.tests.SecretFile;
 

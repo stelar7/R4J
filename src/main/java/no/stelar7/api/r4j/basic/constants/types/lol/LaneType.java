@@ -28,6 +28,11 @@ public enum LaneType implements CodedEnum
     BOT("BOT", "BOTTOM", "BOT_LANE"),
     
     /**
+     * The support
+     */
+    UITILITY("UTILITY"),
+    
+    /**
      * The Riot API could not decide on a lane
      */
     NONE("NONE");
@@ -53,7 +58,8 @@ public enum LaneType implements CodedEnum
     @Override
     public String prettyName()
     {
-        switch (this) {
+        switch (this)
+        {
             case MID:
                 return "Mid";
             case TOP:

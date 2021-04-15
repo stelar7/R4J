@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.impl.lol.builders.match;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.pojo.lol.match.MatchTimeline;
+import no.stelar7.api.r4j.pojo.lol.match.v4.MatchTimeline;
 
 import java.util.*;
 

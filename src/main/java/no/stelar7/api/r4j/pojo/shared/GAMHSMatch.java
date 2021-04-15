@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.pojo.shared;
 
 import com.google.gson.JsonObject;
 import no.stelar7.api.r4j.basic.utils.Utils;
+import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lor.match.*;
 import no.stelar7.api.r4j.pojo.tft.*;
 
@@ -13,24 +14,39 @@ public class GAMHSMatch implements Serializable
     private Object metadata;
     private Object info;
     
-    public TFTMatch toTFTMatch()
+    public TFTMatch asTFTMatch()
     {
         return Utils.getGson().fromJson(Utils.getGson().toJsonTree(info), TFTMatch.class);
     }
     
-    public TFTMetadata toTFTMetadata()
+    public TFTMetadata asTFTMetadata()
     {
         return Utils.getGson().fromJson(Utils.getGson().toJsonTree(metadata), TFTMetadata.class);
     }
     
-    public LORMatch toLORMatch()
+    public LORMatch asLORMatch()
     {
         return Utils.getGson().fromJson(Utils.getGson().toJsonTree(info), LORMatch.class);
     }
     
-    public LORMetadata toLORMetadata()
+    public LORMetadata asLORMetadata()
     {
         return Utils.getGson().fromJson(Utils.getGson().toJsonTree(metadata), LORMetadata.class);
+    }
+    
+    public LOLMatch asLOLMatch()
+    {
+        return Utils.getGson().fromJson(Utils.getGson().toJsonTree(info), LOLMatch.class);
+    }
+    
+    public LOLTimeline asLOLTimeline()
+    {
+        return Utils.getGson().fromJson(Utils.getGson().toJsonTree(info), LOLTimeline.class);
+    }
+    
+    public LOLMetadata asLOLMatchMetadata()
+    {
+        return Utils.getGson().fromJson(Utils.getGson().toJsonTree(metadata), LOLMetadata.class);
     }
     
     public JsonObject getMetadata()
