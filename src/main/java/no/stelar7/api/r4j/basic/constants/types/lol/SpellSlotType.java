@@ -36,7 +36,7 @@ public enum SpellSlotType implements CodedEnum<SpellSlotType>
     
     public Optional<SpellSlotType> getFromId(int value)
     {
-        if (value > 81)
+        if (value > 81 || value < -1)
         {
             return Optional.of(OUT_OF_BOUNDS);
         }

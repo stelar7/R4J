@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 public enum TransformType implements CodedEnum<TransformType>
 {
     ASSASSIN,
+    SLAYER,
     ;
     
     @Override

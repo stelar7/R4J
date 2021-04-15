@@ -33,9 +33,19 @@ public enum LaneType implements CodedEnum
     UITILITY("UTILITY"),
     
     /**
+     * The afk
+     */
+    AFK("AFK"),
+    
+    /**
+     * ???
+     */
+    INVALID("Invalid"),
+    
+    /**
      * The Riot API could not decide on a lane
      */
-    NONE("NONE");
+    NONE("NONE", "");
     
     private final String[] keys;
     

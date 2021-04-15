@@ -12,7 +12,6 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.*;
 import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
-import no.stelar7.api.r4j.pojo.shared.GAMHSMatch;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -27,7 +26,7 @@ public class MatchListV5Test
     
     @Test
     @Disabled
-    public void testMatchAndMatchList() throws IOException
+    public void testMatchInvalidSpellSlots() throws IOException
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
@@ -45,8 +44,10 @@ public class MatchListV5Test
         for (String matchid : all)
         {
             tb = tb.withId(matchid);
-            GAMHSMatch  timelineDetail = tb.getTimelineRAW();
-            LOLTimeline lolTimeline    = timelineDetail.asLOLTimeline();
+            mb = mb.withId(matchid);
+            
+            LOLMatch    match       = mb.getMatch();
+            LOLTimeline lolTimeline = tb.getTimeline();
             
             List<TimelineDamageData> wierdEntries = new ArrayList<>();
             lolTimeline.getFrames().forEach(frame -> {
@@ -85,6 +86,41 @@ public class MatchListV5Test
         
         String output = Utils.getGson().toJson(new JsonParser().parse(sw.toString()));
         Files.write(Paths.get("C:\\Users\\Steffen\\Desktop\\Ny mappe\\errors.json"), output.getBytes(StandardCharsets.UTF_8));
+    }
+    
+    @Test
+    @Disabled
+    public void testMatchParticipantIds()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        
+        MatchListBuilder builder = new MatchListBuilder();
+        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        
+        LazyList<String> all = sum.getLeagueGamesV5().getLazy();
+        
+        MatchBuilder    mb = new MatchBuilder(sum.getPlatform());
+        TimelineBuilder tb = new TimelineBuilder(sum.getPlatform());
+        
+        for (String matchid : all)
+        {
+            tb = tb.withId(matchid);
+            mb = mb.withId(matchid);
+            
+            LOLMatch    match       = mb.getMatch();
+            LOLTimeline lolTimeline = tb.getTimeline();
+            
+            List<TimelineDamageData> wierdEntries = new ArrayList<>();
+            lolTimeline.getFrames().forEach(frame -> {
+                
+                frame.getParticipantFrames().forEach((k, v) -> {
+                    if (!k.equals(String.valueOf(v.getParticipantId())))
+                    {
+                        System.out.println(matchid + " has mismatched participantid and key");
+                    }
+                });
+            });
+        }
     }
 }
 

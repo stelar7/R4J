@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match.v5;
 
+import no.stelar7.api.r4j.basic.constants.types.TransformType;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
@@ -37,6 +38,7 @@ public class TimelineFrameEvent implements Serializable
     private MonsterSubType           monsterSubType;
     private TeamType                 teamId;
     private TeamType                 killerTeamId;
+    private TransformType            transformType;
     
     public long getRealTimestamp()
     {
@@ -178,6 +180,11 @@ public class TimelineFrameEvent implements Serializable
         return killerTeamId;
     }
     
+    public TransformType getTransformType()
+    {
+        return transformType;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -190,13 +197,13 @@ public class TimelineFrameEvent implements Serializable
             return false;
         }
         TimelineFrameEvent that = (TimelineFrameEvent) o;
-        return creatorId == that.creatorId && realTimestamp == that.realTimestamp && timestamp == that.timestamp && participantId == that.participantId && skillSlot == that.skillSlot && itemId == that.itemId && beforeId == that.beforeId && afterId == that.afterId && goldGain == that.goldGain && bounty == that.bounty && killStreakLength == that.killStreakLength && killerId == that.killerId && victimId == that.victimId && type == that.type && levelUpType == that.levelUpType && wardType == that.wardType && Objects.equals(position, that.position) && Objects.equals(victimDamageDealt, that.victimDamageDealt) && Objects.equals(victimDamageReceived, that.victimDamageReceived) && buildingType == that.buildingType && towerType == that.towerType && laneType == that.laneType && Objects.equals(assistingParticipantIds, that.assistingParticipantIds) && monsterType == that.monsterType && monsterSubType == that.monsterSubType && teamId == that.teamId && killerTeamId == that.killerTeamId;
+        return creatorId == that.creatorId && realTimestamp == that.realTimestamp && timestamp == that.timestamp && participantId == that.participantId && skillSlot == that.skillSlot && itemId == that.itemId && beforeId == that.beforeId && afterId == that.afterId && goldGain == that.goldGain && bounty == that.bounty && killStreakLength == that.killStreakLength && killerId == that.killerId && victimId == that.victimId && type == that.type && levelUpType == that.levelUpType && wardType == that.wardType && Objects.equals(position, that.position) && Objects.equals(victimDamageDealt, that.victimDamageDealt) && Objects.equals(victimDamageReceived, that.victimDamageReceived) && buildingType == that.buildingType && towerType == that.towerType && laneType == that.laneType && Objects.equals(assistingParticipantIds, that.assistingParticipantIds) && monsterType == that.monsterType && monsterSubType == that.monsterSubType && teamId == that.teamId && killerTeamId == that.killerTeamId && transformType == that.transformType;
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(creatorId, realTimestamp, timestamp, type, participantId, skillSlot, levelUpType, itemId, beforeId, afterId, goldGain, wardType, bounty, killStreakLength, killerId, position, victimDamageDealt, victimDamageReceived, victimId, buildingType, towerType, laneType, assistingParticipantIds, monsterType, monsterSubType, teamId, killerTeamId);
+        return Objects.hash(creatorId, realTimestamp, timestamp, type, participantId, skillSlot, levelUpType, itemId, beforeId, afterId, goldGain, wardType, bounty, killStreakLength, killerId, position, victimDamageDealt, victimDamageReceived, victimId, buildingType, towerType, laneType, assistingParticipantIds, monsterType, monsterSubType, teamId, killerTeamId, transformType);
     }
     
     @Override
@@ -230,6 +237,7 @@ public class TimelineFrameEvent implements Serializable
                ", monsterSubType=" + monsterSubType +
                ", teamId=" + teamId +
                ", killerTeamId=" + killerTeamId +
+               ", transformType=" + transformType +
                '}';
     }
 }
