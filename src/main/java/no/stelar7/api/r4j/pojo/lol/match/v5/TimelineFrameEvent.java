@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match.v5;
 
-import no.stelar7.api.r4j.basic.constants.types.TransformType;
+import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.*;
 
 public class TimelineFrameEvent implements Serializable
 {
-    private static final long serialVersionUID = 8170189893605146893L;
+    private static final long serialVersionUID = -1632996819871584522L;
     
     private int                      creatorId;
     private long                     realTimestamp;
@@ -39,6 +39,7 @@ public class TimelineFrameEvent implements Serializable
     private TeamType                 teamId;
     private TeamType                 killerTeamId;
     private TransformType            transformType;
+    private KillType                 killType;
     
     public long getRealTimestamp()
     {
@@ -185,6 +186,11 @@ public class TimelineFrameEvent implements Serializable
         return transformType;
     }
     
+    public KillType getKillType()
+    {
+        return killType;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -197,13 +203,13 @@ public class TimelineFrameEvent implements Serializable
             return false;
         }
         TimelineFrameEvent that = (TimelineFrameEvent) o;
-        return creatorId == that.creatorId && realTimestamp == that.realTimestamp && timestamp == that.timestamp && participantId == that.participantId && skillSlot == that.skillSlot && itemId == that.itemId && beforeId == that.beforeId && afterId == that.afterId && goldGain == that.goldGain && bounty == that.bounty && killStreakLength == that.killStreakLength && killerId == that.killerId && victimId == that.victimId && type == that.type && levelUpType == that.levelUpType && wardType == that.wardType && Objects.equals(position, that.position) && Objects.equals(victimDamageDealt, that.victimDamageDealt) && Objects.equals(victimDamageReceived, that.victimDamageReceived) && buildingType == that.buildingType && towerType == that.towerType && laneType == that.laneType && Objects.equals(assistingParticipantIds, that.assistingParticipantIds) && monsterType == that.monsterType && monsterSubType == that.monsterSubType && teamId == that.teamId && killerTeamId == that.killerTeamId && transformType == that.transformType;
+        return creatorId == that.creatorId && realTimestamp == that.realTimestamp && timestamp == that.timestamp && participantId == that.participantId && skillSlot == that.skillSlot && itemId == that.itemId && beforeId == that.beforeId && afterId == that.afterId && goldGain == that.goldGain && bounty == that.bounty && killStreakLength == that.killStreakLength && killerId == that.killerId && victimId == that.victimId && type == that.type && levelUpType == that.levelUpType && wardType == that.wardType && Objects.equals(position, that.position) && Objects.equals(victimDamageDealt, that.victimDamageDealt) && Objects.equals(victimDamageReceived, that.victimDamageReceived) && buildingType == that.buildingType && towerType == that.towerType && laneType == that.laneType && Objects.equals(assistingParticipantIds, that.assistingParticipantIds) && monsterType == that.monsterType && monsterSubType == that.monsterSubType && teamId == that.teamId && killerTeamId == that.killerTeamId && transformType == that.transformType && killType == that.killType;
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(creatorId, realTimestamp, timestamp, type, participantId, skillSlot, levelUpType, itemId, beforeId, afterId, goldGain, wardType, bounty, killStreakLength, killerId, position, victimDamageDealt, victimDamageReceived, victimId, buildingType, towerType, laneType, assistingParticipantIds, monsterType, monsterSubType, teamId, killerTeamId, transformType);
+        return Objects.hash(creatorId, realTimestamp, timestamp, type, participantId, skillSlot, levelUpType, itemId, beforeId, afterId, goldGain, wardType, bounty, killStreakLength, killerId, position, victimDamageDealt, victimDamageReceived, victimId, buildingType, towerType, laneType, assistingParticipantIds, monsterType, monsterSubType, teamId, killerTeamId, transformType, killType);
     }
     
     @Override
@@ -238,6 +244,7 @@ public class TimelineFrameEvent implements Serializable
                ", teamId=" + teamId +
                ", killerTeamId=" + killerTeamId +
                ", transformType=" + transformType +
+               ", killType=" + killType +
                '}';
     }
 }
