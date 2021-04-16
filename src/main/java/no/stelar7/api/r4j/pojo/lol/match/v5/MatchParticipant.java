@@ -237,7 +237,7 @@ public class MatchParticipant implements Serializable
         return goldSpent;
     }
     
-    public LaneType getChampionSelectLane()
+    public LaneType getGameDeterminedPosition()
     {
         return individualPosition;
     }
@@ -497,7 +497,7 @@ public class MatchParticipant implements Serializable
         return teamId;
     }
     
-    public LaneType getGameDeterminedPosition()
+    public LaneType getChampionSelectLane()
     {
         return teamPosition;
     }
