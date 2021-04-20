@@ -20,7 +20,7 @@ public enum Season implements CodedEnum<Season>
     ;
     
     
-    private final String mode;
+    private final String actId;
     
     /**
      * Constructor for MapType
@@ -29,7 +29,7 @@ public enum Season implements CodedEnum<Season>
      */
     Season(final String code)
     {
-        this.mode = code;
+        this.actId = code;
     }
     
     /**
@@ -40,7 +40,7 @@ public enum Season implements CodedEnum<Season>
      */
     public Optional<Season> getFromCode(final String mapId)
     {
-        return Stream.of(Season.values()).filter(t -> t.mode.equals(mapId)).findFirst();
+        return Stream.of(Season.values()).filter(t -> t.actId.equals(mapId)).findFirst();
     }
     
     @Override
@@ -58,9 +58,9 @@ public enum Season implements CodedEnum<Season>
      *
      * @return the id
      */
-    public String getId()
+    public String getActId()
     {
-        return this.mode;
+        return this.actId;
     }
     
     
@@ -71,7 +71,7 @@ public enum Season implements CodedEnum<Season>
      */
     public String getValue()
     {
-        return getId();
+        return getActId();
     }
     
 }

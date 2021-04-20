@@ -30,7 +30,12 @@ public enum RegionShard implements RealmSpesificEnum
     /**
      * PBE platform.
      */
-    PBE("PBE", "pbe");
+    PBE("PBE", "pbe"),
+    /**
+     * Esports
+     */
+    ESPORTS("ESPORTS", "esports"),
+    ;
     
     private String[] key;
     

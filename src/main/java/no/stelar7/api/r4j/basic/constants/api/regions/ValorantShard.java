@@ -38,7 +38,12 @@ public enum ValorantShard implements RealmSpesificEnum
     /**
      * Asia southpasific
      */
-    AP("AP", "ap");
+    AP("AP", "ap"),
+    /**
+     * Esports
+     */
+    ESPORTS("ESPORTS", "esports"),
+    ;
     
     private final String[] key;
     

@@ -28,6 +28,8 @@ public final class Constants
     public static final String ENDINDEX_PLACEHOLDER_DATA   = "endIndex";
     public static final String BEGINTIME_PLACEHOLDER_DATA  = "beginTime";
     public static final String BEGININDEX_PLACEHOLDER_DATA = "beginIndex";
+    public static final String STARTINDEX_PLACEHOLDER_DATA = "startIndex";
+    public static final String SIZE_PLACEHOLDER_DATA       = "size";
     public static final String START_PLACEHOLDER_DATA      = "start";
     public static final String CHAMPION_PLACEHOLDER_DATA   = "champion";
     public static final String TIMELINE_PLACEHOLDER_DATA   = "includeTimeline";
@@ -47,6 +49,7 @@ public final class Constants
     public static final String SUMMONER_NAME_PLACEHOLDER    = "{summonerName}";
     public static final String CHAMPION_ID_PLACEHOLDER      = "{championId}";
     public static final String MATCH_ID_PLACEHOLDER         = "{matchId}";
+    public static final String ACT_ID_PLACEHOLDER           = "{actId}";
     public static final String ID_PLACEHOLDER               = "{id}";
     public static final String PLATFORM_PLACEHOLDER         = "{platform}";
     public static final String GAME_PLACEHOLDER             = "{game}";

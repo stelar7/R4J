@@ -27,7 +27,7 @@ public class VALMatchAPI
     public List<MatchReference> getMatchList(ValorantShard server, String PUUID)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID)
                                                        .withPlatform(server);
         
@@ -59,7 +59,7 @@ public class VALMatchAPI
     public RecentMatchList getRecentMatches(ValorantShard platform, GameQueueType queue)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getValue())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE)
                                                        .withPlatform(platform);
         
@@ -91,7 +91,7 @@ public class VALMatchAPI
     public Match getMatch(ValorantShard platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_MATCH_BY_ID)
                                                        .withPlatform(platform);
         

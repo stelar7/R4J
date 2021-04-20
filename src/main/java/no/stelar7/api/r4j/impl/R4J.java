@@ -99,7 +99,7 @@ public class R4J
         {
             return MatchAPI.getInstance();
         }
-    
+        
         /**
          * Gets league api.
          *
@@ -109,7 +109,7 @@ public class R4J
         {
             return LeagueAPI.getInstance();
         }
-    
+        
         /**
          * Gets clash api.
          *
@@ -153,7 +153,7 @@ public class R4J
         {
             return LoRClientAPI.getInstance();
         }
-    
+        
         /**
          * Gets match api.
          *
@@ -242,6 +242,11 @@ public class R4J
         public VALMatchAPI getMatchAPI()
         {
             return VALMatchAPI.getInstance();
+        }
+        
+        public VALRankedAPI getRankedAPI()
+        {
+            return VALRankedAPI.getInstance();
         }
     }
     
