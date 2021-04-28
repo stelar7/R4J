@@ -307,6 +307,15 @@ public enum GameQueueType implements CodedEnum
      * Teamfight Tactics (Test)
      */
     TEAMFIGHT_TACTICS_1V0(new Integer[]{1111}),
+    /**
+     * Teamfight Tactics (Hyper roll)
+     */
+    TEAMFIGHT_TACTICS_HYPER_ROLL(new Integer[]{1130}),
+    /**
+     * Teamfight Tactics (Hyper roll) (1v0)
+     */
+    TEAMFIGHT_TACTICS_HYPER_ROLL_1V0(new Integer[]{1131}),
+    
     ;
     
     private final Integer[] codes;
@@ -495,6 +504,8 @@ public enum GameQueueType implements CodedEnum
                 return "Teamfight Tactics Ranked";
             case TEAMFIGHT_TACTICS_TUTORIAL:
                 return "Teamfight Tactics Tutorial";
+            case TEAMFIGHT_TACTICS_HYPER_ROLL:
+                return "Teamfight Tactics Hyper Roll";
             default:
                 return "This enum does not have a pretty name";
         }
@@ -625,6 +636,7 @@ public enum GameQueueType implements CodedEnum
             case TEAMFIGHT_TACTICS:
             case TEAMFIGHT_TACTICS_RANKED:
             case TEAMFIGHT_TACTICS_TUTORIAL:
+            case TEAMFIGHT_TACTICS_HYPER_ROLL:
                 return "Teamfight Tactics";
             default:
                 return "This enum does not have a pretty name";
