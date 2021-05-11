@@ -13,10 +13,10 @@ public class ActiveGameClientPlayerStats
     private float  attackSpeed;
     private float  bonusArmorPenetrationPercent;
     private float  bonusMagicPenetrationPercent;
-    private float  cooldownReduction;
     private float  critChance;
     private float  critDamage;
     private float  currentHealth;
+    private float  healShieldPower;
     private float  healthRegenRate;
     private float  lifeSteal;
     private float  magicLethality;
@@ -25,7 +25,9 @@ public class ActiveGameClientPlayerStats
     private float  magicResist;
     private float  maxHealth;
     private float  moveSpeed;
+    private float  omnivamp;
     private float  physicalLethality;
+    private float  physicalVamp;
     private float  resourceMax;
     private float  resourceRegenRate;
     private String resourceType;
@@ -78,11 +80,6 @@ public class ActiveGameClientPlayerStats
         return bonusMagicPenetrationPercent;
     }
     
-    public float getCooldownReduction()
-    {
-        return cooldownReduction;
-    }
-    
     public float getCritChance()
     {
         return critChance;
@@ -96,6 +93,11 @@ public class ActiveGameClientPlayerStats
     public float getCurrentHealth()
     {
         return currentHealth;
+    }
+    
+    public float getHealShieldPower()
+    {
+        return healShieldPower;
     }
     
     public float getHealthRegenRate()
@@ -138,9 +140,19 @@ public class ActiveGameClientPlayerStats
         return moveSpeed;
     }
     
+    public float getOmnivamp()
+    {
+        return omnivamp;
+    }
+    
     public float getPhysicalLethality()
     {
         return physicalLethality;
+    }
+    
+    public float getPhysicalVamp()
+    {
+        return physicalVamp;
     }
     
     public float getResourceMax()
@@ -185,40 +197,13 @@ public class ActiveGameClientPlayerStats
             return false;
         }
         ActiveGameClientPlayerStats that = (ActiveGameClientPlayerStats) o;
-        return Float.compare(that.abilityPower, abilityPower) == 0 &&
-               Float.compare(that.armor, armor) == 0 &&
-               Float.compare(that.armorPenetrationFlat, armorPenetrationFlat) == 0 &&
-               Float.compare(that.armorPenetrationPercent, armorPenetrationPercent) == 0 &&
-               Float.compare(that.attackDamage, attackDamage) == 0 &&
-               Float.compare(that.attackRange, attackRange) == 0 &&
-               Float.compare(that.attackSpeed, attackSpeed) == 0 &&
-               Float.compare(that.bonusArmorPenetrationPercent, bonusArmorPenetrationPercent) == 0 &&
-               Float.compare(that.bonusMagicPenetrationPercent, bonusMagicPenetrationPercent) == 0 &&
-               Float.compare(that.cooldownReduction, cooldownReduction) == 0 &&
-               Float.compare(that.critChance, critChance) == 0 &&
-               Float.compare(that.critDamage, critDamage) == 0 &&
-               Float.compare(that.currentHealth, currentHealth) == 0 &&
-               Float.compare(that.healthRegenRate, healthRegenRate) == 0 &&
-               Float.compare(that.lifeSteal, lifeSteal) == 0 &&
-               Float.compare(that.magicLethality, magicLethality) == 0 &&
-               Float.compare(that.magicPenetrationFlat, magicPenetrationFlat) == 0 &&
-               Float.compare(that.magicPenetrationPercent, magicPenetrationPercent) == 0 &&
-               Float.compare(that.magicResist, magicResist) == 0 &&
-               Float.compare(that.maxHealth, maxHealth) == 0 &&
-               Float.compare(that.moveSpeed, moveSpeed) == 0 &&
-               Float.compare(that.physicalLethality, physicalLethality) == 0 &&
-               Float.compare(that.resourceMax, resourceMax) == 0 &&
-               Float.compare(that.resourceRegenRate, resourceRegenRate) == 0 &&
-               Float.compare(that.resourceValue, resourceValue) == 0 &&
-               Float.compare(that.spellVamp, spellVamp) == 0 &&
-               Float.compare(that.tenacity, tenacity) == 0 &&
-               Objects.equals(resourceType, that.resourceType);
+        return Float.compare(that.abilityPower, abilityPower) == 0 && Float.compare(that.armor, armor) == 0 && Float.compare(that.armorPenetrationFlat, armorPenetrationFlat) == 0 && Float.compare(that.armorPenetrationPercent, armorPenetrationPercent) == 0 && Float.compare(that.attackDamage, attackDamage) == 0 && Float.compare(that.attackRange, attackRange) == 0 && Float.compare(that.attackSpeed, attackSpeed) == 0 && Float.compare(that.bonusArmorPenetrationPercent, bonusArmorPenetrationPercent) == 0 && Float.compare(that.bonusMagicPenetrationPercent, bonusMagicPenetrationPercent) == 0 && Float.compare(that.critChance, critChance) == 0 && Float.compare(that.critDamage, critDamage) == 0 && Float.compare(that.currentHealth, currentHealth) == 0 && Float.compare(that.healShieldPower, healShieldPower) == 0 && Float.compare(that.healthRegenRate, healthRegenRate) == 0 && Float.compare(that.lifeSteal, lifeSteal) == 0 && Float.compare(that.magicLethality, magicLethality) == 0 && Float.compare(that.magicPenetrationFlat, magicPenetrationFlat) == 0 && Float.compare(that.magicPenetrationPercent, magicPenetrationPercent) == 0 && Float.compare(that.magicResist, magicResist) == 0 && Float.compare(that.maxHealth, maxHealth) == 0 && Float.compare(that.moveSpeed, moveSpeed) == 0 && Float.compare(that.omnivamp, omnivamp) == 0 && Float.compare(that.physicalLethality, physicalLethality) == 0 && Float.compare(that.physicalVamp, physicalVamp) == 0 && Float.compare(that.resourceMax, resourceMax) == 0 && Float.compare(that.resourceRegenRate, resourceRegenRate) == 0 && Float.compare(that.resourceValue, resourceValue) == 0 && Float.compare(that.spellVamp, spellVamp) == 0 && Float.compare(that.tenacity, tenacity) == 0 && Objects.equals(resourceType, that.resourceType);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(abilityPower, armor, armorPenetrationFlat, armorPenetrationPercent, attackDamage, attackRange, attackSpeed, bonusArmorPenetrationPercent, bonusMagicPenetrationPercent, cooldownReduction, critChance, critDamage, currentHealth, healthRegenRate, lifeSteal, magicLethality, magicPenetrationFlat, magicPenetrationPercent, magicResist, maxHealth, moveSpeed, physicalLethality, resourceMax, resourceRegenRate, resourceType, resourceValue, spellVamp, tenacity);
+        return Objects.hash(abilityPower, armor, armorPenetrationFlat, armorPenetrationPercent, attackDamage, attackRange, attackSpeed, bonusArmorPenetrationPercent, bonusMagicPenetrationPercent, critChance, critDamage, currentHealth, healShieldPower, healthRegenRate, lifeSteal, magicLethality, magicPenetrationFlat, magicPenetrationPercent, magicResist, maxHealth, moveSpeed, omnivamp, physicalLethality, physicalVamp, resourceMax, resourceRegenRate, resourceType, resourceValue, spellVamp, tenacity);
     }
     
     @Override
@@ -234,10 +219,10 @@ public class ActiveGameClientPlayerStats
                ", attackSpeed=" + attackSpeed +
                ", bonusArmorPenetrationPercent=" + bonusArmorPenetrationPercent +
                ", bonusMagicPenetrationPercent=" + bonusMagicPenetrationPercent +
-               ", cooldownReduction=" + cooldownReduction +
                ", critChance=" + critChance +
                ", critDamage=" + critDamage +
                ", currentHealth=" + currentHealth +
+               ", healShieldPower=" + healShieldPower +
                ", healthRegenRate=" + healthRegenRate +
                ", lifeSteal=" + lifeSteal +
                ", magicLethality=" + magicLethality +
@@ -246,7 +231,9 @@ public class ActiveGameClientPlayerStats
                ", magicResist=" + magicResist +
                ", maxHealth=" + maxHealth +
                ", moveSpeed=" + moveSpeed +
+               ", omnivamp=" + omnivamp +
                ", physicalLethality=" + physicalLethality +
+               ", physicalVamp=" + physicalVamp +
                ", resourceMax=" + resourceMax +
                ", resourceRegenRate=" + resourceRegenRate +
                ", resourceType='" + resourceType + '\'' +
