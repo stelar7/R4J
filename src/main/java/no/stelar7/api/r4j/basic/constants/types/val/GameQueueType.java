@@ -13,6 +13,7 @@ public enum GameQueueType implements CodedEnum<GameQueueType>
     SPIKE_RUSH("spikerush"),
     UNRATED("unrated"),
     CUSTOM_GAME(""),
+    TOURNAMENT_MODE("tournamentmode"),
     ;
     
     
