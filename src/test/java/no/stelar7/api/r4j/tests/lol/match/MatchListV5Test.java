@@ -21,7 +21,7 @@ import java.util.*;
 
 public class MatchListV5Test
 {
-    final R4J r4J = new R4J(new APICredentials("RGAPI-824ffe5b-91d4-4fba-a088-8c883fbba67c"));
+    final R4J r4J = new R4J(new APICredentials("RGAPI-0c3c815b-5d57-4af9-83f2-50d8f0093217"));
     
     
     @Test
@@ -121,6 +121,24 @@ public class MatchListV5Test
                 });
             });
         }
+    }
+    
+    @Test
+    @Disabled
+    public void testMatchListParams()
+    {
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        
+        Summoner sum = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        
+        MatchListBuilder builder = new MatchListBuilder();
+        builder = builder.withPuuid(sum.getPUUID()).withPlatform(LeagueShard.EUW1);
+        
+        List<String> strings1 = builder.get();
+        List<String> strings  = builder.withQueue(GameQueueType.TEAM_BUILDER_RANKED_SOLO).get();
+        List<String> strings2 = builder.withType(MatchlistMatchType.RANKED).get();
+        
+        System.out.println();
     }
 }
 

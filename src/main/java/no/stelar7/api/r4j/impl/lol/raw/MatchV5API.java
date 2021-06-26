@@ -1,6 +1,7 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.LazyList;
 import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.*;
 import no.stelar7.api.r4j.pojo.lol.match.v5.*;
@@ -21,9 +22,9 @@ public final class MatchV5API
         // Hide public constructor
     }
     
-    public List<String> getMatchList(RegionShard server, String puuid, Integer beginIndex, Integer endIndex)
+    public List<String> getMatchList(RegionShard server, String puuid, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer endIndex)
     {
-        return new MatchListBuilder(server, puuid, beginIndex, endIndex).get();
+        return new MatchListBuilder(server, puuid, queue, type, beginIndex, endIndex).get();
     }
     
     /**
@@ -38,7 +39,7 @@ public final class MatchV5API
     public LazyList<String> getMatchList(RegionShard server, String puuid)
     {
         int increment = 100;
-        return new LazyList<>(increment, prevValue -> getMatchList(server, puuid, prevValue, prevValue + increment));
+        return new LazyList<>(increment, prevValue -> getMatchList(server, puuid, null, null, prevValue, prevValue + increment));
     }
     
     /**

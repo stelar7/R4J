@@ -25,6 +25,7 @@ public class LOLMatch implements Serializable
     private LeagueShard            platformId;
     private GameQueueType          queueId;
     private List<MatchTeam>        teams;
+    private String                 tournamentCode;
     
     public ZonedDateTime getMatchCreationAsDate()
     {
@@ -101,6 +102,11 @@ public class LOLMatch implements Serializable
         return teams;
     }
     
+    public String getTournamentCode()
+    {
+        return tournamentCode;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -113,13 +119,13 @@ public class LOLMatch implements Serializable
             return false;
         }
         LOLMatch lolMatch = (LOLMatch) o;
-        return gameCreation == lolMatch.gameCreation && gameDuration == lolMatch.gameDuration && gameId == lolMatch.gameId && gameStartTimestamp == lolMatch.gameStartTimestamp && gameMode == lolMatch.gameMode && Objects.equals(gameName, lolMatch.gameName) && gameType == lolMatch.gameType && Objects.equals(gameVersion, lolMatch.gameVersion) && mapId == lolMatch.mapId && Objects.equals(participants, lolMatch.participants) && platformId == lolMatch.platformId && queueId == lolMatch.queueId && Objects.equals(teams, lolMatch.teams);
+        return gameCreation == lolMatch.gameCreation && gameDuration == lolMatch.gameDuration && gameId == lolMatch.gameId && gameStartTimestamp == lolMatch.gameStartTimestamp && gameMode == lolMatch.gameMode && Objects.equals(gameName, lolMatch.gameName) && gameType == lolMatch.gameType && Objects.equals(gameVersion, lolMatch.gameVersion) && mapId == lolMatch.mapId && Objects.equals(participants, lolMatch.participants) && platformId == lolMatch.platformId && queueId == lolMatch.queueId && Objects.equals(teams, lolMatch.teams) && Objects.equals(tournamentCode, lolMatch.tournamentCode);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(gameCreation, gameDuration, gameId, gameMode, gameName, gameStartTimestamp, gameType, gameVersion, mapId, participants, platformId, queueId, teams);
+        return Objects.hash(gameCreation, gameDuration, gameId, gameMode, gameName, gameStartTimestamp, gameType, gameVersion, mapId, participants, platformId, queueId, teams, tournamentCode);
     }
     
     @Override
@@ -139,6 +145,7 @@ public class LOLMatch implements Serializable
                ", platformId=" + platformId +
                ", queueId=" + queueId +
                ", teams=" + teams +
+               ", tournamentCode='" + tournamentCode + '\'' +
                '}';
     }
 }
