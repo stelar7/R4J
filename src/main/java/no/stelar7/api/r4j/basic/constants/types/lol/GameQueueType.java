@@ -315,6 +315,15 @@ public enum GameQueueType implements CodedEnum
      * Teamfight Tactics (Hyper roll) (1v0)
      */
     TEAMFIGHT_TACTICS_HYPER_ROLL_1V0(new Integer[]{1131}),
+    /**
+     * Ultimate Spellbook
+     */
+    ULTBOOK(new Integer[]{1400}),
+    
+    ONE_VS_ONE(new Integer[]{1401}),
+    TWO_VS_TWO(new Integer[]{1402}),
+    THREE_VS_THREE(new Integer[]{1403}),
+    FOUR_VS_FOUR(new Integer[]{1404}),
     
     ;
     

@@ -77,7 +77,7 @@ public class MatchListTest
     @Test
     public void testMatchlistIterator()
     {
-        Summoner      s     = Summoner.byName(LeagueShard.EUW1, "pupix");
+        Summoner      s     = Summoner.byName(LeagueShard.EUW1, "iets ronds ofzo");
         MatchIterator games = s.getLeagueGames().getMatchIterator();
         for (Match m : games)
         {

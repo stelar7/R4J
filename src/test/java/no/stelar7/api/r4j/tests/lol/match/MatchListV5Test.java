@@ -21,7 +21,7 @@ import java.util.*;
 
 public class MatchListV5Test
 {
-    final R4J r4J = new R4J(new APICredentials("RGAPI-0c3c815b-5d57-4af9-83f2-50d8f0093217"));
+    final R4J r4J = new R4J(new APICredentials("RGAPI-1f73d326-289a-480d-b5a4-52e9af4734b7"));
     
     
     @Test
@@ -95,7 +95,7 @@ public class MatchListV5Test
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "iets ronds ofzo");
         
         LazyList<String> all = sum.getLeagueGamesV5().getLazy();
         

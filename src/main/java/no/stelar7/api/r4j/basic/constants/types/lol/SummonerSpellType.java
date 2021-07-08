@@ -110,7 +110,9 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * Dash through spacetime, becoming briefly untargetable and invulnerable as you rapidly move towards a location.
      */
-    WARP(52, "SummonerTemp1");
+    WARP(52, "SummonerTemp1"),
+    
+    ULTBOOK_1(54, "Placeholder"),;
     
     
     private final Integer id;
