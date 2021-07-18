@@ -17,6 +17,10 @@ public enum Season implements CodedEnum<Season>
     EPISODE_2_ACT_1("97b6e739-44cc-ffa7-49ad-398ba502ceb0"),
     EPISODE_2_ACT_2("ab57ef51-4e59-da91-cc8d-51a5a2b9b8ff"),
     EPISODE_2_ACT_3("52e9749a-429b-7060-99fe-4595426a0cf7"),
+    EPISODE_3("97b39124-46ce-8b55-8fd1-7cbf7ffe173f"),
+    EPISODE_3_ACT_1("2a27e5d2-4d30-c9e2-b15a-93b8909a442c"),
+    EPISODE_3_ACT_2("4cb622e1-4244-6da3-7276-8daaf1c01be2"),
+    EPISODE_3_ACT_3("a16955a5-4ad0-f761-5e9e-389df1c892fb"),
     ;
     
     
