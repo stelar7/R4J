@@ -251,6 +251,11 @@ public class DataCallBuilder
     {
         JsonObject elem    = (JsonObject) JsonParser.parseString(returnValue);
         JsonArray  entries = elem.getAsJsonArray("entries");
+        if (entries == null)
+        {
+            entries = new JsonArray();
+        }
+        
         entries.forEach(e -> {
             JsonObject ob = (JsonObject) e;
             ob.add("leagueId", elem.get("leagueId"));
@@ -622,7 +627,7 @@ public class DataCallBuilder
             if (deprecationHeader != null)
             {
                 LocalDateTime timeout = LocalDateTime.ofEpochSecond(Long.parseLong(deprecationHeader) / 1000, 0, ZoneOffset.ofHours(-7));
-                logger.info("You are using a deprecated method, this method will stop working at: {}", timeout.toString());
+                logger.info("You are using a deprecated method, this method will stop working at: {}", timeout);
             }
             
             if (con.getResponseCode() == 429)

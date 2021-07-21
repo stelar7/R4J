@@ -68,13 +68,4 @@ public class LeagueTest
         data.loadFully();
         System.out.println(data.size());
     }
-    
-    @Test
-    @Disabled
-    public void testPositionalRanksTFT()
-    {
-        LazyList<LeagueEntry> data = r4J.getLoLAPI().getLeagueAPI().getLeagueByTierDivisionLazy(LeagueShard.EUW1, GameQueueType.TEAMFIGHT_TACTICS_RANKED, TierDivisionType.GOLD_I);
-        data.loadFully();
-        System.out.println(data.size());
-    }
 }
