@@ -21,7 +21,7 @@ import java.util.*;
 
 public class MatchListV5Test
 {
-    final R4J r4J = new R4J(new APICredentials("RGAPI-1f73d326-289a-480d-b5a4-52e9af4734b7"));
+    final R4J r4J = new R4J(new APICredentials("RGAPI-95f78ad1-d449-481f-af01-4d5e8021ae87"));
     
     
     @Test
@@ -129,12 +129,12 @@ public class MatchListV5Test
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Summoner sum = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        Summoner sum = Summoner.byName(LeagueShard.EUW1, "rufen03");
         
         MatchListBuilder builder = new MatchListBuilder();
         builder = builder.withPuuid(sum.getPUUID()).withPlatform(LeagueShard.EUW1);
         
-        List<String> strings1 = builder.get();
+        List<String> strings1 = builder.withCount(100).get();
         List<String> strings  = builder.withQueue(GameQueueType.TEAM_BUILDER_RANKED_SOLO).get();
         List<String> strings2 = builder.withType(MatchlistMatchType.RANKED).get();
         
