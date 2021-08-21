@@ -133,6 +133,18 @@ public class TestLorDeck
     }
     
     @Test
+    public void testBandleCity()
+    {
+        LoRDeck deck = new LoRDeck();
+        deck.addCard(LoRCard.create("01BC002"), 4);
+        
+        String  code    = LoRDeckCode.encode(deck);
+        LoRDeck decoded = LoRDeckCode.decode(code);
+        
+        Assertions.assertTrue(checkSameDeck(deck, decoded), "Did not produce same deck when re-coded");
+    }
+    
+    @Test
     public void testMoreThan3Large()
     {
         LoRDeck deck = new LoRDeck();

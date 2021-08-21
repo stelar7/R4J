@@ -6,21 +6,25 @@ import java.util.*;
 
 public enum LoRFaction implements CodedEnum<LoRFaction>
 {
-    DEMACIA("DE", 0),
-    FRELJORD("FR", 1),
-    IONIA("IO", 2),
-    NOXUS("NX", 3),
-    PILTOVER_AND_ZAUN("PZ", 4),
-    SHADOW_ILES("SI", 5),
-    BILGEWATER("BW", 6),
-    SHURIMA("SH", 7),
-    MOUNT_TARGON("MT", 9);
+    DEMACIA(1, "DE", 0),
+    FRELJORD(1, "FR", 1),
+    IONIA(1, "IO", 2),
+    NOXUS(1, "NX", 3),
+    PILTOVER_AND_ZAUN(1, "PZ", 4),
+    SHADOW_ILES(1, "SI", 5),
+    BILGEWATER(2, "BW", 6),
+    MOUNT_TARGON(2, "MT", 9),
+    SHURIMA(3, "SH", 7),
+    BANDLE_CITY(4, "BC", 10),
+    ;
     
+    private final int    version;
     private final String shortCode;
     private final int    id;
     
-    LoRFaction(String shortCode, int id)
+    LoRFaction(int version, String shortCode, int id)
     {
+        this.version = version;
         this.shortCode = shortCode;
         this.id = id;
     }
@@ -33,6 +37,11 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
     public int getId()
     {
         return id;
+    }
+    
+    public int getVersion()
+    {
+        return version;
     }
     
     public static LoRFaction fromID(int id)
@@ -72,6 +81,10 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
                 return "Bilgewater";
             case MOUNT_TARGON:
                 return "Mount Targon";
+            case SHURIMA:
+                return "Shurima";
+            case BANDLE_CITY:
+                return "Bandle City";
             default:
                 throw new RuntimeException("Unknown region; please alert the API maintainer!");
         }
@@ -98,6 +111,10 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
                 return "Bilgewater";
             case MOUNT_TARGON:
                 return "Mount Targon";
+            case SHURIMA:
+                return "Shurima";
+            case BANDLE_CITY:
+                return "Bandle City";
             default:
                 throw new RuntimeException("Unknown region; please alert the API maintainer!");
         }
