@@ -9,11 +9,13 @@ public enum RatedTier {
 
   private String apiName;
 
-  private RatedTier(String apiName) {
+  private RatedTier(String apiName) 
+  {
     this.apiName = apiName;
   }
 
-  public static RatedTier getRatedTierWithApiName(String ratedTier) {
+  public static RatedTier getRatedTierWithApiName(String ratedTier) 
+  {
     for(RatedTier tierToCheck : RatedTier.values()) {
       if(ratedTier.equals(tierToCheck.getApiName()))
         return tierToCheck;
@@ -21,7 +23,8 @@ public enum RatedTier {
     return null;
   }
 
-  public String getApiName() {
+  public String getApiName() 
+  {
     return apiName;
   }
 }
