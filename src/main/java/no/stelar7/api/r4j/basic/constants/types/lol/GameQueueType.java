@@ -310,15 +310,11 @@ public enum GameQueueType implements CodedEnum
     /**
      * Teamfight Tactics (Hyper roll)
      */
-    TEAMFIGHT_TACTICS_HYPER_ROLL(new Integer[]{1130}),
+    TEAMFIGHT_TACTICS_HYPER_ROLL(new Integer[]{1130}, "RANKED_TFT_TURBO"),
     /**
      * Teamfight Tactics (Hyper roll) (1v0)
      */
     TEAMFIGHT_TACTICS_HYPER_ROLL_1V0(new Integer[]{1131}),
-    /**
-     * Teamfight Tactics (Hyper roll Set 5)
-     */
-    TEAMFIGHT_TACTICS_TURBO(new Integer[]{1100}, "RANKED_TFT_TURBO"),
     /**
      * Ultimate Spellbook
      */
