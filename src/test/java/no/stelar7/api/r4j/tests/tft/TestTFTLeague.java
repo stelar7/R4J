@@ -34,7 +34,7 @@ public class TestTFTLeague
     @Test
     public void testEntries()
     {
-        List<LeagueEntry> entries = l4j8.getTFTAPI().getLeagueAPI().getLeagueEntries(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
+        List<LeagueEntry> entries = l4j8.getTFTAPI().getLeagueAPI().getLeagueEntries(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "Rogu chan").getSummonerId());
         System.out.println();
     }
     

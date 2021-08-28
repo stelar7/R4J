@@ -12,6 +12,8 @@ public class LeagueEntry extends LeagueItem implements Serializable
     private GameQueueType queueType;
     private String        tier;
     private String        leagueId;
+    private String        ratedTier;
+    private Integer       ratedRating;
     
     public GameQueueType getQueueType()
     {
@@ -31,6 +33,16 @@ public class LeagueEntry extends LeagueItem implements Serializable
     public String getLeagueId()
     {
         return leagueId;
+    }
+    
+    public RatedTier getRatedTier()
+    {
+      return RatedTier.getRatedTierWithApiName(ratedTier);
+    }
+    
+    public int getRatedRating() 
+    {
+      return ratedRating;
     }
     
     @Override
@@ -78,6 +90,8 @@ public class LeagueEntry extends LeagueItem implements Serializable
                ", inactive=" + inactive +
                ", freshBlood=" + freshBlood +
                ", leaguePoints=" + leaguePoints +
+               ", ratedTier=" + ratedTier +
+               ", ratedRating=" + ratedRating +
                '}';
     }
 }
