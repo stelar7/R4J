@@ -28,6 +28,7 @@ import no.stelar7.api.r4j.pojo.lor.offline.expedition.LoRExpeditionInfo;
 import no.stelar7.api.r4j.pojo.lor.offline.game.*;
 import no.stelar7.api.r4j.pojo.lor.ranked.LoRRankedPlayerList;
 import no.stelar7.api.r4j.pojo.shared.*;
+import no.stelar7.api.r4j.pojo.tft.league.*;
 import no.stelar7.api.r4j.pojo.val.content.Content;
 import no.stelar7.api.r4j.pojo.val.matchlist.RecentMatchList;
 import no.stelar7.api.r4j.pojo.val.ranked.Leaderboard;
@@ -189,12 +190,12 @@ public enum URLEndpoint
     V1_TFT_MATCH("tft", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
     
     
-    V1_TFT_LEAGUE("tft", "league", "v1", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
-    V1_TFT_LEAGUE_ENTRY("tft", "league", "v1", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, LeagueEntryList.class),
-    V1_TFT_LEAGUE_RANK("tft", "league", "v1", "entries/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, LeagueEntryList.class),
-    V1_TFT_LEAGUE_MASTER("tft", "league", "v1", "master", LeagueList.class),
-    V1_TFT_LEAGUE_GRANDMASTER("tft", "league", "v1", "grandmaster", LeagueList.class),
-    V1_TFT_LEAGUE_CHALLENGER("tft", "league", "v1", "challenger", LeagueList.class),
+    V1_TFT_LEAGUE("tft", "league", "v1", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, TFTLeagueList.class),
+    V1_TFT_LEAGUE_ENTRY("tft", "league", "v1", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, TFTLeagueEntryList.class),
+    V1_TFT_LEAGUE_RANK("tft", "league", "v1", "entries/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, TFTLeagueEntryList.class),
+    V1_TFT_LEAGUE_MASTER("tft", "league", "v1", "master", TFTLeagueList.class),
+    V1_TFT_LEAGUE_GRANDMASTER("tft", "league", "v1", "grandmaster", TFTLeagueList.class),
+    V1_TFT_LEAGUE_CHALLENGER("tft", "league", "v1", "challenger", TFTLeagueList.class),
     
     
     V1_LOR_RANKED_LEADERBOARD("lor", "ranked", "v1", "leaderboards", LoRRankedPlayerList.class),

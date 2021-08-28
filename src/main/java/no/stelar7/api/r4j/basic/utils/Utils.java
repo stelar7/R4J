@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.basic.utils;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
+import no.stelar7.api.r4j.basic.constants.types.tft.TFTTier;
 import no.stelar7.api.r4j.basic.ratelimiting.RateLimit;
 import no.stelar7.api.r4j.basic.serializer.GenericEnumSerializer;
 import no.stelar7.api.r4j.basic.constants.types.*;
@@ -64,6 +65,9 @@ public final class Utils
         builder.registerTypeAdapter(TimelineDamageType.class, new GenericEnumSerializer<TimelineDamageType>());
         builder.registerTypeAdapter(TransformType.class, new GenericEnumSerializer<TransformType>());
         
+        // tft
+        builder.registerTypeAdapter(TFTTier.class, new GenericEnumSerializer<TFTTier>());
+        
         // valorant
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.GameQueueType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.GameQueueType>());
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.PlantSiteType.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.PlantSiteType>());
@@ -117,7 +121,6 @@ public final class Utils
         return gson;
     }
     
-    @SuppressWarnings("CharsetObjectCanBeUsed")
     public static String normalizeString(final String data)
     {
         try

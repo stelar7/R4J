@@ -1,19 +1,19 @@
-package no.stelar7.api.r4j.pojo.lol.league;
+package no.stelar7.api.r4j.pojo.tft.league;
 
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class LeagueList implements Serializable
+public class TFTLeagueList implements Serializable
 {
-    private static final long serialVersionUID = 3455950839589456310L;
+    private static final long serialVersionUID = 3779955487138585327L;
     
-    private List<LeagueEntry> entries;
-    private String            name;
-    private GameQueueType     queue;
-    private TierType          tier;
-    private String            leagueId;
+    private List<TFTLeagueEntry> entries;
+    private String               name;
+    private GameQueueType        queue;
+    private TierType             tier;
+    private String               leagueId;
     
     
     /**
@@ -25,19 +25,19 @@ public class LeagueList implements Serializable
      */
     public TierDivisionType getTierDivisionType(String id)
     {
-        LeagueEntry pos = getLeagueEntry(id);
+        TFTLeagueEntry pos = getLeagueEntry(id);
         
         return pos == null ? TierDivisionType.UNRANKED : pos.getTierDivisionType(tier);
     }
     
     /**
-     * Takes in a summonerId, and returns the LeagueEntry found in the list.
+     * Takes in a summonerId, and returns the LeagueItem found in the list.
      * Returns null if not found
      *
      * @param id the Tier to use for construction
      * @return LeagueEntry
      */
-    public LeagueEntry getLeagueEntry(String id)
+    public TFTLeagueEntry getLeagueEntry(String id)
     {
         return entries.stream().filter(s -> s.getSummonerId().equals(id)).findFirst().orElse(null);
     }
@@ -54,7 +54,7 @@ public class LeagueList implements Serializable
             return false;
         }
         
-        LeagueList that = (LeagueList) o;
+        TFTLeagueList that = (TFTLeagueList) o;
         
         if (!Objects.equals(entries, that.entries))
         {
@@ -91,7 +91,7 @@ public class LeagueList implements Serializable
      *
      * @return the entries
      */
-    public List<LeagueEntry> getEntries()
+    public List<TFTLeagueEntry> getEntries()
     {
         return this.entries;
     }
