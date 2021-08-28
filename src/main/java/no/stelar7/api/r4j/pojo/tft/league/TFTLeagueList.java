@@ -31,7 +31,7 @@ public class TFTLeagueList implements Serializable
     }
     
     /**
-     * Takes in a summonerId, and returns the LeagueItem found in the list.
+     * Takes in a summonerId, and returns the TFTLeagueEntry found in the list.
      * Returns null if not found
      *
      * @param id the Tier to use for construction
@@ -118,7 +118,7 @@ public class TFTLeagueList implements Serializable
     
     
     /**
-     * The league's queue type. (Legal values: RANKED_SOLO_5x5, RANKED_TEAM_3x3, RANKED_TEAM_5x5)
+     * The league's queue type. (Legal values: TEAMFIGHT_TACTICS_RANKED, TEAMFIGHT_TACTICS_HYPER_ROLL)
      *
      * @return the queue
      */
@@ -128,7 +128,7 @@ public class TFTLeagueList implements Serializable
     }
     
     /**
-     * The league's tier. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE)
+     * The league's tier. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE, ORANGE, PURPLE, BLUE, GREEN, GRAY)
      *
      * @return the tier
      */
@@ -140,11 +140,12 @@ public class TFTLeagueList implements Serializable
     @Override
     public String toString()
     {
-        return "LeagueList{" +
+        return "TFTLeagueList{" +
                "entries=" + entries +
                ", name='" + name + '\'' +
-               ", queue='" + queue + '\'' +
-               ", tier='" + tier + '\'' +
+               ", queue=" + queue +
+               ", tier=" + tier +
+               ", leagueId='" + leagueId + '\'' +
                '}';
     }
 }
