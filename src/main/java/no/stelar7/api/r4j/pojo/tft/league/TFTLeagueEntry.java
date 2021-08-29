@@ -13,18 +13,6 @@ public class TFTLeagueEntry extends LeagueEntry implements Serializable
     private TFTTier ratedTier;
     private int     ratedRating;
     
-    @Override
-    public String getTier()
-    {
-        return ratedTier.name();
-    }
-    
-    @Override
-    public int getLeaguePoints()
-    {
-        return ratedRating;
-    }
-    
     public TFTTier getRatedTier()
     {
         return ratedTier;
