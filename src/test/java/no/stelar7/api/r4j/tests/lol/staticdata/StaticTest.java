@@ -191,8 +191,8 @@ public class StaticTest
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         
-        Item list = api.getItem(3147);
-        Assertions.assertEquals(3147, list.getId());
+        Item list = api.getItem(1001);
+        Assertions.assertEquals(1001, list.getId());
     }
     
     

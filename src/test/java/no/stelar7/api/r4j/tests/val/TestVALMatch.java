@@ -14,7 +14,7 @@ import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.pojo.val.match.*;
 import no.stelar7.api.r4j.pojo.val.matchlist.*;
 import no.stelar7.api.r4j.tests.SecretFile;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -58,8 +58,8 @@ public class TestVALMatch
         RiotAccount account  = api.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "Coup De Graçe", "EUNE");
         
         List<MatchReference> matchlist = matchAPI.getMatchList(ValorantShard.EU, account.getPUUID());
-        Match                match     = matchAPI.getMatch(ValorantShard.EU, matchlist.get(0).getMatchId());
-        Files.write(Paths.get("C:\\Users\\Steffen\\Desktop\\game.json"), Utils.getGson().toJson(match).getBytes(StandardCharsets.UTF_8));
+        VALMatch             match     = matchAPI.getMatch(ValorantShard.EU, matchlist.get(0).getMatchId());
+        Files.write(Paths.get(System.getProperty("user.home") + "\\Desktop\\game.json"), Utils.getGson().toJson(match).getBytes(StandardCharsets.UTF_8));
         System.out.println(match);
     }
     
@@ -80,7 +80,7 @@ public class TestVALMatch
         
         List<MatchReference> matchlist = matchAPI.getMatchList(ValorantShard.EU, account.getPUUID());
         matchlist.forEach(m -> {
-            Match match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
+            VALMatch match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
             
             match.getRoundResults().forEach(r -> {
                 if (match.getPlayers().stream().anyMatch(p -> p.getCharacter() == null))
@@ -100,7 +100,7 @@ public class TestVALMatch
         ids.forEach(puuid -> {
             List<MatchReference> matches = matchAPI.getMatchList(ValorantShard.EU, puuid);
             matches.forEach(m -> {
-                Match match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
+                VALMatch match = matchAPI.getMatch(ValorantShard.EU, m.getMatchId());
                 match.getRoundResults().forEach(r -> {
                     r.getPlayerStats().forEach(s -> {
                         if (s.getAbility().getGrenadeEffects() != null && !s.getAbility().getGrenadeEffects().equals("null"))
@@ -118,11 +118,12 @@ public class TestVALMatch
     {
         R4J         api      = new R4J(SecretFile.CREDS);
         VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
-        Match       match    = matchAPI.getMatch(ValorantShard.AP, "c4eb3e3d-d175-4b73-b7d4-279374d1b19b");
+        VALMatch    match    = matchAPI.getMatch(ValorantShard.AP, "c4eb3e3d-d175-4b73-b7d4-279374d1b19b");
         System.out.println();
     }
     
     @Test
+    @Disabled
     public void generateRecentGamesData() throws IOException
     {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -146,7 +147,7 @@ public class TestVALMatch
             {
                 System.out.println("Working on match " + (++current) + "/" + max);
                 
-                Match       match     = matchAPI.getMatch(ValorantShard.EU, matchId);
+                VALMatch    match     = matchAPI.getMatch(ValorantShard.EU, matchId);
                 JsonElement matchJson = Utils.getGson().toJsonTree(match);
                 matches.put(matchId, matchJson);
                 

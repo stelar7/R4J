@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
 import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
 import no.stelar7.api.r4j.basic.utils.Pair;
-import no.stelar7.api.r4j.pojo.val.match.Match;
+import no.stelar7.api.r4j.pojo.val.match.VALMatch;
 import no.stelar7.api.r4j.pojo.val.matchlist.*;
 
 import java.util.*;
@@ -88,7 +88,7 @@ public class VALMatchAPI
     }
     
     
-    public Match getMatch(ValorantShard platform, String gameId)
+    public VALMatch getMatch(ValorantShard platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
@@ -102,12 +102,12 @@ public class VALMatchAPI
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_VAL_MATCH_BY_ID, data);
         if (chl.isPresent())
         {
-            return (Match) chl.get();
+            return (VALMatch) chl.get();
         }
         
         try
         {
-            Match match = (Match) builder.build();
+            VALMatch match = (VALMatch) builder.build();
             
             data.put("value", match);
             DataCall.getCacheProvider().store(URLEndpoint.V1_VAL_MATCH_BY_ID, data);

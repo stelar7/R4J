@@ -33,7 +33,7 @@ public class MatchListV5Test
         MatchListBuilder builder = new MatchListBuilder();
         Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "stelar7");
         
-        LazyList<String> all = sum.getLeagueGamesV5().getLazy();
+        LazyList<String> all = sum.getLeagueGames().getLazy();
         MatchBuilder     mb  = new MatchBuilder(sum.getPlatform());
         TimelineBuilder  tb  = new TimelineBuilder(sum.getPlatform());
         
@@ -97,7 +97,7 @@ public class MatchListV5Test
         MatchListBuilder builder = new MatchListBuilder();
         Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "iets ronds ofzo");
         
-        LazyList<String> all = sum.getLeagueGamesV5().getLazy();
+        LazyList<String> all = sum.getLeagueGames().getLazy();
         
         MatchBuilder    mb = new MatchBuilder(sum.getPlatform());
         TimelineBuilder tb = new TimelineBuilder(sum.getPlatform());

@@ -7,9 +7,9 @@ import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.Rectangle;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.builders.match.MatchListBuilder;
+import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
-import no.stelar7.api.r4j.pojo.lol.match.v4.*;
+import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.Item;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
@@ -30,14 +30,14 @@ import java.util.stream.IntStream;
 public class FrameToImageTest
 {
     
-    private ArrayList<Pair<Integer, Integer>>     turrets    = new ArrayList<>();
-    private Map<Pair<Integer, Integer>, TeamType> turretTeam = new HashMap<>();
+    private final ArrayList<Pair<Integer, Integer>>     turrets    = new ArrayList<>();
+    private final Map<Pair<Integer, Integer>, TeamType> turretTeam = new HashMap<>();
     
-    private ArrayList<Pair<Integer, Integer>>     inhib            = new ArrayList<>();
-    private Map<Pair<Integer, Integer>, TeamType> inhibTeam        = new HashMap<>();
-    private Map<Pair<Integer, Integer>, Long>     inhibDestroyTime = new HashMap<>();
+    private final ArrayList<Pair<Integer, Integer>>     inhib            = new ArrayList<>();
+    private final Map<Pair<Integer, Integer>, TeamType> inhibTeam        = new HashMap<>();
+    private final Map<Pair<Integer, Integer>, Long>     inhibDestroyTime = new HashMap<>();
     
-    private ArrayList<Pair<Integer, Integer>> killList = new ArrayList<>();
+    private final ArrayList<Pair<Integer, Integer>> killList = new ArrayList<>();
     
     private Map<TeamType, BufferedImage> turretIcon;
     private BufferedImage                swordIcon;
@@ -51,9 +51,9 @@ public class FrameToImageTest
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Summoner                 sum  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("stelar7").get();
-        LazyList<MatchReference> refs = new MatchListBuilder().withPlatform(sum.getPlatform()).withAccountId(sum.getAccountId()).getLazy();
-        Match                    full = refs.get(0).getFullMatch();
+        Summoner         sum  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName("stelar7").get();
+        LazyList<String> refs = new MatchListBuilder().withPlatform(sum.getPlatform()).withPuuid(sum.getAccountId()).getLazy();
+        LOLMatch         full = LOLMatch.get(sum.getPlatform(), refs.get(0));
         
         
         TowerLocationType.getTowersMap(MapType.SUMMONERS_RIFT).forEach((k, v) -> v.forEach((k2, v2) -> v2.forEach((t, p) -> turretTeam.put(p, t))));
@@ -67,7 +67,7 @@ public class FrameToImageTest
     }
     
     
-    private void generateMinimap(Match match)
+    private void generateMinimap(LOLMatch match)
     {
         // Load map data
         try
@@ -165,7 +165,7 @@ public class FrameToImageTest
                 try
                 {
                     // Generate file output data
-                    String path       = match.getPlatform().getValue() + File.separator + match.getMatchId();
+                    String path       = match.getPlatform().getValue() + File.separator + match.getGameId();
                     File   outputFile = new File(path, frame.getTimestamp() + ".png");
                     outputFile.getParentFile().mkdirs();
                     
@@ -192,8 +192,8 @@ public class FrameToImageTest
                     frame.getEvents().forEach(me -> {
                         
                         Predicate<Pair<Item, Integer>> itemIdFilter     = p -> p.getKey().getId() == me.getItemId();
-                        Predicate<Pair<Item, Integer>> itemAfterFilter  = p -> p.getKey().getId() == me.getItemAfter();
-                        Predicate<Pair<Item, Integer>> itemBeforeFilter = p -> p.getKey().getId() == me.getItemBefore();
+                        Predicate<Pair<Item, Integer>> itemAfterFilter  = p -> p.getKey().getId() == me.getAfterId();
+                        Predicate<Pair<Item, Integer>> itemBeforeFilter = p -> p.getKey().getId() == me.getBeforeId();
                         
                         
                         if (!inhibDestroyTime.isEmpty())
@@ -209,7 +209,7 @@ public class FrameToImageTest
                             });
                         }
                         
-                        switch (me.getEventType())
+                        switch (me.getType())
                         {
                             case ITEM_PURCHASED:
                             {
@@ -340,7 +340,7 @@ public class FrameToImageTest
     }
     
     
-    private void handleBuildingEvent(MatchEvent me)
+    private void handleBuildingEvent(TimelineFrameEvent me)
     {
         Pair<Integer, Integer> location = new Pair<>(me.getPosition().getX(), me.getPosition().getY());
         
@@ -369,10 +369,10 @@ public class FrameToImageTest
         return after;
     }
     
-    private void drawPosition(BufferedImage image, Rectangle mapBounds, Graphics2D g, MatchParticipantFrame mpf, Map<Integer, BufferedImage> championImages)
+    private void drawPosition(BufferedImage image, Rectangle mapBounds, Graphics2D g, TimelineParticipantFrame mpf, Map<Integer, BufferedImage> championImages)
     {
-        BufferedImage square = championImages.get(mpf.getParticipantId());
-        MatchPosition pos    = mpf.getPosition();
+        BufferedImage    square = championImages.get(mpf.getParticipantId());
+        TimelinePosition pos    = mpf.getPosition();
         
         if (pos != null)
         {
@@ -388,7 +388,7 @@ public class FrameToImageTest
         }
     }
     
-    private void drawInventory(BufferedImage image, int offset, int padding, Map<Integer, BufferedImage> iImg, Map<Integer, List<Pair<Item, Integer>>> inventory, Graphics2D g, MatchParticipantFrame mpf, Map<Integer, BufferedImage> cImg)
+    private void drawInventory(BufferedImage image, int offset, int padding, Map<Integer, BufferedImage> iImg, Map<Integer, List<Pair<Item, Integer>>> inventory, Graphics2D g, TimelineParticipantFrame mpf, Map<Integer, BufferedImage> cImg)
     {
         BufferedImage square = cImg.get(mpf.getParticipantId());
         
@@ -407,7 +407,7 @@ public class FrameToImageTest
         }
     }
     
-    private void handleKillEvent(BufferedImage image, Rectangle mapBounds, int offset, int padding, Map<Integer, BufferedImage> cImg, Graphics2D g, int[] kills, MatchEvent me, Map<Integer, Triplet<Integer>> kda)
+    private void handleKillEvent(BufferedImage image, Rectangle mapBounds, int offset, int padding, Map<Integer, BufferedImage> cImg, Graphics2D g, int[] kills, TimelineFrameEvent me, Map<Integer, Triplet<Integer>> kda)
     {
         Triplet<Integer> killer = kda.getOrDefault(me.getKillerId(), new Triplet<>(0, 0, 0));
         kda.put(me.getKillerId(), new Triplet<>(killer.a + 1, killer.b, killer.c));
@@ -437,7 +437,7 @@ public class FrameToImageTest
         kills[0]++;
     }
     
-    private void handleUndoEvent(Map<Integer, Item> items, Map<Integer, List<Pair<Item, Integer>>> inventory, MatchEvent me, Predicate<Pair<Item, Integer>> itemBeforeFilter, Predicate<Pair<Item, Integer>> afterItemFilter)
+    private void handleUndoEvent(Map<Integer, Item> items, Map<Integer, List<Pair<Item, Integer>>> inventory, TimelineFrameEvent me, Predicate<Pair<Item, Integer>> itemBeforeFilter, Predicate<Pair<Item, Integer>> afterItemFilter)
     {
         List<Pair<Item, Integer>> inv = inventory.getOrDefault(me.getParticipantId(), new ArrayList<>());
         
@@ -489,7 +489,7 @@ public class FrameToImageTest
                 inv.add(np);
             } else
             {
-                Pair<Item, Integer> np = new Pair<>(items.get(me.getItemAfter()), 1);
+                Pair<Item, Integer> np = new Pair<>(items.get(me.getAfterId()), 1);
                 inv.add(np);
             }
         }
@@ -497,7 +497,7 @@ public class FrameToImageTest
         inventory.put(me.getParticipantId(), inv);
     }
     
-    private void handleSoldEvent(Map<Integer, List<Pair<Item, Integer>>> inventory, MatchEvent me, Predicate<Pair<Item, Integer>> itemIdFilter)
+    private void handleSoldEvent(Map<Integer, List<Pair<Item, Integer>>> inventory, TimelineFrameEvent me, Predicate<Pair<Item, Integer>> itemIdFilter)
     {
         if (me.getItemId() == 1501 || me.getItemId() == 3513)
         {
@@ -530,7 +530,7 @@ public class FrameToImageTest
         inventory.put(me.getParticipantId(), inv);
     }
     
-    private void handlePurchaseEvent(Map<Integer, Item> items, Map<Integer, List<Pair<Item, Integer>>> inventory, MatchEvent me, Predicate<Pair<Item, Integer>> itemIdFilter)
+    private void handlePurchaseEvent(Map<Integer, Item> items, Map<Integer, List<Pair<Item, Integer>>> inventory, TimelineFrameEvent me, Predicate<Pair<Item, Integer>> itemIdFilter)
     {
         
         List<Pair<Item, Integer>> inv = inventory.getOrDefault(me.getParticipantId(), new ArrayList<>());
@@ -559,9 +559,9 @@ public class FrameToImageTest
     
     private static class Triplet<T>
     {
-        private T a;
-        private T b;
-        private T c;
+        private final T a;
+        private final T b;
+        private final T c;
         
         public Triplet(T a, T b, T c)
         {

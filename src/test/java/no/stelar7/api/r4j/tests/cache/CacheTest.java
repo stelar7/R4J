@@ -8,12 +8,12 @@ import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.builders.match.MatchListBuilder;
+import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
-import no.stelar7.api.r4j.pojo.lol.match.v4.*;
+import no.stelar7.api.r4j.pojo.lol.match.v5.LOLMatch;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
-import no.stelar7.api.r4j.pojo.val.matchlist.RecentMatchList;
+import no.stelar7.api.r4j.pojo.val.matchlist.*;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 import org.slf4j.LoggerFactory;
@@ -32,6 +32,7 @@ public class CacheTest
     Supplier<TieredCacheProvider>     tieredCache = () -> new TieredCacheProvider(memCache.get(), fileCache.get(), sqlCache.get());
     
     @Test
+    @Disabled
     public void testMemoryCache() throws InterruptedException
     {
         DataCall.setCacheProvider(new MemoryCacheProvider(5));
@@ -72,6 +73,7 @@ public class CacheTest
     
     
     @Test
+    @Disabled
     public void testFileSystemCache() throws InterruptedException
     {
         DataCall.setCacheProvider(fileCache.get());
@@ -90,6 +92,7 @@ public class CacheTest
     }
     
     @Test
+    @Disabled
     public void testStaticDataCache()
     {
         
@@ -99,6 +102,7 @@ public class CacheTest
     }
     
     @Test
+    @Disabled
     public void testCacheStuff() throws InterruptedException
     {
         Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
@@ -153,25 +157,25 @@ public class CacheTest
         
         System.out.println("Fetching a random summoner and their match list");
         
-        String               id      = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner             s       = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
-        List<MatchReference> recents = new MatchListBuilder().withPlatform(LeagueShard.EUW1).withAccountId(s.getAccountId()).get();
+        String       id      = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner     s       = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        List<String> recents = new MatchListBuilder().withPlatform(LeagueShard.EUW1).withPuuid(s.getPUUID()).get();
         
         if (recents.isEmpty())
         {
             return;
         }
         
-        MatchReference ref = recents.get(0);
+        String ref = recents.get(0);
         
         System.out.println("Starting timer");
         
         long  start = System.currentTimeMillis();
-        Match url   = ref.getFullMatch();
+        LOLMatch url   = LOLMatch.get(LeagueShard.EUW1, ref);
         System.out.printf("1x url fetch time: %dns%n", System.currentTimeMillis() - start);
         
         start = System.currentTimeMillis();
-        Match cached = ref.getFullMatch();
+        LOLMatch cached = LOLMatch.get(LeagueShard.EUW1, ref);
         System.out.printf("1x cache fetch time: %dns%n", System.currentTimeMillis() - start);
         
         if (!url.equals(cached))
@@ -182,53 +186,53 @@ public class CacheTest
         start = System.currentTimeMillis();
         for (int i = 0; i < 10; i++)
         {
-            ref.getFullMatch();
+            LOLMatch.get(LeagueShard.EUW1, ref);
         }
         System.out.printf("10x cache fetch time: %dns%n", System.currentTimeMillis() - start);
         System.out.println();
         
         start = System.currentTimeMillis();
-        ref.getFullMatch();
+        LOLMatch.get(LeagueShard.EUW1, ref);
         System.out.printf("1x cache fetch time: %dns%n", System.currentTimeMillis() - start);
         System.out.println();
         
         System.out.println("clearing cache");
         System.out.println();
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_MATCH, Collections.emptyMap());
+        DataCall.getCacheProvider().clear(URLEndpoint.V5_MATCH, Collections.emptyMap());
         
         start = System.currentTimeMillis();
-        ref.getFullMatch();
+        LOLMatch.get(LeagueShard.EUW1, ref);
         System.out.printf("1x url fetch time: %dns%n", System.currentTimeMillis() - start);
         
         start = System.currentTimeMillis();
         for (int i = 0; i < 10; i++)
         {
-            ref.getFullMatch();
+            LOLMatch.get(LeagueShard.EUW1, ref);
         }
         System.out.printf("10x cache fetch same item time: %dns%n", System.currentTimeMillis() - start);
         System.out.println();
         
         System.out.println("Fetching 3 aditional matches");
-        recents.get(1).getFullMatch();
-        recents.get(2).getFullMatch();
-        recents.get(3).getFullMatch();
-        
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH, Collections.emptyMap()));
+        LOLMatch.get(LeagueShard.EUW1, recents.get(1));
+        LOLMatch.get(LeagueShard.EUW1, recents.get(2));
+        LOLMatch.get(LeagueShard.EUW1, recents.get(3));
+    
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
         
         System.out.println("Waiting for cache timeout");
         TimeUnit.SECONDS.sleep(6);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH, Collections.emptyMap()));
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
         
         System.out.println("Re-fetching cached items");
         start = System.currentTimeMillis();
-        recents.get(0).getFullMatch();
-        recents.get(1).getFullMatch();
-        recents.get(2).getFullMatch();
-        recents.get(3).getFullMatch();
+        LOLMatch.get(LeagueShard.EUW1, recents.get(0));
+        LOLMatch.get(LeagueShard.EUW1, recents.get(1));
+        LOLMatch.get(LeagueShard.EUW1, recents.get(2));
+        LOLMatch.get(LeagueShard.EUW1, recents.get(3));
         System.out.printf("4x fetches took: %dns%n", System.currentTimeMillis() - start);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V4_MATCH, Collections.emptyMap()));
+        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
         System.out.println();
     }
     

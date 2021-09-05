@@ -164,7 +164,7 @@ public class RoundResult implements Serializable
     {
         Map<Class<?>, String> returnMap = new HashMap<>();
         
-        returnMap.put(Match.class, "id");
+        returnMap.put(VALMatch.class, "id");
         
         return returnMap;
     }

@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.lol.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.league.LeagueBuilder;
-import no.stelar7.api.r4j.impl.lol.builders.match.MatchListBuilder;
+import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.thirdparty.ThirdPartyCodeBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.SummonerAPI;
@@ -46,6 +46,12 @@ public final class Summoner implements Serializable
     {
         return SummonerAPI.getInstance().getSummonerByAccount(platform, id);
     }
+    
+    public static Summoner byPUUID(LeagueShard platform, String puuid)
+    {
+        return SummonerAPI.getInstance().getSummonerByPUUID(platform, puuid);
+    }
+    
     
     /**
      * The Summoners ID
@@ -144,17 +150,7 @@ public final class Summoner implements Serializable
      */
     public MatchListBuilder getLeagueGames()
     {
-        return new MatchListBuilder().withPlatform(platform).withAccountId(accountId);
-    }
-    
-    /**
-     * This method has the same function as the main one but with the puuid and platform already set
-     *
-     * @return MatchListBuilder
-     */
-    public no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder getLeagueGamesV5()
-    {
-        return new no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder().withPlatform(platform).withPuuid(puuid);
+        return new MatchListBuilder().withPlatform(platform).withPuuid(puuid);
     }
     
     /**

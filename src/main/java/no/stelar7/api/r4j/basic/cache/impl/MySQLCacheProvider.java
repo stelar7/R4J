@@ -64,8 +64,8 @@ public class MySQLCacheProvider implements CacheProvider
     {
         sql.getConnection().setCatalog(DataCall.getCredentials().getVALAPIKey());
         
-        createTableForClass(Match.class);
-        createTableForClass(MatchInfo.class);
+        createTableForClass(VALMatch.class);
+        createTableForClass(VALMatchInfo.class);
         createTableForClass(Player.class);
         createTableForClass(PlayerTotalStats.class);
         createTableForClass(RoundResult.class);

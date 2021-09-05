@@ -95,7 +95,7 @@ public class PlayerTotalStats implements Serializable
     {
         Map<Class<?>, String> returnMap = new HashMap<>();
         
-        returnMap.put(Match.class, "id");
+        returnMap.put(VALMatch.class, "id");
         returnMap.put(Player.class, "puuid");
         
         return returnMap;

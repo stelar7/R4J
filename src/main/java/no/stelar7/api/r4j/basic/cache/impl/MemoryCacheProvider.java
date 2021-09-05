@@ -3,7 +3,6 @@ package no.stelar7.api.r4j.basic.cache.impl;
 import no.stelar7.api.r4j.basic.cache.*;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.utils.Pair;
-import no.stelar7.api.r4j.pojo.lol.match.v4.Match;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import org.slf4j.*;
@@ -18,14 +17,13 @@ public class MemoryCacheProvider implements CacheProvider
 {
     private static final Logger logger = LoggerFactory.getLogger(MemoryCacheProvider.class);
     
-    private Map<Summoner, LocalDateTime>            summoners = new HashMap<>();
-    private Map<Match, LocalDateTime>               matches   = new HashMap<>();
-    private Pair<StaticChampionList, LocalDateTime> champions;
+    private final Map<Summoner, LocalDateTime>            summoners = new HashMap<>();
+    private       Pair<StaticChampionList, LocalDateTime> champions;
     
-    private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
-    private ScheduledFuture<?>       clearTask;
-    private long                     timeToLive;
-    private CacheLifetimeHint        hints        = CacheLifetimeHint.DEFAULTS;
+    private final ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
+    private       ScheduledFuture<?>       clearTask;
+    private       long                     timeToLive;
+    private       CacheLifetimeHint        hints        = CacheLifetimeHint.DEFAULTS;
     
     /**
      * Creates a memory cache, where items expire after ttl seconds
@@ -83,9 +81,6 @@ public class MemoryCacheProvider implements CacheProvider
             case V4_SUMMONER_BY_ID:
                 summoners.put((Summoner) obj.get("value"), LocalDateTime.now());
                 break;
-            case V4_MATCH:
-                matches.put((Match) obj.get("value"), LocalDateTime.now());
-                break;
             default:
                 break;
         }
@@ -129,16 +124,6 @@ public class MemoryCacheProvider implements CacheProvider
                 opt = sums.findFirst();
                 break;
             }
-            case V4_MATCH:
-            {
-                Object matchId = data.get("gameid");
-                
-                opt = matches.keySet().stream()
-                             .filter(m -> m.getPlatform().equals(platform))
-                             .filter(m -> matchId.equals(m.getMatchId()))
-                             .findFirst();
-                break;
-            }
             
             default:
             {
@@ -148,7 +133,7 @@ public class MemoryCacheProvider implements CacheProvider
         
         if (opt.isPresent())
         {
-            logger.debug("Loaded data from cache ({} {} {})", this.getClass().getName(), type, data.toString());
+            logger.debug("Loaded data from cache ({} {} {})", this.getClass().getName(), type, data);
         }
         
         return opt;
@@ -165,11 +150,6 @@ public class MemoryCacheProvider implements CacheProvider
             case V4_SUMMONER_BY_ID:
                 summoners.clear();
                 break;
-            case V4_MATCH:
-                matches.clear();
-                break;
-            default:
-                break;
         }
     }
     
@@ -184,7 +164,6 @@ public class MemoryCacheProvider implements CacheProvider
         clearOldCache(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, summoners);
         clearOldCache(URLEndpoint.V4_SUMMONER_BY_NAME, summoners);
         clearOldCache(URLEndpoint.V4_SUMMONER_BY_ID, summoners);
-        clearOldCache(URLEndpoint.V4_MATCH, matches);
     }
     
     @Override
@@ -198,7 +177,6 @@ public class MemoryCacheProvider implements CacheProvider
     {
         long size = 0;
         size += summoners.size();
-        size += matches.size();
         return size;
     }
     

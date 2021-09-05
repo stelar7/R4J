@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.utils.Utils;
-import no.stelar7.api.r4j.pojo.lol.match.v4.Match;
+import no.stelar7.api.r4j.pojo.lol.match.v5.LOLMatch;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
 
 import java.util.List;
@@ -107,7 +107,7 @@ public final class TournamentAPI
      * @param matchId        the ID of the match.
      * @return Match
      */
-    public Match getMatchInfo(final LeagueShard server, final String tournamentCode, final Long matchId)
+    public LOLMatch getMatchInfo(final LeagueShard server, final String tournamentCode, final Long matchId)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
@@ -116,7 +116,7 @@ public final class TournamentAPI
                                                        .withPlatform(server);
         try
         {
-            return (Match) builder.build();
+            return (LOLMatch) builder.build();
         } catch (ClassCastException e)
         {
             

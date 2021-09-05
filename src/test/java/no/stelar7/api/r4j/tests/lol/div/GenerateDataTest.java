@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.tests.lol.div;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.pojo.lol.match.v4.*;
+import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
@@ -25,29 +25,29 @@ public class GenerateDataTest
         
         int                     i         = 0;
         List<InternalMatchData> matchData = new ArrayList<>();
-        for (Match m : iterator)
+        for (LOLMatch m : iterator)
         {
-            Participant       lookup = m.getParticipant(self.getSummonerId()).get();
+            MatchParticipant  lookup = m.getParticipants().stream().filter(p -> p.getPuuid().equals(self.getPUUID())).findFirst().get();
             InternalMatchData data   = new InternalMatchData();
-            data.queue = m.getGameQueueType().commonName();
-            data.win = m.didWin(lookup);
+            data.queue = m.getQueue().commonName();
+            data.win = lookup.didWin();
             data.startTime = m.getMatchCreationAsDate().toInstant().toEpochMilli();
             
             Map<String, InternalMatchSummoner> sums = new HashMap<>();
-            for (Participant p : m.getParticipants())
+            for (MatchParticipant p : m.getParticipants())
             {
                 InternalMatchSummoner sum = new InternalMatchSummoner();
-                sum.name = m.getParticipantIdentity(p.getParticipantId()).get().getPlayer().getSummonerName();
+                sum.name = p.getSummonerName();
                 sum.champion = p.getChampionId();
-                sum.summoner1 = p.getSpell1().getValue();
-                sum.summoner2 = p.getSpell2().getValue();
+                sum.summoner1 = p.getSummoner1Id();
+                sum.summoner2 = p.getSummoner2Id();
                 sum.perks = generatePerkList(p.getPerks());
-                sum.kills = p.getStats().getKills();
-                sum.deaths = p.getStats().getDeaths();
-                sum.assists = p.getStats().getAssists();
-                sum.level = p.getStats().getChampLevel();
-                sum.cs = p.getStats().getTotalMinionsKilled();
-                List<Long> items = Arrays.asList(p.getStats().getItem0(), p.getStats().getItem1(), p.getStats().getItem2(), p.getStats().getItem3(), p.getStats().getItem4(), p.getStats().getItem5(), p.getStats().getItem6());
+                sum.kills = p.getKills();
+                sum.deaths = p.getDeaths();
+                sum.assists = p.getAssists();
+                sum.level = p.getChampionLevel();
+                sum.cs = p.getTotalMinionsKilled();
+                List<Integer> items = Arrays.asList(p.getItem0(), p.getItem1(), p.getItem2(), p.getItem3(), p.getItem4(), p.getItem5(), p.getItem6());
                 Collections.sort(items);
                 sum.items = items;
                 
@@ -80,10 +80,10 @@ public class GenerateDataTest
     private List<Integer> generatePerkList(MatchPerks perks)
     {
         List<Integer> data = new ArrayList<>();
-        perks.getPerkList().stream().map(MatchPerk::getPerkId).forEach(data::add);
-        data.add(perks.getStatPerk0());
-        data.add(perks.getStatPerk1());
-        data.add(perks.getStatPerk2());
+        perks.getPerkStyles().stream().flatMap(p -> p.getSelections().stream()).map(PerkSelection::getPerk).forEach(data::add);
+        data.add(perks.getStatPerks().getOffense());
+        data.add(perks.getStatPerks().getFlex());
+        data.add(perks.getStatPerks().getDefense());
         Collections.sort(data);
         return data;
     }
@@ -110,7 +110,7 @@ public class GenerateDataTest
         long          assists;
         long          level;
         long          cs;
-        List<Long>    items;
+        List<Integer> items;
     }
     
     

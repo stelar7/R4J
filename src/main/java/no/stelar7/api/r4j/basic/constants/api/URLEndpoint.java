@@ -7,7 +7,7 @@ import no.stelar7.api.r4j.pojo.lol.championmastery.*;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
 import no.stelar7.api.r4j.pojo.lol.league.*;
 import no.stelar7.api.r4j.pojo.lol.liveclient.*;
-import no.stelar7.api.r4j.pojo.lol.match.v4.*;
+import no.stelar7.api.r4j.pojo.lol.match.v5.LOLMatch;
 import no.stelar7.api.r4j.pojo.lol.replay.*;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
@@ -30,6 +30,7 @@ import no.stelar7.api.r4j.pojo.lor.ranked.LoRRankedPlayerList;
 import no.stelar7.api.r4j.pojo.shared.*;
 import no.stelar7.api.r4j.pojo.tft.league.*;
 import no.stelar7.api.r4j.pojo.val.content.Content;
+import no.stelar7.api.r4j.pojo.val.match.VALMatch;
 import no.stelar7.api.r4j.pojo.val.matchlist.RecentMatchList;
 import no.stelar7.api.r4j.pojo.val.ranked.Leaderboard;
 
@@ -73,13 +74,6 @@ public enum URLEndpoint
     DDRAGON_REALMS("realms/", "", Constants.REGION_PLACEHOLDER, ".json", Realm.class),
     DDRAGON_TARBALL("", "", "", "", String.class),
     
-    //    lol/match/v3/matches/{matchId}
-    //    lol/match/v3/matchlists/by-account/{accountId}
-    //    lol/match/v3/timelines/by-match/{matchId}
-    V4_MATCH("lol", "match", "v4", "matches/" + Constants.MATCH_ID_PLACEHOLDER, Match.class),
-    V4_MATCHLIST("lol", "match", "v4", "matchlists/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, MatchList.class),
-    V4_TIMELINE("lol", "match", "v4", "timelines/by-match/" + Constants.MATCH_ID_PLACEHOLDER, MatchTimeline.class),
-    
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}
     // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}/entry
     // api/lol/{region}/v2.5/league/challenger
@@ -108,7 +102,7 @@ public enum URLEndpoint
     
     // GET  lol/match/v3/matches/{matchId}/by-tournament-code/{tournamentCode}
     // GET  lol/match/v3/matches/by-tournament-code/{tournamentCode}/ids
-    V4_TOURNAMENT_MATCH("lol", "match", "v4", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, Match.class),
+    V4_TOURNAMENT_MATCH("lol", "match", "v4", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LOLMatch.class),
     V4_TOURNAMENT_MATCHLIST("lol", "match", "v4", "matches/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER + "/ids", LongList.class),
     
     // POST lol/tournament/v3/codes Create a tournament code for the given tournament.
@@ -210,7 +204,7 @@ public enum URLEndpoint
     V1_CLASH_TOURNAMENTS_BY_ID("lol", "clash", "v1", "tournaments/" + Constants.TOURNAMENT_ID_PLACEHOLDER, ClashTournament.class),
     
     V1_VAL_CONTENT("val", "content", "v1", "contents", Content.class),
-    V1_VAL_MATCH_BY_ID("val", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, no.stelar7.api.r4j.pojo.val.match.Match.class),
+    V1_VAL_MATCH_BY_ID("val", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, VALMatch.class),
     V1_VAL_MATCHLIST_BY_PUUID("val", "match", "v1", "matchlists/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, no.stelar7.api.r4j.pojo.val.matchlist.MatchList.class),
     V1_VAL_RECENT_MATCH_BY_QUEUE("val", "match", "v1", "recent-matches/by-queue/" + Constants.QUEUE_PLACEHOLDER, RecentMatchList.class),
     V1_VAL_LEADERBOARD_BY_ACT("val", "ranked", "v1", "leaderboards/by-act/" + Constants.ACT_ID_PLACEHOLDER, Leaderboard.class),

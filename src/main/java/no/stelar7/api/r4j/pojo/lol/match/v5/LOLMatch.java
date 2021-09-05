@@ -1,7 +1,8 @@
 package no.stelar7.api.r4j.pojo.lol.match.v5;
 
-import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
+import no.stelar7.api.r4j.impl.lol.raw.MatchV5API;
 
 import java.io.Serializable;
 import java.time.*;
@@ -26,6 +27,21 @@ public class LOLMatch implements Serializable
     private GameQueueType          queueId;
     private List<MatchTeam>        teams;
     private String                 tournamentCode;
+    
+    public static LOLMatch get(LeagueShard shard, String id)
+    {
+        return MatchV5API.getInstance().getMatch(shard.toRegionShard(), id);
+    }
+    
+    public static LOLMatch get(RegionShard shard, String id)
+    {
+        return MatchV5API.getInstance().getMatch(shard, id);
+    }
+    
+    public LOLTimeline getTimeline()
+    {
+        return MatchV5API.getInstance().getTimeline(platformId.toRegionShard(), platformId + "_" + gameId);
+    }
     
     public ZonedDateTime getMatchCreationAsDate()
     {
@@ -77,7 +93,7 @@ public class LOLMatch implements Serializable
         return gameVersion;
     }
     
-    public MapType getMapId()
+    public MapType getMap()
     {
         return mapId;
     }
@@ -87,12 +103,12 @@ public class LOLMatch implements Serializable
         return participants;
     }
     
-    public LeagueShard getPlatformId()
+    public LeagueShard getPlatform()
     {
         return platformId;
     }
     
-    public GameQueueType getQueueId()
+    public GameQueueType getQueue()
     {
         return queueId;
     }

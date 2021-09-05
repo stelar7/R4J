@@ -127,12 +127,12 @@ public class MatchParticipant implements Serializable
         return bountyLevel;
     }
     
-    public int getChampExperience()
+    public int getChampionExperience()
     {
         return champExperience;
     }
     
-    public int getChampLevel()
+    public int getChampionLevel()
     {
         return champLevel;
     }
@@ -492,7 +492,7 @@ public class MatchParticipant implements Serializable
         return teamEarlySurrendered;
     }
     
-    public TeamType getTeamId()
+    public TeamType getTeam()
     {
         return teamId;
     }

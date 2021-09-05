@@ -47,7 +47,7 @@ public class StringFacade
     {
         Map<Class<?>, String> returnMap = new HashMap<>();
         
-        returnMap.put(Match.class, "id");
+        returnMap.put(VALMatch.class, "id");
         returnMap.put(RoundResult.class, "roundNum");
         returnMap.put(PlayerRoundStats.class, "puuid");
         

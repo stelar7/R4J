@@ -95,9 +95,9 @@ public class R4J
          *
          * @return the match api
          */
-        public MatchAPI getMatchAPI()
+        public MatchV5API getMatchAPI()
         {
-            return MatchAPI.getInstance();
+            return MatchV5API.getInstance();
         }
         
         /**

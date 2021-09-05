@@ -9,7 +9,7 @@ import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 import java.io.Serializable;
 import java.util.*;
 
-public class MatchInfo implements Serializable
+public class VALMatchInfo implements Serializable
 {
     private static final long serialVersionUID = -5536569302071536933L;
     
@@ -111,7 +111,7 @@ public class MatchInfo implements Serializable
         {
             return false;
         }
-        MatchInfo matchInfo = (MatchInfo) o;
+        VALMatchInfo matchInfo = (VALMatchInfo) o;
         return Objects.equals(matchId, matchInfo.matchId) &&
                Objects.equals(mapId, matchInfo.mapId) &&
                Objects.equals(gameLengthMillis, matchInfo.gameLengthMillis) &&
@@ -154,7 +154,7 @@ public class MatchInfo implements Serializable
     {
         Map<Class<?>, String> returnMap = new HashMap<>();
         
-        returnMap.put(Match.class, "id");
+        returnMap.put(VALMatch.class, "id");
         
         return returnMap;
     }

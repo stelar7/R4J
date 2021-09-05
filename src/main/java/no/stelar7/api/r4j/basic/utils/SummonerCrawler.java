@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.basic.utils;
 
 import no.stelar7.api.r4j.impl.lol.raw.LeagueAPI;
-import no.stelar7.api.r4j.pojo.lol.match.v4.*;
+import no.stelar7.api.r4j.pojo.lol.match.v5.MatchParticipant;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
 import java.util.*;
@@ -43,12 +43,10 @@ public class SummonerCrawler
                 }
                 
                 results.addAll(
-                        g.getParticipantIdentities()
-                         .stream()
-                         .map(ParticipantIdentity::getPlayer)
-                         .map(ParticipantPlayer::getCurrentSummoner)
-                         .collect(Collectors.toSet())
-                              );
+                        g.getParticipants().stream()
+                         .map(MatchParticipant::getPuuid)
+                         .map(p -> Summoner.byPUUID(g.getPlatform(), p))
+                         .collect(Collectors.toSet()));
             });
         });
     }

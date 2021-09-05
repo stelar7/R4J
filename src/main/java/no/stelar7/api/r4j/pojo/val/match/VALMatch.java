@@ -5,16 +5,16 @@ import no.stelar7.api.r4j.basic.utils.sql.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class Match implements Serializable
+public class VALMatch implements Serializable
 {
     private static final long serialVersionUID = 8170523652285088932L;
     
-    private MatchInfo         matchInfo;
-    private List<Player>      players;
+    private VALMatchInfo matchInfo;
+    private List<Player> players;
     private List<RoundResult> roundResults;
     private List<Team>        teams;
     
-    public MatchInfo getMatchInfo()
+    public VALMatchInfo getMatchInfo()
     {
         return matchInfo;
     }
@@ -45,7 +45,7 @@ public class Match implements Serializable
         {
             return false;
         }
-        Match match = (Match) o;
+        VALMatch match = (VALMatch) o;
         return Objects.equals(matchInfo, match.matchInfo) &&
                Objects.equals(players, match.players) &&
                Objects.equals(teams, match.teams) &&

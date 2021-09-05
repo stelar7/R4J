@@ -226,11 +226,6 @@ public class DataCallBuilder
             returnValue = postProcessDDragonAddId(returnValue);
         }
         
-        if (this.dc.getEndpoint() == URLEndpoint.V4_MATCH)
-        {
-            returnValue = postProcessMatch(returnValue);
-        }
-        
         final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, URLEndpoint.V4_SUMMONER_BY_ID, URLEndpoint.V4_SUMMONER_BY_NAME, URLEndpoint.V4_SUMMONER_BY_PUUID);
         if (summonerEndpoints.contains(this.dc.getEndpoint()))
         {
@@ -346,55 +341,6 @@ public class DataCallBuilder
     {
         JsonObject element = (JsonObject) JsonParser.parseString(returnValue);
         element.addProperty("platform", this.dc.getPlatform().toString());
-        return Utils.getGson().toJson(element);
-    }
-    
-    private String postProcessMatch(String returnValue)
-    {
-        JsonObject element = (JsonObject) JsonParser.parseString(returnValue);
-        
-        JsonArray participants = element.getAsJsonArray("participants");
-        for (JsonElement participant : participants)
-        {
-            JsonObject stats = participant.getAsJsonObject().getAsJsonObject("stats");
-            JsonObject part  = participant.getAsJsonObject();
-            if (!stats.has("perkPrimaryStyle"))
-            {
-                return Utils.getGson().toJson(element);
-            }
-            
-            JsonObject mPerk = new JsonObject();
-            JsonArray  array = new JsonArray();
-            
-            for (int i = 0; i < 6; i++)
-            {
-                JsonObject perk = new JsonObject();
-                
-                perk.add("perkId", stats.get("perk" + i));
-                perk.add("perkVar1", stats.get("perk" + i + "Var1"));
-                perk.add("perkVar2", stats.get("perk" + i + "Var2"));
-                perk.add("perkVar3", stats.get("perk" + i + "Var3"));
-                array.add(perk);
-                
-                stats.remove("perk" + i);
-                stats.remove("perk" + i + "Var1");
-                stats.remove("perk" + i + "Var2");
-                stats.remove("perk" + i + "Var3");
-            }
-            
-            mPerk.add("perks", array);
-            mPerk.add("perkPrimaryStyle", stats.get("perkPrimaryStyle"));
-            mPerk.add("perkSubStyle", stats.get("perkSubStyle"));
-            mPerk.add("statPerk0", stats.get("statPerk0"));
-            mPerk.add("statPerk1", stats.get("statPerk1"));
-            mPerk.add("statPerk2", stats.get("statPerk2"));
-            
-            stats.remove("perkPrimaryStyle");
-            stats.remove("perkSubStyle");
-            
-            part.add("perks", mPerk);
-        }
-        
         return Utils.getGson().toJson(element);
     }
     

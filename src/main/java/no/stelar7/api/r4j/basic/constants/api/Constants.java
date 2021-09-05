@@ -25,9 +25,7 @@ public final class Constants
     public static final String QUEUE_PLACEHOLDER_DATA      = "queue";
     public static final String SEASON_PLACEHOLDER_DATA     = "season";
     public static final String ENDTIME_PLACEHOLDER_DATA    = "endTime";
-    public static final String ENDINDEX_PLACEHOLDER_DATA   = "endIndex";
-    public static final String BEGINTIME_PLACEHOLDER_DATA  = "beginTime";
-    public static final String BEGININDEX_PLACEHOLDER_DATA = "beginIndex";
+    public static final String STARTTIME_PLACEHOLDER_DATA  = "startTime";
     public static final String STARTINDEX_PLACEHOLDER_DATA = "startIndex";
     public static final String SIZE_PLACEHOLDER_DATA       = "size";
     public static final String START_PLACEHOLDER_DATA      = "start";
