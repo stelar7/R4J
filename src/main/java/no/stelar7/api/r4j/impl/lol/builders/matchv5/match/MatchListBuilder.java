@@ -18,18 +18,20 @@ public class MatchListBuilder
     private final GameQueueType      queue;
     private final Integer            start;
     private final Integer            count;
+    private final Long               startTime;
+    private final Long               endTime;
     
     public MatchListBuilder()
     {
-        this((RegionShard) null, null, null, null, null, null);
+        this((RegionShard) null, null, null, null, null, null, null, null);
     }
     
-    public MatchListBuilder(LeagueShard platform, String puuid, GameQueueType queue, MatchlistMatchType type, Integer start, Integer count)
+    public MatchListBuilder(LeagueShard platform, String puuid, GameQueueType queue, MatchlistMatchType type, Integer start, Integer count, Long startTime, Long endTime)
     {
-        this(platform.toRegionShard(), puuid, queue, type, start, count);
+        this(platform.toRegionShard(), puuid, queue, type, start, count, startTime, endTime);
     }
     
-    public MatchListBuilder(RegionShard platform, String puuid, GameQueueType queue, MatchlistMatchType type, Integer start, Integer count)
+    public MatchListBuilder(RegionShard platform, String puuid, GameQueueType queue, MatchlistMatchType type, Integer start, Integer count, Long startTime, Long endTime)
     {
         this.platform = platform;
         this.puuid = puuid;
@@ -37,36 +39,48 @@ public class MatchListBuilder
         this.type = type;
         this.start = start;
         this.count = count;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
     
     public MatchListBuilder withPlatform(LeagueShard platform)
     {
-        return new MatchListBuilder(platform, this.puuid, this.queue, this.type, this.start, this.count);
+        return new MatchListBuilder(platform, this.puuid, this.queue, this.type, this.start, this.count, this.startTime, this.endTime);
     }
     
     public MatchListBuilder withPuuid(String puuid)
     {
-        return new MatchListBuilder(this.platform, puuid, this.queue, this.type, this.start, this.count);
+        return new MatchListBuilder(this.platform, puuid, this.queue, this.type, this.start, this.count, this.startTime, this.endTime);
     }
     
     public MatchListBuilder withQueue(GameQueueType queue)
     {
-        return new MatchListBuilder(this.platform, this.puuid, queue, this.type, this.start, this.count);
+        return new MatchListBuilder(this.platform, this.puuid, queue, this.type, this.start, this.count, this.startTime, this.endTime);
     }
     
     public MatchListBuilder withType(MatchlistMatchType type)
     {
-        return new MatchListBuilder(this.platform, this.puuid, this.queue, type, this.start, this.count);
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, type, this.start, this.count, this.startTime, this.endTime);
     }
     
     public MatchListBuilder withBeginIndex(Integer start)
     {
-        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, start, this.count);
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, start, this.count, this.startTime, this.endTime);
     }
     
     public MatchListBuilder withCount(Integer count)
     {
-        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, count);
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, count, this.startTime, this.endTime);
+    }
+    
+    public MatchListBuilder withStartTime(Long startTime)
+    {
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, this.count, startTime, this.endTime);
+    }
+    
+    public MatchListBuilder withEndTime(Long endTime)
+    {
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, this.count, this.startTime, endTime);
     }
     
     public List<String> get()
@@ -98,6 +112,14 @@ public class MatchListBuilder
         {
             builder.withQueryParameter(Constants.COUNT_PLACEHOLDER_DATA, String.valueOf(this.count));
         }
+        if (this.startTime != null)
+        {
+            builder.withQueryParameter(Constants.STARTTIME_PLACEHOLDER_DATA, String.valueOf(this.startTime));
+        }
+        if (this.endTime != null)
+        {
+            builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(this.endTime));
+        }
         
         Map<String, Object> data = new TreeMap<>();
         data.put("platform", platform);
@@ -106,6 +128,8 @@ public class MatchListBuilder
         data.put("type", type);
         data.put("start", start);
         data.put("count", count);
+        data.put("startTime", startTime);
+        data.put("endTime", endTime);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_MATCHLIST, data);
         if (chl.isPresent())
@@ -133,7 +157,7 @@ public class MatchListBuilder
         
         return new LazyList<>(increment, prevValue -> {
             Integer          start = (this.start != null ? this.start : 0) + prevValue;
-            MatchListBuilder local = new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, start, increment);
+            MatchListBuilder local = new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, start, increment, startTime, endTime);
             return local.get();
         });
         

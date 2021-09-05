@@ -22,9 +22,9 @@ public final class MatchV5API
         // Hide public constructor
     }
     
-    public List<String> getMatchList(RegionShard server, String puuid, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer endIndex)
+    public List<String> getMatchList(RegionShard server, String puuid, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer endIndex, Long startTime, Long endTime)
     {
-        return new MatchListBuilder(server, puuid, queue, type, beginIndex, endIndex).get();
+        return new MatchListBuilder(server, puuid, queue, type, beginIndex, endIndex, startTime, endTime).get();
     }
     
     /**
@@ -39,7 +39,7 @@ public final class MatchV5API
     public LazyList<String> getMatchList(RegionShard server, String puuid)
     {
         int increment = 100;
-        return new LazyList<>(increment, prevValue -> getMatchList(server, puuid, null, null, prevValue, prevValue + increment));
+        return new LazyList<>(increment, prevValue -> getMatchList(server, puuid, null, null, prevValue, prevValue + increment, null, null));
     }
     
     /**
