@@ -5,10 +5,11 @@ import java.util.*;
 
 public class PerkStyle implements Serializable
 {
-    private static final long serialVersionUID = 3304708021329029764L;
+    private static final long serialVersionUID = -1935275150471079204L;
     
-    private String              description;
+    private String description;
     private List<PerkSelection> selections;
+    private int                 style;
     
     public String getDescription()
     {
@@ -18,6 +19,11 @@ public class PerkStyle implements Serializable
     public List<PerkSelection> getSelections()
     {
         return selections;
+    }
+    
+    public int getStyle()
+    {
+        return style;
     }
     
     @Override
@@ -32,13 +38,13 @@ public class PerkStyle implements Serializable
             return false;
         }
         PerkStyle perkStyle = (PerkStyle) o;
-        return Objects.equals(description, perkStyle.description) && Objects.equals(selections, perkStyle.selections);
+        return style == perkStyle.style && Objects.equals(description, perkStyle.description) && Objects.equals(selections, perkStyle.selections);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(description, selections);
+        return Objects.hash(description, selections, style);
     }
     
     @Override
@@ -47,6 +53,7 @@ public class PerkStyle implements Serializable
         return "PerkStyle{" +
                "description='" + description + '\'' +
                ", selections=" + selections +
+               ", style=" + style +
                '}';
     }
 }

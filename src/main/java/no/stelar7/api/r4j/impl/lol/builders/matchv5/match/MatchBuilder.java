@@ -53,12 +53,24 @@ public class MatchBuilder
     
     public LOLMatch getMatch()
     {
-        return getMatchRAW().asLOLMatch();
+        GAMHSMatch rawMatch = getMatchRAW();
+        
+        if (rawMatch == null) {
+            return null;
+        }
+        
+        return rawMatch.asLOLMatch();
     }
     
     public LOLMetadata getMetadata()
     {
-        return getMatchRAW().asLOLMatchMetadata();
+        GAMHSMatch rawMatch = getMatchRAW();
+    
+        if (rawMatch == null) {
+            return null;
+        }
+        
+        return rawMatch.asLOLMatchMetadata();
     }
     
     public GAMHSMatch getMatchRAW()

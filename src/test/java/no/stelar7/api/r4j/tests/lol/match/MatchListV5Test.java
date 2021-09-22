@@ -2,7 +2,6 @@ package no.stelar7.api.r4j.tests.lol.match;
 
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
-import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -12,6 +11,7 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.*;
 import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -21,7 +21,7 @@ import java.util.*;
 
 public class MatchListV5Test
 {
-    final R4J r4J = new R4J(new APICredentials("RGAPI-95f78ad1-d449-481f-af01-4d5e8021ae87"));
+    final R4J r4J = new R4J(SecretFile.CREDS);
     
     
     @Test
