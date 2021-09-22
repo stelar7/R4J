@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.stelar7</groupId>
     <artifactId>R4J</artifactId>
-    <version>1.10.8</version>
+    <version>2.0.1</version>
     <name>Java Riot Library</name>
     <description>A Java library containing the API for every Riot game</description>
     <properties>
