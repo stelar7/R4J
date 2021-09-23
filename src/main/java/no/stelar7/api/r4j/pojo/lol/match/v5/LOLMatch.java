@@ -60,7 +60,7 @@ public class LOLMatch implements Serializable
     
     public Duration getGameDurationAsDuration()
     {
-        return Duration.of(this.gameDuration, ChronoUnit.SECONDS);
+        return Duration.of(this.gameDuration, ChronoUnit.MILLIS);
     }
     
     public long getGameId()
