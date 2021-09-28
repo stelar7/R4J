@@ -52,12 +52,24 @@ public class TimelineBuilder
     
     public LOLTimeline getTimeline()
     {
-        return getTimelineRAW().asLOLTimeline();
+        GAMHSMatch rawMatch = getTimelineRAW();
+    
+        if (rawMatch == null) {
+            return null;
+        }
+    
+        return rawMatch.asLOLTimeline();
     }
     
     public LOLMetadata getMetadata()
     {
-        return getTimelineRAW().asLOLMatchMetadata();
+        GAMHSMatch rawMatch = getTimelineRAW();
+    
+        if (rawMatch == null) {
+            return null;
+        }
+        
+        return rawMatch.asLOLMatchMetadata();
     }
     
     public GAMHSMatch getTimelineRAW()
