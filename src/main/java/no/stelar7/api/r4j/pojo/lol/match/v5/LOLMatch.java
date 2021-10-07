@@ -11,9 +11,9 @@ import java.util.*;
 
 public class LOLMatch implements Serializable
 {
-    private static final long serialVersionUID = 552752847819005206L;
+    private static final long serialVersionUID = 6308730651274668047L;
     
-    private long                   gameCreation;
+    private long gameCreation;
     private int                    gameDuration;
     private long                   gameId;
     private GameModeType           gameMode;
@@ -156,7 +156,7 @@ public class LOLMatch implements Serializable
             return false;
         }
         LOLMatch lolMatch = (LOLMatch) o;
-        return gameCreation == lolMatch.gameCreation && gameDuration == lolMatch.gameDuration && gameId == lolMatch.gameId && gameStartTimestamp == lolMatch.gameStartTimestamp && gameEndTimestamp == lolMatch.gameEndTimestamp && gameMode == lolMatch.gameMode && Objects.equals(gameName, lolMatch.gameName) && gameType == lolMatch.gameType && Objects.equals(gameVersion, lolMatch.gameVersion) && mapId == lolMatch.mapId && Objects.equals(participants, lolMatch.participants) && platformId == lolMatch.platformId && queueId == lolMatch.queueId && Objects.equals(teams, lolMatch.teams) && Objects.equals(tournamentCode, lolMatch.tournamentCode);
+        return gameCreation == lolMatch.gameCreation && gameDuration == lolMatch.gameDuration && gameId == lolMatch.gameId && gameMode == lolMatch.gameMode && Objects.equals(gameName, lolMatch.gameName) && Objects.equals(gameStartTimestamp, lolMatch.gameStartTimestamp) && Objects.equals(gameEndTimestamp, lolMatch.gameEndTimestamp) && gameType == lolMatch.gameType && Objects.equals(gameVersion, lolMatch.gameVersion) && mapId == lolMatch.mapId && Objects.equals(participants, lolMatch.participants) && platformId == lolMatch.platformId && queueId == lolMatch.queueId && Objects.equals(teams, lolMatch.teams) && Objects.equals(tournamentCode, lolMatch.tournamentCode);
     }
     
     @Override
