@@ -22,9 +22,9 @@ public final class MatchV5API
         // Hide public constructor
     }
     
-    public List<String> getMatchList(RegionShard server, String puuid, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer endIndex, Long startTime, Long endTime)
+    public List<String> getMatchList(RegionShard server, String puuid, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
     {
-        return new MatchListBuilder(server, puuid, queue, type, beginIndex, endIndex, startTime, endTime).get();
+        return new MatchListBuilder(server, puuid, queue, type, beginIndex, count, startTime, endTime).get();
     }
     
     /**
