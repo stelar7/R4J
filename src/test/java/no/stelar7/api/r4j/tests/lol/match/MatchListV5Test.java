@@ -140,6 +140,13 @@ public class MatchListV5Test
         
         System.out.println();
     }
+    
+    @Test
+    public void testMachBadDuration()
+    {
+        LOLMatch match = LOLMatch.get(LeagueShard.BR1, "BR1_2344333561");
+        System.out.println();
+    }
 }
 
 

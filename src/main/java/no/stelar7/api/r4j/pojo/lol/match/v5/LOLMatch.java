@@ -13,7 +13,7 @@ public class LOLMatch implements Serializable
 {
     private static final long serialVersionUID = 6308730651274668047L;
     
-    private long gameCreation;
+    private long                   gameCreation;
     private int                    gameDuration;
     private long                   gameId;
     private GameModeType           gameMode;

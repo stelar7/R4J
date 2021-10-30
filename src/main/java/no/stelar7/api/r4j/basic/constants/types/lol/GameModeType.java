@@ -90,7 +90,8 @@ public enum GameModeType implements CodedEnum
     /**
      * Ultbook
      */
-    ULTBOOK
+    ULTBOOK,
+    UNKNOWN,
     ;
     
     /**
@@ -101,6 +102,10 @@ public enum GameModeType implements CodedEnum
      */
     public Optional<GameModeType> getFromCode(final String gameMode)
     {
+        if (gameMode.isEmpty()) {
+            return Optional.of(UNKNOWN);
+        }
+        
         return Stream.of(GameModeType.values()).filter(t -> t.name().equalsIgnoreCase(gameMode)).findFirst();
     }
     

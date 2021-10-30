@@ -18,7 +18,9 @@ public enum GameType implements CodedEnum
     /**
      * All other games
      */
-    MATCHED_GAME;
+    MATCHED_GAME,
+    
+    UNKNOWN;
     
     /**
      * Returns a GameType from the provided value
@@ -28,6 +30,10 @@ public enum GameType implements CodedEnum
      */
     public Optional<GameType> getFromCode(final String gameType)
     {
+        if (gameType.isEmpty()) {
+            return Optional.of(UNKNOWN);
+        }
+        
         return Stream.of(GameType.values()).filter(t -> t.name().equalsIgnoreCase(gameType)).findFirst();
     }
     

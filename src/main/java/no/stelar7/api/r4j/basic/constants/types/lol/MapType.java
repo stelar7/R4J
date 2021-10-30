@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 public enum MapType implements CodedEnum
 {
+    UNKNOWN(0, new Rectangle(0, 0, 0, 0)),
     
     /**
      * Summoner's Rift Original Summer Variant
