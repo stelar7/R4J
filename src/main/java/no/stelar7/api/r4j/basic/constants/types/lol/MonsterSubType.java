@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public enum MonsterSubType implements CodedEnum
 {
-    UNKNOWN, EARTH_DRAGON, FIRE_DRAGON, WATER_DRAGON, AIR_DRAGON, ELDER_DRAGON;
+    UNKNOWN, EARTH_DRAGON, FIRE_DRAGON, WATER_DRAGON, AIR_DRAGON, ELDER_DRAGON, CHEMTECH_DRAGON, HEXTECH_DRAGON;
     
     public Optional<MonsterSubType> getFromCode(String id)
     {

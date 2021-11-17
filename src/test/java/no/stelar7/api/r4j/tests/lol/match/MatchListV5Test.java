@@ -9,6 +9,8 @@ import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.*;
+import no.stelar7.api.r4j.impl.lol.raw.LeagueAPI;
+import no.stelar7.api.r4j.pojo.lol.league.LeagueEntry;
 import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
@@ -41,8 +43,10 @@ public class MatchListV5Test
         JsonWriter   sb = new JsonWriter(sw);
         sb.beginObject();
         
+        int i = 0;
         for (String matchid : all)
         {
+            if (i++ > 10) break;
             tb = tb.withId(matchid);
             mb = mb.withId(matchid);
             
@@ -85,7 +89,7 @@ public class MatchListV5Test
         sb.flush();
         
         String output = Utils.getGson().toJson(new JsonParser().parse(sw.toString()));
-        Files.write(Paths.get("C:\\Users\\Steffen\\Desktop\\Ny mappe\\errors.json"), output.getBytes(StandardCharsets.UTF_8));
+        Files.write(Paths.get("C:\\Users\\stelar7\\Desktop\\errors.json"), output.getBytes(StandardCharsets.UTF_8));
     }
     
     @Test
@@ -142,10 +146,27 @@ public class MatchListV5Test
     }
     
     @Test
-    public void testMachBadDuration()
+    public void testMatchBadDuration()
     {
         LOLMatch match = LOLMatch.get(LeagueShard.BR1, "BR1_2344333561");
         System.out.println();
+    }
+    
+    @Test
+    public void testForMissingAttributes() {
+        LeagueAPI leagueAPI = r4J.getLoLAPI().getLeagueAPI();
+        List<LeagueEntry> divis = leagueAPI.getLeagueByTierDivision(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GOLD_I, 1);
+        for (LeagueEntry entry : divis)
+        {
+            Summoner summoner = Summoner.bySummonerId(LeagueShard.EUW1, entry.getSummonerId());
+            List<String> lazy = summoner.getLeagueGames().get();
+            for (int i = 0; i < lazy.size() && i < 5; i++)
+            {
+                String   match    = lazy.get(i);
+                LOLMatch lolMatch = LOLMatch.get(LeagueShard.EUW1, match);
+                lolMatch.getTimeline();
+            }
+        }
     }
 }
 
