@@ -118,7 +118,7 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * This slot will be replaced by another champion's ultimate selected at the start of the game. There will be 30 seconds to select an ultimate. Be prepared!
      */
-    AUTO_SMITE(54, "Summoner_EmptySmite"),
+    AUTO_SMITE(55, "Summoner_EmptySmite"),
     
     ;
     
