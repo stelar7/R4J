@@ -111,8 +111,16 @@ public enum SummonerSpellType implements CodedEnum
      * Dash through spacetime, becoming briefly untargetable and invulnerable as you rapidly move towards a location.
      */
     WARP(52, "SummonerTemp1"),
+    /**
+     * This slot will be replaced by another champion's ultimate selected at the start of the game. There will be 30 seconds to select an ultimate. Be prepared!
+     */
+    ULTBOOK_1(54, "Summoner_Empty"),
+    /**
+     * This slot will be replaced by another champion's ultimate selected at the start of the game. There will be 30 seconds to select an ultimate. Be prepared!
+     */
+    AUTO_SMITE(54, "Summoner_EmptySmite"),
     
-    ULTBOOK_1(54, "Placeholder"),;
+    ;
     
     
     private final Integer id;
