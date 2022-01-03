@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.utils.sql.*;
 
 import java.io.Serializable;
@@ -21,6 +22,17 @@ public class Location implements Serializable
     public int getY()
     {
         return y;
+    }
+    
+    /**
+     * 0,0 is top-left
+     */
+    public Pair<Float, Float> toImageCoordinates(Pair<Float, Float> imageSize, Pair<Float, Float> mapMultiplier, Pair<Float, Float> mapScalar)
+    {
+        float x = (y * mapMultiplier.getKey() + mapScalar.getKey()) * imageSize.getKey();
+        float y = (x * mapMultiplier.getValue() + mapScalar.getValue()) * imageSize.getValue();
+        
+        return new Pair<>(x, y);
     }
     
     @Override

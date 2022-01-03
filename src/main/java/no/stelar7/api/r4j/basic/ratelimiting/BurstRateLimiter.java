@@ -77,7 +77,7 @@ public class BurstRateLimiter extends RateLimiter
         int     bias               = 1;
         int     multiplicativeBias = 1;
         Instant now                = Instant.now();
-        long[]  delay              = {overloadTimer * 1000};
+        long[]  delay              = {overloadTimer * 1000L};
         overloadTimer = 0;
         
         if (delay[0] == 0)

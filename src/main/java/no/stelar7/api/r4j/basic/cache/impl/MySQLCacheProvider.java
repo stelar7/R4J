@@ -74,7 +74,7 @@ public class MySQLCacheProvider implements CacheProvider
         createTableForClass(PlayerLocation.class);
         createTableForClass(PlayerRoundStats.class);
         createTableForClass(Economy.class);
-        createTableForClass(Ability.class);
+        createTableForClass(AbilityEffects.class);
         createTableForClass(Damage.class);
         createTableForClass(FinishingDamage.class);
         createTableForClass(Kill.class);

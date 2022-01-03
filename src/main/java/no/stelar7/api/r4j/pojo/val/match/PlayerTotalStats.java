@@ -9,12 +9,13 @@ public class PlayerTotalStats implements Serializable
 {
     private static final long serialVersionUID = -2515335096414775653L;
     
-    private int  score;
-    private int  roundsPlayed;
-    private int  kills;
-    private int  deaths;
-    private int  assists;
-    private long playtimeMillis;
+    private int          score;
+    private int          roundsPlayed;
+    private int          kills;
+    private int          deaths;
+    private int          assists;
+    private long         playtimeMillis;
+    private AbilityCasts abilityCasts;
     
     public static long getSerialVersionUID()
     {

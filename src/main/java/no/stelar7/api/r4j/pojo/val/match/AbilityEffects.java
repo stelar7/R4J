@@ -5,7 +5,7 @@ import no.stelar7.api.r4j.basic.utils.sql.SQLForeignMap;
 import java.io.Serializable;
 import java.util.*;
 
-public class Ability implements Serializable
+public class AbilityEffects implements Serializable
 {
     private static final long serialVersionUID = -1967721053588165202L;
     
@@ -45,11 +45,11 @@ public class Ability implements Serializable
         {
             return false;
         }
-        Ability ability = (Ability) o;
-        return Objects.equals(grenadeEffects, ability.grenadeEffects) &&
-               Objects.equals(ability1Effects, ability.ability1Effects) &&
-               Objects.equals(ability2Effects, ability.ability2Effects) &&
-               Objects.equals(ultimateEffects, ability.ultimateEffects);
+        AbilityEffects abilityEffects = (AbilityEffects) o;
+        return Objects.equals(grenadeEffects, abilityEffects.grenadeEffects) &&
+               Objects.equals(ability1Effects, abilityEffects.ability1Effects) &&
+               Objects.equals(ability2Effects, abilityEffects.ability2Effects) &&
+               Objects.equals(ultimateEffects, abilityEffects.ultimateEffects);
     }
     
     @Override

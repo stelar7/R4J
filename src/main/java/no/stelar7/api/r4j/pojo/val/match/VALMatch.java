@@ -9,8 +9,8 @@ public class VALMatch implements Serializable
 {
     private static final long serialVersionUID = 8170523652285088932L;
     
-    private VALMatchInfo matchInfo;
-    private List<Player> players;
+    private VALMatchInfo      matchInfo;
+    private List<Player>      players;
     private List<RoundResult> roundResults;
     private List<Team>        teams;
     

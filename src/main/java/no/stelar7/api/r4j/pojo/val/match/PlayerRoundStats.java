@@ -10,12 +10,12 @@ public class PlayerRoundStats implements Serializable
     private static final long serialVersionUID = -8892321230434651879L;
     
     @SQLReturnKey
-    private String       puuid;
-    private List<Kill>   kills;
-    private List<Damage> damage;
-    private int          score;
-    private Economy      economy;
-    private Ability      ability;
+    private String         puuid;
+    private List<Kill>     kills;
+    private List<Damage>   damage;
+    private int            score;
+    private Economy        economy;
+    private AbilityEffects ability;
     
     public String getPuuid()
     {
@@ -42,7 +42,7 @@ public class PlayerRoundStats implements Serializable
         return economy;
     }
     
-    public Ability getAbility()
+    public AbilityEffects getAbility()
     {
         return ability;
     }
