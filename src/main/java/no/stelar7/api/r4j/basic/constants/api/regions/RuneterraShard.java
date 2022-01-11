@@ -22,11 +22,17 @@ public enum RuneterraShard implements RealmSpesificEnum
     /**
      * Asia
      */
+    @Deprecated
     ASIA("ASIA", "asia"),
     /**
      * SEA
      */
-    SEA("SEA", "SEA");
+    @Deprecated
+    SEA("SEA", "sea"),
+    /**
+     * Asia-Pacific
+     */
+    APAC("SEA", "sea"),;
     
     private final String[] key;
     
