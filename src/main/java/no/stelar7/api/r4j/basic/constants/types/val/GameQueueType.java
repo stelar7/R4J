@@ -14,6 +14,7 @@ public enum GameQueueType implements CodedEnum<GameQueueType>
     UNRATED("unrated"),
     CUSTOM_GAME(""),
     TOURNAMENT_MODE("tournamentmode"),
+    ONE_FOR_ALL("onefa"),
     ;
     
     
