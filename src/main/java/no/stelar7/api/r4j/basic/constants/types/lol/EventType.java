@@ -27,6 +27,7 @@ public enum EventType implements CodedEnum
     GAME_END,
     DRAGON_SOUL_GIVEN,
     CHAMPION_TRANSFORM,
+    OBJECTIVE_BOUNTY_PRESTART,
     ;
     
     /**

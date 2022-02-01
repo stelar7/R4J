@@ -94,12 +94,20 @@ public class MatchListV5Test
     
     @Test
     @Disabled
+    public void testBounty() {
+        DataCall.setCacheProvider(null);
+        TimelineBuilder tb = new TimelineBuilder(LeagueShard.JP1).withId("JP1_343050027");
+        tb.getTimeline();
+    }
+    
+    @Test
+    @Disabled
     public void testMatchParticipantIds()
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "iets ronds ofzo");
+        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "Karaad");
         
         LazyList<String> all = sum.getLeagueGames().getLazy();
         
