@@ -5,9 +5,10 @@ import java.util.Objects;
 
 public class ChampionStats implements Serializable
 {
-    private static final long serialVersionUID = 4957994144440809843L;
+    private static final long serialVersionUID = -2055664482204277507L;
     
     private int abilityPower;
+    private int abilityHaste;
     private int armor;
     private int armorPen;
     private int armorPenPercent;
@@ -25,6 +26,8 @@ public class ChampionStats implements Serializable
     private int magicPenPercent;
     private int magicResist;
     private int movementSpeed;
+    private int omnivamp;
+    private int physicalVamp;
     private int power;
     private int powerMax;
     private int powerRegen;
@@ -33,6 +36,11 @@ public class ChampionStats implements Serializable
     public int getAbilityPower()
     {
         return abilityPower;
+    }
+    
+    public int getAbilityHaste()
+    {
+        return abilityHaste;
     }
     
     public int getArmor()
@@ -120,6 +128,16 @@ public class ChampionStats implements Serializable
         return movementSpeed;
     }
     
+    public int getOmnivamp()
+    {
+        return omnivamp;
+    }
+    
+    public int getPhysicalVamp()
+    {
+        return physicalVamp;
+    }
+    
     public int getPower()
     {
         return power;
@@ -152,13 +170,13 @@ public class ChampionStats implements Serializable
             return false;
         }
         ChampionStats that = (ChampionStats) o;
-        return abilityPower == that.abilityPower && armor == that.armor && armorPen == that.armorPen && armorPenPercent == that.armorPenPercent && attackDamage == that.attackDamage && attackSpeed == that.attackSpeed && bonusArmorPenPercent == that.bonusArmorPenPercent && bonusMagicPenPercent == that.bonusMagicPenPercent && ccReduction == that.ccReduction && cooldownReduction == that.cooldownReduction && health == that.health && healthMax == that.healthMax && healthRegen == that.healthRegen && lifesteal == that.lifesteal && magicPen == that.magicPen && magicPenPercent == that.magicPenPercent && magicResist == that.magicResist && movementSpeed == that.movementSpeed && power == that.power && powerMax == that.powerMax && powerRegen == that.powerRegen && spellVamp == that.spellVamp;
+        return abilityPower == that.abilityPower && abilityHaste == that.abilityHaste && armor == that.armor && armorPen == that.armorPen && armorPenPercent == that.armorPenPercent && attackDamage == that.attackDamage && attackSpeed == that.attackSpeed && bonusArmorPenPercent == that.bonusArmorPenPercent && bonusMagicPenPercent == that.bonusMagicPenPercent && ccReduction == that.ccReduction && cooldownReduction == that.cooldownReduction && health == that.health && healthMax == that.healthMax && healthRegen == that.healthRegen && lifesteal == that.lifesteal && magicPen == that.magicPen && magicPenPercent == that.magicPenPercent && magicResist == that.magicResist && movementSpeed == that.movementSpeed && omnivamp == that.omnivamp && physicalVamp == that.physicalVamp && power == that.power && powerMax == that.powerMax && powerRegen == that.powerRegen && spellVamp == that.spellVamp;
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(abilityPower, armor, armorPen, armorPenPercent, attackDamage, attackSpeed, bonusArmorPenPercent, bonusMagicPenPercent, ccReduction, cooldownReduction, health, healthMax, healthRegen, lifesteal, magicPen, magicPenPercent, magicResist, movementSpeed, power, powerMax, powerRegen, spellVamp);
+        return Objects.hash(abilityPower, abilityHaste, armor, armorPen, armorPenPercent, attackDamage, attackSpeed, bonusArmorPenPercent, bonusMagicPenPercent, ccReduction, cooldownReduction, health, healthMax, healthRegen, lifesteal, magicPen, magicPenPercent, magicResist, movementSpeed, omnivamp, physicalVamp, power, powerMax, powerRegen, spellVamp);
     }
     
     @Override
@@ -166,6 +184,7 @@ public class ChampionStats implements Serializable
     {
         return "ChampionStats{" +
                "abilityPower=" + abilityPower +
+               ", abilityHaste=" + abilityHaste +
                ", armor=" + armor +
                ", armorPen=" + armorPen +
                ", armorPenPercent=" + armorPenPercent +
@@ -183,6 +202,8 @@ public class ChampionStats implements Serializable
                ", magicPenPercent=" + magicPenPercent +
                ", magicResist=" + magicResist +
                ", movementSpeed=" + movementSpeed +
+               ", omnivamp=" + omnivamp +
+               ", physicalVamp=" + physicalVamp +
                ", power=" + power +
                ", powerMax=" + powerMax +
                ", powerRegen=" + powerRegen +

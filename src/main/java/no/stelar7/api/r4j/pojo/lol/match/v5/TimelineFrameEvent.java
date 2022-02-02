@@ -9,37 +9,43 @@ import java.util.*;
 
 public class TimelineFrameEvent implements Serializable
 {
-    private static final long serialVersionUID = -1632996819871584522L;
+    private static final long serialVersionUID = -653418574112361358L;
     
-    private int                      creatorId;
-    private long                     realTimestamp;
-    private long                     timestamp;
+    private BuildingType             buildingType;
     private EventType                type;
-    private int                      participantId;
-    private int                      skillSlot;
+    private KillType                 killType;
+    private LaneType                 laneType;
     private LevelUpType              levelUpType;
-    private int                      itemId;
-    private int                      beforeId;
-    private int                      afterId;
-    private int                      goldGain;
-    private WardType                 wardType;
-    private int                      bounty;
-    private int                      killStreakLength;
-    private int                      killerId;
-    private TimelinePosition         position;
+    private List<Integer>            assistingParticipantIds;
     private List<TimelineDamageData> victimDamageDealt;
     private List<TimelineDamageData> victimDamageReceived;
-    private int                      victimId;
-    private BuildingType             buildingType;
-    private TowerType                towerType;
-    private LaneType                 laneType;
-    private List<Integer>            assistingParticipantIds;
-    private MonsterType              monsterType;
     private MonsterSubType           monsterSubType;
-    private TeamType                 teamId;
+    private MonsterType              monsterType;
     private TeamType                 killerTeamId;
+    private TeamType                 teamId;
+    private TeamType                 winningTeam;
+    private TimelinePosition         position;
+    private TowerType                towerType;
     private TransformType            transformType;
-    private KillType                 killType;
+    private WardType                 wardType;
+    private int                      actualStartTime;
+    private int                      afterId;
+    private int                      beforeId;
+    private int                      bounty;
+    private int                      creatorId;
+    private int                      goldGain;
+    private int                      itemId;
+    private int                      killStreakLength;
+    private int                      killerId;
+    private int                      level;
+    private int                      multiKillLength;
+    private int                      participantId;
+    private int                      shutdownBounty;
+    private int                      skillSlot;
+    private int                      victimId;
+    private long                     gameId;
+    private long                     realTimestamp;
+    private long                     timestamp;
     
     public long getRealTimestamp()
     {
@@ -191,6 +197,36 @@ public class TimelineFrameEvent implements Serializable
         return killType;
     }
     
+    public int getShutdownBounty()
+    {
+        return shutdownBounty;
+    }
+    
+    public int getLevel()
+    {
+        return level;
+    }
+    
+    public int getMultiKillLength()
+    {
+        return multiKillLength;
+    }
+    
+    public int getActualStartTime()
+    {
+        return actualStartTime;
+    }
+    
+    public long getGameId()
+    {
+        return gameId;
+    }
+    
+    public TeamType getWinningTeam()
+    {
+        return winningTeam;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
@@ -203,13 +239,13 @@ public class TimelineFrameEvent implements Serializable
             return false;
         }
         TimelineFrameEvent that = (TimelineFrameEvent) o;
-        return creatorId == that.creatorId && realTimestamp == that.realTimestamp && timestamp == that.timestamp && participantId == that.participantId && skillSlot == that.skillSlot && itemId == that.itemId && beforeId == that.beforeId && afterId == that.afterId && goldGain == that.goldGain && bounty == that.bounty && killStreakLength == that.killStreakLength && killerId == that.killerId && victimId == that.victimId && type == that.type && levelUpType == that.levelUpType && wardType == that.wardType && Objects.equals(position, that.position) && Objects.equals(victimDamageDealt, that.victimDamageDealt) && Objects.equals(victimDamageReceived, that.victimDamageReceived) && buildingType == that.buildingType && towerType == that.towerType && laneType == that.laneType && Objects.equals(assistingParticipantIds, that.assistingParticipantIds) && monsterType == that.monsterType && monsterSubType == that.monsterSubType && teamId == that.teamId && killerTeamId == that.killerTeamId && transformType == that.transformType && killType == that.killType;
+        return creatorId == that.creatorId && realTimestamp == that.realTimestamp && timestamp == that.timestamp && participantId == that.participantId && skillSlot == that.skillSlot && itemId == that.itemId && beforeId == that.beforeId && afterId == that.afterId && goldGain == that.goldGain && bounty == that.bounty && killStreakLength == that.killStreakLength && killerId == that.killerId && victimId == that.victimId && shutdownBounty == that.shutdownBounty && level == that.level && multiKillLength == that.multiKillLength && actualStartTime == that.actualStartTime && gameId == that.gameId && type == that.type && levelUpType == that.levelUpType && wardType == that.wardType && Objects.equals(position, that.position) && Objects.equals(victimDamageDealt, that.victimDamageDealt) && Objects.equals(victimDamageReceived, that.victimDamageReceived) && buildingType == that.buildingType && towerType == that.towerType && laneType == that.laneType && Objects.equals(assistingParticipantIds, that.assistingParticipantIds) && monsterType == that.monsterType && monsterSubType == that.monsterSubType && teamId == that.teamId && killerTeamId == that.killerTeamId && transformType == that.transformType && killType == that.killType && winningTeam == that.winningTeam;
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(creatorId, realTimestamp, timestamp, type, participantId, skillSlot, levelUpType, itemId, beforeId, afterId, goldGain, wardType, bounty, killStreakLength, killerId, position, victimDamageDealt, victimDamageReceived, victimId, buildingType, towerType, laneType, assistingParticipantIds, monsterType, monsterSubType, teamId, killerTeamId, transformType, killType);
+        return Objects.hash(creatorId, realTimestamp, timestamp, type, participantId, skillSlot, levelUpType, itemId, beforeId, afterId, goldGain, wardType, bounty, killStreakLength, killerId, position, victimDamageDealt, victimDamageReceived, victimId, buildingType, towerType, laneType, assistingParticipantIds, monsterType, monsterSubType, teamId, killerTeamId, transformType, killType, shutdownBounty, level, multiKillLength, actualStartTime, gameId, winningTeam);
     }
     
     @Override
@@ -245,6 +281,12 @@ public class TimelineFrameEvent implements Serializable
                ", killerTeamId=" + killerTeamId +
                ", transformType=" + transformType +
                ", killType=" + killType +
+               ", shutdownBounty=" + shutdownBounty +
+               ", level=" + level +
+               ", multiKillLength=" + multiKillLength +
+               ", actualStartTime=" + actualStartTime +
+               ", gameId=" + gameId +
+               ", winningTeam=" + winningTeam +
                '}';
     }
 }
