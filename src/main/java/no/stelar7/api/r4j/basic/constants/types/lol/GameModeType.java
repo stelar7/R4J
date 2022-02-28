@@ -27,6 +27,10 @@ public enum GameModeType implements CodedEnum
     TUTORIAL_MODULE_2,
     TUTORIAL_MODULE_3,
     /**
+     * Practice tool games
+     */
+    PRACTICETOOL,
+    /**
      * One for All games
      */
     ONEFORALL,
