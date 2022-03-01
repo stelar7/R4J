@@ -97,7 +97,7 @@ public enum MapType implements CodedEnum
     /**
      * Gets from code.
      *
-     * @param mapId the map id
+     * @param value the map code
      * @return the from code
      */
     public Optional<MapType> getFromCode(String value)
