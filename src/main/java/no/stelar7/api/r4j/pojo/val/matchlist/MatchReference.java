@@ -1,15 +1,17 @@
 package no.stelar7.api.r4j.pojo.val.matchlist;
 
+import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class MatchReference implements Serializable
 {
-    private static final long serialVersionUID = -5301457261872587385L;
+    private static final long serialVersionUID = -2998111548318274081L;
 
     private String matchId;
     private Long   gameStartTimeMillis;
-    private String queueId;
+    private GameQueueType queueId;
 
     public String getMatchId()
     {
@@ -21,7 +23,7 @@ public class MatchReference implements Serializable
         return gameStartTimeMillis;
     }
 
-    public String getQueueId()
+    public GameQueueType getQueueId()
     {
         return queueId;
     }
