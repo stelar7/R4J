@@ -6,26 +6,26 @@ import java.util.Objects;
 public class MatchReference implements Serializable
 {
     private static final long serialVersionUID = -5301457261872587385L;
-    
+
     private String matchId;
-    private Long   gameStartTime;
-    private String teamId;
-    
+    private Long   gameStartTimeMillis;
+    private String queueId;
+
     public String getMatchId()
     {
         return matchId;
     }
-    
-    public Long getGameStartTime()
+
+    public Long getGameStartTimeMillis()
     {
-        return gameStartTime;
+        return gameStartTimeMillis;
     }
-    
-    public String getTeamId()
+
+    public String getQueueId()
     {
-        return teamId;
+        return queueId;
     }
-    
+
     @Override
     public boolean equals(Object o)
     {
@@ -39,23 +39,23 @@ public class MatchReference implements Serializable
         }
         MatchReference match = (MatchReference) o;
         return Objects.equals(matchId, match.matchId) &&
-               Objects.equals(gameStartTime, match.gameStartTime) &&
-               Objects.equals(teamId, match.teamId);
+               Objects.equals(gameStartTimeMillis, match.gameStartTimeMillis) &&
+               Objects.equals(queueId, match.queueId);
     }
-    
+
     @Override
     public int hashCode()
     {
-        return Objects.hash(matchId, gameStartTime, teamId);
+        return Objects.hash(matchId, gameStartTimeMillis, queueId);
     }
-    
+
     @Override
     public String toString()
     {
         return "Match{" +
                "matchId='" + matchId + '\'' +
-               ", gameStartTime=" + gameStartTime +
-               ", teamId='" + teamId + '\'' +
+               ", gameStartTimeMillis=" + gameStartTimeMillis +
+               ", queueId='" + queueId + '\'' +
                '}';
     }
 }
