@@ -23,7 +23,7 @@ public class MatchReference implements Serializable
         return gameStartTimeMillis;
     }
 
-    public GameQueueType getQueueId()
+    public GameQueueType getQueue()
     {
         return queueId;
     }
