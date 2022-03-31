@@ -15,6 +15,7 @@ public enum GameQueueType implements CodedEnum<GameQueueType>
     CUSTOM_GAME(""),
     TOURNAMENT_MODE("tournamentmode"),
     ONE_FOR_ALL("onefa"),
+    ESCALATION("ggteam"),
     ;
     
     
