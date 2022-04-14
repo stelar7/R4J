@@ -56,7 +56,7 @@ public class LoRGameScreen implements Serializable
     {
         private String  CardID;
         private String  CardCode;
-        private boolean localPlayer;
+        private boolean LocalPlayer;
         private int     TopLeftX;
         private int     TopLeftY;
         private int     Width;
@@ -86,7 +86,7 @@ public class LoRGameScreen implements Serializable
         
         public boolean isLocalPlayer()
         {
-            return localPlayer;
+            return LocalPlayer;
         }
         
         public int getTopLeftX()
@@ -122,7 +122,7 @@ public class LoRGameScreen implements Serializable
                 return false;
             }
             LoRCardRectangle that = (LoRCardRectangle) o;
-            return localPlayer == that.localPlayer &&
+            return LocalPlayer == that.LocalPlayer &&
                    TopLeftX == that.TopLeftX &&
                    TopLeftY == that.TopLeftY &&
                    Width == that.Width &&
@@ -135,7 +135,7 @@ public class LoRGameScreen implements Serializable
         @Override
         public int hashCode()
         {
-            return Objects.hash(CardID, CardCode, localPlayer, TopLeftX, TopLeftY, Width, Height, card);
+            return Objects.hash(CardID, CardCode, LocalPlayer, TopLeftX, TopLeftY, Width, Height, card);
         }
         
         @Override
@@ -144,7 +144,7 @@ public class LoRGameScreen implements Serializable
             return "LoRCardRectangle{" +
                    "CardID='" + CardID + '\'' +
                    ", CardCode='" + CardCode + '\'' +
-                   ", localPlayer=" + localPlayer +
+                   ", LocalPlayer=" + LocalPlayer +
                    ", TopLeftX=" + TopLeftX +
                    ", TopLeftY=" + TopLeftY +
                    ", Width=" + Width +
