@@ -21,6 +21,7 @@ public enum EventType implements CodedEnum
     WARD_KILL,
     WARD_PLACED,
     TURRET_PLATE_DESTROYED,
+    PAUSE_START,
     PAUSE_END,
     LEVEL_UP,
     CHAMPION_SPECIAL_KILL,
