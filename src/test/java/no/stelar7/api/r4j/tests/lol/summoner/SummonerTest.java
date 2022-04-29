@@ -56,7 +56,7 @@ public class SummonerTest
         String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
         Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
-        Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withName(s.getNormalizedName()).get();
+        Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withName(s.getName()).get();
         doAssertions.accept(optional);
     }
     
@@ -104,5 +104,20 @@ public class SummonerTest
         System.out.println(crawler.get().size());
         crawler.crawlGames();
         System.out.println(crawler.get().size());
+    }
+    
+    @Test
+    public void testSpaceInName()
+    {
+        DataCall.setCacheProvider(null);
+        
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.NA1).withName("Y K").get();
+        Summoner s2 = Summoner.byPUUID(LeagueShard.NA1, "NxhbAImhCWlqkC1IFRVHgfWaAtD0OO8Zofk9oe79DGIYi3IH9YCn75Ke2-iO0qFJNmFCSw9q4l2Rlg"); // 夜
+        Summoner s3 = new SummonerBuilder().withPlatform(LeagueShard.KR).withName("삼 재").get();
+        
+        Assertions.assertNotNull(s);
+        Assertions.assertNotNull(s2);
+        Assertions.assertNotNull(s3);
+        
     }
 }

@@ -125,9 +125,7 @@ public final class Utils
     {
         try
         {
-            final String stripped = data.replaceAll("\\s+", "");
-            final String result   = stripped;
-            return URLEncoder.encode(result, "UTF-8");
+            return URLEncoder.encode(data, "UTF-8");
         } catch (final UnsupportedEncodingException e)
         {
             e.printStackTrace();

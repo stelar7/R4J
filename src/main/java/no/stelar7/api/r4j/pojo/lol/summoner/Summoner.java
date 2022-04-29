@@ -2,7 +2,6 @@ package no.stelar7.api.r4j.pojo.lol.summoner;
 
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.lol.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.league.LeagueBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder;
@@ -71,16 +70,6 @@ public final class Summoner implements Serializable
     public String getName()
     {
         return this.name;
-    }
-    
-    /**
-     * The Summoners name normalized. (no whitespace, lowercase Locale.ENGLISH)
-     *
-     * @return String
-     */
-    public String getNormalizedName()
-    {
-        return Utils.normalizeString(name);
     }
     
     /**
