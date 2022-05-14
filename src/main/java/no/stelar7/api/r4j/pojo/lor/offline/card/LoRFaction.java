@@ -16,6 +16,7 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
     MOUNT_TARGON(2, "MT", 9),
     SHURIMA(3, "SH", 7),
     BANDLE_CITY(4, "BC", 10),
+    RUNETERRA(5, "RU", 12),
     ;
     
     private final int    version;

@@ -65,7 +65,7 @@ public class TestLorDeck
     public void testSmallDeck()
     {
         LoRDeck deck = new LoRDeck();
-        deck.addCard(LoRCard.create("01DE002"), 3);
+        deck.addCard(LoRCard.create("06RU002"), 3);
         
         String  code    = LoRDeckCode.encode(deck);
         LoRDeck decoded = LoRDeckCode.decode(code);
