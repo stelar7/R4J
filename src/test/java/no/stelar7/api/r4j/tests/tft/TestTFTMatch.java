@@ -20,7 +20,7 @@ public class TestTFTMatch
     @Test
     public void testFetchList()
     {
-        List<String> stelar7 = api.getMatchList(RegionShard.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 20);
+        List<String> stelar7 = api.getMatchList(RegionShard.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 0, 20, null, null);
         System.out.println();
     }
     
@@ -42,7 +42,7 @@ public class TestTFTMatch
     public void testMatchIterator()
     {
         RiotAccount acc = l4j8.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "Yisus", "yisus");
-        MatchIterator stelar7 = api.getMatchIterator(RegionShard.EUROPE, acc.getPUUID(), 20);
+        MatchIterator stelar7 = api.getMatchIterator(RegionShard.EUROPE, acc.getPUUID(), 0, 20, null, null);
         for (GAMHSMatch m : stelar7)
         {
             System.out.println(m.asTFTMatch());

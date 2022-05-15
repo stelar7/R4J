@@ -23,18 +23,32 @@ public class TFTMatchAPI
         // Hide public constructor
     }
     
-    public List<String> getMatchList(RegionShard server, String PUUID, int count)
+    public List<String> getMatchList(RegionShard server, String PUUID, Integer start, Integer count, Long startTime, Long endTime)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCHLIST)
+                                                       .withQueryParameter(Constants.START_PLACEHOLDER_DATA, String.valueOf(start))
                                                        .withQueryParameter(Constants.COUNT_PLACEHOLDER_DATA, String.valueOf(count))
                                                        .withPlatform(server);
+    
+        if (startTime != null)
+        {
+            builder.withQueryParameter(Constants.STARTTIME_PLACEHOLDER_DATA, String.valueOf(startTime));
+        }
+    
+        if (endTime != null)
+        {
+            builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(endTime));
+        }
         
         Map<String, Object> data = new TreeMap<>();
         data.put("platform", server);
         data.put("puuid", PUUID);
+        data.put("start", start);
         data.put("count", count);
+        data.put("starttime", startTime);
+        data.put("endtime", endTime);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCHLIST, data);
         if (chl.isPresent())
@@ -62,12 +76,12 @@ public class TFTMatchAPI
      *
      * @param server the platform the account is on
      * @param puuid  the account to check
-     * @param count the amount of games to fetch
+     * @param count  the amount of games to fetch
      * @return {@code MatchIterator}
      */
-    public MatchIterator getMatchIterator(RegionShard server, String puuid, int count)
+    public MatchIterator getMatchIterator(RegionShard server, String puuid, Integer start, Integer count, Long startTime, Long endTime)
     {
-        return new MatchIterator(getMatchList(server, puuid, count));
+        return new MatchIterator(getMatchList(server, puuid, start, count, startTime, endTime));
     }
     
     public TFTMatch getMatch(RegionShard platform, String gameId)
