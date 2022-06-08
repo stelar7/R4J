@@ -153,6 +153,7 @@ public class MatchListV5Test
     }
     
     @Test
+    @Disabled
     public void testForMissingAttributes() {
         LeagueAPI leagueAPI = r4J.getLoLAPI().getLeagueAPI();
         List<LeagueEntry> divis = leagueAPI.getLeagueByTierDivision(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GOLD_I, 1);

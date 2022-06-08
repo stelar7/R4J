@@ -319,12 +319,12 @@ public enum GameQueueType implements CodedEnum
     /**
      * Teamfight Tactics (Normal Double Up 2v0)
      */
-    TEAMFIGHT_TACTICS_DOUBLE_UP_2V0(new Integer[]{1142, 1152}),
+    TEAMFIGHT_TACTICS_DOUBLE_UP_2V0(new Integer[]{1142, 1151, 1161}),
     
     /**
      * Teamfight Tactics (Normal Double Up 4v0)
      */
-    TEAMFIGHT_TACTICS_DOUBLE_UP_4V0(new Integer[]{1143}),
+    TEAMFIGHT_TACTICS_DOUBLE_UP_4V0(new Integer[]{1143, 1152, 1162}),
     
     /**
      * Teamfight Tactics (Normal Double Up)
@@ -336,6 +336,7 @@ public enum GameQueueType implements CodedEnum
      */
     TEAMFIGHT_TACTICS_DOUBLE_UP_1V7_BOTS(new Integer[]{1141}),
     
+    TEAMFIGHT_TACTICS_DOUBLE_UP_WORKSHOP(new Integer[]{1160}, "RANKED_TFT_DOUBLE_UP"),
     
     
     /**
@@ -348,6 +349,8 @@ public enum GameQueueType implements CodedEnum
     THREE_VS_THREE(new Integer[]{1403}),
     FOUR_VS_FOUR(new Integer[]{1404}),
     
+    TFT_CUSTOM(new Integer[]{3000}),
+    TFT_HYPER_ROLL_CUSTOM(new Integer[]{3010}),
     
     ;
     

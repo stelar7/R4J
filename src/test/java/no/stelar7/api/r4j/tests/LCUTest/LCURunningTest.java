@@ -44,6 +44,14 @@ public class LCURunningTest
     
     @Test
     @Disabled
+    public void testGetQueues()
+    {
+        Object a = LCUApi.customUrl("lol-game-queues/v1/queues", null, "GET");
+        System.out.println();
+    }
+    
+    @Test
+    @Disabled
     public void testCustomURL()
     {
         Object a = LCUApi.customUrl("​entitlements​/v1​/token", null, "GET");
