@@ -22,6 +22,7 @@ public final class Constants
     
     public static final String VERSION_PLACEHOLDER_DATA    = "version";
     public static final String LOCALE_PLACEHOLDER_DATA     = "locale";
+    public static final String LIMIT_PLACEHOLDER_DATA      = "limit";
     public static final String QUEUE_PLACEHOLDER_DATA      = "queue";
     public static final String SEASON_PLACEHOLDER_DATA     = "season";
     public static final String ENDTIME_PLACEHOLDER_DATA    = "endTime";
@@ -66,6 +67,8 @@ public final class Constants
     public static final String PAGE_PLACEHOLDER             = "{page}";
     public static final String GAME_NAME_PLACEHOLDER        = "{gameName}";
     public static final String TAG_LINE_PLACEHOLDER         = "{tagLine}";
+    public static final String CHALLENGE_ID_PLACEHOLDER     = "{challengeId}";
+    public static final String LEVEL_PLACEHOLDER            = "{level}";
     
     
     public static final String URL_PARAM_TOURNAMENT_ID       = "tournamentId";

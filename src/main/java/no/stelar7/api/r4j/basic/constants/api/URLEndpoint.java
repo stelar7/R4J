@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.basic.constants.api;
 
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.utils.*;
+import no.stelar7.api.r4j.pojo.lol.challenges.*;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.pojo.lol.championmastery.*;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
@@ -224,11 +225,17 @@ public enum URLEndpoint
     V5_MATCH("lol", "match", "v5", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
     V5_TIMELINE("lol", "match", "v5", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/timeline", GAMHSMatch.class),
     
+    V1_CHALLENGES_PERCENTILES("lol", "challenges", "v1", "challenges/percentiles", MultiChallengePercentileMap.class),
+    V1_CHALLENGES_PERCENTILES_BY_ID("lol", "challenges", "v1", "challenges/" + Constants.CHALLENGE_ID_PLACEHOLDER + "/percentiles", ChallengePercentileMap.class),
+    V1_CHALLENGES_CONFIG("lol", "challenges", "v1", "challenges/config", ChallengeConfigInfoList.class),
+    V1_CHALLENGES_CONFIG_BY_ID("lol", "challenges", "v1", "challenges/" + Constants.CHALLENGE_ID_PLACEHOLDER + "/config", ChallengeConfigInfo.class),
+    V1_CHALLENGES_LEADERBOARD_BY_LEVEL("lol", "challenges", "v1", "challenges/" + Constants.CHALLENGE_ID_PLACEHOLDER + "/leaderboards/by-level/" + Constants.LEVEL_PLACEHOLDER, ChallengeLeaderboardInfoList.class),
+    V1_CHALLENGES_BY_PLAYER("lol", "challenges", "v1", "player-data/" + Constants.PUUID_ID_PLACEHOLDER, ChallengePlayerInfo.class),
     
     ;
     
     
-    private final String game;
+    private final String   game;
     private final String   service;
     private final String   version;
     private final String   resource;

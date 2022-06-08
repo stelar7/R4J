@@ -214,38 +214,8 @@ public final class Summoner implements Serializable
         {
             return false;
         }
-        
         Summoner summoner = (Summoner) o;
-        
-        if (profileIconId != summoner.profileIconId)
-        {
-            return false;
-        }
-        if (summonerLevel != summoner.summonerLevel)
-        {
-            return false;
-        }
-        if (!Objects.equals(id, summoner.id))
-        {
-            return false;
-        }
-        if (!Objects.equals(accountId, summoner.accountId))
-        {
-            return false;
-        }
-        if (!Objects.equals(puuid, summoner.puuid))
-        {
-            return false;
-        }
-        if (revisionDate != summoner.revisionDate)
-        {
-            return false;
-        }
-        if (!Objects.equals(name, summoner.name))
-        {
-            return false;
-        }
-        return platform == summoner.platform;
+        return profileIconId == summoner.profileIconId && summonerLevel == summoner.summonerLevel && revisionDate == summoner.revisionDate && Objects.equals(name, summoner.name) && Objects.equals(accountId, summoner.accountId) && Objects.equals(puuid, summoner.puuid) && Objects.equals(id, summoner.id) && platform == summoner.platform;
     }
     
     @Override
@@ -261,8 +231,9 @@ public final class Summoner implements Serializable
                "profileIconId=" + profileIconId +
                ", name='" + name + '\'' +
                ", summonerLevel=" + summonerLevel +
-               ", accountId=" + accountId +
-               ", id=" + id +
+               ", accountId='" + accountId + '\'' +
+               ", puuid='" + puuid + '\'' +
+               ", id='" + id + '\'' +
                ", revisionDate=" + revisionDate +
                ", platform=" + platform +
                '}';

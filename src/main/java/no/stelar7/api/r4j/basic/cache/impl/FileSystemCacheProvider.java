@@ -21,8 +21,8 @@ public class FileSystemCacheProvider implements CacheProvider
     private       long              timeToLive;
     private       CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
     
-    private ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
-    private ScheduledFuture<?>       clearTask;
+    private final ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
+    private       ScheduledFuture<?>       clearTask;
     
     public FileSystemCacheProvider(Path pathToFiles, int ttl)
     {

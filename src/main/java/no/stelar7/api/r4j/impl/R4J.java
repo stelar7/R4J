@@ -119,6 +119,16 @@ public class R4J
         {
             return ClashAPI.getInstance();
         }
+        
+        /**
+         * Gets challenge api
+         *
+         * @return the challenge api
+         */
+        public ChallengeAPI getChallengeAPI()
+        {
+            return ChallengeAPI.getInstance();
+        }
     }
     
     public LORAPI getLORAPI()
