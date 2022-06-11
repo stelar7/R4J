@@ -30,7 +30,7 @@ public enum LaneType implements CodedEnum
     /**
      * The support
      */
-    UITILITY("UTILITY"),
+    UTILITY("UTILITY"),
     
     /**
      * The afk
