@@ -28,10 +28,13 @@ public enum TierDivisionType implements CodedEnum<TierDivisionType>
     DIAMOND_1(18),
     DIAMOND_2(19),
     DIAMOND_3(20),
-    IMMORTAL_1(21),
-    IMMORTAL_2(22),
-    IMMORTAL_3(23),
-    RADIANT_1(24),
+    ASCENDANT_1(21),
+    ASCENDANT_2(22),
+    ASCENDANT_3(23),
+    IMMORTAL_1(24),
+    IMMORTAL_2(25),
+    IMMORTAL_3(26),
+    RADIANT_1(27),
     ;
     
     
