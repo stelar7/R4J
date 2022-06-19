@@ -10,7 +10,7 @@ Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src
 
 | Type           | Supported |
 | :------------: | :-------: |
-| V4 compatible?            | Yes!      |
+| V5 compatible?            | Yes!      |
 | Rate-limiting? | Set dynamically based on your key!      |
 
 | Cache           | Supported |
