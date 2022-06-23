@@ -16,6 +16,7 @@ public enum GameQueueType implements CodedEnum<GameQueueType>
     TOURNAMENT_MODE("tournamentmode"),
     ONE_FOR_ALL("onefa"),
     ESCALATION("ggteam"),
+    NEW_MAP("newmap"),
     ;
     
     
