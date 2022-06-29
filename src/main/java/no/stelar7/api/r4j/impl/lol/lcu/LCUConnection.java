@@ -13,7 +13,7 @@ public class LCUConnection
     {
         boolean      isWindows      = System.getProperty("os.name").toLowerCase(Locale.ENGLISH).contains("win");
         List<String> windowsCommand = Arrays.asList("WMIC", "process", "where", "name='LeagueClientUx.exe'", "get", "commandLine");
-        List<String> macCommand     = Arrays.asList("ps", "x", "|", "grep", "'LeagueClientUx.exe'");
+        List<String> macCommand     = Arrays.asList("/bin/sh", "-c", "ps x | grep 'LeagueClientUx'");
         
         String passwordRegex = "--remoting-auth-token=(?<password>[^ \\\"]+)";
         String portRegex     = "--app-port=(?<port>\\d+)";
