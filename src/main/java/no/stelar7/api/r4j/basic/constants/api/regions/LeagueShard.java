@@ -191,7 +191,6 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
             case NA1:
             case LA1:
             case LA2:
-            case OC1:
                 return RegionShard.AMERICAS;
             case EUN1:
             case EUW1:
@@ -210,6 +209,8 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
             case TH:
             case TW:
                 return RegionShard.GARENA;
+            case OC1:
+                return RegionShard.SEA;
             default:
                 throw new APIEnumNotUpToDateException(RegionShard.class, new JsonPrimitive(this.toString()));
         }

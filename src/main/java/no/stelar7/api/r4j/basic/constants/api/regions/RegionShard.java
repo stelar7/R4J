@@ -35,6 +35,10 @@ public enum RegionShard implements RealmSpesificEnum
      * Esports
      */
     ESPORTS("ESPORTS", "esports"),
+    /**
+     * South-East Asia platform.
+     */
+    SEA("SEA", "sea"),
     ;
     
     private String[] key;
