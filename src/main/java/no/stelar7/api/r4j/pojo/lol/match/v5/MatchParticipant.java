@@ -7,7 +7,7 @@ import java.util.*;
 
 public class MatchParticipant implements Serializable
 {
-    private static final long serialVersionUID = 796999396694981423L;
+    private static final long serialVersionUID = 1517560777228753575L;
     
     private int                 assists;
     private int                 baronKills;
