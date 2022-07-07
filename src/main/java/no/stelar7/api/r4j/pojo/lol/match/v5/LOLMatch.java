@@ -49,12 +49,12 @@ public class LOLMatch implements Serializable
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameCreation), ZoneOffset.UTC);
     }
     
-    public long getGameCreation()
+    public Long getGameCreation()
     {
         return gameCreation;
     }
     
-    public int getGameDuration()
+    public Integer getGameDuration()
     {
         return gameDuration;
     }
@@ -84,7 +84,7 @@ public class LOLMatch implements Serializable
         return gameName;
     }
     
-    public long getGameStartTimestamp()
+    public Long getGameStartTimestamp()
     {
         return gameStartTimestamp;
     }
@@ -94,7 +94,7 @@ public class LOLMatch implements Serializable
         return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this.gameStartTimestamp), ZoneOffset.UTC);
     }
     
-    public long getGameEndTimestamp()
+    public Long getGameEndTimestamp()
     {
         return gameEndTimestamp;
     }
