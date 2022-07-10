@@ -5,12 +5,13 @@ import java.util.*;
 
 public class StaticLoRCard implements Serializable
 {
-    private static final long serialVersionUID = 2237963538719986242L;
-    private List<String> associatedCards;
+    private static final long serialVersionUID = -1481533360286816949L;
+    
+    private List<String>             associatedCards;
     private List<String>             associatedCardRefs;
     private List<StaticLoRCardAsset> assets;
-    private String                   region;
-    private String                   regionRef;
+    private List<String>             regions;
+    private List<String>             regionRefs;
     private int                      attack;
     private int                      cost;
     private int                      health;
@@ -48,14 +49,14 @@ public class StaticLoRCard implements Serializable
         return assets;
     }
     
-    public String getRegion()
+    public List<String> getRegions()
     {
-        return region;
+        return regions;
     }
     
-    public String getRegionRef()
+    public List<String> getRegionRefs()
     {
-        return regionRef;
+        return regionRefs;
     }
     
     public int getAttack()
@@ -175,70 +176,18 @@ public class StaticLoRCard implements Serializable
             return false;
         }
         StaticLoRCard that = (StaticLoRCard) o;
-        return attack == that.attack &&
-               cost == that.cost &&
-               health == that.health &&
-               collectible == that.collectible &&
-               Objects.equals(associatedCards, that.associatedCards) &&
-               Objects.equals(associatedCardRefs, that.associatedCardRefs) &&
-               Objects.equals(assets, that.assets) &&
-               Objects.equals(region, that.region) &&
-               Objects.equals(regionRef, that.regionRef) &&
-               Objects.equals(description, that.description) &&
-               Objects.equals(descriptionRaw, that.descriptionRaw) &&
-               Objects.equals(levelupDescription, that.levelupDescription) &&
-               Objects.equals(levelupDescriptionRaw, that.levelupDescriptionRaw) &&
-               Objects.equals(flavorText, that.flavorText) &&
-               Objects.equals(artistName, that.artistName) &&
-               Objects.equals(name, that.name) &&
-               Objects.equals(cardCode, that.cardCode) &&
-               Objects.equals(keywords, that.keywords) &&
-               Objects.equals(keywordRefs, that.keywordRefs) &&
-               Objects.equals(spellSpeed, that.spellSpeed) &&
-               Objects.equals(spellSpeedRef, that.spellSpeedRef) &&
-               Objects.equals(rarity, that.rarity) &&
-               Objects.equals(rarityRef, that.rarityRef) &&
-               Objects.equals(subtype, that.subtype) &&
-               Objects.equals(supertype, that.supertype) &&
-               Objects.equals(type, that.type);
+        return attack == that.attack && cost == that.cost && health == that.health && collectible == that.collectible && Objects.equals(associatedCards, that.associatedCards) && Objects.equals(associatedCardRefs, that.associatedCardRefs) && Objects.equals(assets, that.assets) && Objects.equals(regions, that.regions) && Objects.equals(regionRefs, that.regionRefs) && Objects.equals(description, that.description) && Objects.equals(descriptionRaw, that.descriptionRaw) && Objects.equals(levelupDescription, that.levelupDescription) && Objects.equals(levelupDescriptionRaw, that.levelupDescriptionRaw) && Objects.equals(flavorText, that.flavorText) && Objects.equals(artistName, that.artistName) && Objects.equals(name, that.name) && Objects.equals(cardCode, that.cardCode) && Objects.equals(keywords, that.keywords) && Objects.equals(keywordRefs, that.keywordRefs) && Objects.equals(spellSpeed, that.spellSpeed) && Objects.equals(spellSpeedRef, that.spellSpeedRef) && Objects.equals(rarity, that.rarity) && Objects.equals(rarityRef, that.rarityRef) && Objects.equals(subtype, that.subtype) && Objects.equals(supertype, that.supertype) && Objects.equals(type, that.type);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(associatedCards, associatedCardRefs, assets, region, regionRef, attack, cost, health, description, descriptionRaw, levelupDescription, levelupDescriptionRaw, flavorText, artistName, name, cardCode, keywords, keywordRefs, spellSpeed, spellSpeedRef, rarity, rarityRef, subtype, supertype, type, collectible);
+        return Objects.hash(associatedCards, associatedCardRefs, assets, regions, regionRefs, attack, cost, health, description, descriptionRaw, levelupDescription, levelupDescriptionRaw, flavorText, artistName, name, cardCode, keywords, keywordRefs, spellSpeed, spellSpeedRef, rarity, rarityRef, subtype, supertype, type, collectible);
     }
     
     @Override
     public String toString()
     {
-        return "StaticLoRCard{" +
-               "associatedCards=" + associatedCards +
-               ", associatedCardRefs=" + associatedCardRefs +
-               ", assets=" + assets +
-               ", region='" + region + '\'' +
-               ", regionRef='" + regionRef + '\'' +
-               ", attack=" + attack +
-               ", cost=" + cost +
-               ", health=" + health +
-               ", description='" + description + '\'' +
-               ", descriptionRaw='" + descriptionRaw + '\'' +
-               ", levelupDescription='" + levelupDescription + '\'' +
-               ", levelupDescriptionRaw='" + levelupDescriptionRaw + '\'' +
-               ", flavorText='" + flavorText + '\'' +
-               ", artistName='" + artistName + '\'' +
-               ", name='" + name + '\'' +
-               ", cardCode='" + cardCode + '\'' +
-               ", keywords=" + keywords +
-               ", keywordRefs=" + keywordRefs +
-               ", spellSpeed='" + spellSpeed + '\'' +
-               ", spellSpeedRef='" + spellSpeedRef + '\'' +
-               ", rarity='" + rarity + '\'' +
-               ", rarityRef='" + rarityRef + '\'' +
-               ", subtype='" + subtype + '\'' +
-               ", supertype='" + supertype + '\'' +
-               ", type='" + type + '\'' +
-               ", collectible=" + collectible +
-               '}';
+        return "StaticLoRCard{" + "associatedCards=" + associatedCards + ", associatedCardRefs=" + associatedCardRefs + ", assets=" + assets + ", regions=" + regions + ", regionRefs=" + regionRefs + ", attack=" + attack + ", cost=" + cost + ", health=" + health + ", description='" + description + '\'' + ", descriptionRaw='" + descriptionRaw + '\'' + ", levelupDescription='" + levelupDescription + '\'' + ", levelupDescriptionRaw='" + levelupDescriptionRaw + '\'' + ", flavorText='" + flavorText + '\'' + ", artistName='" + artistName + '\'' + ", name='" + name + '\'' + ", cardCode='" + cardCode + '\'' + ", keywords=" + keywords + ", keywordRefs=" + keywordRefs + ", spellSpeed='" + spellSpeed + '\'' + ", spellSpeedRef='" + spellSpeedRef + '\'' + ", rarity='" + rarity + '\'' + ", rarityRef='" + rarityRef + '\'' + ", subtype='" + subtype + '\'' + ", supertype='" + supertype + '\'' + ", type='" + type + '\'' + ", collectible=" + collectible + '}';
     }
 }
