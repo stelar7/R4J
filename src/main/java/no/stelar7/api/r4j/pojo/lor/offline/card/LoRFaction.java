@@ -111,11 +111,11 @@ public enum LoRFaction implements CodedEnum<LoRFaction>
             case BILGEWATER:
                 return "Bilgewater";
             case MOUNT_TARGON:
-                return "Mount Targon";
+                return "MountTargon";
             case SHURIMA:
                 return "Shurima";
             case BANDLE_CITY:
-                return "Bandle City";
+                return "BandleCity";
             default:
                 throw new RuntimeException("Unknown region; please alert the API maintainer!");
         }

@@ -79,7 +79,7 @@ public class LoRStaticAPI
     {
         return cards
                 .stream()
-                .filter(c -> c.getRegionRef().equalsIgnoreCase(faction.commonName()))
+                .filter(c -> c.getRegionRefs().stream().map(String::toLowerCase).collect(Collectors.toList()).contains(faction.commonName().toLowerCase()))
                 .collect(Collectors.toList());
     }
     
