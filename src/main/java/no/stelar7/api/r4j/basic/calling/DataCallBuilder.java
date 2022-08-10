@@ -226,7 +226,15 @@ public class DataCallBuilder
             returnValue = postProcessDDragonAddId(returnValue);
         }
         
-        final List<URLEndpoint> summonerEndpoints = Arrays.asList(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, URLEndpoint.V4_SUMMONER_BY_ID, URLEndpoint.V4_SUMMONER_BY_NAME, URLEndpoint.V4_SUMMONER_BY_PUUID);
+        final List<URLEndpoint> summonerEndpoints = Arrays.asList(
+                URLEndpoint.V4_SUMMONER_BY_ACCOUNT,
+                URLEndpoint.V4_SUMMONER_BY_ID,
+                URLEndpoint.V4_SUMMONER_BY_NAME,
+                URLEndpoint.V4_SUMMONER_BY_PUUID,
+                URLEndpoint.V1_TFT_SUMMONER_BY_ACCOUNT,
+                URLEndpoint.V1_TFT_SUMMONER_BY_ID,
+                URLEndpoint.V1_TFT_SUMMONER_BY_NAME,
+                URLEndpoint.V1_TFT_SUMMONER_BY_PUUID);
         if (summonerEndpoints.contains(this.dc.getEndpoint()))
         {
             returnValue = postProcessSummoner(returnValue);

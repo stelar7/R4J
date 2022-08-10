@@ -65,4 +65,10 @@ public class TestTFTSummoner
         Summoner optional = api.getSummonerByPUUID(LeagueShard.EUW1, s.getPUUID());
         doAssertions.accept(optional);
     }
+    
+    @Test
+    public void testRandomDude() {
+        Summoner s = api.getSummonerByName(LeagueShard.TR1, "Ginggg");
+        s.getChampionMasteries();
+    }
 }
