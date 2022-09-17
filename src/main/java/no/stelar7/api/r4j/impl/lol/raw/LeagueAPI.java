@@ -40,7 +40,7 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_MASTER)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("queue", queue);
         
@@ -81,7 +81,7 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_GRANDMASTER)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("queue", queue);
         
@@ -123,7 +123,7 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("queue", queue);
         
@@ -163,7 +163,7 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("leagueid", leagueId);
         
@@ -203,7 +203,7 @@ public final class LeagueAPI
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("id", summonerId);
         
@@ -269,7 +269,7 @@ public final class LeagueAPI
             }
         }
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("queue", queue);
         data.put("tierdiv", tierdiv);

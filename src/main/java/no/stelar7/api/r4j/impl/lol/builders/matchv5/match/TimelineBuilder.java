@@ -83,7 +83,7 @@ public class TimelineBuilder
                                                        .withEndpoint(URLEndpoint.V5_TIMELINE)
                                                        .withPlatform(this.platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("matchId", this.id);
         

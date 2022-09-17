@@ -42,7 +42,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -131,7 +131,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -187,7 +187,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -237,7 +237,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, "");
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, "");
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         Optional<?>         chl  = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGES, data);
         if (chl.isPresent())
         {
@@ -273,7 +273,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -318,7 +318,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -363,7 +363,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -418,7 +418,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -470,7 +470,7 @@ public final class DDragonAPI
                 .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
                 .withEndpoint(URLEndpoint.DDRAGON_REALMS);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", region);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS, data);
@@ -503,7 +503,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("rune") : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -560,7 +560,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -613,7 +613,7 @@ public final class DDragonAPI
                 .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
         
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         Optional<?>         chl  = DataCall.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS, data);
         if (chl.isPresent())
         {
@@ -642,7 +642,7 @@ public final class DDragonAPI
     
     public Map<Integer, StaticPerk> getPerks(String version, String locale)
     {
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         
@@ -694,7 +694,7 @@ public final class DDragonAPI
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("version", version);
         data.put("locale", locale);
         

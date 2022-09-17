@@ -26,7 +26,7 @@ public final class StatusAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V4_STATUS_LOL)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_STATUS_LOL, data);
@@ -55,7 +55,7 @@ public final class StatusAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_STATUS_LOR)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_STATUS_LOR, data);
@@ -84,7 +84,7 @@ public final class StatusAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_STATUS_VAL)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_STATUS_VAL, data);

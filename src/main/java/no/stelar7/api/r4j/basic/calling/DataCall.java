@@ -24,9 +24,9 @@ public final class DataCall
     private static long           maxSleep       = 10000;
     private static int            globalTimeout  = 0;
     
-    private final Map<String, String> urlParams  = new TreeMap<>();
-    private final Map<String, String> urlData    = new TreeMap<>();
-    private final Map<String, String> urlHeaders = new TreeMap<>();
+    private final Map<String, String> urlParams  = new LinkedHashMap<>();
+    private final Map<String, String> urlData    = new LinkedHashMap<>();
+    private final Map<String, String> urlHeaders = new LinkedHashMap<>();
     
     private        Enum        platform;
     private        URLEndpoint endpoint;

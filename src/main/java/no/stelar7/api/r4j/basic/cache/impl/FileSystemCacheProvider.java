@@ -89,7 +89,7 @@ public class FileSystemCacheProvider implements CacheProvider
             }
             
             // inject api key so cache still works in v4
-            vals.add(0, DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
+            vals.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
             
             Path storePath = resolvePath(type, vals);
             Files.createDirectories(storePath.getParent());
@@ -125,7 +125,6 @@ public class FileSystemCacheProvider implements CacheProvider
         Path storePath = home.resolve(type.toString());
         
         List<Object> pathData = new ArrayList<>(obj);
-        Collections.reverse(pathData);
         
         for (Object datum : pathData)
         {
@@ -155,7 +154,7 @@ public class FileSystemCacheProvider implements CacheProvider
                 return;
             }
             
-            vals.add(0, DataCall.getCredentials().getUniqueKeyCombination());
+            vals.add(DataCall.getCredentials().getUniqueKeyCombination());
             
             Path storePath = resolvePath(type, vals);
             if (Files.exists(storePath))
@@ -177,7 +176,7 @@ public class FileSystemCacheProvider implements CacheProvider
         List<Object> vals = new ArrayList<>(obj.values());
         
         // inject api key so cache still works in v4
-        vals.add(0, DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
+        vals.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
         Path filepath = resolvePath(type, vals);
         
         try

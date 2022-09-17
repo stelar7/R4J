@@ -68,7 +68,7 @@ public class LeagueBuilder
                                                        .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY)
                                                        .withPlatform(this.platform);
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("id", summonerId);
         
@@ -112,7 +112,7 @@ public class LeagueBuilder
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE)
                                                        .withPlatform(this.platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("id", leagueId);
         

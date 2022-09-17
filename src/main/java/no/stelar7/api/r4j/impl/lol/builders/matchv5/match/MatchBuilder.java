@@ -84,7 +84,7 @@ public class MatchBuilder
                                                        .withEndpoint(URLEndpoint.V5_MATCH)
                                                        .withPlatform(this.platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", this.platform);
         data.put("gameid", this.id);
         

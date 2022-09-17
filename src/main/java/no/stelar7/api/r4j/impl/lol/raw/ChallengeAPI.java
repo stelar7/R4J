@@ -27,7 +27,7 @@ public final class ChallengeAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_CONFIG, data);
@@ -55,7 +55,7 @@ public final class ChallengeAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
@@ -84,7 +84,7 @@ public final class ChallengeAPI
                                                        .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("challenge", challengeId);
         
@@ -120,7 +120,7 @@ public final class ChallengeAPI
             builder = builder.withQueryParameter(Constants.LIMIT_PLACEHOLDER_DATA, String.valueOf(limit));
         }
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("challenge", challengeId);
         data.put("level", level);
@@ -152,7 +152,7 @@ public final class ChallengeAPI
                                                        .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("challenge", challengeId);
         
@@ -182,7 +182,7 @@ public final class ChallengeAPI
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
         

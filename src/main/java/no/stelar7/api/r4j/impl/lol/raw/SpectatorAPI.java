@@ -79,7 +79,7 @@ public final class SpectatorAPI
                                                        .withEndpoint(URLEndpoint.V4_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("summoner", summonerId);
         

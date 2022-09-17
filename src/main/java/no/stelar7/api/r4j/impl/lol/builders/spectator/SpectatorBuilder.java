@@ -44,7 +44,7 @@ public class SpectatorBuilder
             return Collections.emptyList();
         }
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_FEATURED, data);
@@ -82,7 +82,7 @@ public class SpectatorBuilder
             return null;
         }
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("id", this.summonerId);
         

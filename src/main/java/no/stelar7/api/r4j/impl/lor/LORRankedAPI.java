@@ -33,7 +33,7 @@ public class LORRankedAPI
                 .withEndpoint(URLEndpoint.V1_LOR_RANKED_LEADERBOARD)
                 .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);

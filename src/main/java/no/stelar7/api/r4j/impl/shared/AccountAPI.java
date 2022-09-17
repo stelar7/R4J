@@ -29,7 +29,7 @@ public class AccountAPI
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID)
                                                        .withPlatform(server);
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
         
@@ -60,7 +60,7 @@ public class AccountAPI
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG)
                                                        .withPlatform(server);
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("name", Utils.normalizeString(name));
         data.put("tag", Utils.normalizeString(tag));
@@ -92,7 +92,7 @@ public class AccountAPI
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_SHARED_SHARD_BY_PUUID)
                                                        .withPlatform(server);
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("game", game);
         data.put("puuid", puuid);

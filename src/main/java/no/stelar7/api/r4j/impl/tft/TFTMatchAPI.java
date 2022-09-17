@@ -42,7 +42,7 @@ public class TFTMatchAPI
             builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(endTime));
         }
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", PUUID);
         data.put("start", start);
@@ -101,7 +101,7 @@ public class TFTMatchAPI
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCH)
                                                        .withPlatform(platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("gameid", gameId);
         

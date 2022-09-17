@@ -105,7 +105,7 @@ public class SummonerBuilder
         URLEndpoint     endpoint = null;
         
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         
         if (accId.length() > 0)

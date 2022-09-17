@@ -29,7 +29,7 @@ public class LORMatchAPI
                 .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                 .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
         
@@ -70,7 +70,7 @@ public class LORMatchAPI
                                                        .withEndpoint(URLEndpoint.V1_LOR_MATCH)
                                                        .withPlatform(platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("gameid", gameId);
         

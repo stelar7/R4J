@@ -38,7 +38,7 @@ public class TFTLeagueAPI
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_MASTER)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_MASTER, data);
@@ -76,7 +76,7 @@ public class TFTLeagueAPI
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER)
                                                        .withPlatform(server);
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, data);
@@ -115,7 +115,7 @@ public class TFTLeagueAPI
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, data);
@@ -155,7 +155,7 @@ public class TFTLeagueAPI
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("leagueid", leagueId);
         
@@ -196,7 +196,7 @@ public class TFTLeagueAPI
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_ENTRY)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("id", summonerId);
         
@@ -260,7 +260,7 @@ public class TFTLeagueAPI
             }
         }
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("tierdiv", tierdiv);
         data.put("page", page);

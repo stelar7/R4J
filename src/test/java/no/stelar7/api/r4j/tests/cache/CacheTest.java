@@ -119,7 +119,7 @@ public class CacheTest
         new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", LeagueShard.EUW1);
         data.put("name", id);
         

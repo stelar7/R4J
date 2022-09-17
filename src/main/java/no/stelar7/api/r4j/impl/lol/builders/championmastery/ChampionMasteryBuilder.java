@@ -60,7 +60,7 @@ public class ChampionMasteryBuilder
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(this.platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", this.platform);
         data.put("id", summonerId);
         
@@ -96,7 +96,7 @@ public class ChampionMasteryBuilder
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
                                                        .withPlatform(this.platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("id", summonerId);
         
@@ -149,7 +149,7 @@ public class ChampionMasteryBuilder
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(this.platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("id", summonerId);
         data.put("champion", championId);

@@ -31,7 +31,7 @@ public class VALMatchAPI
                                                        .withEndpoint(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", PUUID);
         
@@ -63,7 +63,7 @@ public class VALMatchAPI
                                                        .withEndpoint(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE)
                                                        .withPlatform(platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("queue", queue);
         
@@ -95,7 +95,7 @@ public class VALMatchAPI
                                                        .withEndpoint(URLEndpoint.V1_VAL_MATCH_BY_ID)
                                                        .withPlatform(platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("gameid", gameId);
         

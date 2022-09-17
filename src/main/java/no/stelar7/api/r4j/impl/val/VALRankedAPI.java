@@ -30,7 +30,7 @@ public class VALRankedAPI
                                                        .withEndpoint(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT)
                                                        .withPlatform(platform);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("actId", actId);
         data.put("startIndex", startIndex);

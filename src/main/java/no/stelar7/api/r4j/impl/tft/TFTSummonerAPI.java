@@ -40,7 +40,7 @@ public class TFTSummonerAPI
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_ID)
                 .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("id", summonerId);
         
@@ -80,7 +80,7 @@ public class TFTSummonerAPI
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_NAME)
                 .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("name", summonerName);
         
@@ -120,7 +120,7 @@ public class TFTSummonerAPI
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_ACCOUNT)
                 .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("accountid", accountId);
         
@@ -161,7 +161,7 @@ public class TFTSummonerAPI
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID)
                 .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", PUUID);
         

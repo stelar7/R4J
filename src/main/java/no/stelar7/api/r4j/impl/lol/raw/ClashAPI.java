@@ -30,7 +30,7 @@ public class ClashAPI
                                                        .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("summonerId", summonerId);
         
@@ -63,7 +63,7 @@ public class ClashAPI
                                                        .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("teamId", teamId);
         
@@ -95,7 +95,7 @@ public class ClashAPI
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CLASH_TOURNAMENTS, data);
@@ -127,7 +127,7 @@ public class ClashAPI
                                                        .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("teamId", teamId);
         
@@ -160,7 +160,7 @@ public class ClashAPI
                                                        .withURLParameter(Constants.TOURNAMENT_ID_PLACEHOLDER, String.valueOf(tournamentId))
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("tournamentId", tournamentId);
         

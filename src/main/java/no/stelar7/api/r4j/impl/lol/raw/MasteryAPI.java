@@ -40,7 +40,7 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("id", summonerId);
         
@@ -100,7 +100,7 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("id", summonerId);
         data.put("champion", championId);
@@ -162,7 +162,7 @@ public final class MasteryAPI
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
                                                        .withPlatform(server);
         
-        Map<String, Object> data = new TreeMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("id", summonerId);
         
