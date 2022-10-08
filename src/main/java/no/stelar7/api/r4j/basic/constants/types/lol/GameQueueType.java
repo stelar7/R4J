@@ -337,6 +337,26 @@ public enum GameQueueType implements CodedEnum
     TEAMFIGHT_TACTICS_DOUBLE_UP_1V7_BOTS(new Integer[]{1141}),
     
     TEAMFIGHT_TACTICS_DOUBLE_UP_WORKSHOP(new Integer[]{1160}, "RANKED_TFT_DOUBLE_UP"),
+    /**
+     * Ultra Rapid Fire games
+     */
+    URF_1V1(new Integer[]{1901}),
+    /**
+     * Ultra Rapid Fire games
+     */
+    URF_2V2(new Integer[]{1902}),
+    /**
+     * Ultra Rapid Fire games
+     */
+    URF_3V3(new Integer[]{1903}),
+    /**
+     * Ultra Rapid Fire games
+     */
+    URF_4V4(new Integer[]{1904}),
+    /**
+     * Ultra Rapid Fire games
+     */
+    URF(new Integer[]{1900}),
     
     
     /**
@@ -438,7 +458,12 @@ public enum GameQueueType implements CodedEnum
                 return "2v2 Snowdown Showdown";
             case HEXAKILL_6X6_SR:
                 return "Summoners Rift Hexakill";
+            case URF_1V1:
+            case URF_2V2:
+            case URF_3V3:
+            case URF_4V4:
             case URF_5X5:
+            case URF:
                 return "URF";
             case ONE_FOR_ALL_MIRROR:
                 return "One for All Mirror Mode";
@@ -610,7 +635,12 @@ public enum GameQueueType implements CodedEnum
             case HEXAKILL:
             case HEXAKILL_6X6_SR:
                 return "Hexakill";
+            case URF_1V1:
+            case URF_2V2:
+            case URF_3V3:
+            case URF_4V4:
             case URF_5X5:
+            case URF:
                 return "URF";
             case ONE_FOR_ALL_MIRROR:
                 return "One for All Mirror Mode";
