@@ -288,7 +288,6 @@ public class DataCallBuilder
     
     private String postProcessDDragonAddId(String returnValue)
     {
-        List<String> buggedElem = new ArrayList<>();
         JsonObject elem   = (JsonObject) JsonParser.parseString(returnValue);
         JsonObject parent = elem.getAsJsonObject("data");
         for (String key : new HashSet<>(parent.keySet()))
@@ -301,14 +300,9 @@ public class DataCallBuilder
                 
             }   catch(NumberFormatException e) 
             {
-                buggedElem.add(key);
-                logger.warn("Item received without a valid Id ({}), item removed from the list", key);
+                parent.remove(key);
+                logger.warn("Item/Rune received without a valid Id ({}), item removed from the list", key);
             }
-        }
-        
-        for(String elemToRemove : buggedElem) 
-        {
-            elem.getAsJsonObject("data").remove(elemToRemove);
         }
         
         return Utils.getGson().toJson(elem);
