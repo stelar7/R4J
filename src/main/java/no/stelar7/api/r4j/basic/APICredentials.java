@@ -4,6 +4,7 @@ import no.stelar7.api.r4j.basic.exceptions.APIUnsupportedActionException;
 import no.stelar7.api.r4j.basic.utils.Base32;
 
 import java.security.*;
+import java.util.logging.Logger;
 
 public class APICredentials
 {
@@ -29,6 +30,10 @@ public class APICredentials
         this.TFTAPIKey = tft;
         this.LORAPIKey = lor;
         this.VALAPIKey = val;
+        
+        if (lol != null && tournament != null && !lol.equals(tournament)) {
+            Logger.getGlobal().warning("Using different keys for league and tournament might lead to decryption exceptions");
+        }
     }
     
     
