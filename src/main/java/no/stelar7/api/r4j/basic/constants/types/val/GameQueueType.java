@@ -17,6 +17,7 @@ public enum GameQueueType implements CodedEnum<GameQueueType>
     ONE_FOR_ALL("onefa"),
     ESCALATION("ggteam"),
     NEW_MAP("newmap"),
+    SWIFTPLAY("swiftplay")
     ;
     
     
