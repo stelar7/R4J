@@ -64,11 +64,11 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
     /**
      * Singapore platform
      */
-    SG("SG", "sg"),
+    SG2("SG2", "sg"),
     /**
      * Philippines platform
      */
-    PH("PH", "ph"),
+    PH2("PH2", "ph"),
     /**
      * Indonesia platform
      */
@@ -76,15 +76,15 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
     /**
      * Vietnam platform
      */
-    VN("VN", "vn"),
+    VN2("VN2", "vn"),
     /**
      * Thailand platform
      */
-    TH("TH", "th"),
+    TH2("TH2", "th"),
     /**
      * Taiwan platform
      */
-    TW("TW", "tw");
+    TW2("TW2", "tw");
     
     
     private String[] keys;
@@ -136,17 +136,17 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
                 return "Russia";
             case PBE1:
                 return "Public Beta Environment";
-            case SG:
+            case SG2:
                 return "Singapore";
-            case PH:
+            case PH2:
                 return "Philippines";
             case ID1:
                 return "Indonesia";
-            case VN:
+            case VN2:
                 return "Vitenam";
-            case TH:
+            case TH2:
                 return "Thailand";
-            case TW:
+            case TW2:
                 return "Taiwan";
             default:
                 return "This enum does not have a pretty name";
@@ -202,13 +202,13 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
                 return RegionShard.ASIA;
             case PBE1:
                 return RegionShard.PBE;
-            case SG:
-            case PH:
             case ID1:
-            case VN:
-            case TH:
-            case TW:
                 return RegionShard.GARENA;
+            case SG2:
+            case PH2:
+            case VN2:
+            case TH2:
+            case TW2:
             case OC1:
                 return RegionShard.SEA;
             default:
@@ -234,12 +234,12 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
     
     public static List<LeagueShard> getGarenaPlatforms()
     {
-        return Arrays.asList(SG, PH, ID1, VN, TH, TW);
+        return Arrays.asList(ID1);
     }
     
     public static List<LeagueShard> getValidPlatforms()
     {
-        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2, SG, PH, ID1, VN, TH, TW);
+        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2, SG2, PH2, ID1, VN2, TH2, TW2);
     }
     
     public String[] getKeys()
