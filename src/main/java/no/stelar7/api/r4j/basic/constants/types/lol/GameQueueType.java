@@ -374,6 +374,8 @@ public enum GameQueueType implements CodedEnum
     
     TFT_CUSTOM(new Integer[]{3000}),
     TFT_HYPER_ROLL_CUSTOM(new Integer[]{3010}),
+
+    ARAM_CLASH(new Integer[]{720}),
     ;
     
     private final Integer[] codes;
@@ -569,6 +571,8 @@ public enum GameQueueType implements CodedEnum
                 return "Teamfight Tactics Tutorial";
             case TEAMFIGHT_TACTICS_HYPER_ROLL:
                 return "Teamfight Tactics Hyper Roll";
+            case ARAM_CLASH:
+                return "ARAM Clash";
             default:
                 return "This enum does not have a pretty name";
         }
@@ -706,6 +710,8 @@ public enum GameQueueType implements CodedEnum
             case TEAMFIGHT_TACTICS_TUTORIAL:
             case TEAMFIGHT_TACTICS_HYPER_ROLL:
                 return "Teamfight Tactics";
+            case ARAM_CLASH:
+                return "ARAM Clash";
             default:
                 return "This enum does not have a pretty name";
         }
