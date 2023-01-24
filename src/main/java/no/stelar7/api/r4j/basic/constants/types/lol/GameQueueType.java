@@ -337,6 +337,9 @@ public enum GameQueueType implements CodedEnum
     TEAMFIGHT_TACTICS_DOUBLE_UP_1V7_BOTS(new Integer[]{1141}),
     
     TEAMFIGHT_TACTICS_DOUBLE_UP_WORKSHOP(new Integer[]{1160}, "RANKED_TFT_DOUBLE_UP"),
+    
+    TEAMFIGHT_TACTICS_FORTUNE_FAVOR(new Integer[]{1170}),
+    
     /**
      * Ultra Rapid Fire games
      */
@@ -371,8 +374,8 @@ public enum GameQueueType implements CodedEnum
     
     TFT_CUSTOM(new Integer[]{3000}),
     TFT_HYPER_ROLL_CUSTOM(new Integer[]{3010}),
+
     ARAM_CLASH(new Integer[]{720}),
-    
     ;
     
     private final Integer[] codes;
