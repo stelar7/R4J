@@ -143,7 +143,7 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
             case ID1:
                 return "Indonesia";
             case VN2:
-                return "Vitenam";
+                return "Vietnam";
             case TH2:
                 return "Thailand";
             case TW2:
