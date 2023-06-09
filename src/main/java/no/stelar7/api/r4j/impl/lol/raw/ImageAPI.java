@@ -34,8 +34,17 @@ public final class ImageAPI
         String preReplace = cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + file;
         return preReplace.replace(" ", "%20");
     }
-    
-    
+
+    private String buildSplashImageURL(String file)
+    {
+        Realm  realm         = DDragonAPI.getInstance().getRealm();
+        String cdn           = realm.getCDN();
+
+        String preReplace = cdn + Constants.SEPARATOR  + "img/champion/splash" + Constants.SEPARATOR + file;
+        return preReplace.replace(" ", "%20");
+    }
+
+
     /**
      * Gets profile icon.
      *
@@ -65,26 +74,27 @@ public final class ImageAPI
     /**
      * Gets splash art.
      *
-     * @param championId the champion id
+     * @param championKey the champion key
      * @param skinNum    the skin num
      * @return the splash art
      */
-    public String getSplashArt(int championId, int skinNum)
+    public String getSplashArt(String championKey, int skinNum)
     {
         // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
-        return buildImageURL(null, "img/champion/splash", championId + "_" + skinNum + ".png");
+        return buildSplashImageURL(championKey + "_" + skinNum + ".jpg");
     }
     
     /**
      * Gets splash art.
      *
+     * @param championKey the champion key
      * @param skin the skin
      * @return the splash art
      */
-    public String getSplashArt(Skin skin)
+    public String getSplashArt(String championKey, Skin skin)
     {
         // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
-        return buildImageURL(null, "img/champion/splash", skin.getId() + "_" + skin.getNum() + ".png");
+        return buildSplashImageURL(championKey + "_" + skin.getNum() + ".jpg");
     }
     
     /**
