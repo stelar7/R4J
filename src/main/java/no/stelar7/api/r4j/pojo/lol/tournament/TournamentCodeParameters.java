@@ -43,7 +43,7 @@ public class TournamentCodeParameters implements Serializable
             if (spectatorType == TournamentSpectatorType.NONE) {
                 String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s", getTeamSize(), 1, 5, allowedSummonerIds.size());
                 throw new APIUnsupportedActionException(error);
-            } else if (getTeamSize() * 2 + 4 != allowedSummonerIds.size()) {
+            } else if (getTeamSize() * 2 + 4 < allowedSummonerIds.size()) {
                 String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s, Allowed spectators: 4", getTeamSize(), 1, 5, allowedSummonerIds.size());
                 throw new APIUnsupportedActionException(error);
             }
