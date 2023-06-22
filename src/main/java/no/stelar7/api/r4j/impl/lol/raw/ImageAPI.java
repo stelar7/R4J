@@ -1,12 +1,12 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.constants.api.Constants;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
-import no.stelar7.api.r4j.pojo.lol.staticdata.realm.Realm;
-import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.Item;
 import no.stelar7.api.r4j.pojo.lol.staticdata.mastery.StaticMastery;
+import no.stelar7.api.r4j.pojo.lol.staticdata.realm.Realm;
 import no.stelar7.api.r4j.pojo.lol.staticdata.rune.StaticRune;
 import no.stelar7.api.r4j.pojo.lol.staticdata.summonerspell.StaticSummonerSpell;
 
@@ -24,7 +24,6 @@ public final class ImageAPI
         // Hide public constructor
     }
     
-    
     private String buildImageURL(String version, String path, String file)
     {
         Realm  realm         = DDragonAPI.getInstance().getRealm();
@@ -34,17 +33,17 @@ public final class ImageAPI
         String preReplace = cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + file;
         return preReplace.replace(" ", "%20");
     }
-
+    
     private String buildSplashImageURL(String file)
     {
-        Realm  realm         = DDragonAPI.getInstance().getRealm();
-        String cdn           = realm.getCDN();
-
-        String preReplace = cdn + Constants.SEPARATOR  + "img/champion/splash" + Constants.SEPARATOR + file;
+        Realm  realm = DDragonAPI.getInstance().getRealm();
+        String cdn   = realm.getCDN();
+        
+        String preReplace = cdn + Constants.SEPARATOR + "img/champion/splash" + Constants.SEPARATOR + file;
         return preReplace.replace(" ", "%20");
     }
-
-
+    
+    
     /**
      * Gets profile icon.
      *
@@ -75,7 +74,7 @@ public final class ImageAPI
      * Gets splash art.
      *
      * @param championKey the champion key
-     * @param skinNum    the skin num
+     * @param skinNum     the skin num
      * @return the splash art
      */
     public String getSplashArt(String championKey, int skinNum)
@@ -88,7 +87,7 @@ public final class ImageAPI
      * Gets splash art.
      *
      * @param championKey the champion key
-     * @param skin the skin
+     * @param skin        the skin
      * @return the splash art
      */
     public String getSplashArt(String championKey, Skin skin)
