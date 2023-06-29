@@ -18,7 +18,8 @@ public enum GameQueueType implements CodedEnum<GameQueueType>
     ESCALATION("ggteam"),
     NEW_MAP("newmap"),
     SWIFTPLAY("swiftplay"),
-    PREMIER("premier");
+    PREMIER("premier"),
+    TEAM_DEATHMATCH("hurm");
     ;
     
     
