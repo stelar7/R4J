@@ -341,6 +341,11 @@ public enum GameQueueType implements CodedEnum
     TEAMFIGHT_TACTICS_FORTUNE_FAVOR(new Integer[]{1170}),
     
     /**
+     * 2v2v2v2
+     */
+    ARENA(new Integer[]{1700, 1701, 1704}),
+    
+    /**
      * Ultra Rapid Fire games
      */
     URF_1V1(new Integer[]{1901}),

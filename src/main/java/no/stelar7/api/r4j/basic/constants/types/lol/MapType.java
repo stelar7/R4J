@@ -75,6 +75,11 @@ public enum MapType implements CodedEnum
      * TFT map
      */
     TEAMFIGHT_TACTICS(22, new Rectangle(0, 0, 12056, 12056)),
+    
+    /**
+     * Arena map (2v2v2v2)
+     */
+    ARENA(30, new Rectangle(0, 0, 12056, 12056)),
     ;
     
     
