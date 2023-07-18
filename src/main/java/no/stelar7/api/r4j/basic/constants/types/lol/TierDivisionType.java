@@ -19,6 +19,12 @@ public enum TierDivisionType implements CodedEnum
     DIAMOND_IV,
     DIAMOND_V,
     
+    EMERALD_I,
+    EMERALD_II,
+    EMERALD_III,
+    EMERALD_IV,
+    EMERALD_V,
+    
     PLATINUM_I,
     PLATINUM_II,
     PLATINUM_III,
@@ -110,6 +116,16 @@ public enum TierDivisionType implements CodedEnum
                 return "Diamond IV";
             case DIAMOND_V:
                 return "Diamond V";
+            case EMERALD_I:
+                return "Emerald I";
+            case EMERALD_II:
+                return "Emerald II";
+            case EMERALD_III:
+                return "Emerald III";
+            case EMERALD_IV:
+                return "Emerald IV";
+            case EMERALD_V:
+                return "Emerald V";
             case PLATINUM_I:
                 return "Platinum I";
             case PLATINUM_II:

@@ -11,6 +11,7 @@ public enum TierType implements CodedEnum
     GRANDMASTER,
     MASTER,
     DIAMOND,
+    EMERALD,
     PLATINUM,
     GOLD,
     SILVER,
@@ -42,6 +43,8 @@ public enum TierType implements CodedEnum
                 return "Master";
             case DIAMOND:
                 return "Diamond";
+            case EMERALD:
+                return "Emerald";
             case PLATINUM:
                 return "Platinum";
             case GOLD:
