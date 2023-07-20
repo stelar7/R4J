@@ -343,7 +343,7 @@ public enum GameQueueType implements CodedEnum
     /**
      * 2v2v2v2
      */
-    ARENA(new Integer[]{1700, 1701, 1704}),
+    CHERRY(new Integer[]{1700, 1701, 1704}),
     
     /**
      * Ultra Rapid Fire games
