@@ -96,6 +96,11 @@ public enum GameModeType implements CodedEnum
      */
     ULTBOOK,
     UNKNOWN,
+    
+    /**
+     * 2v2v2v2 ARENA
+     */
+    CHERRY,
     ;
     
     /**
@@ -118,7 +123,6 @@ public enum GameModeType implements CodedEnum
     {
         switch (this)
         {
-            
             case CLASSIC:
                 return "Classic";
             case ODIN:
