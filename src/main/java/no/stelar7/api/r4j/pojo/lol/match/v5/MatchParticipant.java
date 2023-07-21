@@ -116,6 +116,10 @@ public class MatchParticipant implements Serializable
     private int                 wardsPlaced;
     private boolean             win;
     
+    //Arena Game Mode field
+    
+    private int playerSubteamId;
+    
     public int getAssists()
     {
         return assists;
@@ -641,7 +645,15 @@ public class MatchParticipant implements Serializable
         return win;
     }
     
-    public Map<String, Object> getChallenges()
+    /**
+     * Used to determine team in Arena Game Mode
+     * @return team id. Can be 1-4. Return 0 if the game mode is not arena (cherry).
+     */
+    public int getArenaTeamId() {
+		return playerSubteamId;
+	}
+
+	public Map<String, Object> getChallenges()
     {
         return challenges;
     }

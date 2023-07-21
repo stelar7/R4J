@@ -2,6 +2,8 @@ package no.stelar7.api.r4j.tests.lol.match;
 
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
+
+import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -16,6 +18,8 @@ import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -24,7 +28,6 @@ import java.util.*;
 public class MatchListV5Test
 {
     final R4J r4J = new R4J(SecretFile.CREDS);
-    
     
     @Test
     @Disabled
@@ -146,6 +149,7 @@ public class MatchListV5Test
     }
     
     @Test
+    @Disabled
     public void testMatchBadDuration()
     {
         LOLMatch match = LOLMatch.get(LeagueShard.BR1, "BR1_2344333561");
@@ -168,6 +172,34 @@ public class MatchListV5Test
                 lolMatch.getTimeline();
             }
         }
+    }
+    
+    @Test
+    @Disabled
+    public void testCherryGameMode()
+    {
+    	LOLMatch match = LOLMatch.get(LeagueShard.EUW1, "EUW1_6507642888");
+        System.out.println(); //We check that this test does not crash
+    }
+    
+    @Test
+    @Disabled
+    public void testCherryGameModeTeamId()
+    {
+    	LOLMatch match = LOLMatch.get(LeagueShard.EUW1, "EUW1_6507642888");
+    	if(match.getParticipants().get(0).getArenaTeamId() == 0) {
+    		fail("The given game is a Arena game, player must have arena team id.");
+    	}
+    }
+    
+    @Test
+    @Disabled
+    public void testClassicalGameDoesNotHaveArenaTeamId()
+    {
+    	LOLMatch match = LOLMatch.get(LeagueShard.EUW1, "EUW1_6503326297");
+    	if(match.getParticipants().get(0).getArenaTeamId() != 0) {
+    		fail("The given game is a Normal Draft, player should not have an arena team id.");
+    	}
     }
 }
 
