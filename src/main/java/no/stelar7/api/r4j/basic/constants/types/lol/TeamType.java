@@ -2,12 +2,12 @@ package no.stelar7.api.r4j.basic.constants.types.lol;
 
 import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum TeamType implements CodedEnum
 {
-    
+    SUBTEAM(0),
     BLUE(100),
     RED(200),
     AI(300);

@@ -46,7 +46,10 @@ public class MatchListV5Test
         int i = 0;
         for (String matchid : all)
         {
-            if (i++ > 10) break;
+            if (i++ > 10)
+            {
+                break;
+            }
             tb = tb.withId(matchid);
             mb = mb.withId(matchid);
             
@@ -154,13 +157,14 @@ public class MatchListV5Test
     
     @Test
     @Disabled
-    public void testForMissingAttributes() {
-        LeagueAPI leagueAPI = r4J.getLoLAPI().getLeagueAPI();
-        List<LeagueEntry> divis = leagueAPI.getLeagueByTierDivision(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GOLD_I, 1);
+    public void testForMissingAttributes()
+    {
+        LeagueAPI         leagueAPI = r4J.getLoLAPI().getLeagueAPI();
+        List<LeagueEntry> divis     = leagueAPI.getLeagueByTierDivision(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GOLD_I, 1);
         for (LeagueEntry entry : divis)
         {
-            Summoner summoner = Summoner.bySummonerId(LeagueShard.EUW1, entry.getSummonerId());
-            List<String> lazy = summoner.getLeagueGames().get();
+            Summoner     summoner = Summoner.bySummonerId(LeagueShard.EUW1, entry.getSummonerId());
+            List<String> lazy     = summoner.getLeagueGames().get();
             for (int i = 0; i < lazy.size() && i < 5; i++)
             {
                 String   match    = lazy.get(i);
@@ -168,6 +172,14 @@ public class MatchListV5Test
                 lolMatch.getTimeline();
             }
         }
+    }
+    
+    @Test
+    @Disabled
+    public void testCherryGameMode()
+    {
+        LOLMatch match = LOLMatch.get(LeagueShard.EUW1, "EUW1_6507642888");
+        System.out.println();
     }
 }
 
