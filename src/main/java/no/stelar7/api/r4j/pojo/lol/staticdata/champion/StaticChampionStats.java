@@ -11,7 +11,7 @@ public class StaticChampionStats implements Serializable
     private float attackdamage;
     private float attackdamageperlevel;
     private float attackrange;
-    private float attackspeedoffset;
+    private float attackspeed;
     private float attackspeedperlevel;
     private float crit;
     private float critperlevel;
@@ -79,13 +79,13 @@ public class StaticChampionStats implements Serializable
     }
     
     /**
-     * Gets the attackspeedoffset.
+     * Gets the attackspeed.
      *
-     * @return the attackspeedoffset
+     * @return the attackspeed
      */
-    public float getAttackspeedoffset()
+    public float getAttackspeed()
     {
-        return this.attackspeedoffset;
+        return this.attackspeed;
     }
     
     /**
@@ -262,7 +262,7 @@ public class StaticChampionStats implements Serializable
         {
             return false;
         }
-        if (Float.compare(stats.attackspeedoffset, attackspeedoffset) != 0)
+        if (Float.compare(stats.attackspeed, attackspeed) != 0)
         {
             return false;
         }
@@ -329,7 +329,7 @@ public class StaticChampionStats implements Serializable
         result = 31 * result + (attackdamage != +0.0f ? Float.floatToIntBits(attackdamage) : 0);
         result = 31 * result + (attackdamageperlevel != +0.0f ? Float.floatToIntBits(attackdamageperlevel) : 0);
         result = 31 * result + (attackrange != +0.0f ? Float.floatToIntBits(attackrange) : 0);
-        result = 31 * result + (attackspeedoffset != +0.0f ? Float.floatToIntBits(attackspeedoffset) : 0);
+        result = 31 * result + (attackspeed != +0.0f ? Float.floatToIntBits(attackspeed) : 0);
         result = 31 * result + (attackspeedperlevel != +0.0f ? Float.floatToIntBits(attackspeedperlevel) : 0);
         result = 31 * result + (crit != +0.0f ? Float.floatToIntBits(crit) : 0);
         result = 31 * result + (critperlevel != +0.0f ? Float.floatToIntBits(critperlevel) : 0);
@@ -357,7 +357,7 @@ public class StaticChampionStats implements Serializable
                ", attackdamage=" + attackdamage +
                ", attackdamageperlevel=" + attackdamageperlevel +
                ", attackrange=" + attackrange +
-               ", attackspeedoffset=" + attackspeedoffset +
+               ", attackspeed=" + attackspeed +
                ", attackspeedperlevel=" + attackspeedperlevel +
                ", crit=" + crit +
                ", critperlevel=" + critperlevel +
