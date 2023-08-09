@@ -6,11 +6,13 @@ import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.match.v5.MatchIterator;
+import org.slf4j.*;
 
 import java.util.*;
 
 public class MatchListBuilder
 {
+    private static final Logger logger = LoggerFactory.getLogger(MatchListBuilder.class);
     
     private final RegionShard        platform;
     private final String             puuid;
@@ -87,6 +89,7 @@ public class MatchListBuilder
     {
         if (this.puuid == null || this.platform == RegionShard.UNKNOWN)
         {
+            logger.error("PUUID or Platform not present, returning empty list");
             return Collections.emptyList();
         }
         

@@ -101,8 +101,14 @@ public class MatchListV5Test
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
+        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "fckmuffin");
+        builder = builder.withQueue(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
+        builder = builder.withPuuid(sum.getPUUID());
+        builder = builder.withPlatform(sum.getPlatform());
+        List<String> strings = builder.get();
+        
         
         LazyList<String> all = sum.getLeagueGames().getLazy();
         
