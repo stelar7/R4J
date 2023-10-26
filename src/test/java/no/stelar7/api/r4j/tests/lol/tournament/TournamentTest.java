@@ -6,7 +6,6 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.TournamentAPI;
-import no.stelar7.api.r4j.pojo.lol.match.v5.LOLMatch;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
 import no.stelar7.api.r4j.tests.SecretFile;
@@ -39,7 +38,7 @@ public class TournamentTest
         SummonerBuilder         sb               = new SummonerBuilder().withPlatform(LeagueShard.EUW1);
         for (String name : names)
         {
-            ids.add(sb.withName(name).get().getSummonerId());
+            ids.add(sb.withName(name).get().getPUUID());
         }
         
         final TournamentCodeUpdateParameters tcinner  = new TournamentCodeUpdateParameters(ids, TournamentMapType.SUMMONERS_RIFT, TournamentPickType.TOURNAMENT_DRAFT, TournamentSpectatorType.ALL);
@@ -55,9 +54,7 @@ public class TournamentTest
         if (!api.isStub())
         {
             this.api.updateTournament(codes.get(0), tcuparams);
-            final TournamentCode id                     = this.api.getTournamentInfo(codes.get(0));
-            final List<Long>     tournamentCodeMatchIds = this.api.getMatchIds(LeagueShard.EUW1, codes.get(0));
-            final LOLMatch       matchDetail            = this.api.getMatchInfo(LeagueShard.EUW1, codes.get(0), tournamentCodeMatchIds.get(0));
+            final TournamentCode id = this.api.getTournamentInfo(codes.get(0));
         }
     }
 }

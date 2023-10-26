@@ -8,7 +8,6 @@ import no.stelar7.api.r4j.pojo.lol.championmastery.*;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
 import no.stelar7.api.r4j.pojo.lol.league.*;
 import no.stelar7.api.r4j.pojo.lol.liveclient.*;
-import no.stelar7.api.r4j.pojo.lol.match.v5.LOLMatch;
 import no.stelar7.api.r4j.pojo.lol.replay.*;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
@@ -91,42 +90,28 @@ public enum URLEndpoint
     V4_THIRD_PARTY_CODE("lol", "platform", "v4", "third-party-code/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, String.class),
     
     
-    // POST lol/tournament-stub/v3/codes Create a mock tournament code for the given tournament.
-    // GET  lol/tournament-stub/v3/lobby-events/by-code/{tournamentCode} Gets a mock list of lobby events by tournament code.
-    // POST lol/tournament-stub/v3/providers Creates a mock tournament provider and returns its ID.
-    // POST lol/tournament-stub/v3/tournaments Creates a mock tournament and returns its ID.
-    V4_STUB_TOURNAMENT_CODES("lol", "tournament-stub", "v4", "codes", StringList.class),
-    V4_STUB_TOURNAMENT_LOBBY_EVENTS("lol", "tournament-stub", "v4", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
-    V4_STUB_TOURNAMENT_PROVIDER("lol", "tournament-stub", "v4", "providers", Integer.class),
-    V4_STUB_TOURNAMENT_TOURNAMENT("lol", "tournament-stub", "v4", "tournaments", Integer.class),
-    
-    
-    // GET  lol/match/v3/matches/{matchId}/by-tournament-code/{tournamentCode}
-    // GET  lol/match/v3/matches/by-tournament-code/{tournamentCode}/ids
-    V4_TOURNAMENT_MATCH("lol", "match", "v4", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LOLMatch.class),
-    V4_TOURNAMENT_MATCHLIST("lol", "match", "v4", "matches/by-tournament-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER + "/ids", LongList.class),
-    
     // POST lol/tournament/v3/codes Create a tournament code for the given tournament.
     // PUT  lol/tournament/v3/codes/{tournamentCode} Update the pick type, map, spectator type, or allowed summoners for a code.
     // GET  lol/tournament/v3/codes/{tournamentCode} Returns the tournament code DTO associated with a tournament code string.
     // GET  lol/tournament/v3/lobby-events/by-code/{tournamentCode} Gets a list of lobby events by tournament code.
     // POST lol/tournament/v3/providers Creates a tournament provider and returns its ID.
     // POST lol/tournament/v3/tournaments Creates a tournament and returns its ID.
-    V4_TOURNAMENT_CODES("lol", "tournament", "v4", "codes", StringList.class),
-    V4_TOURNAMENT_CODES_BY_CODE("lol", "tournament", "v4", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
-    V4_TOURNAMENT_LOBBY_EVENTS("lol", "tournament", "v4", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
-    V4_TOURNAMENT_PROVIDER("lol", "tournament", "v4", "providers", Integer.class),
-    V4_TOURNAMENT_TOURNAMENT("lol", "tournament", "v4", "tournaments", Integer.class),
+    V5_TOURNAMENT_CODES("lol", "tournament", "v5", "codes", StringList.class),
+    V5_TOURNAMENT_CODES_BY_CODE("lol", "tournament", "v5", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
+    V5_TOURNAMENT_LOBBY_EVENTS("lol", "tournament", "v5", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
+    V5_TOURNAMENT_PROVIDER("lol", "tournament", "v5", "providers", Integer.class),
+    V5_TOURNAMENT_TOURNAMENT("lol", "tournament", "v5", "tournaments", Integer.class),
     
     
     // POST lol/tournament/v3/codes Create a tournament code for the given tournament.
     // GET  lol/tournament/v3/lobby-events/by-code/{tournamentCode} Gets a list of lobby events by tournament code.
     // POST lol/tournament/v3/providers Creates a tournament provider and returns its ID.
     // POST lol/tournament/v3/tournaments Creates a tournament and returns its ID.
-    V4_TOURNAMENT_STUB_CODES("lol", "tournament-stub", "v4", "codes", StringList.class),
-    V4_TOURNAMENT_STUB_LOBBY_EVENTS("lol", "tournament-stub", "v4", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
-    V4_TOURNAMENT_STUB_PROVIDER("lol", "tournament-stub", "v4", "providers", Integer.class),
-    V4_TOURNAMENT_STUB_TOURNAMENT("lol", "tournament-stub", "v4", "tournaments", Integer.class),
+    V5_TOURNAMENT_STUB_CODES("lol", "tournament-stub", "v5", "codes", StringList.class),
+    V5_TOURNAMENT_STUB_CODES_BY_CODE("lol", "tournament", "v5", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
+    V5_TOURNAMENT_STUB_LOBBY_EVENTS("lol", "tournament-stub", "v5", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
+    V5_TOURNAMENT_STUB_PROVIDER("lol", "tournament-stub", "v5", "providers", Integer.class),
+    V5_TOURNAMENT_STUB_TOURNAMENT("lol", "tournament-stub", "v5", "tournaments", Integer.class),
     
     // LCU
     LCU_LOBBY("lol-lobby/v2/lobby", "", "", "", JsonObject.class),

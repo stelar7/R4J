@@ -4,18 +4,20 @@ import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.exceptions.APIUnsupportedActionException;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.*;
 
 public class TournamentCodeParameters implements Serializable
 {
-    private static final long serialVersionUID = 6366533149651958130L;
+    private static final long serialVersionUID = 5408302200176552245L;
     
-    private Set<String>             allowedSummonerIds;
+    
+    private Set<String>             allowedParticipants;
     private TournamentMapType       mapType;
     private String                  metadata;
     private TournamentPickType      pickType;
     private TournamentSpectatorType spectatorType;
     private int                     teamSize;
+    private boolean                 enoughPlayers;
     
     public TournamentCodeParameters()
     {
@@ -24,7 +26,7 @@ public class TournamentCodeParameters implements Serializable
     
     public TournamentCodeParameters(final TournamentCodeUpdateParameters updateParams, final String metadata, final int teamSize)
     {
-        this.allowedSummonerIds = updateParams.getAllowedParticipants();
+        this.allowedParticipants = updateParams.getAllowedParticipants();
         this.spectatorType = updateParams.getSpectatorType();
         this.pickType = updateParams.getPickType();
         this.mapType = updateParams.getMapType();
@@ -34,19 +36,19 @@ public class TournamentCodeParameters implements Serializable
         
         if (getTeamSize() < 1 || getTeamSize() > 5)
         {
-            String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s", getTeamSize(), 1, 5, allowedSummonerIds.size());
+            String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s", getTeamSize(), 1, 5, allowedParticipants.size());
             throw new APIUnsupportedActionException(error);
         }
         
-        if (allowedSummonerIds != null && getTeamSize() * 2 != allowedSummonerIds.size())
+        if (allowedParticipants != null && getTeamSize() * 2 != allowedParticipants.size())
         {
             if (spectatorType == TournamentSpectatorType.NONE)
             {
-                String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s", getTeamSize(), 1, 5, allowedSummonerIds.size());
+                String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s", getTeamSize(), 1, 5, allowedParticipants.size());
                 throw new APIUnsupportedActionException(error);
-            } else if (getTeamSize() * 2 + 4 < allowedSummonerIds.size())
+            } else if (getTeamSize() * 2 + 4 < allowedParticipants.size())
             {
-                String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s, Allowed spectators: 4", getTeamSize(), 1, 5, allowedSummonerIds.size());
+                String error = String.format("Team size: %s (min/max) (%s/%s), allowedSummonerIds.size = %s, Allowed spectators: 4", getTeamSize(), 1, 5, allowedParticipants.size());
                 throw new APIUnsupportedActionException(error);
             }
         }
@@ -61,12 +63,12 @@ public class TournamentCodeParameters implements Serializable
      */
     public Set<String> getAllowedSummonerIds()
     {
-        return this.allowedSummonerIds;
+        return this.allowedParticipants;
     }
     
     public void setAllowedSummonerIds(final Set<String> allowedSummonerIds)
     {
-        this.allowedSummonerIds = allowedSummonerIds;
+        this.allowedParticipants = allowedSummonerIds;
     }
     
     /**
@@ -156,54 +158,27 @@ public class TournamentCodeParameters implements Serializable
         {
             return false;
         }
-        
         TournamentCodeParameters that = (TournamentCodeParameters) o;
-        
-        if (teamSize != that.teamSize)
-        {
-            return false;
-        }
-        if ((allowedSummonerIds != null) ? !allowedSummonerIds.equals(that.allowedSummonerIds) : (that.allowedSummonerIds != null))
-        {
-            return false;
-        }
-        if (mapType != that.mapType)
-        {
-            return false;
-        }
-        if ((metadata != null) ? !metadata.equals(that.metadata) : (that.metadata != null))
-        {
-            return false;
-        }
-        if (pickType != that.pickType)
-        {
-            return false;
-        }
-        return spectatorType == that.spectatorType;
+        return teamSize == that.teamSize && enoughPlayers == that.enoughPlayers && Objects.equals(allowedParticipants, that.allowedParticipants) && mapType == that.mapType && Objects.equals(metadata, that.metadata) && pickType == that.pickType && spectatorType == that.spectatorType;
     }
     
     @Override
     public int hashCode()
     {
-        int result = allowedSummonerIds != null ? allowedSummonerIds.hashCode() : 0;
-        result = 31 * result + (mapType != null ? mapType.hashCode() : 0);
-        result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
-        result = 31 * result + (pickType != null ? pickType.hashCode() : 0);
-        result = 31 * result + (spectatorType != null ? spectatorType.hashCode() : 0);
-        result = 31 * result + teamSize;
-        return result;
+        return Objects.hash(allowedParticipants, mapType, metadata, pickType, spectatorType, teamSize, enoughPlayers);
     }
     
     @Override
     public String toString()
     {
         return "TournamentCodeParameters{" +
-               "allowedSummonerIds=" + allowedSummonerIds +
+               "allowedParticipants=" + allowedParticipants +
                ", mapType=" + mapType +
                ", metadata='" + metadata + '\'' +
                ", pickType=" + pickType +
                ", spectatorType=" + spectatorType +
                ", teamSize=" + teamSize +
+               ", enoughPlayers=" + enoughPlayers +
                '}';
     }
 }

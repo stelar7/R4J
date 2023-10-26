@@ -4,18 +4,19 @@ import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.*;
 
 public class TournamentCode implements Serializable
 {
-    private static final long serialVersionUID = 5463341008783194897L;
+    private static final long serialVersionUID = 6929086319264520944L;
+    
     
     private String                  code;
     private long                    id;
     private String                  lobbyName;
     private String                  map;
     private String                  metaData;
-    private Set<Long>               participants;
+    private Set<String>             participants;
     private String                  password;
     private TournamentPickType      pickType;
     private int                     providerId;
@@ -80,7 +81,7 @@ public class TournamentCode implements Serializable
      *
      * @return set
      */
-    public Set<Long> getParticipants()
+    public Set<String> getParticipants()
     {
         return this.participants;
     }
@@ -166,77 +167,14 @@ public class TournamentCode implements Serializable
         {
             return false;
         }
-        
         TournamentCode that = (TournamentCode) o;
-        
-        if (id != that.id)
-        {
-            return false;
-        }
-        if (providerId != that.providerId)
-        {
-            return false;
-        }
-        if (teamSize != that.teamSize)
-        {
-            return false;
-        }
-        if (tournamentId != that.tournamentId)
-        {
-            return false;
-        }
-        if ((code != null) ? !code.equals(that.code) : (that.code != null))
-        {
-            return false;
-        }
-        if ((lobbyName != null) ? !lobbyName.equals(that.lobbyName) : (that.lobbyName != null))
-        {
-            return false;
-        }
-        if ((map != null) ? !map.equals(that.map) : (that.map != null))
-        {
-            return false;
-        }
-        if ((metaData != null) ? !metaData.equals(that.metaData) : (that.metaData != null))
-        {
-            return false;
-        }
-        if ((participants != null) ? !participants.equals(that.participants) : (that.participants != null))
-        {
-            return false;
-        }
-        if ((password != null) ? !password.equals(that.password) : (that.password != null))
-        {
-            return false;
-        }
-        if (pickType != that.pickType)
-        {
-            return false;
-        }
-        if (region != that.region)
-        {
-            return false;
-        }
-        return spectators == that.spectators;
+        return id == that.id && providerId == that.providerId && teamSize == that.teamSize && tournamentId == that.tournamentId && Objects.equals(code, that.code) && Objects.equals(lobbyName, that.lobbyName) && Objects.equals(map, that.map) && Objects.equals(metaData, that.metaData) && Objects.equals(participants, that.participants) && Objects.equals(password, that.password) && pickType == that.pickType && region == that.region && spectators == that.spectators;
     }
     
     @Override
     public int hashCode()
     {
-        int result = code != null ? code.hashCode() : 0;
-        result = 31 * result + (int) (id ^ (id >>> 32));
-        result = 31 * result + (lobbyName != null ? lobbyName.hashCode() : 0);
-        result = 31 * result + (map != null ? map.hashCode() : 0);
-        result = 31 * result + (metaData != null ? metaData.hashCode() : 0);
-        result = 31 * result + (participants != null ? participants.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (pickType != null ? pickType.hashCode() : 0);
-        result = 31 * result + providerId;
-        result = 31 * result + (region != null ? region.hashCode() : 0);
-        result = 31 * result + (spectators != null ? spectators.hashCode() : 0);
-        result = 31 * result + teamSize;
-        result = 31 * result + tournamentId;
-        return result;
+        return Objects.hash(code, id, lobbyName, map, metaData, participants, password, pickType, providerId, region, spectators, teamSize, tournamentId);
     }
     
     @Override
@@ -250,10 +188,10 @@ public class TournamentCode implements Serializable
                ", metaData='" + metaData + '\'' +
                ", participants=" + participants +
                ", password='" + password + '\'' +
-               ", pickType='" + pickType + '\'' +
+               ", pickType=" + pickType +
                ", providerId=" + providerId +
-               ", region='" + region + '\'' +
-               ", spectators='" + spectators + '\'' +
+               ", region=" + region +
+               ", spectators=" + spectators +
                ", teamSize=" + teamSize +
                ", tournamentId=" + tournamentId +
                '}';

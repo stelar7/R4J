@@ -96,42 +96,19 @@ public class TournamentCodeUpdateParameters implements Serializable
         {
             return false;
         }
-        
         TournamentCodeUpdateParameters that = (TournamentCodeUpdateParameters) o;
-        
-        if ((allowedParticipants != null) ? !allowedParticipants.equals(that.allowedParticipants) : (that.allowedParticipants != null))
-        {
-            return false;
-        }
-        if (mapType != that.mapType)
-        {
-            return false;
-        }
-        if (pickType != that.pickType)
-        {
-            return false;
-        }
-        return spectatorType == that.spectatorType;
+        return Objects.equals(allowedParticipants, that.allowedParticipants) && mapType == that.mapType && pickType == that.pickType && spectatorType == that.spectatorType;
     }
     
     @Override
     public int hashCode()
     {
-        int result = allowedParticipants != null ? allowedParticipants.hashCode() : 0;
-        result = 31 * result + (mapType != null ? mapType.hashCode() : 0);
-        result = 31 * result + (pickType != null ? pickType.hashCode() : 0);
-        result = 31 * result + (spectatorType != null ? spectatorType.hashCode() : 0);
-        return result;
+        return Objects.hash(allowedParticipants, mapType, pickType, spectatorType);
     }
     
     @Override
     public String toString()
     {
-        return "TournamentCodeUpdateParameters{" +
-               "allowedParticipants='" + allowedParticipants + '\'' +
-               ", mapType=" + mapType +
-               ", pickType=" + pickType +
-               ", spectatorType=" + spectatorType +
-               '}';
+        return "TournamentCodeUpdateParameters{" + "allowedParticipants=" + allowedParticipants + ", mapType=" + mapType + ", pickType=" + pickType + ", spectatorType=" + spectatorType + '}';
     }
 }
