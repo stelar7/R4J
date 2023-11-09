@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.basic.constants.types.lol;
 import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
 
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 public enum GameQueueType implements CodedEnum
 {
@@ -381,8 +381,10 @@ public enum GameQueueType implements CodedEnum
     
     TFT_CUSTOM(new Integer[]{3000}),
     TFT_HYPER_ROLL_CUSTOM(new Integer[]{3010}),
-
+    
     ARAM_CLASH(new Integer[]{720}),
+    
+    QUICKPLAY_NORMAL(new Integer[]{490}),
     ;
     
     private final Integer[] codes;
@@ -580,6 +582,8 @@ public enum GameQueueType implements CodedEnum
                 return "Teamfight Tactics Hyper Roll";
             case ARAM_CLASH:
                 return "ARAM Clash";
+            case QUICKPLAY_NORMAL:
+                return "Quickplay";
             default:
                 return "This enum does not have a pretty name";
         }
