@@ -342,6 +342,8 @@ public enum GameQueueType implements CodedEnum
     
     TEAMFIGHT_TACTICS_SOUL_BRAWL(new Integer[]{1180}),
     
+    TEAMFIGHT_TACTICS_CHONCC_TREASURE(new Integer[]{1190}),
+    
     /**
      * 2v2v2v2
      */
