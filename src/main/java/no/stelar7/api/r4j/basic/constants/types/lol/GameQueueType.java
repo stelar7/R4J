@@ -725,6 +725,8 @@ public enum GameQueueType implements CodedEnum
                 return "Teamfight Tactics";
             case ARAM_CLASH:
                 return "ARAM Clash";
+            case QUICKPLAY_NORMAL:
+                return "Quickplay";
             default:
                 return "This enum does not have a pretty name";
         }
