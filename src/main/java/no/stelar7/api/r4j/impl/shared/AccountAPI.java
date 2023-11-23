@@ -25,8 +25,14 @@ public class AccountAPI
     
     public RiotAccount getAccountByPUUID(RegionShard server, String puuid)
     {
+        return getAccountByPUUID(server, puuid, ApiKey.VAL);
+    }
+    
+    public RiotAccount getAccountByPUUID(RegionShard server, String puuid, ApiKey keySelected)
+    {   
+        
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, Utils.getSelectedApiKey(keySelected))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
@@ -55,9 +61,14 @@ public class AccountAPI
     
     public RiotAccount getAccountByTag(RegionShard server, String name, String tag)
     {
+        return getAccountByTag(server, name, tag, ApiKey.VAL);
+    }
+    
+    public RiotAccount getAccountByTag(RegionShard server, String name, String tag, ApiKey keySelected)
+    {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_NAME_PLACEHOLDER, Utils.normalizeString(name))
                                                        .withURLParameter(Constants.TAG_LINE_PLACEHOLDER, Utils.normalizeString(tag))
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, Utils.getSelectedApiKey(keySelected))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
@@ -87,9 +98,14 @@ public class AccountAPI
     
     public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid)
     {
+        return getActiveShard(server, game, puuid, ApiKey.VAL);
+    }
+    
+    public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid, ApiKey keySelected)
+    {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, Utils.getSelectedApiKey(keySelected))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_SHARD_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
