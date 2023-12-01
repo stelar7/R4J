@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.basic;
 
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.exceptions.APIUnsupportedActionException;
 import no.stelar7.api.r4j.basic.utils.Base32;
 
@@ -127,6 +128,23 @@ public class APICredentials
             throw new APIUnsupportedActionException("TOURNAMENT key not set!");
         }
         return this.tournamentApiKey;
+    }
+    
+    public String getKey(ApiKeyType type) {
+        switch (type) {
+            case LOL:
+                return getLoLAPIKey();
+            case TOURNAMENT:
+                return getTournamentAPIKey();
+            case TFT:
+                return getTFTAPIKey();
+            case VAL:
+                return getVALAPIKey();
+            case LOR:
+                return getLORAPIKey();
+            default:
+                throw new APIUnsupportedActionException("API key not set!");
+        }
     }
     
     public String getUniqueKeyCombination()

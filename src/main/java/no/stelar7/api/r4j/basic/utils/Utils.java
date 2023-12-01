@@ -1,15 +1,11 @@
 package no.stelar7.api.r4j.basic.utils;
 
 import com.google.gson.*;
-
-import no.stelar7.api.r4j.basic.calling.DataCall;
-import no.stelar7.api.r4j.basic.constants.api.ApiKey;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
+import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.constants.types.tft.TFTTier;
 import no.stelar7.api.r4j.basic.ratelimiting.RateLimit;
-import no.stelar7.api.r4j.basic.serializer.GenericEnumSerializer;
-import no.stelar7.api.r4j.basic.constants.types.*;
 import no.stelar7.api.r4j.basic.serializer.*;
 import no.stelar7.api.r4j.pojo.lor.offline.expedition.ExpeditionState;
 import no.stelar7.api.r4j.pojo.lor.offline.game.LoRGameState;
@@ -85,29 +81,6 @@ public final class Utils
         builder.registerTypeAdapter(no.stelar7.api.r4j.basic.constants.types.val.Skill.class, new GenericEnumSerializer<no.stelar7.api.r4j.basic.constants.types.val.Skill>());
         
         gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
-    }
-    
-    public static String getSelectedApiKey(ApiKey keySelection) 
-    {
-        String key = null;
-        switch (keySelection) {
-        case LOL:
-          key = DataCall.getCredentials().getLoLAPIKey();
-          break;
-        case LOR:
-          key = DataCall.getCredentials().getLORAPIKey();
-          break;
-        case TFT:
-          key = DataCall.getCredentials().getTFTAPIKey();
-          break;
-        case TOURNAMENT:
-          key = DataCall.getCredentials().getTournamentAPIKey();
-          break;
-        case VAL:
-          key = DataCall.getCredentials().getVALAPIKey();
-          break;
-        }
-        return key;
     }
     
     public static String padLeft(String input, String val, int length)

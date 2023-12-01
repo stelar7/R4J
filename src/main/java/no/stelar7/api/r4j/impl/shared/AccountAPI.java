@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.impl.shared;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.shared.*;
 
@@ -25,14 +26,14 @@ public class AccountAPI
     
     public RiotAccount getAccountByPUUID(RegionShard server, String puuid)
     {
-        return getAccountByPUUID(server, puuid, ApiKey.VAL);
+        return getAccountByPUUID(server, puuid, ApiKeyType.VAL);
     }
     
-    public RiotAccount getAccountByPUUID(RegionShard server, String puuid, ApiKey keySelected)
+    public RiotAccount getAccountByPUUID(RegionShard server, String puuid, ApiKeyType keyType)
     {   
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, Utils.getSelectedApiKey(keySelected))
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
@@ -61,14 +62,14 @@ public class AccountAPI
     
     public RiotAccount getAccountByTag(RegionShard server, String name, String tag)
     {
-        return getAccountByTag(server, name, tag, ApiKey.VAL);
+        return getAccountByTag(server, name, tag, ApiKeyType.VAL);
     }
     
-    public RiotAccount getAccountByTag(RegionShard server, String name, String tag, ApiKey keySelected)
+    public RiotAccount getAccountByTag(RegionShard server, String name, String tag, ApiKeyType keyType)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_NAME_PLACEHOLDER, Utils.normalizeString(name))
                                                        .withURLParameter(Constants.TAG_LINE_PLACEHOLDER, Utils.normalizeString(tag))
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, Utils.getSelectedApiKey(keySelected))
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
@@ -98,14 +99,14 @@ public class AccountAPI
     
     public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid)
     {
-        return getActiveShard(server, game, puuid, ApiKey.VAL);
+        return getActiveShard(server, game, puuid, ApiKeyType.VAL);
     }
     
-    public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid, ApiKey keySelected)
+    public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, Utils.getSelectedApiKey(keySelected))
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_SHARD_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
