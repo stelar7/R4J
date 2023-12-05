@@ -36,6 +36,23 @@ public class ChampionMasteryTest
         
     }
     
+    @Test
+    public void testChampionMasteryWithPUUID()
+    {
+        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        
+        ChampionMastery        mastery;
+        ChampionMasteryBuilder bu = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID());
+        
+        mastery = bu.withChampionId(1).getChampionMastery();
+        assert mastery != null;
+        
+        mastery = bu.withChampionId(2).getChampionMastery();
+        assert mastery != null;
+        
+    }
+    
     
     @Test
     public void testChampionMasteryTop()

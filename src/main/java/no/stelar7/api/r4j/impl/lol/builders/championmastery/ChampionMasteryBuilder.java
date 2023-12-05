@@ -16,13 +16,15 @@ public class ChampionMasteryBuilder
     
     private final LeagueShard platform;
     private       String      summonerId;
+    private       String      puuid;
     private final Integer  championId;
     
-    private ChampionMasteryBuilder(LeagueShard platform, String summonerId, Integer championId)
+    private ChampionMasteryBuilder(LeagueShard platform, String summonerId, Integer championId, String puuid)
     {
         this.platform = platform;
         this.summonerId = summonerId;
         this.championId = championId;
+        this.puuid = puuid;
     }
     
     public ChampionMasteryBuilder()
@@ -30,22 +32,33 @@ public class ChampionMasteryBuilder
         this.platform = LeagueShard.UNKNOWN;
         this.summonerId = null;
         this.championId = null;
+        this.puuid = null;
     }
     
     
+    /**
+     * @deprecated Champion mastery endpoints using the summoner id will be removed on 15 December 2023.
+     * Please use {@code ChampionMasteryBuilder#withPUUID(String)} instead.
+     */
+    @Deprecated
     public ChampionMasteryBuilder withSummonerId(String id)
     {
-        return new ChampionMasteryBuilder(this.platform, id, this.championId);
+        return new ChampionMasteryBuilder(this.platform, id, this.championId, this.puuid);
+    }
+    
+    public ChampionMasteryBuilder withPUUID(String puuid)
+    {
+        return new ChampionMasteryBuilder(this.platform, this.summonerId, this.championId, puuid);
     }
     
     public ChampionMasteryBuilder withChampionId(Integer id)
     {
-        return new ChampionMasteryBuilder(this.platform, this.summonerId, id);
+        return new ChampionMasteryBuilder(this.platform, this.summonerId, id, this.puuid);
     }
     
     public ChampionMasteryBuilder withPlatform(LeagueShard platform)
     {
-        return new ChampionMasteryBuilder(platform, this.summonerId, this.championId);
+        return new ChampionMasteryBuilder(platform, this.summonerId, this.championId, this.puuid);
     }
     
     public Integer getMasteryScore()
@@ -92,9 +105,17 @@ public class ChampionMasteryBuilder
             return Collections.emptyList();
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
-                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
                                                        .withPlatform(this.platform);
+        
+        if(this.puuid != null)
+        {
+          builder = builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid);
+        }
+        else
+        {
+          builder = builder.withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId);
+        }
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
@@ -139,19 +160,31 @@ public class ChampionMasteryBuilder
     
     public ChampionMastery getChampionMastery()
     {
-        if (this.championId == null || this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
+        if (this.championId == null || !(this.summonerId != null || this.puuid != null) || this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
-                                                       .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(this.championId))
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(this.championId))
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(this.platform);
         
+        
+        String id;
+        if(this.puuid != null)
+        {
+          builder = builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid);
+          id = this.puuid;
+        } 
+        else 
+        {
+          builder = builder.withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId);
+          id = this.summonerId;
+        }
+        
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
-        data.put("id", summonerId);
+        data.put("id", id);
         data.put("champion", championId);
         
         

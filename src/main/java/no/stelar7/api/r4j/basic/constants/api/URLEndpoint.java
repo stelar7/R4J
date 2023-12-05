@@ -56,6 +56,14 @@ public enum URLEndpoint
     V4_MASTERY_BY_CHAMPION("lol", "champion-mastery", "v4", "champion-masteries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER + "/by-champion/" + Constants.CHAMPION_ID_PLACEHOLDER, ChampionMastery.class),
     V4_MASTERY_SCORE("lol", "champion-mastery", "v4", "scores/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, Integer.class),
     
+    // lol/champion-mastery/v4/champion-masteries/by-summoner/{summonerId}
+    // lol/champion-mastery/v4/champion-masteries/by-summoner/{summonerId}/by-champion/{championId}
+    // lol/champion-mastery/v4/scores/by-summoner/{summonerId}
+    V4_MASTERY_PUUID_BY_ID("lol", "champion-mastery", "v4", "champion-masteries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, ChampionMasteryList.class),
+    V4_MASTERY_PUUID_BY_CHAMPION("lol", "champion-mastery", "v4", "champion-masteries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/by-champion/" + Constants.CHAMPION_ID_PLACEHOLDER, ChampionMastery.class),
+    V4_MASTERY_PUUID_SCORE("lol", "champion-mastery", "v4", "scores/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Integer.class),
+    
+    
     // lol/platform/v3/champion-rotations
     V3_CHAMPION_ROTATIONS("lol", "platform", "v3", "champion-rotations", ChampionRotationInfo.class),
     
