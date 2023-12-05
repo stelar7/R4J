@@ -63,20 +63,35 @@ public class ChampionMasteryBuilder
     
     public Integer getMasteryScore()
     {
-        if (this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
+        if (!(this.summonerId != null || this.puuid != null) || this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }
         
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
-                                                       .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
-                                                       .withPlatform(this.platform);
+        DataCallBuilder builder = new DataCallBuilder().withPlatform(this.platform);
+        
+        URLEndpoint endpoint;
+        String id;
+        String idPlaceHolder;
+        if(this.puuid != null)
+        {
+          id = this.puuid;
+          endpoint = URLEndpoint.V4_MASTERY_PUUID_SCORE;
+          idPlaceHolder = Constants.PUUID_ID_PLACEHOLDER;
+        } 
+        else 
+        {
+          id = this.summonerId;
+          endpoint = URLEndpoint.V4_MASTERY_SCORE;
+          idPlaceHolder = Constants.SUMMONER_ID_PLACEHOLDER;
+        }
+        
+        builder = builder.withURLParameter(idPlaceHolder, id).withEndpoint(endpoint);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", this.platform);
-        data.put("id", summonerId);
-        
+        data.put("id", id);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, data);
         if (chl.isPresent())
@@ -100,26 +115,34 @@ public class ChampionMasteryBuilder
     
     public List<ChampionMastery> getChampionMasteries()
     {
-        if (this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
+        if (!(this.summonerId != null || this.puuid != null) || this.platform == LeagueShard.UNKNOWN)
         {
             return Collections.emptyList();
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
-                                                       .withPlatform(this.platform);
+        DataCallBuilder builder = new DataCallBuilder().withPlatform(this.platform);
         
+        URLEndpoint endpoint;
+        String id;
+        String idPlaceHolder;
         if(this.puuid != null)
         {
-          builder = builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid);
-        }
-        else
+          id = this.puuid;
+          endpoint = URLEndpoint.V4_MASTERY_PUUID_BY_ID;
+          idPlaceHolder = Constants.PUUID_ID_PLACEHOLDER;
+        } 
+        else 
         {
-          builder = builder.withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId);
+          id = this.summonerId;
+          endpoint = URLEndpoint.V4_MASTERY_BY_ID;
+          idPlaceHolder = Constants.SUMMONER_ID_PLACEHOLDER;
         }
+        
+        builder = builder.withURLParameter(idPlaceHolder, id).withEndpoint(endpoint);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
-        data.put("id", summonerId);
+        data.put("id", id);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, data);
         if (chl.isPresent())
@@ -166,27 +189,30 @@ public class ChampionMasteryBuilder
         }
         
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(this.championId))
-                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(this.platform);
         
-        
+        URLEndpoint endpoint;
         String id;
+        String idPlaceHolder;
         if(this.puuid != null)
         {
-          builder = builder.withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid);
           id = this.puuid;
+          endpoint = URLEndpoint.V4_MASTERY_PUUID_BY_CHAMPION;
+          idPlaceHolder = Constants.PUUID_ID_PLACEHOLDER;
         } 
         else 
         {
-          builder = builder.withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId);
           id = this.summonerId;
+          endpoint = URLEndpoint.V4_MASTERY_BY_CHAMPION;
+          idPlaceHolder = Constants.SUMMONER_ID_PLACEHOLDER;
         }
+        
+        builder = builder.withURLParameter(idPlaceHolder, id).withEndpoint(endpoint);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("id", id);
         data.put("champion", championId);
-        
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
         if (chl.isPresent())
