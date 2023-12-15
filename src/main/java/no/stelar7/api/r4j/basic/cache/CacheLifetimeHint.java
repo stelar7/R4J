@@ -56,8 +56,9 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V4_SPECTATOR_FEATURED, MINUTES_30);
         
         DEFAULTS.add(URLEndpoint.V4_MASTERY_BY_CHAMPION, MINUTES_10);
-        DEFAULTS.add(URLEndpoint.V4_MASTERY_BY_ID, MINUTES_10);
+        DEFAULTS.add(URLEndpoint.V4_MASTERY_BY_PUUID, MINUTES_10);
         DEFAULTS.add(URLEndpoint.V4_MASTERY_SCORE, MINUTES_10);
+        DEFAULTS.add(URLEndpoint.V4_MASTERY_TOP, MINUTES_10);
         
         DEFAULTS.add(URLEndpoint.V3_CHAMPION_ROTATIONS, DAYS_1);
     

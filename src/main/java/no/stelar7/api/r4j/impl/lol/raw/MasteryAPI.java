@@ -1,9 +1,9 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
-import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 
 import java.lang.reflect.Field;
@@ -30,19 +30,19 @@ public final class MasteryAPI
     /**
      * The response object contains the summoners masteryscore.
      *
-     * @param server     the region to execute against
-     * @param summonerId the summonerId
+     * @param server the region to execute against
+     * @param puuid  the puuid
      * @return Optional FeaturedGames
      */
-    public Integer getMasteryScore(LeagueShard server, String summonerId)
+    public Integer getMasteryScore(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        data.put("id", summonerId);
+        data.put("puuid", puuid);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, data);
         if (chl.isPresent())
@@ -68,14 +68,14 @@ public final class MasteryAPI
     /**
      * Gets the champions with the most masteryscore from the summoner
      *
-     * @param server     the server the summoner plays on
-     * @param summonerId the summonerid of the summoner
-     * @param count      the amount of champions to get
+     * @param server the server the summoner plays on
+     * @param puuid  the puuid of the summoner
+     * @param count  the amount of champions to get
      * @return A sorted list of ChampionMastery
      */
-    public List<ChampionMastery> getTopChampions(LeagueShard server, String summonerId, Integer count)
+    public List<ChampionMastery> getTopChampions(LeagueShard server, String puuid, Integer count)
     {
-        List<ChampionMastery> list = getChampionMasteries(server, summonerId);
+        List<ChampionMastery> list = getChampionMasteries(server, puuid);
         
         return list.stream().sorted(Comparator.comparing(ChampionMastery::getChampionPoints).reversed())
                    .limit(count != null ? count : 3)
@@ -89,20 +89,20 @@ public final class MasteryAPI
      * Only championid and summonerid is present if the level == 0
      *
      * @param server     the region to execute against
-     * @param summonerId the summonerId
+     * @param puuid      the summonerId
      * @param championId the championId
      * @return Optional ChampionMastery
      */
-    public ChampionMastery getChampionMastery(LeagueShard server, String summonerId, int championId)
+    public ChampionMastery getChampionMastery(LeagueShard server, String puuid, int championId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(championId))
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        data.put("id", summonerId);
+        data.put("puuid", puuid);
         data.put("champion", championId);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
@@ -120,7 +120,7 @@ public final class MasteryAPI
                 
                 Field player = mastery.getClass().getDeclaredField("playerId");
                 player.setAccessible(true);
-                player.set(mastery, summonerId);
+                player.set(mastery, puuid);
                 
                 Field champ = mastery.getClass().getDeclaredField("championId");
                 champ.setAccessible(true);
@@ -152,21 +152,21 @@ public final class MasteryAPI
      * The response object contains a list of the summoners mastery of champions.
      * Does not return a value for champions with mastery level 0
      *
-     * @param server     the region to execute against
-     * @param summonerId the summonerId
+     * @param server the region to execute against
+     * @param puuid  the puuid
      * @return Optional ChampionMastery
      */
-    public List<ChampionMastery> getChampionMasteries(LeagueShard server, String summonerId)
+    public List<ChampionMastery> getChampionMasteries(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_PUUID)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        data.put("id", summonerId);
+        data.put("puuid", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, data);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (List<ChampionMastery>) chl.get();
@@ -183,7 +183,7 @@ public final class MasteryAPI
             List<ChampionMastery> list = (List<ChampionMastery>) ret;
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_ID, data);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_PUUID, data);
             
             return list;
         } catch (ClassCastException e)

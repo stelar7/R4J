@@ -160,7 +160,7 @@ public final class Summoner implements Serializable
      */
     public ChampionMastery getChampionMastery(int championId)
     {
-        return new ChampionMasteryBuilder().withPlatform(platform).withSummonerId(id).withChampionId(championId).getChampionMastery();
+        return new ChampionMasteryBuilder().withPlatform(platform).withPUUID(puuid).withChampionId(championId).getChampionMastery();
     }
     
     /**
@@ -170,7 +170,7 @@ public final class Summoner implements Serializable
      */
     public List<ChampionMastery> getChampionMasteries()
     {
-        return new ChampionMasteryBuilder().withPlatform(platform).withSummonerId(id).getChampionMasteries();
+        return new ChampionMasteryBuilder().withPlatform(platform).withPUUID(puuid).getChampionMasteries();
     }
     
     public List<LeagueEntry> getLeagueEntry()
@@ -190,7 +190,7 @@ public final class Summoner implements Serializable
     
     public int getMasteryScore()
     {
-        return new ChampionMasteryBuilder().withPlatform(platform).withSummonerId(id).getMasteryScore();
+        return new ChampionMasteryBuilder().withPlatform(platform).withPUUID(puuid).getMasteryScore();
     }
     
     /**

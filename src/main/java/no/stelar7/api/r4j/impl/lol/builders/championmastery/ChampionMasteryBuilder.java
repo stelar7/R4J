@@ -15,54 +15,54 @@ public class ChampionMasteryBuilder
 {
     
     private final LeagueShard platform;
-    private       String      summonerId;
-    private final Integer  championId;
+    private       String      puuid;
+    private final Integer     championId;
     
-    private ChampionMasteryBuilder(LeagueShard platform, String summonerId, Integer championId)
+    private ChampionMasteryBuilder(LeagueShard platform, String puuid, Integer championId)
     {
         this.platform = platform;
-        this.summonerId = summonerId;
+        this.puuid = puuid;
         this.championId = championId;
     }
     
     public ChampionMasteryBuilder()
     {
         this.platform = LeagueShard.UNKNOWN;
-        this.summonerId = null;
+        this.puuid = null;
         this.championId = null;
     }
     
     
-    public ChampionMasteryBuilder withSummonerId(String id)
+    public ChampionMasteryBuilder withPUUID(String id)
     {
         return new ChampionMasteryBuilder(this.platform, id, this.championId);
     }
     
     public ChampionMasteryBuilder withChampionId(Integer id)
     {
-        return new ChampionMasteryBuilder(this.platform, this.summonerId, id);
+        return new ChampionMasteryBuilder(this.platform, this.puuid, id);
     }
     
     public ChampionMasteryBuilder withPlatform(LeagueShard platform)
     {
-        return new ChampionMasteryBuilder(platform, this.summonerId, this.championId);
+        return new ChampionMasteryBuilder(platform, this.puuid, this.championId);
     }
     
     public Integer getMasteryScore()
     {
-        if (this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
+        if (this.puuid == null || this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }
         
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(this.platform);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", this.platform);
-        data.put("id", summonerId);
+        data.put("puuid", puuid);
         
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, data);
@@ -87,20 +87,20 @@ public class ChampionMasteryBuilder
     
     public List<ChampionMastery> getChampionMasteries()
     {
-        if (this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
+        if (this.puuid == null || this.platform == LeagueShard.UNKNOWN)
         {
             return Collections.emptyList();
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
-                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_ID)
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
+                                                       .withEndpoint(URLEndpoint.V4_MASTERY_BY_PUUID)
                                                        .withPlatform(this.platform);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
-        data.put("id", summonerId);
+        data.put("puuid", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_ID, data);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (List<ChampionMastery>) chl.get();
@@ -117,7 +117,7 @@ public class ChampionMasteryBuilder
             List<ChampionMastery> list = (List<ChampionMastery>) ret;
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_ID, data);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_PUUID, data);
             
             return list;
         } catch (ClassCastException e)
@@ -139,19 +139,19 @@ public class ChampionMasteryBuilder
     
     public ChampionMastery getChampionMastery()
     {
-        if (this.championId == null || this.summonerId == null || this.platform == LeagueShard.UNKNOWN)
+        if (this.championId == null || this.puuid == null || this.platform == LeagueShard.UNKNOWN)
         {
             return null;
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(this.championId))
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(this.platform);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
-        data.put("id", summonerId);
+        data.put("puuid", puuid);
         data.put("champion", championId);
         
         
@@ -171,7 +171,7 @@ public class ChampionMasteryBuilder
                 
                 Field player = mastery.getClass().getDeclaredField("playerId");
                 player.setAccessible(true);
-                player.set(mastery, this.summonerId);
+                player.set(mastery, this.puuid);
                 
                 Field champ = mastery.getClass().getDeclaredField("championId");
                 champ.setAccessible(true);
