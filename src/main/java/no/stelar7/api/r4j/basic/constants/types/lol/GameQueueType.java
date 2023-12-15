@@ -345,9 +345,9 @@ public enum GameQueueType implements CodedEnum
     TEAMFIGHT_TACTICS_CHONCC_TREASURE(new Integer[]{1190}),
     
     /**
-     * 2v2v2v2
+     * 2v2v2v2 (Arena)
      */
-    CHERRY(new Integer[]{1700, 1701, 1704}),
+    CHERRY(new Integer[]{1700, 1701, 1704, 1710}),
     
     /**
      * Ultra Rapid Fire games
