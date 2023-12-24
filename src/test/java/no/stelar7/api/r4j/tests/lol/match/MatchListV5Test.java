@@ -62,14 +62,20 @@ public class MatchListV5Test
                     if (event.getType() == EventType.CHAMPION_KILL)
                     {
                         event.getVictimDamageReceived().forEach(d -> {
-                            if (d.getSpellSlot() == SpellSlotType.INVALID || d.getSpellSlot() == SpellSlotType.UNDOCUMENTED || d.getSpellSlot() == SpellSlotType.UNUSED || d.getSpellSlot() == SpellSlotType.OUT_OF_BOUNDS)
+                            if (d.getSpellSlot() == SpellSlotType.INVALID
+                                || d.getSpellSlot() == SpellSlotType.UNDOCUMENTED
+                                || d.getSpellSlot() == SpellSlotType.UNUSED
+                                || d.getSpellSlot() == SpellSlotType.OUT_OF_BOUNDS)
                             {
                                 wierdEntries.add(d);
                             }
                         });
                         
                         event.getVictimDamageDealt().forEach(d -> {
-                            if (d.getSpellSlot() == SpellSlotType.INVALID || d.getSpellSlot() == SpellSlotType.UNDOCUMENTED || d.getSpellSlot() == SpellSlotType.UNUSED || d.getSpellSlot() == SpellSlotType.OUT_OF_BOUNDS)
+                            if (d.getSpellSlot() == SpellSlotType.INVALID
+                                || d.getSpellSlot() == SpellSlotType.UNDOCUMENTED
+                                || d.getSpellSlot() == SpellSlotType.UNUSED
+                                || d.getSpellSlot() == SpellSlotType.OUT_OF_BOUNDS)
                             {
                                 wierdEntries.add(d);
                             }
@@ -101,7 +107,7 @@ public class MatchListV5Test
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        Summoner sum = Summoner.byName(LeagueShard.EUW1, "stelar7");
         
         MatchListBuilder builder = new MatchListBuilder();
         builder = builder.withQueue(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
@@ -151,6 +157,19 @@ public class MatchListV5Test
         List<String> strings  = builder.withQueue(GameQueueType.TEAM_BUILDER_RANKED_SOLO).get();
         List<String> strings2 = builder.withType(MatchlistMatchType.RANKED).get();
         
+        System.out.println();
+    }
+    
+    @Test
+    public void testMatchListParameterOrder()
+    {
+        
+        String           puuid     = Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID();
+        LazyList<String> matchList = r4J.getLoLAPI().getMatchAPI().getMatchList(LeagueShard.EUW1.toRegionShard(), puuid);
+        for (String s : matchList)
+        {
+            System.out.println(s);
+        }
         System.out.println();
     }
     

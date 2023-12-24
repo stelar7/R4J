@@ -39,7 +39,7 @@ public final class MatchV5API
     public LazyList<String> getMatchList(RegionShard server, String puuid)
     {
         int increment = 100;
-        return new LazyList<>(increment, prevValue -> getMatchList(server, puuid, null, null, prevValue, prevValue + increment, null, null));
+        return new LazyList<>(increment, prevValue -> getMatchList(server, puuid, null, null, prevValue + increment, increment, null, null));
     }
     
     /**
