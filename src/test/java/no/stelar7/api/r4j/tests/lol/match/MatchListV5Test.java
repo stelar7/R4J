@@ -107,10 +107,9 @@ public class MatchListV5Test
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Summoner sum = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        Summoner sum = Summoner.byName(LeagueShard.KR, "coconutkr");
         
         MatchListBuilder builder = new MatchListBuilder();
-        builder = builder.withQueue(GameQueueType.TEAM_BUILDER_RANKED_SOLO);
         builder = builder.withPuuid(sum.getPUUID());
         builder = builder.withPlatform(sum.getPlatform());
         List<String> strings = builder.get();
@@ -131,6 +130,13 @@ public class MatchListV5Test
             
             List<TimelineDamageData> wierdEntries = new ArrayList<>();
             lolTimeline.getFrames().forEach(frame -> {
+                
+                for (TimelineFrameEvent event : frame.getEvents())
+                {
+                    if (event.getMonsterType() == MonsterType.HORDE) {
+                       System.out.println(event.getMonsterType() + " - " + event.getMonsterSubType());
+                    }
+                }
                 
                 frame.getParticipantFrames().forEach((k, v) -> {
                     if (!k.equals(String.valueOf(v.getParticipantId())))

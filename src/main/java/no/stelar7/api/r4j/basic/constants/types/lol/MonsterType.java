@@ -10,9 +10,11 @@ public enum MonsterType implements CodedEnum
     BARON_NASHOR,
     BLUE_GOLEM,
     DRAGON,
+    HORDE,
     RED_LIZARD,
     RIFTHERALD,
-    VILEMAW;
+    VILEMAW,
+    ;
     
     /**
      * Returns an MonsterType from the provided value
@@ -42,6 +44,8 @@ public enum MonsterType implements CodedEnum
                 return "Rift Herald";
             case VILEMAW:
                 return "Vilemaw";
+            case HORDE:
+                return "Voidgrub";
             default:
                 return "This enum does not have a pretty name";
         }
