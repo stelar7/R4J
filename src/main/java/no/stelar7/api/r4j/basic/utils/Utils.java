@@ -63,6 +63,7 @@ public final class Utils
         builder.registerTypeAdapter(SpellSlotType.class, new GenericEnumSerializer<SpellSlotType>());
         builder.registerTypeAdapter(TimelineDamageType.class, new GenericEnumSerializer<TimelineDamageType>());
         builder.registerTypeAdapter(TransformType.class, new GenericEnumSerializer<TransformType>());
+        builder.registerTypeAdapter(SpectatorRole.class, new GenericEnumSerializer<SpectatorRole>());
         
         // tft
         builder.registerTypeAdapter(TFTTier.class, new GenericEnumSerializer<TFTTier>());

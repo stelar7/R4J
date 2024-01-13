@@ -10,6 +10,7 @@ import no.stelar7.api.r4j.pojo.lol.league.*;
 import no.stelar7.api.r4j.pojo.lol.liveclient.*;
 import no.stelar7.api.r4j.pojo.lol.replay.*;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
+import no.stelar7.api.r4j.pojo.lol.spectator.v5.SpectatorConnectionInformation;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.ItemList;
 import no.stelar7.api.r4j.pojo.lol.staticdata.language.LanguageStrings;
@@ -48,6 +49,9 @@ public enum URLEndpoint
     // lol/spectator/v3/active-games/by-summoner/{summonerId}
     V4_SPECTATOR_FEATURED("lol", "spectator", "v4", "featured-games", FeaturedGames.class),
     V4_SPECTATOR_CURRENT("lol", "spectator", "v4", "active-games/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, SpectatorGameInfo.class),
+    
+    V5_SPECTATOR_FEATURED("lol", "spectator", "v5", "featured-games", FeaturedGames.class),
+    V5_SPECTATOR_CURRENT("lol", "spectator", "v5", "active-games/by-summoner/v2/" + Constants.PUUID_ID_PLACEHOLDER, SpectatorConnectionInformation.class),
     
     // lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}
     // lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}/by-champion/{championId}
