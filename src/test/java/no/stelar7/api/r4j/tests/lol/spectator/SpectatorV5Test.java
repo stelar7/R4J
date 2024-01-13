@@ -24,7 +24,7 @@ public class SpectatorV5Test
     {
         final R4J      r4J = new R4J(SecretFile.CREDS);
         SpectatorV5API api = r4J.getLoLAPI().getSpectatorV5API();
-        Summoner       sum = Summoner.byName(LeagueShard.EUW1, "Sjefenes Sjef");
+        Summoner       sum = Summoner.byName(LeagueShard.EUW1, "stelar7");
         
         SpectatorConnectionInformation currentGame = api.getCurrentGame(LeagueShard.EUW1, sum.getPUUID());
         System.out.println(currentGame);
