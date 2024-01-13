@@ -101,6 +101,11 @@ public enum GameModeType implements CodedEnum
      * 2v2v2v2 ARENA
      */
     CHERRY,
+    
+    /**
+     * TFT
+     */
+    TFT,
     ;
     
     /**

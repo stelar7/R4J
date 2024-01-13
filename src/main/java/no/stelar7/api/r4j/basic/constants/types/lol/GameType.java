@@ -3,24 +3,31 @@ package no.stelar7.api.r4j.basic.constants.types.lol;
 import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
 
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 public enum GameType implements CodedEnum
 {
     /**
      * Custom games
      */
-    CUSTOM_GAME,
+    CUSTOM_GAME("CUSTOM_GAME", "CUSTOM"),
     /**
      * Tutorial games
      */
-    TUTORIAL_GAME,
+    TUTORIAL_GAME("TUTORIAL_GAME", "TUTORIAL"),
     /**
      * All other games
      */
-    MATCHED_GAME,
+    MATCHED_GAME("MATCHED_GAME", "MATCHED"),
     
-    UNKNOWN;
+    UNKNOWN("UNKNOWN");
+    
+    private final List<String> codes;
+    
+    GameType(String... codes)
+    {
+        this.codes = Arrays.asList(codes);
+    }
     
     /**
      * Returns a GameType from the provided value
@@ -30,17 +37,19 @@ public enum GameType implements CodedEnum
      */
     public Optional<GameType> getFromCode(final String gameType)
     {
-        if (gameType.isEmpty()) {
+        if (gameType.isEmpty())
+        {
             return Optional.of(UNKNOWN);
         }
         
-        return Stream.of(GameType.values()).filter(t -> t.name().equalsIgnoreCase(gameType)).findFirst();
+        return Stream.of(GameType.values()).filter(t -> t.codes.contains(gameType.toUpperCase())).findFirst();
     }
     
     @Override
     public String prettyName()
     {
-        switch (this) {
+        switch (this)
+        {
             case CUSTOM_GAME:
                 return "Custom Game";
             case TUTORIAL_GAME:
