@@ -10,19 +10,19 @@ public enum GameQueueType implements CodedEnum
     /**
      * Custom games
      */
-    CUSTOM(new Integer[]{0}),
+    CUSTOM(0),
     /**
      * Normal 3v3 games
      */
-    NORMAL_3X3_BLIND_PICK_OLD(new Integer[]{8}),
+    NORMAL_3X3_BLIND_PICK_OLD(8),
     /**
      * Normal 5v5 Blind Pick games
      */
-    NORMAL_5X5_BLIND_PICK_OLD(new Integer[]{1, 2}),
+    NORMAL_5X5_BLIND_PICK_OLD(1, 2),
     /**
      * Normal 5v5 Draft Pick games
      */
-    NORMAL_5X5_DRAFT(new Integer[]{14}),
+    NORMAL_5X5_DRAFT(14),
     /**
      * Ranked Solo 5v5 games
      */
@@ -30,301 +30,301 @@ public enum GameQueueType implements CodedEnum
     /**
      * Ranked Premade 5v5 games
      */
-    RANKED_PREMADE_5X5(new Integer[]{6}),
+    RANKED_PREMADE_5X5(6),
     /**
      * Ranked Premade 3v3 games
      */
-    RANKED_PREMADE_3X3(new Integer[]{9}),
+    RANKED_PREMADE_3X3(9),
     /**
      * Ranked TeamType 3v3 games
      */
-    RANKED_TEAM_3X3(new Integer[]{41}),
+    RANKED_TEAM_3X3(41),
     /**
      * Ranked TeamType 5v5 games
      */
-    RANKED_TEAM_5X5(new Integer[]{42}),
+    RANKED_TEAM_5X5(42),
     /**
      * Dominion 5v5 Blind Pick games
      */
-    ODIN_5X5_BLIND(new Integer[]{16}),
+    ODIN_5X5_BLIND(16),
     /**
      * Dominion 5v5 Draft Pick games
      */
-    ODIN_5X5_DRAFT(new Integer[]{17}),
+    ODIN_5X5_DRAFT(17),
     /**
      * Historical Summoner's Rift Coop vs AI games
      */
-    BOT_5X5(new Integer[]{7}),
+    BOT_5X5(7),
     /**
      * Dominion Coop vs AI games
      */
-    BOT_ODIN_5X5(new Integer[]{25}),
+    BOT_ODIN_5X5(25),
     /**
      * Summoner's Rift Coop vs AI Intro Bot games
      */
-    BOT_5X5_INTRO_OLD(new Integer[]{31, 34}),
+    BOT_5X5_INTRO_OLD(31, 34),
     /**
      * Summoner's Rift Coop vs AI Beginner Bot games
      */
-    BOT_5X5_BEGINNER_OLD(new Integer[]{32, 33}),
+    BOT_5X5_BEGINNER_OLD(32, 33, 35),
     /**
      * Historical Summoner's Rift Coop vs AI Intermediate Bot games
      */
-    BOT_5X5_INTERMEDIATE_OLD(new Integer[]{36}),
+    BOT_5X5_INTERMEDIATE_OLD(36),
     /**
      * Twisted Treeline Coop vs AI games
      */
-    BOT_3X3_BEGINNER_OLD(new Integer[]{52}),
+    BOT_3X3_BEGINNER_OLD(52),
     /**
      * Team Builder games
      */
-    GROUP_FINDER_5X5(new Integer[]{61}),
+    GROUP_FINDER_5X5(61),
     /**
      * ARAM games
      */
-    ARAM_5X5_OLD(new Integer[]{62, 63, 64, 65, 67}),
+    ARAM_5X5_OLD(62, 63, 64, 65, 67),
     /**
      * One for All games
      */
-    ONEFORALL_5X5(new Integer[]{70, 1020}),
+    ONEFORALL_5X5(70, 1020, 1021, 1022, 1023, 1024),
     /**
      * Snowdown Showdown 1v1 games
      */
-    FIRSTBLOOD_1X1(new Integer[]{72}),
+    FIRSTBLOOD_1X1(72),
     /**
      * Snowdown Showdown 2v2 games
      */
-    FIRSTBLOOD_2X2(new Integer[]{73}),
+    FIRSTBLOOD_2X2(73),
     /**
      * Summoner's Rift 6x6 Hexakill games
      */
-    HEXAKILL_6X6_SR(new Integer[]{75}),
+    HEXAKILL_6X6_SR(75, 971),
     /**
      * Ultra Rapid Fire games
      */
-    URF_5X5(new Integer[]{76}),
+    URF_5X5(76),
     /**
      * One for All (Mirror mode)
      */
-    ONE_FOR_ALL_MIRROR(new Integer[]{78}),
+    ONE_FOR_ALL_MIRROR(78),
     /**
      * Ultra Rapid Fire games played against AI games
      */
-    BOT_URF_5X5(new Integer[]{83}),
+    BOT_URF_5X5(83),
     /**
      * Doom Bots Rank 1 games
      */
-    NIGHTMARE_BOT_5X5_RANK1(new Integer[]{90, 91}),
+    NIGHTMARE_BOT_5X5_RANK1(90, 91),
     /**
      * Doom Bots Rank 2 games
      */
-    NIGHTMARE_BOT_5X5_RANK2(new Integer[]{92}),
+    NIGHTMARE_BOT_5X5_RANK2(92),
     /**
      * Doom Bots Rank 5 games
      */
-    NIGHTMARE_BOT_5X5_RANK5(new Integer[]{93}),
+    NIGHTMARE_BOT_5X5_RANK5(93),
     /**
      * Ascension games
      */
-    ASCENSION_5X5(new Integer[]{910, 911, 96, 97}),
+    ASCENSION_5X5(910, 911, 96, 97),
     /**
      * Twisted Treeline 6x6 Hexakill games
      */
-    HEXAKILL(new Integer[]{970, 98}),
+    HEXAKILL(970, 98),
     /**
      * Butcher's Bridge games
      */
-    BILGEWATER_ARAM_5X5(new Integer[]{100}),
+    BILGEWATER_ARAM_5X5(100),
     /**
      * King Poro games
      */
-    KING_PORO_5X5(new Integer[]{920, 921, 300, 301}),
+    KING_PORO_5X5(920, 921, 300, 301),
     /**
      * Nemesis games
      */
-    COUNTER_PICK(new Integer[]{310}),
+    COUNTER_PICK(310),
     /**
      * Black Market Brawlers games
      */
-    BILGEWATER_5X5(new Integer[]{313}),
+    BILGEWATER_5X5(313),
     /**
      * Nexux Siege games
      */
-    NEXUS_SIEGE_OLD(new Integer[]{315}),
+    NEXUS_SIEGE_OLD(315),
     /**
      * Definitely Not Dominion games
      */
-    DEFINITELY_NOT_DOMINION_5X5(new Integer[]{316, 317}),
+    DEFINITELY_NOT_DOMINION_5X5(316, 317),
     /**
      * All Random URF games
      */
-    ALL_RANDOM_URF(new Integer[]{900, 901, 318, 319}),
+    ALL_RANDOM_URF(900, 901, 318, 319, 902, 903, 904),
     /**
      * All Random snow URF games
      */
-    SNOW_BATTLE_ARURF(new Integer[]{1010, 1011}),
+    SNOW_BATTLE_ARURF(1010, 1011, 1012),
     /**
      * Overcharge games
      */
-    OVERCHARGE(new Integer[]{1000, 101}),
+    OVERCHARGE(1000, 1001),
     /**
      * All Random Summoner's Rift games
      */
-    ARAM_5X5(new Integer[]{325, 324}),
+    ARAM_5X5(325, 324),
     /**
      * Normal 5v5 Draft Pick games (Dynamic Queue)
      */
-    TEAM_BUILDER_DRAFT_UNRANKED_5X5(new Integer[]{400, 401, 402, 403}),
+    TEAM_BUILDER_DRAFT_UNRANKED_5X5(400, 401, 402, 403),
     /**
      * Ranked 5v5 Draft Pick games (Dynamic Queue)
      */
-    TEAM_BUILDER_DRAFT_RANKED_5X5(new Integer[]{410, 411, 412, 413}),
+    TEAM_BUILDER_DRAFT_RANKED_5X5(410, 411, 412, 413),
     /**
      * Ranked 5v5 Draft Pick games (Flex Queue)
      */
-    TEAM_BUILDER_RANKED_SOLO(new Integer[]{420, 421, 422}),
+    TEAM_BUILDER_RANKED_SOLO(420, 421, 422),
     /**
      * Normal 5v5 Blind Pick games
      */
-    NORMAL_5V5_BLIND_PICK(new Integer[]{430, 431, 432, 433}),
+    NORMAL_5V5_BLIND_PICK(430, 431, 432, 433),
     /**
      * Ranked 5v5 Draft Pick games (Flex Queue)
      */
-    RANKED_FLEX_SR(new Integer[]{440, 441, 442}),
+    RANKED_FLEX_SR(440, 441, 442),
     /**
      * ARAM games
      */
-    ARAM(new Integer[]{450, 451, 452, 930, 931}),
+    ARAM(450, 451, 452, 930, 931),
     /**
      * Normal 3v3 Blind Pick Twisted Treeline games
      */
-    NORMAL_3X3_BLIND_PICK(new Integer[]{460}),
+    NORMAL_3X3_BLIND_PICK(460, 461),
     /**
      * Ranked 3v3 Draft Pick games (Flex Queue)
      */
-    RANKED_FLEX_TT(new Integer[]{470}),
+    RANKED_FLEX_TT(470),
     /**
      * Blood Hunt Assassin games
      */
-    ASSASSINATE_5X5(new Integer[]{320, 321, 600, 601}),
+    ASSASSINATE_5X5(320, 321, 600, 601),
     /**
      * Darkstar games
      */
-    DARKSTAR_3X3(new Integer[]{610, 611}),
+    DARKSTAR_3X3(610, 611),
     /**
      * Clash games
      */
-    CLASH(new Integer[]{700}),
+    CLASH(700, 701, 721),
     /**
      * BOT 3x3 games
      */
-    BOT_3X3_INTERMEDIATE(new Integer[]{800, 801}),
+    BOT_3X3_INTERMEDIATE(800, 801),
     /**
      * BOT 3x3 games
      */
-    BOT_3X3_INTRO(new Integer[]{810}),
+    BOT_3X3_INTRO(810),
     /**
      * BOT 3x3 games
      */
-    BOT_3X3_BEGINNER(new Integer[]{820}),
+    BOT_3X3_BEGINNER(820),
     /**
      * BOT 5x5 games
      */
-    BOT_5X5_INTRO(new Integer[]{830}),
+    BOT_5X5_INTRO(830, 831, 832),
     /**
      * BOT 5x5 games
      */
-    BOT_5X5_BEGINNER(new Integer[]{840}),
+    BOT_5X5_BEGINNER(840, 841, 842),
     /**
      * BOT 5x5 games
      */
-    BOT_5X5_INTERMEDIATE(new Integer[]{850}),
+    BOT_5X5_INTERMEDIATE(850, 851, 852),
     /**
      * Nexus Siege games
      */
-    NEXUS_SIEGE(new Integer[]{940, 941, 314, 315}),
+    NEXUS_SIEGE(940, 941, 314, 315),
     /**
      * Doom Bots w/ difficulty voting
      */
-    NIGHTMARE_BOT_5X5_VOTE(new Integer[]{950, 951}),
+    NIGHTMARE_BOT_5X5_VOTE(950, 951),
     /**
      * Doom Bots games
      */
-    NIGHTMARE_BOT_5X5(new Integer[]{960, 961}),
+    NIGHTMARE_BOT_5X5(960, 961),
     /**
      * Invasion games
      */
-    INVASION_NORMAL(new Integer[]{980, 981, 982}),
+    INVASION_NORMAL(980, 981, 982),
     /**
      * Invasion games
      */
-    INVASION_ONSLAUGHT(new Integer[]{990}),
+    INVASION_ONSLAUGHT(990),
     /**
      * Nexus Blitz games
      */
-    NEXUS_BLITZ(new Integer[]{1200, 1300}),
+    NEXUS_BLITZ(1200, 1201, 1300, 1301, 1302, 1303, 1304),
     /**
      * Odyssey: Extraction Intro games
      */
-    ODYSSEY_INTRO(new Integer[]{1030}),
+    ODYSSEY_INTRO(1030, 1031, 1032),
     /**
      * Odyssey: Extraction Cadet games
      */
-    ODYSSEY_CADET(new Integer[]{1040}),
+    ODYSSEY_CADET(1040, 1041),
     /**
      * Odyssey: Extraction Crewmember games
      */
-    ODYSSEY_CREWMEMBER(new Integer[]{1050}),
+    ODYSSEY_CREWMEMBER(1050, 1051),
     /**
      * Odyssey: Extraction Captain games
      */
-    ODYSSEY_CAPTAIN(new Integer[]{1060}),
+    ODYSSEY_CAPTAIN(1060, 1061),
     /**
      * Odyssey: Extraction Onslaught games
      */
-    ODYSSEY_ONSLAUGHT(new Integer[]{1070}),
+    ODYSSEY_ONSLAUGHT(1070, 1071),
     /**
      * Tutorial games
      */
-    TUTORIAL_MODULE_1(new Integer[]{2000}),
-    TUTORIAL_MODULE_2(new Integer[]{2010}),
-    TUTORIAL_MODULE_3(new Integer[]{2020}),
+    TUTORIAL_MODULE_1(2000),
+    TUTORIAL_MODULE_2(2010),
+    TUTORIAL_MODULE_3(2020),
     
     /**
      * Teamfight Tactics (Normal)
      */
-    TEAMFIGHT_TACTICS(new Integer[]{1090}),
+    TEAMFIGHT_TACTICS(1090, 1091, 1092, 1093, 1094, 2200),
     
     /**
      * Teamfight Tactics (Ranked)
      */
-    TEAMFIGHT_TACTICS_RANKED(new Integer[]{1100}, "RANKED_TFT"),
+    TEAMFIGHT_TACTICS_RANKED(new Integer[]{1100, 1101, 1102}, "RANKED_TFT"),
     /**
      * Teamfight Tactics (Tutorial)
      */
-    TEAMFIGHT_TACTICS_TUTORIAL(new Integer[]{1110}),
+    TEAMFIGHT_TACTICS_TUTORIAL(1110),
     /**
      * Teamfight Tactics (Simulation)
      */
-    TEAMFIGHT_TACTICS_SIMULATION(new Integer[]{1111}),
+    TEAMFIGHT_TACTICS_SIMULATION(1111),
     /**
      * Teamfight Tactics (Hyper roll)
      */
-    TEAMFIGHT_TACTICS_HYPER_ROLL(new Integer[]{1130}, "RANKED_TFT_TURBO"),
+    TEAMFIGHT_TACTICS_HYPER_ROLL(new Integer[]{1120, 1130}, "RANKED_TFT_TURBO"),
     /**
      * Teamfight Tactics (Hyper roll) (1v0)
      */
-    TEAMFIGHT_TACTICS_HYPER_ROLL_1V0(new Integer[]{1131}),
+    TEAMFIGHT_TACTICS_HYPER_ROLL_1V0(1121, 1131, 1122, 1132),
     
     /**
      * Teamfight Tactics (Normal Double Up 2v0)
      */
-    TEAMFIGHT_TACTICS_DOUBLE_UP_2V0(new Integer[]{1142, 1151, 1161}),
+    TEAMFIGHT_TACTICS_DOUBLE_UP_2V0(1142, 1151, 1161),
     
     /**
      * Teamfight Tactics (Normal Double Up 4v0)
      */
-    TEAMFIGHT_TACTICS_DOUBLE_UP_4V0(new Integer[]{1143, 1152, 1162}),
+    TEAMFIGHT_TACTICS_DOUBLE_UP_4V0(1143, 1152, 1162),
     
     /**
      * Teamfight Tactics (Normal Double Up)
@@ -334,65 +334,66 @@ public enum GameQueueType implements CodedEnum
     /**
      * Teamfight Tactics (Normal Double Up 1v7 bots)
      */
-    TEAMFIGHT_TACTICS_DOUBLE_UP_1V7_BOTS(new Integer[]{1141}),
+    TEAMFIGHT_TACTICS_DOUBLE_UP_1V7_BOTS(1141),
     
     TEAMFIGHT_TACTICS_DOUBLE_UP_WORKSHOP(new Integer[]{1160}, "RANKED_TFT_DOUBLE_UP"),
     
-    TEAMFIGHT_TACTICS_FORTUNE_FAVOR(new Integer[]{1170}),
+    TEAMFIGHT_TACTICS_FORTUNE_FAVOR(1170, 1171, 1172, 1175),
     
-    TEAMFIGHT_TACTICS_SOUL_BRAWL(new Integer[]{1180}),
+    TEAMFIGHT_TACTICS_SOUL_BRAWL(1180, 1181, 1182, 1185),
     
-    TEAMFIGHT_TACTICS_CHONCC_TREASURE(new Integer[]{1190}),
+    TEAMFIGHT_TACTICS_CHONCC_TREASURE(1190, 1191, 1192, 1195),
     
     /**
      * 2v2v2v2 (Arena)
      */
-    CHERRY(new Integer[]{1700, 1701, 1704, 1710}),
+    CHERRY(1700, 1701, 1704, 1710),
     
     /**
      * Ultra Rapid Fire games
      */
-    URF_1V1(new Integer[]{1901}),
+    URF_1V1(1901),
     /**
      * Ultra Rapid Fire games
      */
-    URF_2V2(new Integer[]{1902}),
+    URF_2V2(1902),
     /**
      * Ultra Rapid Fire games
      */
-    URF_3V3(new Integer[]{1903}),
+    URF_3V3(1903),
     /**
      * Ultra Rapid Fire games
      */
-    URF_4V4(new Integer[]{1904}),
+    URF_4V4(1904),
     /**
      * Ultra Rapid Fire games
      */
-    URF(new Integer[]{1900}),
+    URF(1900),
     
     
     /**
      * Ultimate Spellbook
      */
-    ULTBOOK(new Integer[]{1400}),
+    ULTBOOK(1400),
     
-    ONE_VS_ONE(new Integer[]{1401}),
-    TWO_VS_TWO(new Integer[]{1402}),
-    THREE_VS_THREE(new Integer[]{1403}),
-    FOUR_VS_FOUR(new Integer[]{1404}),
+    ONE_VS_ONE(1401),
+    TWO_VS_TWO(1402),
+    THREE_VS_THREE(1403),
+    FOUR_VS_FOUR(1404),
     
-    TFT_CUSTOM(new Integer[]{3000}),
-    TFT_HYPER_ROLL_CUSTOM(new Integer[]{3010}),
+    TFT_CUSTOM(3000),
+    TFT_HYPER_ROLL_CUSTOM(3010),
     
-    ARAM_CLASH(new Integer[]{720}),
+    ARAM_CLASH(720),
+    ARAM_BOTS(860),
     
-    QUICKPLAY_NORMAL(new Integer[]{490}),
+    QUICKPLAY_NORMAL(490),
     ;
     
     private final Integer[] codes;
     private final String    apiname;
     
-    GameQueueType(final Integer[] codes)
+    GameQueueType(final Integer... codes)
     {
         this(codes, "");
     }
