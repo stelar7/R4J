@@ -344,6 +344,8 @@ public enum GameQueueType implements CodedEnum
     
     TEAMFIGHT_TACTICS_CHONCC_TREASURE(1190, 1191, 1192, 1195),
     
+    TEAMFIGHT_TACTICS_SET3_5_REVIVAL_GALAXIES(6000),
+    
     /**
      * 2v2v2v2 (Arena)
      */
