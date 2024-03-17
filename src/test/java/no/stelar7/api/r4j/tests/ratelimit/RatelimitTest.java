@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.tests.ratelimit;
 
+import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
@@ -9,6 +10,8 @@ import no.stelar7.api.r4j.tests.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
 
 @ExtendWith(TimingExtension.class)
@@ -21,6 +24,8 @@ public class RatelimitTest
     @Disabled
     public void testRateLimitThreaded()
     {
+
+        DataCall.setCacheProvider(null);
         try
         {
             String          name   = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
@@ -32,6 +37,35 @@ public class RatelimitTest
             }
             pool.shutdown();
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    @Disabled
+    public void testRateLimitVirtualThread()
+    {
+
+        DataCall.setCacheProvider(null);
+        try
+        {
+            String          name   = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
+            Summoner        s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(name).get();
+            
+            List<Thread> threadToWait = new ArrayList<>();
+            
+            for (int i2 = 0; i2 < 130; i2++)
+            {
+                //Require Java 21
+                //threadToWait.add(Thread.ofVirtual().start(() -> new SummonerBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(s.getSummonerId()).get()));
+            }
+            
+            for (Thread thread : threadToWait)
+            {
+                thread.join();
+            }
         } catch (InterruptedException e)
         {
             e.printStackTrace();
