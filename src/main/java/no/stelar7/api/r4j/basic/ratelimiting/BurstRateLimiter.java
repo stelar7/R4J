@@ -9,6 +9,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Burst ratelimiter will use as many calls as possible, then wait when it reaches the limit
@@ -18,14 +19,17 @@ public class BurstRateLimiter extends RateLimiter
     
     private static final Logger logger = LoggerFactory.getLogger(BurstRateLimiter.class);
     
+    private ReentrantLock lock = new ReentrantLock();
+    
     public BurstRateLimiter(List<RateLimit> limits)
     {
         super(limits.toArray(new RateLimit[0]));
     }
     
     @Override
-    public synchronized void acquire()
+    public void acquire()
     {
+        lock.lock();
         try
         {
             update();
@@ -48,6 +52,9 @@ public class BurstRateLimiter extends RateLimiter
         } catch (InterruptedException e)
         {
             e.printStackTrace();
+        } finally
+        {
+            lock.unlock();
         }
     }
     
