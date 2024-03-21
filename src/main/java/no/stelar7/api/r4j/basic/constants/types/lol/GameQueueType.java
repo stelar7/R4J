@@ -230,15 +230,15 @@ public enum GameQueueType implements CodedEnum
     /**
      * BOT 5x5 games
      */
-    BOT_5X5_INTRO(830, 831, 832),
+    BOT_5X5_INTRO(830, 831, 832, 870),
     /**
      * BOT 5x5 games
      */
-    BOT_5X5_BEGINNER(840, 841, 842),
+    BOT_5X5_BEGINNER(840, 841, 842, 880),
     /**
      * BOT 5x5 games
      */
-    BOT_5X5_INTERMEDIATE(850, 851, 852),
+    BOT_5X5_INTERMEDIATE(850, 851, 852, 890),
     /**
      * Nexus Siege games
      */
