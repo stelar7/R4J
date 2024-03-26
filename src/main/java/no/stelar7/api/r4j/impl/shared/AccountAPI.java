@@ -76,6 +76,7 @@ public class AccountAPI
         data.put("platform", server);
         data.put("name", Utils.normalizeString(name));
         data.put("tag", Utils.normalizeString(tag));
+        data.put("keytype", keyType);
         
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
         if (chl.isPresent())
