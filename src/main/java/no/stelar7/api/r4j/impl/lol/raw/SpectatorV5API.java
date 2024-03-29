@@ -5,8 +5,6 @@ import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
-import no.stelar7.api.r4j.pojo.lol.spectator.v5.SpectatorConnectionInformation;
-
 import java.util.*;
 
 public final class SpectatorV5API
@@ -74,7 +72,7 @@ public final class SpectatorV5API
      * @param puuid  the puuid
      * @return SpectatorGameInfo
      */
-    public SpectatorConnectionInformation getCurrentGame(LeagueShard server, String puuid)
+    public SpectatorGameInfo getCurrentGame(LeagueShard server, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V5_SPECTATOR_CURRENT)
@@ -92,7 +90,7 @@ public final class SpectatorV5API
         
         try
         {
-            SpectatorConnectionInformation fg = (SpectatorConnectionInformation) builder.build();
+          SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
             
             data.put("value", fg);
             DataCall.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_CURRENT, data);

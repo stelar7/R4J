@@ -7,7 +7,7 @@ import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.SpectatorV5API;
-import no.stelar7.api.r4j.pojo.lol.spectator.v5.SpectatorConnectionInformation;
+import no.stelar7.api.r4j.pojo.lol.spectator.SpectatorGameInfo;
 import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 
@@ -29,7 +29,7 @@ public class SpectatorV5Test
         SpectatorV5API api = r4J.getLoLAPI().getSpectatorV5API();
         RiotAccount    acc = r4J.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "Incandescence33", "EUW", ApiKeyType.LOL);
         
-        SpectatorConnectionInformation currentGame = api.getCurrentGame(LeagueShard.EUW1, acc.getPUUID());
+        SpectatorGameInfo currentGame = api.getCurrentGame(LeagueShard.EUW1, acc.getPUUID());
         System.out.println(currentGame);
     }
 }
