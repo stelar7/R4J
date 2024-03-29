@@ -51,7 +51,7 @@ public enum URLEndpoint
     V4_SPECTATOR_CURRENT("lol", "spectator", "v4", "active-games/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, SpectatorGameInfo.class),
     
     V5_SPECTATOR_FEATURED("lol", "spectator", "v5", "featured-games", FeaturedGames.class),
-    V5_SPECTATOR_CURRENT("lol", "spectator", "v5", "active-games/by-summoner/v2/" + Constants.PUUID_ID_PLACEHOLDER, SpectatorConnectionInformation.class),
+    V5_SPECTATOR_CURRENT("lol", "spectator", "v5", "active-games/by-summoner/" + Constants.PUUID_ID_PLACEHOLDER, SpectatorGameInfo.class),
     
     // lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}
     // lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}/by-champion/{championId}
