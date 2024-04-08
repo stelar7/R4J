@@ -85,7 +85,7 @@ public final class SpectatorV5API
         Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_CURRENT, data);
         if (chl.isPresent())
         {
-            //return (SpectatorConnectionInformation) chl.get();
+            return (SpectatorGameInfo) chl.get();
         }
         
         try
