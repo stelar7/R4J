@@ -6,6 +6,7 @@ import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.tft.TFTSummonerAPI;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 
@@ -36,22 +37,17 @@ public class TestTFTSummoner
     @Test
     public void testById()
     {
-        Summoner s  = api.getSummonerByName(LeagueShard.EUW1, "stelar7");
-        Summoner s2 = api.getSummonerById(LeagueShard.EUW1, s.getSummonerId());
+        RiotAccount account = l4j8.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
+        Summoner    s2      = api.getSummonerById(LeagueShard.EUW1, s.getSummonerId());
         doAssertions.accept(s2);
-    }
-    
-    @Test
-    public void testByName()
-    {
-        Summoner s = api.getSummonerByName(LeagueShard.EUW1, "stelar7");
-        doAssertions.accept(s);
     }
     
     @Test
     public void testByAccount()
     {
-        Summoner s = api.getSummonerByName(LeagueShard.EUW1, "stelar7");
+        RiotAccount account = l4j8.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         Summoner optional = api.getSummonerByAccount(LeagueShard.EUW1, s.getAccountId());
         doAssertions.accept(optional);
@@ -60,15 +56,10 @@ public class TestTFTSummoner
     @Test
     public void testByPUUID()
     {
-        Summoner s = api.getSummonerByName(LeagueShard.EUW1, "stelar7");
+        RiotAccount account = l4j8.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         Summoner optional = api.getSummonerByPUUID(LeagueShard.EUW1, s.getPUUID());
         doAssertions.accept(optional);
-    }
-    
-    @Test
-    public void testRandomDude() {
-        Summoner s = api.getSummonerByName(LeagueShard.TR1, "Ginggg");
-        s.getChampionMasteries();
     }
 }

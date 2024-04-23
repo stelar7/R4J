@@ -5,8 +5,8 @@ import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.championmastery.ChampionMasteryBuilder;
-import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
+import no.stelar7.api.r4j.impl.lol.raw.SpectatorAPI;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.tests.SecretFile;
@@ -29,8 +29,8 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMastery()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         ChampionMastery        mastery;
         ChampionMasteryBuilder bu = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID());
@@ -46,8 +46,8 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryTop()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         List<ChampionMastery> all = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID()).getTopChampions(null);
         assert all != null;
@@ -56,8 +56,8 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryAll()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         List<ChampionMastery> all = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID()).getChampionMasteries();
         assert all != null;
@@ -66,8 +66,8 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryScore()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         Integer score = new ChampionMasteryBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID()).getMasteryScore();
         Assertions.assertNotNull(score, "no data");
@@ -76,8 +76,8 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryRaw()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         ChampionMastery mastery = r4J.getLoLAPI().getMasteryAPI().getChampionMastery(s.getPlatform(), s.getPUUID(), 1);
         assert mastery != null;
@@ -90,8 +90,8 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryTopRaw()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         List<ChampionMastery> all = r4J.getLoLAPI().getMasteryAPI().getTopChampions(s.getPlatform(), s.getPUUID(), null);
         assert all != null;
@@ -100,8 +100,8 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryAllRaw()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         List<ChampionMastery> all = r4J.getLoLAPI().getMasteryAPI().getChampionMasteries(s.getPlatform(), s.getPUUID());
         assert all != null;
@@ -110,8 +110,8 @@ public class ChampionMasteryTest
     @Test
     public void testChampionMasteryScoreRaw()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         Integer score = r4J.getLoLAPI().getMasteryAPI().getMasteryScore(s.getPlatform(), s.getPUUID());
         Assertions.assertNotNull(score, "no data");

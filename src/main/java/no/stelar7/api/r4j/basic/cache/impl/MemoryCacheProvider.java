@@ -77,7 +77,6 @@ public class MemoryCacheProvider implements CacheProvider
         switch (type)
         {
             case V4_SUMMONER_BY_ACCOUNT:
-            case V4_SUMMONER_BY_NAME:
             case V4_SUMMONER_BY_ID:
                 summoners.put((Summoner) obj.get("value"), LocalDateTime.now());
                 break;
@@ -102,7 +101,6 @@ public class MemoryCacheProvider implements CacheProvider
         switch (type)
         {
             case V4_SUMMONER_BY_ACCOUNT:
-            case V4_SUMMONER_BY_NAME:
             case V4_SUMMONER_BY_ID:
             {
                 Object value = data.getOrDefault("name", data.getOrDefault("id", data.getOrDefault("accountid", data.getOrDefault("puuid", null))));
@@ -115,10 +113,6 @@ public class MemoryCacheProvider implements CacheProvider
                 if (type == URLEndpoint.V4_SUMMONER_BY_ACCOUNT)
                 {
                     sums = sums.filter(s -> value.equals(s.getAccountId()));
-                }
-                if (type == URLEndpoint.V4_SUMMONER_BY_NAME)
-                {
-                    sums = sums.filter(s -> value.equals(s.getName()));
                 }
                 
                 opt = sums.findFirst();
@@ -146,7 +140,6 @@ public class MemoryCacheProvider implements CacheProvider
         switch (type)
         {
             case V4_SUMMONER_BY_ACCOUNT:
-            case V4_SUMMONER_BY_NAME:
             case V4_SUMMONER_BY_ID:
                 summoners.clear();
                 break;
@@ -162,7 +155,6 @@ public class MemoryCacheProvider implements CacheProvider
         }
         
         clearOldCache(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, summoners);
-        clearOldCache(URLEndpoint.V4_SUMMONER_BY_NAME, summoners);
         clearOldCache(URLEndpoint.V4_SUMMONER_BY_ID, summoners);
     }
     

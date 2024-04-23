@@ -19,7 +19,6 @@ public class Observer implements Serializable
     private long               championId;
     private RoleType           selectedRole;
     private LeaguePositionType selectedPosition;
-    private String             summonerName;
     
     public String getPuuid()
     {
@@ -71,11 +70,6 @@ public class Observer implements Serializable
         return selectedPosition;
     }
     
-    public String getSummonerName()
-    {
-        return summonerName;
-    }
-    
     @Override
     public boolean equals(Object o)
     {
@@ -97,14 +91,13 @@ public class Observer implements Serializable
                && Objects.equals(puuid, observer.puuid)
                && Objects.equals(locale, observer.locale)
                && selectedRole == observer.selectedRole
-               && selectedPosition == observer.selectedPosition
-               && Objects.equals(summonerName, observer.summonerName);
+               && selectedPosition == observer.selectedPosition;
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(puuid, accountId, summonerId, locale, teamOwner, profileIconId, teamParticipantId, championId, selectedRole, selectedPosition, summonerName);
+        return Objects.hash(puuid, accountId, summonerId, locale, teamOwner, profileIconId, teamParticipantId, championId, selectedRole, selectedPosition);
     }
     
     @Override
@@ -121,7 +114,6 @@ public class Observer implements Serializable
                ", championId=" + championId +
                ", selectedRole=" + selectedRole +
                ", selectedPosition=" + selectedPosition +
-               ", summonerName='" + summonerName + '\'' +
                '}';
     }
 }

@@ -5,6 +5,7 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.ClashAPI;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
 
@@ -18,14 +19,18 @@ public class ClashTest
     @Test
     public void testGetPlayerData()
     {
-        List<ClashPlayer> stelar7 = api.getPlayerInfo(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
+        RiotAccount       account  = R4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner          summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
+        List<ClashPlayer> stelar7  = api.getPlayerInfo(LeagueShard.EUW1, summoner.getSummonerId());
         System.out.println(stelar7);
     }
     
     @Test
     public void getTeams()
     {
-        List<ClashPlayer> stelar7 = api.getPlayerInfo(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
+        RiotAccount       account  = R4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner          summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
+        List<ClashPlayer> stelar7  = api.getPlayerInfo(LeagueShard.EUW1, summoner.getSummonerId());
         for (ClashPlayer clashPlayer : stelar7)
         {
             ClashTeam team = api.getTeam(LeagueShard.EUW1, clashPlayer.getTeamId());
@@ -43,7 +48,9 @@ public class ClashTest
     @Test
     public void testGetTournamentsByTeam()
     {
-        List<ClashPlayer> stelar7 = api.getPlayerInfo(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
+        RiotAccount       account  = R4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner          summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
+        List<ClashPlayer> stelar7  = api.getPlayerInfo(LeagueShard.EUW1, summoner.getSummonerId());
         for (ClashPlayer clashPlayer : stelar7)
         {
             ClashTeam       team             = api.getTeam(LeagueShard.EUW1, clashPlayer.getTeamId());
@@ -55,7 +62,9 @@ public class ClashTest
     @Test
     public void testGetTournamentsById()
     {
-        List<ClashPlayer> stelar7 = api.getPlayerInfo(LeagueShard.EUW1, Summoner.byName(LeagueShard.EUW1, "stelar7").getSummonerId());
+        RiotAccount       account  = R4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner          summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
+        List<ClashPlayer> stelar7  = api.getPlayerInfo(LeagueShard.EUW1, summoner.getSummonerId());
         for (ClashPlayer clashPlayer : stelar7)
         {
             ClashTeam       team           = api.getTeam(LeagueShard.EUW1, clashPlayer.getTeamId());

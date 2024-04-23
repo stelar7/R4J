@@ -3,7 +3,6 @@ package no.stelar7.api.r4j.tests.tft;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.tft.TFTMatchAPI;
-import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import no.stelar7.api.r4j.pojo.shared.*;
 import no.stelar7.api.r4j.pojo.tft.*;
 import no.stelar7.api.r4j.tests.SecretFile;
@@ -20,7 +19,8 @@ public class TestTFTMatch
     @Test
     public void testFetchList()
     {
-        List<String> stelar7 = api.getMatchList(RegionShard.EUROPE, Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID(), 0, 20, null, null);
+        RiotAccount  account = l4j8.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        List<String> stelar7 = api.getMatchList(RegionShard.EUROPE, account.getPUUID(), 0, 20, null, null);
         System.out.println();
     }
     
@@ -41,7 +41,7 @@ public class TestTFTMatch
     @Test
     public void testMatchIterator()
     {
-        RiotAccount acc = l4j8.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "Yisus", "yisus");
+        RiotAccount   acc     = l4j8.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "Yisus", "yisus");
         MatchIterator stelar7 = api.getMatchIterator(RegionShard.EUROPE, acc.getPUUID(), 0, 20, null, null);
         for (GAMHSMatch m : stelar7)
         {

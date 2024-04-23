@@ -1,23 +1,20 @@
 package no.stelar7.api.r4j.tests.lol.spectator;
 
-import org.junit.jupiter.api.Test;
-
-import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
-import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
+import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.raw.SpectatorV5API;
+import no.stelar7.api.r4j.impl.lol.raw.SpectatorAPI;
 import no.stelar7.api.r4j.pojo.lol.spectator.SpectatorGameInfo;
 import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
+import org.junit.jupiter.api.Test;
 
 public class SpectatorV5Test
 {
     @Test
     public void testFeaturedGame()
     {
-        final R4J      r4J = new R4J(SecretFile.CREDS);
-        SpectatorV5API api = r4J.getLoLAPI().getSpectatorV5API();
+        final R4J    r4J = new R4J(SecretFile.CREDS);
+        SpectatorAPI api = r4J.getLoLAPI().getSpectatorAPI();
         
         api.getFeaturedGames(LeagueShard.EUW1).forEach(System.out::println);
     }
@@ -25,9 +22,9 @@ public class SpectatorV5Test
     @Test
     public void testCurrentGame()
     {
-        final R4J      r4J = new R4J(SecretFile.CREDS);
-        SpectatorV5API api = r4J.getLoLAPI().getSpectatorV5API();
-        RiotAccount    acc = r4J.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "Incandescence33", "EUW", ApiKeyType.LOL);
+        final R4J    r4J = new R4J(SecretFile.CREDS);
+        SpectatorAPI api = r4J.getLoLAPI().getSpectatorAPI();
+        RiotAccount  acc = r4J.getAccountAPI().getAccountByPUUID(RegionShard.EUROPE, "3p_vqgvTRkkynHiEG4Hcy1elPOpyo5x6kFqvTMOobIdwXcJFgSwSYcIL27m036TKAa1GBzzB-6CNpg");
         
         SpectatorGameInfo currentGame = api.getCurrentGame(LeagueShard.EUW1, acc.getPUUID());
         System.out.println(currentGame);

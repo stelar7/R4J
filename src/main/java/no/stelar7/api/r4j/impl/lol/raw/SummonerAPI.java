@@ -39,18 +39,6 @@ public final class SummonerAPI
     /**
      * The response object contains the summoner objects mapped by their username.
      *
-     * @param server       the region to execute against
-     * @param summonerName summoner name  associated with summoner to retrieve.
-     * @return Optional Summoner
-     */
-    public Summoner getSummonerByName(final LeagueShard server, String summonerName)
-    {
-        return builder.withPlatform(server).withName(summonerName).get();
-    }
-    
-    /**
-     * The response object contains the summoner objects mapped by their username.
-     *
      * @param server    the region to execute against
      * @param accountId accountId associated with summoner to retrieve.
      * @return Optional Summoner

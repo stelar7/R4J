@@ -108,7 +108,6 @@ public class MatchParticipant implements Serializable
     private int                 summoner2Id;
     private String              summonerId;
     private int                 summonerLevel;
-    private String              summonerName;
     private boolean             teamEarlySurrendered;
     private TeamType            teamId;
     private LaneType            teamPosition;
@@ -636,11 +635,6 @@ public class MatchParticipant implements Serializable
         return summonerLevel;
     }
     
-    public String getSummonerName()
-    {
-        return summonerName;
-    }
-    
     public boolean isTeamEarlySurrendered()
     {
         return teamEarlySurrendered;
@@ -936,7 +930,6 @@ public class MatchParticipant implements Serializable
                && Objects.equals(riotIdTagline, that.riotIdTagline)
                && role == that.role
                && Objects.equals(summonerId, that.summonerId)
-               && Objects.equals(summonerName, that.summonerName)
                && teamId == that.teamId
                && teamPosition == that.teamPosition;
     }
@@ -1043,7 +1036,6 @@ public class MatchParticipant implements Serializable
                             summoner2Id,
                             summonerId,
                             summonerLevel,
-                            summonerName,
                             teamEarlySurrendered,
                             teamId,
                             teamPosition,
@@ -1180,7 +1172,6 @@ public class MatchParticipant implements Serializable
                ", summoner2Id=" + summoner2Id +
                ", summonerId='" + summonerId + '\'' +
                ", summonerLevel=" + summonerLevel +
-               ", summonerName='" + summonerName + '\'' +
                ", teamEarlySurrendered=" + teamEarlySurrendered +
                ", teamId=" + teamId +
                ", teamPosition=" + teamPosition +

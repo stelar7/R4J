@@ -52,9 +52,6 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V5_MATCHLIST, MINUTES_10);
         DEFAULTS.add(URLEndpoint.V1_TFT_MATCHLIST, MINUTES_10);
         
-        DEFAULTS.add(URLEndpoint.V4_SPECTATOR_CURRENT, MINUTES_30);
-        DEFAULTS.add(URLEndpoint.V4_SPECTATOR_FEATURED, MINUTES_30);
-        
         DEFAULTS.add(URLEndpoint.V5_SPECTATOR_CURRENT, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V5_SPECTATOR_FEATURED, MINUTES_30);
         

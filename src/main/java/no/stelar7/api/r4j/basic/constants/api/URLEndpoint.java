@@ -10,7 +10,6 @@ import no.stelar7.api.r4j.pojo.lol.league.*;
 import no.stelar7.api.r4j.pojo.lol.liveclient.*;
 import no.stelar7.api.r4j.pojo.lol.replay.*;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
-import no.stelar7.api.r4j.pojo.lol.spectator.v5.SpectatorConnectionInformation;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
 import no.stelar7.api.r4j.pojo.lol.staticdata.item.ItemList;
 import no.stelar7.api.r4j.pojo.lol.staticdata.language.LanguageStrings;
@@ -42,14 +41,10 @@ public enum URLEndpoint
     // lol/summoner/v3/summoners/{summonerId}
     V4_SUMMONER_BY_ACCOUNT("lol", "summoner", "v4", "summoners/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, Summoner.class),
     V4_SUMMONER_BY_PUUID("lol", "summoner", "v4", "summoners/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Summoner.class),
-    V4_SUMMONER_BY_NAME("lol", "summoner", "v4", "summoners/by-name/" + Constants.SUMMONER_NAME_PLACEHOLDER, Summoner.class),
     V4_SUMMONER_BY_ID("lol", "summoner", "v4", "summoners/" + Constants.SUMMONER_ID_PLACEHOLDER, Summoner.class),
     
     // lol/spectator/v3/featured-games
     // lol/spectator/v3/active-games/by-summoner/{summonerId}
-    V4_SPECTATOR_FEATURED("lol", "spectator", "v4", "featured-games", FeaturedGames.class),
-    V4_SPECTATOR_CURRENT("lol", "spectator", "v4", "active-games/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, SpectatorGameInfo.class),
-    
     V5_SPECTATOR_FEATURED("lol", "spectator", "v5", "featured-games", FeaturedGames.class),
     V5_SPECTATOR_CURRENT("lol", "spectator", "v5", "active-games/by-summoner/" + Constants.PUUID_ID_PLACEHOLDER, SpectatorGameInfo.class),
     
@@ -169,7 +164,6 @@ public enum URLEndpoint
     
     V1_TFT_SUMMONER_BY_ACCOUNT("tft", "summoner", "v1", "summoners/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, Summoner.class),
     V1_TFT_SUMMONER_BY_PUUID("tft", "summoner", "v1", "summoners/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Summoner.class),
-    V1_TFT_SUMMONER_BY_NAME("tft", "summoner", "v1", "summoners/by-name/" + Constants.SUMMONER_NAME_PLACEHOLDER, Summoner.class),
     V1_TFT_SUMMONER_BY_ID("tft", "summoner", "v1", "summoners/" + Constants.SUMMONER_ID_PLACEHOLDER, Summoner.class),
     
     V1_TFT_MATCHLIST("tft", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),

@@ -60,16 +60,6 @@ public class R4J
         }
         
         /**
-         * Gets spectator api.
-         *
-         * @return the spectator api
-         */
-        public SpectatorV5API getSpectatorV5API()
-        {
-            return SpectatorV5API.getInstance();
-        }
-        
-        /**
          * Gets summoner api.
          *
          * @return the summoner api

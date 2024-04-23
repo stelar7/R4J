@@ -19,7 +19,6 @@ public class Team implements Serializable
     private long               championId;
     private SpectatorRole      selectedRole;
     private LeaguePositionType selectedPosition;
-    private String             summonerName;
     
     public String getPuuid()
     {
@@ -71,11 +70,6 @@ public class Team implements Serializable
         return selectedPosition;
     }
     
-    public String getSummonerName()
-    {
-        return summonerName;
-    }
-    
     @Override
     public boolean equals(Object o)
     {
@@ -97,14 +91,13 @@ public class Team implements Serializable
                && Objects.equals(summonerId, team.summonerId)
                && Objects.equals(locale, team.locale)
                && selectedRole == team.selectedRole
-               && selectedPosition == team.selectedPosition
-               && Objects.equals(summonerName, team.summonerName);
+               && selectedPosition == team.selectedPosition;
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(puuid, accountId, summonerId, locale, teamOwner, profileIconId, teamParticipantId, championId, selectedRole, selectedPosition, summonerName);
+        return Objects.hash(puuid, accountId, summonerId, locale, teamOwner, profileIconId, teamParticipantId, championId, selectedRole, selectedPosition);
     }
     
     @Override
@@ -121,7 +114,6 @@ public class Team implements Serializable
                ", championId=" + championId +
                ", selectedRole=" + selectedRole +
                ", selectedPosition=" + selectedPosition +
-               ", summonerName='" + summonerName + '\'' +
                '}';
     }
 }

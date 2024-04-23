@@ -5,6 +5,7 @@ import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 
@@ -20,14 +21,15 @@ public class GenerateDataTest
     public void generateStuff() throws IOException
     {
         R4J           api      = new R4J(SecretFile.CREDS);
-        Summoner      self     = Summoner.byName(LeagueShard.EUW1, "stelar7");
-        MatchIterator iterator = self.getLeagueGames().getMatchIterator();
+        RiotAccount   account  = api.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner      summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
+        MatchIterator iterator = summoner.getLeagueGames().getMatchIterator();
         
         int                     i         = 0;
         List<InternalMatchData> matchData = new ArrayList<>();
         for (LOLMatch m : iterator)
         {
-            MatchParticipant  lookup = m.getParticipants().stream().filter(p -> p.getPuuid().equals(self.getPUUID())).findFirst().get();
+            MatchParticipant  lookup = m.getParticipants().stream().filter(p -> p.getPuuid().equals(summoner.getPUUID())).findFirst().get();
             InternalMatchData data   = new InternalMatchData();
             data.queue = m.getQueue().commonName();
             data.win = lookup.didWin();
@@ -37,7 +39,6 @@ public class GenerateDataTest
             for (MatchParticipant p : m.getParticipants())
             {
                 InternalMatchSummoner sum = new InternalMatchSummoner();
-                sum.name = p.getSummonerName();
                 sum.champion = p.getChampionId();
                 sum.summoner1 = p.getSummoner1Id();
                 sum.summoner2 = p.getSummoner2Id();
@@ -100,7 +101,6 @@ public class GenerateDataTest
     
     static class InternalMatchSummoner
     {
-        String        name;
         int           champion;
         int           summoner1;
         int           summoner2;

@@ -13,6 +13,7 @@ import no.stelar7.api.r4j.impl.lol.raw.LeagueAPI;
 import no.stelar7.api.r4j.pojo.lol.league.LeagueEntry;
 import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 
@@ -33,7 +34,8 @@ public class MatchListV5Test
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
         MatchListBuilder builder = new MatchListBuilder();
-        Summoner         sum     = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        RiotAccount      account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner         sum     = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         LazyList<String> all = sum.getLeagueGames().getLazy();
         MatchBuilder     mb  = new MatchBuilder(sum.getPlatform());
@@ -83,7 +85,7 @@ public class MatchListV5Test
                     }
                 });
             });
-            if (wierdEntries.size() > 0)
+            if (!wierdEntries.isEmpty())
             {
                 sb.name(tb.getID());
                 sb.beginArray();
@@ -97,7 +99,7 @@ public class MatchListV5Test
         sb.endObject();
         sb.flush();
         
-        String output = Utils.getGson().toJson(new JsonParser().parse(sw.toString()));
+        String output = Utils.getGson().toJson(JsonParser.parseString(sw.toString()));
         Files.write(Paths.get("C:\\Users\\stelar7\\Desktop\\errors.json"), output.getBytes(StandardCharsets.UTF_8));
     }
     
@@ -107,7 +109,8 @@ public class MatchListV5Test
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Summoner sum = Summoner.byName(LeagueShard.KR, "coconutkr");
+        RiotAccount account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner    sum     = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         MatchListBuilder builder = new MatchListBuilder();
         builder = builder.withPuuid(sum.getPUUID());
@@ -133,8 +136,9 @@ public class MatchListV5Test
                 
                 for (TimelineFrameEvent event : frame.getEvents())
                 {
-                    if (event.getMonsterType() == MonsterType.HORDE) {
-                       System.out.println(event.getMonsterType() + " - " + event.getMonsterSubType());
+                    if (event.getMonsterType() == MonsterType.HORDE)
+                    {
+                        System.out.println(event.getMonsterType() + " - " + event.getMonsterSubType());
                     }
                 }
                 
@@ -154,7 +158,8 @@ public class MatchListV5Test
     {
         DataCall.setCacheProvider(new FileSystemCacheProvider());
         
-        Summoner sum = Summoner.byName(LeagueShard.EUW1, "rufen03");
+        RiotAccount account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner    sum     = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         MatchListBuilder builder = new MatchListBuilder();
         builder = builder.withPuuid(sum.getPUUID()).withPlatform(LeagueShard.EUW1);
@@ -170,8 +175,8 @@ public class MatchListV5Test
     public void testMatchListParameterOrder()
     {
         
-        String           puuid     = Summoner.byName(LeagueShard.EUW1, "stelar7").getPUUID();
-        LazyList<String> matchList = r4J.getLoLAPI().getMatchAPI().getMatchList(LeagueShard.EUW1.toRegionShard(), puuid);
+        RiotAccount      account   = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        LazyList<String> matchList = r4J.getLoLAPI().getMatchAPI().getMatchList(LeagueShard.EUW1.toRegionShard(), account.getPUUID());
         for (String s : matchList)
         {
             System.out.println(s);

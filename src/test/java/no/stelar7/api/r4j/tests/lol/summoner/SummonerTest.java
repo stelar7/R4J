@@ -6,9 +6,10 @@ import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.SummonerCrawler;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
+import no.stelar7.api.r4j.impl.lol.raw.SpectatorAPI;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 
@@ -45,26 +46,18 @@ public class SummonerTest
         Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
          */
         
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String      id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        RiotAccount account = r4J.getAccountAPI().getAccountByPUUID(LeagueShard.EUW1.toRegionShard(), id);
+        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         doAssertions.accept(s);
-    }
-    
-    @Test
-    public void testByName()
-    {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
-        
-        Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withName(s.getName()).get();
-        doAssertions.accept(optional);
     }
     
     @Test
     public void testByAccount()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String      id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        RiotAccount account = r4J.getAccountAPI().getAccountByPUUID(LeagueShard.EUW1.toRegionShard(), id);
+        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withAccountId(s.getAccountId()).get();
         doAssertions.accept(optional);
@@ -73,51 +66,31 @@ public class SummonerTest
     @Test
     public void testByPUUID()
     {
-        String   id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String      id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        RiotAccount account = r4J.getAccountAPI().getAccountByPUUID(LeagueShard.EUW1.toRegionShard(), id);
+        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withPUUID(s.getPUUID()).get();
         doAssertions.accept(optional);
     }
     
-    @Test
-    public void testWadas()
-    {
-        DataCall.setCacheProvider(null);
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withName("GindenEU").get();
-        Summoner s2 = new SummonerBuilder().withPlatform(LeagueShard.EUN1).withPUUID(s.getPUUID()).get();
-        
-        System.out.println(s);
-        System.out.println(s2);
-    }
     
     @Test
     @Disabled
     public void testCrawler()
     {
-        SummonerCrawler crawler = new SummonerCrawler(Summoner.byName(LeagueShard.EUW1, "stelar7"));
+        RiotAccount account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
+        
+        SummonerCrawler crawler = new SummonerCrawler(s);
         System.out.println(crawler.get().size());
         crawler.crawlLeague();
         System.out.println(crawler.get().size());
         
-        crawler = new SummonerCrawler(Summoner.byName(LeagueShard.EUW1, "stelar7"));
+        crawler = new SummonerCrawler(s);
         System.out.println(crawler.get().size());
         crawler.crawlGames();
         System.out.println(crawler.get().size());
     }
     
-    @Test
-    public void testSpaceInName()
-    {
-        DataCall.setCacheProvider(null);
-        
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.NA1).withName("Y K").get();
-        Summoner s2 = Summoner.byPUUID(LeagueShard.NA1, "NxhbAImhCWlqkC1IFRVHgfWaAtD0OO8Zofk9oe79DGIYi3IH9YCn75Ke2-iO0qFJNmFCSw9q4l2Rlg"); // 夜
-        Summoner s3 = new SummonerBuilder().withPlatform(LeagueShard.KR).withName("삼 재").get();
-        
-        Assertions.assertNotNull(s);
-        Assertions.assertNotNull(s2);
-        Assertions.assertNotNull(s3);
-        
-    }
 }

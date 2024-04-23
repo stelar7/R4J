@@ -2,10 +2,10 @@ package no.stelar7.api.r4j.tests.lol.spectator;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
-import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
+import no.stelar7.api.r4j.impl.lol.raw.SpectatorAPI;
 import no.stelar7.api.r4j.pojo.lol.spectator.SpectatorGameInfo;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 
@@ -34,18 +34,18 @@ public class CurrentGameTest
     @Test
     public void testCurrentGame()
     {
-        final R4J        r4J = new R4J(SecretFile.CREDS);
-        SpectatorBuilder sb  = new SpectatorBuilder().withPlatform(LeagueShard.EUW1);
+        final R4J r4J = new R4J(SecretFile.CREDS);
         
         // Get a game in progess
-        final List<SpectatorGameInfo> game = sb.getFeaturedGames();
+        final List<SpectatorGameInfo> game = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1);
         
         // Get a summoner from that game
-        final String   name = game.get(0).getParticipants().get(0).getSummonerName();
-        final Summoner sum  = new SummonerBuilder().withPlatform(game.get(0).getPlatform()).withName(name).get();
+        final String name    = game.get(0).getParticipants().get(0).getPuuid();
+        RiotAccount  account = r4J.getAccountAPI().getAccountByPUUID(LeagueShard.EUW1.toRegionShard(), name);
+        Summoner     sum     = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         // Get game info
-        final SpectatorGameInfo currentGame = sb.withSummonerId(sum.getSummonerId()).getCurrentGame();
+        final SpectatorGameInfo currentGame = SpectatorAPI.getInstance().getCurrentGame(LeagueShard.EUW1, sum.getPUUID());
         if (currentGame != null)
         {
             doAssertions.accept(currentGame);
@@ -55,9 +55,10 @@ public class CurrentGameTest
     @Test
     public void testCurrentGameFame()
     {
-        final R4J         r4J  = new R4J(SecretFile.CREDS);
-        Summoner          s    = Summoner.byName(LeagueShard.EUW1, "Klospülautomat");
-        SpectatorGameInfo game = s.getCurrentGame();
+        final R4J         r4J     = new R4J(SecretFile.CREDS);
+        RiotAccount       account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner          s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
+        SpectatorGameInfo game    = s.getCurrentGame();
         
         System.out.format("%s is %sin game%n", s.getName(), game != null ? "" : "not ");
     }

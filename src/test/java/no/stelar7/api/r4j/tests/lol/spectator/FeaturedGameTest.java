@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.tests.lol.spectator;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
+import no.stelar7.api.r4j.impl.lol.raw.SpectatorAPI;
 import no.stelar7.api.r4j.pojo.lol.spectator.SpectatorGameInfo;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
@@ -30,11 +30,9 @@ public class FeaturedGameTest
     @Test
     public void testCurrentGame()
     {
-        final R4J        r4J = new R4J(SecretFile.CREDS);
-        SpectatorBuilder sb  = new SpectatorBuilder().withPlatform(LeagueShard.EUW1);
+        final R4J r4J = new R4J(SecretFile.CREDS);
         
-        
-        final List<SpectatorGameInfo> game = sb.getFeaturedGames();
+        final List<SpectatorGameInfo> game = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1);
         doAssertions.accept(game);
     }
     

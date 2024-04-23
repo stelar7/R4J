@@ -5,9 +5,8 @@ import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.lol.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.league.LeagueBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder;
-import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.thirdparty.ThirdPartyCodeBuilder;
-import no.stelar7.api.r4j.impl.lol.raw.SummonerAPI;
+import no.stelar7.api.r4j.impl.lol.raw.*;
 import no.stelar7.api.r4j.impl.tft.TFTMatchAPI;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
 import no.stelar7.api.r4j.pojo.lol.league.LeagueEntry;
@@ -30,11 +29,6 @@ public final class Summoner implements Serializable
     private long        revisionDate;
     private LeagueShard platform;
     
-    
-    public static Summoner byName(LeagueShard platform, String name)
-    {
-        return SummonerAPI.getInstance().getSummonerByName(platform, name);
-    }
     
     public static Summoner bySummonerId(LeagueShard platform, String id)
     {
@@ -180,7 +174,7 @@ public final class Summoner implements Serializable
     
     public SpectatorGameInfo getCurrentGame()
     {
-        return new SpectatorBuilder().withPlatform(platform).withSummonerId(id).getCurrentGame();
+        return SpectatorAPI.getInstance().getCurrentGame(platform, puuid);
     }
     
     public String getThirdPartyCode()
@@ -215,7 +209,14 @@ public final class Summoner implements Serializable
             return false;
         }
         Summoner summoner = (Summoner) o;
-        return profileIconId == summoner.profileIconId && summonerLevel == summoner.summonerLevel && revisionDate == summoner.revisionDate && Objects.equals(name, summoner.name) && Objects.equals(accountId, summoner.accountId) && Objects.equals(puuid, summoner.puuid) && Objects.equals(id, summoner.id) && platform == summoner.platform;
+        return profileIconId == summoner.profileIconId
+               && summonerLevel == summoner.summonerLevel
+               && revisionDate == summoner.revisionDate
+               && Objects.equals(name, summoner.name)
+               && Objects.equals(accountId, summoner.accountId)
+               && Objects.equals(puuid, summoner.puuid)
+               && Objects.equals(id, summoner.id)
+               && platform == summoner.platform;
     }
     
     @Override

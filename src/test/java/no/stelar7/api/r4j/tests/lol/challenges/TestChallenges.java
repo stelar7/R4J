@@ -6,6 +6,7 @@ import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.ChallengeAPI;
 import no.stelar7.api.r4j.pojo.lol.challenges.*;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +48,8 @@ public class TestChallenges
     @Test
     public void testGetChallengePlayerInfo()
     {
-        Summoner            summoner            = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        RiotAccount         account             = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner            summoner            = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         ChallengePlayerInfo challengePlayerInfo = api.getChallengePlayerInfo(LeagueShard.EUW1, summoner.getPUUID());
     }
 }

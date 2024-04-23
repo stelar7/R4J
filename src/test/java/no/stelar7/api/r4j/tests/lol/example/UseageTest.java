@@ -11,6 +11,7 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.mastery.StaticMastery;
 import no.stelar7.api.r4j.pojo.lol.staticdata.perk.StaticPerk;
 import no.stelar7.api.r4j.pojo.lol.staticdata.rune.StaticRune;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +31,8 @@ public class UseageTest
         Map<Integer, StaticChampion> championData  = api.getDDragonAPI().getChampions();
         Map<Integer, StaticPerk>     perkData      = api.getDDragonAPI().getPerks();
         
-        Summoner     summoner = Summoner.byName(LeagueShard.EUW1, "stelar7");
+        RiotAccount  account  = api.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner     summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         List<String> some     = summoner.getLeagueGames().get();
         
         LOLMatch         match = LOLMatch.get(summoner.getPlatform(), some.get(0));

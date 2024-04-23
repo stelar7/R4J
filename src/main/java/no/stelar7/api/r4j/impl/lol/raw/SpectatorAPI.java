@@ -32,13 +32,13 @@ public final class SpectatorAPI
      */
     public List<SpectatorGameInfo> getFeaturedGames(LeagueShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V4_SPECTATOR_FEATURED)
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V5_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new HashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_FEATURED, data);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_FEATURED, data);
         if (chl.isPresent())
         {
             return ((FeaturedGames) chl.get()).getGameList();
@@ -52,10 +52,10 @@ public final class SpectatorAPI
                 return Collections.emptyList();
             }
             
-            FeaturedGames fg = (FeaturedGames) data;
+            FeaturedGames fg = (FeaturedGames) ret;
             
             data.put("value", fg);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_FEATURED, data);
+            DataCall.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_FEATURED, data);
             
             return fg.getGameList();
         } catch (ClassCastException e)
@@ -69,21 +69,21 @@ public final class SpectatorAPI
      * <p>
      * returns null if not in game
      *
-     * @param server     the region to execute against
-     * @param summonerId the summonerId
+     * @param server the region to execute against
+     * @param puuid  the puuid
      * @return SpectatorGameInfo
      */
-    public SpectatorGameInfo getCurrentGame(LeagueShard server, String summonerId)
+    public SpectatorGameInfo getCurrentGame(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V4_SPECTATOR_CURRENT)
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                       .withEndpoint(URLEndpoint.V5_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        data.put("summoner", summonerId);
+        data.put("summoner", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_SPECTATOR_CURRENT, data);
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_CURRENT, data);
         if (chl.isPresent())
         {
             return (SpectatorGameInfo) chl.get();
@@ -94,7 +94,7 @@ public final class SpectatorAPI
             SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
             
             data.put("value", fg);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_SPECTATOR_CURRENT, data);
+            DataCall.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_CURRENT, data);
             
             return fg;
         } catch (ClassCastException e)

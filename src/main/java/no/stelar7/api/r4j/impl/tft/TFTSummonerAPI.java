@@ -3,7 +3,6 @@ package no.stelar7.api.r4j.impl.tft;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
 import java.util.*;
@@ -56,46 +55,6 @@ public class TFTSummonerAPI
             
             data.put("value", summoner);
             DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_ID, data);
-            
-            return summoner;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
-    }
-    
-    /**
-     * The response object contains the summoner objects mapped by their username.
-     *
-     * @param server       the region to execute against
-     * @param summonerName summoner name  associated with summoner to retrieve.
-     * @return Optional Summoner
-     */
-    public Summoner getSummonerByName(final LeagueShard server, String summonerName)
-    {
-        DataCallBuilder builder = new DataCallBuilder()
-                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
-                .withURLParameter(Constants.SUMMONER_NAME_PLACEHOLDER, Utils.normalizeString(summonerName))
-                .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_NAME)
-                .withPlatform(server);
-        
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("platform", server);
-        data.put("name", summonerName);
-        
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_NAME, data);
-        if (chl.isPresent())
-        {
-            return (Summoner) chl.get();
-        }
-        
-        try
-        {
-            Summoner summoner = (Summoner) builder.build();
-            
-            data.put("value", summoner);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_NAME, data);
             
             return summoner;
         } catch (ClassCastException e)

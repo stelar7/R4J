@@ -193,11 +193,11 @@ public class SpectatorGameInfo implements Serializable
         {
             return false;
         }
-        if ((observers != null) ? !observers.equals(that.observers) : (that.observers != null))
+        if (!Objects.equals(observers, that.observers))
         {
             return false;
         }
-        if ((participants != null) ? !participants.equals(that.participants) : (that.participants != null))
+        if (!Objects.equals(participants, that.participants))
         {
             return false;
         }
@@ -208,11 +208,11 @@ public class SpectatorGameInfo implements Serializable
     public int hashCode()
     {
         int result = bannedChampions != null ? bannedChampions.hashCode() : 0;
-        result = 31 * result + (int) (gameId ^ (gameId >>> 32));
-        result = 31 * result + (int) (gameLength ^ (gameLength >>> 32));
+        result = 31 * result + Long.hashCode(gameId);
+        result = 31 * result + Long.hashCode(gameLength);
         result = 31 * result + (gameMode != null ? gameMode.hashCode() : 0);
         result = 31 * result + (gameQueueConfigId != null ? gameQueueConfigId.hashCode() : 0);
-        result = 31 * result + (int) (gameStartTime ^ (gameStartTime >>> 32));
+        result = 31 * result + Long.hashCode(gameStartTime);
         result = 31 * result + (gameType != null ? gameType.hashCode() : 0);
         result = 31 * result + (mapId != null ? mapId.hashCode() : 0);
         result = 31 * result + (observers != null ? observers.hashCode() : 0);

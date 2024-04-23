@@ -17,7 +17,6 @@ public class LeagueItem implements Serializable
     protected boolean    veteran;
     protected int        losses;
     protected String     summonerId;
-    protected String     summonerName;
     protected boolean    inactive;
     protected boolean    freshBlood;
     protected int        leaguePoints;
@@ -129,16 +128,6 @@ public class LeagueItem implements Serializable
     }
     
     /**
-     * The name of the the participant (i.e., summoner or team) represented by this entry.
-     *
-     * @return the player or team name
-     */
-    public String getSummonerName()
-    {
-        return this.summonerName;
-    }
-    
-    /**
      * The number of wins for the participant.
      *
      * @return the wins
@@ -169,14 +158,13 @@ public class LeagueItem implements Serializable
                leaguePoints == that.leaguePoints &&
                Objects.equals(rank, that.rank) &&
                Objects.equals(miniSeries, that.miniSeries) &&
-               Objects.equals(summonerId, that.summonerId) &&
-               Objects.equals(summonerName, that.summonerName);
+               Objects.equals(summonerId, that.summonerId);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(rank, hotStreak, miniSeries, wins, veteran, losses, summonerId, summonerName, inactive, freshBlood, leaguePoints);
+        return Objects.hash(rank, hotStreak, miniSeries, wins, veteran, losses, summonerId, inactive, freshBlood, leaguePoints);
     }
     
     @Override
@@ -192,7 +180,6 @@ public class LeagueItem implements Serializable
                ", losses=" + losses +
                ", miniSeries=" + miniSeries +
                ", summonerId='" + summonerId + '\'' +
-               ", summonerName='" + summonerName + '\'' +
                ", wins=" + wins +
                '}';
     }

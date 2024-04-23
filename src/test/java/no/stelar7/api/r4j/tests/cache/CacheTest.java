@@ -1,7 +1,6 @@
 package no.stelar7.api.r4j.tests.cache;
 
 import ch.qos.logback.classic.*;
-import no.stelar7.api.r4j.basic.cache.CacheLifetimeHint;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
@@ -9,11 +8,11 @@ import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.matchv5.match.MatchListBuilder;
-import no.stelar7.api.r4j.impl.lol.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
+import no.stelar7.api.r4j.impl.lol.raw.SpectatorAPI;
 import no.stelar7.api.r4j.pojo.lol.match.v5.LOLMatch;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
-import no.stelar7.api.r4j.pojo.val.matchlist.*;
+import no.stelar7.api.r4j.pojo.val.matchlist.RecentMatchList;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.*;
 import org.slf4j.LoggerFactory;
@@ -51,15 +50,7 @@ public class CacheTest
         {
             r4J.getVALAPI().getMatchAPI().getMatch(ValorantShard.EU, matchId);
         }
-    
-        /*
-            Summoner s = Summoner.byName(LeagueShard.EUW1, "stelar7");
-            System.out.println(s);
-            s = Summoner.byName(LeagueShard.EUW1, "stelar7");
-            System.out.println(s);
-        */
         
-        //    doCacheStuff();
     }
     
     @Test
@@ -110,33 +101,28 @@ public class CacheTest
         
         System.out.println("Fetching summoner for the first time");
         DataCall.setCacheProvider(fileCache.get());
-        String id = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         Thread.sleep(6000);
         System.out.println("Fetching summoner after cache timeout");
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", LeagueShard.EUW1);
         data.put("name", id);
         
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_SUMMONER_BY_NAME, data);
-        
         System.out.println("Fetching summoner after deleting entry");
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
-        CacheLifetimeHint defaults = CacheLifetimeHint.DEFAULTS;
-        defaults.add(URLEndpoint.V4_SUMMONER_BY_NAME, TimeUnit.SECONDS.toMillis(1));
-        DataCall.getCacheProvider().setTimeToLive(defaults);
         Thread.sleep(1000);
         
         System.out.println("Fetching summoner after setting lifetime to a lower limit");
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
     }
     
     @AfterEach
@@ -157,8 +143,8 @@ public class CacheTest
         
         System.out.println("Fetching a random summoner and their match list");
         
-        String       id      = new SpectatorBuilder().withPlatform(LeagueShard.EUW1).getFeaturedGames().get(0).getParticipants().get(0).getSummonerName();
-        Summoner     s       = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withName(id).get();
+        String       id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        Summoner     s       = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         List<String> recents = new MatchListBuilder().withPlatform(LeagueShard.EUW1).withPuuid(s.getPUUID()).get();
         
         if (recents.isEmpty())
@@ -170,7 +156,7 @@ public class CacheTest
         
         System.out.println("Starting timer");
         
-        long  start = System.currentTimeMillis();
+        long     start = System.currentTimeMillis();
         LOLMatch url   = LOLMatch.get(LeagueShard.EUW1, ref);
         System.out.printf("1x url fetch time: %dns%n", System.currentTimeMillis() - start);
         
@@ -216,7 +202,7 @@ public class CacheTest
         LOLMatch.get(LeagueShard.EUW1, recents.get(1));
         LOLMatch.get(LeagueShard.EUW1, recents.get(2));
         LOLMatch.get(LeagueShard.EUW1, recents.get(3));
-    
+        
         System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
         
         System.out.println("Waiting for cache timeout");

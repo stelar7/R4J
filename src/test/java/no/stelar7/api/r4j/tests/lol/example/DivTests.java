@@ -2,11 +2,11 @@ package no.stelar7.api.r4j.tests.lol.example;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
-import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.impl.lol.raw.ImageAPI;
 import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,8 @@ public class DivTests
         String      user   = "stelar7";
         LeagueShard region = LeagueShard.EUW1;
         
-        Summoner                     summoner  = new SummonerBuilder().withPlatform(region).withName(user).get();
+        RiotAccount                  account   = api.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        Summoner                     summoner  = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         Map<Integer, StaticChampion> champData = api.getDDragonAPI().getChampions();
         //pfp
         String pfp = ImageAPI.getInstance().getProfileIcon(region, user);

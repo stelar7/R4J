@@ -74,7 +74,6 @@ public class LeagueEntry extends LeagueItem implements Serializable
                ", veteran=" + veteran +
                ", losses=" + losses +
                ", summonerId='" + summonerId + '\'' +
-               ", summonerName='" + summonerName + '\'' +
                ", inactive=" + inactive +
                ", freshBlood=" + freshBlood +
                ", leaguePoints=" + leaguePoints +

@@ -10,13 +10,14 @@ public class SpectatorParticipant implements Serializable
     private static final long serialVersionUID = -4280093223886492229L;
     
     private int                                    championId;
-    private long              profileIconId;
-    private SummonerSpellType spell1Id;
-    private SummonerSpellType spell2Id;
-    private String                                 summonerName;
-    private String            summonerId;
-    private TeamType          teamId;
-    private boolean           bot;
+    private long                                   profileIconId;
+    private SummonerSpellType                      spell1Id;
+    private SummonerSpellType                      spell2Id;
+    private String                                 summonerId;
+    private String                                 puuid;
+    private String                                 riotId;
+    private TeamType                               teamId;
+    private boolean                                bot;
     private SpectatorPerks                         perks;
     private List<SpectatorGameCustomizationObject> gameCustomizationObjects;
     
@@ -58,16 +59,6 @@ public class SpectatorParticipant implements Serializable
     public SummonerSpellType getSpell2()
     {
         return spell2Id;
-    }
-    
-    /**
-     * Gets summoner name
-     *
-     * @return the summoner name
-     */
-    public String getSummonerName()
-    {
-        return summonerName;
     }
     
     /**
@@ -120,21 +111,14 @@ public class SpectatorParticipant implements Serializable
         return gameCustomizationObjects;
     }
     
-    @Override
-    public String toString()
+    public String getPuuid()
     {
-        return "SpectatorParticipant{" +
-               "championId=" + championId +
-               ", profileIconId=" + profileIconId +
-               ", spell1Id=" + spell1Id +
-               ", spell2Id=" + spell2Id +
-               ", summonerName='" + summonerName + '\'' +
-               ", summonerId='" + summonerId + '\'' +
-               ", teamId=" + teamId +
-               ", bot=" + bot +
-               ", perks=" + perks +
-               ", gameCustomizationObjects=" + gameCustomizationObjects +
-               '}';
+        return puuid;
+    }
+    
+    public String getRiotId()
+    {
+        return riotId;
     }
     
     @Override
@@ -149,21 +133,40 @@ public class SpectatorParticipant implements Serializable
             return false;
         }
         SpectatorParticipant that = (SpectatorParticipant) o;
-        return championId == that.championId &&
-               profileIconId == that.profileIconId &&
-               bot == that.bot &&
-               spell1Id == that.spell1Id &&
-               spell2Id == that.spell2Id &&
-               Objects.equals(summonerName, that.summonerName) &&
-               Objects.equals(summonerId, that.summonerId) &&
-               teamId == that.teamId &&
-               Objects.equals(perks, that.perks) &&
-               Objects.equals(gameCustomizationObjects, that.gameCustomizationObjects);
+        return championId == that.championId
+               && profileIconId == that.profileIconId
+               && bot == that.bot
+               && spell1Id == that.spell1Id
+               && spell2Id == that.spell2Id
+               && Objects.equals(summonerId, that.summonerId)
+               && Objects.equals(puuid, that.puuid)
+               && Objects.equals(riotId, that.riotId)
+               && teamId == that.teamId
+               && Objects.equals(perks, that.perks)
+               && Objects.equals(gameCustomizationObjects, that.gameCustomizationObjects);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(championId, profileIconId, spell1Id, spell2Id, summonerName, summonerId, teamId, bot, perks, gameCustomizationObjects);
+        return Objects.hash(championId, profileIconId, spell1Id, spell2Id, summonerId, puuid, riotId, teamId, bot, perks, gameCustomizationObjects);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "SpectatorParticipant{" +
+               "championId=" + championId +
+               ", profileIconId=" + profileIconId +
+               ", spell1Id=" + spell1Id +
+               ", spell2Id=" + spell2Id +
+               ", summonerId='" + summonerId + '\'' +
+               ", puuid='" + puuid + '\'' +
+               ", riotId='" + riotId + '\'' +
+               ", teamId=" + teamId +
+               ", bot=" + bot +
+               ", perks=" + perks +
+               ", gameCustomizationObjects=" + gameCustomizationObjects +
+               '}';
     }
 }
