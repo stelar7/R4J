@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.tests.lol.staticdata;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
+import no.stelar7.api.r4j.basic.constants.types.lol.SummonerSpellType;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
@@ -48,10 +49,10 @@ public class StaticTest
                    {
                        return;
                    }
-                
+                   
                    String url  = "https://cdn.communitydragon.org/latest/champion/" + e.getKey() + "/splash-art/centered/skin/" + skin.getNum();
                    Path   file = outputFolder.resolve(Utils.padLeft(String.valueOf(skin.getId()), "0", 6) + ".png");
-                
+                   
                    downloadFile(url, file);
                }
            });
@@ -79,9 +80,9 @@ public class StaticTest
                    JsonObject skinObj = skin.getAsJsonObject();
                    String     id      = skinObj.get("id").getAsString();
                    id = id.substring(id.length() - 3);
-                
+                   
                    downloadFromCDragon(outputFolder, e.getKey(), id, skinObj.get("id").getAsString());
-                
+                   
                    if (skinObj.has("chromas"))
                    {
                        JsonArray chromas = skinObj.getAsJsonArray("chromas");
@@ -92,7 +93,7 @@ public class StaticTest
                        }
                    }
                }
-            
+               
            });
     }
     
@@ -365,5 +366,13 @@ public class StaticTest
         
         String paths = api.getTarball();
         System.out.println();
+    }
+    
+    @Test
+    public void testSummonerSpellSecondId()
+    {
+        Assertions.assertSame(SummonerSpellType.UNKNOWN.getFromCode("4").get(), SummonerSpellType.FLASH);
+        Assertions.assertSame(SummonerSpellType.UNKNOWN.getFromCode("2202").get(), SummonerSpellType.FLASH);
+        Assertions.assertSame(SummonerSpellType.UNKNOWN.getFromCode("2203").get(), SummonerSpellType.FLASH);
     }
 }

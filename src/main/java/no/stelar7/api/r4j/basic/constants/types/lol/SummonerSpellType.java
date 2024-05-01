@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.basic.constants.types.lol;
 
 import no.stelar7.api.r4j.basic.constants.types.CodedEnum;
 
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public enum SummonerSpellType implements CodedEnum
@@ -155,7 +155,7 @@ public enum SummonerSpellType implements CodedEnum
             return byName;
         }
         
-        return Stream.of(SummonerSpellType.values()).filter(t -> t.getValue().equals(Integer.valueOf(type))).findFirst();
+        return Stream.of(SummonerSpellType.values()).filter(t -> Arrays.asList(t.ids).contains(Integer.parseInt(type))).findFirst();
     }
     
     @Override
