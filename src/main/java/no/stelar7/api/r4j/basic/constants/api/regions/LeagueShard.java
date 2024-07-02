@@ -84,7 +84,11 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
     /**
      * Taiwan platform
      */
-    TW2("TW2", "tw");
+    TW2("TW2", "tw"),
+    /**
+     * Middle East platform
+     */
+    ME1("ME1", "me");
     
     
     private String[] keys;
@@ -148,6 +152,8 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
                 return "Thailand";
             case TW2:
                 return "Taiwan";
+            case ME1:
+                return "Middle East";
             default:
                 return "This enum does not have a pretty name";
         }
@@ -196,6 +202,7 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
             case EUW1:
             case TR1:
             case RU:
+            case ME1:
                 return RegionShard.EUROPE;
             case JP1:
             case KR:
@@ -229,7 +236,7 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
     
     public static List<LeagueShard> getSpectatorPlatforms()
     {
-        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1);
+        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, ME1);
     }
     
     public static List<LeagueShard> getGarenaPlatforms()
@@ -239,7 +246,7 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
     
     public static List<LeagueShard> getValidPlatforms()
     {
-        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2, SG2, PH2, ID1, VN2, TH2, TW2);
+        return Arrays.asList(RU, KR, BR1, OC1, JP1, NA1, EUN1, EUW1, TR1, LA1, LA2, SG2, PH2, ID1, VN2, TH2, TW2, ME1);
     }
     
     public String[] getKeys()
