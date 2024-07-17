@@ -284,6 +284,10 @@ public enum GameQueueType implements CodedEnum
      */
     ODYSSEY_ONSLAUGHT(1070, 1071),
     /**
+     * Swarm
+     */
+    STRAWBERRY(1830),
+    /**
      * Tutorial games
      */
     TUTORIAL_MODULE_1(2000),
