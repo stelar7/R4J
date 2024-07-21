@@ -106,6 +106,11 @@ public enum GameModeType implements CodedEnum
      * TFT
      */
     TFT,
+    
+    /**
+     * Vampire survivors esq
+     */
+    STRAWBERRY,
     ;
     
     /**

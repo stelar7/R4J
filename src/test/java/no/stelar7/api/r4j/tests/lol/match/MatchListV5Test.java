@@ -215,7 +215,17 @@ public class MatchListV5Test
     public void testCherryGameMode()
     {
         LOLMatch match = LOLMatch.get(LeagueShard.EUW1, "EUW1_6507642888");
-        System.out.println();
+        String   puuid = match.getParticipants().get(0).getPuuid();
+        
+        MatchListBuilder builder = new MatchListBuilder();
+        builder = builder.withPuuid(puuid).withPlatform(LeagueShard.EUW1);
+        List<String> strings = builder.get();
+        
+        for (String s : strings)
+        {
+            LOLMatch lolMatch = LOLMatch.get(LeagueShard.EUW1, s);
+            System.out.println();
+        }
     }
 }
 
