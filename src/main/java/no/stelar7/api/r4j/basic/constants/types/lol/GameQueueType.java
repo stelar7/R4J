@@ -286,7 +286,7 @@ public enum GameQueueType implements CodedEnum
     /**
      * Swarm
      */
-    STRAWBERRY(1830, 1840),
+    STRAWBERRY(1810, 1820, 1830, 1840),
     /**
      * Tutorial games
      */
