@@ -111,6 +111,9 @@ public enum GameModeType implements CodedEnum
      * Vampire survivors esq
      */
     STRAWBERRY,
+    
+
+    SWIFTPLAY,
     ;
     
     /**
@@ -174,6 +177,8 @@ public enum GameModeType implements CodedEnum
                 return "Nexus Blitz";
             case ODYSSEY:
                 return "Odyssey";
+            case SWIFTPLAY:
+                return "Switfplay";
             default:
                 return "This enum does not have a pretty name";
         }

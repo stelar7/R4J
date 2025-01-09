@@ -7,6 +7,7 @@ import java.util.stream.*;
 
 public enum MonsterType implements CodedEnum
 {
+    ATAKHAN,
     BARON_NASHOR,
     BLUE_GOLEM,
     DRAGON,
@@ -46,6 +47,8 @@ public enum MonsterType implements CodedEnum
                 return "Vilemaw";
             case HORDE:
                 return "Voidgrub";
+            case ATAKHAN:
+                return "Atakhan";
             default:
                 return "This enum does not have a pretty name";
         }

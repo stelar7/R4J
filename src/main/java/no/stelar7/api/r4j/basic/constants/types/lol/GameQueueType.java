@@ -404,6 +404,8 @@ public enum GameQueueType implements CodedEnum
     ARAM_BOTS(860),
     
     QUICKPLAY_NORMAL(490),
+    
+    SWIFTPLAY(480)
     ;
     
     private final Integer[] codes;
