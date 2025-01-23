@@ -184,6 +184,7 @@ public enum URLEndpoint
     V1_LOR_DECKS_ME_POST("lor", "deck", "v1", "decks/me", String.class),
     
     V1_CLASH_PLAYER_BY_SUMMONER("lol", "clash", "v1", "players/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, ClashPlayerList.class),
+    V1_CLASH_PLAYER_BY_PUUID("lol", "clash", "v1", "players/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, ClashPlayerList.class),
     V1_CLASH_TEAM_BY_ID("lol", "clash", "v1", "teams/" + Constants.TEAM_ID_PLACEHOLDER, ClashTeam.class),
     V1_CLASH_TOURNAMENTS("lol", "clash", "v1", "tournaments", ClashTournamentList.class),
     V1_CLASH_TOURNAMENTS_BY_TEAM("lol", "clash", "v1", "tournaments/by-team/" + Constants.TEAM_ID_PLACEHOLDER, ClashTournament.class),
