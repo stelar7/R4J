@@ -23,7 +23,10 @@ public class ClashAPI
     
     /**
      * Returns a list of player data for all active tournaments you are registered in
+     * 
+     * @deprecated use {@link #getPlayerInfoByPuuid(LeagueShard, String)} instead
      */
+    @Deprecated
     public List<ClashPlayer> getPlayerInfo(final LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CLASH_PLAYER_BY_SUMMONER)
@@ -46,6 +49,39 @@ public class ClashAPI
             
             data.put("value", list);
             DataCall.getCacheProvider().store(URLEndpoint.V1_CLASH_PLAYER_BY_SUMMONER, data);
+            
+            return list;
+        } catch (ClassCastException e)
+        {
+            return Collections.emptyList();
+        }
+    }
+    
+    /**
+     * Returns a list of player data for all active tournaments you are registered in
+     */
+    public List<ClashPlayer> getPlayerInfoByPuuid(final LeagueShard server, String puuid)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CLASH_PLAYER_BY_PUUID)
+                                                       .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                       .withPlatform(server);
+        
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+        data.put("puuid", puuid);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CLASH_PLAYER_BY_PUUID, data);
+        if (chl.isPresent())
+        {
+            return (List<ClashPlayer>) chl.get();
+        }
+        
+        try
+        {
+            List<ClashPlayer> list = (List<ClashPlayer>) builder.build();
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_CLASH_PLAYER_BY_PUUID, data);
             
             return list;
         } catch (ClassCastException e)

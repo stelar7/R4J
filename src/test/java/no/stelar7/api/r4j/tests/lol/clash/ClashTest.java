@@ -1,6 +1,7 @@
 package no.stelar7.api.r4j.tests.lol.clash;
 
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.ClashAPI;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
@@ -22,6 +23,14 @@ public class ClashTest
         RiotAccount       account  = R4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
         Summoner          summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         List<ClashPlayer> stelar7  = api.getPlayerInfo(LeagueShard.EUW1, summoner.getSummonerId());
+        System.out.println(stelar7);
+    }
+    
+    @Test
+    public void testGetPlayerDataByPUUID()
+    {
+        RiotAccount       account  = R4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "KaluNight", "ABM2", ApiKeyType.LOL);
+        List<ClashPlayer> stelar7  = api.getPlayerInfoByPuuid(LeagueShard.EUW1, account.getPUUID());
         System.out.println(stelar7);
     }
     
