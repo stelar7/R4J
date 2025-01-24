@@ -55,4 +55,15 @@ public class TestSharedAccount
         System.out.println(accountLoL);
         System.out.println(accountTfT);
     }
+    
+    @Test
+    @Order(5)
+    public void getByTagWithSpace()
+    {
+        R4J         api     = new R4J(SecretFile.CREDS);
+        // Banger account name
+        RiotAccount account = api.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "LECHEUR 2 PIEDS", "444", ApiKeyType.LOL);
+        
+        System.out.println(account);
+    }
 }
