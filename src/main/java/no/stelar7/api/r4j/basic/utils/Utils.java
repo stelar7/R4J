@@ -125,7 +125,10 @@ public final class Utils
     {
         try
         {
-            return URLEncoder.encode(data, "UTF-8");
+          // FIXME : This is a workaround for the fact that URLEncoder encodes spaces as + instead of %20 (as described in the HTML spec)
+          // A better solution would be to use an encoder made for our task as UrlEscapers from Guava (https://guava.dev/releases/23.0/api/docs/com/google/common/net/UrlEscapers.html)
+          // More info : https://stackoverflow.com/questions/4737841/urlencoder-not-able-to-translate-space-character
+            return URLEncoder.encode(data, "UTF-8").replaceAll("\\+", "%20");
         } catch (final UnsupportedEncodingException e)
         {
             e.printStackTrace();
