@@ -58,7 +58,7 @@ public class MatchListV5Test
             LOLMatch    match       = mb.getMatch();
             LOLTimeline lolTimeline = tb.getTimeline();
             
-            List<TimelineDamageData> wierdEntries = new ArrayList<>();
+            List<TimelineDamageData> weirdEntries = new ArrayList<>();
             lolTimeline.getFrames().forEach(frame -> {
                 frame.getEvents().forEach(event -> {
                     if (event.getType() == EventType.CHAMPION_KILL)
@@ -69,7 +69,7 @@ public class MatchListV5Test
                                 || d.getSpellSlot() == SpellSlotType.UNUSED
                                 || d.getSpellSlot() == SpellSlotType.OUT_OF_BOUNDS)
                             {
-                                wierdEntries.add(d);
+                                weirdEntries.add(d);
                             }
                         });
                         
@@ -79,19 +79,19 @@ public class MatchListV5Test
                                 || d.getSpellSlot() == SpellSlotType.UNUSED
                                 || d.getSpellSlot() == SpellSlotType.OUT_OF_BOUNDS)
                             {
-                                wierdEntries.add(d);
+                                weirdEntries.add(d);
                             }
                         });
                     }
                 });
             });
-            if (!wierdEntries.isEmpty())
+            if (!weirdEntries.isEmpty())
             {
                 sb.name(tb.getID());
                 sb.beginArray();
-                for (TimelineDamageData wierdEntry : wierdEntries)
+                for (TimelineDamageData weirdEntry : weirdEntries)
                 {
-                    sb.jsonValue(Utils.getGson().toJson(wierdEntry));
+                    sb.jsonValue(Utils.getGson().toJson(weirdEntry));
                 }
                 sb.endArray();
             }
@@ -131,7 +131,7 @@ public class MatchListV5Test
             LOLMatch    match       = mb.getMatch();
             LOLTimeline lolTimeline = tb.getTimeline();
             
-            List<TimelineDamageData> wierdEntries = new ArrayList<>();
+            List<TimelineDamageData> weirdEntries = new ArrayList<>();
             lolTimeline.getFrames().forEach(frame -> {
                 
                 for (TimelineFrameEvent event : frame.getEvents())
