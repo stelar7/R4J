@@ -11,9 +11,9 @@ import java.util.*;
 
 public class VALMatchInfo implements Serializable
 {
-    private static final long serialVersionUID = -5536569302071536933L;
-    
-    private String               matchId;
+    private static final long serialVersionUID = -5464272518315981864L;
+
+    private String matchId;
     private String               mapId;
     private long                 gameLengthMillis;
     private long                 gameStartMillis;
@@ -23,7 +23,7 @@ public class VALMatchInfo implements Serializable
     private GameQueueType        queueId;
     private String               gameMode;
     private boolean              isRanked;
-    private Season               seasonId;
+    private String               seasonId;
     
     public String getMatchId()
     {
@@ -95,9 +95,14 @@ public class VALMatchInfo implements Serializable
         return isRanked;
     }
     
-    public Season getSeason()
+    public String getSeason()
     {
         return seasonId;
+    }
+
+    public Season getSeasonAsEnum()
+    {
+        return Season.NONE.getFromCode(seasonId).orElse(Season.NONE);
     }
     
     @Override
