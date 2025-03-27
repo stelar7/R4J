@@ -216,6 +216,10 @@ public enum GameQueueType implements CodedEnum
      */
     CLASH(700, 701, 721),
     /**
+     * AR Ultra Rapid Fire Clash
+     */
+    ARURF_CLASH(740, 741),
+    /**
      * BOT 3x3 games
      */
     BOT_3X3_INTERMEDIATE(800, 801),
@@ -555,6 +559,8 @@ public enum GameQueueType implements CodedEnum
                 return "Darkstar";
             case CLASH:
                 return "Clash";
+              case ARURF_CLASH:
+                return "ARURF Clash";
             case BOT_3X3_INTERMEDIATE:
                 return "3v3 Bots Intermediate Difficulty";
             case BOT_3X3_INTRO:
