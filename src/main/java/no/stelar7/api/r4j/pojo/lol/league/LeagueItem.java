@@ -17,6 +17,7 @@ public class LeagueItem implements Serializable
     protected boolean    veteran;
     protected int        losses;
     protected String     summonerId;
+    protected String     puuid;
     protected boolean    inactive;
     protected boolean    freshBlood;
     protected int        leaguePoints;
@@ -118,13 +119,22 @@ public class LeagueItem implements Serializable
     }
     
     /**
-     * The ID of the participant (i.e., summoner or team) represented by this entry.
+     * The summoner ID of the participant (i.e., summoner or team) represented by this entry.
      *
-     * @return the player or team id
+     * @return the player summoner id
      */
     public String getSummonerId()
     {
         return this.summonerId;
+    }
+    
+    /**
+     * The puuid of the participant (i.e., summoner or team) represented by this entry.
+     *
+     * @return the player puuid
+     */
+    public String getPuuid() {
+      return this.puuid;
     }
     
     /**
@@ -180,6 +190,7 @@ public class LeagueItem implements Serializable
                ", losses=" + losses +
                ", miniSeries=" + miniSeries +
                ", summonerId='" + summonerId + '\'' +
+               ", puuid='" + puuid + '\'' +
                ", wins=" + wins +
                '}';
     }

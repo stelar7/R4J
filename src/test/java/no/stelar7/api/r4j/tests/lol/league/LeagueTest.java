@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.tests.lol.league;
 
 import ch.qos.logback.classic.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.LazyList;
 import no.stelar7.api.r4j.impl.R4J;
@@ -54,10 +55,24 @@ public class LeagueTest
     public void testLeagueEntry()
     {
         String            id       = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getRiotId();
-        RiotAccount       account  = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
+        RiotAccount       account  = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7", ApiKeyType.LOL);
         Summoner          summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         List<LeagueEntry> data     = new LeagueBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(summoner.getSummonerId()).getLeagueEntries();
-        System.out.println(data.size());
+        System.out.println(data);
+        
+        data = LeagueAPI.getInstance().getLeagueEntries(LeagueShard.EUW1, summoner.getSummonerId());
+        System.out.println(data);
+    }
+    
+    @Test
+    public void testLeagueEntryByPUUID() 
+    {
+        RiotAccount       account  = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "KaluNight", "ABM2", ApiKeyType.LOL);
+        List<LeagueEntry> data     = new LeagueBuilder().withPlatform(LeagueShard.EUW1).withPuuid(account.getPUUID()).getLeagueEntries();
+        System.out.println(data);
+
+        LeagueAPI.getInstance().getLeagueEntriesByPUUID(LeagueShard.EUW1, account.getPUUID());
+        System.out.println(data);
     }
     
     @Test
