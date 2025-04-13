@@ -234,6 +234,51 @@ public final class LeagueAPI
     }
     
     /**
+     * Get league entries for a summonerId
+     * Empty if unranked
+     *
+     * @param server     region to get data from
+     * @param summonerId summoner to get data for
+     * @return List of LeagueEntry
+     */
+    public List<LeagueEntry> getLeagueEntriesByPUUID(LeagueShard server, String puuid)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID)
+                                                       .withPlatform(server);
+        
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+        data.put("id", puuid);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID, data);
+        if (chl.isPresent())
+        {
+            return (List<LeagueEntry>) chl.get();
+        }
+        
+        try
+        {
+            Object ret = builder.build();
+            if (ret instanceof Pair)
+            {
+                return Collections.emptyList();
+            }
+            
+            List<LeagueEntry> list = (List<LeagueEntry>) ret;
+            
+            data.put("value", list);
+            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID, data);
+            
+            return list;
+        } catch (ClassCastException e)
+        {
+            return Collections.emptyList();
+        }
+    }
+    
+    /**
      * @param server  the region to query
      * @param queue   the queue to fetch data from (only RANKED_SOLO_5x5, RANKED_FLEX_SR and RANKED_FLEX_TT is allowed)
      * @param tierdiv the tier and division to query
