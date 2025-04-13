@@ -234,7 +234,7 @@ public final class LeagueAPI
     }
     
     /**
-     * Get league entries for a summonerId
+     * Get league entries for a puuid
      * Empty if unranked
      *
      * @param server     region to get data from
