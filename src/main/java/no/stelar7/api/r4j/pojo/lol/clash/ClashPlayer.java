@@ -3,19 +3,26 @@ package no.stelar7.api.r4j.pojo.lol.clash;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.mongodb.lang.Nullable;
+
 public class ClashPlayer implements Serializable
 {
     private static final long serialVersionUID = 7753261596504782527L;
-    private String summonerId;
+    private String        puuid;
     private String        teamId;
     private ClashPosition position;
     private ClashRole     role;
     
-    public String getSummonerId()
+    public String getPuuid()
     {
-        return summonerId;
+        return puuid;
     }
     
+    /**
+     * Returns the id of the team, may be null if received through a team
+     * @return The teamId of the team this player is in
+     */
+    @Nullable
     public String getTeamId()
     {
         return teamId;
@@ -43,7 +50,7 @@ public class ClashPlayer implements Serializable
             return false;
         }
         ClashPlayer that = (ClashPlayer) o;
-        return Objects.equals(summonerId, that.summonerId) &&
+        return Objects.equals(puuid, that.puuid) &&
                Objects.equals(teamId, that.teamId) &&
                position == that.position &&
                role == that.role;
@@ -52,14 +59,14 @@ public class ClashPlayer implements Serializable
     @Override
     public int hashCode()
     {
-        return Objects.hash(summonerId, teamId, position, role);
+        return Objects.hash(puuid, teamId, position, role);
     }
     
     @Override
     public String toString()
     {
         return "ClashPlayer{" +
-               "summonerId='" + summonerId + '\'' +
+               "puuid='" + puuid + '\'' +
                ", teamId='" + teamId + '\'' +
                ", position=" + position +
                ", role=" + role +
