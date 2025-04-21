@@ -3,7 +3,6 @@ package no.stelar7.api.r4j.pojo.lol.clash;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.mongodb.lang.Nullable;
 
 public class ClashPlayer implements Serializable
 {
