@@ -20,7 +20,6 @@ public class ClashPlayer implements Serializable
      * Returns the id of the team, may be null if received through a team
      * @return The teamId of the team this player is in
      */
-    @Nullable
     public String getTeamId()
     {
         return teamId;
