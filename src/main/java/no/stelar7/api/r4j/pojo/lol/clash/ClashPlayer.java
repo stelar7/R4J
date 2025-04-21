@@ -3,7 +3,6 @@ package no.stelar7.api.r4j.pojo.lol.clash;
 import java.io.Serializable;
 import java.util.Objects;
 
-
 public class ClashPlayer implements Serializable
 {
     private static final long serialVersionUID = 7753261596504782527L;
