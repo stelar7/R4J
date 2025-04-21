@@ -40,6 +40,9 @@ public class ClashTeam implements Serializable
         return tier;
     }
     
+    /**
+     * @return The puuid of the captain of this team
+     */
     public String getCaptain()
     {
         return captain;
