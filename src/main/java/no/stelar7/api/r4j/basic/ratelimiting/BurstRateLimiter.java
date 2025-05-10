@@ -42,12 +42,16 @@ public class BurstRateLimiter extends RateLimiter
         {
             Duration dur = Duration.of(sleepTime, ChronoUnit.MILLIS);
             
-            logger.info("Ratelimited activated! Sleeping for: {}", dur);
-            logger.info("Callstack:");
+            StringBuilder sb = new StringBuilder();
+            sb.append("Ratelimited activated! Sleeping for: {}".formatted(dur));
+            sb.append("Callstack:");
             Arrays.stream(Thread.currentThread().getStackTrace())
                   .skip(DataCall.getCallStackSkip())
                   .limit(DataCall.getCallStackLimit())
-                  .forEachOrdered(s -> logger.info(s.toString()));
+                  .forEachOrdered(s -> sb.append(s.toString()));
+            
+            String message = sb.toString();
+            logger.warn(message);
         }
         
         try 
