@@ -9,7 +9,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Burst ratelimiter will use as many calls as possible, then wait when it reaches the limit
@@ -18,9 +17,7 @@ public class BurstRateLimiter extends RateLimiter
 {
     
     private static final Logger logger = LoggerFactory.getLogger(BurstRateLimiter.class);
-    
-    private ReentrantLock lock = new ReentrantLock();
-    
+        
     public BurstRateLimiter(List<RateLimit> limits)
     {
         super(limits.toArray(new RateLimit[0]));
@@ -29,54 +26,67 @@ public class BurstRateLimiter extends RateLimiter
     @Override
     public void acquire()
     {
+    	long sleepTime = 0;
         lock.lock();
         try
         {
             update();
-            long sleepTime = getDelay();
-            
-            if (sleepTime != 0)
-            {
-                Duration dur = Duration.of(sleepTime, ChronoUnit.MILLIS);
-                
-                logger.info("Ratelimited activated! Sleeping for: {}", dur);
-                logger.info("Callstack:");
-                Arrays.stream(Thread.currentThread().getStackTrace())
-                      .skip(DataCall.getCallStackSkip())
-                      .limit(DataCall.getCallStackLimit())
-                      .forEachOrdered(s -> logger.info(s.toString()));
-            }
-            
-            
-            Thread.sleep(sleepTime);
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
+            sleepTime = getDelay();
+
         } finally
         {
             lock.unlock();
+        }
+        
+        if (sleepTime != 0)
+        {
+            Duration dur = Duration.of(sleepTime, ChronoUnit.MILLIS);
+            
+            logger.info("Ratelimited activated! Sleeping for: {}", dur);
+            logger.info("Callstack:");
+            Arrays.stream(Thread.currentThread().getStackTrace())
+                  .skip(DataCall.getCallStackSkip())
+                  .limit(DataCall.getCallStackLimit())
+                  .forEachOrdered(s -> logger.info(s.toString()));
+        }
+        
+        try 
+        {
+        	Thread.sleep(sleepTime);
+        }catch (InterruptedException e)
+        {
+        	logger.error("Thread interrupted while sleeping", e);
+            Thread.currentThread().interrupt();
         }
     }
     
     @Override
     public void updatePermitsTakenPerX(Map<Integer, Integer> data)
     {
-        for (Entry<Integer, Integer> key : data.entrySet())
-        {
-            for (RateLimit l : limits)
-            {
-                if (l.getTimeframeInMS() / 1000 == key.getKey())
-                {
-                    long oldVal = callCountInTime.get(l).get();
-                    long newVal = key.getValue();
-                    if (oldVal + 1 < newVal)
-                    {
-                        callCountInTime.get(l).set(newVal);
-                        logger.debug("limit {} has changed from {} to {}", key, oldVal, newVal);
-                    }
-                }
-            }
-        }
+    	lock.lock();
+    	try 
+    	{
+	        for (Entry<Integer, Integer> key : data.entrySet())
+	        {
+	            for (RateLimit l : limits)
+	            {
+	                if (l.getTimeframeInMS() / 1000 == key.getKey())
+	                {
+	                    long oldVal = callCountInTime.get(l).get();
+	                    long newVal = key.getValue();
+	                    if (oldVal < newVal)
+	                    {
+	                        callCountInTime.get(l).set(newVal);
+	                        logger.debug("limit {} has changed from {} to {}", key, oldVal, newVal);
+	                    }
+	                }
+	            }
+	        }
+		} finally 
+    	{
+			lock.unlock();
+		}
+        
     }
     
     private long getDelay()

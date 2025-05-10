@@ -610,14 +610,13 @@ public class DataCallBuilder
                 {
                     RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getEndpoint());
                     limter.updateSleep(con.getHeaderField("Retry-After"));
-                    limter.resetCalls();
                 }
                 
                 if (limitType == RateLimitType.LIMIT_USER)
                 {
+                	
                     RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getPlatform());
                     limter.updateSleep(con.getHeaderField("Retry-After"));
-                    limter.resetCalls();
                 }
                 
                 return new DataCallResponse(con.getResponseCode(), reason);
