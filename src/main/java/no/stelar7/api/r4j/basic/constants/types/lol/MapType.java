@@ -85,7 +85,12 @@ public enum MapType implements CodedEnum
      * Strawberry map
      */
     STRAWBERRY(33, new Rectangle(0, 0, 12056, 12056)),
-    ;
+    
+	/**
+	 * Brawl map
+     */
+	BRAWL(35, new Rectangle(0, 0, 12056, 12056)),
+	;
     
     
     private final Integer   mapId;
