@@ -102,6 +102,11 @@ public enum GameModeType implements CodedEnum
      */
     CHERRY,
     
+	/**
+	 * 5v5 Brawl
+	 */
+    BRAWL,
+    
     /**
      * TFT
      */
