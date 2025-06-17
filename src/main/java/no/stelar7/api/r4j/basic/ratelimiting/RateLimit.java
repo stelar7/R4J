@@ -9,7 +9,7 @@ public class RateLimit
     
     public RateLimit(final int permits, final long time, final TimeUnit unit)
     {
-        this.permits = permits;
+        this.permits = (int) (permits * 0.9); // Add a 10% safety net
         delayInMs = unit.toMillis(time);
     }
     
