@@ -108,7 +108,7 @@ public class BurstRateLimiter extends RateLimiter
             for (RateLimit limit : limits)
             {
                 long actual = callCountInTime.get(limit).get();
-                if (actual >= limit.getPermits())
+                if (actual + 10 >= limit.getPermits()) // We add 10 query as security margin, test
                 {
                     
                     logger.debug("Calls made in the time frame: {}", actual);
