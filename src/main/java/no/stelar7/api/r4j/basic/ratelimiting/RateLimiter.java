@@ -17,6 +17,7 @@ public abstract class RateLimiter
     protected Map<RateLimit, AtomicLong> callCountInTime;
         
     protected volatile int overloadTimer;
+    protected volatile Instant overloadReceivedTime;
     
     private static final Logger logger = LoggerFactory.getLogger(RateLimiter.class);
     
@@ -84,20 +85,29 @@ public abstract class RateLimiter
                '}';
     }
     
-    public void updateSleep(String sleep, Enum platform)
+    public void updateSleep(Instant timeReceived, String sleep, Enum platform)
     {
     	DataCallBuilder.getLock(platform).lock();
         try
         {
+        	Instant now = Instant.now();
+        	int futurTimer = Integer.parseInt(sleep);
+        	
+        	if(timeReceived.toEpochMilli() + (futurTimer * 1000L) < now.toEpochMilli()) {
+        		logger.debug("Received 429 sleep time {} for platform {}, but the time has already passed (now: {}, received: {})", futurTimer, platform, now, timeReceived);
+				return;
+        	}
+        	
         	resetCalls();
-            overloadTimer = Integer.parseInt(sleep);
-            logger.debug("Forcing next sleep to be atleast: {} seconds", overloadTimer);
+            overloadTimer = futurTimer;
+            overloadReceivedTime = timeReceived;
+            logger.debug("Forcing next sleep to be atleast: {} seconds (starting at : {})", overloadTimer, timeReceived);
             
         } catch (NumberFormatException e)
         {
             overloadTimer = 5;
 		} finally
-        {
+		{
 			DataCallBuilder.getLock(platform).unlock();
 		}
     }

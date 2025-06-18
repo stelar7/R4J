@@ -42,9 +42,9 @@ public class DataCallBuilder
 	private String postData      = "";
 
 	private Semaphore semaphore = new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true);
-	
+
 	private static final Map<Enum, Lock> lockContainer = new HashMap<>();
-	
+
 	private static final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
 	{
 		public java.security.cert.X509Certificate[] getAcceptedIssuers()
@@ -98,25 +98,26 @@ public class DataCallBuilder
 	{
 		final String url = this.getURL();
 
-		try {
-			semaphore.acquire();
-			if (this.dc.useRatelimiter())
+		if (this.dc.useRatelimiter())
+		{
+			if (DataCall.getCredentials() == null)
 			{
-				if (DataCall.getCredentials() == null)
-				{
-					throw new APIUnsupportedActionException("No API Creds set!");
-				}
-
-				dc.getUrlHeaders().putIfAbsent("X-Riot-Token", DataCall.getCredentials().getLoLAPIKey());
-
-				// app limit
-				applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
-				// method limit
-				applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
+				throw new APIUnsupportedActionException("No API Creds set!");
 			}
 
+			dc.getUrlHeaders().putIfAbsent("X-Riot-Token", DataCall.getCredentials().getLoLAPIKey());
 
-			logger.info("Trying url: {}", url);
+			// app limit
+			applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
+			// method limit
+			applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
+		}
+
+
+		logger.info("Trying url: {}", url);
+
+		try {
+			semaphore.acquire();
 
 			final DataCallResponse response = this.getResponse(url);
 			//logger.debug(response.toString());
@@ -431,7 +432,7 @@ public class DataCallBuilder
 		{
 			getLock(platform).unlock();
 		}
-		
+
 		RateLimiter limitr = DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).get(endpoint);
 
 		if (limitr != null)
@@ -563,6 +564,7 @@ public class DataCallBuilder
 			}
 
 			con.connect();
+			Instant received = Instant.now();
 
 			StringBuilder sb2 = new StringBuilder("\n");
 			con.getHeaderFields().forEach((key, value) -> sb2.append(String.format(Constants.TABBED2X_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
@@ -631,14 +633,14 @@ public class DataCallBuilder
 				if (limitType == RateLimitType.LIMIT_METHOD)
 				{
 					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getEndpoint());
-					limter.updateSleep(con.getHeaderField("Retry-After"), this.dc.getPlatform());
+					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
 				}
 
 				if (limitType == RateLimitType.LIMIT_USER)
 				{
 
 					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getPlatform());
-					limter.updateSleep(con.getHeaderField("Retry-After"), this.dc.getPlatform());
+					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
 				}
 
 				return new DataCallResponse(con.getResponseCode(), reason);
@@ -888,12 +890,12 @@ public class DataCallBuilder
 		this.dc.setProxy(proxy);
 		return this;
 	}
-		public DataCallBuilder withMaxSleep(long maxSleep)
+	public DataCallBuilder withMaxSleep(long maxSleep)
 	{
 		this.dc.setMaxSleep(maxSleep);
 		return this;
 	}
-		
+
 	public static Lock getLock(Enum platform)
 	{
 		return lockContainer.computeIfAbsent(platform, k -> new ReentrantLock());

@@ -100,6 +100,11 @@ public class BurstRateLimiter extends RateLimiter
 		int     multiplicativeBias = 1;
 		Instant now                = Instant.now();
 		long[]  delay              = {overloadTimer * 1000L};
+		
+		if(delay[0] != 0) {
+			delay[0] = overloadReceivedTime.toEpochMilli() + delay[0] - now.toEpochMilli(); // We remove the time that has already passed since the overload was received
+		}
+		
 		overloadTimer = 0;
 
 		if (delay[0] == 0)
@@ -144,7 +149,7 @@ public class BurstRateLimiter extends RateLimiter
 			AtomicLong firstCall = firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
 			AtomicLong counter = callCountInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
 
-			if ((firstCall.get() - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
+			if ((firstCall.get()+10 - now.toEpochMilli()) + limit.getTimeframeInMS() < 0)
 			{
 				firstCallInTime.get(limit).set(now.toEpochMilli());
 				callCountInTime.get(limit).set(0);
