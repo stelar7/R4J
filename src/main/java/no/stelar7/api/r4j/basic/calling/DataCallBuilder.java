@@ -586,7 +586,7 @@ public class DataCallBuilder
 				try {
 					getLock(dc.getPlatform()).lock();
 					createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
-					saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
+					//saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
 				}finally {
 					getLock(dc.getPlatform()).unlock();
 				}
@@ -600,7 +600,7 @@ public class DataCallBuilder
 				try {
 					getLock(dc.getPlatform()).lock();
 					createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
-					saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
+					//saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
 				} finally {
 					getLock(dc.getPlatform()).unlock();
 				}
