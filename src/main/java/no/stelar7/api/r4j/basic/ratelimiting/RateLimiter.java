@@ -54,9 +54,9 @@ public abstract class RateLimiter
 		return Objects.equals(limits, other.limits);
 	}
 
-	public abstract void acquire();
+	public abstract void acquire(Enum platform);
     
-    public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data);
+    public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platform);
     
     public Map<RateLimit, AtomicLong> getFirstCallInTime()
     {
@@ -84,9 +84,9 @@ public abstract class RateLimiter
                '}';
     }
     
-    public void updateSleep(String sleep)
+    public void updateSleep(String sleep, Enum platform)
     {
-    	DataCallBuilder.lock.lock();
+    	DataCallBuilder.getLock(platform).lock();
         try
         {
         	resetCalls();
@@ -98,7 +98,7 @@ public abstract class RateLimiter
             overloadTimer = 5;
 		} finally
         {
-			DataCallBuilder.lock.unlock();
+			DataCallBuilder.getLock(platform).unlock();
 		}
     }
     

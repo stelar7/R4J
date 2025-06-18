@@ -43,7 +43,9 @@ public class DataCallBuilder
 
 	private Semaphore semaphore = new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true);
 
-	public static final Lock lock = new ReentrantLock();
+	private static final Lock lock = new ReentrantLock();
+	
+	private static final Map<Enum, Lock> lockContainer = new HashMap<>();
 	
 	private static final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
 	{
@@ -83,7 +85,7 @@ public class DataCallBuilder
 	private static void updateRatelimiter(Enum server, Enum endpoint)
 	{
 		RateLimiter limiter = DataCall.getLimiter().get(server).get(endpoint);
-		limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint));
+		limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), server);
 	}
 
 	private static final Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
@@ -436,7 +438,7 @@ public class DataCallBuilder
 
 		if (limitr != null)
 		{
-			limitr.acquire();
+			limitr.acquire(platform);
 			storeLimiter(platform, endpoint);
 		}
 	}
@@ -631,14 +633,14 @@ public class DataCallBuilder
 				if (limitType == RateLimitType.LIMIT_METHOD)
 				{
 					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getEndpoint());
-					limter.updateSleep(con.getHeaderField("Retry-After"));
+					limter.updateSleep(con.getHeaderField("Retry-After"), this.dc.getPlatform());
 				}
 
 				if (limitType == RateLimitType.LIMIT_USER)
 				{
 
 					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getPlatform());
-					limter.updateSleep(con.getHeaderField("Retry-After"));
+					limter.updateSleep(con.getHeaderField("Retry-After"), this.dc.getPlatform());
 				}
 
 				return new DataCallResponse(con.getResponseCode(), reason);
@@ -887,5 +889,15 @@ public class DataCallBuilder
 	{
 		this.dc.setProxy(proxy);
 		return this;
+	}
+		public DataCallBuilder withMaxSleep(long maxSleep)
+	{
+		this.dc.setMaxSleep(maxSleep);
+		return this;
+	}
+		
+	public static Lock getLock(Enum platform)
+	{
+		return lockContainer.computeIfAbsent(platform, k -> new ReentrantLock());
 	}
 }
