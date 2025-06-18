@@ -702,8 +702,7 @@ public class DataCallBuilder
     for (final String limitPair : limits)
     {
       final String[] limit = limitPair.split(":");
-      // tentative fix: when we receive a limit, a given number of calls could have been made since we work in async. We add this to the limit
-      final Integer  call  = Integer.parseInt(limit[0] + NUMBER_OF_CALLS_ALLOWED_IN_ASYNC);
+      final Integer  call  = Integer.parseInt(limit[0]);
       final Integer  time  = Integer.parseInt(limit[1]);
       timeout.put(time, call);
     }
