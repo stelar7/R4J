@@ -42,8 +42,6 @@ public class DataCallBuilder
 	private String postData      = "";
 
 	private Semaphore semaphore = new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true);
-
-	private static final Lock lock = new ReentrantLock();
 	
 	private static final Map<Enum, Lock> lockContainer = new HashMap<>();
 	
@@ -420,7 +418,7 @@ public class DataCallBuilder
 
 	private void applyLimit(Enum platform, Enum endpoint)
 	{
-		lock.lock();
+		getLock(platform).lock();
 		try
 		{
 			Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
@@ -431,7 +429,7 @@ public class DataCallBuilder
 			}
 		} finally
 		{
-			lock.unlock();
+			getLock(platform).unlock();
 		}
 		
 		RateLimiter limitr = DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).get(endpoint);
@@ -586,11 +584,11 @@ public class DataCallBuilder
 			} else
 			{
 				try {
-					lock.lock();
+					getLock(dc.getPlatform()).lock();
 					createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
 					saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
 				}finally {
-					lock.unlock();
+					getLock(dc.getPlatform()).unlock();
 				}
 			}
 
@@ -600,11 +598,11 @@ public class DataCallBuilder
 			} else
 			{
 				try {
-					lock.lock();
+					getLock(dc.getPlatform()).lock();
 					createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
 					saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
 				} finally {
-					lock.unlock();
+					getLock(dc.getPlatform()).unlock();
 				}
 			}
 
