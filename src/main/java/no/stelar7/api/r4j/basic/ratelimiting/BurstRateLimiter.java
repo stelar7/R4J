@@ -131,7 +131,7 @@ public class BurstRateLimiter extends RateLimiter
         
         if (delay[0] != 0)
         {
-            delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias));
+            delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias)) + 1000L; // Add 1 second to the delay to ensure we don't hit the limit again immediately, test
         }
         
         return delay[0];
