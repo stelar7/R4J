@@ -2,6 +2,8 @@ package no.stelar7.api.r4j.basic.ratelimiting;
 
 
 import no.stelar7.api.r4j.basic.calling.DataCall;
+import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
+
 import org.slf4j.*;
 
 import java.time.*;
@@ -27,7 +29,7 @@ public class BurstRateLimiter extends RateLimiter
     public void acquire()
     {
     	long sleepTime = 0;
-        lock.lock();
+        DataCallBuilder.lock.lock();
         try
         {
             update();
@@ -35,7 +37,7 @@ public class BurstRateLimiter extends RateLimiter
 
         } finally
         {
-            lock.unlock();
+        	DataCallBuilder.lock.unlock();
         }
         
         if (sleepTime != 0)
@@ -67,7 +69,7 @@ public class BurstRateLimiter extends RateLimiter
     @Override
     public void updatePermitsTakenPerX(Map<Integer, Integer> data)
     {
-    	lock.lock();
+    	DataCallBuilder.lock.lock();
     	try 
     	{
 	        for (Entry<Integer, Integer> key : data.entrySet())
@@ -88,7 +90,7 @@ public class BurstRateLimiter extends RateLimiter
 	        }
 		} finally 
     	{
-			lock.unlock();
+			DataCallBuilder.lock.unlock();
 		}
         
     }
