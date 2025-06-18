@@ -2,6 +2,8 @@ package no.stelar7.api.r4j.basic.ratelimiting;
 
 import org.slf4j.*;
 
+import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
+
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -13,9 +15,7 @@ public abstract class RateLimiter
     protected List<RateLimit>            limits;
     protected Map<RateLimit, AtomicLong> firstCallInTime;
     protected Map<RateLimit, AtomicLong> callCountInTime;
-    
-    protected ReentrantLock lock = new ReentrantLock();
-    
+        
     protected volatile int overloadTimer;
     
     private static final Logger logger = LoggerFactory.getLogger(RateLimiter.class);
@@ -86,7 +86,7 @@ public abstract class RateLimiter
     
     public void updateSleep(String sleep)
     {
-    	lock.lock();
+    	DataCallBuilder.lock.lock();
         try
         {
         	resetCalls();
@@ -98,7 +98,7 @@ public abstract class RateLimiter
             overloadTimer = 5;
 		} finally
         {
-			lock.unlock();
+			DataCallBuilder.lock.unlock();
 		}
     }
     

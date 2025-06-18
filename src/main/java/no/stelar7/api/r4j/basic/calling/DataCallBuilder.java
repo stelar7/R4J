@@ -21,6 +21,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiFunction;
 import java.util.prefs.BackingStoreException;
@@ -42,6 +43,8 @@ public class DataCallBuilder
 
 	private Semaphore semaphore = new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true);
 
+	public static final Lock lock = new ReentrantLock();
+	
 	private static final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
 	{
 		public java.security.cert.X509Certificate[] getAcceptedIssuers()
@@ -413,8 +416,6 @@ public class DataCallBuilder
 		}
 	}
 
-	public static final ReentrantLock lock = new ReentrantLock();
-
 	private void applyLimit(Enum platform, Enum endpoint)
 	{
 		lock.lock();
@@ -430,7 +431,7 @@ public class DataCallBuilder
 		{
 			lock.unlock();
 		}
-
+		
 		RateLimiter limitr = DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).get(endpoint);
 
 		if (limitr != null)
@@ -582,10 +583,13 @@ public class DataCallBuilder
 				logger.debug("Header 'X-App-Rate-Limit' missing from call: {} ", getURL());
 			} else
 			{
-				lock.lock();
-				createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
-				saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
-				lock.unlock();
+				try {
+					lock.lock();
+					createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
+					saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
+				}finally {
+					lock.unlock();
+				}
 			}
 
 			if (methodA == null)
@@ -593,10 +597,13 @@ public class DataCallBuilder
 				logger.debug("Header 'X-Method-Rate-Limit' missing from call: {}", getURL());
 			} else
 			{
-				lock.lock();
-				createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
-				saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
-				lock.unlock();
+				try {
+					lock.lock();
+					createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
+					saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
+				} finally {
+					lock.unlock();
+				}
 			}
 
 			String deprecationHeader = con.getHeaderField("X-Riot-Deprecated");
