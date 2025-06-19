@@ -135,7 +135,8 @@ public abstract class RateLimiter
 		if (oldLimit != null)
 		{
 			
-			if(oldLimit instanceof CounterRateLimiter toConvert) {
+			if(oldLimit instanceof CounterRateLimiter) {
+				CounterRateLimiter toConvert = (CounterRateLimiter) oldLimit;
 				for(RateLimit limit : limits) {
 					firstCallInTime.put(limit, oldLimit.getFirstCallInTime().get(toConvert.getDummyLimit()));
 					callCountInTime.put(limit, oldLimit.getCallCountInTime().get(toConvert.getDummyLimit()));
