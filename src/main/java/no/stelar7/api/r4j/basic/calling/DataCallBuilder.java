@@ -422,12 +422,14 @@ public class DataCallBuilder
 
 	private void applyLimit(Enum platform, Enum endpoint)
 	{
-		getLock(endpoint).lock();
 
 		RateLimiter limitr;
-
+		getLock(endpoint).lock();
 		try
 		{
+			globalLock.lock();
+			try
+			{
 			Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
 
 			if (child.get(endpoint) == null)
@@ -440,15 +442,20 @@ public class DataCallBuilder
 			if (limitr == null)
 			{
 				limitr = new CounterRateLimiter();
-				DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).put(endpoint, limitr);
+				child.put(endpoint, limitr);
+				DataCall.getLimiter().put(platform, child);
 			}
+			} finally {
+				globalLock.unlock();
+			}
+
+
+		// Here endpoint is the equivalent to plafrorm when treating app limits, equivalent to endpoint when treating method limits
+		limitr.acquire(endpoint);
 		} finally
 		{
 			getLock(endpoint).unlock();
 		}
-
-		// Here endpoint is the equivalent to plafrorm when treating app limits, equivalent to endpoint when treating method limits
-		limitr.acquire(endpoint);
 		storeLimiter(platform, endpoint);
 	}
 
@@ -922,5 +929,10 @@ public class DataCallBuilder
 	public static Lock getLock(Enum platform)
 	{
 		return lockContainer.computeIfAbsent(platform, k -> new ReentrantLock());
+	}
+	
+	public static Lock getGlobalLock()
+	{
+		return globalLock;
 	}
 }

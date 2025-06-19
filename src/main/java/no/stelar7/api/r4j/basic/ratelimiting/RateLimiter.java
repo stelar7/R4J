@@ -138,8 +138,8 @@ public abstract class RateLimiter
 			if(oldLimit instanceof CounterRateLimiter) {
 				CounterRateLimiter toConvert = (CounterRateLimiter) oldLimit;
 				for(RateLimit limit : limits) {
-					firstCallInTime.put(limit, oldLimit.getFirstCallInTime().get(toConvert.getDummyLimit()));
-					callCountInTime.put(limit, oldLimit.getCallCountInTime().get(toConvert.getDummyLimit()));
+					firstCallInTime.put(limit, new AtomicLong(oldLimit.getFirstCallInTime().get(toConvert.getDummyLimit()).get()));
+					callCountInTime.put(limit, new AtomicLong(oldLimit.getCallCountInTime().get(toConvert.getDummyLimit()).get()));
 				}
 				
 				this.overloadTimer = oldLimit.overloadTimer;
@@ -174,5 +174,10 @@ public abstract class RateLimiter
 	public void setFirstCallInTime(Map<RateLimit, AtomicLong> firstCallInTime)
 	{
 		this.firstCallInTime = firstCallInTime;
+	}
+	
+	public static Lock getOverloadTimerLock()
+	{
+		return overloadTimerLock;
 	}
 }

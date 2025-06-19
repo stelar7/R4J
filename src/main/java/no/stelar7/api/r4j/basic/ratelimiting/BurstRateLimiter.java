@@ -93,7 +93,7 @@ public class BurstRateLimiter extends RateLimiter
 			long actualCountCall = callCountInTime.get(limit).incrementAndGet();
 
 			// ACTUAL CHECK IF WE ARE OVER THE LIMIT
-			if (actualCountCall >= limit.getPermits()) { // We add 10 query as security margin, test
+			if (actualCountCall + 10 >= limit.getPermits()) { // We add 10 query as security margin, test
 				
 				// We need to wait for the next sliding window to make our request
 				long delayForNextWindow = firstCallInTime.get(limit).get() + limit.getTimeframeInMS() - now.toEpochMilli();
