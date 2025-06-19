@@ -580,6 +580,26 @@ public class DataCallBuilder
 			String methodA = con.getHeaderField("X-Method-Rate-Limit");
 			String methodB = con.getHeaderField("X-Method-Rate-Limit-Count");
 
+			
+			// Quickly notify if a ratelimit was hit, we don't wait on any lock
+			if (con.getResponseCode() == 429)
+			{
+				final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
+
+				if (limitType == RateLimitType.LIMIT_METHOD)
+				{
+					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getEndpoint());
+					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
+				}
+
+				if (limitType == RateLimitType.LIMIT_USER)
+				{
+
+					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getPlatform());
+					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
+				}
+			}
+			
 			if (appA == null)
 			{
 				logger.debug("Header 'X-App-Rate-Limit' missing from call: {} ", getURL());
@@ -588,6 +608,7 @@ public class DataCallBuilder
 				try {
 					getLock(dc.getPlatform()).lock();
 					createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
+					//Since it's behind a lock, we can't update the app limit here if we are not sure that we are still in the same time period
 					//saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
 				}finally {
 					getLock(dc.getPlatform()).unlock();
@@ -602,6 +623,7 @@ public class DataCallBuilder
 				try {
 					getLock(dc.getPlatform()).lock();
 					createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
+					//Since it's behind a lock, we can't update the app limit here if we are not sure that we are still in the same time period
 					//saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
 				} finally {
 					getLock(dc.getPlatform()).unlock();
@@ -629,19 +651,6 @@ public class DataCallBuilder
 
 				String reasonString = String.format("%s%n%s", limitType.getReason(), valueList.toString().trim());
 				String reason       = String.format("%s%n", reasonString);
-
-				if (limitType == RateLimitType.LIMIT_METHOD)
-				{
-					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getEndpoint());
-					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
-				}
-
-				if (limitType == RateLimitType.LIMIT_USER)
-				{
-
-					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getPlatform());
-					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
-				}
 
 				return new DataCallResponse(con.getResponseCode(), reason);
 			}
