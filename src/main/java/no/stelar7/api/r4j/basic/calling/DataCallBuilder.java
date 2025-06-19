@@ -82,9 +82,9 @@ public class DataCallBuilder
 	}
 
 
-	private static void updateRatelimiter(Enum server, Enum endpoint)
+	private static void updateRatelimiter(Enum server, Enum endpoint, String gameKeyUsed)
 	{
-		RateLimiter limiter = DataCall.getLimiter().get(server).get(endpoint);
+		RateLimiter limiter = DataCall.getLimiter(gameKeyUsed).get(server).get(endpoint);
 		// Endpoint as second parameter is used to determine if this is a method or app limit
 		limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), endpoint);
 	}
@@ -430,20 +430,20 @@ public class DataCallBuilder
 			globalLock.lock();
 			try
 			{
-			Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
+			Map<Enum, RateLimiter> child = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>());
 
 			if (child.get(endpoint) == null)
 			{
 				loadLimiterFromCache(platform, endpoint, child);
 			}
 
-			limitr = DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).get(endpoint);
+			limitr = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>()).get(endpoint);
 
 			if (limitr == null)
 			{
 				limitr = new CounterRateLimiter();
 				child.put(endpoint, limitr);
-				DataCall.getLimiter().put(platform, child);
+				DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).put(platform, child);
 			}
 			} finally {
 				globalLock.unlock();
@@ -461,7 +461,7 @@ public class DataCallBuilder
 
 	private void storeLimiter(Enum platform, Enum endpoint)
 	{
-		RateLimiter limiter  = DataCall.getLimiter().get(platform).get(endpoint);
+		RateLimiter limiter  = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(platform).get(endpoint);
 		String      baseKey  = platform.toString() + "/" + endpoint.toString();
 		String      limitKey = "limits/" + baseKey;
 		String      firstKey = "first/" + baseKey;
@@ -505,7 +505,7 @@ public class DataCallBuilder
 			logger.debug("Loaded ratelimit for {}", endpoint);
 
 			child.put(endpoint, newerLimit);
-			DataCall.getLimiter().put(platform, child);
+			DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).put(platform, child);
 		} catch (JsonSyntaxException s)
 		{
 			try
@@ -609,14 +609,14 @@ public class DataCallBuilder
 
 				if (limitType == RateLimitType.LIMIT_METHOD)
 				{
-					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getEndpoint());
+					RateLimiter limter = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(this.dc.getPlatform()).get(this.dc.getEndpoint());
 					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
 				}
 
 				if (limitType == RateLimitType.LIMIT_USER)
 				{
 
-					RateLimiter limter = DataCall.getLimiter().get(this.dc.getPlatform()).get(this.dc.getPlatform());
+					RateLimiter limter = DataCall.getLimiter(dc.getEndpoint().getGame()).get(this.dc.getPlatform()).get(this.dc.getPlatform());
 					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
 				}
 			}
@@ -663,7 +663,7 @@ public class DataCallBuilder
 				final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
 
 				StringBuilder valueList = new StringBuilder();
-				DataCall.getLimiter().get(dc.getPlatform()).forEach((key, value) -> {
+				DataCall.getLimiter(dc.getEndpoint().getGame()).get(dc.getPlatform()).forEach((key, value) -> {
 					valueList.append(key);
 					valueList.append("=");
 					valueList.append(value.getCallCountInTime());
@@ -704,7 +704,7 @@ public class DataCallBuilder
 
 	private void createRatelimiterIfMissing(String methodA, Enum platform, Enum endpoint)
 	{
-		Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
+		Map<Enum, RateLimiter> child = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>());
 
 		RateLimiter oldLimit   = child.get(endpoint);
 		RateLimiter newerLimit = createLimiter(methodA);
@@ -718,7 +718,7 @@ public class DataCallBuilder
 			logger.debug(newerLimit.getLimits().toString());
 		}
 
-		DataCall.getLimiter().put(platform, child);
+		DataCall.getLimiter(dc.getEndpoint().getGame()).put(platform, child);
 	}
 
 	private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
@@ -730,7 +730,7 @@ public class DataCallBuilder
 		parent.put(endpoint, child);
 		DataCall.getCallData().put(platform, parent);
 
-		updateRatelimiter(platform, endpoint);
+		updateRatelimiter(platform, endpoint, dc.getKeyUsedByHeadersUsed());
 		storeLimiter(platform, endpoint);
 	}
 
