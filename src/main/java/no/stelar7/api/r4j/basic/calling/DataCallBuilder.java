@@ -44,7 +44,7 @@ public class DataCallBuilder
 	private Semaphore semaphore = new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true);
 
 	private static final Map<Enum, Lock> lockContainer = new HashMap<>();
-	
+
 	private static final Lock globalLock = new ReentrantLock();
 
 	private static final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
@@ -88,7 +88,7 @@ public class DataCallBuilder
 		// Endpoint as second parameter is used to determine if this is a method or app limit
 		limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), endpoint);
 	}
-	
+
 	private static final Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
 
 	/**
@@ -423,6 +423,9 @@ public class DataCallBuilder
 	private void applyLimit(Enum platform, Enum endpoint)
 	{
 		getLock(endpoint).lock();
+
+		RateLimiter limitr;
+
 		try
 		{
 			Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
@@ -431,19 +434,22 @@ public class DataCallBuilder
 			{
 				loadLimiterFromCache(platform, endpoint, child);
 			}
+
+			limitr = DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).get(endpoint);
+
+			if (limitr == null)
+			{
+				limitr = new CounterRateLimiter();
+				DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).put(endpoint, limitr);
+			}
 		} finally
 		{
 			getLock(endpoint).unlock();
 		}
 
-		RateLimiter limitr = DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).get(endpoint);
-
-		if (limitr != null)
-		{
-			// Here endpoint is the equivalent to plafrorm when treating app limits, equivalent to endpoint when treating method limits
-			limitr.acquire(endpoint);
-			storeLimiter(platform, endpoint);
-		}
+		// Here endpoint is the equivalent to plafrorm when treating app limits, equivalent to endpoint when treating method limits
+		limitr.acquire(endpoint);
+		storeLimiter(platform, endpoint);
 	}
 
 	private void storeLimiter(Enum platform, Enum endpoint)
@@ -583,15 +589,15 @@ public class DataCallBuilder
 			String appB    = con.getHeaderField("X-App-Rate-Limit-Count");
 			String methodA = con.getHeaderField("X-Method-Rate-Limit");
 			String methodB = con.getHeaderField("X-Method-Rate-Limit-Count");
-			
+
 			// Quickly notify if a ratelimit was hit, we don't wait on any lock
 			if (con.getResponseCode() == 429)
 			{
 				logger.debug("Debug: all headers: {}", con.getHeaderFields());
-				
+
 				logger.warn("Ratelimit hit for platform: {}, endpoint: {}, method: {}, app limit: {}/{}, method limit: {}/{}",
-				            this.dc.getPlatform(), this.dc.getEndpoint(), this.requestMethod, appB, appA, methodB, methodA);
-				
+						this.dc.getPlatform(), this.dc.getEndpoint(), this.requestMethod, appB, appA, methodB, methodA);
+
 				final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
 
 				if (limitType == RateLimitType.LIMIT_METHOD)
@@ -607,7 +613,7 @@ public class DataCallBuilder
 					limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
 				}
 			}
-			
+
 			if (appA == null)
 			{
 				logger.debug("Header 'X-App-Rate-Limit' missing from call: {} ", getURL());
