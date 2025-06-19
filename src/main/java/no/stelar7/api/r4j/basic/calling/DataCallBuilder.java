@@ -583,11 +583,15 @@ public class DataCallBuilder
 			String appB    = con.getHeaderField("X-App-Rate-Limit-Count");
 			String methodA = con.getHeaderField("X-Method-Rate-Limit");
 			String methodB = con.getHeaderField("X-Method-Rate-Limit-Count");
-
 			
 			// Quickly notify if a ratelimit was hit, we don't wait on any lock
 			if (con.getResponseCode() == 429)
 			{
+				logger.debug("Debug: all headers: {}", con.getHeaderFields());
+				
+				logger.warn("Ratelimit hit for platform: {}, endpoint: {}, method: {}, app limit: {}/{}, method limit: {}/{}",
+				            this.dc.getPlatform(), this.dc.getEndpoint(), this.requestMethod, appB, appA, methodB, methodA);
+				
 				final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
 
 				if (limitType == RateLimitType.LIMIT_METHOD)
