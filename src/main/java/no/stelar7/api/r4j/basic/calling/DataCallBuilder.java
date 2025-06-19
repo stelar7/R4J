@@ -83,9 +83,10 @@ public class DataCallBuilder
 	private static void updateRatelimiter(Enum server, Enum endpoint)
 	{
 		RateLimiter limiter = DataCall.getLimiter().get(server).get(endpoint);
-		limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), server);
+		// Endpoint as second parameter is used to determine if this is a method or app limit
+		limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), endpoint);
 	}
-
+	
 	private static final Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
 
 	/**
@@ -419,7 +420,7 @@ public class DataCallBuilder
 
 	private void applyLimit(Enum platform, Enum endpoint)
 	{
-		getLock(platform).lock();
+		getLock(endpoint).lock();
 		try
 		{
 			Map<Enum, RateLimiter> child = DataCall.getLimiter().getOrDefault(platform, new HashMap<>());
@@ -430,14 +431,15 @@ public class DataCallBuilder
 			}
 		} finally
 		{
-			getLock(platform).unlock();
+			getLock(endpoint).unlock();
 		}
 
 		RateLimiter limitr = DataCall.getLimiter().getOrDefault(platform, new HashMap<>()).get(endpoint);
 
 		if (limitr != null)
 		{
-			limitr.acquire(platform);
+			// Here endpoint is the equivalent to plafrorm when treating app limits, equivalent to endpoint when treating method limits
+			limitr.acquire(endpoint);
 			storeLimiter(platform, endpoint);
 		}
 	}
@@ -606,7 +608,7 @@ public class DataCallBuilder
 			} else
 			{
 				try {
-					getLock(dc.getPlatform()).lock();
+					getLock(dc.getPlatform()).lock(); // app level -> platform
 					createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
 					//Since it's behind a lock, we can't update the app limit here if we are not sure that we are still in the same time period
 					//saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
@@ -621,12 +623,12 @@ public class DataCallBuilder
 			} else
 			{
 				try {
-					getLock(dc.getPlatform()).lock();
+					getLock(dc.getEndpoint()).lock(); // method level -> endpoint
 					createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
 					//Since it's behind a lock, we can't update the app limit here if we are not sure that we are still in the same time period
 					//saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
 				} finally {
-					getLock(dc.getPlatform()).unlock();
+					getLock(dc.getEndpoint()).unlock();
 				}
 			}
 

@@ -58,9 +58,9 @@ public abstract class RateLimiter
 		return Objects.equals(limits, other.limits);
 	}
 
-	public abstract void acquire(Enum platform);
+	public abstract void acquire(Enum platformOrEndpoint);
 
-	public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platform);
+	public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platformOrEndpoint);
 
 	public Map<RateLimit, AtomicLong> getFirstCallInTime()
 	{

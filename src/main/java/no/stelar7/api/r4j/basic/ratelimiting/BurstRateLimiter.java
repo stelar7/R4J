@@ -26,10 +26,10 @@ public class BurstRateLimiter extends RateLimiter
 	}
 
 	@Override
-	public void acquire(Enum platform)
+	public void acquire(Enum platformOrEndpoint)
 	{
 		long sleepTime = 0;
-		DataCallBuilder.getLock(platform).lock();
+		DataCallBuilder.getLock(platformOrEndpoint).lock();
 		try
 		{	
 			overloadTimerLock.lock();
@@ -45,7 +45,7 @@ public class BurstRateLimiter extends RateLimiter
 				Duration dur = Duration.of(sleepTime, ChronoUnit.MILLIS);
 
 				StringBuilder sb = new StringBuilder();
-				sb.append(String.format("Ratelimited activated! Sleeping for: %s%n", dur.toString()));
+				sb.append(String.format("Ratelimited activated for {} ! Sleeping for: %s%n", platformOrEndpoint.name(), dur.toString()));
 				sb.append("Callstack:\n");
 				Arrays.stream(Thread.currentThread().getStackTrace())
 				.skip(DataCall.getCallStackSkip())
@@ -66,14 +66,14 @@ public class BurstRateLimiter extends RateLimiter
 			}
 		} finally
 		{
-			DataCallBuilder.getLock(platform).unlock();
+			DataCallBuilder.getLock(platformOrEndpoint).unlock();
 		}
 	}
 
 	@Override
-	public void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platform)
+	public void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platformOrEndpoint)
 	{
-		DataCallBuilder.getLock(platform).lock();
+		DataCallBuilder.getLock(platformOrEndpoint).lock();
 		try 
 		{
 			for (Entry<Integer, Integer> key : data.entrySet())
@@ -94,7 +94,7 @@ public class BurstRateLimiter extends RateLimiter
 			}
 		} finally 
 		{
-			DataCallBuilder.getLock(platform).unlock();
+			DataCallBuilder.getLock(platformOrEndpoint).unlock();
 		}
 
 	}
