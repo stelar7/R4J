@@ -39,6 +39,8 @@ public abstract class RateLimiter
 			firstCallInTime.put(limit, new AtomicLong(Instant.now().toEpochMilli()));
 			callCountInTime.put(limit, new AtomicLong(0));
 		}
+
+		overloadReceivedTime = Instant.now(); // default value, will be updated when a 429 is received
 	}
 
 	@Override
@@ -90,10 +92,10 @@ public abstract class RateLimiter
 
 	public void updateSleep(Instant timeReceived, String sleep, Enum platform)
 	{
+		Instant now = Instant.now();
 		overloadTimerLock.lock();
 		try
 		{
-			Instant now = Instant.now();
 			int futurTimer = Integer.parseInt(sleep);
 
 			if(timeReceived.toEpochMilli() + (futurTimer * 1000L) < now.toEpochMilli()) {
@@ -101,34 +103,30 @@ public abstract class RateLimiter
 				return;
 			}
 
-			// We prioritize the longest sleep time, so that we can avoid being rate limited again
-			if(overloadTimer < futurTimer) { 
+			// We prioritize the most recent sleep time
+			if(overloadReceivedTime.toEpochMilli() < timeReceived.toEpochMilli()) { 
 				overloadReceivedTime = timeReceived;
 				overloadTimer = futurTimer;
-				resetCalls();
+				//resetCalls(); We should reset calls only after the sleep has been applied
 			}
 			logger.debug("Forcing next sleep to be atleast: {} seconds (starting at : {})", overloadTimer, timeReceived);
 
 		} catch (NumberFormatException e)
 		{
 			overloadTimer = 5;
+			overloadReceivedTime = now;
 		} finally
 		{
 			overloadTimerLock.unlock();
 		}
 	}
 
-	private void resetCalls()
+	protected void resetCalls()
 	{
-		overloadTimerLock.lock();
-		try {
-			for (RateLimit limit : limits)
-			{
-				firstCallInTime.get(limit).set(Instant.now().minusMillis(limit.getTimeframeInMS()).toEpochMilli());
-				callCountInTime.get(limit).set(0);
-			}
-		} finally {
-			overloadTimerLock.unlock();
+		for (RateLimit limit : limits)
+		{
+			firstCallInTime.get(limit).set(Instant.now().minusMillis(limit.getTimeframeInMS()).toEpochMilli());
+			callCountInTime.get(limit).set(0);
 		}
 	}
 
@@ -151,6 +149,7 @@ public abstract class RateLimiter
 			});
 
 			this.overloadTimer = oldLimit.overloadTimer;
+			this.overloadReceivedTime = oldLimit.overloadReceivedTime;
 		}
 	}
 

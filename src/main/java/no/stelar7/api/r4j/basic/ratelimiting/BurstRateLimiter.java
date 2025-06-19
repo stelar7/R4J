@@ -1,13 +1,11 @@
 package no.stelar7.api.r4j.basic.ratelimiting;
 
 
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 
 import org.slf4j.*;
 
 import java.time.*;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,45 +26,49 @@ public class BurstRateLimiter extends RateLimiter
 	@Override
 	public void acquire(Enum platformOrEndpoint)
 	{
-		long sleepTime = 0;
 		DataCallBuilder.getLock(platformOrEndpoint).lock();
 		try
 		{	
-			overloadTimerLock.lock();
-			try {
-				update();
-				sleepTime = getDelay();
-			} finally {
-				overloadTimerLock.unlock();
-			}
-
-			if (sleepTime != 0)
-			{
-				Duration dur = Duration.of(sleepTime, ChronoUnit.MILLIS);
-
-				StringBuilder sb = new StringBuilder();
-				sb.append(String.format("Ratelimited activated for {} ! Sleeping for: %s%n", platformOrEndpoint.name(), dur.toString()));
-				sb.append("Callstack:\n");
-				Arrays.stream(Thread.currentThread().getStackTrace())
-				.skip(DataCall.getCallStackSkip())
-				.limit(DataCall.getCallStackLimit())
-				.forEachOrdered(s -> sb.append(s.toString() + "\n"));
-
-				String message = sb.toString();
-				logger.debug(message);
-			}
-
-			try 
-			{
-				Thread.sleep(sleepTime);
-			}catch (InterruptedException e)
-			{
-				logger.error("Thread interrupted while sleeping", e);
-				Thread.currentThread().interrupt();
-			}
+			manageOverloadTimer(platformOrEndpoint);
+			manageRateLimit(platformOrEndpoint);
 		} finally
 		{
 			DataCallBuilder.getLock(platformOrEndpoint).unlock();
+		}
+	}
+
+	private void manageOverloadTimer(Enum platformOrEndpoint) {
+		long msToWait = 0;
+
+		overloadTimerLock.lock();
+		try {
+			if(overloadTimer != 0) {
+				Instant now = Instant.now();
+				// 200 ms is added as security margin, test 
+				long realtimeToWait = overloadReceivedTime.toEpochMilli() + ((overloadTimer * 1000) + 200) - now.toEpochMilli();
+				if (realtimeToWait <= 0) {
+					logger.debug("Overload timer reset for {} since time overpassed", platformOrEndpoint.name());
+					overloadTimer = 0; // Reset overload timer after waiting
+					resetCalls(); // Reset the call counts since we are no longer in an overload state
+					return; // Overload timer has passed, no need to wait
+				} else {
+					logger.debug("Overload timer still active for {}. Waiting {} ms", platformOrEndpoint.name(), realtimeToWait);
+					msToWait = realtimeToWait;
+				}
+			}
+		}finally {
+			overloadTimerLock.unlock();
+		}
+
+		if(msToWait > 0) {
+			try {
+				Thread.sleep(msToWait);
+			} catch (InterruptedException e) {
+				logger.error("Thread interrupted while waiting for overload timer", e);
+				Thread.currentThread().interrupt();
+			}
+			// Recheck the overload timer after waiting (an old call with a longer required delay might have been received, even if it's highly unlikely)
+			manageOverloadTimer(platformOrEndpoint);
 		}
 	}
 
@@ -99,74 +101,56 @@ public class BurstRateLimiter extends RateLimiter
 
 	}
 
-	private long getDelay()
+	private void manageRateLimit(Enum platformOrEndpoint)
 	{
-		int     bias               = 1;
-		int     multiplicativeBias = 1;
-		Instant now                = Instant.now();
-		long[]  delay              = {overloadTimer * 1000L};
-
-		if(delay[0] != 0) {
-			delay[0] = overloadReceivedTime.toEpochMilli() + delay[0] - now.toEpochMilli(); // We remove the time that has already passed since the overload was received
-			if(delay[0] < 0) {
-				delay[0] = 0;
-			}
-		}
-
-		overloadTimer = 0;
-
-		if (delay[0] == 0)
-		{
-			for (RateLimit limit : limits)
-			{
-				long actual = callCountInTime.get(limit).get();
-				if (actual + 10 >= limit.getPermits()) // We add 10 query as security margin, test
-				{
-
-					logger.debug("Calls made in the time frame: {}", actual);
-					logger.debug("Limit for the time frame: {}", limit.getPermits());
-
-					int newBias = (int) Math.floorDiv(actual, (long) limit.getPermits());
-					if (newBias > multiplicativeBias)
-					{
-						multiplicativeBias = newBias;
-					}
-
-					long newDelay = firstCallInTime.get(limit).get() + limit.getTimeframeInMS() - now.toEpochMilli();
-					if (newDelay > delay[0])
-					{
-						delay[0] = newDelay;
-					}
-				}
-			}
-		}
-
-		if (delay[0] != 0)
-		{
-			delay[0] = (long) ((Math.ceil(delay[0] / 1000f) + bias) * (1000L * multiplicativeBias)) + 1000L; // Add 1 second to the delay to ensure we don't hit the limit again immediately, test
-		}
-
-		return delay[0];
-	}
-
-	private void update()
-	{
-		Instant now = Instant.now();
+		List<RateLimit> limitsToResetAfterWait = new ArrayList<>();
+		
 		for (RateLimit limit : limits)
 		{
+			Instant now = Instant.now();
+
 			AtomicLong firstCall = firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
 			callCountInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
 
 			if ((firstCall.get()+10 - now.toEpochMilli()) + limit.getTimeframeInMS() < 0) // 10 ms of security margin, test
 			{
-				firstCallInTime.get(limit).set(now.toEpochMilli());
-				callCountInTime.get(limit).set(0);
+				limitsToResetAfterWait.add(limit); // We reset later in case another limit is hit
+				continue;
 			}
 
-			callCountInTime.get(limit).incrementAndGet();
+			long actualCountCall = callCountInTime.get(limit).incrementAndGet();
 
-			logger.debug("{}: current call count: {}", limit, callCountInTime.get(limit));
+			// ACTUAL CHECK IF WE ARE OVER THE LIMIT
+			if (actualCountCall + 10 >= limit.getPermits()) { // We add 10 query as security margin, test
+				
+				// We need to wait for the next sliding window to make our request
+				long delayForNextWindow = firstCallInTime.get(limit).get() + limit.getTimeframeInMS() - now.toEpochMilli();
+
+				try {
+					logger.debug("{}: Waiting for next sliding window, delay for next window is {} ms", platformOrEndpoint.name(), delayForNextWindow);
+					Thread.sleep(delayForNextWindow + 10); // Add 10 ms to the delay to ensure we don't hit the limit again immediately, test
+				}catch (InterruptedException e) {
+					logger.error("Thread interrupted while sleeping for next window", e);
+					Thread.currentThread().interrupt();
+				}
+				
+				limitsToResetAfterWait.add(limit); // Add this limit to the list of limits to reset after waiting
+			}
 		}
+		
+		Instant now = Instant.now();
+		for(RateLimit limit : limitsToResetAfterWait) {
+			// Reset the call count after waiting for the next sliding window the next sliding window is when we make the first call again
+			firstCallInTime.get(limit).set(now.toEpochMilli());
+			callCountInTime.get(limit).set(1); // Reset to 1 since we just made a call
+			logger.debug("{}: Resetting call count for limit {}", platformOrEndpoint.name(), limit);
+		}
+		
+		for (RateLimit limit : limits)
+		{
+			logger.debug("{}: current call count={}, limit={}", platformOrEndpoint.name(), callCountInTime.get(limit), limit);
+		}
+		
 	}
 
 }
