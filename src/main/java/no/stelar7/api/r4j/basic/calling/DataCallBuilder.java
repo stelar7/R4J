@@ -44,6 +44,8 @@ public class DataCallBuilder
 	private Semaphore semaphore = new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true);
 
 	private static final Map<Enum, Lock> lockContainer = new HashMap<>();
+	
+	private static final Lock globalLock = new ReentrantLock();
 
 	private static final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
 	{
@@ -608,12 +610,12 @@ public class DataCallBuilder
 			} else
 			{
 				try {
-					getLock(dc.getPlatform()).lock(); // app level -> platform
+					globalLock.lock(); // app level -> platform
 					createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
 					//Since it's behind a lock, we can't update the app limit here if we are not sure that we are still in the same time period
 					//saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
 				}finally {
-					getLock(dc.getPlatform()).unlock();
+					globalLock.unlock();
 				}
 			}
 
@@ -623,12 +625,12 @@ public class DataCallBuilder
 			} else
 			{
 				try {
-					getLock(dc.getEndpoint()).lock(); // method level -> endpoint
+					globalLock.lock(); // method level -> endpoint
 					createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
 					//Since it's behind a lock, we can't update the app limit here if we are not sure that we are still in the same time period
 					//saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
 				} finally {
-					getLock(dc.getEndpoint()).unlock();
+					globalLock.unlock();
 				}
 			}
 
