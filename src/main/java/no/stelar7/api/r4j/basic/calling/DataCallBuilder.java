@@ -11,7 +11,6 @@ import org.slf4j.*;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.lang.foreign.ValueLayout;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
