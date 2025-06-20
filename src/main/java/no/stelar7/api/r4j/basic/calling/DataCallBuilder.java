@@ -116,13 +116,13 @@ public class DataCallBuilder
 
 			// This system seems to create infinite loops after 30 - 60 min of uptime for weird reason, disable for now
 			//do {
-				// app limit
-				appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
+			// app limit
+			appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
 
-				// method limit
-				methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
+			// method limit
+			methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
 
-				closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
+			//closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
 			//} while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
 		}
 
@@ -941,7 +941,12 @@ public class DataCallBuilder
 
 	public static Lock getLock(Enum platform)
 	{
-		return lockContainer.computeIfAbsent(platform, k -> new ReentrantLock());
+		globalLock.lock();
+		try {
+			return lockContainer.computeIfAbsent(platform, k -> new ReentrantLock());
+		} finally {
+			globalLock.unlock();
+		}
 	}
 
 	public static Lock getGlobalLock()
