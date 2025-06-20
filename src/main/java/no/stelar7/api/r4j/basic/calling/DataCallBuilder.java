@@ -114,7 +114,8 @@ public class DataCallBuilder
 			Instant appValidityDateTime;
 			Instant methodValidityDateTime;
 
-			do {
+			// This system seems to create infinite loops after 30 - 60 min of uptime for weird reason, disable for now
+			//do {
 				// app limit
 				appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
 
@@ -122,7 +123,7 @@ public class DataCallBuilder
 				methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
 
 				closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
-			} while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
+			//} while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
 		}
 
 
