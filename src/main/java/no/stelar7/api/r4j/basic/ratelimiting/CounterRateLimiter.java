@@ -17,7 +17,7 @@ public class CounterRateLimiter extends RateLimiter {
 	}
 	
 	@Override
-	public void acquire(Enum platformOrEndpoint) {
+	public Instant acquire(Enum platformOrEndpoint) {
 		DataCallBuilder.getLock(platformOrEndpoint).lock();
 		try {
 			for (RateLimit limit : limits)
@@ -25,6 +25,8 @@ public class CounterRateLimiter extends RateLimiter {
 				firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(Instant.now().toEpochMilli()));
 				callCountInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0)).incrementAndGet();
 			}
+			
+			return Instant.MAX; // We return a dummy value, as this is a counter rate limiter. The request is always allowed
 		}finally {
 			DataCallBuilder.getLock(platformOrEndpoint).unlock();
 		}

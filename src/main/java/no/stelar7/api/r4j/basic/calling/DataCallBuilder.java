@@ -11,6 +11,7 @@ import org.slf4j.*;
 
 import javax.net.ssl.*;
 import java.io.*;
+import java.lang.foreign.ValueLayout;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -110,10 +111,19 @@ public class DataCallBuilder
 
 			dc.getUrlHeaders().putIfAbsent("X-Riot-Token", DataCall.getCredentials().getLoLAPIKey());
 
-			// app limit
-			applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
-			// method limit
-			applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
+			Instant closestValidityDateTime;
+			Instant appValidityDateTime;
+			Instant methodValidityDateTime;
+
+			do {
+				// app limit
+				appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
+
+				// method limit
+				methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
+
+				closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
+			} while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
 		}
 
 
@@ -420,43 +430,46 @@ public class DataCallBuilder
 		}
 	}
 
-	private void applyLimit(Enum platform, Enum endpoint)
+	private Instant applyLimit(Enum platform, Enum endpoint)
 	{
 
 		RateLimiter limitr;
+		Instant validityDateTime;
 		getLock(endpoint).lock();
 		try
 		{
 			globalLock.lock();
 			try
 			{
-			Map<Enum, RateLimiter> child = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>());
+				Map<Enum, RateLimiter> child = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>());
 
-			if (child.get(endpoint) == null)
-			{
-				loadLimiterFromCache(platform, endpoint, child);
-			}
+				if (child.get(endpoint) == null)
+				{
+					loadLimiterFromCache(platform, endpoint, child);
+				}
 
-			limitr = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>()).get(endpoint);
+				limitr = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>()).get(endpoint);
 
-			if (limitr == null)
-			{
-				limitr = new CounterRateLimiter();
-				child.put(endpoint, limitr);
-				DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).put(platform, child);
-			}
+				if (limitr == null)
+				{
+					limitr = new CounterRateLimiter();
+					child.put(endpoint, limitr);
+					DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).put(platform, child);
+				}
 			} finally {
 				globalLock.unlock();
 			}
 
+			// Here endpoint is the equivalent to plafrorm when treating app limits, equivalent to endpoint when treating method limits
+			validityDateTime = limitr.acquire(endpoint);
 
-		// Here endpoint is the equivalent to plafrorm when treating app limits, equivalent to endpoint when treating method limits
-		limitr.acquire(endpoint);
 		} finally
 		{
 			getLock(endpoint).unlock();
 		}
 		storeLimiter(platform, endpoint);
+
+		return validityDateTime;
 	}
 
 	private void storeLimiter(Enum platform, Enum endpoint)
@@ -930,7 +943,7 @@ public class DataCallBuilder
 	{
 		return lockContainer.computeIfAbsent(platform, k -> new ReentrantLock());
 	}
-	
+
 	public static Lock getGlobalLock()
 	{
 		return globalLock;

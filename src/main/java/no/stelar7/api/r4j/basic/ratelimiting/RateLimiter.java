@@ -60,7 +60,15 @@ public abstract class RateLimiter
 		return Objects.equals(limits, other.limits);
 	}
 
-	public abstract void acquire(Enum platformOrEndpoint);
+	/**
+	 * Acquires a permit for the specified platform or endpoint.
+	 * This method should be called before making an API call to ensure compliance with rate limits.
+	 * Return the validity date of the request, if this date is passed, the request must go through the rate limiter another time.
+	 *
+	 * @param platformOrEndpoint the platform or endpoint for which to acquire a permit
+	 * @return the time at which point the permit is not valid anymore
+	 */
+	public abstract Instant acquire(Enum platformOrEndpoint);
 
 	public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platformOrEndpoint);
 

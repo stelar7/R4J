@@ -24,13 +24,13 @@ public class BurstRateLimiter extends RateLimiter
 	}
 
 	@Override
-	public void acquire(Enum platformOrEndpoint)
+	public Instant acquire(Enum platformOrEndpoint)
 	{
 		DataCallBuilder.getLock(platformOrEndpoint).lock();
 		try
 		{	
 			manageOverloadTimer(platformOrEndpoint);
-			manageRateLimit(platformOrEndpoint);
+			return manageRateLimit(platformOrEndpoint);
 		} finally
 		{
 			DataCallBuilder.getLock(platformOrEndpoint).unlock();
@@ -73,15 +73,22 @@ public class BurstRateLimiter extends RateLimiter
 	}
 
 
-	private void manageRateLimit(Enum platformOrEndpoint)
+	/**
+	 * Manage the rate limit, return the time until the request can be made. 
+	 * If when the request will be executed after this date, the request must be re-go through the rate limit process to be correctly counted.
+	 * @return the time until the request can be made
+	 */
+	private Instant manageRateLimit(Enum platformOrEndpoint)
 	{
+		Instant requestValidUntil = Instant.MAX; // Used to dermine if we need to "recount" the calls later
+		
 		List<RateLimit> limitsToResetAfterWait = new ArrayList<>();
 		
 		for (RateLimit limit : limits)
 		{
 			Instant now = Instant.now();
 
-			AtomicLong firstCall = firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
+			AtomicLong firstCall = firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(Instant.now().toEpochMilli()));
 			callCountInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
 
 			if ((firstCall.get()+200 - now.toEpochMilli()) + limit.getTimeframeInMS() < 0) // 200 ms of security margin, test
@@ -107,6 +114,9 @@ public class BurstRateLimiter extends RateLimiter
 				}
 				
 				limitsToResetAfterWait.add(limit); // Add this limit to the list of limits to reset after waiting
+			}else {
+				// limit valid, we save the end of the closest timeframe
+				requestValidUntil = updateRequestValidityTime(requestValidUntil, limit, firstCall);
 			}
 		}
 		
@@ -116,13 +126,25 @@ public class BurstRateLimiter extends RateLimiter
 			firstCallInTime.get(limit).set(now.toEpochMilli());
 			callCountInTime.get(limit).set(1); // Reset to 1 since we just made a call
 			logger.debug("{}: Resetting call count for limit {}", platformOrEndpoint.name(), limit);
+			
+			requestValidUntil = updateRequestValidityTime(requestValidUntil, limit, firstCallInTime.get(limit));
 		}
 		
 		for (RateLimit limit : limits)
 		{
-			logger.debug("{}: current call count={}, limit={}", platformOrEndpoint.name(), callCountInTime.get(limit), limit);
+			logger.debug("{}: current call count={}, limit={}, can be executed until : {}", platformOrEndpoint.name(), callCountInTime.get(limit), limit, requestValidUntil);
 		}
 		
+		return requestValidUntil;
+	}
+
+	private Instant updateRequestValidityTime(Instant requestValidUntil, RateLimit limit, AtomicLong firstCall) {
+		if (requestValidUntil.isAfter(Instant.ofEpochMilli((firstCall.get() + limit.getTimeframeInMS()))))
+		{
+			requestValidUntil = Instant.ofEpochMilli(firstCall.get() + limit.getTimeframeInMS());
+		}
+		
+		return requestValidUntil;
 	}
 	
 	@Override
