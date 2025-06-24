@@ -372,6 +372,11 @@ public enum GameQueueType implements CodedEnum
     CHERRY(1700, 1701, 1704, 1710),
     
     /**
+     * 5v5 Brawl
+     */
+    BRAWL(2300, 2301, 2302, 2303, 2304, 2305),
+    
+    /**
      * Ultra Rapid Fire games
      */
     URF_1V1(1901),
