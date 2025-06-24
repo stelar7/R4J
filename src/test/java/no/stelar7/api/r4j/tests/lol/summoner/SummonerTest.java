@@ -53,17 +53,6 @@ public class SummonerTest
     }
     
     @Test
-    public void testByAccount()
-    {
-        String      id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
-        RiotAccount account = r4J.getAccountAPI().getAccountByPUUID(LeagueShard.EUW1.toRegionShard(), id);
-        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
-        
-        Summoner optional = new SummonerBuilder().withPlatform(s.getPlatform()).withAccountId(s.getAccountId()).get();
-        doAssertions.accept(optional);
-    }
-    
-    @Test
     public void testByPUUID()
     {
         String      id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();

@@ -37,7 +37,7 @@ public class TestTFTLeague
         RiotAccount account  = l4j8.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
         Summoner    summoner = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
-        List<TFTLeagueEntry> entries = l4j8.getTFTAPI().getLeagueAPI().getLeagueEntries(LeagueShard.EUW1, summoner.getSummonerId());
+        List<TFTLeagueEntry> entries = l4j8.getTFTAPI().getLeagueAPI().getLeagueEntriesByPUUID(LeagueShard.EUW1, summoner.getPUUID());
         System.out.println();
     }
     

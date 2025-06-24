@@ -65,7 +65,7 @@ public class SummonerCrawler
                     return;
                 }
                 
-                results.add(Summoner.bySummonerId(summoner.getPlatform(), e.getSummonerId()));
+                results.add(Summoner.byPUUID(summoner.getPlatform(), e.getPuuid()));
             });
         }));
     }

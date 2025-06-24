@@ -18,9 +18,9 @@ public class TestTFTSummoner
     private final Consumer<Summoner> doAssertions = (final Summoner value) ->
     {
         Assertions.assertNotNull(value.getName(), "Summoner name is NULL");
-        Assertions.assertNotEquals(value.getProfileIconId(), 0, "Summoner profile icon is NULL");
-        Assertions.assertNotEquals(value.getRevisionDate(), 0L, "Summoner revision date is NULL");
-        Assertions.assertNotEquals(value.getSummonerLevel(), 0, "Summoner level is NULL");
+        Assertions.assertNotEquals(0, value.getProfileIconId(), "Summoner profile icon is NULL");
+        Assertions.assertNotEquals(0L, value.getRevisionDate(), "Summoner revision date is NULL");
+        Assertions.assertNotEquals(0, value.getSummonerLevel(), "Summoner level is NULL");
         Assertions.assertNotNull(value.getRevisionDateAsDate(), "Summoner revison date DATE is NULL");
         Assertions.assertNotNull(value.getPUUID(), "Summoner PUUID is null");
     };
@@ -32,25 +32,6 @@ public class TestTFTSummoner
     static void before()
     {
         DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
-    }
-    
-    @Test
-    public void testById()
-    {
-        RiotAccount account = l4j8.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
-        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
-        Summoner    s2      = api.getSummonerById(LeagueShard.EUW1, s.getSummonerId());
-        doAssertions.accept(s2);
-    }
-    
-    @Test
-    public void testByAccount()
-    {
-        RiotAccount account = l4j8.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
-        Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
-        
-        Summoner optional = api.getSummonerByAccount(LeagueShard.EUW1, s.getAccountId());
-        doAssertions.accept(optional);
     }
     
     @Test

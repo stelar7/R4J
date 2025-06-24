@@ -4,20 +4,17 @@ import no.stelar7.api.r4j.basic.cache.*;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
-import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 import org.slf4j.*;
 
 import java.time.*;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.*;
-import java.util.stream.Stream;
 
 public class MemoryCacheProvider implements CacheProvider
 {
     private static final Logger logger = LoggerFactory.getLogger(MemoryCacheProvider.class);
     
-    private final Map<Summoner, LocalDateTime>            summoners = new HashMap<>();
     private       Pair<StaticChampionList, LocalDateTime> champions;
     
     private final ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
@@ -76,10 +73,6 @@ public class MemoryCacheProvider implements CacheProvider
         
         switch (type)
         {
-            case V4_SUMMONER_BY_ACCOUNT:
-            case V4_SUMMONER_BY_ID:
-                summoners.put((Summoner) obj.get("value"), LocalDateTime.now());
-                break;
             default:
                 break;
         }
@@ -100,25 +93,6 @@ public class MemoryCacheProvider implements CacheProvider
         
         switch (type)
         {
-            case V4_SUMMONER_BY_ACCOUNT:
-            case V4_SUMMONER_BY_ID:
-            {
-                Object value = data.getOrDefault("name", data.getOrDefault("id", data.getOrDefault("accountid", data.getOrDefault("puuid", null))));
-                
-                Stream<Summoner> sums = summoners.keySet().stream().filter(s -> s.getPlatform().equals(platform));
-                if (type == URLEndpoint.V4_SUMMONER_BY_ID)
-                {
-                    sums = sums.filter(s -> value.equals(s.getSummonerId()));
-                }
-                if (type == URLEndpoint.V4_SUMMONER_BY_ACCOUNT)
-                {
-                    sums = sums.filter(s -> value.equals(s.getAccountId()));
-                }
-                
-                opt = sums.findFirst();
-                break;
-            }
-            
             default:
             {
                 opt = Optional.empty();
@@ -136,12 +110,9 @@ public class MemoryCacheProvider implements CacheProvider
     @Override
     public void clear(URLEndpoint type, Map<String, Object> filter)
     {
-        // TODO: respect filters
         switch (type)
         {
-            case V4_SUMMONER_BY_ACCOUNT:
-            case V4_SUMMONER_BY_ID:
-                summoners.clear();
+            default:
                 break;
         }
     }
@@ -149,13 +120,6 @@ public class MemoryCacheProvider implements CacheProvider
     @Override
     public void clearOldCache()
     {
-        if (timeToLive == CacheProvider.TTL_INFINITY)
-        {
-            return;
-        }
-        
-        clearOldCache(URLEndpoint.V4_SUMMONER_BY_ACCOUNT, summoners);
-        clearOldCache(URLEndpoint.V4_SUMMONER_BY_ID, summoners);
     }
     
     @Override
@@ -168,7 +132,6 @@ public class MemoryCacheProvider implements CacheProvider
     public long getSize(URLEndpoint type, Map<String, Object> filter)
     {
         long size = 0;
-        size += summoners.size();
         return size;
     }
     

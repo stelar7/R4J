@@ -36,28 +36,16 @@ import no.stelar7.api.r4j.pojo.val.ranked.Leaderboard;
 
 public enum URLEndpoint
 {
-    // lol/summoner/v3/summoners/by-account/{accountId}
-    // lol/summoner/v3/summoners/by-name/{summonerName}
-    // lol/summoner/v3/summoners/{summonerId}
-    V4_SUMMONER_BY_ACCOUNT("lol", "summoner", "v4", "summoners/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, Summoner.class),
     V4_SUMMONER_BY_PUUID("lol", "summoner", "v4", "summoners/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Summoner.class),
-    V4_SUMMONER_BY_ID("lol", "summoner", "v4", "summoners/" + Constants.SUMMONER_ID_PLACEHOLDER, Summoner.class),
-    
-    // lol/spectator/v3/featured-games
-    // lol/spectator/v3/active-games/by-summoner/{summonerId}
+
     V5_SPECTATOR_FEATURED("lol", "spectator", "v5", "featured-games", FeaturedGames.class),
     V5_SPECTATOR_CURRENT("lol", "spectator", "v5", "active-games/by-summoner/" + Constants.PUUID_ID_PLACEHOLDER, SpectatorGameInfo.class),
     
-    // lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}
-    // lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}/by-champion/{championId}
-    // lol/champion-mastery/v4/champion-masteries/by-puuid/{encryptedPUUID}/top
-    // lol/champion-mastery/v4/scores/by-puuid/{encryptedPUUID}
     V4_MASTERY_BY_PUUID("lol", "champion-mastery", "v4", "champion-masteries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, ChampionMasteryList.class),
     V4_MASTERY_BY_CHAMPION("lol", "champion-mastery", "v4", "champion-masteries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/by-champion/" + Constants.CHAMPION_ID_PLACEHOLDER, ChampionMastery.class),
     V4_MASTERY_TOP("lol", "champion-mastery", "v4", "champion-masteries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/top", ChampionMasteryList.class),
     V4_MASTERY_SCORE("lol", "champion-mastery", "v4", "scores/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Integer.class),
     
-    // lol/platform/v3/champion-rotations
     V3_CHAMPION_ROTATIONS("lol", "platform", "v3", "champion-rotations", ChampionRotationInfo.class),
     
     DDRAGON_CHAMPION_MANY("cdn/", "", Constants.VERSION_PLACEHOLDER, "/data/" + Constants.LOCALE_PLACEHOLDER + "/championFull.json", StaticChampionList.class),
@@ -75,47 +63,27 @@ public enum URLEndpoint
     DDRAGON_REALMS("realms/", "", Constants.REGION_PLACEHOLDER, ".json", Realm.class),
     DDRAGON_TARBALL("", "", "", "", String.class),
     
-    // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}
-    // api/lol/{region}/v2.5/league/by-summoner/{summonerIds}/entry
-    // api/lol/{region}/v2.5/league/challenger
-    // api/lol/{region}/v2.5/league/master
     V4_LEAGUE("lol", "league", "v4", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
-    V4_LEAGUE_ENTRY("lol", "league", "v4", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, LeagueEntryList.class),
     V4_LEAGUE_ENTRY_BY_PUUID("lol", "league", "v4", "entries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, LeagueEntryList.class),
-    //V3_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, LeagueEntryList.class),
     V4_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, LeagueEntryList.class),
     V4_LEAGUE_MASTER("lol", "league", "v4", "masterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V4_LEAGUE_GRANDMASTER("lol", "league", "v4", "grandmasterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V4_LEAGUE_CHALLENGER("lol", "league", "v4", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     
-    // lol/platform/v3/third-party-code/by-summoner/{summonerId}
     V4_THIRD_PARTY_CODE("lol", "platform", "v4", "third-party-code/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, String.class),
     
-    
-    // POST lol/tournament/v3/codes Create a tournament code for the given tournament.
-    // PUT  lol/tournament/v3/codes/{tournamentCode} Update the pick type, map, spectator type, or allowed summoners for a code.
-    // GET  lol/tournament/v3/codes/{tournamentCode} Returns the tournament code DTO associated with a tournament code string.
-    // GET  lol/tournament/v3/lobby-events/by-code/{tournamentCode} Gets a list of lobby events by tournament code.
-    // POST lol/tournament/v3/providers Creates a tournament provider and returns its ID.
-    // POST lol/tournament/v3/tournaments Creates a tournament and returns its ID.
     V5_TOURNAMENT_CODES("lol", "tournament", "v5", "codes", StringList.class),
     V5_TOURNAMENT_CODES_BY_CODE("lol", "tournament", "v5", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
     V5_TOURNAMENT_LOBBY_EVENTS("lol", "tournament", "v5", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V5_TOURNAMENT_PROVIDER("lol", "tournament", "v5", "providers", Integer.class),
     V5_TOURNAMENT_TOURNAMENT("lol", "tournament", "v5", "tournaments", Integer.class),
     
-    
-    // POST lol/tournament/v3/codes Create a tournament code for the given tournament.
-    // GET  lol/tournament/v3/lobby-events/by-code/{tournamentCode} Gets a list of lobby events by tournament code.
-    // POST lol/tournament/v3/providers Creates a tournament provider and returns its ID.
-    // POST lol/tournament/v3/tournaments Creates a tournament and returns its ID.
     V5_TOURNAMENT_STUB_CODES("lol", "tournament-stub", "v5", "codes", StringList.class),
     V5_TOURNAMENT_STUB_CODES_BY_CODE("lol", "tournament", "v5", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
     V5_TOURNAMENT_STUB_LOBBY_EVENTS("lol", "tournament-stub", "v5", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V5_TOURNAMENT_STUB_PROVIDER("lol", "tournament-stub", "v5", "providers", Integer.class),
     V5_TOURNAMENT_STUB_TOURNAMENT("lol", "tournament-stub", "v5", "tournaments", Integer.class),
     
-    // LCU
     LCU_LOBBY("lol-lobby/v2/lobby", "", "", "", JsonObject.class),
     LCU_LOBBY_JOIN("lol-lobby/v2/party/{id}/join", "", "", "", Void.class),
     LCU_LOBBY_INVITE("lol-lobby/v2/lobby/invitations", "", "", "", JsonArray.class),
@@ -135,7 +103,6 @@ public enum URLEndpoint
     LCU_REPLAY_DOWNLOAD_PATH("lol-replays/v1/rofls/path", "", "", "", String.class),
     LCU_REPLAY_WATCH("lol-replays/v1/rofls/{gameId}/watch", "", "", "", String.class),
     
-    // REPLAY
     REPLAY_GAME("replay/game", "", "", "", ReplayGameClientProcessInfo.class),
     REPLAY_PARTICLES("replay/particles", "", "", "", BooleanMap.class),
     REPLAY_PLAYBACK("replay/playback", "", "", "", ReplayPlaybackInfo.class),
@@ -155,29 +122,23 @@ public enum URLEndpoint
     LIVECLIENT_PLAYER_ITEMS("liveclientdata/playeritems", "", "", "", ActiveGameItemList.class),
     LIVECLIENT_PLAYER_SCORES("liveclientdata/playerscores", "", "", "", ActiveGamePlayerScores.class),
     LIVECLIENT_PLAYER_SUMMONERS("liveclientdata/playersummonerspells", "", "", "", ActiveGamePlayerSummonerSpells.class),
-    
-    
+
     LOR_STATIC_ACTIVE_DECK("static-decklist", "", "", "", JsonObject.class),
     LOR_CARD_POSITIONS("positional-rectangles", "", "", "", LoRGameInfo.class),
     LOR_GAME_RESULT("game-result", "", "", "", LoRGameResult.class),
     LOR_EXPEDITIONS_STATE("expeditions-state", "", "", "", LoRExpeditionInfo.class),
-    
-    
-    V1_TFT_SUMMONER_BY_ACCOUNT("tft", "summoner", "v1", "summoners/by-account/" + Constants.ACCOUNT_ID_PLACEHOLDER, Summoner.class),
+
     V1_TFT_SUMMONER_BY_PUUID("tft", "summoner", "v1", "summoners/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Summoner.class),
-    V1_TFT_SUMMONER_BY_ID("tft", "summoner", "v1", "summoners/" + Constants.SUMMONER_ID_PLACEHOLDER, Summoner.class),
-    
+
     V1_TFT_MATCHLIST("tft", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),
     V1_TFT_MATCH("tft", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
-    
-    
+
     V1_TFT_LEAGUE("tft", "league", "v1", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, TFTLeagueList.class),
-    V1_TFT_LEAGUE_ENTRY("tft", "league", "v1", "entries/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, TFTLeagueEntryList.class),
+    V1_TFT_LEAGUE_BY_PUUID("tft", "league", "v1", "by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, TFTLeagueEntryList.class),
     V1_TFT_LEAGUE_RANK("tft", "league", "v1", "entries/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, TFTLeagueEntryList.class),
     V1_TFT_LEAGUE_MASTER("tft", "league", "v1", "master", TFTLeagueList.class),
     V1_TFT_LEAGUE_GRANDMASTER("tft", "league", "v1", "grandmaster", TFTLeagueList.class),
     V1_TFT_LEAGUE_CHALLENGER("tft", "league", "v1", "challenger", TFTLeagueList.class),
-    
     
     V1_LOR_RANKED_LEADERBOARD("lor", "ranked", "v1", "leaderboards", LoRRankedPlayerList.class),
     V1_LOR_INVENTORY_CARDS_ME("lor", "inventory", "v1", "cards/me", LoRCardList.class),

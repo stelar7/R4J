@@ -17,7 +17,6 @@ public class LeagueBuilder
     
     private final LeagueShard   platform;
     private final GameQueueType queue;
-    private final String        summonerId;
     private final String        puuid;
     private final String        leagueId;
     
@@ -25,47 +24,40 @@ public class LeagueBuilder
     {
         this.platform = LeagueShard.UNKNOWN;
         this.queue = GameQueueType.RANKED_SOLO_5X5;
-        this.summonerId = null;
         this.puuid = null;
         this.leagueId = null;
     }
     
-    private LeagueBuilder(LeagueShard platform, GameQueueType queue, String summonerId, String puuid, String leagueId)
+    private LeagueBuilder(LeagueShard platform, GameQueueType queue, String puuid, String leagueId)
     {
         this.platform = platform;
         this.queue = queue;
-        this.summonerId = summonerId;
         this.puuid = puuid;
         this.leagueId = leagueId;
     }
     
     public LeagueBuilder withPlatform(LeagueShard platform)
     {
-        return new LeagueBuilder(platform, this.queue, this.summonerId, this.puuid, this.leagueId);
+        return new LeagueBuilder(platform, this.queue, this.puuid, this.leagueId);
     }
     
     public LeagueBuilder withQueue(GameQueueType queue)
     {
-        return new LeagueBuilder(this.platform, queue, this.summonerId, this.puuid, this.leagueId);
-    }
-    
-    public LeagueBuilder withSummonerId(String summonerId)
-    {
-        return new LeagueBuilder(this.platform, this.queue, summonerId, this.puuid, this.leagueId);
+        return new LeagueBuilder(this.platform, queue, this.puuid, this.leagueId);
     }
     
     public LeagueBuilder withPuuid(String puuid) {
-      return new LeagueBuilder(this.platform, this.queue, this.summonerId, puuid, this.leagueId);
+      return new LeagueBuilder(this.platform, this.queue, puuid, this.leagueId);
     }
     
     public LeagueBuilder withLeagueId(String leagueId)
     {
-        return new LeagueBuilder(this.platform, this.queue, this.summonerId, this.puuid, leagueId);
+        return new LeagueBuilder(this.platform, this.queue, this.puuid, leagueId);
     }
     
     public List<LeagueEntry> getLeagueEntries()
     {
-        if (this.platform == LeagueShard.UNKNOWN || (this.summonerId == null && this.puuid == null))
+        if (this.platform == LeagueShard.UNKNOWN || this.puuid == null)
         {
             logger.warn("GET called with invalid platform or summonerId");
             return Collections.emptyList();
@@ -77,25 +69,13 @@ public class LeagueBuilder
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         
-        if(puuid != null)
-        {
-            endpoint = URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID;
-            builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
-                                                         .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
-                                                         .withEndpoint(endpoint)
-                                                         .withPlatform(this.platform);
-            data.put("id", puuid);
-        }else 
-        {
-            endpoint = URLEndpoint.V4_LEAGUE_ENTRY;
-            builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
-              .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
-              .withEndpoint(endpoint)
-              .withPlatform(this.platform);
-            data.put("id", summonerId);
-        }
-        
-        
+        endpoint = URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID;
+        builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
+                                                     .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
+                                                     .withEndpoint(endpoint)
+                                                     .withPlatform(this.platform);
+        data.put("id", puuid);
+
         Optional<?> chl = DataCall.getCacheProvider().get(endpoint, data);
         if (chl.isPresent())
         {
