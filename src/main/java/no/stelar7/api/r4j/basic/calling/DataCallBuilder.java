@@ -127,7 +127,8 @@ public class DataCallBuilder
 				Instant appValidityDateTime;
 				Instant methodValidityDateTime;
 
-				do {
+				// FIXME: Bug with validity -> sometimes some already expired limits are returned, causing the app to wait for a long time 
+				//do {
 					// app limit
 					appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
 
@@ -135,7 +136,7 @@ public class DataCallBuilder
 					methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
 
 					closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
-				} while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
+				//} while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
 			}
 
 
