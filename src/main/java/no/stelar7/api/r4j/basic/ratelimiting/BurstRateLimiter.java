@@ -24,16 +24,16 @@ public class BurstRateLimiter extends RateLimiter
 	}
 
 	@Override
-	public Instant acquire(Enum platformOrEndpoint)
+	public Instant acquire(String gameKey, Enum platformOrEndpoint)
 	{
-		DataCallBuilder.getLock(platformOrEndpoint).lock();
+		DataCallBuilder.getLock(gameKey, platformOrEndpoint).lock();
 		try
 		{	
 			manageOverloadTimer(platformOrEndpoint);
 			return manageRateLimit(platformOrEndpoint);
 		} finally
 		{
-			DataCallBuilder.getLock(platformOrEndpoint).unlock();
+			DataCallBuilder.getLock(gameKey, platformOrEndpoint).unlock();
 		}
 	}
 
@@ -148,9 +148,9 @@ public class BurstRateLimiter extends RateLimiter
 	}
 	
 	@Override
-	public void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platformOrEndpoint)
+	public void updatePermitsTakenPerX(Map<Integer, Integer> data, String gameKey, Enum platformOrEndpoint)
 	{
-		DataCallBuilder.getLock(platformOrEndpoint).lock();
+		DataCallBuilder.getLock(gameKey, platformOrEndpoint).lock();
 		try 
 		{
 			for (Entry<Integer, Integer> key : data.entrySet())
@@ -171,7 +171,7 @@ public class BurstRateLimiter extends RateLimiter
 			}
 		} finally 
 		{
-			DataCallBuilder.getLock(platformOrEndpoint).unlock();
+			DataCallBuilder.getLock(gameKey, platformOrEndpoint).unlock();
 		}
 
 	}

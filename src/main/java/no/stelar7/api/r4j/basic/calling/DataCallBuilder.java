@@ -18,6 +18,7 @@ import java.security.cert.X509Certificate;
 import java.time.*;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -41,9 +42,15 @@ public class DataCallBuilder
 	private String requestMethod = "GET";
 	private String postData      = "";
 
-	private Semaphore semaphore = new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true);
+	/**
+	 * Pair:> Left: Game, Right: Endpoint
+	 */
+	private static final Map<Pair<String, Enum>, Semaphore> semaphoreContainer = new HashMap<>();
 
-	private static final Map<Enum, Lock> lockContainer = new HashMap<>();
+	/**
+	 * Pair:> Left: Game, Right: Endpoint
+	 */
+	private static final Map<Pair<String, Enum>, Lock> lockContainer = new HashMap<>();
 
 	private static final Lock globalLock = new ReentrantLock();
 
@@ -86,7 +93,7 @@ public class DataCallBuilder
 	{
 		RateLimiter limiter = DataCall.getLimiter(gameKeyUsed).get(server).get(endpoint);
 		// Endpoint as second parameter is used to determine if this is a method or app limit
-		limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), endpoint);
+		limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), gameKeyUsed, endpoint);
 	}
 
 	private static final Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
@@ -101,35 +108,38 @@ public class DataCallBuilder
 	{
 		final String url = this.getURL();
 
-		if (this.dc.useRatelimiter())
-		{
-			if (DataCall.getCredentials() == null)
+		String game = this.dc.getKeyUsedByHeadersUsed();
+		Enum platform = this.dc.getPlatform();
+		
+		try {
+			getSemaphore(game, platform).acquire(); // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
+
+			if (this.dc.useRatelimiter())
 			{
-				throw new APIUnsupportedActionException("No API Creds set!");
+				if (DataCall.getCredentials() == null)
+				{
+					throw new APIUnsupportedActionException("No API Creds set!");
+				}
+
+				dc.getUrlHeaders().putIfAbsent("X-Riot-Token", DataCall.getCredentials().getLoLAPIKey());
+
+				Instant closestValidityDateTime;
+				Instant appValidityDateTime;
+				Instant methodValidityDateTime;
+
+				do {
+					// app limit
+					appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
+
+					// method limit
+					methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
+
+					closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
+				} while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
 			}
 
-			dc.getUrlHeaders().putIfAbsent("X-Riot-Token", DataCall.getCredentials().getLoLAPIKey());
 
-			Instant closestValidityDateTime;
-			Instant appValidityDateTime;
-			Instant methodValidityDateTime;
-
-			do {
-			// app limit
-			appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
-
-			// method limit
-			methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
-
-			closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
-			} while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
-		}
-
-
-		logger.info("Trying url: {}", url);
-
-		try {
-			semaphore.acquire();
+			logger.info("Trying url: {}", url);
 
 			final DataCallResponse response = this.getResponse(url);
 			//logger.debug(response.toString());
@@ -240,7 +250,7 @@ public class DataCallBuilder
 			Thread.currentThread().interrupt();
 			return null;
 		}finally {
-			semaphore.release();
+			getSemaphore(game, platform).release();
 		}
 	}
 
@@ -434,7 +444,8 @@ public class DataCallBuilder
 
 		RateLimiter limitr;
 		Instant validityDateTime;
-		getLock(endpoint).lock();
+		String game = this.dc.getKeyUsedByHeadersUsed();
+		getLock(game, endpoint).lock();
 		try
 		{
 			globalLock.lock();
@@ -459,12 +470,12 @@ public class DataCallBuilder
 				globalLock.unlock();
 			}
 
-			// Here endpoint is the equivalent to plafrorm when treating app limits, equivalent to endpoint when treating method limits
-			validityDateTime = limitr.acquire(endpoint);
+			// Here endpoint is the equivalent to platform when treating app limits, equivalent to endpoint when treating method limits
+			validityDateTime = limitr.acquire(game, endpoint);
 
 		} finally
 		{
-			getLock(endpoint).unlock();
+			getLock(game, endpoint).unlock();
 		}
 		storeLimiter(platform, endpoint);
 
@@ -938,11 +949,25 @@ public class DataCallBuilder
 		return this;
 	}
 
-	public static Lock getLock(Enum platform)
+	private static Semaphore getSemaphore(String game, Enum platform)
 	{
+		Pair<String, Enum> pair = new Pair<>(game, platform);
+
 		globalLock.lock();
 		try {
-			return lockContainer.computeIfAbsent(platform, k -> new ReentrantLock());
+			return semaphoreContainer.computeIfAbsent(pair, k -> new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true));
+		} finally {
+			globalLock.unlock();
+		}
+	}
+
+	public static Lock getLock(String game, Enum platform)
+	{
+		Pair<String, Enum> pair = new Pair<>(game, platform);
+
+		globalLock.lock();
+		try {
+			return lockContainer.computeIfAbsent(pair, k -> new ReentrantLock());
 		} finally {
 			globalLock.unlock();
 		}

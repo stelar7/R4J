@@ -17,8 +17,8 @@ public class CounterRateLimiter extends RateLimiter {
 	}
 	
 	@Override
-	public Instant acquire(Enum platformOrEndpoint) {
-		DataCallBuilder.getLock(platformOrEndpoint).lock();
+	public Instant acquire(String gameKey, Enum platformOrEndpoint) {
+		DataCallBuilder.getLock(gameKey, platformOrEndpoint).lock();
 		try {
 			for (RateLimit limit : limits)
 			{
@@ -28,7 +28,7 @@ public class CounterRateLimiter extends RateLimiter {
 			
 			return Instant.MAX; // We return a dummy value, as this is a counter rate limiter. The request is always allowed
 		}finally {
-			DataCallBuilder.getLock(platformOrEndpoint).unlock();
+			DataCallBuilder.getLock(gameKey, platformOrEndpoint).unlock();
 		}
 	}
 	
@@ -41,7 +41,7 @@ public class CounterRateLimiter extends RateLimiter {
 	}
 
 	@Override
-	public void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platformOrEndpoint) {
+	public void updatePermitsTakenPerX(Map<Integer, Integer> data, String gameKey, Enum platformOrEndpoint) {
 		// Do nothing, as this is a counter rate limiter
 	}
 

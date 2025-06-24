@@ -68,9 +68,9 @@ public abstract class RateLimiter
 	 * @param platformOrEndpoint the platform or endpoint for which to acquire a permit
 	 * @return the time at which point the permit is not valid anymore
 	 */
-	public abstract Instant acquire(Enum platformOrEndpoint);
+	public abstract Instant acquire(String gameKey, Enum platformOrEndpoint);
 
-	public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, Enum platformOrEndpoint);
+	public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, String gameKey, Enum platformOrEndpoint);
 
 	public Map<RateLimit, AtomicLong> getFirstCallInTime()
 	{
