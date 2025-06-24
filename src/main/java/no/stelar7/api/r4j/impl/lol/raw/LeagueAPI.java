@@ -189,51 +189,6 @@ public final class LeagueAPI
     }
     
     /**
-     * Get league entries for a summonerId
-     * Empty if unranked
-     *
-     * @param server     region to get data from
-     * @param summonerId summoner to get data for
-     * @return List of LeagueEntry
-     */
-    public List<LeagueEntry> getLeagueEntries(LeagueShard server, String summonerId)
-    {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY)
-                                                       .withPlatform(server);
-        
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("platform", server);
-        data.put("id", summonerId);
-        
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY, data);
-        if (chl.isPresent())
-        {
-            return (List<LeagueEntry>) chl.get();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-            
-            List<LeagueEntry> list = (List<LeagueEntry>) ret;
-            
-            data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
-    }
-    
-    /**
      * Get league entries for a puuid
      * Empty if unranked
      *

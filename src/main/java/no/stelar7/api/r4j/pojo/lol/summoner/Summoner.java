@@ -29,17 +29,6 @@ public final class Summoner implements Serializable
     private long        revisionDate;
     private LeagueShard platform;
     
-    
-    public static Summoner bySummonerId(LeagueShard platform, String id)
-    {
-        return SummonerAPI.getInstance().getSummonerById(platform, id);
-    }
-    
-    public static Summoner byAccountId(LeagueShard platform, String id)
-    {
-        return SummonerAPI.getInstance().getSummonerByAccount(platform, id);
-    }
-    
     public static Summoner byPUUID(LeagueShard platform, String puuid)
     {
         return SummonerAPI.getInstance().getSummonerByPUUID(platform, puuid);
@@ -169,7 +158,7 @@ public final class Summoner implements Serializable
     
     public List<LeagueEntry> getLeagueEntry()
     {
-        return new LeagueBuilder().withPlatform(platform).withSummonerId(id).getLeagueEntries();
+        return new LeagueBuilder().withPlatform(platform).withPuuid(puuid).getLeagueEntries();
     }
     
     public SpectatorGameInfo getCurrentGame()

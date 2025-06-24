@@ -199,7 +199,7 @@ public class MatchListV5Test
         List<LeagueEntry> divis     = leagueAPI.getLeagueByTierDivision(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.GOLD_I, 1);
         for (LeagueEntry entry : divis)
         {
-            Summoner     summoner = Summoner.bySummonerId(LeagueShard.EUW1, entry.getSummonerId());
+            Summoner     summoner = Summoner.byPUUID(LeagueShard.EUW1, entry.getPuuid());
             List<String> lazy     = summoner.getLeagueGames().get();
             for (int i = 0; i < lazy.size() && i < 5; i++)
             {

@@ -32,7 +32,7 @@ public class RatelimitTest
             ExecutorService pool = Executors.newFixedThreadPool(8);
             for (int i2 = 0; i2 < 130; i2++)
             {
-                pool.execute(() -> new SummonerBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(s.getSummonerId()).get());
+                pool.execute(() -> new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(s.getPUUID()).get());
             }
             pool.shutdown();
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
@@ -90,11 +90,10 @@ public class RatelimitTest
     public void testRateLimitWithSleep() throws InterruptedException
     {
         String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
-        Summoner s  = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
-        
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(id).get();
+
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         TimeUnit.SECONDS.sleep(10);
-        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withSummonerId(id).get();
+        new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
     }
     
     @Test
