@@ -20,6 +20,7 @@ public final class DataCall
 	private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
 
 	private static APICredentials creds;
+	private static int 			  callAllowedInParallel = -1;
 	private static CacheProvider  cache          = EmptyCacheProvider.INSTANCE;
 	private static int            callStackSkip  = 5;
 	private static int            callStackLimit = 5;
@@ -155,6 +156,16 @@ public final class DataCall
 	public static CacheProvider getCacheProvider()
 	{
 		return cache;
+	}
+	
+	public static void setCallAllowedInParallel(int callAllowedInParallel)
+	{
+		DataCall.callAllowedInParallel = callAllowedInParallel;
+	}
+	
+	public static int getCallAllowedInParallel()
+	{
+		return callAllowedInParallel;
 	}
 
 	public static void setCacheProvider(CacheProvider provider)

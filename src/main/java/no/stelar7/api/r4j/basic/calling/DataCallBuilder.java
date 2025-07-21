@@ -30,8 +30,6 @@ import java.util.prefs.BackingStoreException;
 @SuppressWarnings("rawtypes")
 public class DataCallBuilder
 {
-	private static final int NUMBER_OF_CALLS_ALLOWED_IN_ASYNC = 200;
-
 	private static final Logger logger = LoggerFactory.getLogger(DataCallBuilder.class);
 
 	private final DataCall dc = new DataCall();
@@ -110,10 +108,13 @@ public class DataCallBuilder
 
 		String game = this.dc.getKeyUsedByHeadersUsed();
 		Enum platform = this.dc.getPlatform();
+		int callAllowedInParallel = DataCall.getCallAllowedInParallel();
 		
 		try {
-			getSemaphore(game, platform).acquire(); // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
-
+			if (callAllowedInParallel > 0) {
+				getSemaphore(game, platform).acquire(); // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
+			}
+			
 			if (this.dc.useRatelimiter())
 			{
 				if (DataCall.getCredentials() == null)
@@ -251,7 +252,9 @@ public class DataCallBuilder
 			Thread.currentThread().interrupt();
 			return null;
 		}finally {
-			getSemaphore(game, platform).release();
+			if(callAllowedInParallel > 0) {
+				getSemaphore(game, platform).release();
+			}
 		}
 	}
 
@@ -949,10 +952,14 @@ public class DataCallBuilder
 	private static Semaphore getSemaphore(String game, Enum platform)
 	{
 		Pair<String, Enum> pair = new Pair<>(game, platform);
+		int callAllowedInParallel = DataCall.getCallAllowedInParallel();
+		if (callAllowedInParallel <= 0) {
+			throw new IllegalArgumentException("Call allowed in parallel must be greater than 0");
+		}
 
 		globalLock.lock();
 		try {
-			return semaphoreContainer.computeIfAbsent(pair, k -> new Semaphore(NUMBER_OF_CALLS_ALLOWED_IN_ASYNC, true));
+			return semaphoreContainer.computeIfAbsent(pair, k -> new Semaphore(DataCall.getCallAllowedInParallel(), true));
 		} finally {
 			globalLock.unlock();
 		}
