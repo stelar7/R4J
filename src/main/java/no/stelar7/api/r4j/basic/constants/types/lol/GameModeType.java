@@ -119,6 +119,12 @@ public enum GameModeType implements CodedEnum
     
 
     SWIFTPLAY,
+
+    /**
+     * Doombots v2
+     */
+    RUBY,
+    RUBY_TRIAL_2
     ;
     
     /**
@@ -173,6 +179,8 @@ public enum GameModeType implements CodedEnum
             case URF:
                 return "URF";
             case DOOMBOTSTEEMO:
+            case RUBY_TRIAL_2:
+            case RUBY:
                 return "Doombots";
             case PROJECT:
                 return "Overcharge";
