@@ -54,7 +54,7 @@ public class LCURunningTest
     @Disabled
     public void testCustomURL()
     {
-        Object a = LCUApi.customUrl("​entitlements​/v1​/token", null, "GET");
+        Object a = LCUApi.customUrl("entitlements/v1/token", null, "GET");
         System.out.println(a);
         //String json = "{\"actorCellId\":0,\"championId\":51,\"completed\":false,\"id\":1,\"isAllyAction\":true,\"isInProgress\":true,\"pickTurn\":1,\"type\":\"pick\"}";
         
