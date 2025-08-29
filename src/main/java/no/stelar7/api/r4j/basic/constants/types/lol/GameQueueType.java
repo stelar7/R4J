@@ -414,6 +414,14 @@ public enum GameQueueType implements CodedEnum
     SWIFTPLAY(480),
 
     DOOMBOTS_V2(4210, 4220, 4240, 4250, 4260),
+    
+    PRACTICE_TOOL(3140),
+    
+    // FIXME : Figure out what these queues really are
+    // I'm absolutely not sure about the true meaning of the 3110, 3120, 3130 codes, but they seem to be some kind of custom games ? (Even if marked as "Matched"???)
+    CUSTOM_SUMMONERS_RIFT(3100, 3110, 3120, 3130), 
+    // I'm absolutely not sure about the true meaning of the 3210, 3220 and 3230 codes either
+    CUSTOM_ARAM(3200, 3210, 3220, 3230),
     ;
     
     private final Integer[] codes;
