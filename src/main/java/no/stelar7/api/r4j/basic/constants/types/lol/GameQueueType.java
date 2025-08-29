@@ -413,7 +413,7 @@ public enum GameQueueType implements CodedEnum
     
     SWIFTPLAY(480),
 
-    DOOMBOTS_V2(4220, 4240, 4250, 4260),
+    DOOMBOTS_V2(4210, 4220, 4240, 4250, 4260),
     ;
     
     private final Integer[] codes;
