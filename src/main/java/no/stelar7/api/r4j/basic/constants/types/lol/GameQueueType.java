@@ -356,6 +356,8 @@ public enum GameQueueType implements CodedEnum
     
     TEAMFIGHT_TACTICS_PENGU_S_PARTY(6120, 6121, 6122, 6125),
     
+    TEAMFIGHT_TACTICS_AO_SHINS_ASCENT(6130),
+    
     TEAMFIGHT_TACTICS_SET3_5_REVIVAL_GALAXIES(6000, 6001, 6002, 6005),
     
     TEAMFIGHT_TACTICS_REVIVAL_DAWN_OF_HEROES(6110, 6111, 6112, 6115),
@@ -417,10 +419,7 @@ public enum GameQueueType implements CodedEnum
     
     PRACTICE_TOOL(3140),
     
-    // FIXME : Figure out what these queues really are
-    // I'm absolutely not sure about the true meaning of the 3110, 3120, 3130 codes, but they seem to be some kind of custom games ? (Even if marked as "Matched"???)
     CUSTOM_SUMMONERS_RIFT(3100, 3110, 3120, 3130), 
-    // I'm absolutely not sure about the true meaning of the 3210, 3220 and 3230 codes either
     CUSTOM_ARAM(3200, 3210, 3220, 3230),
     ;
     
