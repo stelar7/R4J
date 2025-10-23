@@ -119,7 +119,13 @@ public enum GameModeType implements CodedEnum
      * Doombots v2
      */
     RUBY,
-    RUBY_TRIAL_2
+    RUBY_TRIAL_2,
+    RUBY_TRIAL_3,
+    
+    /**
+     * ARAM Mayhem
+     */
+    KIWI
     ;
     
     /**

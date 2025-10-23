@@ -397,10 +397,6 @@ public enum GameQueueType implements CodedEnum
      * Ultimate Spellbook
      */
     ULTBOOK(1400),
-    /**
-	 * ARAM Mayhem Mode
-	 */
-    KIWI(),
     
     ONE_VS_ONE(1401),
     TWO_VS_TWO(1402),
