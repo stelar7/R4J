@@ -420,7 +420,7 @@ public enum GameQueueType implements CodedEnum
     PRACTICE_TOOL(3140),
     
     CUSTOM_SUMMONERS_RIFT(3100, 3110, 3120, 3130), 
-    CUSTOM_ARAM(3200, 3210, 3220, 3230),
+    CUSTOM_ARAM(3200, 3210, 3220, 3230, 3270),
     ;
     
     private final Integer[] codes;
