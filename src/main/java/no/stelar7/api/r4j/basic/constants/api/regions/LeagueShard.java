@@ -206,18 +206,16 @@ public enum LeagueShard implements CodedEnum, RealmSpesificEnum
                 return RegionShard.EUROPE;
             case JP1:
             case KR:
-                return RegionShard.ASIA;
-            case PBE1:
-                return RegionShard.PBE;
             case ID1:
-                return RegionShard.GARENA;
             case SG2:
             case PH2:
             case VN2:
             case TH2:
             case TW2:
             case OC1:
-                return RegionShard.SEA;
+                return RegionShard.ASIA;
+            case PBE1:
+                return RegionShard.PBE;
             default:
                 throw new APIEnumNotUpToDateException(RegionShard.class, new JsonPrimitive(this.toString()));
         }
