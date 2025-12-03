@@ -14,10 +14,13 @@ import java.util.prefs.Preferences;
 public final class DataCall
 {
     
-    private static final Map<Enum, Map<Enum, RateLimiter>>           limiter  = new HashMap<>();
+    // Maps for storing limiters
+    private static final Map<String, Map<Enum, Map<Enum, RateLimiter>>> limitersByKeyType = new HashMap<>();
+    
     private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
     
     private static APICredentials creds;
+    private static int 			  callAllowedInParallel = -1;
     private static CacheProvider  cache          = EmptyCacheProvider.INSTANCE;
     private static int            callStackSkip  = 5;
     private static int            callStackLimit = 5;
@@ -39,9 +42,14 @@ public final class DataCall
     private        String      urlProxy          = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache  = Preferences.userRoot().node("no/stelar7/r4j");
     
-    public static Map<Enum, Map<Enum, RateLimiter>> getLimiter()
+    public static Map<Enum, Map<Enum, RateLimiter>> getLimiter(String game)
     {
-        return limiter;
+        DataCallBuilder.getGlobalLock().lock();
+        try {
+            return limitersByKeyType.computeIfAbsent(game, k -> new HashMap<>());
+        } finally {
+            DataCallBuilder.getGlobalLock().unlock();
+        }
     }
     
     public static Map<Enum, Map<Enum, Map<Integer, Integer>>> getCallData()
@@ -67,6 +75,29 @@ public final class DataCall
     public Map<String, String> getUrlHeaders()
     {
         return urlHeaders;
+    }
+    
+    public String getKeyUsedByHeadersUsed() {
+        String keyUsed = urlHeaders.get(Constants.X_RIOT_TOKEN_HEADER_KEY);
+        
+        if (keyUsed == null || keyUsed.isEmpty())
+        {
+            return "unknown";
+        }
+        
+        if (keyUsed.equals(creds.getLoLAPIKey())){
+            return "lol";
+        } else if (keyUsed.equals(creds.getTFTAPIKey())) {
+            return "tft";
+        } else if (keyUsed.equals(creds.getVALAPIKey())) {
+            return "val";
+        } else if (keyUsed.equals(creds.getLORAPIKey())) {
+            return "lor";
+        }else if (keyUsed.equals(creds.getTournamentAPIKey())) {
+            return "tournament";
+        }
+        
+        return "other";
     }
     
     public Enum getPlatform()
@@ -125,6 +156,16 @@ public final class DataCall
     public static CacheProvider getCacheProvider()
     {
         return cache;
+    }
+    
+    public static void setCallAllowedInParallel(int callAllowedInParallel)
+    {
+        DataCall.callAllowedInParallel = callAllowedInParallel;
+    }
+    
+    public static int getCallAllowedInParallel()
+    {
+        return callAllowedInParallel;
     }
     
     public static void setCacheProvider(CacheProvider provider)
