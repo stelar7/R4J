@@ -129,13 +129,13 @@ public class DataCallBuilder
                 Instant methodValidityDateTime;
 
                 do {
-                // app limit
-                appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
+                    // app limit
+                    appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
 
-                // method limit
-                methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
+                    // method limit
+                    methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
 
-                closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
+                    closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
                 } while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
             }
 
