@@ -15,14 +15,14 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class BurstRateLimiter extends RateLimiter
 {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(BurstRateLimiter.class);
-
+    
     public BurstRateLimiter(List<RateLimit> limits)
     {
         super(limits.toArray(new RateLimit[0]));
     }
-
+    
     @Override
     public Instant acquire(String gameKey, Enum platformOrEndpoint)
     {
@@ -36,10 +36,10 @@ public class BurstRateLimiter extends RateLimiter
             DataCallBuilder.getLock(gameKey, platformOrEndpoint).unlock();
         }
     }
-
+    
     private void manageOverloadTimer(Enum platformOrEndpoint) {
         long msToWait = 0;
-
+        
         overloadTimerLock.lock();
         try {
             if(overloadTimer != 0) {
@@ -59,7 +59,7 @@ public class BurstRateLimiter extends RateLimiter
         }finally {
             overloadTimerLock.unlock();
         }
-
+        
         if(msToWait > 0) {
             try {
                 Thread.sleep(msToWait);
@@ -71,8 +71,8 @@ public class BurstRateLimiter extends RateLimiter
             manageOverloadTimer(platformOrEndpoint);
         }
     }
-
-
+    
+    
     /**
      * Manage the rate limit, return the time until the request can be made. 
      * In the case when the request would be executed after this date, the request must be re-go through the rate limit process to be correctly counted.
@@ -81,31 +81,31 @@ public class BurstRateLimiter extends RateLimiter
     private Instant manageRateLimit(Enum platformOrEndpoint)
     {
         Instant requestValidUntil = Instant.MAX; // Used to determine if we need to "recount" the calls later
-
+        
         List<RateLimit> limitsToResetAfterWait = new ArrayList<>();
-
+        
         for (RateLimit limit : limits)
         {
             Instant now = Instant.now();
-
+            
             AtomicLong firstCall = firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(now.toEpochMilli()));
             callCountInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0));
-
+            
             // Are we in a new sliding window?
             if (firstCall.get() + limit.getTimeframeInMS() < now.toEpochMilli())
             {
                 limitsToResetAfterWait.add(limit); // We reset later in case another limit is hit
                 continue;
             }
-
+            
             long actualCountCall = callCountInTime.get(limit).incrementAndGet();
-
+            
             // ACTUAL CHECK IF WE ARE OVER THE LIMIT
             if (actualCountCall >= limit.getPermits()) {
-
+                
                 // We need to wait for the next sliding window to make our request
                 long delayForNextWindow = firstCallInTime.get(limit).get() + limit.getTimeframeInMS() - now.toEpochMilli();
-
+                
                 try {
                     logger.debug("{}: Waiting for next sliding window, delay for next window is {} ms", platformOrEndpoint.name(), delayForNextWindow);
                     Thread.sleep(delayForNextWindow + 200); // Add 200 ms to the delay to ensure we don't hit the limit again immediately, security margin
@@ -113,40 +113,40 @@ public class BurstRateLimiter extends RateLimiter
                     logger.error("Thread interrupted while sleeping for next window", e);
                     Thread.currentThread().interrupt();
                 }
-
+                
                 limitsToResetAfterWait.add(limit); // Add this limit to the list of limits to reset after waiting
             }else {
                 requestValidUntil = updateRequestValidityTime(requestValidUntil, limit, firstCall);
             }
         }
-
+        
         Instant now = Instant.now();
         for(RateLimit limit : limitsToResetAfterWait) {
             // Reset the call count after waiting for the next sliding window. The new sliding window starts now.
             firstCallInTime.get(limit).set(now.toEpochMilli());
             callCountInTime.get(limit).set(1); // Reset to 1 since we just made a call
             logger.debug("{}: Resetting call count for limit {}", platformOrEndpoint.name(), limit);
-
+            
             requestValidUntil = updateRequestValidityTime(requestValidUntil, limit, firstCallInTime.get(limit));
         }
-
+        
         for (RateLimit limit : limits)
         {
             logger.debug("{}: current call count={}, limit={}, can be executed until : {}", platformOrEndpoint.name(), callCountInTime.get(limit), limit, requestValidUntil);
         }
-
+        
         return requestValidUntil;
     }
-
+    
     private Instant updateRequestValidityTime(Instant requestValidUntil, RateLimit limit, AtomicLong firstCall) {
         if (requestValidUntil.isAfter(Instant.ofEpochMilli((firstCall.get() + limit.getTimeframeInMS()))))
         {
             requestValidUntil = Instant.ofEpochMilli(firstCall.get() + limit.getTimeframeInMS());
         }
-
+        
         return requestValidUntil;
     }
-
+    
     @Override
     public void updatePermitsTakenPerX(Map<Integer, Integer> data, String gameKey, Enum platformOrEndpoint)
     {
@@ -173,7 +173,7 @@ public class BurstRateLimiter extends RateLimiter
         {
             DataCallBuilder.getLock(gameKey, platformOrEndpoint).unlock();
         }
-
+        
     }
-
+    
 }

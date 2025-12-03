@@ -31,47 +31,47 @@ import java.util.prefs.BackingStoreException;
 public class DataCallBuilder
 {
     private static final Logger logger = LoggerFactory.getLogger(DataCallBuilder.class);
-
+    
     private final DataCall dc = new DataCall();
-
+    
     private static final BiFunction<String, String, String> MERGE        = (o, n) -> o + "," + n;
     private static final BiFunction<String, String, String> MERGE_AS_SET = (o, n) -> o + n;
-
+    
     private String requestMethod = "GET";
     private String postData      = "";
-
+    
     /**
      * Pair:> Left: Game, Right: Endpoint
      */
     private static final Map<Pair<String, Enum>, Semaphore> semaphoreContainer = new HashMap<>();
-
+    
     /**
      * Pair:> Left: Game, Right: Endpoint
      */
     private static final Map<Pair<String, Enum>, Lock> lockContainer = new HashMap<>();
-
+    
     private static final Lock globalLock = new ReentrantLock();
-
+    
     private static final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
     {
         public java.security.cert.X509Certificate[] getAcceptedIssuers()
         {
             return null;
         }
-
+        
         public void checkClientTrusted(X509Certificate[] certs, String authType)
         {
         }
-
+        
         public void checkServerTrusted(X509Certificate[] certs, String authType)
         {
         }
     }
     };
-
+    
     // Create all-trusting host name verifier
     private static final HostnameVerifier allHostsValid = (hostname, session) -> true;
-
+    
     static
     {
         try
@@ -85,17 +85,17 @@ public class DataCallBuilder
             e.printStackTrace();
         }
     }
-
-
+    
+    
     private static void updateRatelimiter(Enum server, Enum endpoint, String gameKeyUsed)
     {
         RateLimiter limiter = DataCall.getLimiter(gameKeyUsed).get(server).get(endpoint);
         // Endpoint as second parameter is used to determine if this is a method or app limit
         limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), gameKeyUsed, endpoint);
     }
-
+    
     private static final Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
-
+    
     /**
      * Puts together all the data, and then returns an object representing the JSON from the call
      *
@@ -105,46 +105,46 @@ public class DataCallBuilder
     public Object build(int... retrys)
     {
         final String url = this.getURL();
-
+        
         String game = this.dc.getKeyUsedByHeadersUsed();
         Enum platform = this.dc.getPlatform();
         int callAllowedInParallel = DataCall.getCallAllowedInParallel();
-
+        
         try {
             if (callAllowedInParallel > 0) {
                 getSemaphore(game, platform).acquire(); // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
             }
-
+            
             if (this.dc.useRatelimiter())
             {
                 if (DataCall.getCredentials() == null)
                 {
                     throw new APIUnsupportedActionException("No API Creds set!");
                 }
-
+                
                 dc.getUrlHeaders().putIfAbsent("X-Riot-Token", DataCall.getCredentials().getLoLAPIKey());
-
+                
                 Instant closestValidityDateTime;
                 Instant appValidityDateTime;
                 Instant methodValidityDateTime;
-
+                
                 do {
                     // app limit
                     appValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getPlatform());
-
+                    
                     // method limit
                     methodValidityDateTime = applyLimit(this.dc.getPlatform(), this.dc.getEndpoint());
-
+                    
                     closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
                 } while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
             }
-
-
+            
+            
             logger.info("Trying url: {}", url);
-
+            
             final DataCallResponse response = this.getResponse(url);
             //logger.debug(response.toString());
-
+            
             switch (response.getResponseCode())
             {
             case 200:
@@ -152,43 +152,43 @@ public class DataCallBuilder
             case 204:
             {
                 String returnValue = response.getResponseData();
-
+                
                 if (this.dc.shouldReturnRawResponse())
                 {
                     return returnValue;
                 }
-
+                
                 if (this.dc.getEndpoint() != null)
                 {
                     final Class<?> returnType = this.dc.getEndpoint().getType();
                     returnValue = postProcess(returnValue);
-
+                    
                     return Utils.getGson().fromJson(returnValue, returnType);
                 } else
                 {
                     return returnValue;
                 }
             }
-
+            
             case 400:
             {
                 String reasonText = "Your api request is malformed!\n";
                 reasonText += url + "\n";
                 throw new APIResponseException(APIHTTPErrorReason.ERROR_400, reasonText + response.getResponseData());
             }
-
+            
             case 401:
             {
-
+                
                 String reasonText = "The API denied your request!\n";
                 reasonText += "Your API key was not present in the request\n";
                 reasonText += "Make sure you have setup your APICredentials before doing a API call!\n";
                 throw new APIResponseException(APIHTTPErrorReason.ERROR_401, reasonText + response.getResponseData());
             }
-
+            
             case 403:
             {
-
+                
                 String reasonText = "The API denied your request!\n";
                 reasonText += "Possible reasons:\n";
                 reasonText += " - Your API key is invalid\n";
@@ -196,12 +196,12 @@ public class DataCallBuilder
                 reasonText += " - You are trying to call a endpoint you dont have access to\n";
                 throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
             }
-
+            
             case 404:
             {
                 return new Pair<>(response.getResponseCode(), response.getResponseData());
             }
-
+            
             case 405:
             {
                 String reasonText = "The API was unable to handle your request due to the wrong HTTP method being used.\n";
@@ -216,13 +216,13 @@ public class DataCallBuilder
                     String error = response.getResponseData() + "429 ratelimit hit! " +
                             "Please do not restart your application to refresh the timer! " +
                             "This isn't supposed to happen unless you restarted your app before the last limit was hit!";
-
+                    
                     logger.error(error);
-
+                    
                 }
-
+                
                 return this.build();
-
+                
             case 500:
             case 502:
             case 503:
@@ -230,18 +230,18 @@ public class DataCallBuilder
             {
                 return sleepAndRetry(retrys, response.getResponseCode());
             }
-
+            
             case 599:
             {
                 throw new APIResponseException(APIHTTPErrorReason.ERROR_599, response.getResponseData());
             }
-
+            
             default:
             {
                 break;
             }
             }
-
+            
             System.err.println("UNHANDLED RESPONSE CODE!!!");
             System.err.println("Response Code:" + response.getResponseCode());
             System.err.println("Response Data:" + response.getResponseData());
@@ -256,7 +256,7 @@ public class DataCallBuilder
             }
         }
     }
-
+    
     private String postProcess(String returnValue)
     {
         final List<URLEndpoint> ddragon = Arrays.asList(URLEndpoint.DDRAGON_CHAMPION_MANY, URLEndpoint.DDRAGON_SUMMONER_SPELLS);
@@ -264,12 +264,12 @@ public class DataCallBuilder
         {
             returnValue = postProcessDDragonMany(returnValue);
         }
-
+        
         if (this.dc.getEndpoint() == URLEndpoint.DDRAGON_ITEMS || this.dc.getEndpoint() == URLEndpoint.DDRAGON_RUNES)
         {
             returnValue = postProcessDDragonAddId(returnValue);
         }
-
+        
         final List<URLEndpoint> summonerEndpoints = Arrays.asList(
                 URLEndpoint.V4_SUMMONER_BY_PUUID,
                 URLEndpoint.V1_TFT_SUMMONER_BY_PUUID);
@@ -277,17 +277,17 @@ public class DataCallBuilder
         {
             returnValue = postProcessSummoner(returnValue);
         }
-
+        
         final List<URLEndpoint> apexEndpoints = Arrays.asList(URLEndpoint.V4_LEAGUE_MASTER, URLEndpoint.V4_LEAGUE_GRANDMASTER, URLEndpoint.V4_LEAGUE_CHALLENGER,
                 URLEndpoint.V1_TFT_LEAGUE_MASTER, URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, URLEndpoint.V1_TFT_LEAGUE_CHALLENGER);
         if (apexEndpoints.contains(this.dc.getEndpoint()))
         {
             returnValue = postProcessApex(returnValue);
         }
-
+        
         return returnValue;
     }
-
+    
     private String postProcessApex(String returnValue)
     {
         JsonObject elem    = (JsonObject) JsonParser.parseString(returnValue);
@@ -296,17 +296,17 @@ public class DataCallBuilder
         {
             entries = new JsonArray();
         }
-
+        
         entries.forEach(e -> {
             JsonObject ob = (JsonObject) e;
             ob.add("leagueId", elem.get("leagueId"));
             ob.add("queueType", elem.get("queue"));
             ob.add("tier", elem.get("tier"));
         });
-
+        
         return Utils.getGson().toJson(elem);
     }
-
+    
     private String postProcessDDragonMany(String returnValue)
     {
         JsonObject elem   = (JsonObject) JsonParser.parseString(returnValue);
@@ -320,10 +320,10 @@ public class DataCallBuilder
             parent.add(id, child);
             parent.remove(key);
         }
-
+        
         return Utils.getGson().toJson(elem);
     }
-
+    
     private String postProcessDDragonAddId(String returnValue)
     {
         JsonObject elem   = (JsonObject) JsonParser.parseString(returnValue);
@@ -335,23 +335,23 @@ public class DataCallBuilder
             {
                 int keyAsInt = Integer.parseInt(key);
                 child.addProperty("id", keyAsInt);
-
+                
             }   catch(NumberFormatException e) 
             {
                 parent.remove(key);
                 logger.warn("Item/Rune received without a valid Id ({}), item removed from the list", key);
             }
         }
-
+        
         return Utils.getGson().toJson(elem);
     }
-
+    
     private String postProcessPerkPath(String returnValue)
     {
         JsonObject elem     = (JsonObject) JsonParser.parseString(returnValue);
         String     pathName = elem.get("name").getAsString();
         String     pathId   = elem.get("id").getAsString();
-
+        
         JsonArray slots = elem.getAsJsonArray("slots");
         for (JsonElement slot : slots)
         {
@@ -363,19 +363,19 @@ public class DataCallBuilder
                 obj.addProperty("runePathId", pathId);
             }
         }
-
+        
         return Utils.getGson().toJson(elem);
     }
-
+    
     private String postProcessPerkPaths(String returnValue)
     {
         JsonArray element = (JsonArray) JsonParser.parseString(returnValue);
-
+        
         for (JsonElement elem : element)
         {
             String pathName = elem.getAsJsonObject().get("name").getAsString();
             String pathId   = elem.getAsJsonObject().get("id").getAsString();
-
+            
             JsonArray slots = elem.getAsJsonObject().getAsJsonArray("slots");
             for (JsonElement slot : slots)
             {
@@ -388,17 +388,17 @@ public class DataCallBuilder
                 }
             }
         }
-
+        
         return Utils.getGson().toJson(element);
     }
-
+    
     private String postProcessSummoner(String returnValue)
     {
         JsonObject element = (JsonObject) JsonParser.parseString(returnValue);
         element.addProperty("platform", this.dc.getPlatform().toString());
         return Utils.getGson().toJson(element);
     }
-
+    
     private Object sleepAndRetry(int[] retrys, int errorCode)
     {
         try
@@ -410,8 +410,8 @@ public class DataCallBuilder
             {
                 totalSleepDuration += i * 500L;
             }
-
-
+            
+            
             String message = "";
             if (errorCode == 429)
             {
@@ -420,16 +420,16 @@ public class DataCallBuilder
             {
                 message = "Server error (" + errorCode + ") , waiting " + nextSleepDuration / 1000 + " seconds then retrying";
             }
-
+            
             logger.info(message);
-
+            
             if (totalSleepDuration > this.dc.getMaxSleep())
             {
                 throw new APINoValidResponseException(String.format("API did not return a valid response in time. Total sleep time is over the max sleep value %s > %s...\n" +
                         "Try setting `DataCall.setDefaultMaxSleep(long)` to a larger number (default is 10000)",
                         (nextSleepDuration + totalSleepDuration), this.dc.getMaxSleep()));
             }
-
+            
             Thread.sleep(nextSleepDuration);
             return this.build(attempts);
         } catch (InterruptedException e)
@@ -437,10 +437,10 @@ public class DataCallBuilder
             throw new APINoValidResponseException("Something interupted the API timeout;" + e.getMessage());
         }
     }
-
+    
     private Instant applyLimit(Enum platform, Enum endpoint)
     {
-
+        
         RateLimiter limitr;
         Instant validityDateTime;
         String game = this.dc.getKeyUsedByHeadersUsed();
@@ -451,14 +451,14 @@ public class DataCallBuilder
             try
             {
                 Map<Enum, RateLimiter> child = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>());
-
+                
                 if (child.get(endpoint) == null)
                 {
                     loadLimiterFromCache(platform, endpoint, child);
                 }
-
+                
                 limitr = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>()).get(endpoint);
-
+                
                 if (limitr == null)
                 {
                     limitr = new CounterRateLimiter();
@@ -468,19 +468,19 @@ public class DataCallBuilder
             } finally {
                 globalLock.unlock();
             }
-
+            
             // Here endpoint is the equivalent to platform when treating app limits, equivalent to endpoint when treating method limits
             validityDateTime = limitr.acquire(game, endpoint);
-
+            
         } finally
         {
             getLock(game, endpoint).unlock();
         }
         storeLimiter(platform, endpoint);
-
+        
         return validityDateTime;
     }
-
+    
     private void storeLimiter(Enum platform, Enum endpoint)
     {
         RateLimiter limiter  = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(platform).get(endpoint);
@@ -488,22 +488,22 @@ public class DataCallBuilder
         String      limitKey = "limits/" + baseKey;
         String      firstKey = "first/" + baseKey;
         String      callKey  = "call/" + baseKey;
-
+        
         DataCall.getRatelimiterCache().put(firstKey, Utils.getGson().toJson(limiter.getFirstCallInTime()));
         DataCall.getRatelimiterCache().put(callKey, Utils.getGson().toJson(limiter.getCallCountInTime()));
     }
-
+    
     private void loadLimiterFromCache(Enum platform, Enum endpoint, Map<Enum, RateLimiter> child)
     {
         String baseKey  = platform.toString() + "/" + endpoint.toString();
         String limitKey = "limits/" + baseKey;
         String firstKey = "first/" + baseKey;
         String callKey  = "call/" + baseKey;
-
+        
         String lastLimit = DataCall.getRatelimiterCache().get(limitKey, null);
         String lastFirst = DataCall.getRatelimiterCache().get(firstKey, null);
         String lastKey   = DataCall.getRatelimiterCache().get(callKey, null);
-
+        
         if (lastLimit == null)
         {
             logger.debug("No instance of an old ratelimiter found");
@@ -512,20 +512,20 @@ public class DataCallBuilder
         {
             logger.debug("Loading old ratelimiter data");
         }
-
+        
         try
         {
             List<RateLimit>            knownLimits = Utils.getGson().fromJson(lastLimit, new TypeToken<List<RateLimit>>() {}.getType());
             Map<RateLimit, AtomicLong> knownTime   = Utils.getGson().fromJson(lastFirst, new TypeToken<Map<RateLimit, AtomicLong>>() {}.getType());
             Map<RateLimit, AtomicLong> knownCount  = Utils.getGson().fromJson(lastKey, new TypeToken<Map<RateLimit, AtomicLong>>() {}.getType());
-
-
+            
+            
             RateLimiter newerLimit = new BurstRateLimiter(knownLimits);
             newerLimit.setCallCountInTime(knownCount);
             newerLimit.setFirstCallInTime(knownTime);
-
+            
             logger.debug("Loaded ratelimit for {}", endpoint);
-
+            
             child.put(endpoint, newerLimit);
             DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).put(platform, child);
         } catch (JsonSyntaxException s)
@@ -541,8 +541,8 @@ public class DataCallBuilder
             }
         }
     }
-
-
+    
+    
     /**
      * Opens a connection to the URL, then reads the data into a Response.
      *
@@ -556,7 +556,7 @@ public class DataCallBuilder
         try
         {
             final HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
-
+            
             con.setUseCaches(false);
             con.setDefaultUseCaches(false);
             con.setRequestProperty("User-Agent", "R4J");
@@ -570,7 +570,7 @@ public class DataCallBuilder
             con.setConnectTimeout(this.dc.getConnectTimeout());
             con.setReadTimeout(this.dc.getReadTimeout());
             this.dc.getUrlHeaders().forEach(con::setRequestProperty);
-
+            
             if (requestMethod.equalsIgnoreCase("PATCH"))
             {
                 con.setRequestProperty("X-HTTP-Method-Override", "PATCH");
@@ -579,20 +579,20 @@ public class DataCallBuilder
             {
                 con.setRequestMethod(requestMethod);
             }
-
+            
             StringBuilder sb = new StringBuilder();
             con.getRequestProperties().forEach((key, value) -> sb.append(String.format(Constants.TABBED2X_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
-
+            
             String printMe = new StringBuilder("\n")
                     .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Url", url)).append("\n")
                     .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Request Method", con.getRequestMethod())).append("\n")
                     .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "POST data", this.postData)).append("\n")
                     .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Request Headers", "")).append("\n")
                     .append(sb).toString();
-
+            
             //logger.debug(printMe);
-
-
+            
+            
             if (null != this.postData && !this.postData.isEmpty())
             {
                 con.setDoOutput(true);
@@ -601,48 +601,48 @@ public class DataCallBuilder
                 writer.flush();
                 writer.close();
             }
-
+            
             con.connect();
             Instant received = Instant.now();
-
+            
             StringBuilder sb2 = new StringBuilder("\n");
             con.getHeaderFields().forEach((key, value) -> sb2.append(String.format(Constants.TABBED2X_VERBOSE_STRING_FORMAT, key, value)).append("\n"));
-
+            
             String printMe2 = new StringBuilder("\n").append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Response Headers", ""))
                     .append(sb2)
                     .toString();
             //logger.debug(printMe2);
-
-
+            
+            
             String appA    = con.getHeaderField("X-App-Rate-Limit");
             String appB    = con.getHeaderField("X-App-Rate-Limit-Count");
             String methodA = con.getHeaderField("X-Method-Rate-Limit");
             String methodB = con.getHeaderField("X-Method-Rate-Limit-Count");
-
+            
             // Quickly notify if a ratelimit was hit, we don't wait on any lock
             if (con.getResponseCode() == 429)
             {
                 logger.debug("Debug: all headers: {}", con.getHeaderFields());
-
+                
                 logger.warn("Ratelimit hit for platform: {}, endpoint: {}, method: {}, app limit: {}/{}, method limit: {}/{}",
                         this.dc.getPlatform(), this.dc.getEndpoint(), this.requestMethod, appB, appA, methodB, methodA);
-
+                
                 final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
-
+                
                 if (limitType == RateLimitType.LIMIT_METHOD)
                 {
                     RateLimiter limter = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(this.dc.getPlatform()).get(this.dc.getEndpoint());
                     limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
                 }
-
+                
                 if (limitType == RateLimitType.LIMIT_USER)
                 {
-
+                    
                     RateLimiter limter = DataCall.getLimiter(dc.getEndpoint().getGame()).get(this.dc.getPlatform()).get(this.dc.getPlatform());
                     limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
                 }
             }
-
+            
             if (appA == null)
             {
                 logger.debug("Header 'X-App-Rate-Limit' missing from call: {} ", getURL());
@@ -657,7 +657,7 @@ public class DataCallBuilder
                     globalLock.unlock();
                 }
             }
-
+            
             if (methodA == null)
             {
                 logger.debug("Header 'X-Method-Rate-Limit' missing from call: {}", getURL());
@@ -672,18 +672,18 @@ public class DataCallBuilder
                     globalLock.unlock();
                 }
             }
-
+            
             String deprecationHeader = con.getHeaderField("X-Riot-Deprecated");
             if (deprecationHeader != null)
             {
                 LocalDateTime timeout = LocalDateTime.ofEpochSecond(Long.parseLong(deprecationHeader) / 1000, 0, ZoneOffset.ofHours(-7));
                 logger.info("You are using a deprecated method, this method will stop working at: {}", timeout);
             }
-
+            
             if (con.getResponseCode() == 429)
             {
                 final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
-
+                
                 StringBuilder valueList = new StringBuilder();
                 DataCall.getLimiter(dc.getEndpoint().getGame()).get(dc.getPlatform()).forEach((key, value) -> {
                     valueList.append(key);
@@ -691,71 +691,71 @@ public class DataCallBuilder
                     valueList.append(value.getCallCountInTime());
                     valueList.append("\n");
                 });
-
+                
                 String reasonString = String.format("%s%n%s", limitType.getReason(), valueList.toString().trim());
                 String reason       = String.format("%s%n", reasonString);
-
+                
                 return new DataCallResponse(con.getResponseCode(), reason);
             }
-
+            
             if (con.getResponseCode() == 204)
             {
                 return new DataCallResponse(con.getResponseCode(), "");
             }
-
+            
             InputStream stream = (con.getResponseCode() <= 399) ? con.getInputStream() : con.getErrorStream();
-
+            
             if (stream == null)
             {
                 return new DataCallResponse(con.getResponseCode(), "Unable to read stream!");
             }
-
+            
             try (BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)))
             {
                 br.lines().forEach(data::append);
             }
-
+            
             con.disconnect();
-
+            
             return new DataCallResponse(con.getResponseCode(), data.toString());
         } catch (final IOException e)
         {
             throw new APIResponseException(APIHTTPErrorReason.ERROR_599, APIHTTPErrorReason.ERROR_599.getReason());
         }
     }
-
+    
     private void createRatelimiterIfMissing(String methodA, Enum platform, Enum endpoint)
     {
         Map<Enum, RateLimiter> child = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>());
-
+        
         RateLimiter oldLimit   = child.get(endpoint);
         RateLimiter newerLimit = createLimiter(methodA);
-
+        
         if (!newerLimit.equals(oldLimit))
         {
             newerLimit.mergeFrom(oldLimit);
             child.put(endpoint, newerLimit);
-
+            
             logger.debug("Updating Ratelimit For {}", endpoint);
             logger.debug(newerLimit.getLimits().toString());
         }
-
+        
         DataCall.getLimiter(dc.getEndpoint().getGame()).put(platform, child);
     }
-
+    
     private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
     {
         Map<Enum, Map<Integer, Integer>> parent = DataCall.getCallData().getOrDefault(platform, new HashMap<>());
         Map<Integer, Integer>            child  = parent.getOrDefault(endpoint, new HashMap<>());
-
+        
         child.putAll(parseLimitFromHeader(limitCount));
         parent.put(endpoint, child);
         DataCall.getCallData().put(platform, parent);
-
+        
         updateRatelimiter(platform, endpoint, dc.getKeyUsedByHeadersUsed());
         storeLimiter(platform, endpoint);
     }
-
+    
     private Map<Integer, Integer> parseLimitFromHeader(String headerValue)
     {
         final String[]        limits  = headerValue.split(",");
@@ -767,23 +767,23 @@ public class DataCallBuilder
             final Integer  time  = Integer.parseInt(limit[1]);
             timeout.put(time, call);
         }
-
+        
         return timeout;
     }
-
+    
     public RateLimiter createLimiter(String limitCount)
     {
         Map<Integer, Integer> timeout = parseLimitFromHeader(limitCount);
-
+        
         List<RateLimit> limits = new ArrayList<>();
         for (Entry<Integer, Integer> entry : timeout.entrySet())
         {
             limits.add(new RateLimit(entry.getValue(), entry.getKey(), TimeUnit.SECONDS));
         }
-
+        
         return new BurstRateLimiter(limits);
     }
-
+    
     /**
      * Generates the URL to use for the call.
      *
@@ -805,24 +805,24 @@ public class DataCallBuilder
             url[0] = url[0].replace(Constants.REGION_PLACEHOLDER, ((RealmSpesificEnum) dc.getPlatform()).getRealmValue());
         }
         dc.getUrlParams().forEach((k, v) -> url[0] = url[0].replace(k, v));
-
+        
         boolean first = true;
         for (Entry<String, String> pair : dc.getUrlData().entrySet())
         {
             char token = first ? '?' : '&';
-
+            
             if (first)
             {
                 first = !first;
             }
-
+            
             url[0] = url[0] + token + pair.getKey() + '=' + pair.getValue();
         }
-
+        
         return url[0];
     }
-
-
+    
+    
     /**
      * Sets the endpoint to make the call to
      *
@@ -834,7 +834,7 @@ public class DataCallBuilder
         this.dc.setEndpoint(endpoint);
         return this;
     }
-
+    
     /**
      * enables ratelimiters for this call
      *
@@ -846,7 +846,7 @@ public class DataCallBuilder
         this.dc.setUseLimiters(flag);
         return this;
     }
-
+    
     /**
      * Sets the headers to use with the call
      *
@@ -859,7 +859,7 @@ public class DataCallBuilder
         this.dc.getUrlHeaders().merge(key, value, MERGE);
         return this;
     }
-
+    
     /**
      * Sets the data to send with the request if its a POST call
      *
@@ -871,8 +871,8 @@ public class DataCallBuilder
         this.postData = data;
         return this;
     }
-
-
+    
+    
     /**
      * The request-method on the call (usually GET or POST)
      *
@@ -884,7 +884,7 @@ public class DataCallBuilder
         this.requestMethod = method;
         return this;
     }
-
+    
     /**
      * Set the platform to make this call to. (ie. EUW1)
      *
@@ -896,7 +896,7 @@ public class DataCallBuilder
         this.dc.setPlatform(server);
         return this;
     }
-
+    
     /**
      * Replaces placeholders in the URL (ie. {region})
      *
@@ -909,8 +909,8 @@ public class DataCallBuilder
         this.dc.getUrlData().merge(key, (this.dc.getUrlData().get(key) != null) ? ("&" + key + "=" + value) : value, MERGE_AS_SET);
         return this;
     }
-
-
+    
+    
     /**
      * Adds parameters to the url (ie. ?api_key)
      *
@@ -923,7 +923,7 @@ public class DataCallBuilder
         this.dc.getUrlData().merge(key, value, MERGE);
         return this;
     }
-
+    
     /**
      * Replaces placeholders in the URL (ie. {region})
      *
@@ -936,7 +936,7 @@ public class DataCallBuilder
         this.dc.getUrlParams().merge(key, value, MERGE);
         return this;
     }
-
+    
     public DataCallBuilder withProxy(String proxy)
     {
         this.dc.setProxy(proxy);
@@ -947,7 +947,7 @@ public class DataCallBuilder
         this.dc.setMaxSleep(maxSleep);
         return this;
     }
-
+    
     private static Semaphore getSemaphore(String game, Enum platform)
     {
         Pair<String, Enum> pair = new Pair<>(game, platform);
@@ -955,7 +955,7 @@ public class DataCallBuilder
         if (callAllowedInParallel <= 0) {
             throw new IllegalArgumentException("Call allowed in parallel must be greater than 0");
         }
-
+        
         globalLock.lock();
         try {
             return semaphoreContainer.computeIfAbsent(pair, k -> new Semaphore(DataCall.getCallAllowedInParallel(), true));
@@ -963,11 +963,11 @@ public class DataCallBuilder
             globalLock.unlock();
         }
     }
-
+    
     public static Lock getLock(String game, Enum platform)
     {
         Pair<String, Enum> pair = new Pair<>(game, platform);
-
+        
         globalLock.lock();
         try {
             return lockContainer.computeIfAbsent(pair, k -> new ReentrantLock());
@@ -975,7 +975,7 @@ public class DataCallBuilder
             globalLock.unlock();
         }
     }
-
+    
     public static Lock getGlobalLock()
     {
         return globalLock;

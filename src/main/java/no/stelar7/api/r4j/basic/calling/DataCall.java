@@ -13,12 +13,12 @@ import java.util.prefs.Preferences;
 
 public final class DataCall
 {
-
+    
     // Maps for storing limiters
     private static final Map<String, Map<Enum, Map<Enum, RateLimiter>>> limitersByKeyType = new HashMap<>();
-
+    
     private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
-
+    
     private static APICredentials creds;
     private static int 			  callAllowedInParallel = -1;
     private static CacheProvider  cache          = EmptyCacheProvider.INSTANCE;
@@ -26,11 +26,11 @@ public final class DataCall
     private static int            callStackLimit = 5;
     private static long           maxSleep       = 10000;
     private static int            globalTimeout  = 0;
-
+    
     private final Map<String, String> urlParams  = new LinkedHashMap<>();
     private final Map<String, String> urlData    = new LinkedHashMap<>();
     private final Map<String, String> urlHeaders = new LinkedHashMap<>();
-
+    
     private        Enum        platform;
     private        URLEndpoint endpoint;
     private        boolean     useLimiters       = true;
@@ -41,7 +41,7 @@ public final class DataCall
     private        LeagueShard defaultPlatform   = LeagueShard.EUW1;
     private        String      urlProxy          = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache  = Preferences.userRoot().node("no/stelar7/r4j");
-
+    
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter(String game)
     {
         DataCallBuilder.getGlobalLock().lock();
@@ -51,40 +51,40 @@ public final class DataCall
             DataCallBuilder.getGlobalLock().unlock();
         }
     }
-
+    
     public static Map<Enum, Map<Enum, Map<Integer, Integer>>> getCallData()
     {
         return callData;
     }
-
+    
     public static Preferences getRatelimiterCache()
     {
         return ratelimiterCache;
     }
-
+    
     public Map<String, String> getUrlParams()
     {
         return urlParams;
     }
-
+    
     public Map<String, String> getUrlData()
     {
         return urlData;
     }
-
+    
     public Map<String, String> getUrlHeaders()
     {
         return urlHeaders;
     }
-
+    
     public String getKeyUsedByHeadersUsed() {
         String keyUsed = urlHeaders.get(Constants.X_RIOT_TOKEN_HEADER_KEY);
-
+        
         if (keyUsed == null || keyUsed.isEmpty())
         {
             return "unknown";
         }
-
+        
         if (keyUsed.equals(creds.getLoLAPIKey())){
             return "lol";
         } else if (keyUsed.equals(creds.getTFTAPIKey())) {
@@ -96,10 +96,10 @@ public final class DataCall
         }else if (keyUsed.equals(creds.getTournamentAPIKey())) {
             return "tournament";
         }
-
+        
         return "other";
     }
-
+    
     public Enum getPlatform()
     {
         if (platform == null)
@@ -112,72 +112,72 @@ public final class DataCall
         }
         return platform;
     }
-
+    
     public URLEndpoint getEndpoint()
     {
         return endpoint;
     }
-
+    
     public void setPlatform(Enum platform)
     {
         this.platform = platform;
     }
-
+    
     public void setUseLimiters(boolean flag)
     {
         this.useLimiters = flag;
     }
-
+    
     public void setEndpoint(URLEndpoint endpoint)
     {
         this.endpoint = endpoint;
     }
-
+    
     public void setMaxSleep(long sleep)
     {
         this.sleep = sleep;
     }
-
+    
     public long getMaxSleep()
     {
         return this.sleep != -1 ? this.sleep : DataCall.getDefaultMaxSleep();
     }
-
+    
     public static DataCallBuilder builder()
     {
         return new DataCallBuilder();
     }
-
+    
     public static APICredentials getCredentials()
     {
         return DataCall.creds;
     }
-
+    
     public static CacheProvider getCacheProvider()
     {
         return cache;
     }
-
+    
     public static void setCallAllowedInParallel(int callAllowedInParallel)
     {
         DataCall.callAllowedInParallel = callAllowedInParallel;
     }
-
+    
     public static int getCallAllowedInParallel()
     {
         return callAllowedInParallel;
     }
-
+    
     public static void setCacheProvider(CacheProvider provider)
     {
         cache = provider == null ? EmptyCacheProvider.INSTANCE : provider;
     }
-
+    
     public static void setCredentials(final APICredentials creds)
     {
         DataCall.creds = creds;
     }
-
+    
     /**
      * Takes in a proxy for the api.
      * The URL should contain the parts:
@@ -195,92 +195,92 @@ public final class DataCall
     {
         urlProxy = proxy == null ? Constants.REQUEST_URL : proxy;
     }
-
+    
     public String getProxy()
     {
         return urlProxy;
     }
-
+    
     public LeagueShard getDefaultPlatform()
     {
         return defaultPlatform;
     }
-
+    
     public void setDefaultPlatform(LeagueShard defaultPlatform)
     {
         this.defaultPlatform = defaultPlatform;
     }
-
+    
     public static int getCallStackSkip()
     {
         return callStackSkip;
     }
-
+    
     public static void setCallStackSkip(int callStackSkip)
     {
         DataCall.callStackSkip = callStackSkip;
     }
-
+    
     public static int getCallStackLimit()
     {
         return callStackLimit;
     }
-
+    
     public static void setCallStackLimit(int callStackLimit)
     {
         DataCall.callStackLimit = callStackLimit;
     }
-
+    
     public boolean useRatelimiter()
     {
         return useLimiters;
     }
-
+    
     public static void setDefaultMaxSleep(long sleep)
     {
         DataCall.maxSleep = sleep;
     }
-
+    
     public static long getDefaultMaxSleep()
     {
         return DataCall.maxSleep;
     }
-
+    
     public int getReadTimeout()
     {
         return readTimeout == 0 ? globalTimeout : readTimeout;
     }
-
+    
     public void setReadTimeout(int readTimeout)
     {
         this.readTimeout = readTimeout;
     }
-
+    
     public int getConnectTimeout()
     {
         return connectTimeout == 0 ? globalTimeout : connectTimeout;
     }
-
+    
     public void setConnectTimeout(int connectTimeout)
     {
         this.connectTimeout = connectTimeout;
     }
-
+    
     public static int getGlobalTimeout()
     {
         return globalTimeout;
     }
-
+    
     public static void setGlobalTimeout(int globalTimeout)
     {
         DataCall.globalTimeout = globalTimeout;
     }
-
+    
     public boolean shouldReturnRawResponse()
     {
         return returnRawResponse;
     }
-
+    
     public void setShouldReturnRawResponse(boolean returnRawResponse)
     {
         this.returnRawResponse = returnRawResponse;
