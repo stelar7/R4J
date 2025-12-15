@@ -8,7 +8,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 
 /**
- * 
+ * Rate limiter used when the limit is not known. This allow us to already count each request done.
+ * The count is meant to be transfered to a proper ratelimiter when the limit is known.
  */
 public class CounterRateLimiter extends RateLimiter {
     
