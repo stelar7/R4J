@@ -6,6 +6,7 @@ import no.stelar7.api.r4j.basic.cache.CacheProvider;
 import no.stelar7.api.r4j.basic.cache.impl.EmptyCacheProvider;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.ratelimiting.RateLimiter;
 
 import java.util.*;
@@ -14,10 +15,13 @@ import java.util.prefs.Preferences;
 public final class DataCall
 {
     
-    private static final Map<Enum, Map<Enum, RateLimiter>>           limiter  = new HashMap<>();
+    // Maps for storing limiters
+    private static final Map<ApiKeyType, Map<Enum, Map<Enum, RateLimiter>>> limitersByKeyType = new HashMap<>();
+    
     private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
     
     private static APICredentials creds;
+    private static int 			  numberOfCallsAllowedInParallel = -1;
     private static CacheProvider  cache          = EmptyCacheProvider.INSTANCE;
     private static int            callStackSkip  = 5;
     private static int            callStackLimit = 5;
@@ -39,9 +43,14 @@ public final class DataCall
     private        String      urlProxy          = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache  = Preferences.userRoot().node("no/stelar7/r4j");
     
-    public static Map<Enum, Map<Enum, RateLimiter>> getLimiter()
+    public static Map<Enum, Map<Enum, RateLimiter>> getLimiter(ApiKeyType keyType)
     {
-        return limiter;
+        DataCallBuilder.getGlobalLock().lock();
+        try {
+            return limitersByKeyType.computeIfAbsent(keyType, k -> new HashMap<>());
+        } finally {
+            DataCallBuilder.getGlobalLock().unlock();
+        }
     }
     
     public static Map<Enum, Map<Enum, Map<Integer, Integer>>> getCallData()
@@ -67,6 +76,29 @@ public final class DataCall
     public Map<String, String> getUrlHeaders()
     {
         return urlHeaders;
+    }
+    
+    public ApiKeyType getKeyUsedByHeadersUsed() {
+        String keyUsed = urlHeaders.get(Constants.X_RIOT_TOKEN_HEADER_KEY);
+        
+        if (keyUsed == null || keyUsed.isEmpty())
+        {
+            return ApiKeyType.NONE;
+        }
+        
+        if (keyUsed.equals(creds.getLoLAPIKey())){
+            return ApiKeyType.LOL;
+        } else if (keyUsed.equals(creds.getTFTAPIKey())) {
+            return ApiKeyType.TFT;
+        } else if (keyUsed.equals(creds.getVALAPIKey())) {
+            return ApiKeyType.VAL;
+        } else if (keyUsed.equals(creds.getLORAPIKey())) {
+            return ApiKeyType.LOR;
+        }else if (keyUsed.equals(creds.getTournamentAPIKey())) {
+            return ApiKeyType.TOURNAMENT;
+        }
+        
+        return ApiKeyType.UNKNOWN;
     }
     
     public Enum getPlatform()
@@ -125,6 +157,16 @@ public final class DataCall
     public static CacheProvider getCacheProvider()
     {
         return cache;
+    }
+    
+    public static void setNumberOfCallsAllowedInParallel(int numberOfCallsAllowedInParallel)
+    {
+        DataCall.numberOfCallsAllowedInParallel = numberOfCallsAllowedInParallel;
+    }
+    
+    public static int getNumberOfCallsAllowedInParallel()
+    {
+        return numberOfCallsAllowedInParallel;
     }
     
     public static void setCacheProvider(CacheProvider provider)

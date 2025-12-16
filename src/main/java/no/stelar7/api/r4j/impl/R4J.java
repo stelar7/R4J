@@ -26,6 +26,13 @@ public class R4J
         DataCall.setCacheProvider(new FileSystemCacheProvider());
     }
     
+    public R4J(final APICredentials creds, final int numberOfCallsAllowedInParallel)
+    {
+        DataCall.setCredentials(creds);
+        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        DataCall.setNumberOfCallsAllowedInParallel(numberOfCallsAllowedInParallel);
+    }
+    
     public LOLAPI getLoLAPI()
     {
         return LOLAPI.INSTANCE;

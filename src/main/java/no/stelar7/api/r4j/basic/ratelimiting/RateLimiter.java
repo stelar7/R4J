@@ -2,9 +2,14 @@ package no.stelar7.api.r4j.basic.ratelimiting;
 
 import org.slf4j.*;
 
+import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
+
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class RateLimiter
 {
@@ -13,7 +18,10 @@ public abstract class RateLimiter
     protected Map<RateLimit, AtomicLong> firstCallInTime;
     protected Map<RateLimit, AtomicLong> callCountInTime;
     
-    protected int overloadTimer;
+    protected volatile int overloadTimer;
+    protected volatile Instant overloadReceivedTime;
+    
+    protected static final Lock overloadTimerLock = new ReentrantLock();
     
     private static final Logger logger = LoggerFactory.getLogger(RateLimiter.class);
     
@@ -32,38 +40,38 @@ public abstract class RateLimiter
             firstCallInTime.put(limit, new AtomicLong(Instant.now().toEpochMilli()));
             callCountInTime.put(limit, new AtomicLong(0));
         }
+        
+        overloadReceivedTime = Instant.now(); // default value, will be updated when a 429 is received
     }
     
     @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
+    public int hashCode() {
+        return Objects.hash(limits);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        }
-        if (o == null || getClass() != o.getClass())
-        {
+        if (obj == null)
             return false;
-        }
-        
-        RateLimiter that = (RateLimiter) o;
-        
-        return Objects.equals(limits, that.limits);
+        if (getClass() != obj.getClass())
+            return false;
+        RateLimiter other = (RateLimiter) obj;
+        return Objects.equals(limits, other.limits);
     }
     
-    @Override
-    public int hashCode()
-    {
-        int result = limits != null ? limits.hashCode() : 0;
-        result = 31 * result + (firstCallInTime != null ? firstCallInTime.hashCode() : 0);
-        result = 31 * result + (callCountInTime != null ? callCountInTime.hashCode() : 0);
-        result = 31 * result + overloadTimer;
-        return result;
-    }
+    /**
+     * Acquires a permit for the specified platform or endpoint.
+     * This method should be called before making an API call to ensure compliance with rate limits.
+     * Return the validity date of the request, if this date is passed, the request must go through the rate limiter another time.
+     *
+     * @param platformOrEndpoint the platform or endpoint for which to acquire a permit
+     * @return the time at which point the permit is not valid anymore
+     */
+    public abstract Instant acquire(ApiKeyType keyType, Enum platformOrEndpoint);
     
-    public abstract void acquire();
-    
-    public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data);
+    public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, ApiKeyType keyTypeUsed, Enum platformOrEndpoint);
     
     public Map<RateLimit, AtomicLong> getFirstCallInTime()
     {
@@ -85,30 +93,49 @@ public abstract class RateLimiter
     public String toString()
     {
         return "RateLimiter{" +
-               "limits=" + limits +
-               ", firstCallInTime=" + firstCallInTime +
-               ", callCountInTime=" + callCountInTime +
-               '}';
+                "limits=" + limits +
+                ", firstCallInTime=" + firstCallInTime +
+                ", callCountInTime=" + callCountInTime +
+                '}';
     }
     
-    public void updateSleep(String sleep)
+    public void updateSleep(Instant timeReceived, String sleep, Enum platform)
     {
+        Instant now = Instant.now();
+        overloadTimerLock.lock();
         try
         {
-            overloadTimer = Integer.parseInt(sleep);
-            logger.debug("Forcing next sleep to be atleast: {} seconds", overloadTimer);
+            int futurTimer = Integer.parseInt(sleep);
+            
+            if(timeReceived.toEpochMilli() + (futurTimer * 1000L) < now.toEpochMilli()) {
+                logger.debug("Received 429 sleep time {} for platform {}, but the time has already passed (now: {}, received: {})", futurTimer, platform, now, timeReceived);
+                return;
+            }
+            
+            // We prioritize the most recent sleep time
+            if(overloadReceivedTime.toEpochMilli() < timeReceived.toEpochMilli()) { 
+                overloadReceivedTime = timeReceived;
+                overloadTimer = futurTimer;
+                //resetCalls(); We should reset calls only after the sleep has been applied
+            }
+            logger.debug("Forcing next sleep to be atleast: {} seconds (starting at : {})", overloadTimer, timeReceived);
             
         } catch (NumberFormatException e)
         {
             overloadTimer = 5;
+            overloadReceivedTime = now;
+        } finally
+        {
+            overloadTimerLock.unlock();
         }
     }
     
-    public void resetCalls()
+    protected void resetCalls()
     {
+        Instant now = Instant.now();
         for (RateLimit limit : limits)
         {
-            firstCallInTime.get(limit).set(Instant.now().minusMillis(limit.getTimeframeInMS()).toEpochMilli());
+            firstCallInTime.get(limit).set(now.minusMillis(limit.getTimeframeInMS()).toEpochMilli());
             callCountInTime.get(limit).set(0);
         }
     }
@@ -117,6 +144,19 @@ public abstract class RateLimiter
     {
         if (oldLimit != null)
         {
+            
+            if(oldLimit instanceof CounterRateLimiter) {
+                CounterRateLimiter toConvert = (CounterRateLimiter) oldLimit;
+                for(RateLimit limit : limits) {
+                    firstCallInTime.put(limit, new AtomicLong(oldLimit.getFirstCallInTime().get(toConvert.getDummyLimit()).get()));
+                    callCountInTime.put(limit, new AtomicLong(oldLimit.getCallCountInTime().get(toConvert.getDummyLimit()).get()));
+                }
+                
+                this.overloadTimer = oldLimit.overloadTimer;
+                this.overloadReceivedTime = oldLimit.overloadReceivedTime;
+                return;
+            }
+            
             oldLimit.getCallCountInTime().forEach((key, value) -> {
                 if (callCountInTime.containsKey(key))
                 {
@@ -132,6 +172,7 @@ public abstract class RateLimiter
             });
             
             this.overloadTimer = oldLimit.overloadTimer;
+            this.overloadReceivedTime = oldLimit.overloadReceivedTime;
         }
     }
     
@@ -143,5 +184,10 @@ public abstract class RateLimiter
     public void setFirstCallInTime(Map<RateLimit, AtomicLong> firstCallInTime)
     {
         this.firstCallInTime = firstCallInTime;
+    }
+    
+    public static Lock getOverloadTimerLock()
+    {
+        return overloadTimerLock;
     }
 }

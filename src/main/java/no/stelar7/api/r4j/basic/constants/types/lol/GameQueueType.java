@@ -374,6 +374,11 @@ public enum GameQueueType implements CodedEnum
     CHERRY(1700, 1701, 1704, 1710),
     
     /**
+     * 5v5 Brawl
+     */
+    BRAWL(2300, 2301, 2302, 2303, 2304, 2305),
+    
+    /**
      * Ultra Rapid Fire games
      */
     URF_1V1(1901),
@@ -393,12 +398,14 @@ public enum GameQueueType implements CodedEnum
      * Ultra Rapid Fire games
      */
     URF(1900),
-    
-    
     /**
      * Ultimate Spellbook
      */
     ULTBOOK(1400),
+    /**
+     * ARAM Mayhem
+     */
+    KIWI(2400),
     
     ONE_VS_ONE(1401),
     TWO_VS_TWO(1402),
@@ -420,7 +427,7 @@ public enum GameQueueType implements CodedEnum
     PRACTICE_TOOL(3140),
     
     CUSTOM_SUMMONERS_RIFT(3100, 3110, 3120, 3130), 
-    CUSTOM_ARAM(3200, 3210, 3220, 3230),
+    CUSTOM_ARAM(3200, 3210, 3220, 3230, 3270),
     ;
     
     private final Integer[] codes;

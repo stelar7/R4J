@@ -6,5 +6,7 @@ public enum ApiKeyType
     TOURNAMENT,
     TFT,
     VAL,
-    LOR
+    LOR,
+    NONE,
+    UNKNOWN;
 }
