@@ -46,7 +46,7 @@ public class BurstRateLimiter extends RateLimiter
             if(overloadTimer != 0) {
                 Instant now = Instant.now();
                 // 1s is added as security margin
-                long realtimeToWait = overloadReceivedTime.toEpochMilli() + ((overloadTimer * 1000) + 1000) - now.toEpochMilli();
+                long realtimeToWait = overloadReceivedTime.plusSeconds(1 + overloadTimer).toEpochMilli() - now.toEpochMilli();
                 if (realtimeToWait <= 0) {
                     logger.debug("Overload timer reset for {} since time overpassed", platformOrEndpoint.name());
                     overloadTimer = 0; // Reset overload timer after waiting
