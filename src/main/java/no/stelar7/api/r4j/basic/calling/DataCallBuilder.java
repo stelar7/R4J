@@ -141,9 +141,10 @@ public class DataCallBuilder
             }
             
             
-            logger.info("Trying url: {}", url);
+            logger.trace("Trying url: {}", url);
             
             final DataCallResponse response = this.getResponse(url);
+            logger.trace("Response: {}", response);
             
             switch (response.getResponseCode())
             {
@@ -593,7 +594,7 @@ public class DataCallBuilder
                     .append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Request Headers", "")).append("\n")
                     .append(sb).toString();
             
-            //logger.debug(printMe);
+            logger.trace(printMe);
             
             
             if (null != this.postData && !this.postData.isEmpty())
@@ -614,7 +615,7 @@ public class DataCallBuilder
             String printMe2 = new StringBuilder("\n").append(String.format(Constants.TABBED_VERBOSE_STRING_FORMAT, "Response Headers", ""))
                     .append(sb2)
                     .toString();
-            //logger.debug(printMe2);
+            logger.trace(printMe2);
             
             
             String appA    = con.getHeaderField("X-App-Rate-Limit");
