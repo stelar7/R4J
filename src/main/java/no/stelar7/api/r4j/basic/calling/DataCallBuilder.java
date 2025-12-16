@@ -444,13 +444,14 @@ public class DataCallBuilder
     private Instant applyLimit(Enum platform, Enum endpoint)
     {
         
-        RateLimiter limitr;
         Instant validityDateTime;
         ApiKeyType keyType = this.dc.getKeyUsedByHeadersUsed();
         getLock(keyType, endpoint).lock();
         try
         {
+            RateLimiter limitr;
             globalLock.lock();
+            
             try
             {
                 Map<Enum, RateLimiter> child = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).getOrDefault(platform, new HashMap<>());
@@ -545,7 +546,6 @@ public class DataCallBuilder
             }
         }
     }
-    
     
     /**
      * Opens a connection to the URL, then reads the data into a Response.
@@ -655,8 +655,6 @@ public class DataCallBuilder
                 try {
                     globalLock.lock(); // app level -> platform
                     createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
-                    //Since it's behind a lock, we can't update the app limit here if we are not sure that we are still in the same time period
-                    //saveHeaderRateLimit(appB, dc.getPlatform(), dc.getPlatform());
                 }finally {
                     globalLock.unlock();
                 }
@@ -670,8 +668,6 @@ public class DataCallBuilder
                 try {
                     globalLock.lock(); // method level -> endpoint
                     createRatelimiterIfMissing(methodA, dc.getPlatform(), dc.getEndpoint());
-                    //Since it's behind a lock, we can't update the app limit here if we are not sure that we are still in the same time period
-                    //saveHeaderRateLimit(methodB, dc.getPlatform(), dc.getEndpoint());
                 } finally {
                     globalLock.unlock();
                 }
@@ -745,19 +741,6 @@ public class DataCallBuilder
         }
         
         DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).put(platform, child);
-    }
-    
-    private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
-    {
-        Map<Enum, Map<Integer, Integer>> parent = DataCall.getCallData().getOrDefault(platform, new HashMap<>());
-        Map<Integer, Integer>            child  = parent.getOrDefault(endpoint, new HashMap<>());
-        
-        child.putAll(parseLimitFromHeader(limitCount));
-        parent.put(endpoint, child);
-        DataCall.getCallData().put(platform, parent);
-        
-        updateRatelimiter(platform, endpoint, dc.getKeyUsedByHeadersUsed());
-        storeLimiter(platform, endpoint);
     }
     
     private Map<Integer, Integer> parseLimitFromHeader(String headerValue)
