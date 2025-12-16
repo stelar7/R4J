@@ -655,7 +655,7 @@ public class DataCallBuilder
                 try {
                     globalLock.lock(); // app level -> platform
                     createRatelimiterIfMissing(appA, dc.getPlatform(), dc.getPlatform());
-                }finally {
+                } finally {
                     globalLock.unlock();
                 }
             }
