@@ -109,10 +109,10 @@ public class DataCallBuilder
         
         ApiKeyType keyTypeUsed = this.dc.getKeyUsedByHeadersUsed();
         Enum platform = this.dc.getPlatform();
-        int callAllowedInParallel = DataCall.getCallAllowedInParallel();
+        int numberOfCallsAllowedInParallel = DataCall.getNumberOfCallsAllowedInParallel();
         
         try {
-            if (callAllowedInParallel > 0) {
+            if (numberOfCallsAllowedInParallel > 0) {
                 getSemaphore(keyTypeUsed, platform).acquire(); // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
             }
             
@@ -252,7 +252,7 @@ public class DataCallBuilder
             Thread.currentThread().interrupt();
             return null;
         }finally {
-            if(callAllowedInParallel > 0) {
+            if(numberOfCallsAllowedInParallel > 0) {
                 getSemaphore(keyTypeUsed, platform).release();
             }
         }
@@ -952,14 +952,14 @@ public class DataCallBuilder
     private static Semaphore getSemaphore(ApiKeyType keyTypeUsed, Enum platform)
     {
         Pair<ApiKeyType, Enum> pair = new Pair<>(keyTypeUsed, platform);
-        int callAllowedInParallel = DataCall.getCallAllowedInParallel();
-        if (callAllowedInParallel <= 0) {
+        int numberOfCallsAllowedInParallel = DataCall.getNumberOfCallsAllowedInParallel();
+        if (numberOfCallsAllowedInParallel <= 0) {
             throw new IllegalArgumentException("Call allowed in parallel must be greater than 0");
         }
         
         globalLock.lock();
         try {
-            return semaphoreContainer.computeIfAbsent(pair, k -> new Semaphore(DataCall.getCallAllowedInParallel(), true));
+            return semaphoreContainer.computeIfAbsent(pair, k -> new Semaphore(DataCall.getNumberOfCallsAllowedInParallel(), true));
         } finally {
             globalLock.unlock();
         }
