@@ -8,6 +8,7 @@ import no.stelar7.api.r4j.pojo.lol.championmastery.*;
 import no.stelar7.api.r4j.pojo.lol.clash.*;
 import no.stelar7.api.r4j.pojo.lol.league.*;
 import no.stelar7.api.r4j.pojo.lol.liveclient.*;
+import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 import no.stelar7.api.r4j.pojo.lol.replay.*;
 import no.stelar7.api.r4j.pojo.lol.spectator.*;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
@@ -170,6 +171,7 @@ public enum URLEndpoint
     V1_STATUS_VAL("val", "status", "v1", "platform-data", PlatformData.class),
     
     V5_MATCHLIST("lol", "match", "v5", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),
+    V5_MATCHLIST_REPLAYS("lol", "match", "v5", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/replays", LOLMatchReplayList.class),
     V5_MATCH("lol", "match", "v5", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
     V5_TIMELINE("lol", "match", "v5", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/timeline", GAMHSMatch.class),
     

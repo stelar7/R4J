@@ -43,6 +43,17 @@ public final class MatchV5API
     }
     
     /**
+     * Returns a list of all replays avaliable in the api
+     *
+     * @param server the platform the account is on
+     * @param puuid  the account to check
+     */
+    public LOLMatchReplayList getMatchListReplays(RegionShard server, String puuid)
+    {
+        return new ReplayBuilder(server, puuid).get();
+    }
+    
+    /**
      * Returns an iterator that transforms all {@code MatchReference} to {@code Match}
      *
      * @param server the platform the account is on
