@@ -144,7 +144,6 @@ public class DataCallBuilder
             logger.info("Trying url: {}", url);
             
             final DataCallResponse response = this.getResponse(url);
-            //logger.debug(response.toString());
             
             switch (response.getResponseCode())
             {
@@ -247,11 +246,13 @@ public class DataCallBuilder
             System.err.println("Response Code:" + response.getResponseCode());
             System.err.println("Response Data:" + response.getResponseData());
             throw new APINoValidResponseException(response.getResponseData());
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e) 
+        {
             logger.error("Semaphore was interrupted while trying to acquire a permit for the API call: {}", url, e);
             Thread.currentThread().interrupt();
             return null;
-        }finally {
+        } finally 
+        {
             if(numberOfCallsAllowedInParallel > 0) {
                 getSemaphore(keyTypeUsed, platform).release();
             }
@@ -466,7 +467,8 @@ public class DataCallBuilder
                     child.put(endpoint, limitr);
                     DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).put(platform, child);
                 }
-            } finally {
+            } finally 
+            {
                 globalLock.unlock();
             }
             
