@@ -626,7 +626,7 @@ public class DataCallBuilder
             // Quickly notify if a ratelimit was hit, we don't wait on any lock
             if (con.getResponseCode() == 429)
             {
-                logger.debug("Debug: all headers: {}", con.getHeaderFields());
+                logger.debug("All headers: {}", con.getHeaderFields());
                 
                 logger.warn("Ratelimit hit for platform: {}, endpoint: {}, method: {}, app limit: {}/{}, method limit: {}/{}",
                         this.dc.getPlatform(), this.dc.getEndpoint(), this.requestMethod, appB, appA, methodB, methodA);
