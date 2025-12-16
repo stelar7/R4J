@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.basic.ratelimiting;
 import org.slf4j.*;
 
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 
 import java.time.Instant;
 import java.util.*;
@@ -68,9 +69,9 @@ public abstract class RateLimiter
      * @param platformOrEndpoint the platform or endpoint for which to acquire a permit
      * @return the time at which point the permit is not valid anymore
      */
-    public abstract Instant acquire(String gameKey, Enum platformOrEndpoint);
+    public abstract Instant acquire(ApiKeyType keyType, Enum platformOrEndpoint);
     
-    public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, String gameKey, Enum platformOrEndpoint);
+    public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, ApiKeyType keyTypeUsed, Enum platformOrEndpoint);
     
     public Map<RateLimit, AtomicLong> getFirstCallInTime()
     {

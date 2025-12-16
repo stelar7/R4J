@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.basic.calling;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.r4j.basic.constants.api.*;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.constants.types.RealmSpesificEnum;
 import no.stelar7.api.r4j.basic.exceptions.*;
 import no.stelar7.api.r4j.basic.ratelimiting.*;
@@ -43,12 +44,12 @@ public class DataCallBuilder
     /**
      * Pair:> Left: Game, Right: Endpoint
      */
-    private static final Map<Pair<String, Enum>, Semaphore> semaphoreContainer = new HashMap<>();
+    private static final Map<Pair<ApiKeyType, Enum>, Semaphore> semaphoreContainer = new HashMap<>();
     
     /**
      * Pair:> Left: Game, Right: Endpoint
      */
-    private static final Map<Pair<String, Enum>, Lock> lockContainer = new HashMap<>();
+    private static final Map<Pair<ApiKeyType, Enum>, Lock> lockContainer = new HashMap<>();
     
     private static final Lock globalLock = new ReentrantLock();
     
@@ -87,11 +88,11 @@ public class DataCallBuilder
     }
     
     
-    private static void updateRatelimiter(Enum server, Enum endpoint, String gameKeyUsed)
+    private static void updateRatelimiter(Enum server, Enum endpoint, ApiKeyType keyTypeUsed)
     {
-        RateLimiter limiter = DataCall.getLimiter(gameKeyUsed).get(server).get(endpoint);
+        RateLimiter limiter = DataCall.getLimiter(keyTypeUsed).get(server).get(endpoint);
         // Endpoint as second parameter is used to determine if this is a method or app limit
-        limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), gameKeyUsed, endpoint);
+        limiter.updatePermitsTakenPerX(DataCall.getCallData().get(server).get(endpoint), keyTypeUsed, endpoint);
     }
     
     private static final Map<URLEndpoint, AtomicLong> requestCount = new HashMap<>();
@@ -106,13 +107,13 @@ public class DataCallBuilder
     {
         final String url = this.getURL();
         
-        String game = this.dc.getKeyUsedByHeadersUsed();
+        ApiKeyType keyTypeUsed = this.dc.getKeyUsedByHeadersUsed();
         Enum platform = this.dc.getPlatform();
         int callAllowedInParallel = DataCall.getCallAllowedInParallel();
         
         try {
             if (callAllowedInParallel > 0) {
-                getSemaphore(game, platform).acquire(); // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
+                getSemaphore(keyTypeUsed, platform).acquire(); // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
             }
             
             if (this.dc.useRatelimiter())
@@ -252,7 +253,7 @@ public class DataCallBuilder
             return null;
         }finally {
             if(callAllowedInParallel > 0) {
-                getSemaphore(game, platform).release();
+                getSemaphore(keyTypeUsed, platform).release();
             }
         }
     }
@@ -443,8 +444,8 @@ public class DataCallBuilder
         
         RateLimiter limitr;
         Instant validityDateTime;
-        String game = this.dc.getKeyUsedByHeadersUsed();
-        getLock(game, endpoint).lock();
+        ApiKeyType keyType = this.dc.getKeyUsedByHeadersUsed();
+        getLock(keyType, endpoint).lock();
         try
         {
             globalLock.lock();
@@ -470,11 +471,11 @@ public class DataCallBuilder
             }
             
             // Here endpoint is the equivalent to platform when treating app limits, equivalent to endpoint when treating method limits
-            validityDateTime = limitr.acquire(game, endpoint);
+            validityDateTime = limitr.acquire(keyType, endpoint);
             
         } finally
         {
-            getLock(game, endpoint).unlock();
+            getLock(keyType, endpoint).unlock();
         }
         storeLimiter(platform, endpoint);
         
@@ -638,7 +639,7 @@ public class DataCallBuilder
                 if (limitType == RateLimitType.LIMIT_USER)
                 {
                     
-                    RateLimiter limter = DataCall.getLimiter(dc.getEndpoint().getGame()).get(this.dc.getPlatform()).get(this.dc.getPlatform());
+                    RateLimiter limter = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(this.dc.getPlatform()).get(this.dc.getPlatform());
                     limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
                 }
             }
@@ -685,7 +686,7 @@ public class DataCallBuilder
                 final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
                 
                 StringBuilder valueList = new StringBuilder();
-                DataCall.getLimiter(dc.getEndpoint().getGame()).get(dc.getPlatform()).forEach((key, value) -> {
+                DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(dc.getPlatform()).forEach((key, value) -> {
                     valueList.append(key);
                     valueList.append("=");
                     valueList.append(value.getCallCountInTime());
@@ -740,7 +741,7 @@ public class DataCallBuilder
             logger.debug(newerLimit.getLimits().toString());
         }
         
-        DataCall.getLimiter(dc.getEndpoint().getGame()).put(platform, child);
+        DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).put(platform, child);
     }
     
     private void saveHeaderRateLimit(String limitCount, Enum platform, Enum endpoint)
@@ -948,9 +949,9 @@ public class DataCallBuilder
         return this;
     }
     
-    private static Semaphore getSemaphore(String game, Enum platform)
+    private static Semaphore getSemaphore(ApiKeyType keyTypeUsed, Enum platform)
     {
-        Pair<String, Enum> pair = new Pair<>(game, platform);
+        Pair<ApiKeyType, Enum> pair = new Pair<>(keyTypeUsed, platform);
         int callAllowedInParallel = DataCall.getCallAllowedInParallel();
         if (callAllowedInParallel <= 0) {
             throw new IllegalArgumentException("Call allowed in parallel must be greater than 0");
@@ -964,9 +965,9 @@ public class DataCallBuilder
         }
     }
     
-    public static Lock getLock(String game, Enum platform)
-    {
-        Pair<String, Enum> pair = new Pair<>(game, platform);
+    public static Lock getLock(ApiKeyType keyType, Enum platform)
+    {        
+        Pair<ApiKeyType, Enum> pair = new Pair<>(keyType, platform);
         
         globalLock.lock();
         try {

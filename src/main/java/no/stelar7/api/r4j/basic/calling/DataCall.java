@@ -6,6 +6,7 @@ import no.stelar7.api.r4j.basic.cache.CacheProvider;
 import no.stelar7.api.r4j.basic.cache.impl.EmptyCacheProvider;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.ratelimiting.RateLimiter;
 
 import java.util.*;
@@ -15,7 +16,7 @@ public final class DataCall
 {
     
     // Maps for storing limiters
-    private static final Map<String, Map<Enum, Map<Enum, RateLimiter>>> limitersByKeyType = new HashMap<>();
+    private static final Map<ApiKeyType, Map<Enum, Map<Enum, RateLimiter>>> limitersByKeyType = new HashMap<>();
     
     private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
     
@@ -42,11 +43,11 @@ public final class DataCall
     private        String      urlProxy          = Constants.REQUEST_URL;
     private static Preferences ratelimiterCache  = Preferences.userRoot().node("no/stelar7/r4j");
     
-    public static Map<Enum, Map<Enum, RateLimiter>> getLimiter(String game)
+    public static Map<Enum, Map<Enum, RateLimiter>> getLimiter(ApiKeyType keyType)
     {
         DataCallBuilder.getGlobalLock().lock();
         try {
-            return limitersByKeyType.computeIfAbsent(game, k -> new HashMap<>());
+            return limitersByKeyType.computeIfAbsent(keyType, k -> new HashMap<>());
         } finally {
             DataCallBuilder.getGlobalLock().unlock();
         }
@@ -77,27 +78,27 @@ public final class DataCall
         return urlHeaders;
     }
     
-    public String getKeyUsedByHeadersUsed() {
+    public ApiKeyType getKeyUsedByHeadersUsed() {
         String keyUsed = urlHeaders.get(Constants.X_RIOT_TOKEN_HEADER_KEY);
         
         if (keyUsed == null || keyUsed.isEmpty())
         {
-            return "unknown";
+            return ApiKeyType.NONE;
         }
         
         if (keyUsed.equals(creds.getLoLAPIKey())){
-            return "lol";
+            return ApiKeyType.LOL;
         } else if (keyUsed.equals(creds.getTFTAPIKey())) {
-            return "tft";
+            return ApiKeyType.TFT;
         } else if (keyUsed.equals(creds.getVALAPIKey())) {
-            return "val";
+            return ApiKeyType.VAL;
         } else if (keyUsed.equals(creds.getLORAPIKey())) {
-            return "lor";
+            return ApiKeyType.LOR;
         }else if (keyUsed.equals(creds.getTournamentAPIKey())) {
-            return "tournament";
+            return ApiKeyType.TOURNAMENT;
         }
         
-        return "other";
+        return ApiKeyType.UNKNOWN;
     }
     
     public Enum getPlatform()

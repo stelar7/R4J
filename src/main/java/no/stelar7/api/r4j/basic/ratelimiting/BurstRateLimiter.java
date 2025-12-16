@@ -2,6 +2,7 @@ package no.stelar7.api.r4j.basic.ratelimiting;
 
 
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 
 import org.slf4j.*;
 
@@ -24,16 +25,16 @@ public class BurstRateLimiter extends RateLimiter
     }
     
     @Override
-    public Instant acquire(String gameKey, Enum platformOrEndpoint)
+    public Instant acquire(ApiKeyType keyTypeUsed, Enum platformOrEndpoint)
     {
-        DataCallBuilder.getLock(gameKey, platformOrEndpoint).lock();
+        DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).lock();
         try
         {	
             manageOverloadTimer(platformOrEndpoint);
             return manageRateLimit(platformOrEndpoint);
         } finally
         {
-            DataCallBuilder.getLock(gameKey, platformOrEndpoint).unlock();
+            DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).unlock();
         }
     }
     
@@ -148,9 +149,9 @@ public class BurstRateLimiter extends RateLimiter
     }
     
     @Override
-    public void updatePermitsTakenPerX(Map<Integer, Integer> data, String gameKey, Enum platformOrEndpoint)
+    public void updatePermitsTakenPerX(Map<Integer, Integer> data, ApiKeyType keyTypeUsed, Enum platformOrEndpoint)
     {
-        DataCallBuilder.getLock(gameKey, platformOrEndpoint).lock();
+        DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).lock();
         try 
         {
             for (Entry<Integer, Integer> key : data.entrySet())
@@ -171,7 +172,7 @@ public class BurstRateLimiter extends RateLimiter
             }
         } finally 
         {
-            DataCallBuilder.getLock(gameKey, platformOrEndpoint).unlock();
+            DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).unlock();
         }
         
     }

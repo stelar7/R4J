@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 
 /**
  * Rate limiter used when the limit is not known. This allow us to already count each request done.
@@ -18,8 +19,8 @@ public class CounterRateLimiter extends RateLimiter {
     }
     
     @Override
-    public Instant acquire(String gameKey, Enum platformOrEndpoint) {
-        DataCallBuilder.getLock(gameKey, platformOrEndpoint).lock();
+    public Instant acquire(ApiKeyType keyTypeUsed, Enum platformOrEndpoint) {
+        DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).lock();
         try {
             for (RateLimit limit : limits)
             {
@@ -29,7 +30,7 @@ public class CounterRateLimiter extends RateLimiter {
             
             return Instant.MAX; // We return a dummy value, as this is a counter rate limiter. The request is always allowed
         }finally {
-            DataCallBuilder.getLock(gameKey, platformOrEndpoint).unlock();
+            DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).unlock();
         }
     }
     
@@ -42,7 +43,7 @@ public class CounterRateLimiter extends RateLimiter {
     }
     
     @Override
-    public void updatePermitsTakenPerX(Map<Integer, Integer> data, String gameKey, Enum platformOrEndpoint) {
+    public void updatePermitsTakenPerX(Map<Integer, Integer> data, ApiKeyType keyTypeUsed, Enum platformOrEndpoint) {
         // Do nothing, as this is a counter rate limiter
     }
     
