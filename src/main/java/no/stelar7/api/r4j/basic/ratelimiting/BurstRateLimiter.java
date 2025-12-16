@@ -101,7 +101,7 @@ public class BurstRateLimiter extends RateLimiter
             
             long actualCountCall = callCountInTime.get(limit).incrementAndGet();
             
-            // ACTUAL CHECK IF WE ARE OVER THE LIMIT
+            // Actual check if we are over the limit
             if (actualCountCall >= limit.getPermits()) {
                 
                 // We need to wait for the next sliding window to make our request
