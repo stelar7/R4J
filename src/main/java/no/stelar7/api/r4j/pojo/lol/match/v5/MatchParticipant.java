@@ -96,6 +96,7 @@ public class MatchParticipant implements Serializable
     private String              riotIdGameName;
     private String              riotIdTagline;
     private RoleType            role;
+    private int                 roleBoundItem;
     private int                 sightWardsBoughtInGame;
     private int                 spell1Casts;
     private int                 spell2Casts;
@@ -574,6 +575,11 @@ public class MatchParticipant implements Serializable
     {
         return role;
     }
+
+    public int getRoleBoundItem()
+    {
+        return roleBoundItem;
+    }
     
     public int getSightWardsBoughtInGame()
     {
@@ -929,6 +935,7 @@ public class MatchParticipant implements Serializable
                && Objects.equals(riotIdGameName, that.riotIdGameName)
                && Objects.equals(riotIdTagline, that.riotIdTagline)
                && role == that.role
+               && roleBoundItem == that.roleBoundItem
                && Objects.equals(summonerId, that.summonerId)
                && teamId == that.teamId
                && teamPosition == that.teamPosition;
@@ -1024,6 +1031,7 @@ public class MatchParticipant implements Serializable
                             riotIdGameName,
                             riotIdTagline,
                             role,
+                            roleBoundItem,
                             sightWardsBoughtInGame,
                             spell1Casts,
                             spell2Casts,
@@ -1160,6 +1168,7 @@ public class MatchParticipant implements Serializable
                ", riotIdGameName='" + riotIdGameName + '\'' +
                ", riotIdTagline='" + riotIdTagline + '\'' +
                ", role=" + role +
+               ", roleBoundItem=" + roleBoundItem + 
                ", sightWardsBoughtInGame=" + sightWardsBoughtInGame +
                ", spell1Casts=" + spell1Casts +
                ", spell2Casts=" + spell2Casts +
