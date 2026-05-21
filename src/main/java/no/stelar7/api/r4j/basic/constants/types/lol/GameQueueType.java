@@ -370,8 +370,9 @@ public enum GameQueueType implements CodedEnum
     
     /**
      * 2v2v2v2 (Arena)
+     * 1750: Cherry 3v3v3v3
      */
-    CHERRY(1700, 1701, 1704, 1710),
+    CHERRY(1700, 1701, 1704, 1710, 1750),
     
     /**
      * 5v5 Brawl
