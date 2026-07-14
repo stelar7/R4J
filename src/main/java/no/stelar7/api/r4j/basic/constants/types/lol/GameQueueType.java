@@ -30,7 +30,7 @@ public enum GameQueueType implements CodedEnum
     /**
      * Ranked Premade 5v5 games
      */
-    RANKED_PREMADE_5X5(6),
+    RANKED_PREMADE_5X5(6, 710),
     /**
      * Ranked Premade 3v3 games
      */
