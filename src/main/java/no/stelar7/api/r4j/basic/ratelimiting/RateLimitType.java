@@ -1,6 +1,7 @@
 package no.stelar7.api.r4j.basic.ratelimiting;
 
-import no.stelar7.api.r4j.basic.exceptions.APIDataNotParseableException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.stream.Stream;
 
@@ -20,13 +21,18 @@ public enum RateLimitType
         this.reason = reason;
     }
     
+    private static final Logger logger = LoggerFactory.getLogger(RateLimitType.class);
+
     public static RateLimitType getBestMatch(String data)
     {
         if (data == null)
         {
             return LIMIT_UNDERLYING;
         }
-        return Stream.of(values()).filter(s -> s.getValue().equalsIgnoreCase(data)).findFirst().orElseThrow(() -> new APIDataNotParseableException(data));
+        return Stream.of(values()).filter(s -> s.getValue().equalsIgnoreCase(data)).findFirst().orElseGet(() -> {
+            logger.warn("Unknown X-Rate-Limit-Type header value '{}', treating it as an underlying service limit", data);
+            return LIMIT_UNDERLYING;
+        });
     }
     
     public String getValue()

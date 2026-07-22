@@ -630,9 +630,9 @@ public class DataCallBuilder
                 
                 logger.warn("Ratelimit hit for platform: {}, endpoint: {}, method: {}, app limit: {}/{}, method limit: {}/{}",
                         this.dc.getPlatform(), this.dc.getEndpoint(), this.requestMethod, appB, appA, methodB, methodA);
-                
+
                 final RateLimitType limitType = RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type"));
-                
+
                 if (limitType == RateLimitType.LIMIT_METHOD)
                 {
                     RateLimiter limter = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(this.dc.getPlatform()).get(this.dc.getEndpoint());
@@ -641,9 +641,19 @@ public class DataCallBuilder
                 
                 if (limitType == RateLimitType.LIMIT_USER)
                 {
-                    
+
                     RateLimiter limter = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(this.dc.getPlatform()).get(this.dc.getPlatform());
                     limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform());
+                }
+
+                if (limitType == RateLimitType.LIMIT_UNDERLYING || limitType == RateLimitType.LIMIT_SERVICE)
+                {
+                    Map<Enum, RateLimiter> platformLimiters = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).get(this.dc.getPlatform());
+                    RateLimiter limter = platformLimiters == null ? null : platformLimiters.get(this.dc.getEndpoint());
+                    if (limter != null)
+                    {
+                        limter.updateSleep(received, con.getHeaderField("Retry-After"), this.dc.getPlatform(), DataCall.shouldFailFastOnServiceRatelimit());
+                    }
                 }
             }
             
