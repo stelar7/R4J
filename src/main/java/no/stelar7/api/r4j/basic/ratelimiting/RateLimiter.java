@@ -20,6 +20,7 @@ public abstract class RateLimiter
     
     protected volatile int overloadTimer;
     protected volatile Instant overloadReceivedTime;
+    protected volatile boolean overloadFailFast;
     
     protected static final Lock overloadTimerLock = new ReentrantLock();
     
@@ -101,29 +102,40 @@ public abstract class RateLimiter
     
     public void updateSleep(Instant timeReceived, String sleep, Enum platform)
     {
+        updateSleep(timeReceived, sleep, platform, false);
+    }
+
+    /**
+     * @param failFast when true, calls arriving while this cooldown is active fail immediately
+     *                 with an APIEndpointCooldownException instead of sleeping it out.
+     */
+    public void updateSleep(Instant timeReceived, String sleep, Enum platform, boolean failFast)
+    {
         Instant now = Instant.now();
         overloadTimerLock.lock();
         try
         {
             int futurTimer = Integer.parseInt(sleep);
-            
+
             if(timeReceived.toEpochMilli() + (futurTimer * 1000L) < now.toEpochMilli()) {
                 logger.debug("Received 429 sleep time {} for platform {}, but the time has already passed (now: {}, received: {})", futurTimer, platform, now, timeReceived);
                 return;
             }
-            
+
             // We prioritize the most recent sleep time
-            if(overloadReceivedTime.toEpochMilli() < timeReceived.toEpochMilli()) { 
+            if(overloadReceivedTime.toEpochMilli() < timeReceived.toEpochMilli()) {
                 overloadReceivedTime = timeReceived;
                 overloadTimer = futurTimer;
+                overloadFailFast = failFast;
                 //resetCalls(); We should reset calls only after the sleep has been applied
             }
             logger.debug("Forcing next sleep to be atleast: {} seconds (starting at : {})", overloadTimer, timeReceived);
-            
+
         } catch (NumberFormatException e)
         {
             overloadTimer = 5;
             overloadReceivedTime = now;
+            overloadFailFast = failFast;
         } finally
         {
             overloadTimerLock.unlock();
@@ -154,6 +166,7 @@ public abstract class RateLimiter
                 
                 this.overloadTimer = oldLimit.overloadTimer;
                 this.overloadReceivedTime = oldLimit.overloadReceivedTime;
+                this.overloadFailFast = oldLimit.overloadFailFast;
                 return;
             }
             
@@ -173,6 +186,7 @@ public abstract class RateLimiter
             
             this.overloadTimer = oldLimit.overloadTimer;
             this.overloadReceivedTime = oldLimit.overloadReceivedTime;
+            this.overloadFailFast = oldLimit.overloadFailFast;
         }
     }
     

@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.basic.ratelimiting;
 
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
+import no.stelar7.api.r4j.basic.exceptions.APIEndpointCooldownException;
 
 import org.slf4j.*;
 
@@ -50,8 +51,14 @@ public class BurstRateLimiter extends RateLimiter
                 if (realtimeToWait <= 0) {
                     logger.debug("Overload timer reset for {} since time overpassed", platformOrEndpoint.name());
                     overloadTimer = 0; // Reset overload timer after waiting
+                    overloadFailFast = false;
                     resetCalls(); // Reset the call counts since we are no longer in an overload state
                     return; // Overload timer has passed, no need to wait
+                } else if (overloadFailFast) {
+                    // Service-limit cooldown in fail-fast mode: blocking here would hold the caller
+                    // thread (and its parallel-call permit) for the whole cooldown. Fail immediately
+                    // instead, without making the HTTP call.
+                    throw new APIEndpointCooldownException(platformOrEndpoint.name(), realtimeToWait);
                 } else {
                     logger.debug("Overload timer still active for {}. Waiting {} ms", platformOrEndpoint.name(), realtimeToWait);
                     msToWait = realtimeToWait;

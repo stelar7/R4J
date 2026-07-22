@@ -27,6 +27,7 @@ public final class DataCall
     private static int            callStackLimit = 5;
     private static long           maxSleep       = 10000;
     private static int            globalTimeout  = 0;
+    private static boolean        failFastOnServiceRatelimit = false;
     
     private final Map<String, String> urlParams  = new LinkedHashMap<>();
     private final Map<String, String> urlData    = new LinkedHashMap<>();
@@ -275,6 +276,21 @@ public final class DataCall
     public static void setGlobalTimeout(int globalTimeout)
     {
         DataCall.globalTimeout = globalTimeout;
+    }
+
+    public static boolean shouldFailFastOnServiceRatelimit()
+    {
+        return failFastOnServiceRatelimit;
+    }
+
+    /**
+     * A service rate limit can sometimes be hit (limits that are not linked to your API key, but to the Riot server itself),
+     * this flag determines whether this type of rate limit should fail immediately (throwing an APIEndpointCooldownException) or sleep until the cooldown expires.
+     * Can be useful for high-throughput applications who prefer to fail fast so they can do other not limited calls instead of waiting for the cooldown to expire.
+     */
+    public static void setFailFastOnServiceRatelimit(boolean failFastOnServiceRatelimit)
+    {
+        DataCall.failFastOnServiceRatelimit = failFastOnServiceRatelimit;
     }
     
     public boolean shouldReturnRawResponse()
