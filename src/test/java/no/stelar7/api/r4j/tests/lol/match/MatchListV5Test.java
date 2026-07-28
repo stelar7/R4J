@@ -5,6 +5,7 @@ import com.google.gson.stream.JsonWriter;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.impl.R4J;
@@ -189,6 +190,49 @@ public class MatchListV5Test
     {
         LOLMatch match = LOLMatch.get(LeagueShard.BR1, "BR1_2344333561");
         System.out.println();
+    }
+    
+    @Test
+    public void testMatch6Augments()
+    {
+        RiotAccount riotAccount = r4J.getAccountAPI().getAccountByTag(RegionShard.AMERICAS, "yuuuda", "NA1");
+
+        List<String> matchsids = r4J.getLoLAPI().getMatchAPI().getMatchList(RegionShard.AMERICAS, riotAccount.getPUUID(), null, null, 0, 20, null, null);
+        
+        boolean foundSixAugments = false;
+        for (String matchId : matchsids)
+        {
+            LOLMatch match = LOLMatch.get(LeagueShard.NA1, matchId);
+            if (match.getQueue() != GameQueueType.CHERRY)
+            {
+                continue;
+            }
+
+            for (MatchParticipant participant : match.getParticipants())
+            {
+                int[] slots = {
+                    participant.getPlayerAugment1(), participant.getPlayerAugment2(), participant.getPlayerAugment3(),
+                    participant.getPlayerAugment4(), participant.getPlayerAugment5(), participant.getPlayerAugment6(),
+                };
+                List<Integer> augments = new ArrayList<>();
+                for (int slot : slots)
+                {
+                    if (slot != 0)
+                    {
+                        augments.add(slot);
+                    }
+                }
+
+                System.out.println(matchId + " " + participant.getRiotIdName() + "#" + participant.getRiotIdTagline() + " -> " + augments);
+
+                if (augments.size() == 6)
+                {
+                    foundSixAugments = true;
+                }
+            }
+        }
+
+        Assertions.assertTrue(foundSixAugments, "expected at least one Arena participant with 6 augments in the last 20 games");
     }
     
     @Test

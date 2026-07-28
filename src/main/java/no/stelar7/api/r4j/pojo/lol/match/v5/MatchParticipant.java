@@ -87,6 +87,8 @@ public class MatchParticipant implements Serializable
     private int                 playerAugment2;
     private int                 playerAugment3;
     private int                 playerAugment4;
+    private int                 playerAugment5;
+    private int                 playerAugment6;
     private int                 playerSubteamId;
     private int                 profileIcon;
     private int                 pushPings;
@@ -530,6 +532,16 @@ public class MatchParticipant implements Serializable
     {
         return playerAugment4;
     }
+
+    public int getPlayerAugment5()
+    {
+        return playerAugment5;
+    }
+
+    public int getPlayerAugment6()
+    {
+        return playerAugment6;
+    }
     
     public int getPlayerSubteamId()
     {
@@ -881,6 +893,8 @@ public class MatchParticipant implements Serializable
                && playerAugment2 == that.playerAugment2
                && playerAugment3 == that.playerAugment3
                && playerAugment4 == that.playerAugment4
+               && playerAugment5 == that.playerAugment5
+               && playerAugment6 == that.playerAugment6
                && playerSubteamId == that.playerSubteamId
                && profileIcon == that.profileIcon
                && pushPings == that.pushPings
@@ -1022,6 +1036,8 @@ public class MatchParticipant implements Serializable
                             playerAugment2,
                             playerAugment3,
                             playerAugment4,
+                            playerAugment5,
+                            playerAugment6,
                             playerSubteamId,
                             profileIcon,
                             pushPings,
@@ -1159,6 +1175,8 @@ public class MatchParticipant implements Serializable
                ", playerAugment2=" + playerAugment2 +
                ", playerAugment3=" + playerAugment3 +
                ", playerAugment4=" + playerAugment4 +
+               ", playerAugment5=" + playerAugment5 +
+               ", playerAugment6=" + playerAugment6 +
                ", playerSubteamId=" + playerSubteamId +
                ", profileIcon=" + profileIcon +
                ", pushPings=" + pushPings +
