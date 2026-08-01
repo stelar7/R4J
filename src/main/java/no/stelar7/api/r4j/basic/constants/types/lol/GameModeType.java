@@ -130,7 +130,18 @@ public enum GameModeType implements CodedEnum
     /**
      * ARAM Mayhem
      */
-    KIWI
+    KIWI,
+
+    /**
+     * League of Legends Classic Game Mode.
+     * Not shown in Match History by Riot policy. Only seen via spectator.
+     */
+    JADE,
+
+    /**
+     * ARAM: Mayhem Classic-ish
+     */
+    KIWI_JADE,
     ;
     
     /**

@@ -428,8 +428,36 @@ public enum GameQueueType implements CodedEnum
     
     PRACTICE_TOOL(3140),
     
-    CUSTOM_SUMMONERS_RIFT(3100, 3110, 3120, 3130), 
+    CUSTOM_SUMMONERS_RIFT(3100, 3110, 3120, 3130),
     CUSTOM_ARAM(3200, 3210, 3220, 3230, 3270),
+
+    /**
+     * League of Legends Classic + All variants
+     */
+    JADE(4300, 4301, 4302, 4303, 4304, 4305, 4306, 4307, 4308, 4309, 4310, 4311),
+    /**
+     * LEAGUE-V4 representation of the League of Legends Classic rank system.
+     * (Similar to arena with rank such as "SALT", "WOOD", ...)
+     */
+    JADE_RANKED_SOLO_5X5(new Integer[]{}, "JADE_RANKED_SOLO_5x5"),
+    /**
+     * League of Legends Classic Co-op vs. AI
+     */
+    JADE_BOT(4320, 4321),
+    /**
+     * League of Legends Classic custom games (blind, "Jade Sydney", draft)
+     */
+    CUSTOM_JADE(3260, 3261, 3262),
+
+    /**
+     * ARAM: Mayhem Classic-ish (gameMode KIWI_JADE) matchmade games
+     */
+    KIWI_JADE(2450),
+    /**
+     * ARAM: Mayhem Classic-ish custom games
+     */
+    CUSTOM_KIWI_JADE(3280),
+
     ;
     
     private final Integer[] codes;
