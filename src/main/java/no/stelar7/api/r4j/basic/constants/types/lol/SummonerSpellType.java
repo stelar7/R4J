@@ -14,11 +14,11 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * Removes all disables and summoner spell debuffs affecting your champion and lowers the duration of incoming disables by 65% for 3 seconds.
      */
-    CLEANSE("SummonerBoost", 1),
+    CLEANSE("SummonerBoost", 1, 71),
     /**
      * After channeling for 3.5 seconds, teleports your champion to target allied structure, minion, or ward.
      */
-    TELEPORT("SummonerTeleport", 12),
+    TELEPORT("SummonerTeleport", 12, 712),
     /**
      * Quickly travel to the Poro King's side.
      */
@@ -26,11 +26,11 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * Ignites target enemy champion, dealing 70-410 true damage (depending on champion level) over 5 seconds, grants you vision of the target, and reduces healing effects on them for the duration.
      */
-    IGNITE("SummonerDot", 14),
+    IGNITE("SummonerDot", 14, 714),
     /**
      * Your champion can move through units and has 27% increased Movement Speed for 10 seconds
      */
-    GHOST("SummonerHaste", 6),
+    GHOST("SummonerHaste", 6, 76),
     /**
      * Throw a snowball in a straight line at your enemies. If it hits an enemy, they become marked and your champion can quickly travel to the marked target as a follow up.
      */
@@ -38,15 +38,15 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * Restores 90-345 Health (depending on champion level) and grants 30% Movement Speed for 1 second to you and target allied champion. This healing is halved for units recently affected by Summoner Heal.
      */
-    HEAL("SummonerHeal", 7),
+    HEAL("SummonerHeal", 7, 77),
     /**
      * Deals 390-1000 true damage (depending on champion level) to target epic or large monster or enemy minion.
      */
-    SMITE("SummonerSmite", 11),
+    SMITE("SummonerSmite", 11, 711),
     /**
      * Exhausts target enemy champion, reducing their Movement Speed and Attack Speed by 30%, their Armor and Magic Resist by 10, and their damage dealt by 40% for 2.5 seconds.
      */
-    EXHAUST("SummonerExhaust", 3),
+    EXHAUST("SummonerExhaust", 3, 73),
     /**
      * Throw a Poro at your enemies. If it hits, you can quickly travel to your target as a follow up.
      */
@@ -54,19 +54,19 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * Restores 40% of your champion's maximum Mana. Also restores allies for 40% of their maximum Mana
      */
-    CLARITY("SummonerMana", 13),
+    CLARITY("SummonerMana", 13, 713),
     /**
      * Reveals a small area of the map for your team for 5 seconds.
      */
-    CLAIRVOYANCE("SummonerClairvoyance", 2),
+    CLAIRVOYANCE("SummonerClairvoyance", 2, 75),
     /**
      * Shields your champion for 115-455 (depending on champion level) for 2 seconds.
      */
-    BARRIER("SummonerBarrier", 21),
+    BARRIER("SummonerBarrier", 21, 721),
     /**
      * Teleports your champion a short distance toward your cursor's location.
      */
-    FLASH("SummonerFlash", 4, 2202, 2203),
+    FLASH("SummonerFlash", 4, 2202, 2203, 74),
     /**
      * Allied Turret: Grants massive regeneration for 8 seconds. Enemy Turret: Reduces damage dealt by 80% for 8 seconds.
      */
@@ -74,7 +74,7 @@ public enum SummonerSpellType implements CodedEnum
     /**
      * Instantly revives your champion at your team's Summoner Platform and increases their Movement Speed for a short duration.
      */
-    REVIVE("SummonerRevive", 10),
+    REVIVE("SummonerRevive", 10, 777),
     /**
      * In Nexus Siege, Summoner Spells are replaced with Siege Weapon Slots. Spend Crystal Shards to buy single-use Siege Weapons from the item shop, then use your Summoner Spell keys to activate them!
      */
@@ -123,7 +123,24 @@ public enum SummonerSpellType implements CodedEnum
      * Gain a short burst of Move Speed, increased while running away from enemy champions.
      */
     FLEE("Summoner_Flee", 2201),
-    
+
+    /**
+     * Grants invulnerability to all Allied Turrets and causes them to attack faster.
+     */
+    FORTIFY("SummonerFortify", 705),
+    /**
+     * Summons a temporary beacon which increases allied Attack damage in an area.
+     */
+    RALLY("SummonerRally", 709),
+    /**
+     * Temporarily empowers your champion, granting Attack Speed and Ability Power.
+     */
+    SURGE("SummonerBattleCry", 716),
+    /**
+     * Promotes a minion, granting it bonus stats and an empowering aura.
+     */
+    PROMOTE("SummonerPromote", 720),
+
     ;
     
     
@@ -213,6 +230,14 @@ public enum SummonerSpellType implements CodedEnum
                 return "Resuscitate";
             case WARP:
                 return "Warp";
+            case FORTIFY:
+                return "Fortify";
+            case RALLY:
+                return "Rally";
+            case SURGE:
+                return "Surge";
+            case PROMOTE:
+                return "Promote";
             default:
                 return "This enum does not have a pretty name";
         }
