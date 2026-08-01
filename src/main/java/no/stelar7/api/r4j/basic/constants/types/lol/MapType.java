@@ -90,6 +90,12 @@ public enum MapType implements CodedEnum
 	 * Brawl map
      */
 	BRAWL(35, new Rectangle(0, 0, 12056, 12056)),
+	
+	/**
+	 * "Classic Rift" from Classic game mode. Coordinate need to be validated
+	 */
+	SUMMONERS_RIFT_CLASSIC_VERSION(453, new Rectangle(0, 0, 16000, 16000)),
+	
 	;
     
     
