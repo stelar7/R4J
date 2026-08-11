@@ -66,7 +66,7 @@ public class LORMatchAPI
     public GAMHSMatch getMatchRAW(RuneterraShard platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getLORAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_LOR_MATCH)
                                                        .withPlatform(platform);
         
