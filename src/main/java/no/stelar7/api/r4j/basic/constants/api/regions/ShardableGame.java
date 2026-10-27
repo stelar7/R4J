@@ -17,6 +17,14 @@ public enum ShardableGame
      * Valorant
      */
     VAL("VAL", "val"),
+    /**
+     * League of Legends, only for the active region lookup
+     */
+    LOL("LOL", "lol"),
+    /**
+     * Teamfight Tactics, only for the active region lookup
+     */
+    TFT("TFT", "tft"),
     
     ;
     

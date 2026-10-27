@@ -46,6 +46,18 @@ public class TestSharedAccount
     
     @Test
     @Order(4)
+    public void getActiveRegion()
+    {
+        R4J               api     = new R4J(SecretFile.CREDS);
+        RiotAccount       account = api.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "stelar7", "STL7", ApiKeyType.LOL);
+        RiotAccountRegion region  = api.getAccountAPI().getActiveRegion(RegionShard.EUROPE, ShardableGame.LOL, account.getPUUID());
+
+        System.out.println(region);
+        System.out.println(region.getRegionAsEnum());
+    }
+
+    @Test
+    @Order(5)
     public void getByTagDifferentKeyType()
     {
         R4J         api     = new R4J(SecretFile.CREDS);
@@ -57,7 +69,7 @@ public class TestSharedAccount
     }
     
     @Test
-    @Order(5)
+    @Order(6)
     public void getByTagWithSpace()
     {
         R4J         api     = new R4J(SecretFile.CREDS);

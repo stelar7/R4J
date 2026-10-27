@@ -135,5 +135,45 @@ public class AccountAPI
         }
     }
     
+    /**
+     * The platform the player is active on, for {@link ShardableGame#LOL} or {@link ShardableGame#TFT}
+     */
+    public RiotAccountRegion getActiveRegion(RegionShard server, ShardableGame game, String puuid)
+    {
+        return getActiveRegion(server, game, puuid, ApiKeyType.LOL);
+    }
+    
+    public RiotAccountRegion getActiveRegion(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
+                                                       .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
+                                                       .withEndpoint(URLEndpoint.V1_SHARED_REGION_BY_PUUID)
+                                                       .withPlatform(server);
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+        data.put("game", game);
+        data.put("puuid", puuid);
+        data.put("keytype", keyType);
+        
+        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_REGION_BY_PUUID, data);
+        if (chl.isPresent())
+        {
+            return (RiotAccountRegion) chl.get();
+        }
+        
+        try
+        {
+            RiotAccountRegion region = (RiotAccountRegion) builder.build();
+            
+            data.put("value", region);
+            DataCall.getCacheProvider().store(URLEndpoint.V1_SHARED_REGION_BY_PUUID, data);
+            
+            return region;
+        } catch (ClassCastException e)
+        {
+            return null;
+        }
+    }
     
 }
