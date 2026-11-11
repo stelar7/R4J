@@ -4,6 +4,13 @@ package no.stelar7.api.r4j.basic.utils;
 import java.util.*;
 import java.util.function.*;
 
+/**
+ * A list that fetches its content page by page, when it is needed.
+ * <p>
+ * Iterating, streaming and {@link #get(int)} only load the pages they reach, and {@link #isEmpty()} loads at most the first page.
+ * Anything that needs to know the whole list ({@link #size()}, {@link #contains(Object)}, {@link #toArray()}, {@link #subList(int, int)}, ...)
+ * loads all of it first. Use {@link #loadedSize()} to see how much has been loaded without loading more.
+ */
 public class LazyList<T> extends ArrayList<T>
 {
     private static final long serialVersionUID = -1691718732059707951L;
@@ -32,6 +39,12 @@ public class LazyList<T> extends ArrayList<T>
      */
     private boolean loadMoreData()
     {
+        if (makerOfMoreData == null)
+        {
+            // a list that was serialized has what it had loaded, but can not load more
+            return false;
+        }
+
         List<T> more = makerOfMoreData.apply(lastValue);
         lastValue += increment;
         
@@ -46,6 +59,80 @@ public class LazyList<T> extends ArrayList<T>
         return true;
     }
     
+    /**
+     * @return the amount of items loaded so far; never loads more
+     */
+    public int loadedSize()
+    {
+        return super.size();
+    }
+
+    /**
+     * @return the amount of items in the list. This has to load the whole list, as there is no other way to know.
+     */
+    @Override
+    public int size()
+    {
+        loadFully();
+        return super.size();
+    }
+
+    /**
+     * @return true if there is nothing in the list. Loads the first page if nothing has been loaded yet.
+     */
+    @Override
+    public boolean isEmpty()
+    {
+        if (super.size() == 0 && hasMore)
+        {
+            hasMore = loadMoreData();
+        }
+
+        return super.size() == 0;
+    }
+
+    @Override
+    public boolean contains(Object o)
+    {
+        loadFully();
+        return super.contains(o);
+    }
+
+    @Override
+    public int indexOf(Object o)
+    {
+        loadFully();
+        return super.indexOf(o);
+    }
+
+    @Override
+    public int lastIndexOf(Object o)
+    {
+        loadFully();
+        return super.lastIndexOf(o);
+    }
+
+    @Override
+    public Object[] toArray()
+    {
+        loadFully();
+        return super.toArray();
+    }
+
+    @Override
+    public <E> E[] toArray(E[] a)
+    {
+        loadFully();
+        return super.toArray(a);
+    }
+
+    @Override
+    public List<T> subList(int fromIndex, int toIndex)
+    {
+        loadFully();
+        return super.subList(fromIndex, toIndex);
+    }
+
     @Override
     public Iterator<T> iterator()
     {
@@ -67,7 +154,7 @@ public class LazyList<T> extends ArrayList<T>
     @Override
     public Spliterator<T> spliterator()
     {
-        return Spliterators.spliterator(this.iterator(), this.size(), 0);
+        return Spliterators.spliteratorUnknownSize(this.iterator(), Spliterator.ORDERED);
     }
     
     @Override
@@ -127,7 +214,7 @@ public class LazyList<T> extends ArrayList<T>
     private class LazyListIterator implements ListIterator<T>
     {
         private int index;
-        private int size = size();
+        private int size = loadedSize();
         
         public LazyListIterator(int startIndex)
         {
@@ -135,7 +222,7 @@ public class LazyList<T> extends ArrayList<T>
             
             while (startIndex >= size && (hasMore = LazyList.this.loadMoreData()))
             {
-                size = size();
+                size = loadedSize();
             }
         }
         
@@ -155,7 +242,7 @@ public class LazyList<T> extends ArrayList<T>
                 hasMore = loadMoreData();
                 if (hasMore)
                 {
-                    size = size();
+                    size = loadedSize();
                     return true;
                 }
             }
@@ -232,7 +319,8 @@ public class LazyList<T> extends ArrayList<T>
     public String toString()
     {
         return "LazyList{" +
-               "hasMore=" + hasMore +
+               "loaded=" + loadedSize() +
+               ", hasMore=" + hasMore +
                ", currentValue=" + lastValue +
                ", increment=" + increment +
                '}';
