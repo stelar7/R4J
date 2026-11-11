@@ -752,6 +752,9 @@ public class DataCallBuilder
                 String reasonString = String.format("%s%n%s", limitType.getReason(), valueList.toString().trim());
                 String reason       = String.format("%s%n", reasonString);
 
+                // the body is not used, but has to be read for the connection to be reused
+                drain(con.getErrorStream());
+
                 return new DataCallResponse(responseCode, reason);
             }
 
@@ -772,13 +775,37 @@ public class DataCallBuilder
                 br.lines().forEach(data::append);
             }
 
-            con.disconnect();
+            // The connection is not disconnected: once the body has been read and closed, the JDK keeps it open and uses it
+            // for the next call to the same host, which saves a TCP and TLS handshake per call.
 
             return new DataCallResponse(responseCode, data.toString());
         } catch (final IOException e)
         {
             // keep the cause, so a timeout can be told apart from a dns/tls/connection failure
             throw new APIResponseException(APIHTTPErrorReason.ERROR_599, APIHTTPErrorReason.ERROR_599.getReason() + " (" + e + ")", e);
+        }
+    }
+
+    /**
+     * Reads and closes a stream we have no use for, so the connection can be reused
+     */
+    private static void drain(InputStream stream)
+    {
+        if (stream == null)
+        {
+            return;
+        }
+
+        try (InputStream in = stream)
+        {
+            byte[] buffer = new byte[1024];
+            while (in.read(buffer) != -1)
+            {
+                // discard
+            }
+        } catch (IOException e)
+        {
+            // nothing to do, the connection is simply not reused
         }
     }
 

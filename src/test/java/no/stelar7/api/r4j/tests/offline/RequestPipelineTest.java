@@ -279,6 +279,61 @@ public class RequestPipelineTest
     }
 
     @Test
+    public void connectionsAreReused()
+    {
+        Set<Integer>  clientPorts = ConcurrentHashMap.newKeySet();
+        AtomicInteger calls       = new AtomicInteger();
+        handler = exchange -> {
+            clientPorts.add(exchange.getRemoteAddress().getPort());
+            // a mix of outcomes: every one of them has to leave the connection usable
+            switch (calls.incrementAndGet() % 3)
+            {
+                case 0:
+                    respond(exchange, 404, "{\"status\":{\"status_code\":404}}");
+                    break;
+                case 1:
+                    respond(exchange, 200, STATUS_JSON);
+                    break;
+                default:
+                    respond(exchange, 204, "");
+            }
+        };
+
+        for (int i = 0; i < 9; i++)
+        {
+            statusCall(LeagueShard.TW2).build();
+        }
+
+        // every call came from the same client port, so it was the same connection
+        Assertions.assertEquals(9, calls.get());
+        Assertions.assertEquals(1, clientPorts.size(), "ports used: " + clientPorts);
+    }
+
+    @Test
+    public void theConnectionIsReusedAfterA429()
+    {
+        Set<Integer>  clientPorts = ConcurrentHashMap.newKeySet();
+        AtomicInteger calls       = new AtomicInteger();
+        handler = exchange -> {
+            clientPorts.add(exchange.getRemoteAddress().getPort());
+            if (calls.incrementAndGet() == 1)
+            {
+                // a service limit with a body; the body is not used, but it has to be read for the connection to be reusable
+                respond(exchange, 429, "{\"status\":{\"message\":\"Rate limit exceeded\",\"status_code\":429}}");
+            } else
+            {
+                respond(exchange, 200, STATUS_JSON);
+            }
+        };
+
+        // retried after 500ms
+        Assertions.assertNotNull(statusCall(LeagueShard.TH2).withLimiters(false).build());
+
+        Assertions.assertEquals(2, calls.get());
+        Assertions.assertEquals(1, clientPorts.size(), "ports used: " + clientPorts);
+    }
+
+    @Test
     public void ratelimitedCallWithoutLimitersDoesNotCrash()
     {
         // no X-Rate-Limit-Type header means a service limit, which is retried with a backoff
