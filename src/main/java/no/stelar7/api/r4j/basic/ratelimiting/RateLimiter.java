@@ -10,6 +10,16 @@ import java.util.*;
  * The limits are fixed windows, like the ones the api uses: a window starts with the first call made in it, and allows a number of calls until it ends.
  * The limiter never sleeps or blocks itself; {@link #tryAcquire(long)} either takes a permit or says how long to wait, so the caller decides how to wait.
  * All methods are thread safe.
+ * <p>
+ * Several processes (on the same or on different machines) can share an api key. They do not talk to each other; each one follows the
+ * counts the server reports in its responses ({@link #syncWithServerCounts(Map, long, long)}), which include the calls of the others:
+ * <ul>
+ * <li>a higher count than ours means someone else is using the key, so the count is raised</li>
+ * <li>the limiter then keeps a reserve as large as the amount of calls the others made while one of ours was in flight, because it can not see their calls until it gets a response</li>
+ * <li>a count lower than the calls the server has already answered for us means the server has started a new window, so ours is restarted</li>
+ * </ul>
+ * This keeps a shared key close to its limits. It can not be exact: calls that are in flight at the same time in different processes are invisible to each other,
+ * so an occasional 429 is still possible. Those are handled with the Retry-After the server gives ({@link #cooldown(long, String, boolean)}).
  */
 public class RateLimiter
 {
@@ -35,7 +45,17 @@ public class RateLimiter
     {
         private final RateLimit limit;
         private       long      start;
-        private       long      count;
+
+        // the calls the server has counted in this window, as far as we know (ours and the ones of other processes)
+        private long count;
+        // our own calls in this window
+        private long own;
+        // our own calls in this window that the server has answered
+        private long answered;
+        // when the newest of the answered calls was sent
+        private long newestAnswered;
+        // how many calls other processes made while one of ours was in flight
+        private long foreignPerCall;
 
         private Window(RateLimit limit)
         {
@@ -45,6 +65,25 @@ public class RateLimiter
         private boolean isOpen()
         {
             return count > 0;
+        }
+
+        private void close()
+        {
+            count = 0;
+            own = 0;
+            answered = 0;
+            newestAnswered = 0;
+            // foreignPerCall is kept: the other processes are most likely still there in the next window
+        }
+
+        private void copyFrom(Window other)
+        {
+            start = other.start;
+            count = other.count;
+            own = other.own;
+            answered = other.answered;
+            newestAnswered = other.newestAnswered;
+            foreignPerCall = other.foreignPerCall;
         }
     }
 
@@ -96,14 +135,14 @@ public class RateLimiter
             cooldownUntil = 0;
             cooldownFailFast = false;
             unknownCount = 0;
-            windows.forEach(w -> w.count = 0);
+            windows.forEach(Window::close);
         }
 
         for (Window window : windows)
         {
             if (window.isOpen() && now >= windowEnd(window))
             {
-                window.count = 0;
+                window.close();
             }
         }
     }
@@ -126,7 +165,9 @@ public class RateLimiter
         long wait = 0;
         for (Window window : windows)
         {
-            if (window.count >= window.limit.getPermits())
+            // the reserve is for the calls other processes sharing the key are expected to make while this call is in flight
+            long reserve = window.isOpen() ? window.foreignPerCall : 0;
+            if (window.count + reserve >= window.limit.getPermits())
             {
                 wait = Math.max(wait, windowEnd(window) - now);
             }
@@ -153,6 +194,7 @@ public class RateLimiter
                 window.start = now;
             }
             window.count++;
+            window.own++;
         }
 
         return 0;
@@ -170,8 +212,9 @@ public class RateLimiter
 
         for (Window window : windows)
         {
-            if (window.count > 0)
+            if (window.own > 0)
             {
+                window.own--;
                 window.count--;
             }
         }
@@ -195,28 +238,26 @@ public class RateLimiter
         }
 
         // what a new limit starts with: the calls of the longest known window, or the calls made before any limit was known
-        long seedStart = unknownStart;
-        long seedCount = unknownCount;
+        Window seed = new Window(null);
+        seed.start = unknownStart;
+        seed.count = unknownCount;
+        seed.own = unknownCount;
         if (!windows.isEmpty())
         {
-            Window longest = windows.get(windows.size() - 1);
-            seedStart = longest.start;
-            seedCount = longest.count;
+            seed.copyFrom(windows.get(windows.size() - 1));
         }
 
         List<Window> updated = new ArrayList<>();
         for (RateLimit limit : sorted)
         {
             Window window = new Window(limit);
-            window.start = seedStart;
-            window.count = seedCount;
+            window.copyFrom(seed);
 
             for (Window old : windows)
             {
                 if (old.limit.getTimeframeInMS() == limit.getTimeframeInMS())
                 {
-                    window.start = old.start;
-                    window.count = old.count;
+                    window.copyFrom(old);
                 }
             }
 
@@ -231,9 +272,11 @@ public class RateLimiter
     }
 
     /**
-     * Raises our call counts to the counts reported by the server (X-App-Rate-Limit-Count / X-Method-Rate-Limit-Count).
-     * This keeps the limiter correct when the key is shared with another process, or the application was just restarted.
-     * A count is never lowered, and a response to a request sent before the current window started is ignored.
+     * Follows the counts reported by the server (X-App-Rate-Limit-Count / X-Method-Rate-Limit-Count). Call this once for every response.
+     * <p>
+     * This is what keeps the limiter correct when the key is shared with other processes, or the application was just restarted:
+     * a count is raised when the server has seen more calls than we know of, and the window is restarted when the server has started a new one.
+     * A response to a request sent before the current window started is ignored.
      *
      * @param countsByWindowSeconds the calls the server has counted, by the size of the window in seconds
      * @param sentAt                when the request this response belongs to was sent (epoch millis)
@@ -259,13 +302,48 @@ public class RateLimiter
 
             if (!window.isOpen())
             {
-                // we think the window is over, but the server is still counting in it
+                // we think the window is over (or never made a call in it), but the server is counting
                 window.start = sentAt;
                 window.count = serverCount;
+                window.own = 1;
+                window.answered = 1;
+                window.newestAnswered = sentAt;
                 continue;
             }
 
-            if (window.start <= sentAt && window.count < serverCount)
+            if (window.start > sentAt)
+            {
+                // the request was sent before this window started
+                continue;
+            }
+
+            window.answered++;
+            boolean newest = sentAt > window.newestAnswered;
+            window.newestAnswered = Math.max(window.newestAnswered, sentAt);
+
+            if (newest && serverCount < window.answered)
+            {
+                // The server has counted fewer calls than it has already answered for us in this window, so it has started a new window.
+                // (ours started earlier than the one of the server, which happens when another process made the first call of that window)
+                // Only the newest call is trusted for this, as responses can arrive out of order.
+                long inFlight = Math.max(0, window.own - window.answered);
+                logger.debug("The server started a new window for {}, call count changed from {} to {}", window.limit, window.count, serverCount + inFlight);
+                window.start = sentAt;
+                window.count = serverCount + inFlight;
+                window.own = inFlight + 1;
+                window.answered = 1;
+                continue;
+            }
+
+            // the calls made by others since we last knew the count
+            long foreign = Math.max(0, serverCount - window.count);
+            if (window.answered > 1)
+            {
+                // the first answer of a window only tells us what happened before we joined it, not how fast the others are going
+                window.foreignPerCall = foreign >= window.foreignPerCall ? foreign : (window.foreignPerCall + foreign) / 2;
+            }
+
+            if (foreign > 0)
             {
                 logger.debug("Call count for {} raised from {} to {} to match the server", window.limit, window.count, serverCount);
                 window.count = serverCount;
@@ -332,7 +410,7 @@ public class RateLimiter
     }
 
     /**
-     * @return the calls counted in the current window of each limit
+     * @return the calls counted in the current window of each limit (ours and, as far as the server told us, the ones of other processes sharing the key)
      */
     public synchronized Map<RateLimit, Long> getCallCounts()
     {
