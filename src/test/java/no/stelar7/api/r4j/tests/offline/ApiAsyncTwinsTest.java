@@ -17,6 +17,7 @@ import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.pojo.lol.clash.ClashPlayer;
 import no.stelar7.api.r4j.pojo.lol.status.PlatformData;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.lol.tournament.*;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -44,6 +45,32 @@ public class ApiAsyncTwinsTest
             if (path.contains("/unknown"))
             {
                 body = null;
+            } else if (path.contains("/number"))
+            {
+                // what registering a tournament or a provider answers
+                body = "7";
+            } else if (path.contains("/list"))
+            {
+                body = "[]";
+            } else if (path.contains("/ddragon"))
+            {
+                // a small Data Dragon
+                if (path.endsWith("versions.json") || path.endsWith("languages.json"))
+                {
+                    body = "[\"15.1.1\",\"15.1.0\"]";
+                } else if (path.contains("/realms/"))
+                {
+                    body = "{\"v\":\"15.1.1\",\"cdn\":\"https://example.invalid/cdn\",\"n\":{\"mastery\":\"7.23.1\",\"rune\":\"7.23.1\"}}";
+                } else if (path.endsWith("runesReforged.json"))
+                {
+                    body = "[{\"id\":8100,\"key\":\"Domination\",\"name\":\"Domination\",\"slots\":[{\"runes\":[{\"id\":1,\"key\":\"Electrocute\",\"name\":\"Electrocute\"}]}]}]";
+                } else if (path.endsWith("championFull.json"))
+                {
+                    body = "{\"data\":{\"Annie\":{\"id\":\"Annie\",\"key\":\"1\",\"name\":\"Annie\"}}}";
+                } else
+                {
+                    body = "{\"data\":{}}";
+                }
             } else if (path.contains("/unexpected"))
             {
                 body = "{}";
@@ -245,7 +272,20 @@ public class ApiAsyncTwinsTest
         }
         if (List.class.isAssignableFrom(type) || type == Collection.class)
         {
-            return new ArrayList<>();
+            // the only list taken is one of champion ids
+            return Arrays.asList(1, 2);
+        }
+        if (type == TournamentCodeParameters.class)
+        {
+            return new TournamentCodeParameters();
+        }
+        if (type == ProviderRegistrationParameters.class)
+        {
+            return new ProviderRegistrationParameters(LeagueShard.EUW1, "https://example.invalid/callback");
+        }
+        if (type == TournamentRegistrationParameters.class)
+        {
+            return new TournamentRegistrationParameters("sample", 1L);
         }
 
         // parameter objects (ie. for the tournament api); both methods get the same null
@@ -273,8 +313,8 @@ public class ApiAsyncTwinsTest
 
     /**
      * Calls every twin and its blocking method with the same arguments, and expects the same outcome from both.
-     * Done twice: once with a server that knows nothing (404), once with a server that answers something no endpoint expects.
-     * Data Dragon is left out, as its calls go to the real Data Dragon and not to the test server.
+     * Done with a server that knows nothing (404), with servers that answer something most endpoints do not expect (an empty object, a number, an empty list),
+     * and with a server that is a small Data Dragon.
      */
     @Test
     public void everyTwinBehavesLikeItsBlockingMethod() throws Exception
@@ -282,20 +322,21 @@ public class ApiAsyncTwinsTest
         List<String> differences = new ArrayList<>();
         int          compared    = 0;
 
-        for (String scenario : Arrays.asList("unknown", "unexpected"))
+        for (String scenario : Arrays.asList("unknown", "unexpected", "number", "list", "ddragon"))
         {
-            // a fresh instance per scenario, pointed at a part of the server that answers 404, or an empty json object
+            // a fresh instance per scenario, pointed at the part of the server that plays it
             R4JContext context = new R4JContext(APICredentials.builder().all("key").build())
                     .setRequestUrl("http://127.0.0.1:" + server.getAddress().getPort() + "/" + scenario + "/{game}/{service}/{version}/{resource}")
                     .setMaxSleep(0);
             R4J isolated = R4J.withContext(context);
             CDragonAPI.getInstance(context).setBaseUrl("http://127.0.0.1:" + server.getAddress().getPort() + "/" + scenario + "/");
+            DDragonAPI.getInstance(context).setBaseUrl("http://127.0.0.1:" + server.getAddress().getPort() + "/" + scenario + "/");
 
             List<Object> apis = Arrays.asList(
                     isolated.getLoLAPI().getChallengeAPI(), isolated.getLoLAPI().getChampionAPI(), isolated.getLoLAPI().getClashAPI(), isolated.getLoLAPI().getLeagueAPI(),
                     isolated.getLoLAPI().getMasteryAPI(), isolated.getLoLAPI().getMatchAPI(), isolated.getLoLAPI().getSpectatorAPI(), isolated.getLoLAPI().getSummonerAPI(),
                     isolated.getLoLAPI().getTournamentAPI(false), isolated.getLoLAPI().getTournamentAPI(true),
-                    isolated.getAccountAPI(), isolated.getStatusAPI(), isolated.getCDragonAPI(), isolated.getRiftboundContentAPI(),
+                    isolated.getAccountAPI(), isolated.getStatusAPI(), isolated.getCDragonAPI(), isolated.getDDragonAPI(), isolated.getRiftboundContentAPI(),
                     isolated.getTFTAPI().getLeagueAPI(), isolated.getTFTAPI().getMatchAPI(), isolated.getTFTAPI().getSpectatorAPI(), isolated.getTFTAPI().getSummonerAPI(),
                     isolated.getVALAPI().getAccoladesAPI(), isolated.getVALAPI().getConsoleAPI(), isolated.getVALAPI().getContentAPI(), isolated.getVALAPI().getMatchAPI(), isolated.getVALAPI().getRankedAPI(),
                     isolated.getLORAPI().getMatchAPI(), isolated.getLORAPI().getRankedAPI());
@@ -331,6 +372,6 @@ public class ApiAsyncTwinsTest
         }
 
         Assertions.assertTrue(differences.isEmpty(), differences.size() + " twins behave differently:\n" + String.join("\n", differences));
-        Assertions.assertTrue(compared > 150, "only " + compared + " comparisons were made");
+        Assertions.assertTrue(compared > 600, "only " + compared + " comparisons were made");
     }
 }
