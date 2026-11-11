@@ -118,13 +118,14 @@ public class Content implements Serializable
                Objects.equals(charms, content.charms) &&
                Objects.equals(charmLevels, content.charmLevels) &&
                Objects.equals(playerCards, content.playerCards) &&
-               Objects.equals(playerTitles, content.playerTitles);
+               Objects.equals(playerTitles, content.playerTitles) &&
+               Objects.equals(acts, content.acts);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(version, characters, maps, chromas, skins, skinLevels, equips, gameModes, sprays, sprayLevels, charms, charmLevels, playerCards, playerTitles);
+        return Objects.hash(version, characters, maps, chromas, skins, skinLevels, equips, gameModes, sprays, sprayLevels, charms, charmLevels, playerCards, playerTitles, acts);
     }
     
     @Override
@@ -145,6 +146,7 @@ public class Content implements Serializable
                ", charmLevels=" + charmLevels +
                ", playerCards=" + playerCards +
                ", playerTitles=" + playerTitles +
+               ", acts=" + acts +
                '}';
     }
     

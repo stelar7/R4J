@@ -74,13 +74,14 @@ public class LORMatch
                Objects.equals(game_start_time_utc, lorMatch.game_start_time_utc) &&
                Objects.equals(game_version, lorMatch.game_version) &&
                Objects.equals(players, lorMatch.players) &&
-               Objects.equals(total_turn_count, lorMatch.total_turn_count);
+               Objects.equals(total_turn_count, lorMatch.total_turn_count) &&
+               Objects.equals(game_format, lorMatch.game_format);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(game_mode, game_type, game_start_time_utc, game_version, players, total_turn_count);
+        return Objects.hash(game_mode, game_type, game_start_time_utc, game_version, players, total_turn_count, game_format);
     }
     
     @Override
@@ -93,6 +94,7 @@ public class LORMatch
                ", game_version='" + game_version + '\'' +
                ", players=" + players +
                ", total_turn_count=" + total_turn_count +
+               ", game_format=" + game_format +
                '}';
     }
     

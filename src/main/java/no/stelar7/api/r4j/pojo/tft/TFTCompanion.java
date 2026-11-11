@@ -41,13 +41,14 @@ public class TFTCompanion implements Serializable
         TFTCompanion that = (TFTCompanion) o;
         return skin_ID == that.skin_ID &&
                Objects.equals(content_ID, that.content_ID) &&
-               Objects.equals(species, that.species);
+               Objects.equals(species, that.species) &&
+               Objects.equals(item_ID, that.item_ID);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(skin_ID, content_ID, species);
+        return Objects.hash(skin_ID, content_ID, species, item_ID);
     }
     
     @Override
@@ -57,6 +58,7 @@ public class TFTCompanion implements Serializable
                "skin_ID=" + skin_ID +
                ", content_ID='" + content_ID + '\'' +
                ", species='" + species + '\'' +
+               ", item_ID=" + item_ID +
                '}';
     }
     

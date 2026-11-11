@@ -46,13 +46,15 @@ public class Leaderboard implements Serializable
             return false;
         }
         Leaderboard that = (Leaderboard) o;
-        return totalPlayers == that.totalPlayers && Objects.equals(shard, that.shard) && Objects.equals(actId, that.actId) && Objects.equals(players, that.players);
+        return totalPlayers == that.totalPlayers && Objects.equals(shard, that.shard) && Objects.equals(actId, that.actId) && Objects.equals(players, that.players) &&
+               Objects.equals(query, that.query) &&
+               Objects.equals(tierDetails, that.tierDetails);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(shard, actId, totalPlayers, players);
+        return Objects.hash(shard, actId, totalPlayers, players, query, tierDetails);
     }
     
     @Override
@@ -63,6 +65,8 @@ public class Leaderboard implements Serializable
                ", actId='" + actId + '\'' +
                ", totalPlayers=" + totalPlayers +
                ", players=" + players +
+               ", query=" + query +
+               ", tierDetails=" + tierDetails +
                '}';
     }
     

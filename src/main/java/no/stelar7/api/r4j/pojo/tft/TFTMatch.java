@@ -80,13 +80,19 @@ public class TFTMatch implements Serializable
                Objects.equals(game_version, tftMatch.game_version) &&
                queue_id == tftMatch.queue_id &&
                Objects.equals(participants, tftMatch.participants) &&
-               Objects.equals(game_variation, tftMatch.game_variation);
+               Objects.equals(game_variation, tftMatch.game_variation) &&
+               Objects.equals(endOfGameResult, tftMatch.endOfGameResult) &&
+               Objects.equals(gameCreation, tftMatch.gameCreation) &&
+               Objects.equals(gameId, tftMatch.gameId) &&
+               Objects.equals(mapId, tftMatch.mapId) &&
+               Objects.equals(tft_game_type, tftMatch.tft_game_type) &&
+               Objects.equals(tft_set_core_name, tftMatch.tft_set_core_name);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(game_datetime, game_length, game_version, queue_id, tft_set_number, participants, game_variation);
+        return Objects.hash(game_datetime, game_length, game_version, queue_id, tft_set_number, participants, game_variation, endOfGameResult, gameCreation, gameId, mapId, tft_game_type, tft_set_core_name);
     }
     
     @Override
@@ -100,6 +106,12 @@ public class TFTMatch implements Serializable
                ", tft_set_number=" + tft_set_number +
                ", participants=" + participants +
                ", game_variation='" + game_variation + '\'' +
+               ", endOfGameResult=" + endOfGameResult +
+               ", gameCreation=" + gameCreation +
+               ", gameId=" + gameId +
+               ", mapId=" + mapId +
+               ", tft_game_type=" + tft_game_type +
+               ", tft_set_core_name=" + tft_set_core_name +
                '}';
     }
     

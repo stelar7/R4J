@@ -60,13 +60,14 @@ public class TFTUnit implements Serializable
                Objects.equals(name, tftUnit.name) &&
                Objects.equals(character_id, tftUnit.character_id) &&
                Objects.equals(items, tftUnit.items) &&
-               Objects.equals(chosen, tftUnit.chosen);
+               Objects.equals(chosen, tftUnit.chosen) &&
+               Objects.equals(itemNames, tftUnit.itemNames);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(name, tier, rarity, character_id, items, chosen);
+        return Objects.hash(name, tier, rarity, character_id, items, chosen, itemNames);
     }
     
     @Override
@@ -79,6 +80,7 @@ public class TFTUnit implements Serializable
                ", character_id='" + character_id + '\'' +
                ", items=" + items +
                ", chosen='" + chosen + '\'' +
+               ", itemNames=" + itemNames +
                '}';
     }
     

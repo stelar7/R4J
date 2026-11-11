@@ -97,13 +97,16 @@ public class TFTParticipant implements Serializable
                Objects.equals(puuid, that.puuid) &&
                Objects.equals(companion, that.companion) &&
                Objects.equals(traits, that.traits) &&
-               Objects.equals(units, that.units);
+               Objects.equals(units, that.units) &&
+               Objects.equals(riotIdGameName, that.riotIdGameName) &&
+               Objects.equals(riotIdTagline, that.riotIdTagline) &&
+               Objects.equals(win, that.win);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(puuid, level, placement, last_round, players_eliminated, total_damage_to_players, gold_left, time_eliminated, companion, traits, units);
+        return Objects.hash(puuid, level, placement, last_round, players_eliminated, total_damage_to_players, gold_left, time_eliminated, companion, traits, units, riotIdGameName, riotIdTagline, win);
     }
     
     @Override
@@ -121,6 +124,9 @@ public class TFTParticipant implements Serializable
                ", companion=" + companion +
                ", traits=" + traits +
                ", units=" + units +
+               ", riotIdGameName=" + riotIdGameName +
+               ", riotIdTagline=" + riotIdTagline +
+               ", win=" + win +
                '}';
     }
     

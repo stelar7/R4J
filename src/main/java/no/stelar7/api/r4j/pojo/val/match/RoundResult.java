@@ -129,13 +129,14 @@ public class RoundResult implements Serializable
                Objects.equals(defusePlayerLocations, that.defusePlayerLocations) &&
                Objects.equals(defuseLocation, that.defuseLocation) &&
                Objects.equals(playerStats, that.playerStats) &&
-               Objects.equals(roundResultCode, that.roundResultCode);
+               Objects.equals(roundResultCode, that.roundResultCode) &&
+               Objects.equals(winningTeamRole, that.winningTeamRole);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(roundNum, roundResult, roundCeremony, winningTeam, bombPlanter, bombDefuser, plantRoundTime, plantPlayerLocations, plantLocation, plantSite, defuseRoundTime, defusePlayerLocations, defuseLocation, playerStats, roundResultCode);
+        return Objects.hash(roundNum, roundResult, roundCeremony, winningTeam, bombPlanter, bombDefuser, plantRoundTime, plantPlayerLocations, plantLocation, plantSite, defuseRoundTime, defusePlayerLocations, defuseLocation, playerStats, roundResultCode, winningTeamRole);
     }
     
     @Override
@@ -157,6 +158,7 @@ public class RoundResult implements Serializable
                ", defuseLocation=" + defuseLocation +
                ", playerStats=" + playerStats +
                ", roundResultCode='" + roundResultCode + '\'' +
+               ", winningTeamRole=" + winningTeamRole +
                '}';
     }
     

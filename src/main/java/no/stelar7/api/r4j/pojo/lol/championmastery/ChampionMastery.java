@@ -146,13 +146,18 @@ public class ChampionMastery implements Serializable
                tokensEarned == that.tokensEarned &&
                championId == that.championId &&
                lastPlayTime == that.lastPlayTime &&
-               Objects.equals(playerId, that.playerId);
+               Objects.equals(playerId, that.playerId) &&
+               Objects.equals(puuid, that.puuid) &&
+               Objects.equals(markRequiredForNextLevel, that.markRequiredForNextLevel) &&
+               Objects.equals(championSeasonMilestone, that.championSeasonMilestone) &&
+               Objects.equals(nextSeasonMilestone, that.nextSeasonMilestone) &&
+               Objects.equals(milestoneGrades, that.milestoneGrades);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(championLevel, chestGranted, championPoints, championPointsSinceLastLevel, playerId, championPointsUntilNextLevel, tokensEarned, championId, lastPlayTime);
+        return Objects.hash(championLevel, chestGranted, championPoints, championPointsSinceLastLevel, playerId, championPointsUntilNextLevel, tokensEarned, championId, lastPlayTime, puuid, markRequiredForNextLevel, championSeasonMilestone, nextSeasonMilestone, milestoneGrades);
     }
     
     @Override
@@ -168,6 +173,11 @@ public class ChampionMastery implements Serializable
                ", tokensEarned=" + tokensEarned +
                ", championId=" + championId +
                ", lastPlayTime=" + lastPlayTime +
+               ", puuid=" + puuid +
+               ", markRequiredForNextLevel=" + markRequiredForNextLevel +
+               ", championSeasonMilestone=" + championSeasonMilestone +
+               ", nextSeasonMilestone=" + nextSeasonMilestone +
+               ", milestoneGrades=" + milestoneGrades +
                '}';
     }
     

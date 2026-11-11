@@ -45,13 +45,14 @@ public class LOLTimeline implements Serializable
             return false;
         }
         LOLTimeline that = (LOLTimeline) o;
-        return frameInterval == that.frameInterval && gameId == that.gameId && Objects.equals(frames, that.frames) && Objects.equals(participants, that.participants);
+        return frameInterval == that.frameInterval && gameId == that.gameId && Objects.equals(frames, that.frames) && Objects.equals(participants, that.participants) &&
+               Objects.equals(endOfGameResult, that.endOfGameResult);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(frameInterval, frames, gameId, participants);
+        return Objects.hash(frameInterval, frames, gameId, participants, endOfGameResult);
     }
     
     @Override
@@ -62,6 +63,7 @@ public class LOLTimeline implements Serializable
                ", frames=" + frames +
                ", gameId=" + gameId +
                ", participants=" + participants +
+               ", endOfGameResult=" + endOfGameResult +
                '}';
     }
     

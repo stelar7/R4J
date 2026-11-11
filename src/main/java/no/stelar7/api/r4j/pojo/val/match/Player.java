@@ -116,13 +116,17 @@ public class Player implements Serializable
                Objects.equals(stats, player.stats) &&
                Objects.equals(competitiveTier, player.competitiveTier) &&
                Objects.equals(playerCard, player.playerCard) &&
-               Objects.equals(playerTitle, player.playerTitle);
+               Objects.equals(playerTitle, player.playerTitle) &&
+               Objects.equals(gameName, player.gameName) &&
+               Objects.equals(tagLine, player.tagLine) &&
+               Objects.equals(isObserver, player.isObserver) &&
+               Objects.equals(accountLevel, player.accountLevel);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(puuid, teamId, partyId, characterId, stats, competitiveTier, playerCard, playerTitle);
+        return Objects.hash(puuid, teamId, partyId, characterId, stats, competitiveTier, playerCard, playerTitle, gameName, tagLine, isObserver, accountLevel);
     }
     
     @Override
@@ -137,6 +141,10 @@ public class Player implements Serializable
                ", competitiveTier=" + competitiveTier +
                ", playerCard='" + playerCard + '\'' +
                ", playerTitle='" + playerTitle + '\'' +
+               ", gameName=" + gameName +
+               ", tagLine=" + tagLine +
+               ", isObserver=" + isObserver +
+               ", accountLevel=" + accountLevel +
                '}';
     }
     

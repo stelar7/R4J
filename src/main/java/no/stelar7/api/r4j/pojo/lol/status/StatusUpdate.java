@@ -60,13 +60,14 @@ public class StatusUpdate implements Serializable
                Objects.equals(author, that.author) &&
                Objects.equals(publish_locations, that.publish_locations) &&
                Objects.equals(created_at, that.created_at) &&
-               Objects.equals(updated_at, that.updated_at);
+               Objects.equals(updated_at, that.updated_at) &&
+               Objects.equals(translations, that.translations);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(id, author, publish, publish_locations, created_at, updated_at);
+        return Objects.hash(id, author, publish, publish_locations, created_at, updated_at, translations);
     }
     
     @Override
@@ -79,6 +80,7 @@ public class StatusUpdate implements Serializable
                ", publish_locations=" + publish_locations +
                ", created_at='" + created_at + '\'' +
                ", updated_at='" + updated_at + '\'' +
+               ", translations=" + translations +
                '}';
     }
     

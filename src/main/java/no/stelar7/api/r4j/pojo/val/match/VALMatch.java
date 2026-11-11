@@ -50,13 +50,14 @@ public class VALMatch implements Serializable
         return Objects.equals(matchInfo, match.matchInfo) &&
                Objects.equals(players, match.players) &&
                Objects.equals(teams, match.teams) &&
-               Objects.equals(roundResults, match.roundResults);
+               Objects.equals(roundResults, match.roundResults) &&
+               Objects.equals(coaches, match.coaches);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(matchInfo, players, teams, roundResults);
+        return Objects.hash(matchInfo, players, teams, roundResults, coaches);
     }
     
     @Override
@@ -67,6 +68,7 @@ public class VALMatch implements Serializable
                ", players=" + players +
                ", teams=" + teams +
                ", roundResults=" + roundResults +
+               ", coaches=" + coaches +
                '}';
     }
     

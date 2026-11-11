@@ -130,13 +130,16 @@ public class VALMatchInfo implements Serializable
                Objects.equals(queueId, matchInfo.queueId) &&
                Objects.equals(gameMode, matchInfo.gameMode) &&
                Objects.equals(isRanked, matchInfo.isRanked) &&
-               Objects.equals(seasonId, matchInfo.seasonId);
+               Objects.equals(seasonId, matchInfo.seasonId) &&
+               Objects.equals(gameVersion, matchInfo.gameVersion) &&
+               Objects.equals(region, matchInfo.region) &&
+               Objects.equals(premierMatchInfo, matchInfo.premierMatchInfo);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(matchId, mapId, gameLengthMillis, gameStartMillis, provisioningFlowId, isCompleted, customGameName, queueId, gameMode, isRanked, seasonId);
+        return Objects.hash(matchId, mapId, gameLengthMillis, gameStartMillis, provisioningFlowId, isCompleted, customGameName, queueId, gameMode, isRanked, seasonId, gameVersion, region, premierMatchInfo);
     }
     
     @Override
@@ -154,6 +157,9 @@ public class VALMatchInfo implements Serializable
                ", gameMode='" + gameMode + '\'' +
                ", isRanked=" + isRanked +
                ", seasonId='" + seasonId + '\'' +
+               ", gameVersion=" + gameVersion +
+               ", region=" + region +
+               ", premierMatchInfo=" + premierMatchInfo +
                '}';
     }
     

@@ -953,7 +953,8 @@ public class MatchParticipant implements Serializable
                && roleBoundItem == that.roleBoundItem
                && Objects.equals(summonerId, that.summonerId)
                && teamId == that.teamId
-               && teamPosition == that.teamPosition;
+               && teamPosition == that.teamPosition &&
+               Objects.equals(missions, that.missions);
     }
     
     @Override
@@ -1091,7 +1092,7 @@ public class MatchParticipant implements Serializable
                             visionWardsBoughtInGame,
                             wardsKilled,
                             wardsPlaced,
-                            win);
+                            win, missions);
     }
     
     @Override
@@ -1231,6 +1232,7 @@ public class MatchParticipant implements Serializable
                ", wardsKilled=" + wardsKilled +
                ", wardsPlaced=" + wardsPlaced +
                ", win=" + win +
+               ", missions=" + missions +
                '}';
     }
     

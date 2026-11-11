@@ -41,13 +41,16 @@ public class PlayerClientPreferences implements Serializable
             return false;
         }
         PlayerClientPreferences that = (PlayerClientPreferences) o;
-        return Objects.equals(bannerAccent, that.bannerAccent) && Objects.equals(percentile, that.percentile) && Objects.equals(challengeIds, that.challengeIds);
+        return Objects.equals(bannerAccent, that.bannerAccent) && Objects.equals(percentile, that.percentile) && Objects.equals(challengeIds, that.challengeIds) &&
+               Objects.equals(title, that.title) &&
+               Objects.equals(crestBorder, that.crestBorder) &&
+               Objects.equals(prestigeCrestBorderLevel, that.prestigeCrestBorderLevel);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(bannerAccent, percentile, challengeIds);
+        return Objects.hash(bannerAccent, percentile, challengeIds, title, crestBorder, prestigeCrestBorderLevel);
     }
     
     @Override
@@ -57,6 +60,9 @@ public class PlayerClientPreferences implements Serializable
                "bannerAccent='" + bannerAccent + '\'' +
                ", percentile=" + percentile +
                ", challengeIds=" + challengeIds +
+               ", title=" + title +
+               ", crestBorder=" + crestBorder +
+               ", prestigeCrestBorderLevel=" + prestigeCrestBorderLevel +
                '}';
     }
     
