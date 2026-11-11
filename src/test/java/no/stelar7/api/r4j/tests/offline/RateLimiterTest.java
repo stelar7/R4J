@@ -64,25 +64,63 @@ public class RateLimiterTest
     }
 
     @Test
-    public void unknownLimitsNeverBlockButAreCarriedOver()
+    public void onlyOneCallGoesOutUntilTheLimitsAreKnown()
     {
         RateLimiter limiter = new RateLimiter();
         Assertions.assertTrue(limiter.getLimits().isEmpty());
 
-        for (int i = 0; i < 3; i++)
-        {
-            Assertions.assertEquals(0, limiter.tryAcquire(T0 + i));
-        }
+        // the first call is the probe; the others wait for its response
+        Assertions.assertEquals(0, limiter.tryAcquire(T0));
+        Assertions.assertTrue(limiter.tryAcquire(T0 + 1) > 0);
+        Assertions.assertTrue(limiter.tryAcquire(T0 + 2) > 0);
 
-        // the first response tells us the limits: the 3 calls already made count
+        // the response tells us the limits, and the probe counts against them
         Assertions.assertTrue(limiter.updateLimits(Arrays.asList(PER_TWO_MINUTE, PER_SECOND)));
+        limiter.callFinished();
         Assertions.assertEquals(Arrays.asList(PER_SECOND, PER_TWO_MINUTE), limiter.getLimits());
-        Assertions.assertEquals(3L, limiter.getCallCounts().get(PER_SECOND));
-        Assertions.assertTrue(limiter.tryAcquire(T0 + 10) > 0);
+        Assertions.assertEquals(1L, limiter.getCallCounts().get(PER_SECOND));
+
+        Assertions.assertEquals(0, limiter.tryAcquire(T0 + 50));
+        Assertions.assertEquals(0, limiter.tryAcquire(T0 + 50));
+        Assertions.assertTrue(limiter.tryAcquire(T0 + 50) > 0);
 
         // the same limits again change nothing
         Assertions.assertFalse(limiter.updateLimits(Arrays.asList(PER_SECOND, PER_TWO_MINUTE)));
         Assertions.assertEquals(3L, limiter.getCallCounts().get(PER_SECOND));
+    }
+
+    @Test
+    public void aProbeWithoutLimitsStopsHoldingCallsBack()
+    {
+        RateLimiter limiter = new RateLimiter();
+
+        Assertions.assertEquals(0, limiter.tryAcquire(T0));
+        Assertions.assertTrue(limiter.tryAcquire(T0 + 1) > 0);
+
+        // the first call finished, but its response had no limit headers: there is nothing to wait for
+        limiter.callFinished();
+        Assertions.assertEquals(0, limiter.tryAcquire(T0 + 2));
+        Assertions.assertEquals(0, limiter.tryAcquire(T0 + 3));
+
+        // the calls made so far are counted once the limits do show up
+        limiter.updateLimits(Collections.singletonList(PER_SECOND));
+        Assertions.assertEquals(3L, limiter.getCallCounts().get(PER_SECOND));
+        Assertions.assertTrue(limiter.tryAcquire(T0 + 10) > 0);
+    }
+
+    @Test
+    public void aProbeThatIsNeverMadeOrNeverAnsweredDoesNotBlockForever()
+    {
+        RateLimiter limiter = new RateLimiter();
+
+        // the permit is given back (ie. the method limit was not available): the next call becomes the probe
+        Assertions.assertEquals(0, limiter.tryAcquire(T0));
+        limiter.release();
+        Assertions.assertEquals(0, limiter.tryAcquire(T0 + 1));
+
+        // the probe never reports back: after 10 seconds the next call goes anyway
+        Assertions.assertTrue(limiter.tryAcquire(T0 + 5000) > 0);
+        Assertions.assertEquals(0, limiter.tryAcquire(T0 + 10_001));
     }
 
     @Test

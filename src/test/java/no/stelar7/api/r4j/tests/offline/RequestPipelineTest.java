@@ -203,6 +203,82 @@ public class RequestPipelineTest
     }
 
     @Test
+    public void aBurstOfFirstCallsStaysWithinTheLimit() throws Exception
+    {
+        // its own context, so nothing is known about the limits yet
+        R4JContext fresh = new R4JContext(new APICredentials("cold-start-key"));
+
+        // the server allows 3 calls per second, and counts like the api: a window starts with the first call after the previous one ended
+        AtomicInteger inFlight      = new AtomicInteger();
+        AtomicInteger mostInFlight  = new AtomicInteger();
+        AtomicInteger firstCalls    = new AtomicInteger();
+        AtomicInteger overTheLimit  = new AtomicInteger();
+        long[]        window        = {0, 0};
+        AtomicBoolean limitsHandedOut = new AtomicBoolean();
+
+        handler = exchange -> {
+            int count;
+            synchronized (window)
+            {
+                long now = System.currentTimeMillis();
+                if (now >= window[0] + 1000)
+                {
+                    window[0] = now;
+                    window[1] = 0;
+                }
+                count = (int) ++window[1];
+                if (count > 3)
+                {
+                    overTheLimit.incrementAndGet();
+                }
+            }
+
+            if (!limitsHandedOut.get())
+            {
+                // calls that arrive before any response has left: these went out without knowing the limits
+                firstCalls.incrementAndGet();
+                mostInFlight.accumulateAndGet(inFlight.incrementAndGet(), Math::max);
+                try
+                {
+                    Thread.sleep(300);
+                } catch (InterruptedException ignored)
+                {
+                    Thread.currentThread().interrupt();
+                }
+                inFlight.decrementAndGet();
+            }
+
+            exchange.getResponseHeaders().add("X-App-Rate-Limit", "3:1");
+            exchange.getResponseHeaders().add("X-App-Rate-Limit-Count", count + ":1");
+            limitsHandedOut.set(true);
+            respond(exchange, 200, STATUS_JSON);
+        };
+
+        ExecutorService pool = Executors.newFixedThreadPool(8);
+        try
+        {
+            List<Future<Object>> calls = new ArrayList<>();
+            for (int i = 0; i < 8; i++)
+            {
+                calls.add(pool.submit(() -> new DataCallBuilder(fresh).withProxy(proxy).withEndpoint(URLEndpoint.V4_STATUS_LOL).withPlatform(LeagueShard.VN2).build()));
+            }
+
+            for (Future<Object> call : calls)
+            {
+                Assertions.assertNotNull(call.get(30, TimeUnit.SECONDS));
+            }
+        } finally
+        {
+            pool.shutdownNow();
+        }
+
+        // only one call went out before the limits were known, and the other seven were then spread over the windows
+        Assertions.assertEquals(1, firstCalls.get());
+        Assertions.assertEquals(1, mostInFlight.get());
+        Assertions.assertEquals(0, overTheLimit.get());
+    }
+
+    @Test
     public void ratelimitedCallWithoutLimitersDoesNotCrash()
     {
         // no X-Rate-Limit-Type header means a service limit, which is retried with a backoff

@@ -52,6 +52,12 @@ public class RateLimiter
     private static final long WARN_INTERVAL_MS = 60_000;
 
     /**
+     * While the first call of a bucket is in flight, how often the others check if the limits are known, and how long they wait for it at most
+     */
+    private static final long PROBE_POLL_MS    = 25;
+    private static final long PROBE_TIMEOUT_MS = 10_000;
+
+    /**
      * What this process knows about the current window of one limit. The count itself is in the store.
      */
     private static final class Window
@@ -99,6 +105,12 @@ public class RateLimiter
     private long unknownStart;
     private long unknownCount;
 
+    // While the limits are unknown, a single call (the probe) is let through to learn them from its response.
+    // Without this, everything started before the first response arrives would go out unlimited.
+    private boolean probeInFlight;
+    private boolean probeDone;
+    private long    probeStartedAt;
+
     // what this process knows about the cooldown, so the store is not asked about it for every call
     private long    cooldownUntil;
     private boolean cooldownFailFast;
@@ -111,7 +123,7 @@ public class RateLimiter
 
     /**
      * A limiter that counts for itself, for a bucket with unknown limits.
-     * It does not make a caller wait until the limits are known, but counts the calls, so they are accounted for once they are.
+     * It lets a single call through to learn the limits from its response, and counts the calls made until they are known.
      */
     public RateLimiter()
     {
@@ -295,6 +307,12 @@ public class RateLimiter
             ttls.add(limit.getTimeframeInMS() + getWindowMargin());
         }
 
+        if (limits.isEmpty() && !probeDone && probeInFlight && now - probeStartedAt < PROBE_TIMEOUT_MS)
+        {
+            // the first call of this bucket is on its way; its response tells us the limits
+            return PROBE_POLL_MS;
+        }
+
         // with unknown limits there are no counters, but a cooldown still blocks
         long wait = withStore(s -> s.tryIncrement(cooldownKey(), counters, maxima, ttls));
         if (wait > 0)
@@ -320,6 +338,12 @@ public class RateLimiter
                 unknownStart = now;
             }
             unknownCount++;
+
+            if (!probeDone)
+            {
+                probeInFlight = true;
+                probeStartedAt = now;
+            }
         }
 
         for (RateLimit limit : limits)
@@ -348,6 +372,8 @@ public class RateLimiter
             {
                 unknownCount--;
             }
+            // the call was not made, so the next one becomes the probe
+            probeInFlight = false;
             return;
         }
 
@@ -366,6 +392,21 @@ public class RateLimiter
             s.decrement(counters);
             return null;
         });
+    }
+
+    /**
+     * Tells the limiter that a call it gave a permit to has finished, whatever the outcome.
+     * <p>
+     * While the limits are unknown only one call is let through at a time, and this is what lets the next one go.
+     * If that first call did not tell us the limits (not every response has the headers), calls are no longer held back.
+     */
+    public synchronized void callFinished()
+    {
+        if (probeInFlight)
+        {
+            probeInFlight = false;
+            probeDone = true;
+        }
     }
 
     /**

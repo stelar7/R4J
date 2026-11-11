@@ -303,7 +303,21 @@ public class DataCallBuilder
 
             logger.trace("Trying url: {}", url);
 
-            return this.getResponse(url);
+            try
+            {
+                return this.getResponse(url);
+            } finally
+            {
+                if (this.dc.useRatelimiter())
+                {
+                    // lets the next call through if this was the first call of the bucket (see RateLimiter.callFinished)
+                    context.getLimiter(keyTypeUsed, platform, platform).callFinished();
+                    if (this.dc.getEndpoint() != null)
+                    {
+                        context.getLimiter(keyTypeUsed, platform, this.dc.getEndpoint()).callFinished();
+                    }
+                }
+            }
         } finally
         {
             if (semaphore != null)
