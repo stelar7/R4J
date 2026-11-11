@@ -9,8 +9,8 @@ import no.stelar7.api.r4j.basic.ratelimiting.*;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
 
 /**
  * Several processes sharing one api key through a {@link SharedRateLimitStore}.
@@ -252,6 +252,73 @@ public class SharedRateLimiterTest
         Assertions.assertTrue(limiter.tryAcquire(0) > 0);
         limiter.release();
         Assertions.assertEquals(0, limiter.tryAcquire(0));
+    }
+
+    /**
+     * A store that takes a while to answer, like a Redis or a database on the other side of a network
+     */
+    private static final class SlowStore extends InMemoryRateLimitStore
+    {
+        private final AtomicInteger inside     = new AtomicInteger();
+        private final AtomicInteger mostInside = new AtomicInteger();
+
+        @Override
+        public long tryIncrement(String blockKey, List<String> counters, List<Long> maxima, List<Long> ttls)
+        {
+            mostInside.accumulateAndGet(inside.incrementAndGet(), Math::max);
+            try
+            {
+                Thread.sleep(300);
+            } catch (InterruptedException e)
+            {
+                Thread.currentThread().interrupt();
+            } finally
+            {
+                inside.decrementAndGet();
+            }
+
+            return super.tryIncrement(blockKey, counters, maxima, ttls);
+        }
+    }
+
+    @Test
+    public void aSlowStoreDoesNotMakeCallsQueueUp() throws Exception
+    {
+        SlowStore   store   = new SlowStore();
+        RateLimiter limiter = new RateLimiter(store, "test");
+        limiter.updateLimits(Collections.singletonList(new RateLimit(100, 60, TimeUnit.SECONDS)));
+
+        ExecutorService pool = Executors.newFixedThreadPool(4);
+        try
+        {
+            long               start = System.currentTimeMillis();
+            List<Future<Long>> calls = new ArrayList<>();
+            for (int i = 0; i < 4; i++)
+            {
+                calls.add(pool.submit(() -> limiter.tryAcquire(System.currentTimeMillis())));
+            }
+
+            // while those are waiting for the store, what the limiter knows locally is still available right away
+            Thread.sleep(100);
+            long before = System.currentTimeMillis();
+            Assertions.assertFalse(limiter.isCooldownFailFast());
+            Assertions.assertEquals(0, limiter.getCooldownRemaining(System.currentTimeMillis()));
+            Assertions.assertTrue(System.currentTimeMillis() - before < 100, "the limiter was blocked by a call to the store");
+
+            for (Future<Long> call : calls)
+            {
+                Assertions.assertEquals(0L, call.get(10, TimeUnit.SECONDS));
+            }
+            long took = System.currentTimeMillis() - start;
+
+            // the four calls were in the store at the same time, instead of one after the other (which would take 1200ms)
+            Assertions.assertEquals(4, store.mostInside.get());
+            Assertions.assertTrue(took < 1000, "took " + took + " ms");
+            Assertions.assertEquals(4L, limiter.getCallCounts().values().iterator().next());
+        } finally
+        {
+            pool.shutdownNow();
+        }
     }
 
     @Test

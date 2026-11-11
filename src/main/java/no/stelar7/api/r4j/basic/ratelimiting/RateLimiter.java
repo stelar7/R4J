@@ -4,13 +4,14 @@ import org.slf4j.*;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Limits the calls of one bucket (the application limit of a platform, or the limit of one method on a platform).
  * <p>
  * The limits are fixed windows, like the ones the api uses: a window starts with the first call made in it, and allows a number of calls until it ends.
  * The limiter never sleeps or blocks itself; {@link #tryAcquire(long)} either takes a permit or says how long to wait, so the caller decides how to wait.
- * All methods are thread safe.
+ * All methods are thread safe, and calls for the same bucket do not wait for each other while a store outside of the JVM is being asked.
  * <p>
  * The counters live in a {@link SharedRateLimitStore}. There is one implementation of the limiter, and where the counters are kept decides how
  * well several processes sharing an api key work together:
@@ -93,6 +94,10 @@ public class RateLimiter
         }
     }
 
+    // Guards everything this process knows about the bucket. It is never held while talking to a store outside of the JVM
+    // (see withStore), so a slow Redis or database does not make the calls to an endpoint queue up behind each other.
+    private final ReentrantLock lock = new ReentrantLock();
+
     private final SharedRateLimitStore store;
     // used when the store can not be reached
     private final SharedRateLimitStore fallback;
@@ -118,7 +123,7 @@ public class RateLimiter
 
     private long latency;
     // the latest time this limiter was told about
-    private long lastNow;
+    private volatile long lastNow;
     private long lastWarning;
 
     /**
@@ -173,7 +178,11 @@ public class RateLimiter
     }
 
     /**
-     * Runs the call on the store, or on the private in-memory store if the store can not be reached
+     * Runs the call on the store, or on the private in-memory store if the store can not be reached.
+     * <p>
+     * For a store outside of the JVM the lock is released while the call is made, and taken again afterwards.
+     * What this process knows about the bucket can therefore have changed when the call returns; the callers only use
+     * what they read before the call, or read it again.
      */
     private <T> T withStore(StoreCall<T> call)
     {
@@ -182,19 +191,40 @@ public class RateLimiter
             return call.on(store);
         }
 
+        int holds = lock.getHoldCount();
+        for (int i = 0; i < holds; i++)
+        {
+            lock.unlock();
+        }
+
+        RuntimeException failure = null;
+        T                result  = null;
         try
         {
-            return call.on(store);
+            result = call.on(store);
         } catch (RuntimeException e)
         {
-            if (lastNow - lastWarning > WARN_INTERVAL_MS || lastWarning == 0)
+            failure = e;
+        } finally
+        {
+            for (int i = 0; i < holds; i++)
             {
-                lastWarning = Math.max(1, lastNow);
-                logger.warn("The shared rate limit store could not be used, counting locally instead", e);
+                lock.lock();
             }
-
-            return call.on(fallback);
         }
+
+        if (failure == null)
+        {
+            return result;
+        }
+
+        if (lastNow - lastWarning > WARN_INTERVAL_MS || lastWarning == 0)
+        {
+            lastWarning = Math.max(1, lastNow);
+            logger.warn("The shared rate limit store could not be used, counting locally instead", failure);
+        }
+
+        return call.on(fallback);
     }
 
     private void touch(long now)
@@ -287,7 +317,19 @@ public class RateLimiter
      * @param now the current time (epoch millis)
      * @return 0 if a permit was taken, otherwise the amount of milliseconds to wait before trying again
      */
-    public synchronized long tryAcquire(long now)
+    public long tryAcquire(long now)
+    {
+        lock.lock();
+        try
+        {
+            return tryAcquireLocked(now);
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private long tryAcquireLocked(long now)
     {
         touch(now);
         loadSharedLimits();
@@ -364,7 +406,19 @@ public class RateLimiter
     /**
      * Gives back a permit taken with {@link #tryAcquire(long)}, for a call that ended up not being made.
      */
-    public synchronized void release()
+    public void release()
+    {
+        lock.lock();
+        try
+        {
+            releaseLocked();
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private void releaseLocked()
     {
         if (limits.isEmpty())
         {
@@ -400,7 +454,19 @@ public class RateLimiter
      * While the limits are unknown only one call is let through at a time, and this is what lets the next one go.
      * If that first call did not tell us the limits (not every response has the headers), calls are no longer held back.
      */
-    public synchronized void callFinished()
+    public void callFinished()
+    {
+        lock.lock();
+        try
+        {
+            callFinishedLocked();
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private void callFinishedLocked()
     {
         if (probeInFlight)
         {
@@ -417,7 +483,19 @@ public class RateLimiter
      * @param newLimits the limits to obey
      * @return true if the limits changed
      */
-    public synchronized boolean updateLimits(Collection<RateLimit> newLimits)
+    public boolean updateLimits(Collection<RateLimit> newLimits)
+    {
+        lock.lock();
+        try
+        {
+            return updateLimitsLocked(newLimits);
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private boolean updateLimitsLocked(Collection<RateLimit> newLimits)
     {
         List<RateLimit> sorted = sort(newLimits);
         if (sorted.equals(limits))
@@ -477,7 +555,19 @@ public class RateLimiter
      * @param sentAt                when the request this response belongs to was sent (epoch millis)
      * @param receivedAt            when the response was received (epoch millis)
      */
-    public synchronized void syncWithServerCounts(Map<Integer, Integer> countsByWindowSeconds, long sentAt, long receivedAt)
+    public void syncWithServerCounts(Map<Integer, Integer> countsByWindowSeconds, long sentAt, long receivedAt)
+    {
+        lock.lock();
+        try
+        {
+            syncWithServerCountsLocked(countsByWindowSeconds, sentAt, receivedAt);
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private void syncWithServerCountsLocked(Map<Integer, Integer> countsByWindowSeconds, long sentAt, long receivedAt)
     {
         touch(receivedAt);
 
@@ -567,7 +657,19 @@ public class RateLimiter
      * @param retryAfterSeconds the value of the Retry-After header (may be null or malformed, a default is used then)
      * @param failFast          true if calls made during the cooldown should fail instead of wait (see {@link #isCooldownFailFast()})
      */
-    public synchronized void cooldown(long receivedAt, String retryAfterSeconds, boolean failFast)
+    public void cooldown(long receivedAt, String retryAfterSeconds, boolean failFast)
+    {
+        lock.lock();
+        try
+        {
+            cooldownLocked(receivedAt, retryAfterSeconds, failFast);
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private void cooldownLocked(long receivedAt, String retryAfterSeconds, boolean failFast)
     {
         // a response that was received before the one that set the current cooldown is outdated
         if (cooldownUntil > lastNow && receivedAt < cooldownStartedAt)
@@ -601,7 +703,19 @@ public class RateLimiter
      * @return how long the cooldown started by a 429 still lasts, 0 if there is none.
      * A cooldown started by another process (through a shared store) is known once {@link #tryAcquire(long)} has run into it.
      */
-    public synchronized long getCooldownRemaining(long now)
+    public long getCooldownRemaining(long now)
+    {
+        lock.lock();
+        try
+        {
+            return getCooldownRemainingLocked(now);
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private long getCooldownRemainingLocked(long now)
     {
         touch(now);
         return Math.max(0, cooldownUntil - now);
@@ -610,7 +724,19 @@ public class RateLimiter
     /**
      * @return true if calls made during the current cooldown should fail immediately instead of waiting for it to end
      */
-    public synchronized boolean isCooldownFailFast()
+    public boolean isCooldownFailFast()
+    {
+        lock.lock();
+        try
+        {
+            return isCooldownFailFastLocked();
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private boolean isCooldownFailFastLocked()
     {
         return cooldownFailFast && lastNow < cooldownUntil;
     }
@@ -618,7 +744,19 @@ public class RateLimiter
     /**
      * @return the limits this limiter obeys, shortest window first (empty if they are not known yet)
      */
-    public synchronized List<RateLimit> getLimits()
+    public List<RateLimit> getLimits()
+    {
+        lock.lock();
+        try
+        {
+            return getLimitsLocked();
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private List<RateLimit> getLimitsLocked()
     {
         loadSharedLimits();
         return new ArrayList<>(limits);
@@ -627,7 +765,19 @@ public class RateLimiter
     /**
      * @return the calls counted in the current window of each limit (by everyone using the store, and as far as the server told us, by others)
      */
-    public synchronized Map<RateLimit, Long> getCallCounts()
+    public Map<RateLimit, Long> getCallCounts()
+    {
+        lock.lock();
+        try
+        {
+            return getCallCountsLocked();
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private Map<RateLimit, Long> getCallCountsLocked()
     {
         loadSharedLimits();
 
@@ -640,7 +790,19 @@ public class RateLimiter
     }
 
     @Override
-    public synchronized String toString()
+    public String toString()
+    {
+        lock.lock();
+        try
+        {
+            return toStringLocked();
+        } finally
+        {
+            lock.unlock();
+        }
+    }
+    
+    private String toStringLocked()
     {
         return "RateLimiter{" + "calls=" + getCallCounts() + ", cooldownUntil=" + cooldownUntil + '}';
     }
