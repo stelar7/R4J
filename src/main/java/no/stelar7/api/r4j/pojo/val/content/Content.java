@@ -21,6 +21,7 @@ public class Content implements Serializable
     private List<ContentItem> charmLevels;
     private List<ContentItem> playerCards;
     private List<ContentItem> playerTitles;
+    private List<Act> acts;
     
     public String getVersion()
     {
@@ -145,5 +146,10 @@ public class Content implements Serializable
                ", playerCards=" + playerCards +
                ", playerTitles=" + playerTitles +
                '}';
+    }
+    
+    public List<Act> getActs()
+    {
+        return acts;
     }
 }
