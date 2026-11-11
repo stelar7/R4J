@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.Map;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.Constants;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -40,22 +41,49 @@ public final class ImageAPI
     {
         Realm  realm         = DDragonAPI.getInstance(context).getRealm();
         String cdn           = realm.getCDN();
-        String versionString = version != null ? version : realm.getV();
-        
+        String versionString = version != null ? version : currentVersion(realm, path);
+
         String preReplace = cdn + Constants.SEPARATOR + versionString + Constants.SEPARATOR + path + Constants.SEPARATOR + file;
         return preReplace.replace(" ", "%20");
     }
-    
-    private String buildSplashImageURL(String file)
+
+    /**
+     * The version to use when none is given. Not everything is published for the current patch:
+     * the old runes and masteries only exist for the last patch that had them, which the realm tells us.
+     */
+    private String currentVersion(Realm realm, String path)
+    {
+        String type = null;
+        if (path.equals("img/rune"))
+        {
+            type = "rune";
+        } else if (path.equals("img/mastery"))
+        {
+            type = "mastery";
+        }
+
+        Map<String, String> versions = realm.getN();
+        return type != null && versions != null && versions.get(type) != null ? versions.get(type) : realm.getV();
+    }
+
+    /**
+     * The art that is not tied to a patch (splash and loading screen art) has no version in its url
+     */
+    private String buildUnversionedImageURL(String path, String file)
     {
         Realm  realm = DDragonAPI.getInstance(context).getRealm();
         String cdn   = realm.getCDN();
-        
-        String preReplace = cdn + Constants.SEPARATOR + "img/champion/splash" + Constants.SEPARATOR + file;
+
+        String preReplace = cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + file;
         return preReplace.replace(" ", "%20");
     }
-    
-    
+
+    private String buildSplashImageURL(String file)
+    {
+        return buildUnversionedImageURL("img/champion/splash", file);
+    }
+
+
     /**
      * Gets profile icon.
      *
@@ -65,7 +93,7 @@ public final class ImageAPI
      */
     public String getProfileIcon(String iconid, String version)
     {
-        //http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png
+        //https://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png
         return buildImageURL(version, "img/profileicon", iconid + ".png");
     }
     
@@ -75,7 +103,10 @@ public final class ImageAPI
      * @param region       the region
      * @param summonerName the summoner name
      * @return the profile icon
+     * @deprecated the avatar service this url points at no longer exists (the host does not answer), and summoner names are no longer used to look players up.
+     * Get the icon id from the Summoner, and use {@link #getProfileIcon(String, String)}.
      */
+    @Deprecated
     public String getProfileIcon(LeagueShard region, String summonerName)
     {
         // http://avatar.leagueoflegends.com/region/summonername.png
@@ -91,7 +122,7 @@ public final class ImageAPI
      */
     public String getSplashArt(String championKey, int skinNum)
     {
-        // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
+        // https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
         return buildSplashImageURL(championKey + "_" + skinNum + ".jpg");
     }
     
@@ -104,21 +135,21 @@ public final class ImageAPI
      */
     public String getSplashArt(String championKey, Skin skin)
     {
-        // http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
+        // https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
         return buildSplashImageURL(championKey + "_" + skin.getNum() + ".jpg");
     }
     
     /**
      * Gets loading screen art.
      *
-     * @param championId the champion id
-     * @param skinNum    the skin num
+     * @param championKey the key of the champion (ie. "Aatrox")
+     * @param skinNum     the skin num
      * @return the loading screen art
      */
-    public String getLoadingScreenArt(String championId, int skinNum)
+    public String getLoadingScreenArt(String championKey, int skinNum)
     {
-        // http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
-        return buildImageURL(null, "img/champion/loading", championId + "_" + skinNum + ".png");
+        // https://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
+        return buildUnversionedImageURL("img/champion/loading", championKey + "_" + skinNum + ".jpg");
     }
     
     /**
@@ -129,8 +160,10 @@ public final class ImageAPI
      */
     public String getLoadingScreenArt(Skin skin)
     {
-        // http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
-        return buildImageURL(null, "img/champion/loading", skin.getId() + "_" + skin.getNum() + ".png");
+        // https://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
+        // the url needs the key of the champion; the id of a skin is the id of its champion followed by the three digits of the skin
+        StaticChampion champion = DDragonAPI.getInstance(context).getChampion(skin.getId() / 1000);
+        return getLoadingScreenArt(champion.getKey(), skin.getNum());
     }
     
     
@@ -143,7 +176,7 @@ public final class ImageAPI
      */
     public String getSquare(StaticChampion champ, String version)
     {
-        // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
+        // https://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
         return buildImageURL(version, "img/champion", champ.getImage().getFull());
     }
     
@@ -156,7 +189,7 @@ public final class ImageAPI
      */
     public String getSquare(String champKey, String version)
     {
-        // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
+        // https://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Aatrox.png
         return buildImageURL(version, "img/champion", champKey + ".png");
     }
     
@@ -170,7 +203,7 @@ public final class ImageAPI
      */
     public String getPassive(String imageFull, String version)
     {
-        // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
+        // https://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
         return buildImageURL(version, "img/passive", imageFull);
     }
     
@@ -183,7 +216,7 @@ public final class ImageAPI
      */
     public String getPassive(Passive passive, String version)
     {
-        // http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
+        // https://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/Anivia_P.png
         return getPassive(passive.getImage().getFull(), version);
     }
     
@@ -196,7 +229,7 @@ public final class ImageAPI
      */
     public String getAbility(StaticChampionSpell spell, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
         return buildImageURL(version, "img/spell", spell.getImage().getFull());
     }
     
@@ -209,7 +242,7 @@ public final class ImageAPI
      */
     public String getAbility(String imageFull, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/FlashFrost.png
         return buildImageURL(version, "img/spell", imageFull);
     }
     
@@ -222,7 +255,7 @@ public final class ImageAPI
      */
     public String getSummonerSpell(SummonerSpellType spell, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
         return buildImageURL(version, "img/spell", spell.getApiName() + ".png");
     }
     
@@ -235,7 +268,7 @@ public final class ImageAPI
      */
     public String getSummonerSpell(StaticSummonerSpell spell, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
         return buildImageURL(version, "img/spell", spell.getImage().getFull());
     }
     
@@ -248,7 +281,7 @@ public final class ImageAPI
      */
     public String getSummonerSpell(String spell, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/SummonerFlash.png
         return buildImageURL(version, "img/spell", spell + ".png");
     }
     
@@ -261,7 +294,7 @@ public final class ImageAPI
      */
     public String getItem(String id, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
         return buildImageURL(version, "img/item", id + ".png");
     }
     
@@ -275,7 +308,7 @@ public final class ImageAPI
      */
     public String getItem(Item id, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/1001.png
         return buildImageURL(version, "img/item", id.getImage().getFull());
     }
     
@@ -288,7 +321,7 @@ public final class ImageAPI
      */
     public String getMastery(StaticMastery id, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
         return buildImageURL(version, "img/mastery", id.getImage().getFull());
     }
     
@@ -301,7 +334,7 @@ public final class ImageAPI
      */
     public String getMastery(String id, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/mastery/6111.png
         return buildImageURL(version, "img/mastery", id + ".png");
     }
     
@@ -315,7 +348,7 @@ public final class ImageAPI
      */
     public String getSpriteSheet(String sprite, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/7.8.1/img/sprite/mastery0.png
+        //  https://ddragon.leagueoflegends.com/cdn/7.8.1/img/sprite/mastery0.png
         return buildImageURL(version, "img/sprite", sprite);
     }
     
@@ -328,7 +361,7 @@ public final class ImageAPI
      */
     public String getRune(String id, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
         return buildImageURL(version, "img/rune", id + ".png");
     }
     
@@ -341,7 +374,7 @@ public final class ImageAPI
      */
     public String getRune(StaticRune rune, String version)
     {
-        //  http://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
+        //  https://ddragon.leagueoflegends.com/cdn/6.24.1/img/rune/8001.png
         return buildImageURL(version, "img/rune", rune.getImage().getFull());
     }
     
@@ -355,7 +388,7 @@ public final class ImageAPI
      */
     public String getMap(MapType map, String version)
     {
-        // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
+        // https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
         return buildImageURL(version, "img/map", "map" + map.getId() + ".png");
     }
     
@@ -368,7 +401,7 @@ public final class ImageAPI
      */
     public String getMap(String map, String version)
     {
-        // http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
+        // https://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map11.png
         return buildImageURL(version, "img/map", map + ".png");
     }
 }
