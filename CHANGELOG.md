@@ -83,3 +83,4 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * `ImageAPI` built loading screen art urls that do not exist, and rune and mastery icon urls that only work for an old patch. `ImageAPI.getProfileIcon(region, summonerName)` is deprecated, as the service behind it is gone.
 * A lazily loaded list (ie. from `getMatchList`) claimed to be empty until it was iterated (#112).
 * The file cache kept growing, because expired files were only removed when asked for again and folders were never removed (#61).
+* Asking for something that does not exist threw a `NullPointerException` in three places: `getMatch` and `getMetadata` of `TFTMatchAPI` and `LORMatchAPI` (now null), `getLeagueByTierDivision` for master, grandmaster and challenger (now an empty list), and the tier and division lookups when given `TierDivisionType.UNRANKED` (now an empty list, without making a call).
