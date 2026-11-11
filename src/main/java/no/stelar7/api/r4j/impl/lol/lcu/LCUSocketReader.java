@@ -11,6 +11,18 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Listens to the events of the running league client over its websocket.
+ * <p>
+ * This is the only class that needs the websocket library, which is an optional dependency of R4J. Add it to your own project to use this class:
+ * <pre>
+ * &lt;dependency&gt;
+ *     &lt;groupId&gt;com.neovisionaries&lt;/groupId&gt;
+ *     &lt;artifactId&gt;nv-websocket-client&lt;/artifactId&gt;
+ *     &lt;version&gt;2.14&lt;/version&gt;
+ * &lt;/dependency&gt;
+ * </pre>
+ */
 public class LCUSocketReader
 {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(LCUSocketReader.class);
