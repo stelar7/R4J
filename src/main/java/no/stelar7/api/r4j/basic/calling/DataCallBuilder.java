@@ -452,7 +452,7 @@ public class DataCallBuilder
                 logger.trace("Trying url: {}", url);
 
                 final long sentAt = System.currentTimeMillis();
-                CompletableFuture<java.net.http.HttpResponse<byte[]>> pending = context.getHttpClient().sendAsync(toRequest(url), java.net.http.HttpResponse.BodyHandlers.ofByteArray());
+                CompletableFuture<java.net.http.HttpResponse<byte[]>> pending = context.getHttpClient(this.dc.getConnectTimeout()).sendAsync(toRequest(url), java.net.http.HttpResponse.BodyHandlers.ofByteArray());
                 handedOver = true;
 
                 pending.whenComplete((httpResponse, error) -> {

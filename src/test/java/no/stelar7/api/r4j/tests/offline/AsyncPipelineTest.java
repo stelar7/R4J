@@ -403,4 +403,32 @@ public class AsyncPipelineTest
 
         Assertions.assertNotEquals(thread, ranOn);
     }
+
+    /**
+     * The connect timeout used to be the one set when the first non-blocking call was made
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void aChangedTimeoutIsUsedByTheCallsMadeAfterIt() throws Exception
+    {
+        handler = exchange -> respond(exchange, 200, STATUS_JSON);
+
+        R4JContext context = context();
+        java.lang.reflect.Field field = R4JContext.class.getDeclaredField("httpClients");
+        field.setAccessible(true);
+        Map<Integer, java.net.http.HttpClient> clients = (Map<Integer, java.net.http.HttpClient>) field.get(context);
+
+        statusCall(context).buildAsync().get(20, TimeUnit.SECONDS);
+        Assertions.assertEquals(Collections.singleton(DataCall.DEFAULT_CONNECT_TIMEOUT), clients.keySet());
+
+        context.setGlobalTimeout(4321);
+        statusCall(context).buildAsync().get(20, TimeUnit.SECONDS);
+        Assertions.assertEquals(java.time.Duration.ofMillis(4321), clients.get(4321).connectTimeout().orElse(null));
+
+        // calls with the same timeout share a client, and with it the open connections
+        java.net.http.HttpClient client = clients.get(4321);
+        statusCall(context).buildAsync().get(20, TimeUnit.SECONDS);
+        Assertions.assertSame(client, clients.get(4321));
+        Assertions.assertEquals(2, clients.size());
+    }
 }

@@ -274,7 +274,8 @@ public final class R4JContext
         return t;
     });
 
-    private volatile java.net.http.HttpClient httpClient;
+    // one client per connect timeout in use, as a client has its connect timeout fixed when it is created
+    private final Map<Integer, java.net.http.HttpClient> httpClients = new ConcurrentHashMap<>();
 
     /**
      * Runs the task after the delay, on the timer thread. The task must not block.
@@ -293,26 +294,14 @@ public final class R4JContext
     }
 
     /**
-     * The http client used by the non-blocking calls ({@code DataCallBuilder.buildAsync()}). It is created on first use,
-     * with the connect timeout of that moment (see {@link #setGlobalTimeout(int)}).
+     * The http client used by the non-blocking calls ({@code DataCallBuilder.buildAsync()}).
+     * Calls with the same connect timeout share a client (and its connections); it is created the first time that timeout is used.
+     *
+     * @param connectTimeout the connect timeout of the call, in ms
      */
-    java.net.http.HttpClient getHttpClient()
+    java.net.http.HttpClient getHttpClient(int connectTimeout)
     {
-        java.net.http.HttpClient client = httpClient;
-        if (client == null)
-        {
-            synchronized (this)
-            {
-                client = httpClient;
-                if (client == null)
-                {
-                    int connectTimeout = globalTimeout != 0 ? globalTimeout : DataCall.DEFAULT_CONNECT_TIMEOUT;
-                    httpClient = client = java.net.http.HttpClient.newBuilder().connectTimeout(java.time.Duration.ofMillis(connectTimeout)).build();
-                }
-            }
-        }
-
-        return client;
+        return httpClients.computeIfAbsent(connectTimeout, timeout -> java.net.http.HttpClient.newBuilder().connectTimeout(java.time.Duration.ofMillis(timeout)).build());
     }
 
     /**
