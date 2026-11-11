@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.lcu;
 
+import org.slf4j.*;
 import no.stelar7.api.r4j.basic.utils.*;
 
 import java.io.*;
@@ -9,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class LCUConnection
 {
+    private static final Logger logger = LoggerFactory.getLogger(LCUConnection.class);
+    
     public static Pair<String, String> getConnectionData()
     {
         boolean      isWindows      = System.getProperty("os.name").toLowerCase(Locale.ENGLISH).contains("win");
@@ -30,7 +33,7 @@ public class LCUConnection
             
             if (password == null || port == null)
             {
-                System.err.println("The league client does not appear to be running!");
+                logger.warn("The league client does not appear to be running!");
                 return null;
             }
             
@@ -38,7 +41,7 @@ public class LCUConnection
             
         } catch (Exception e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to find the connection info of the league client", e);
             return null;
         }
     }

@@ -5,10 +5,12 @@ import no.stelar7.api.r4j.basic.exceptions.APIUnsupportedActionException;
 import no.stelar7.api.r4j.basic.utils.Base32;
 
 import java.security.*;
-import java.util.logging.Logger;
+import org.slf4j.*;
 
 public class APICredentials
 {
+    private static final Logger logger = LoggerFactory.getLogger(APICredentials.class);
+    
     private final String lolAPIKey;
     private final String TFTAPIKey;
     private final String LORAPIKey;
@@ -33,7 +35,7 @@ public class APICredentials
         this.VALAPIKey = val;
         
         if (lol != null && tournament != null && !lol.equals(tournament)) {
-            Logger.getGlobal().warning("Using different keys for league and tournament might lead to decryption exceptions");
+            logger.warn("Using different keys for league and tournament might lead to decryption exceptions");
         }
     }
     
@@ -157,7 +159,7 @@ public class APICredentials
             return Base32.encode(messageDigest.digest());
         } catch (NoSuchAlgorithmException e)
         {
-            e.printStackTrace();
+            logger.warn("SHA-256 is not available", e);
             return unique;
         }
     }

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.replay;
 
+import org.slf4j.*;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.exceptions.APIResponseException;
@@ -10,6 +11,8 @@ import java.util.Map;
 
 public class ReplayAPI
 {
+    private static final Logger logger = LoggerFactory.getLogger(ReplayAPI.class);
+    
     public static ReplayGameClientProcessInfo getProcessInfo()
     {
         try
@@ -40,7 +43,7 @@ public class ReplayAPI
             
         } catch (APIResponseException e)
         {
-            e.printStackTrace();
+            logger.warn("The replay api did not accept the request", e);
         }
     }
     
@@ -74,7 +77,7 @@ public class ReplayAPI
             
         } catch (APIResponseException e)
         {
-            e.printStackTrace();
+            logger.warn("The replay api did not accept the request", e);
         }
     }
     
@@ -108,7 +111,7 @@ public class ReplayAPI
             
         } catch (APIResponseException e)
         {
-            e.printStackTrace();
+            logger.warn("The replay api did not accept the request", e);
         }
     }
     
@@ -142,7 +145,7 @@ public class ReplayAPI
             
         } catch (APIResponseException e)
         {
-            e.printStackTrace();
+            logger.warn("The replay api did not accept the request", e);
         }
     }
     
@@ -176,7 +179,7 @@ public class ReplayAPI
             
         } catch (APIResponseException e)
         {
-            e.printStackTrace();
+            logger.warn("The replay api did not accept the request", e);
         }
     }
     

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.lcu;
 
+import org.slf4j.*;
 import com.google.gson.*;
 import com.google.gson.stream.JsonWriter;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
@@ -14,6 +15,8 @@ import java.util.Set;
 
 public class LCUApi
 {
+    private static final Logger logger = LoggerFactory.getLogger(LCUApi.class);
+    
     /**
      * Creates a lobby for the gamemode supplied
      * @param queue the queue to create
@@ -74,7 +77,7 @@ public class LCUApi
               .endArray();
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to build the request for the league client", e);
         }
         
         String               postData = sw.toString();
@@ -133,7 +136,7 @@ public class LCUApi
               .endObject();
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to build the request for the league client", e);
         }
         
         String postData = sw.toString();
@@ -220,7 +223,7 @@ public class LCUApi
               .endObject();
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to build the request for the league client", e);
         }
         
         String postData = sw.toString();
@@ -285,7 +288,7 @@ public class LCUApi
               .endObject();
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to build the request for the league client", e);
         }
         
         String postData = sw.toString();
@@ -318,7 +321,7 @@ public class LCUApi
               .endObject();
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to build the request for the league client", e);
         }
         
         String postData = sw.toString();
@@ -373,7 +376,7 @@ public class LCUApi
               .endObject();
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to build the request for the league client", e);
         }
         
         String postData = sw.toString();

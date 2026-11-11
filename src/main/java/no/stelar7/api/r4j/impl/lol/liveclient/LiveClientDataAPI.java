@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.liveclient;
 
+import org.slf4j.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
@@ -14,6 +15,8 @@ import java.util.*;
 
 public class LiveClientDataAPI
 {
+    private static final Logger logger = LoggerFactory.getLogger(LiveClientDataAPI.class);
+    
     public static ActiveGameData getGameData()
     {
         try
@@ -127,7 +130,7 @@ public class LiveClientDataAPI
                 
                 case UNKNOWN:
                 default:
-                    System.out.println("Unknown event: " + elem.toString());
+                    logger.warn("Unknown event: {}", elem);
             }
         }
         return events;

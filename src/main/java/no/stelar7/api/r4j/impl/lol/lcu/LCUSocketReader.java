@@ -33,7 +33,7 @@ public class LCUSocketReader
                 }
             } catch (InterruptedException e)
             {
-                e.printStackTrace();
+                logger.warn("Problem with the league client websocket", e);
             }
         }
     }, "LCU Ping Thread");
@@ -91,13 +91,13 @@ public class LCUSocketReader
                         rawConsumers.forEach(c -> c.accept(content));
                     } catch (IOException e)
                     {
-                        e.printStackTrace();
+                        logger.warn("Problem with the league client websocket", e);
                     }
                 }
             });
         } catch (IOException | NoSuchAlgorithmException e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the league client websocket", e);
         }
     }
     
@@ -119,7 +119,7 @@ public class LCUSocketReader
             
         } catch (WebSocketException e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the league client websocket", e);
         }
     }
     

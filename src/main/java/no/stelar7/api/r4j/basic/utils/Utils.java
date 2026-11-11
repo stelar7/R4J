@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.basic.utils;
 
+import org.slf4j.*;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.*;
@@ -18,6 +19,8 @@ import java.util.regex.*;
 
 public final class Utils
 {
+    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
+    
     private static final Gson gson;
     
     private Utils()
@@ -131,7 +134,7 @@ public final class Utils
             return URLEncoder.encode(data, "UTF-8").replaceAll("\\+", "%20");
         } catch (final UnsupportedEncodingException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to read or encode the data", e);
         }
         return null;
     }
@@ -153,7 +156,7 @@ public final class Utils
             }
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to read or encode the data", e);
         }
         
         return joiner.toString();
