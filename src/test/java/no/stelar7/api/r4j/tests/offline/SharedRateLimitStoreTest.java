@@ -4,12 +4,13 @@ import no.stelar7.api.r4j.basic.ratelimiting.*;
 import org.junit.jupiter.api.*;
 import redis.clients.jedis.JedisPooled;
 
+import java.sql.DriverManager;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * The same checks are run against the in-memory store and, when one is available, a real Redis.
+ * The same checks are run against the in-memory store, a database (H2) and, when they are available, a real Redis and a real database.
  * <p>
  * To include Redis, point the R4J_TEST_REDIS environment variable (or system property) at it, ie.
  * {@code docker run --rm -p 6379:6379 redis} and {@code R4J_TEST_REDIS=localhost:6379 mvn test}
@@ -47,6 +48,50 @@ public class SharedRateLimitStoreTest
         return new RedisRateLimitStore((script, keys, args) -> jedis.eval(script, keys, args));
     }
 
+    /**
+     * An in-memory H2 database, which needs nothing installed
+     */
+    private SharedRateLimitStore h2()
+    {
+        return new JdbcRateLimitStore(() -> DriverManager.getConnection("jdbc:h2:mem:r4j;DB_CLOSE_DELAY=-1"));
+    }
+    
+    /**
+     * A real database, when R4J_TEST_JDBC is set to its jdbc url (with the user and password in the url), ie.
+     * {@code jdbc:postgresql://localhost:5432/postgres?user=postgres&password=secret} or {@code jdbc:mysql://localhost:3306/r4j?user=root&password=secret}
+     */
+    private SharedRateLimitStore database()
+    {
+        String url = System.getProperty("R4J_TEST_JDBC") != null ? System.getProperty("R4J_TEST_JDBC") : System.getenv("R4J_TEST_JDBC");
+        Assumptions.assumeTrue(url != null && !url.isEmpty(), "R4J_TEST_JDBC is not set, skipping the database test");
+        
+        return new JdbcRateLimitStore(() -> DriverManager.getConnection(url));
+    }
+    
+    @Test
+    public void h2StoreFollowsTheContract() throws InterruptedException
+    {
+        checkContract(h2());
+    }
+    
+    @Test
+    public void h2StoreNeverGoesOverTheLimitUnderConcurrency() throws Exception
+    {
+        checkConcurrency(h2());
+    }
+    
+    @Test
+    public void databaseStoreFollowsTheContract() throws InterruptedException
+    {
+        checkContract(database());
+    }
+    
+    @Test
+    public void databaseStoreNeverGoesOverTheLimitUnderConcurrency() throws Exception
+    {
+        checkConcurrency(database());
+    }
+    
     @Test
     public void inMemoryStoreFollowsTheContract() throws InterruptedException
     {

@@ -76,7 +76,15 @@ JedisPooled jedis = new JedisPooled("localhost", 6379);
 R4JContext.getDefault().setRateLimitStore(new RedisRateLimitStore((script, keys, args) -> jedis.eval(script, keys, args)));
 ```
 
-Implement `SharedRateLimitStore` to use something other than Redis. The file system cache can be shared between processes as well.
+  A SQL database works too. It uses one small table, created on first use, and the JDBC driver of your database:
+
+```Java
+R4JContext.getDefault().setRateLimitStore(new JdbcRateLimitStore(dataSource));
+```
+
+  Redis is the faster of the two. The database store measures expiry with the clock of each process, so keep the clocks of the machines in sync.
+
+Implement `SharedRateLimitStore` to use something else. The file system cache can be shared between processes as well.
 
 ## Requirements
 
@@ -88,6 +96,7 @@ Java 11 or newer.
 mvn clean package         # builds, and runs the tests that need no api key
 mvn test -Plive           # also runs the tests that call the real api (put your keys in SecretFile)
 R4J_TEST_REDIS=localhost:6379 mvn test   # also runs the rate limit store tests against a real Redis
+R4J_TEST_JDBC="jdbc:postgresql://localhost/db?user=..&password=.." mvn test   # and against a real database
 ```
 
 #### TODO:
