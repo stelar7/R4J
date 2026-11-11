@@ -2,7 +2,7 @@ name: Docs
 
 # Builds the javadoc of a release and publishes it with GitHub Pages, at https://stelar7.github.io/R4J/
 #
-# It runs when a tag is pushed (the same moment the Release workflow runs), so the published docs describe the latest release.
+# It runs when a tag is pushed, so the published docs describe the latest release.
 # It can also be started by hand from the Actions tab, for example to publish the docs before the first tag.
 # The github-pages environment has to allow deployments from tags (Settings > Environments > github-pages: no restriction).
 on:

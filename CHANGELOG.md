@@ -12,7 +12,7 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * **You use the rate limiter classes directly.** `BurstRateLimiter` and `CounterRateLimiter` are gone, and `RateLimiter` has a new api (`tryAcquire`, `release`, `updateLimits`, `syncWithServerCounts`, `cooldown`, `getCallCounts`). `DataCallBuilder.getLock` and `getGlobalLock` are gone. If you only use R4J through its api classes, nothing changes for you.
 * **You use `MemoryCacheProvider` with a time to live.** It is now in milliseconds, like the other caches (the old javadoc said seconds, but the cache did not work at all before).
 * **You use `MySQLCacheProvider`.** Its databases are now named `r4j_<hash>` instead of after the raw api key, and existing ones are not migrated. It is also deprecated, see below.
-* **You relied on the Travis build uploading jars.** Releases are now made by a GitHub Actions workflow when a tag is pushed.
+* **You relied on the Travis build uploading jars.** The Travis configuration is gone (the service was shut down), and nothing builds or uploads release jars automatically anymore.
 
 **Behaviour that changed:**
 
