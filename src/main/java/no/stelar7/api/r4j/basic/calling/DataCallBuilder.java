@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.basic.calling;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
-import no.stelar7.api.r4j.basic.constants.types.RealmSpesificEnum;
+import no.stelar7.api.r4j.basic.constants.types.RealmSpecificEnum;
 import no.stelar7.api.r4j.basic.exceptions.*;
 import no.stelar7.api.r4j.basic.ratelimiting.*;
 import no.stelar7.api.r4j.basic.utils.*;
@@ -1205,7 +1205,7 @@ public class DataCallBuilder
         if (dc.getPlatform() != null)
         {
             url[0] = url[0].replace(Constants.PLATFORM_PLACEHOLDER, dc.getPlatform().toString().toLowerCase());
-            url[0] = url[0].replace(Constants.REGION_PLACEHOLDER, ((RealmSpesificEnum) dc.getPlatform()).getRealmValue());
+            url[0] = url[0].replace(Constants.REGION_PLACEHOLDER, ((RealmSpecificEnum) dc.getPlatform()).getRealmValue());
         }
         dc.getUrlParams().forEach((k, v) -> url[0] = url[0].replace(k, v));
         

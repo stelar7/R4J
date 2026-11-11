@@ -42,6 +42,7 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 | `ClashAPI.getPlayerInfo(server, summonerId)` | summoner ids are no longer handed out | `ClashAPI.getPlayerInfoByPuuid` |
 | `ImageAPI.getProfileIcon(region, summonerName)` | the service behind it no longer exists | `ImageAPI.getProfileIcon(iconId, version)` |
 | `MySQLCacheProvider`, `MongoDBCacheProvider` | never finished | `JdbcCacheProvider` |
+| `RealmSpesificEnum`, `RealmSpesificEnumSerializer` | the name was misspelled | `RealmSpecificEnum`, `RealmSpecificEnumSerializer` |
 
 ### New
 

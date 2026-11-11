@@ -61,8 +61,8 @@ public final class Utils
         builder.registerTypeAdapter(TournamentSpectatorType.class, new GenericEnumSerializer<TournamentSpectatorType>());
         builder.registerTypeAdapter(TowerType.class, new GenericEnumSerializer<TowerType>());
         builder.registerTypeAdapter(WardType.class, new GenericEnumSerializer<WardType>());
-        builder.registerTypeAdapter(RealmSpesificEnum.class, new RealmSpesificEnumSerializer());
-        builder.registerTypeAdapter(RegionShard.class, new RealmSpesificEnumSerializer());
+        builder.registerTypeAdapter(RealmSpecificEnum.class, new RealmSpecificEnumSerializer());
+        builder.registerTypeAdapter(RegionShard.class, new RealmSpecificEnumSerializer());
         builder.registerTypeAdapter(SpellSlotType.class, new GenericEnumSerializer<SpellSlotType>());
         builder.registerTypeAdapter(TimelineDamageType.class, new GenericEnumSerializer<TimelineDamageType>());
         builder.registerTypeAdapter(TransformType.class, new GenericEnumSerializer<TransformType>());

@@ -29,6 +29,7 @@ public class RiotAccountShard implements Serializable
         return activeShard;
     }
     
+    @SuppressWarnings("removal")
     public RealmSpesificEnum getShardAsEnum()
     {
         if (game.equalsIgnoreCase("val"))
