@@ -19,6 +19,119 @@ public class APICredentials
     private final String riftboundAPIKey;
     
     /**
+     * Starts building credentials, naming each key instead of relying on its position:
+     * <pre>{@code
+     * APICredentials credentials = APICredentials.builder()
+     *                                            .lol("RGAPI-...")
+     *                                            .tft("RGAPI-...")
+     *                                            .build();
+     * }</pre>
+     * A key that is not set is null; using an api that needs it throws an APIUnsupportedActionException.
+     *
+     * @return a builder
+     */
+    public static Builder builder()
+    {
+        return new Builder();
+    }
+
+    public static final class Builder
+    {
+        private String lol;
+        private String tournament;
+        private String tft;
+        private String lor;
+        private String val;
+        private String riftbound;
+
+        private Builder()
+        {
+        }
+
+        /**
+         * Uses one key for every product, like {@code new APICredentials(key)}. Keys set after this replace it for their product.
+         *
+         * @param key the key (ie. a development key)
+         * @return this
+         */
+        public Builder all(String key)
+        {
+            this.lol = key;
+            this.tournament = key;
+            this.tft = key;
+            this.lor = key;
+            this.val = key;
+            this.riftbound = key;
+            return this;
+        }
+
+        /**
+         * @param key the League of Legends key
+         * @return this
+         */
+        public Builder lol(String key)
+        {
+            this.lol = key;
+            return this;
+        }
+
+        /**
+         * @param key the tournament key
+         * @return this
+         */
+        public Builder tournament(String key)
+        {
+            this.tournament = key;
+            return this;
+        }
+
+        /**
+         * @param key the Teamfight Tactics key
+         * @return this
+         */
+        public Builder tft(String key)
+        {
+            this.tft = key;
+            return this;
+        }
+
+        /**
+         * @param key the Legends of Runeterra key
+         * @return this
+         */
+        public Builder lor(String key)
+        {
+            this.lor = key;
+            return this;
+        }
+
+        /**
+         * @param key the VALORANT key
+         * @return this
+         */
+        public Builder val(String key)
+        {
+            this.val = key;
+            return this;
+        }
+
+        /**
+         * @param key the Riftbound key
+         * @return this
+         */
+        public Builder riftbound(String key)
+        {
+            this.riftbound = key;
+            return this;
+        }
+
+        public APICredentials build()
+        {
+            return new APICredentials(lol, tournament, tft, lor, val, riftbound, true);
+        }
+    }
+
+    /**
      * Instantiates new API credentials.
      *
      * @param lol        the lol key
@@ -26,7 +139,9 @@ public class APICredentials
      * @param tft        the tft lol key
      * @param lor        the lor lol key
      * @param val        the val lol key
+     * @deprecated five keys of the same type in a fixed order are easy to mix up; use {@link #builder()}
      */
+    @Deprecated
     public APICredentials(final String lol, final String tournament, final String tft, final String lor, final String val)
     {
         this(lol, tournament, tft, lor, val, null);
@@ -41,8 +156,16 @@ public class APICredentials
      * @param lor        the lor key
      * @param val        the val key
      * @param riftbound  the riftbound key
+     * @deprecated six keys of the same type in a fixed order are easy to mix up; use {@link #builder()}
      */
+    @Deprecated
     public APICredentials(final String lol, final String tournament, final String tft, final String lor, final String val, final String riftbound)
+    {
+        this(lol, tournament, tft, lor, val, riftbound, true);
+    }
+
+    // the extra parameter only tells this constructor apart from the deprecated public one
+    private APICredentials(final String lol, final String tournament, final String tft, final String lor, final String val, final String riftbound, boolean internal)
     {
         this.riftboundAPIKey = riftbound;
         this.lolAPIKey = lol;
@@ -65,7 +188,7 @@ public class APICredentials
      */
     public APICredentials(final String key, final String tournament)
     {
-        this(key, tournament, key, key, key);
+        this(key, tournament, key, key, key, null, true);
     }
     
     /**
@@ -75,7 +198,7 @@ public class APICredentials
      */
     public APICredentials(final String api)
     {
-        this(api, api, api, api, api, api);
+        this(api, api, api, api, api, api, true);
     }
     
     /**
