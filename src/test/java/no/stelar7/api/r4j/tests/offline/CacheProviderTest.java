@@ -228,6 +228,35 @@ public class CacheProviderTest
         Assertions.assertEquals(1, files(dir).size());
     }
 
+    @Test
+    public void fileCacheCleanupRemovesExpiredFilesAndEmptyFolders(@TempDir Path dir) throws IOException
+    {
+        FileSystemCacheProvider cache = new FileSystemCacheProvider(dir, 60_000);
+        cache.store(ENDPOINT, entry(LeagueShard.EUW1, "old", "value-old"));
+        cache.store(ENDPOINT, entry(LeagueShard.NA1, "fresh", "value-fresh"));
+
+        // the first one was stored two minutes ago
+        Path old = files(dir).stream().filter(p -> p.toString().contains("old")).findFirst().orElseThrow(AssertionError::new);
+        Files.setLastModifiedTime(old, FileTime.fromMillis(System.currentTimeMillis() - 120_000));
+
+        // nobody asks for it again; the cleanup has to remove it, and the folders that only existed for it
+        cache.clearOldCache();
+
+        Assertions.assertFalse(Files.exists(old));
+        Assertions.assertFalse(Files.exists(old.getParent()));
+        Assertions.assertTrue(Files.exists(dir));
+
+        // what has not expired is untouched
+        List<Path> left = files(dir);
+        Assertions.assertEquals(1, left.size());
+        Assertions.assertTrue(left.get(0).toString().contains("fresh"));
+        Assertions.assertEquals("value-fresh", cache.get(ENDPOINT, key(LeagueShard.NA1, "fresh")).orElse(null));
+
+        // and storing into a folder that was removed works
+        cache.store(ENDPOINT, entry(LeagueShard.EUW1, "old", "value-new"));
+        Assertions.assertEquals("value-new", cache.get(ENDPOINT, key(LeagueShard.EUW1, "old")).orElse(null));
+    }
+
     private JdbcCacheProvider h2Cache(long ttl)
     {
         // a table per test, so the tests do not see each others data

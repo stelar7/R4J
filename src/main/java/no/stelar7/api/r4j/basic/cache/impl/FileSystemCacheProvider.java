@@ -8,6 +8,7 @@ import no.stelar7.api.r4j.basic.utils.Utils;
 import org.slf4j.*;
 
 import java.io.*;
+import java.lang.ref.WeakReference;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.FileTime;
@@ -26,11 +27,18 @@ public class FileSystemCacheProvider implements CacheProvider
     
     private volatile R4JContext context = R4JContext.getDefault();
 
-    private final ScheduledExecutorService clearService = Executors.newSingleThreadScheduledExecutor(r -> {
+    /**
+     * How often expired files are removed, at most. A shorter time to live cleans up more often.
+     */
+    private static final long MAX_CLEANUP_INTERVAL_MS = TimeUnit.HOURS.toMillis(1);
+
+    // one thread cleans up for all file caches
+    private static final ScheduledExecutorService clearService = Executors.newSingleThreadScheduledExecutor(r -> {
         Thread t = new Thread(r, "R4J-FileSystemCache-cleaner");
         t.setDaemon(true);
         return t;
     });
+
     private       ScheduledFuture<?>       clearTask;
     
     public FileSystemCacheProvider(Path pathToFiles, int ttl)
@@ -65,10 +73,31 @@ public class FileSystemCacheProvider implements CacheProvider
             clearTask = null;
         }
 
-        if (timeToLive > 0)
+        if (timeToLive == CacheProvider.TTL_INFINITY)
         {
-            clearTask = clearService.scheduleAtFixedRate(this::clearOldCache, timeToLive, timeToLive, TimeUnit.MILLISECONDS);
+            return;
         }
+
+        // Expired files are never returned, but without this they would stay on disk until someone asks for them again.
+        // The task does not keep the cache alive: once the cache is no longer used, the task stops itself.
+        long                                   interval = timeToLive > 0 ? Math.max(1000, Math.min(timeToLive, MAX_CLEANUP_INTERVAL_MS)) : MAX_CLEANUP_INTERVAL_MS;
+        WeakReference<FileSystemCacheProvider> self     = new WeakReference<>(this);
+        clearTask = clearService.scheduleWithFixedDelay(() -> {
+            FileSystemCacheProvider cache = self.get();
+            if (cache == null)
+            {
+                // an exception ends a scheduled task
+                throw new CancellationException("the cache is no longer in use");
+            }
+
+            try
+            {
+                cache.clearOldCache();
+            } catch (RuntimeException e)
+            {
+                logger.warn("Unable to clear old data from the cache", e);
+            }
+        }, interval, interval, TimeUnit.MILLISECONDS);
     }
 
     private String getKeyCombination()
@@ -109,8 +138,16 @@ public class FileSystemCacheProvider implements CacheProvider
             }
 
             Path storePath = resolvePath(type, getKeyValues(obj));
-            Files.createDirectories(storePath.getParent());
-            writeObject(storePath, type, storeItem);
+            try
+            {
+                Files.createDirectories(storePath.getParent());
+                writeObject(storePath, type, storeItem);
+            } catch (NoSuchFileException e)
+            {
+                // a cleanup removed the (still empty) folder before the file was written
+                Files.createDirectories(storePath.getParent());
+                writeObject(storePath, type, storeItem);
+            }
         } catch (IOException e)
         {
             logger.warn("Unable to store data in the cache ({})", type, e);
@@ -295,13 +332,20 @@ public class FileSystemCacheProvider implements CacheProvider
 
         try (Stream<Path> paths = Files.walk(home))
         {
+            // deepest first, so a folder is looked at after everything in it
             paths.sorted(Comparator.reverseOrder()).forEach(p -> {
                 try
                 {
                     clearPath(p);
+
+                    if (!p.equals(home) && Files.isDirectory(p))
+                    {
+                        // only succeeds if the folder is empty; without this every player and match ever cached leaves a folder behind
+                        Files.delete(p);
+                    }
                 } catch (IOException | RuntimeException e)
                 {
-                    // silent fail
+                    // a folder that is not empty, or something that is in use; it is looked at again next time
                 }
             });
         } catch (IOException e)
