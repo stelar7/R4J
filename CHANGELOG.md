@@ -66,6 +66,7 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * **Proxy support:** `R4JContext.setRequestUrl` sends every call to the Riot api through a url of your choice.
 * **Nullability:** the api methods that return null when nothing is found are marked `@Nullable` (JetBrains annotations), so IntelliJ warns about unchecked use and Kotlin sees them as nullable types. The methods that return a list return an empty list instead, as before.
 * **Typed calls:** `DataCallBuilder.buildAs` and `buildCached`, and `withAccessToken` for RSO.
+* **Compressed responses:** every call asks for gzip (`Accept-Encoding: gzip`), which the Riot api and Data Dragon both answer with. Data Dragon files arrive four to seven times smaller. Set the header yourself on a call (`withHeader("Accept-Encoding", "identity")`) to switch it off.
 
 ### Fixed
 

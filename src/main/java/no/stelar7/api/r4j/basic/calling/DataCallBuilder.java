@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.*;
 import java.util.function.BiFunction;
+import java.util.zip.GZIPInputStream;
 
 @SuppressWarnings("rawtypes")
 public class DataCallBuilder
@@ -451,7 +452,7 @@ public class DataCallBuilder
                 logger.trace("Trying url: {}", url);
 
                 final long sentAt = System.currentTimeMillis();
-                CompletableFuture<java.net.http.HttpResponse<String>> pending = context.getHttpClient().sendAsync(toRequest(url), java.net.http.HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+                CompletableFuture<java.net.http.HttpResponse<byte[]>> pending = context.getHttpClient().sendAsync(toRequest(url), java.net.http.HttpResponse.BodyHandlers.ofByteArray());
                 handedOver = true;
 
                 pending.whenComplete((httpResponse, error) -> {
@@ -474,7 +475,7 @@ public class DataCallBuilder
                             response = new DataCallResponse(code, limitReason);
                         } else
                         {
-                            response = new DataCallResponse(code, code == 204 || httpResponse.body() == null ? "" : httpResponse.body());
+                            response = new DataCallResponse(code, code == 204 || httpResponse.body() == null ? "" : decode(httpResponse.body(), httpResponse.headers().firstValue("Content-Encoding").orElse(null)));
                         }
 
                         Object outcome = interpret(url, response, state);
@@ -543,6 +544,7 @@ public class DataCallBuilder
                                                                              .header("User-Agent", "R4J")
                                                                              .header("Accept-Charset", "ISO-8859-1,utf-8")
                                                                              .header("Accept-Language", "en-US")
+                                                                             .header("Accept-Encoding", "gzip")
                                                                              .header("Cache-Control", "no-store,max-age=0,no-cache")
                                                                              .header("Expires", "0")
                                                                              .header("Pragma", "no-cache");
@@ -943,6 +945,7 @@ public class DataCallBuilder
             con.setRequestProperty("Expires", "0");
             con.setRequestProperty("Pragma", "no-cache");
             con.setRequestProperty("Connection", "keep-alive");
+            con.setRequestProperty("Accept-Encoding", "gzip");
             con.setRequestProperty("Content-Type", "application/json");
             con.setConnectTimeout(this.dc.getConnectTimeout());
             con.setReadTimeout(this.dc.getReadTimeout());
@@ -1022,6 +1025,11 @@ public class DataCallBuilder
                 return new DataCallResponse(responseCode, "Unable to read stream!");
             }
 
+            if (isGzip(con.getContentEncoding()))
+            {
+                stream = new GZIPInputStream(stream);
+            }
+
             try (BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)))
             {
                 br.lines().forEach(data::append);
@@ -1034,6 +1042,30 @@ public class DataCallBuilder
         } catch (final IOException e)
         {
             // keep the cause, so a timeout can be told apart from a dns/tls/connection failure
+            throw new APIResponseException(APIHTTPErrorReason.ERROR_599, APIHTTPErrorReason.ERROR_599.getReason() + " (" + e + ")", e);
+        }
+    }
+
+    private static boolean isGzip(String contentEncoding)
+    {
+        return contentEncoding != null && contentEncoding.trim().equalsIgnoreCase("gzip");
+    }
+
+    /**
+     * The text of a response body of the non-blocking transport, which is compressed when the server chose to (we ask for gzip)
+     */
+    private static String decode(byte[] body, String contentEncoding)
+    {
+        if (!isGzip(contentEncoding))
+        {
+            return new String(body, StandardCharsets.UTF_8);
+        }
+
+        try (InputStream in = new GZIPInputStream(new ByteArrayInputStream(body)))
+        {
+            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e)
+        {
             throw new APIResponseException(APIHTTPErrorReason.ERROR_599, APIHTTPErrorReason.ERROR_599.getReason() + " (" + e + ")", e);
         }
     }
