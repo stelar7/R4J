@@ -19,7 +19,12 @@ import java.util.*;
  *
  * R4JContext.getDefault().setRateLimitStore(store);
  * }</pre>
- * The executor must be safe to use from several threads (a pool, or a thread safe connection).
+ * Optionally give it a way to run EVALSHA as well. The scripts are then sent by their hash instead of in full with every call:
+ * <pre>{@code
+ * new RedisRateLimitStore((script, keys, args) -> jedis.eval(script, keys, args),
+ *                         (sha1, keys, args) -> jedis.evalsha(sha1, keys, args));
+ * }</pre>
+ * The executors must be safe to use from several threads (a pool, or a thread safe connection).
  * The keys of one bucket share a hash tag, so the scripts also work on Redis Cluster.
  */
 public class RedisRateLimitStore implements SharedRateLimitStore
@@ -101,14 +106,96 @@ public class RedisRateLimitStore implements SharedRateLimitStore
             "if ttl < 0 then return 0 end " +
             "return ttl";
 
-    private final ScriptExecutor executor;
+    /**
+     * Runs a Lua script that Redis already knows, by the SHA-1 of its source (the EVALSHA command)
+     */
+    @FunctionalInterface
+    public interface HashedScriptExecutor
+    {
+        /**
+         * @param sha1 the lowercase hex SHA-1 of the script
+         * @param keys the keys the script uses (KEYS)
+         * @param args the arguments of the script (ARGV)
+         * @return what the script returned. If Redis does not know the script, the exception it gives (a NOSCRIPT error) should be thrown as is.
+         */
+        Object evalsha(String sha1, List<String> keys, List<String> args);
+    }
+
+    private final ScriptExecutor       executor;
+    private final HashedScriptExecutor hashedExecutor;
+    private final Map<String, String>  hashes = new java.util.concurrent.ConcurrentHashMap<>();
 
     /**
      * @param executor runs a Lua script on Redis, see the class description for examples
      */
     public RedisRateLimitStore(ScriptExecutor executor)
     {
+        this(executor, null);
+    }
+
+    /**
+     * @param executor       runs a Lua script on Redis (EVAL), see the class description for examples
+     * @param hashedExecutor runs a script Redis already knows by its hash (EVALSHA), or null to always send the full script
+     */
+    public RedisRateLimitStore(ScriptExecutor executor, HashedScriptExecutor hashedExecutor)
+    {
         this.executor = Objects.requireNonNull(executor);
+        this.hashedExecutor = hashedExecutor;
+    }
+
+    private static String sha1(String script)
+    {
+        try
+        {
+            byte[]        hash = java.security.MessageDigest.getInstance("SHA-1").digest(script.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb   = new StringBuilder();
+            for (byte b : hash)
+            {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e)
+        {
+            throw new IllegalStateException("SHA-1 is not available", e);
+        }
+    }
+
+    private static boolean isUnknownScript(Throwable e)
+    {
+        for (Throwable t = e; t != null; t = t.getCause())
+        {
+            if (t.getMessage() != null && t.getMessage().contains("NOSCRIPT"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Runs the script by its hash when possible. Redis remembers every script it has run with EVAL,
+     * so the full script is only sent the first time, and again if Redis has forgotten it (a restart, SCRIPT FLUSH).
+     */
+    private Object run(String script, List<String> keys, List<String> args)
+    {
+        if (hashedExecutor == null)
+        {
+            return executor.eval(script, keys, args);
+        }
+
+        try
+        {
+            return hashedExecutor.evalsha(hashes.computeIfAbsent(script, RedisRateLimitStore::sha1), keys, args);
+        } catch (RuntimeException e)
+        {
+            if (!isUnknownScript(e))
+            {
+                throw e;
+            }
+
+            return executor.eval(script, keys, args);
+        }
     }
 
     private static long asLong(Object result)
@@ -155,7 +242,7 @@ public class RedisRateLimitStore implements SharedRateLimitStore
             args.add(String.valueOf(ttls.get(i)));
         }
 
-        return asLong(executor.eval(TRY_INCREMENT, keys, args));
+        return asLong(run(TRY_INCREMENT, keys, args));
     }
 
     @Override
@@ -163,37 +250,37 @@ public class RedisRateLimitStore implements SharedRateLimitStore
     {
         if (!counters.isEmpty())
         {
-            executor.eval(DECREMENT, counters, Collections.emptyList());
+            run(DECREMENT, counters, Collections.emptyList());
         }
     }
 
     @Override
     public long raise(String counter, long value, long ttl)
     {
-        return asLong(executor.eval(RAISE, Collections.singletonList(counter), Arrays.asList(String.valueOf(value), String.valueOf(ttl))));
+        return asLong(run(RAISE, Collections.singletonList(counter), Arrays.asList(String.valueOf(value), String.valueOf(ttl))));
     }
     
     @Override
     public long getCounter(String counter)
     {
-        return asLong(executor.eval(GET, Collections.singletonList(counter), Collections.emptyList()));
+        return asLong(run(GET, Collections.singletonList(counter), Collections.emptyList()));
     }
 
     @Override
     public void put(String key, String value, long ttl)
     {
-        executor.eval(PUT, Collections.singletonList(key), Arrays.asList(value, String.valueOf(ttl)));
+        run(PUT, Collections.singletonList(key), Arrays.asList(value, String.valueOf(ttl)));
     }
 
     @Override
     public String get(String key)
     {
-        return asString(executor.eval(GET, Collections.singletonList(key), Collections.emptyList()));
+        return asString(run(GET, Collections.singletonList(key), Collections.emptyList()));
     }
 
     @Override
     public long getTimeToLive(String key)
     {
-        return asLong(executor.eval(TIME_TO_LIVE, Collections.singletonList(key), Collections.emptyList()));
+        return asLong(run(TIME_TO_LIVE, Collections.singletonList(key), Collections.emptyList()));
     }
 }

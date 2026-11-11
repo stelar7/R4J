@@ -99,6 +99,33 @@ public class SharedRateLimitStoreTest
     }
 
     @Test
+    public void redisStoreWithEvalshaFollowsTheContract() throws Exception
+    {
+        redis();
+        AtomicInteger full   = new AtomicInteger();
+        AtomicInteger hashed = new AtomicInteger();
+
+        SharedRateLimitStore store = new RedisRateLimitStore(
+                (script, keys, args) -> {
+                    full.incrementAndGet();
+                    return jedis.eval(script, keys, args);
+                },
+                (sha1, keys, args) -> {
+                    hashed.incrementAndGet();
+                    return jedis.evalsha(sha1, keys, args);
+                });
+
+        // forget every script, so the first use of each one has to fall back to sending it in full
+        jedis.scriptFlush();
+        checkContract(store);
+        checkConcurrency(store);
+
+        // every call was tried by hash; the full script was only sent when Redis did not know it yet
+        Assertions.assertTrue(full.get() >= 1 && full.get() <= 40, "full scripts sent: " + full.get());
+        Assertions.assertTrue(hashed.get() > 300, "calls by hash: " + hashed.get());
+    }
+
+    @Test
     public void redisStoreFollowsTheContract() throws InterruptedException
     {
         checkContract(redis());
