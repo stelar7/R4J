@@ -9,6 +9,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.language>java</sonar.language>
+        <!-- Only the tests that need no api key and no network run by default; use -Plive to run everything -->
+        <r4j.tests>**/offline/**/*Test.java</r4j.tests>
     </properties>
     <dependencies>
 
@@ -51,14 +53,6 @@
         </dependency>
 
         <!-- Dependencies used for tests -->
-        <!--
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
-            <version>1.8.0-beta4</version>
-            <scope>test</scope>
-        </dependency>
-        -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -71,9 +65,10 @@
             <version>1.3.0-alpha15</version>
             <scope>test</scope>
         </dependency>
+        <!-- api + engine, so the tests are actually found and run by maven -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <artifactId>junit-jupiter</artifactId>
             <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
@@ -87,6 +82,17 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <includes>
+                        <include>${r4j.tests}</include>
+                    </includes>
                 </configuration>
             </plugin>
 
@@ -120,6 +126,16 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Runs every test, including the ones that call the real api (needs keys in SecretFile) -->
+        <profile>
+            <id>live</id>
+            <properties>
+                <r4j.tests>**/*Test*.java</r4j.tests>
+            </properties>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>
