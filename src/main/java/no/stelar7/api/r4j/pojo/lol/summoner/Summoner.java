@@ -182,6 +182,11 @@ public final class Summoner implements Serializable, ContextAware
         return SpectatorAPI.getInstance(getContext()).getCurrentGame(platform, puuid);
     }
     
+    /**
+     * @deprecated third-party-code is no longer listed in the Riot api documentation
+     */
+    @Deprecated(since = "3.0.0", forRemoval = true)
+    @SuppressWarnings("removal")
     public String getThirdPartyCode()
     {
         return new ThirdPartyCodeBuilder().withContext(getContext()).withPlatform(platform).withSummonerId(id).getCode();

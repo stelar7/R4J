@@ -105,7 +105,7 @@ public class TFTLeagueAPI
      * @return TFTLeagueList
      * @deprecated Riot announced (2025-05-29) that leagueId is going away; this endpoint is no longer in the tft-league-v1 documentation
      */
-    @Deprecated
+    @Deprecated(since = "3.0.0", forRemoval = true)
     public TFTLeagueList getLeague(LeagueShard server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())

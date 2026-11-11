@@ -10,7 +10,7 @@ import no.stelar7.api.r4j.basic.utils.Pair;
 /**
  * @deprecated third-party-code is no longer listed in the Riot api documentation, and it is looked up by summoner id, which the api no longer hands out
  */
-@Deprecated
+@Deprecated(since = "3.0.0", forRemoval = true)
 public final class ThirdPartyAPI
 {
     private static final ThirdPartyAPI INSTANCE = new ThirdPartyAPI(R4JContext.getDefault());

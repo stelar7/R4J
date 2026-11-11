@@ -37,7 +37,7 @@ public class ClashAPI
      * 
      * @deprecated use {@link #getPlayerInfoByPuuid(LeagueShard, String)} instead
      */
-    @Deprecated
+    @Deprecated(since = "3.0.0", forRemoval = true)
     public List<ClashPlayer> getPlayerInfo(final LeagueShard server, String summonerId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_PLAYER_BY_SUMMONER)

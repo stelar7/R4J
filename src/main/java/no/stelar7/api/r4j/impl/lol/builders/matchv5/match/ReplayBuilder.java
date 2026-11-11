@@ -7,6 +7,11 @@ import no.stelar7.api.r4j.pojo.lol.match.v5.*;
 
 import java.util.*;
 
+/**
+ * @deprecated the replays of a player by puuid are no longer listed in the Riot api documentation;
+ * use {@link no.stelar7.api.r4j.impl.lol.raw.MatchV5API#getMatchReplaysByAccessToken(RegionShard, String)}
+ */
+@Deprecated(since = "3.0.0", forRemoval = true)
 public class ReplayBuilder
 {
     private R4JContext context = R4JContext.getDefault();

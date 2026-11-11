@@ -6,6 +6,10 @@ import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 
+/**
+ * @deprecated third-party-code is no longer listed in the Riot api documentation, see {@link no.stelar7.api.r4j.impl.lol.raw.ThirdPartyAPI}
+ */
+@Deprecated(since = "3.0.0", forRemoval = true)
 @SuppressWarnings("unchecked")
 public class ThirdPartyCodeBuilder
 {

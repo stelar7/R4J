@@ -114,7 +114,7 @@ public final class LeagueAPI
      * @return LeagueList
      * @deprecated Riot announced (2025-05-29) that leagueId is going away and that this endpoint is retired; it is no longer in the league-v4 documentation
      */
-    @Deprecated
+    @Deprecated(since = "3.0.0", forRemoval = true)
     public LeagueList getLeague(LeagueShard server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())

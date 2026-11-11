@@ -42,7 +42,7 @@ public final class SpectatorAPI
      * @return Optional FeaturedGames
      * @deprecated featured-games is no longer listed in the Riot api documentation for spectator-v5
      */
-    @Deprecated
+    @Deprecated(since = "3.0.0", forRemoval = true)
     public List<SpectatorGameInfo> getFeaturedGames(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V5_SPECTATOR_FEATURED)

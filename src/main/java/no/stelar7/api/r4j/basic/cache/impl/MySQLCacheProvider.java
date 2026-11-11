@@ -18,7 +18,7 @@ import java.util.Map.Entry;
  * @deprecated this cache was never finished: it only creates tables for Valorant matches and does not return what it stores.
  * Use {@link JdbcCacheProvider}, which works with MySQL and other databases.
  */
-@Deprecated
+@Deprecated(since = "3.0.0", forRemoval = true)
 @SuppressWarnings("rawtypes")
 public class MySQLCacheProvider implements CacheProvider
 {

@@ -28,10 +28,19 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * **File cache cleanup.** Expired files and empty folders are now removed every hour (or more often with a short time to live), also with the default lifetimes.
 * **Tests.** `mvn test` only runs the tests that need no api key. Use `mvn test -Plive` for all of them.
 
-**Deprecated (still there, but on their way out at Riot or never finished):**
+**Deprecated, and scheduled for removal in 4.0.0:**
 
-* `ThirdPartyAPI`, `SpectatorAPI.getFeaturedGames`, `MatchV5API.getMatchListReplays` (by puuid), `LeagueAPI.getLeague` and `TFTLeagueAPI.getLeague` (by league id): no longer in the Riot api documentation.
-* `MySQLCacheProvider` and `MongoDBCacheProvider`: use `JdbcCacheProvider`.
+Everything below still works as it did (as far as Riot still answers), but is marked `@Deprecated(since = "3.0.0", forRemoval = true)`, so your compiler warns where you use it.
+
+| What | Why | Use instead |
+| :--- | :-- | :---------- |
+| `ThirdPartyAPI`, `ThirdPartyCodeBuilder`, `Summoner.getThirdPartyCode()` | third-party-code is no longer in the Riot api documentation | RSO, to prove an account belongs to a player |
+| `SpectatorAPI.getFeaturedGames` | featured-games is no longer in the Riot api documentation | nothing |
+| `MatchV5API.getMatchListReplays(server, puuid)`, `ReplayBuilder` | replaced by an endpoint that needs the access token of the player | `MatchV5API.getMatchReplaysByAccessToken` |
+| `LeagueAPI.getLeague(server, leagueId)`, `TFTLeagueAPI.getLeague(server, leagueId)` | Riot is retiring league ids | the league entries of a player, or the tier and division lists |
+| `ClashAPI.getPlayerInfo(server, summonerId)` | summoner ids are no longer handed out | `ClashAPI.getPlayerInfoByPuuid` |
+| `ImageAPI.getProfileIcon(region, summonerName)` | the service behind it no longer exists | `ImageAPI.getProfileIcon(iconId, version)` |
+| `MySQLCacheProvider`, `MongoDBCacheProvider` | never finished | `JdbcCacheProvider` |
 
 ### New
 

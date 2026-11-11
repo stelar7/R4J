@@ -106,7 +106,7 @@ public final class ImageAPI
      * @deprecated the avatar service this url points at no longer exists (the host does not answer), and summoner names are no longer used to look players up.
      * Get the icon id from the Summoner, and use {@link #getProfileIcon(String, String)}.
      */
-    @Deprecated
+    @Deprecated(since = "3.0.0", forRemoval = true)
     public String getProfileIcon(LeagueShard region, String summonerName)
     {
         // http://avatar.leagueoflegends.com/region/summonername.png
