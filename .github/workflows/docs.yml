@@ -1,12 +1,14 @@
 name: Docs
 
-# Builds the javadoc of a release and publishes it with GitHub Pages.
+# Builds the javadoc and publishes it with GitHub Pages, at https://stelar7.github.io/R4J/
 #
-# One-time setup by the owner of the repository: Settings > Pages > Source: "GitHub Actions".
-# The docs are then available at https://<owner>.github.io/<repository>/
+# It runs when master changes, so the docs always describe the current code (which is also what a release is tagged from).
+# It does not run on tags: the github-pages environment of this repository only accepts deployments from the master branch,
+# so a run started by a tag would be refused. To publish per release instead, allow tags in
+# Settings > Environments > github-pages > Deployment branches and tags, and change the trigger below to tags.
 on:
   push:
-    tags: [ '*' ]
+    branches: [ master ]
   workflow_dispatch:
 
 permissions:
