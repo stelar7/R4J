@@ -5,6 +5,7 @@ import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
 import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.impl.lol.raw.*;
 import no.stelar7.api.r4j.impl.lor.*;
+import no.stelar7.api.r4j.impl.riftbound.RiftboundContentAPI;
 import no.stelar7.api.r4j.impl.shared.*;
 import no.stelar7.api.r4j.impl.tft.*;
 import no.stelar7.api.r4j.impl.val.*;
@@ -297,6 +298,16 @@ public class R4J
         }
     }
     
+    /**
+     * Gets the Riftbound content api.
+     *
+     * @return the riftbound content api
+     */
+    public RiftboundContentAPI getRiftboundContentAPI()
+    {
+        return RiftboundContentAPI.getInstance();
+    }
+
     /**
      * Gets image api.
      *

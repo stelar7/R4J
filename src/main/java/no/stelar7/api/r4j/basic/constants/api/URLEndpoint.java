@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.basic.constants.api;
 
+import no.stelar7.api.r4j.pojo.riftbound.RiftboundContent;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.lol.challenges.*;
@@ -182,6 +183,8 @@ public enum URLEndpoint
     V1_STATUS_TFT("tft", "status", "v1", "platform-data", PlatformData.class),
     V1_STATUS_LOR("lor", "status", "v1", "platform-data", PlatformData.class),
     V1_STATUS_VAL("val", "status", "v1", "platform-data", PlatformData.class),
+    
+    V1_RIFTBOUND_CONTENT("riftbound", "content", "v1", "contents", RiftboundContent.class),
     
     V5_MATCHLIST("lol", "match", "v5", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),
     V5_MATCHLIST_REPLAYS("lol", "match", "v5", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/replays", LOLMatchReplayList.class),
