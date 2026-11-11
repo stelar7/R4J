@@ -4,7 +4,7 @@ import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.cache.CacheProvider;
 import no.stelar7.api.r4j.basic.cache.impl.EmptyCacheProvider;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
-import no.stelar7.api.r4j.basic.ratelimiting.RateLimiter;
+import no.stelar7.api.r4j.basic.ratelimiting.*;
 import no.stelar7.api.r4j.basic.utils.Pair;
 
 import java.util.Map;
@@ -36,6 +36,8 @@ public final class R4JContext
     private volatile long           maxSleep                       = 10000;
     private volatile int            globalTimeout                  = 0;
     private volatile boolean        failFastOnServiceRatelimit     = false;
+
+    private volatile SharedRateLimitStore rateLimitStore;
 
     private final Map<ApiKeyType, Map<Enum, Map<Enum, RateLimiter>>> limiters   = new ConcurrentHashMap<>();
     private final Map<Pair<ApiKeyType, Enum>, Semaphore>             semaphores = new ConcurrentHashMap<>();
@@ -152,7 +154,65 @@ public final class R4JContext
      */
     public RateLimiter getLimiter(ApiKeyType keyType, Enum platform, Enum endpoint)
     {
-        return getLimiters(keyType).computeIfAbsent(platform, k -> new ConcurrentHashMap<>()).computeIfAbsent(endpoint, k -> new RateLimiter());
+        return getLimiters(keyType).computeIfAbsent(platform, k -> new ConcurrentHashMap<>()).computeIfAbsent(endpoint, k -> createLimiter(keyType, platform, endpoint));
+    }
+
+    private RateLimiter createLimiter(ApiKeyType keyType, Enum platform, Enum endpoint)
+    {
+        SharedRateLimitStore store = rateLimitStore;
+        if (store == null)
+        {
+            return new RateLimiter();
+        }
+
+        return new RateLimiter(store, "r4j:" + describeKey(keyType) + ":" + platform.name() + ":" + endpoint.name());
+    }
+
+    /**
+     * Identifies the api key in the name of a shared bucket, without putting the key itself in the store
+     */
+    private String describeKey(ApiKeyType keyType)
+    {
+        APICredentials creds = credentials;
+        if (creds == null || !creds.hasKey(keyType))
+        {
+            return keyType.name();
+        }
+
+        try
+        {
+            byte[]        hash = java.security.MessageDigest.getInstance("SHA-256").digest(creds.getKey(keyType).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder sb   = new StringBuilder();
+            for (int i = 0; i < 8; i++)
+            {
+                sb.append(String.format("%02x", hash[i]));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e)
+        {
+            throw new IllegalStateException("SHA-256 is not available", e);
+        }
+    }
+
+    public SharedRateLimitStore getRateLimitStore()
+    {
+        return rateLimitStore;
+    }
+
+    /**
+     * Keeps the rate limit counters in a store outside of this JVM (ie. Redis), so every process using the same api key obeys the limits together.
+     * Without a store, each process counts for itself and follows the counts the api reports.
+     * <p>
+     * Set this before making calls: the limiters that already exist are dropped, and with them what they had counted.
+     *
+     * @param rateLimitStore the store, or null to count locally
+     * @return this
+     */
+    public R4JContext setRateLimitStore(SharedRateLimitStore rateLimitStore)
+    {
+        this.rateLimitStore = rateLimitStore;
+        this.limiters.clear();
+        return this;
     }
 
     /**

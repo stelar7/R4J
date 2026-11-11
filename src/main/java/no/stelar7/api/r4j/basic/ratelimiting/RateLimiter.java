@@ -3,23 +3,31 @@ package no.stelar7.api.r4j.basic.ratelimiting;
 import org.slf4j.*;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Tracks how many calls have been made in each rate limit window of one bucket (the application limit of a platform, or the limit of one method on a platform).
+ * Limits the calls of one bucket (the application limit of a platform, or the limit of one method on a platform).
  * <p>
  * The limits are fixed windows, like the ones the api uses: a window starts with the first call made in it, and allows a number of calls until it ends.
  * The limiter never sleeps or blocks itself; {@link #tryAcquire(long)} either takes a permit or says how long to wait, so the caller decides how to wait.
  * All methods are thread safe.
  * <p>
- * Several processes (on the same or on different machines) can share an api key. They do not talk to each other; each one follows the
- * counts the server reports in its responses ({@link #syncWithServerCounts(Map, long, long)}), which include the calls of the others:
+ * The counters live in a {@link SharedRateLimitStore}. There is one implementation of the limiter, and where the counters are kept decides how
+ * well several processes sharing an api key work together:
  * <ul>
- * <li>a higher count than ours means someone else is using the key, so the count is raised</li>
- * <li>the limiter then keeps a reserve as large as the amount of calls the others made while one of ours was in flight, because it can not see their calls until it gets a response</li>
- * <li>a count lower than the calls the server has already answered for us means the server has started a new window, so ours is restarted</li>
+ * <li>By default every limiter has a private in-memory store. Processes sharing a key do not see each other, so each one follows the counts the
+ * server reports in its responses, which include the calls of the others. That keeps a shared key close to its limits, but not exactly on them:
+ * calls in flight at the same time in different processes are invisible to each other, so an occasional 429 is possible.</li>
+ * <li>With a shared store (ie. Redis, see {@code R4JContext.setRateLimitStore}) every process takes its permits from the same counters,
+ * so a call is seen by all of them before it is sent.</li>
  * </ul>
- * This keeps a shared key close to its limits. It can not be exact: calls that are in flight at the same time in different processes are invisible to each other,
- * so an occasional 429 is still possible. Those are handled with the Retry-After the server gives ({@link #cooldown(long, String, boolean)}).
+ * In both cases the limiter follows the server ({@link #syncWithServerCounts(Map, long, long)}):
+ * <ul>
+ * <li>a higher count than the counter means something else is using the key, so the counter is raised</li>
+ * <li>it then keeps a reserve as large as the amount of calls made by others while one of ours was in flight</li>
+ * <li>a count lower than the calls the server has already answered for us means the server has started a new window, so the counter is restarted</li>
+ * </ul>
+ * A 429 stops all calls for the Retry-After the server gives ({@link #cooldown(long, String, boolean)}).
  */
 public class RateLimiter
 {
@@ -41,80 +49,91 @@ public class RateLimiter
      */
     private static final long DEFAULT_COOLDOWN_MS = 5000;
 
+    private static final long WARN_INTERVAL_MS = 60_000;
+
+    /**
+     * What this process knows about the current window of one limit. The count itself is in the store.
+     */
     private static final class Window
     {
-        private final RateLimit limit;
-        private       long      start;
-
-        // the calls the server has counted in this window, as far as we know (ours and the ones of other processes)
-        private long count;
+        // when we joined the window, and when it ends (in our own time)
+        private long start;
+        private long end;
+        // the margin that was in use when we learned when the window ends
+        private long margin;
         // our own calls in this window
         private long own;
         // our own calls in this window that the server has answered
         private long answered;
         // when the newest of the answered calls was sent
-        private long newestAnswered;
-        // how many calls other processes made while one of ours was in flight
+        private long newestAnswered = Long.MIN_VALUE;
+        // how many calls were made by others (that the store did not know about) while one of ours was in flight
         private long foreignPerCall;
 
-        private Window(RateLimit limit)
+        private boolean isOpen(long now)
         {
-            this.limit = limit;
+            return now < end;
         }
 
-        private boolean isOpen()
+        private void open(long start, long end, long margin, long own, long answered)
         {
-            return count > 0;
-        }
-
-        private void close()
-        {
-            count = 0;
-            own = 0;
-            answered = 0;
-            newestAnswered = 0;
-            // foreignPerCall is kept: the other processes are most likely still there in the next window
-        }
-
-        private void copyFrom(Window other)
-        {
-            start = other.start;
-            count = other.count;
-            own = other.own;
-            answered = other.answered;
-            newestAnswered = other.newestAnswered;
-            foreignPerCall = other.foreignPerCall;
+            this.start = start;
+            this.end = end;
+            this.margin = margin;
+            this.own = own;
+            this.answered = answered;
+            this.newestAnswered = Long.MIN_VALUE;
+            // foreignPerCall is kept: the others are most likely still there in the next window
         }
     }
 
-    private List<Window> windows = new ArrayList<>();
+    private final SharedRateLimitStore store;
+    // used when the store can not be reached
+    private final SharedRateLimitStore fallback;
+    private final String               bucket;
+
+    private List<RateLimit>        limits  = Collections.emptyList();
+    private Map<RateLimit, Window> windows = new HashMap<>();
 
     // calls made before the limits were known (the limits are only known after the first response)
     private long unknownStart;
     private long unknownCount;
 
+    // what this process knows about the cooldown, so the store is not asked about it for every call
     private long    cooldownUntil;
     private boolean cooldownFailFast;
     private long    cooldownStartedAt;
 
     private long latency;
+    // the latest time this limiter was told about
+    private long lastNow;
+    private long lastWarning;
 
     /**
-     * A limiter for a bucket with unknown limits. It never makes a caller wait, but counts the calls, so they are accounted for once the limits are known.
+     * A limiter that counts for itself, for a bucket with unknown limits.
+     * It does not make a caller wait until the limits are known, but counts the calls, so they are accounted for once they are.
      */
     public RateLimiter()
     {
+        this.fallback = new InMemoryRateLimitStore(() -> lastNow);
+        this.store = this.fallback;
+        this.bucket = "local";
     }
 
     /**
+     * A limiter that counts for itself.
+     *
      * @param limits the limits to obey
      */
     public RateLimiter(Collection<RateLimit> limits)
     {
+        this();
         updateLimits(limits);
     }
 
     /**
+     * A limiter that counts for itself.
+     *
      * @param limits the limits to obey
      */
     public RateLimiter(RateLimit... limits)
@@ -122,28 +141,131 @@ public class RateLimiter
         this(Arrays.asList(limits));
     }
 
-    private long windowEnd(Window window)
+    /**
+     * A limiter that shares its counters, limits and cooldown with every other limiter using the same store and bucket.
+     *
+     * @param store  where the counters are kept
+     * @param bucket identifies the bucket (key + platform + endpoint); must be the same in every process sharing it
+     */
+    public RateLimiter(SharedRateLimitStore store, String bucket)
     {
-        return window.start + window.limit.getTimeframeInMS() + Math.min(MAX_WINDOW_MARGIN_MS, Math.max(MIN_WINDOW_MARGIN_MS, latency));
+        this.fallback = new InMemoryRateLimitStore(() -> lastNow);
+        this.store = Objects.requireNonNull(store);
+        // the braces are a Redis Cluster hash tag: all keys of a bucket end up in the same slot, which the scripts need
+        this.bucket = "{" + bucket + "}";
     }
 
-    private void closeExpiredWindows(long now)
+    private interface StoreCall<T>
     {
-        if (cooldownUntil != 0 && now >= cooldownUntil)
+        T on(SharedRateLimitStore store);
+    }
+
+    /**
+     * Runs the call on the store, or on the private in-memory store if the store can not be reached
+     */
+    private <T> T withStore(StoreCall<T> call)
+    {
+        if (store == fallback)
         {
-            // the server told us when it would accept calls again, so everything counted before that is void
-            cooldownUntil = 0;
-            cooldownFailFast = false;
-            unknownCount = 0;
-            windows.forEach(Window::close);
+            return call.on(store);
         }
 
-        for (Window window : windows)
+        try
         {
-            if (window.isOpen() && now >= windowEnd(window))
+            return call.on(store);
+        } catch (RuntimeException e)
+        {
+            if (lastNow - lastWarning > WARN_INTERVAL_MS || lastWarning == 0)
             {
-                window.close();
+                lastWarning = Math.max(1, lastNow);
+                logger.warn("The shared rate limit store could not be used, counting locally instead", e);
             }
+
+            return call.on(fallback);
+        }
+    }
+
+    private void touch(long now)
+    {
+        lastNow = Math.max(lastNow, now);
+    }
+
+    private String counterKey(RateLimit limit)
+    {
+        return bucket + ":count:" + limit.getTimeframeInMS();
+    }
+
+    private String cooldownKey()
+    {
+        return bucket + ":cooldown";
+    }
+
+    private String limitsKey()
+    {
+        return bucket + ":limits";
+    }
+
+    private static List<RateLimit> sort(Collection<RateLimit> limits)
+    {
+        List<RateLimit> sorted = new ArrayList<>(new LinkedHashSet<>(limits));
+        sorted.sort(Comparator.comparingLong(RateLimit::getTimeframeInMS));
+        return sorted;
+    }
+
+    private static String format(List<RateLimit> limits)
+    {
+        StringJoiner joiner = new StringJoiner(",");
+        limits.forEach(l -> joiner.add(l.getPermits() + ":" + l.getTimeframeInMS()));
+        return joiner.toString();
+    }
+
+    private static List<RateLimit> parse(String value)
+    {
+        List<RateLimit> limits = new ArrayList<>();
+        if (value != null && !value.isEmpty())
+        {
+            for (String part : value.split(","))
+            {
+                String[] pair = part.split(":");
+                limits.add(new RateLimit(Integer.parseInt(pair[0]), Long.parseLong(pair[1]), TimeUnit.MILLISECONDS));
+            }
+        }
+
+        return sort(limits);
+    }
+
+    /**
+     * @return how much longer than its size (in ms) a window is kept open; follows the measured round trip time
+     */
+    private long getWindowMargin()
+    {
+        return Math.min(MAX_WINDOW_MARGIN_MS, Math.max(MIN_WINDOW_MARGIN_MS, latency));
+    }
+
+    private static long getCooldownDuration(String retryAfterSeconds)
+    {
+        try
+        {
+            return Long.parseLong(retryAfterSeconds.trim()) * 1000L + COOLDOWN_MARGIN_MS;
+        } catch (NumberFormatException | NullPointerException e)
+        {
+            return DEFAULT_COOLDOWN_MS;
+        }
+    }
+
+    private Window window(RateLimit limit)
+    {
+        return windows.computeIfAbsent(limit, k -> new Window());
+    }
+
+    /**
+     * Another process may already have learned the limits
+     */
+    private void loadSharedLimits()
+    {
+        if (limits.isEmpty() && store != fallback)
+        {
+            limits = parse(withStore(s -> s.get(limitsKey())));
         }
     }
 
@@ -155,30 +277,43 @@ public class RateLimiter
      */
     public synchronized long tryAcquire(long now)
     {
-        closeExpiredWindows(now);
+        touch(now);
+        loadSharedLimits();
 
-        if (cooldownUntil != 0)
+        List<String> counters = new ArrayList<>();
+        List<Long>   maxima   = new ArrayList<>();
+        List<Long>   ttls     = new ArrayList<>();
+        for (RateLimit limit : limits)
         {
-            return cooldownUntil - now;
+            Window window = window(limit);
+
+            // the reserve is for the calls others are expected to make while this call is in flight
+            long reserve = window.isOpen(now) ? window.foreignPerCall : 0;
+
+            counters.add(counterKey(limit));
+            maxima.add(Math.max(1, limit.getPermits() - reserve));
+            ttls.add(limit.getTimeframeInMS() + getWindowMargin());
         }
 
-        long wait = 0;
-        for (Window window : windows)
-        {
-            // the reserve is for the calls other processes sharing the key are expected to make while this call is in flight
-            long reserve = window.isOpen() ? window.foreignPerCall : 0;
-            if (window.count + reserve >= window.limit.getPermits())
-            {
-                wait = Math.max(wait, windowEnd(window) - now);
-            }
-        }
-
+        // with unknown limits there are no counters, but a cooldown still blocks
+        long wait = withStore(s -> s.tryIncrement(cooldownKey(), counters, maxima, ttls));
         if (wait > 0)
         {
             return wait;
         }
 
-        if (windows.isEmpty())
+        if (wait < 0)
+        {
+            // a cooldown is active; remember it, and whether calls should fail instead of wait
+            if (cooldownUntil < now - wait)
+            {
+                cooldownUntil = now - wait;
+                cooldownFailFast = "1".equals(withStore(s -> s.get(cooldownKey())));
+            }
+            return -wait;
+        }
+
+        if (limits.isEmpty())
         {
             if (unknownCount == 0)
             {
@@ -187,13 +322,15 @@ public class RateLimiter
             unknownCount++;
         }
 
-        for (Window window : windows)
+        for (RateLimit limit : limits)
         {
-            if (!window.isOpen())
+            Window window = window(limit);
+            if (!window.isOpen(now))
             {
-                window.start = now;
+                // the first call we make in this window; ask how long it lasts, as someone else may have started it
+                long remaining = withStore(s -> s.getTimeToLive(counterKey(limit)));
+                window.open(now, now + Math.max(1, remaining), getWindowMargin(), 0, 0);
             }
-            window.count++;
             window.own++;
         }
 
@@ -205,66 +342,83 @@ public class RateLimiter
      */
     public synchronized void release()
     {
-        if (windows.isEmpty() && unknownCount > 0)
+        if (limits.isEmpty())
         {
-            unknownCount--;
+            if (unknownCount > 0)
+            {
+                unknownCount--;
+            }
+            return;
         }
 
-        for (Window window : windows)
+        List<String> counters = new ArrayList<>();
+        for (RateLimit limit : limits)
         {
+            Window window = window(limit);
             if (window.own > 0)
             {
                 window.own--;
-                window.count--;
+                counters.add(counterKey(limit));
             }
         }
+
+        withStore(s -> {
+            s.decrement(counters);
+            return null;
+        });
     }
 
     /**
      * Sets the limits of this bucket, as reported by the server (X-App-Rate-Limit / X-Method-Rate-Limit).
-     * The calls already counted are kept: a limit that stays keeps its window, and a new limit starts with the calls made so far.
+     * The counters are per window size, so a limit that only changes its amount of calls keeps its count.
+     * The calls made before any limit was known are counted in the new limits.
      *
-     * @param limits the limits to obey
+     * @param newLimits the limits to obey
      * @return true if the limits changed
      */
-    public synchronized boolean updateLimits(Collection<RateLimit> limits)
+    public synchronized boolean updateLimits(Collection<RateLimit> newLimits)
     {
-        List<RateLimit> sorted = new ArrayList<>(new LinkedHashSet<>(limits));
-        sorted.sort(Comparator.comparingLong(RateLimit::getTimeframeInMS));
-
-        if (sorted.equals(getLimits()))
+        List<RateLimit> sorted = sort(newLimits);
+        if (sorted.equals(limits))
         {
             return false;
         }
 
-        // what a new limit starts with: the calls of the longest known window, or the calls made before any limit was known
-        Window seed = new Window(null);
-        seed.start = unknownStart;
-        seed.count = unknownCount;
-        seed.own = unknownCount;
-        if (!windows.isEmpty())
-        {
-            seed.copyFrom(windows.get(windows.size() - 1));
-        }
+        boolean wasUnknown = limits.isEmpty();
 
-        List<Window> updated = new ArrayList<>();
+        // what we know about a window belongs to its size, not to how many calls it allows
+        Map<RateLimit, Window> updated = new HashMap<>();
         for (RateLimit limit : sorted)
         {
-            Window window = new Window(limit);
-            window.copyFrom(seed);
-
-            for (Window old : windows)
+            for (Map.Entry<RateLimit, Window> old : windows.entrySet())
             {
-                if (old.limit.getTimeframeInMS() == limit.getTimeframeInMS())
+                if (old.getKey().getTimeframeInMS() == limit.getTimeframeInMS())
                 {
-                    window.copyFrom(old);
+                    updated.put(limit, old.getValue());
                 }
             }
-
-            updated.add(window);
         }
 
+        limits = sorted;
         windows = updated;
+        withStore(s -> {
+            s.put(limitsKey(), format(sorted), 0);
+            return null;
+        });
+
+        if (wasUnknown && unknownCount > 0)
+        {
+            for (RateLimit limit : sorted)
+            {
+                long remaining = limit.getTimeframeInMS() + getWindowMargin() - (lastNow - unknownStart);
+                if (remaining > 0)
+                {
+                    long count = unknownCount;
+                    withStore(s -> s.raise(counterKey(limit), count, remaining));
+                    window(limit).open(unknownStart, lastNow + remaining, getWindowMargin(), count, 0);
+                }
+            }
+        }
         unknownCount = 0;
 
         logger.debug("Ratelimits updated to {}", sorted);
@@ -274,9 +428,9 @@ public class RateLimiter
     /**
      * Follows the counts reported by the server (X-App-Rate-Limit-Count / X-Method-Rate-Limit-Count). Call this once for every response.
      * <p>
-     * This is what keeps the limiter correct when the key is shared with other processes, or the application was just restarted:
-     * a count is raised when the server has seen more calls than we know of, and the window is restarted when the server has started a new one.
-     * A response to a request sent before the current window started is ignored.
+     * This is what keeps the limiter correct when something the store does not know about is using the key too (another process without a shared store,
+     * another application), or when the application was just restarted: a counter is raised when the server has seen more calls than it holds,
+     * and restarted when the server has started a new window. A response to a request sent before we joined the current window is ignored.
      *
      * @param countsByWindowSeconds the calls the server has counted, by the size of the window in seconds
      * @param sentAt                when the request this response belongs to was sent (epoch millis)
@@ -284,36 +438,39 @@ public class RateLimiter
      */
     public synchronized void syncWithServerCounts(Map<Integer, Integer> countsByWindowSeconds, long sentAt, long receivedAt)
     {
+        touch(receivedAt);
+
         if (receivedAt >= sentAt)
         {
             // slowly follows the round trip time, which decides how much longer than its size a window is kept open
             latency = latency == 0 ? receivedAt - sentAt : (latency * 3 + (receivedAt - sentAt)) / 4;
         }
 
-        closeExpiredWindows(receivedAt);
-
-        for (Window window : windows)
+        for (RateLimit limit : limits)
         {
-            Integer serverCount = countsByWindowSeconds.get((int) (window.limit.getTimeframeInMS() / 1000));
+            Integer serverCount = countsByWindowSeconds.get((int) (limit.getTimeframeInMS() / 1000));
             if (serverCount == null)
             {
                 continue;
             }
 
-            if (!window.isOpen())
+            Window window = window(limit);
+            String counter = counterKey(limit);
+            long   fullTtl = limit.getTimeframeInMS() + getWindowMargin();
+
+            if (!window.isOpen(receivedAt))
             {
                 // we think the window is over (or never made a call in it), but the server is counting
-                window.start = sentAt;
-                window.count = serverCount;
-                window.own = 1;
-                window.answered = 1;
+                withStore(s -> s.raise(counter, serverCount, fullTtl));
+                long remaining = withStore(s -> s.getTimeToLive(counter));
+                window.open(sentAt, receivedAt + Math.max(1, remaining), getWindowMargin(), 1, 1);
                 window.newestAnswered = sentAt;
                 continue;
             }
 
             if (window.start > sentAt)
             {
-                // the request was sent before this window started
+                // the request was sent before we joined this window
                 continue;
             }
 
@@ -324,19 +481,31 @@ public class RateLimiter
             if (newest && serverCount < window.answered)
             {
                 // The server has counted fewer calls than it has already answered for us in this window, so it has started a new window.
-                // (ours started earlier than the one of the server, which happens when another process made the first call of that window)
+                // (the counter was started before the window of the server, which happens when something else made the first call of that window)
                 // Only the newest call is trusted for this, as responses can arrive out of order.
                 long inFlight = Math.max(0, window.own - window.answered);
-                logger.debug("The server started a new window for {}, call count changed from {} to {}", window.limit, window.count, serverCount + inFlight);
-                window.start = sentAt;
-                window.count = serverCount + inFlight;
-                window.own = inFlight + 1;
-                window.answered = 1;
+                logger.debug("The server started a new window for {}, call count set to {}", limit, serverCount + inFlight);
+                withStore(s -> {
+                    s.put(counter, String.valueOf(serverCount + inFlight), fullTtl);
+                    return null;
+                });
+                window.open(sentAt, receivedAt + fullTtl, getWindowMargin(), inFlight + 1, 1);
+                window.newestAnswered = sentAt;
                 continue;
             }
 
-            // the calls made by others since we last knew the count
-            long foreign = Math.max(0, serverCount - window.count);
+            if (getWindowMargin() > window.margin)
+            {
+                // the connection is slower than we thought when the window started, so the window of the server ends later than we assumed
+                window.end += getWindowMargin() - window.margin;
+                window.margin = getWindowMargin();
+            }
+
+            long remaining = Math.max(1, window.end - receivedAt);
+            long previous  = withStore(s -> s.raise(counter, serverCount, remaining));
+
+            // the calls made by others, that the store did not know about, since our previous call
+            long foreign = Math.max(0, serverCount - previous);
             if (window.answered > 1)
             {
                 // the first answer of a window only tells us what happened before we joined it, not how fast the others are going
@@ -345,8 +514,7 @@ public class RateLimiter
 
             if (foreign > 0)
             {
-                logger.debug("Call count for {} raised from {} to {} to match the server", window.limit, window.count, serverCount);
-                window.count = serverCount;
+                logger.debug("Call count for {} raised from {} to {} to match the server", limit, previous, serverCount);
             }
         }
     }
@@ -360,17 +528,17 @@ public class RateLimiter
      */
     public synchronized void cooldown(long receivedAt, String retryAfterSeconds, boolean failFast)
     {
-        long duration;
-        try
+        // a response that was received before the one that set the current cooldown is outdated
+        if (cooldownUntil > lastNow && receivedAt < cooldownStartedAt)
         {
-            duration = Long.parseLong(retryAfterSeconds.trim()) * 1000L + COOLDOWN_MARGIN_MS;
-        } catch (NumberFormatException | NullPointerException e)
-        {
-            duration = DEFAULT_COOLDOWN_MS;
+            return;
         }
 
-        // a response that was received before the one that set the current cooldown is outdated
-        if (cooldownUntil != 0 && receivedAt < cooldownStartedAt)
+        touch(receivedAt);
+
+        long duration  = getCooldownDuration(retryAfterSeconds);
+        long remaining = receivedAt + duration - lastNow;
+        if (remaining <= 0)
         {
             return;
         }
@@ -379,16 +547,23 @@ public class RateLimiter
         cooldownUntil = receivedAt + duration;
         cooldownFailFast = failFast;
 
-        logger.debug("No calls for {} ms (failFast={})", duration, failFast);
+        withStore(s -> {
+            s.put(cooldownKey(), failFast ? "1" : "0", remaining);
+            return null;
+        });
+
+        logger.debug("No calls for {} ms (failFast={})", remaining, failFast);
     }
 
     /**
      * @param now the current time (epoch millis)
-     * @return how long the cooldown started by a 429 still lasts, 0 if there is none
+     * @return how long the cooldown started by a 429 still lasts, 0 if there is none.
+     * A cooldown started by another process (through a shared store) is known once {@link #tryAcquire(long)} has run into it.
      */
     public synchronized long getCooldownRemaining(long now)
     {
-        return cooldownUntil == 0 ? 0 : Math.max(0, cooldownUntil - now);
+        touch(now);
+        return Math.max(0, cooldownUntil - now);
     }
 
     /**
@@ -396,7 +571,7 @@ public class RateLimiter
      */
     public synchronized boolean isCooldownFailFast()
     {
-        return cooldownUntil != 0 && cooldownFailFast;
+        return cooldownFailFast && lastNow < cooldownUntil;
     }
 
     /**
@@ -404,18 +579,22 @@ public class RateLimiter
      */
     public synchronized List<RateLimit> getLimits()
     {
-        List<RateLimit> limits = new ArrayList<>();
-        windows.forEach(w -> limits.add(w.limit));
-        return limits;
+        loadSharedLimits();
+        return new ArrayList<>(limits);
     }
 
     /**
-     * @return the calls counted in the current window of each limit (ours and, as far as the server told us, the ones of other processes sharing the key)
+     * @return the calls counted in the current window of each limit (by everyone using the store, and as far as the server told us, by others)
      */
     public synchronized Map<RateLimit, Long> getCallCounts()
     {
+        loadSharedLimits();
+
         Map<RateLimit, Long> counts = new LinkedHashMap<>();
-        windows.forEach(w -> counts.put(w.limit, w.count));
+        for (RateLimit limit : limits)
+        {
+            counts.put(limit, withStore(s -> s.getCounter(counterKey(limit))));
+        }
         return counts;
     }
 

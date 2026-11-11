@@ -538,6 +538,12 @@ public class DataCallBuilder
                 return;
             }
 
+            // a cooldown started by another process (sharing the limits through a store) is only known after asking for a permit
+            if (method != null && method.isCooldownFailFast() && method.getCooldownRemaining(now) > 0)
+            {
+                throw new APIEndpointCooldownException(endpoint.name(), method.getCooldownRemaining(now));
+            }
+
             logger.debug("{} {}: waiting {} ms for the ratelimit", platform, endpoint, wait);
             Thread.sleep(wait);
         }
