@@ -19,6 +19,7 @@ Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src
 | :-- | :--- | :---- |
 | Riot API | League of Legends, Teamfight Tactics, VALORANT, Legends of Runeterra, Riftbound, accounts and status: every endpoint on the [developer portal](https://developer.riotgames.com/apis), including tournaments and the RSO (signed-in player) endpoints | `api.getLoLAPI()`, `getTFTAPI()`, `getVALAPI()`, `getLORAPI()`, `getAccountAPI()`, ... |
 | Data Dragon | Static data (champions, items, runes, ...) and images | `api.getDDragonAPI()`, `api.getImageAPI()` |
+| CommunityDragon | Champion data and assets from the community-run CDN (the only source here not run by Riot; only used if you call it) | `api.getCDragonAPI()` |
 | League client (LCU) | Calls to the running client, and its websocket events | `LCUApi`, `LCUSocketReader` |
 | Live client data | Data about the game being played on this machine | `LiveClientDataAPI` |
 | Replay API | Controlling the replay viewer | `ReplayAPI` |

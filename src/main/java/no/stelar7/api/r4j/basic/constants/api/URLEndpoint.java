@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.basic.constants.api;
 import no.stelar7.api.r4j.pojo.riftbound.RiftboundContent;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.utils.*;
+import no.stelar7.api.r4j.pojo.lol.cdragon.CDragonChampion;
 import no.stelar7.api.r4j.pojo.lol.challenges.*;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.pojo.lol.championmastery.*;
@@ -65,6 +66,8 @@ public enum URLEndpoint
     DDRAGON_VERSIONS("api/", "", "", "versions.json", StringList.class),
     DDRAGON_REALMS("realms/", "", Constants.REGION_PLACEHOLDER, ".json", Realm.class),
     DDRAGON_TARBALL("", "", "", "", String.class),
+    
+    CDRAGON_CHAMPION_DATA("", "", Constants.VERSION_PLACEHOLDER, "/champion/" + Constants.ID_PLACEHOLDER + "/data", CDragonChampion.class),
     
     V4_LEAGUE("lol", "league", "v4", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
     V4_LEAGUE_ENTRY_BY_PUUID("lol", "league", "v4", "entries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, LeagueEntryList.class),

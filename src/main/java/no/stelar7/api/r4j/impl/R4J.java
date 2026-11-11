@@ -396,6 +396,16 @@ public class R4J
     }
     
     /**
+     * Gets the api for the CommunityDragon CDN, a community-run source of champion data and assets.
+     *
+     * @return the cdragon api
+     */
+    public CDragonAPI getCDragonAPI()
+    {
+        return CDragonAPI.getInstance(context);
+    }
+
+    /**
      * Gets static api.
      *
      * @return the static api

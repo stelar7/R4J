@@ -39,6 +39,7 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * **Fields:** the responses of champion mastery, challenges, status, LoR match, match-v5, TFT match and the Valorant match, leaderboard and content apis were brought in line with the documentation.
 * **Several instances:** `R4J.isolated(credentials)` gives an instance with its own keys, cache, settings and limiters. Objects it returns (a `Summoner`, a match) keep using it when they fetch more data.
 * **Sharing an api key between processes:** works without setup by following the call counts the api reports. For exact limits, keep the counters in a shared store with `R4JContext.setRateLimitStore`: `RedisRateLimitStore`, `JdbcRateLimitStore`, or your own `SharedRateLimitStore`.
+* **CommunityDragon:** `CDragonAPI` reads champion data and builds asset urls (splash art, tiles, portraits, ability icons, champion select sounds, wards, profile icons) from the CommunityDragon CDN. It is community-run, not Riot, and is only contacted when you call it.
 * **Tournament callbacks:** `TournamentCallbackListener` receives the result Riot posts after a tournament game.
 * **Caches:** `MemoryCacheProvider` works; `JdbcCacheProvider` caches in any SQL database; the file cache can be shared by several processes.
 * **Riftbound key** in `APICredentials`.
@@ -56,5 +57,6 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * The api key was written to the log at trace level.
 * The connection was not reused after a 429.
 * `MySQLCacheProvider` terminated the JVM on every lookup.
+* `ImageAPI` built loading screen art urls that do not exist, and rune and mastery icon urls that only work for an old patch. `ImageAPI.getProfileIcon(region, summonerName)` is deprecated, as the service behind it is gone.
 * A lazily loaded list (ie. from `getMatchList`) claimed to be empty until it was iterated (#112).
 * The file cache kept growing, because expired files were only removed when asked for again and folders were never removed (#61).

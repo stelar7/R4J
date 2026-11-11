@@ -46,6 +46,7 @@ public class CacheLifetimeHint
         
         DEFAULTS.add(URLEndpoint.DDRAGON_REALMS, DAYS_1);
         DEFAULTS.add(URLEndpoint.DDRAGON_VERSIONS, DAYS_1);
+        DEFAULTS.add(URLEndpoint.CDRAGON_CHAMPION_DATA, DAYS_1);
         
         DEFAULTS.add(URLEndpoint.V4_THIRD_PARTY_CODE, MINUTES_10);
         
