@@ -6,6 +6,7 @@
 
 ```Java
 R4J api = new R4J(new APICredentials("RGAPI-your-key"));
+// or, with a key per game: new R4J(APICredentials.builder().lol("RGAPI-..").tft("RGAPI-..").build());
 
 RiotAccount account  = api.getAccountAPI().getAccountByTag(RegionShard.EUROPE, "stelar7", "STL7");
 Summoner    summoner = api.getLoLAPI().getSummonerAPI().getSummonerByPUUID(LeagueShard.EUW1, account.getPUUID());
@@ -34,6 +35,10 @@ Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src
 | Rate-limiting? | Set dynamically based on your key, and synced with the counts the api reports |
 | Shared keys?   | Yes, across processes; optionally exact with Redis or a database |
 | RSO endpoints? | Yes, pass the access token of the player |
+| Async?         | Yes, every method has a non-blocking twin |
+| Several keys?  | Yes, each instance can have its own keys, cache and limits |
+| Proxy or mirror? | Yes, for the Riot api, Data Dragon and CommunityDragon |
+| Compressed responses? | Yes, gzip is asked for and handled |
 
 | Cache      | Supported |
 | :--------: | :-------: |
@@ -45,6 +50,12 @@ Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src
 ```Java
 api.getContext().setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
 ```
+
+##### What if something is not there, or goes wrong?
+
+A method returns `null` (or an empty list or map) when what you asked for does not exist; the ones that can return `null` are marked `@Nullable`.
+Everything else is an exception extending `R4JException`: `APIResponseException` when the api refuses a call (with the reason), `APINoValidResponseException` when it answers something that can not be read, and `APIUnsupportedActionException` when the key a call needs is not set.
+Rate limits are waited for, and server errors are retried, before either becomes an exception.
 
 ## How do I download?
 
@@ -118,7 +129,7 @@ api.getCDragonAPI().setBaseUrl("https://my-mirror.example/cdragon/");
 
 ## Upgrading
 
-See the [changelog](CHANGELOG.md) for what changed in 3.0.0 and what to look out for when coming from 2.x.
+Coming from 2.x? The [migration guide](MIGRATION.md) lists what to change, what behaves differently and what was removed in 3.0.0.
 
 ## Requirements
 
