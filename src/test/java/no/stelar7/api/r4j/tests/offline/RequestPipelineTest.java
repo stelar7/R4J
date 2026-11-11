@@ -186,6 +186,23 @@ public class RequestPipelineTest
     }
 
     @Test
+    public void queryParametersAreUrlEncoded()
+    {
+        AtomicReference<String> query = new AtomicReference<>();
+        handler = exchange -> {
+            query.set(exchange.getRequestURI().getRawQuery());
+            respond(exchange, 200, STATUS_JSON);
+        };
+
+        statusCall(LeagueShard.SG2).withQueryParameter("name", "a b&c=d+e")
+                                   .withQueryParameter("multi", "1")
+                                   .withQueryParameter("multi", "2")
+                                   .build();
+
+        Assertions.assertEquals("name=a%20b%26c%3Dd%2Be&multi=1,2", query.get());
+    }
+
+    @Test
     public void ratelimitedCallWithoutLimitersDoesNotCrash()
     {
         // no X-Rate-Limit-Type header means a service limit, which is retried with a backoff

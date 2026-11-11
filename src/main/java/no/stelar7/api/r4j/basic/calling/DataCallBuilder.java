@@ -952,7 +952,9 @@ public class DataCallBuilder
      */
     public DataCallBuilder withURLDataAsSet(final String key, final String value)
     {
-        this.dc.getUrlData().merge(key, (this.dc.getUrlData().get(key) != null) ? ("&" + key + "=" + value) : value, MERGE_AS_SET);
+        String encodedKey   = Utils.normalizeString(key);
+        String encodedValue = Utils.normalizeString(value);
+        this.dc.getUrlData().merge(encodedKey, (this.dc.getUrlData().get(encodedKey) != null) ? ("&" + encodedKey + "=" + encodedValue) : encodedValue, MERGE_AS_SET);
         return this;
     }
     
@@ -966,7 +968,8 @@ public class DataCallBuilder
      */
     public DataCallBuilder withQueryParameter(final String key, final String value)
     {
-        this.dc.getUrlData().merge(key, value, MERGE);
+        // the values are url-encoded here (and not when the url is built), as repeated keys are merged into one value
+        this.dc.getUrlData().merge(Utils.normalizeString(key), Utils.normalizeString(value), MERGE);
         return this;
     }
     
