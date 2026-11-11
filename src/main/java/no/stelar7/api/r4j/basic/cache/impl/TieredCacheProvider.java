@@ -91,22 +91,22 @@ public class TieredCacheProvider implements CacheProvider
         return providers.stream().mapToLong(provider -> provider.getSize(type, filter)).sum();
     }
     
+    /**
+     * Sets the time to live of every tier. To give the tiers different lifetimes, set them on the tiers themselves.
+     */
     @Override
     public void setTimeToLiveGlobal(long timeToLive)
     {
-        // this is ignored for tiered caches as the individuals control it themself
+        providers.forEach(p -> p.setTimeToLiveGlobal(timeToLive));
     }
     
-    @Override
-    public void setContext(no.stelar7.api.r4j.basic.calling.R4JContext context)
-    {
-        providers.forEach(p -> p.setContext(context));
-    }
-
+    /**
+     * Sets the lifetime hints of every tier. To give the tiers different hints, set them on the tiers themselves.
+     */
     @Override
     public void setTimeToLive(CacheLifetimeHint hints)
     {
-        // this is ignored for tiered caches as the individuals control it themself
+        providers.forEach(p -> p.setTimeToLive(hints));
     }
     
 }

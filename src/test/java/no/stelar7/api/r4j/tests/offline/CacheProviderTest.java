@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.offline;
 
-import no.stelar7.api.r4j.basic.cache.CacheProvider;
+import no.stelar7.api.r4j.basic.cache.*;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -255,6 +255,33 @@ public class CacheProviderTest
         // and storing into a folder that was removed works
         cache.store(ENDPOINT, entry(LeagueShard.EUW1, "old", "value-new"));
         Assertions.assertEquals("value-new", cache.get(ENDPOINT, key(LeagueShard.EUW1, "old")).orElse(null));
+    }
+
+    @Test
+    public void tieredCachePassesTheTimeToLiveOnToItsTiers(@TempDir Path dir) throws InterruptedException
+    {
+        MemoryCacheProvider     memory = new MemoryCacheProvider(CacheProvider.TTL_INFINITY);
+        FileSystemCacheProvider file   = new FileSystemCacheProvider(dir, CacheProvider.TTL_INFINITY);
+        TieredCacheProvider     tiered = new TieredCacheProvider(memory, file);
+        
+        // this used to be ignored, leaving both tiers at "never expires"
+        tiered.setTimeToLiveGlobal(200);
+        Assertions.assertEquals(200, memory.getTimeToLive(ENDPOINT));
+        Assertions.assertEquals(200, file.getTimeToLive(ENDPOINT));
+        
+        tiered.store(ENDPOINT, entry(LeagueShard.EUW1, "a", "value-a"));
+        Assertions.assertTrue(tiered.get(ENDPOINT, key(LeagueShard.EUW1, "a")).isPresent());
+        
+        Thread.sleep(400);
+        Assertions.assertFalse(tiered.get(ENDPOINT, key(LeagueShard.EUW1, "a")).isPresent());
+        
+        // hints are passed on as well
+        CacheLifetimeHint hints = new CacheLifetimeHint();
+        hints.add(ENDPOINT, 1234);
+        tiered.setTimeToLiveGlobal(CacheProvider.TTL_USE_HINTS);
+        tiered.setTimeToLive(hints);
+        Assertions.assertEquals(1234, memory.getTimeToLive(ENDPOINT));
+        Assertions.assertEquals(1234, file.getTimeToLive(ENDPOINT));
     }
 
     private JdbcCacheProvider h2Cache(long ttl)
