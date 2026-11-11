@@ -11,7 +11,7 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * **You run on Java 8.** Java 11 is now the minimum.
 * **You use the rate limiter classes directly.** `BurstRateLimiter` and `CounterRateLimiter` are gone, and `RateLimiter` has a new api (`tryAcquire`, `release`, `updateLimits`, `syncWithServerCounts`, `cooldown`, `getCallCounts`). `DataCallBuilder.getLock` and `getGlobalLock` are gone. If you only use R4J through its api classes, nothing changes for you.
 * **You use `MemoryCacheProvider` with a time to live.** It is now in milliseconds, like the other caches (the old javadoc said seconds, but the cache did not work at all before).
-* **You use `MySQLCacheProvider`.** Its databases are now named `r4j_<hash>` instead of after the raw api key, and existing ones are not migrated. It is also deprecated, see below.
+* **You use `MySQLCacheProvider` or `MongoDBCacheProvider`.** Both are gone. Neither was finished (the MySQL one ended the JVM on every lookup), and `JdbcCacheProvider` caches in any SQL database, MySQL included. The MySQL driver and Morphia are no longer optional dependencies of R4J.
 * **You use `LCUSocketReader`.** The websocket library it needs (`com.neovisionaries:nv-websocket-client:2.14`) is now an optional dependency, so it is no longer pulled in for everyone. Add it to your own project.
 * **You relied on the Travis build uploading jars.** The Travis configuration is gone (the service was shut down), and nothing builds or uploads release jars automatically anymore.
 
@@ -41,7 +41,6 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 | `LeagueAPI.getLeague(server, leagueId)`, `TFTLeagueAPI.getLeague(server, leagueId)` | Riot is retiring league ids | the league entries of a player, or the tier and division lists |
 | `ClashAPI.getPlayerInfo(server, summonerId)` | summoner ids are no longer handed out | `ClashAPI.getPlayerInfoByPuuid` |
 | `ImageAPI.getProfileIcon(region, summonerName)` | the service behind it no longer exists | `ImageAPI.getProfileIcon(iconId, version)` |
-| `MySQLCacheProvider`, `MongoDBCacheProvider` | never finished | `JdbcCacheProvider` |
 | `RealmSpesificEnum`, `RealmSpesificEnumSerializer` | the name was misspelled | `RealmSpecificEnum`, `RealmSpecificEnumSerializer` |
 
 **Deprecated, without a removal date:**
@@ -80,7 +79,6 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * The api key was written to the log at trace level.
 * The connection was not reused after a 429.
 * With a shared rate limit store, calls to the same endpoint waited for each other while the store was being asked.
-* `MySQLCacheProvider` terminated the JVM on every lookup.
 * `ImageAPI` built loading screen art urls that do not exist, and rune and mastery icon urls that only work for an old patch. `ImageAPI.getProfileIcon(region, summonerName)` is deprecated, as the service behind it is gone.
 * A lazily loaded list (ie. from `getMatchList`) claimed to be empty until it was iterated (#112).
 * The file cache kept growing, because expired files were only removed when asked for again and folders were never removed (#61).

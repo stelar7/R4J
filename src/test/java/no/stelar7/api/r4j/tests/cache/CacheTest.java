@@ -24,11 +24,9 @@ import java.util.function.Supplier;
 public class CacheTest
 {
     final R4J r4J = new R4J(SecretFile.CREDS);
-    Supplier<MySQLCacheProvider>      sqlCache    = () -> new MySQLCacheProvider("localhost", 3306, "homestead", "secret");
-    Supplier<MongoDBCacheProvider>    mongoCache  = () -> new MongoDBCacheProvider("mongodb://localhost:27017");
     Supplier<FileSystemCacheProvider> fileCache   = () -> new FileSystemCacheProvider(5);
     Supplier<MemoryCacheProvider>     memCache    = () -> new MemoryCacheProvider(5);
-    Supplier<TieredCacheProvider>     tieredCache = () -> new TieredCacheProvider(memCache.get(), fileCache.get(), sqlCache.get());
+    Supplier<TieredCacheProvider>     tieredCache = () -> new TieredCacheProvider(memCache.get(), fileCache.get());
     
     @Test
     @Disabled
@@ -38,30 +36,6 @@ public class CacheTest
         
         doCacheStuff();
     }
-    
-    @Test
-    @Disabled
-    public void testSQLCache()
-    {
-        DataCall.setCacheProvider(sqlCache.get());
-        
-        RecentMatchList list = r4J.getVALAPI().getMatchAPI().getRecentMatches(ValorantShard.EU, GameQueueType.COMPETITIVE);
-        for (String matchId : list.getMatchIds())
-        {
-            r4J.getVALAPI().getMatchAPI().getMatch(ValorantShard.EU, matchId);
-        }
-        
-    }
-    
-    @Test
-    @Disabled
-    public void testMongoCache() throws InterruptedException
-    {
-        DataCall.setCacheProvider(mongoCache.get());
-        
-        doCacheStuff();
-    }
-    
     
     @Test
     @Disabled
