@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 
 /**
@@ -20,18 +19,14 @@ public class CounterRateLimiter extends RateLimiter {
     
     @Override
     public Instant acquire(ApiKeyType keyTypeUsed, Enum platformOrEndpoint) {
-        DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).lock();
-        try {
-            for (RateLimit limit : limits)
-            {
-                firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(Instant.now().toEpochMilli()));
-                callCountInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0)).incrementAndGet();
-            }
-            
-            return Instant.MAX; // We return a dummy value, as this is a counter rate limiter. The request is always allowed
-        }finally {
-            DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).unlock();
+        // the caller holds the lock for this limiter
+        for (RateLimit limit : limits)
+        {
+            firstCallInTime.computeIfAbsent(limit, (key) -> new AtomicLong(Instant.now().toEpochMilli()));
+            callCountInTime.computeIfAbsent(limit, (key) -> new AtomicLong(0)).incrementAndGet();
         }
+        
+        return Instant.MAX; // We return a dummy value, as this is a counter rate limiter. The request is always allowed
     }
     
     public RateLimit getDummyLimit() {

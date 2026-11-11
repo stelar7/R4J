@@ -2,11 +2,11 @@ package no.stelar7.api.r4j.basic.ratelimiting;
 
 import org.slf4j.*;
 
-import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -33,8 +33,8 @@ public abstract class RateLimiter
     {
         limits = Arrays.asList(limiters);
         
-        firstCallInTime = new HashMap<>();
-        callCountInTime = new HashMap<>();
+        firstCallInTime = new ConcurrentHashMap<>();
+        callCountInTime = new ConcurrentHashMap<>();
         
         for (RateLimit limit : limits)
         {
@@ -65,6 +65,7 @@ public abstract class RateLimiter
     /**
      * Acquires a permit for the specified platform or endpoint.
      * This method should be called before making an API call to ensure compliance with rate limits.
+     * The caller must hold the lock for this limiter (DataCallBuilder.getLock(keyType, platform, endpoint)).
      * Return the validity date of the request, if this date is passed, the request must go through the rate limiter another time.
      *
      * @param platformOrEndpoint the platform or endpoint for which to acquire a permit
@@ -73,6 +74,39 @@ public abstract class RateLimiter
     public abstract Instant acquire(ApiKeyType keyType, Enum platformOrEndpoint);
     
     public abstract void updatePermitsTakenPerX(Map<Integer, Integer> data, ApiKeyType keyTypeUsed, Enum platformOrEndpoint);
+    
+    /**
+     * Raises our call counts to the counts reported by the server (X-App-Rate-Limit-Count / X-Method-Rate-Limit-Count).
+     * This keeps the limiter correct when the key is shared with another process, or the application was just restarted.
+     * The count is never lowered, and a response to a request sent before the current window started is ignored.
+     *
+     * @param countsByWindowSeconds the calls the server has counted, by the size of the window in seconds
+     * @param requestSentAt         when the request this response belongs to was sent (epoch millis)
+     */
+    public void syncWithServerCounts(Map<Integer, Integer> countsByWindowSeconds, long requestSentAt)
+    {
+        for (RateLimit limit : limits)
+        {
+            Integer serverCount = countsByWindowSeconds.get((int) (limit.getTimeframeInMS() / 1000));
+            if (serverCount == null)
+            {
+                continue;
+            }
+            
+            AtomicLong windowStart = firstCallInTime.get(limit);
+            AtomicLong localCount  = callCountInTime.get(limit);
+            if (windowStart == null || localCount == null || windowStart.get() > requestSentAt)
+            {
+                continue;
+            }
+            
+            long previous = localCount.getAndAccumulate(serverCount, Math::max);
+            if (previous < serverCount)
+            {
+                logger.debug("Call count for {} raised from {} to {} to match the server", limit, previous, serverCount);
+            }
+        }
+    }
     
     public Map<RateLimit, AtomicLong> getFirstCallInTime()
     {

@@ -1,7 +1,6 @@
 package no.stelar7.api.r4j.basic.ratelimiting;
 
 
-import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.exceptions.APIEndpointCooldownException;
 
@@ -9,7 +8,6 @@ import org.slf4j.*;
 
 import java.time.*;
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -28,15 +26,9 @@ public class BurstRateLimiter extends RateLimiter
     @Override
     public Instant acquire(ApiKeyType keyTypeUsed, Enum platformOrEndpoint)
     {
-        DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).lock();
-        try
-        {	
-            manageOverloadTimer(platformOrEndpoint);
-            return manageRateLimit(platformOrEndpoint);
-        } finally
-        {
-            DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).unlock();
-        }
+        // the caller holds the lock for this limiter
+        manageOverloadTimer(platformOrEndpoint);
+        return manageRateLimit(platformOrEndpoint);
     }
     
     private void manageOverloadTimer(Enum platformOrEndpoint) {
@@ -158,30 +150,7 @@ public class BurstRateLimiter extends RateLimiter
     @Override
     public void updatePermitsTakenPerX(Map<Integer, Integer> data, ApiKeyType keyTypeUsed, Enum platformOrEndpoint)
     {
-        DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).lock();
-        try 
-        {
-            for (Entry<Integer, Integer> key : data.entrySet())
-            {
-                for (RateLimit l : limits)
-                {
-                    if (l.getTimeframeInMS() / 1000 == key.getKey())
-                    {
-                        long oldVal = callCountInTime.get(l).get();
-                        long newVal = key.getValue();
-                        if (oldVal < newVal)
-                        {
-                            callCountInTime.get(l).set(newVal);
-                            logger.debug("limit {} has changed from {} to {}", key, oldVal, newVal);
-                        }
-                    }
-                }
-            }
-        } finally 
-        {
-            DataCallBuilder.getLock(keyTypeUsed, platformOrEndpoint).unlock();
-        }
-        
+        syncWithServerCounts(data, System.currentTimeMillis());
     }
     
 }
