@@ -40,7 +40,7 @@ public final class R4JContext
     private volatile SharedRateLimitStore rateLimitStore;
 
     private final Map<ApiKeyType, Map<Enum, Map<Enum, RateLimiter>>> limiters   = new ConcurrentHashMap<>();
-    private final Map<Pair<ApiKeyType, Enum>, Semaphore>             semaphores = new ConcurrentHashMap<>();
+    private final Map<Pair<ApiKeyType, Enum>, CallPermits>           permits    = new ConcurrentHashMap<>();
     private final Map<Class<?>, Object>                              apis       = new ConcurrentHashMap<>();
 
     public R4JContext()
@@ -220,9 +220,9 @@ public final class R4JContext
     }
 
     /**
-     * @return the semaphore limiting the calls in flight for a key + platform, or null if there is no limit
+     * @return what limits the calls in flight for a key + platform, or null if there is no limit
      */
-    Semaphore getSemaphore(ApiKeyType keyType, Enum platform)
+    CallPermits getPermits(ApiKeyType keyType, Enum platform)
     {
         int permits = numberOfCallsAllowedInParallel;
         if (permits <= 0)
@@ -230,7 +230,7 @@ public final class R4JContext
             return null;
         }
 
-        return semaphores.computeIfAbsent(new Pair<>(keyType, platform), k -> new Semaphore(permits, true));
+        return this.permits.computeIfAbsent(new Pair<>(keyType, platform), k -> new CallPermits(permits, task -> schedule(task, 0)));
     }
 
     // timers for the non-blocking calls of every context: waiting for a ratelimit or a retry is a scheduled task, not a sleeping thread

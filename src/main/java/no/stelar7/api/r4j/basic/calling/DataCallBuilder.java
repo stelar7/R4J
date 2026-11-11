@@ -376,11 +376,6 @@ public class DataCallBuilder
     }
 
     /**
-     * How often a call that could not get a parallel-call permit tries again
-     */
-    private static final long PERMIT_POLL_MS = 10;
-
-    /**
      * One attempt of a non-blocking call. Nothing in here waits: when the call can not be made yet, the attempt is scheduled again.
      */
     private void attemptAsync(final String url, final RetryState state, final CompletableFuture<Object> result)
@@ -405,76 +400,16 @@ public class DataCallBuilder
 
             final ApiKeyType keyTypeUsed = this.dc.getKeyUsedByHeadersUsed();
             final Enum       platform    = this.dc.getPlatform();
-            final Semaphore  semaphore   = context.getSemaphore(keyTypeUsed, platform);
+            final CallPermits permits     = context.getPermits(keyTypeUsed, platform);
 
-            if (semaphore != null && !semaphore.tryAcquire())
+            if (permits == null)
             {
-                context.schedule(() -> attemptAsync(url, state, result), PERMIT_POLL_MS);
-                return;
+                attemptWithPermit(url, state, result, keyTypeUsed, platform, null);
+            } else
+            {
+                // runs when it is this call's turn; blocking and non-blocking calls stand in the same line
+                permits.acquireAsync(() -> attemptWithPermit(url, state, result, keyTypeUsed, platform, permits));
             }
-
-            boolean handedOver = false;
-            long    wait;
-            try
-            {
-                wait = this.dc.useRatelimiter() ? tryAcquireLimits(keyTypeUsed, platform, this.dc.getEndpoint()) : 0;
-                if (wait == 0)
-                {
-                    logger.trace("Trying url: {}", url);
-
-                    final long sentAt = System.currentTimeMillis();
-                    CompletableFuture<java.net.http.HttpResponse<String>> pending = context.getHttpClient().sendAsync(toRequest(url), java.net.http.HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-                    handedOver = true;
-
-                    pending.whenComplete((httpResponse, error) -> {
-                        try
-                        {
-                            finishCall(keyTypeUsed, platform, semaphore);
-
-                            if (error != null)
-                            {
-                                Throwable cause = error instanceof CompletionException && error.getCause() != null ? error.getCause() : error;
-                                throw new APIResponseException(APIHTTPErrorReason.ERROR_599, APIHTTPErrorReason.ERROR_599.getReason() + " (" + cause + ")", cause);
-                            }
-
-                            int    code        = httpResponse.statusCode();
-                            String limitReason = handleRateLimitHeaders(url, code, name -> httpResponse.headers().firstValue(name).orElse(null), sentAt, Instant.now());
-
-                            DataCallResponse response;
-                            if (limitReason != null)
-                            {
-                                response = new DataCallResponse(code, limitReason);
-                            } else
-                            {
-                                response = new DataCallResponse(code, code == 204 || httpResponse.body() == null ? "" : httpResponse.body());
-                            }
-
-                            Object outcome = interpret(url, response, state);
-                            if (outcome != RETRY)
-                            {
-                                result.complete(outcome);
-                            } else
-                            {
-                                context.schedule(() -> attemptAsync(url, state, result), state.delay);
-                            }
-                        } catch (Throwable t)
-                        {
-                            result.completeExceptionally(t);
-                        }
-                    });
-                    return;
-                }
-            } finally
-            {
-                if (!handedOver && semaphore != null)
-                {
-                    semaphore.release();
-                }
-            }
-
-            // The parallel-call permit was given back, and nothing waits here: the attempt simply runs again when the ratelimit allows it
-            logger.debug("{} {}: waiting {} ms for the ratelimit", platform, this.dc.getEndpoint(), wait);
-            context.schedule(() -> attemptAsync(url, state, result), wait);
         } catch (Throwable t)
         {
             result.completeExceptionally(t);
@@ -482,9 +417,86 @@ public class DataCallBuilder
     }
 
     /**
+     * The part of a non-blocking attempt that runs while holding a parallel-call permit (if there is a limit)
+     */
+    private void attemptWithPermit(final String url, final RetryState state, final CompletableFuture<Object> result, final ApiKeyType keyTypeUsed, final Enum platform, final CallPermits permits)
+    {
+        boolean handedOver = false;
+        try
+        {
+            if (result.isDone())
+            {
+                // cancelled while waiting for the permit
+                return;
+            }
+
+            long wait = this.dc.useRatelimiter() ? tryAcquireLimits(keyTypeUsed, platform, this.dc.getEndpoint()) : 0;
+            if (wait == 0)
+            {
+                logger.trace("Trying url: {}", url);
+
+                final long sentAt = System.currentTimeMillis();
+                CompletableFuture<java.net.http.HttpResponse<String>> pending = context.getHttpClient().sendAsync(toRequest(url), java.net.http.HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+                handedOver = true;
+
+                pending.whenComplete((httpResponse, error) -> {
+                    try
+                    {
+                        finishCall(keyTypeUsed, platform, permits);
+
+                        if (error != null)
+                        {
+                            Throwable cause = error instanceof CompletionException && error.getCause() != null ? error.getCause() : error;
+                            throw new APIResponseException(APIHTTPErrorReason.ERROR_599, APIHTTPErrorReason.ERROR_599.getReason() + " (" + cause + ")", cause);
+                        }
+
+                        int    code        = httpResponse.statusCode();
+                        String limitReason = handleRateLimitHeaders(url, code, name -> httpResponse.headers().firstValue(name).orElse(null), sentAt, Instant.now());
+
+                        DataCallResponse response;
+                        if (limitReason != null)
+                        {
+                            response = new DataCallResponse(code, limitReason);
+                        } else
+                        {
+                            response = new DataCallResponse(code, code == 204 || httpResponse.body() == null ? "" : httpResponse.body());
+                        }
+
+                        Object outcome = interpret(url, response, state);
+                        if (outcome != RETRY)
+                        {
+                            result.complete(outcome);
+                        } else
+                        {
+                            context.schedule(() -> attemptAsync(url, state, result), state.delay);
+                        }
+                    } catch (Throwable t)
+                    {
+                        result.completeExceptionally(t);
+                    }
+                });
+                return;
+            }
+
+            // The parallel-call permit is given back (below), and nothing waits here: the attempt simply runs again when the ratelimit allows it
+            logger.debug("{} {}: waiting {} ms for the ratelimit", platform, this.dc.getEndpoint(), wait);
+            context.schedule(() -> attemptAsync(url, state, result), wait);
+        } catch (Throwable t)
+        {
+            result.completeExceptionally(t);
+        } finally
+        {
+            if (!handedOver && permits != null)
+            {
+                permits.release();
+            }
+        }
+    }
+
+    /**
      * What has to happen when a call has finished, whatever the outcome
      */
-    private void finishCall(ApiKeyType keyTypeUsed, Enum platform, Semaphore semaphore)
+    private void finishCall(ApiKeyType keyTypeUsed, Enum platform, CallPermits semaphore)
     {
         try
         {
@@ -563,7 +575,7 @@ public class DataCallBuilder
         final Enum       platform    = this.dc.getPlatform();
 
         // We allow only a given number of calls to be made at the same time / per platform + game
-        final Semaphore semaphore = context.getSemaphore(keyTypeUsed, platform);
+        final CallPermits semaphore = context.getPermits(keyTypeUsed, platform);
 
         while (true)
         {

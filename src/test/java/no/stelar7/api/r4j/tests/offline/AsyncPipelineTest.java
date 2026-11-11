@@ -306,6 +306,45 @@ public class AsyncPipelineTest
     }
 
     @Test
+    public void callsWaitingForAPermitAreServedInOrder() throws Exception
+    {
+        List<String> order = new CopyOnWriteArrayList<>();
+        handler = exchange -> {
+            order.add(exchange.getRequestURI().getRawQuery());
+            try
+            {
+                Thread.sleep(60);
+            } catch (InterruptedException ignored)
+            {
+                Thread.currentThread().interrupt();
+            }
+            respond(exchange, 200, STATUS_JSON);
+        };
+
+        // one call at a time, so all but the first have to stand in line
+        R4JContext                      context = context().setNumberOfCallsAllowedInParallel(1);
+        List<CompletableFuture<Object>> calls   = new ArrayList<>();
+        List<String>                    asked   = new ArrayList<>();
+        for (int i = 0; i < 10; i++)
+        {
+            asked.add("n=" + i);
+            calls.add(statusCall(context).withLimiters(false).withQueryParameter("n", String.valueOf(i)).buildAsync());
+        }
+
+        // a blocking call joins the same line, behind the ten that were there first
+        asked.add("n=blocking");
+        Object blocking = statusCall(context).withLimiters(false).withQueryParameter("n", "blocking").build();
+        Assertions.assertNotNull(blocking);
+
+        for (CompletableFuture<Object> call : calls)
+        {
+            Assertions.assertNotNull(call.get(30, TimeUnit.SECONDS));
+        }
+
+        Assertions.assertEquals(asked, order);
+    }
+
+    @Test
     public void cachedCallsDoNotReachTheServer() throws Exception
     {
         AtomicInteger calls = new AtomicInteger();
