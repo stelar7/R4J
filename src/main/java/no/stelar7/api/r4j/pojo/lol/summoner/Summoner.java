@@ -1,6 +1,7 @@
 package no.stelar7.api.r4j.pojo.lol.summoner;
 
 
+import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.lol.builders.championmastery.ChampionMasteryBuilder;
 import no.stelar7.api.r4j.impl.lol.builders.league.LeagueBuilder;
@@ -16,8 +17,23 @@ import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
-public final class Summoner implements Serializable
+public final class Summoner implements Serializable, ContextAware
 {
+    // the context this object was fetched with; not part of the data
+    private transient R4JContext context;
+
+    @Override
+    public void setContext(R4JContext context)
+    {
+        this.context = context;
+    }
+
+    @Override
+    public R4JContext getContext()
+    {
+        return context != null ? context : R4JContext.getDefault();
+    }
+
     private static final long serialVersionUID = 7941348691314302772L;
     
     private int         profileIconId;
@@ -122,7 +138,7 @@ public final class Summoner implements Serializable
      */
     public MatchListBuilder getLeagueGames()
     {
-        return new MatchListBuilder().withPlatform(platform).withPuuid(puuid);
+        return new MatchListBuilder().withContext(getContext()).withPlatform(platform).withPuuid(puuid);
     }
     
     /**
@@ -132,7 +148,7 @@ public final class Summoner implements Serializable
      */
     public List<String> getTFTGames()
     {
-        return TFTMatchAPI.getInstance().getMatchList(platform.toRegionShard(), puuid, 0, 20, null, null);
+        return TFTMatchAPI.getInstance(getContext()).getMatchList(platform.toRegionShard(), puuid, 0, 20, null, null);
     }
     
     /**
@@ -143,7 +159,7 @@ public final class Summoner implements Serializable
      */
     public ChampionMastery getChampionMastery(int championId)
     {
-        return new ChampionMasteryBuilder().withPlatform(platform).withPUUID(puuid).withChampionId(championId).getChampionMastery();
+        return new ChampionMasteryBuilder().withContext(getContext()).withPlatform(platform).withPUUID(puuid).withChampionId(championId).getChampionMastery();
     }
     
     /**
@@ -153,27 +169,27 @@ public final class Summoner implements Serializable
      */
     public List<ChampionMastery> getChampionMasteries()
     {
-        return new ChampionMasteryBuilder().withPlatform(platform).withPUUID(puuid).getChampionMasteries();
+        return new ChampionMasteryBuilder().withContext(getContext()).withPlatform(platform).withPUUID(puuid).getChampionMasteries();
     }
     
     public List<LeagueEntry> getLeagueEntry()
     {
-        return new LeagueBuilder().withPlatform(platform).withPuuid(puuid).getLeagueEntries();
+        return new LeagueBuilder().withContext(getContext()).withPlatform(platform).withPuuid(puuid).getLeagueEntries();
     }
     
     public SpectatorGameInfo getCurrentGame()
     {
-        return SpectatorAPI.getInstance().getCurrentGame(platform, puuid);
+        return SpectatorAPI.getInstance(getContext()).getCurrentGame(platform, puuid);
     }
     
     public String getThirdPartyCode()
     {
-        return new ThirdPartyCodeBuilder().withPlatform(platform).withSummonerId(id).getCode();
+        return new ThirdPartyCodeBuilder().withContext(getContext()).withPlatform(platform).withSummonerId(id).getCode();
     }
     
     public int getMasteryScore()
     {
-        return new ChampionMasteryBuilder().withPlatform(platform).withPUUID(puuid).getMasteryScore();
+        return new ChampionMasteryBuilder().withContext(getContext()).withPlatform(platform).withPUUID(puuid).getMasteryScore();
     }
     
     /**

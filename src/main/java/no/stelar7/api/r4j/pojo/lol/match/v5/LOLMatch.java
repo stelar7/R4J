@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match.v5;
 
+import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.impl.lol.raw.MatchV5API;
@@ -9,8 +10,23 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-public class LOLMatch implements Serializable
+public class LOLMatch implements Serializable, ContextAware
 {
+    // the context this object was fetched with; not part of the data
+    private transient R4JContext context;
+
+    @Override
+    public void setContext(R4JContext context)
+    {
+        this.context = context;
+    }
+
+    @Override
+    public R4JContext getContext()
+    {
+        return context != null ? context : R4JContext.getDefault();
+    }
+
     private static final long serialVersionUID = 6308730651274668047L;
     
     private long                   gameCreation;
@@ -42,7 +58,7 @@ public class LOLMatch implements Serializable
     
     public LOLTimeline getTimeline()
     {
-        return MatchV5API.getInstance().getTimeline(platformId.toRegionShard(), platformId + "_" + gameId);
+        return MatchV5API.getInstance(getContext()).getTimeline(platformId.toRegionShard(), platformId + "_" + gameId);
     }
     
     public ZonedDateTime getMatchCreationAsDate()

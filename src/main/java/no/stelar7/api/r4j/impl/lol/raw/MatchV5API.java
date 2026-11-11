@@ -190,7 +190,7 @@ public final class MatchV5API
                                                 .withPlatform(server)
                                                 .buildAs(GAMHSMatch.class);
 
-        return match != null ? match.asLOLMatch() : null;
+        return match != null ? context.bind(match.asLOLMatch()) : null;
     }
 
     /**
@@ -209,6 +209,6 @@ public final class MatchV5API
                                                    .withPlatform(server)
                                                    .buildAs(GAMHSMatch.class);
 
-        return timeline != null ? timeline.asLOLTimeline() : null;
+        return timeline != null ? context.bind(timeline.asLOLTimeline()) : null;
     }
 }

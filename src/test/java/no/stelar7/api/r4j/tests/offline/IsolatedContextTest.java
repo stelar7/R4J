@@ -5,12 +5,15 @@ import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.cache.CacheProvider;
 import no.stelar7.api.r4j.basic.cache.impl.MemoryCacheProvider;
 import no.stelar7.api.r4j.basic.calling.*;
-import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
+import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.SummonerAPI;
+import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.status.PlatformData;
+import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
+import no.stelar7.api.r4j.pojo.val.match.VALMatch;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -111,5 +114,53 @@ public class IsolatedContextTest
 
         // the default context still hands out the shared singletons
         Assertions.assertSame(SummonerAPI.getInstance(), SummonerAPI.getInstance(R4JContext.getDefault()));
+    }
+
+    @Test
+    public void returnedObjectsRememberTheirContext()
+    {
+        R4JContext isolated = new R4JContext(new APICredentials("key-a")).setCacheProvider(new MemoryCacheProvider(CacheProvider.TTL_INFINITY));
+
+        Map<String, Object> key = new LinkedHashMap<>();
+        key.put("platform", LeagueShard.EUW1);
+        key.put("puuid", "abc");
+
+        // fresh from the api
+        Summoner fresh = new DataCallBuilder(isolated).withProxy(proxy)
+                                                      .withEndpoint(URLEndpoint.V4_SUMMONER_BY_PUUID).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, "abc")
+                                                      .withPlatform(LeagueShard.EUW1)
+                                                      .buildCached(Summoner.class, key);
+        Assertions.assertSame(isolated, fresh.getContext());
+
+        // and from the cache
+        int      callsBefore = keysSeen.size();
+        Summoner cached      = new DataCallBuilder(isolated).withProxy(proxy)
+                                                            .withEndpoint(URLEndpoint.V4_SUMMONER_BY_PUUID).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, "abc")
+                                                            .withPlatform(LeagueShard.EUW1)
+                                                            .buildCached(Summoner.class, key);
+        Assertions.assertEquals(callsBefore, keysSeen.size());
+        Assertions.assertSame(isolated, cached.getContext());
+
+        // an object that was not fetched through a context uses the default one
+        Assertions.assertSame(R4JContext.getDefault(), Utils.getGson().fromJson("{}", Summoner.class).getContext());
+    }
+
+    @Test
+    public void nestedObjectsAreBoundToo()
+    {
+        R4JContext isolated = new R4JContext(new APICredentials("key-a"));
+
+        // players are inside a match, inside a list
+        VALMatch match = Utils.getGson().fromJson("{\"matchInfo\":{\"matchId\":\"1\"},\"players\":[{\"puuid\":\"a\"},{\"puuid\":\"b\"}]}", VALMatch.class);
+        List<VALMatch> matches = isolated.bind(new ArrayList<>(Collections.singletonList(match)));
+
+        Assertions.assertSame(isolated, matches.get(0).getMatchInfo().getContext());
+        Assertions.assertEquals(2, match.getPlayers().size());
+        match.getPlayers().forEach(player -> Assertions.assertSame(isolated, player.getContext()));
+
+        // binding with the default context changes nothing
+        VALMatch other = Utils.getGson().fromJson("{\"players\":[{\"puuid\":\"a\"}]}", VALMatch.class);
+        R4JContext.getDefault().bind(other);
+        Assertions.assertSame(R4JContext.getDefault(), other.getPlayers().get(0).getContext());
     }
 }

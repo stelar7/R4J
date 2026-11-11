@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
 import no.stelar7.api.r4j.basic.constants.types.val.*;
 import no.stelar7.api.r4j.basic.utils.sql.SQLForeignMap;
@@ -9,8 +10,23 @@ import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 import java.io.Serializable;
 import java.util.*;
 
-public class Economy implements Serializable
+public class Economy implements Serializable, ContextAware
 {
+    // the context this object was fetched with; not part of the data
+    private transient R4JContext context;
+
+    @Override
+    public void setContext(R4JContext context)
+    {
+        this.context = context;
+    }
+
+    @Override
+    public R4JContext getContext()
+    {
+        return context != null ? context : R4JContext.getDefault();
+    }
+
     private static final long serialVersionUID = 8795392679461398269L;
     
     private int    loadoutValue;
@@ -31,7 +47,7 @@ public class Economy implements Serializable
     
     public Optional<ContentItem> getWeaponAsContent()
     {
-        return VALContentAPI.getInstance()
+        return VALContentAPI.getInstance(getContext())
                             .getContent(ValorantShard.EU, Optional.empty())
                             .getEquips()
                             .stream()

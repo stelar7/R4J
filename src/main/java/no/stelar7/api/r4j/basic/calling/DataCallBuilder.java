@@ -154,7 +154,7 @@ public class DataCallBuilder
                         final Class<?> returnType = this.dc.getEndpoint().getType();
                         returnValue = postProcess(returnValue);
 
-                        return Utils.getGson().fromJson(returnValue, returnType);
+                        return context.bind(Utils.getGson().fromJson(returnValue, returnType));
                     } else
                     {
                         return returnValue;
@@ -364,7 +364,7 @@ public class DataCallBuilder
         Optional<?> cached = context.getCacheProvider().get(endpoint, cacheKey);
         if (cached.isPresent() && type.isInstance(cached.get()))
         {
-            return type.cast(cached.get());
+            return context.bind(type.cast(cached.get()));
         }
 
         T result = buildAs(type);

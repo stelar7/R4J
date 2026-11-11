@@ -65,7 +65,7 @@ public class R4J
      * Creates an R4J with its own context: its own credentials, ratelimiters, settings and (file system) cache.
      * Nothing is shared with the default context or with other isolated instances, so several sets of api keys can be used side by side.
      * <p>
-     * Note that the convenience methods on the returned objects that fetch more data (ie. from a Summoner) always use the default context.
+     * Objects returned by it that can fetch more data themselves (ie. a Summoner fetching its matches) keep using this instance.
      *
      * @param creds the API credentials used for the API (your token)
      * @return a new, independent R4J

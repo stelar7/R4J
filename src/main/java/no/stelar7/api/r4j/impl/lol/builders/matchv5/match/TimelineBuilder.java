@@ -72,7 +72,7 @@ public class TimelineBuilder
             return null;
         }
     
-        return rawMatch.asLOLTimeline();
+        return context.bind(rawMatch.asLOLTimeline());
     }
     
     public LOLMetadata getMetadata()

@@ -73,7 +73,7 @@ public class MatchBuilder
             return null;
         }
         
-        return rawMatch.asLOLMatch();
+        return context.bind(rawMatch.asLOLMatch());
     }
     
     public LOLMetadata getMetadata()

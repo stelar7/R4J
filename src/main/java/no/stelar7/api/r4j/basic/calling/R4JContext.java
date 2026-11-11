@@ -230,6 +230,80 @@ public final class R4JContext
     }
 
     /**
+     * Tells the object, and everything it contains, which context it was fetched with (see {@link ContextAware}).
+     * Objects of the default context are left alone, as that is what they use when nothing is set.
+     *
+     * @param result something returned by a call
+     * @param <T>    the type of the object
+     * @return the same object
+     */
+    public <T> T bind(T result)
+    {
+        if (result != null && this != DEFAULT)
+        {
+            bind(result, java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));
+        }
+
+        return result;
+    }
+
+    private void bind(Object object, java.util.Set<Object> seen)
+    {
+        if (object == null || !seen.add(object))
+        {
+            return;
+        }
+
+        if (object instanceof ContextAware)
+        {
+            ((ContextAware) object).setContext(this);
+        }
+
+        if (object instanceof java.util.Collection)
+        {
+            ((java.util.Collection<?>) object).forEach(o -> bind(o, seen));
+            return;
+        }
+
+        if (object instanceof Map)
+        {
+            ((Map<?, ?>) object).values().forEach(o -> bind(o, seen));
+            return;
+        }
+
+        if (object instanceof Object[])
+        {
+            for (Object o : (Object[]) object)
+            {
+                bind(o, seen);
+            }
+            return;
+        }
+
+        // only the objects of this library are looked into
+        for (Class<?> type = object.getClass(); type != null && type.getName().startsWith("no.stelar7.api.r4j.pojo."); type = type.getSuperclass())
+        {
+            for (java.lang.reflect.Field field : type.getDeclaredFields())
+            {
+                if (field.getType().isPrimitive() || field.getType().isEnum() || field.getType() == String.class
+                    || java.lang.reflect.Modifier.isStatic(field.getModifiers()) || java.lang.reflect.Modifier.isTransient(field.getModifiers()))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    field.setAccessible(true);
+                    bind(field.get(object), seen);
+                } catch (IllegalAccessException | RuntimeException e)
+                {
+                    // a field we can not look at just keeps the default context
+                }
+            }
+        }
+    }
+
+    /**
      * The instance of an api class that belongs to this context, created on first use.
      *
      * @param type    the api class

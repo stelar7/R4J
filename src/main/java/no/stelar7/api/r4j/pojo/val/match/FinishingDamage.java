@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.pojo.val.match;
 
+import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
 import no.stelar7.api.r4j.basic.constants.types.val.*;
 import no.stelar7.api.r4j.basic.utils.sql.SQLForeignMap;
@@ -9,8 +10,23 @@ import no.stelar7.api.r4j.pojo.val.content.ContentItem;
 import java.io.Serializable;
 import java.util.*;
 
-public class FinishingDamage implements Serializable
+public class FinishingDamage implements Serializable, ContextAware
 {
+    // the context this object was fetched with; not part of the data
+    private transient R4JContext context;
+
+    @Override
+    public void setContext(R4JContext context)
+    {
+        this.context = context;
+    }
+
+    @Override
+    public R4JContext getContext()
+    {
+        return context != null ? context : R4JContext.getDefault();
+    }
+
     private static final long serialVersionUID = -2055229548751293072L;
     
     private FinishingDamageType damageType;
@@ -29,7 +45,7 @@ public class FinishingDamage implements Serializable
     
     public Optional<ContentItem> getDamageItemAsWeaponContent()
     {
-        return VALContentAPI.getInstance()
+        return VALContentAPI.getInstance(getContext())
                             .getContent(ValorantShard.EU, Optional.empty())
                             .getEquips()
                             .stream()

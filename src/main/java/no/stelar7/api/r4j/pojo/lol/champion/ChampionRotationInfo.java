@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.champion;
 
+import no.stelar7.api.r4j.basic.calling.*;
 import com.google.gson.annotations.SerializedName;
 import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
@@ -7,8 +8,23 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 import java.io.Serializable;
 import java.util.*;
 
-public class ChampionRotationInfo implements Serializable
+public class ChampionRotationInfo implements Serializable, ContextAware
 {
+    // the context this object was fetched with; not part of the data
+    private transient R4JContext context;
+
+    @Override
+    public void setContext(R4JContext context)
+    {
+        this.context = context;
+    }
+
+    @Override
+    public R4JContext getContext()
+    {
+        return context != null ? context : R4JContext.getDefault();
+    }
+
     // the api documentation now lists these as "sr" and "newplayer", so both names are accepted
     @SerializedName(value = "freeChampionIds", alternate = {"sr"})
     private List<Integer> freeChampionIds;
@@ -49,7 +65,7 @@ public class ChampionRotationInfo implements Serializable
      */
     public List<StaticChampion> getFreeChampions()
     {
-        return DDragonAPI.getInstance().getChampionsFromId(freeChampionIds);
+        return DDragonAPI.getInstance(getContext()).getChampionsFromId(freeChampionIds);
     }
     
     /**
@@ -58,7 +74,7 @@ public class ChampionRotationInfo implements Serializable
      */
     public List<StaticChampion> getFreeChampionsForNewPlayers()
     {
-        return DDragonAPI.getInstance().getChampionsFromId(freeChampionIdsForNewPlayers);
+        return DDragonAPI.getInstance(getContext()).getChampionsFromId(freeChampionIdsForNewPlayers);
     }
     
     @Override

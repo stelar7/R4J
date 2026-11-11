@@ -84,23 +84,6 @@ public class SummonerBuilder
 
         builder.withEndpoint(endpoint);
 
-        Optional<?> chl = context.getCacheProvider().get(endpoint, data);
-        if (chl.isPresent())
-        {
-            return (Summoner) chl.get();
-        }
-
-
-        Object sob = builder.build();
-
-        if (sob instanceof Pair)
-        {
-            return null;
-        }
-
-        data.put("value", sob);
-        context.getCacheProvider().store(endpoint, data);
-
-        return (Summoner) sob;
+        return builder.buildCached(Summoner.class, data);
     }
 }
