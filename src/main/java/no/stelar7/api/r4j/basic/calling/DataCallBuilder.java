@@ -314,6 +314,48 @@ public class DataCallBuilder
         }
     }
 
+    /**
+     * Does the call, and returns the result as the requested type.
+     *
+     * @param type the type the endpoint returns
+     * @param <T>  the type the endpoint returns
+     * @return the result, or null if the api returned 404 (or something that is not of the requested type)
+     */
+    public <T> T buildAs(Class<T> type)
+    {
+        Object result = this.build();
+        return type.isInstance(result) ? type.cast(result) : null;
+    }
+
+    /**
+     * Returns the value from the cache if it is there, otherwise does the call and stores the result in the cache.
+     *
+     * @param type     the type the endpoint returns
+     * @param cacheKey the values identifying this call in the cache (ie. platform, puuid), in a consistent order
+     * @param <T>      the type the endpoint returns
+     * @return the result, or null if the api returned 404 (or something that is not of the requested type)
+     */
+    public <T> T buildCached(Class<T> type, Map<String, Object> cacheKey)
+    {
+        URLEndpoint endpoint = this.dc.getEndpoint();
+
+        Optional<?> cached = DataCall.getCacheProvider().get(endpoint, cacheKey);
+        if (cached.isPresent() && type.isInstance(cached.get()))
+        {
+            return type.cast(cached.get());
+        }
+
+        T result = buildAs(type);
+        if (result != null)
+        {
+            Map<String, Object> data = new LinkedHashMap<>(cacheKey);
+            data.put("value", result);
+            DataCall.getCacheProvider().store(endpoint, data);
+        }
+
+        return result;
+    }
+
     private String postProcess(String returnValue)
     {
         final List<URLEndpoint> ddragon = Arrays.asList(URLEndpoint.DDRAGON_CHAMPION_MANY, URLEndpoint.DDRAGON_SUMMONER_SPELLS);
