@@ -131,7 +131,11 @@ public final class R4JContext
     }
 
     /**
-     * @param failFastOnServiceRatelimit see {@link DataCall#setFailFastOnServiceRatelimit(boolean)}
+     * A service rate limit can sometimes be hit (limits that are not linked to your API key, but to the Riot server itself).
+     * This decides whether calls to an endpoint in such a cooldown fail immediately (with an APIEndpointCooldownException) or wait until it is over.
+     * Failing fast is useful for high-throughput applications, which can make other calls in the meantime.
+     *
+     * @param failFastOnServiceRatelimit true to fail instead of wait
      * @return this
      */
     public R4JContext setFailFastOnServiceRatelimit(boolean failFastOnServiceRatelimit)

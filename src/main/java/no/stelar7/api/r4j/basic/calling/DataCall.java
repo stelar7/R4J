@@ -13,7 +13,8 @@ import java.util.*;
 /**
  * The data of a single call.
  * <p>
- * The static methods read and change the settings of the default {@link R4JContext}; they are kept so existing code keeps working.
+ * The static methods read and change the settings of the default {@link R4JContext}. They are deprecated, and kept so existing code keeps working:
+ * settings belong to a context, which is what an R4J instance hands out with {@code getContext()}.
  */
 public final class DataCall
 {
@@ -59,6 +60,10 @@ public final class DataCall
         return context;
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#getLimiters(ApiKeyType)}
+     */
+    @Deprecated
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter(ApiKeyType keyType)
     {
         return R4JContext.getDefault().getLimiters(keyType);
@@ -141,31 +146,55 @@ public final class DataCall
         return new DataCallBuilder();
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#getCredentials()}
+     */
+    @Deprecated
     public static APICredentials getCredentials()
     {
         return R4JContext.getDefault().getCredentials();
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#getCacheProvider()}
+     */
+    @Deprecated
     public static CacheProvider getCacheProvider()
     {
         return R4JContext.getDefault().getCacheProvider();
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#setNumberOfCallsAllowedInParallel(int)}
+     */
+    @Deprecated
     public static void setNumberOfCallsAllowedInParallel(int numberOfCallsAllowedInParallel)
     {
         R4JContext.getDefault().setNumberOfCallsAllowedInParallel(numberOfCallsAllowedInParallel);
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#getNumberOfCallsAllowedInParallel()}
+     */
+    @Deprecated
     public static int getNumberOfCallsAllowedInParallel()
     {
         return R4JContext.getDefault().getNumberOfCallsAllowedInParallel();
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#setCacheProvider(CacheProvider)}
+     */
+    @Deprecated
     public static void setCacheProvider(CacheProvider provider)
     {
         R4JContext.getDefault().setCacheProvider(provider);
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#setCredentials(APICredentials)}
+     */
+    @Deprecated
     public static void setCredentials(final APICredentials creds)
     {
         R4JContext.getDefault().setCredentials(creds);
@@ -229,11 +258,19 @@ public final class DataCall
         return useLimiters;
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#setMaxSleep(long)}
+     */
+    @Deprecated
     public static void setDefaultMaxSleep(long sleep)
     {
         R4JContext.getDefault().setMaxSleep(sleep);
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#getMaxSleep()}
+     */
+    @Deprecated
     public static long getDefaultMaxSleep()
     {
         return R4JContext.getDefault().getMaxSleep();
@@ -269,6 +306,10 @@ public final class DataCall
         this.connectTimeout = connectTimeout;
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#getGlobalTimeout()}
+     */
+    @Deprecated
     public static int getGlobalTimeout()
     {
         return R4JContext.getDefault().getGlobalTimeout();
@@ -279,12 +320,18 @@ public final class DataCall
      * 0 means "use the defaults" ({@link #DEFAULT_CONNECT_TIMEOUT} / {@link #DEFAULT_READ_TIMEOUT})
      *
      * @param globalTimeout the timeout in ms
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#setGlobalTimeout(int)}
      */
+    @Deprecated
     public static void setGlobalTimeout(int globalTimeout)
     {
         R4JContext.getDefault().setGlobalTimeout(globalTimeout);
     }
 
+    /**
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#shouldFailFastOnServiceRatelimit()}
+     */
+    @Deprecated
     public static boolean shouldFailFastOnServiceRatelimit()
     {
         return R4JContext.getDefault().shouldFailFastOnServiceRatelimit();
@@ -294,7 +341,9 @@ public final class DataCall
      * A service rate limit can sometimes be hit (limits that are not linked to your API key, but to the Riot server itself),
      * this flag determines whether this type of rate limit should fail immediately (throwing an APIEndpointCooldownException) or sleep until the cooldown expires.
      * Can be useful for high-throughput applications who prefer to fail fast so they can do other not limited calls instead of waiting for the cooldown to expire.
+     * @deprecated set on the context instead: {@code api.getContext()} of an R4J, or {@code R4JContext.getDefault()}. See {@link R4JContext#setFailFastOnServiceRatelimit(boolean)}
      */
+    @Deprecated
     public static void setFailFastOnServiceRatelimit(boolean failFastOnServiceRatelimit)
     {
         R4JContext.getDefault().setFailFastOnServiceRatelimit(failFastOnServiceRatelimit);

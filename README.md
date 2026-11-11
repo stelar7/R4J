@@ -43,7 +43,7 @@ Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src
 | SQL        | Yes! (any database with a JDBC driver, `JdbcCacheProvider`) |
 
 ```Java
-DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
+api.getContext().setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
 ```
 
 ## How do I download?

@@ -44,6 +44,11 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 | `MySQLCacheProvider`, `MongoDBCacheProvider` | never finished | `JdbcCacheProvider` |
 | `RealmSpesificEnum`, `RealmSpesificEnumSerializer` | the name was misspelled | `RealmSpecificEnum`, `RealmSpecificEnumSerializer` |
 
+**Deprecated, without a removal date:**
+
+* The static settings on `DataCall` (`setCacheProvider`, `setCredentials`, `setGlobalTimeout`, `setDefaultMaxSleep`, ...). They still configure the default context. Use the context itself: `api.getContext().setCacheProvider(...)`.
+* The five and six argument constructors of `APICredentials`. Use `APICredentials.builder()`.
+
 ### New
 
 * **Endpoints:** TFT status, TFT spectator, TFT rated ladder and the queue filter on TFT leagues; `league-exp-v4`; tournament games by code; Valorant console match and ranked; Valorant accolades; Riftbound content; the RSO endpoints (`accounts/me`, `summoners/me`, `lol-rso-match-v1`, `matches/replays`).
