@@ -11,6 +11,7 @@ public class TFTUnit implements Serializable
     private String        character_id;
     private List<Integer> items;
     private String        chosen;
+    private List<String> itemNames;
     
     public String getName()
     {
@@ -79,5 +80,10 @@ public class TFTUnit implements Serializable
                ", items=" + items +
                ", chosen='" + chosen + '\'' +
                '}';
+    }
+    
+    public List<String> getItemNames()
+    {
+        return itemNames;
     }
 }

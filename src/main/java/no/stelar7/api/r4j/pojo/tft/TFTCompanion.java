@@ -10,6 +10,7 @@ public class TFTCompanion implements Serializable
     private int skin_ID;
     private String content_ID;
     private String species;
+    private int item_ID;
     
     public int getSkin_ID()
     {
@@ -57,5 +58,10 @@ public class TFTCompanion implements Serializable
                ", content_ID='" + content_ID + '\'' +
                ", species='" + species + '\'' +
                '}';
+    }
+    
+    public int getItemID()
+    {
+        return item_ID;
     }
 }

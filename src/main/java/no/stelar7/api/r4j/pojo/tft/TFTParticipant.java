@@ -16,6 +16,9 @@ public class TFTParticipant implements Serializable
     private TFTCompanion   companion;
     private List<TFTTrait> traits;
     private List<TFTUnit>  units;
+    private String  riotIdGameName;
+    private String  riotIdTagline;
+    private boolean win;
     
     public String getPuuid()
     {
@@ -119,5 +122,20 @@ public class TFTParticipant implements Serializable
                ", traits=" + traits +
                ", units=" + units +
                '}';
+    }
+    
+    public String getRiotIdGameName()
+    {
+        return riotIdGameName;
+    }
+    
+    public String getRiotIdTagline()
+    {
+        return riotIdTagline;
+    }
+    
+    public boolean isWin()
+    {
+        return win;
     }
 }

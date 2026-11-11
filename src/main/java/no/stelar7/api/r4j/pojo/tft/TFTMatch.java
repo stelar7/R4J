@@ -15,6 +15,12 @@ public class TFTMatch implements Serializable
     private int                  tft_set_number;
     private List<TFTParticipant> participants;
     private String               game_variation;
+    private String endOfGameResult;
+    private long   gameCreation;
+    private long   gameId;
+    private int    mapId;
+    private String tft_game_type;
+    private String tft_set_core_name;
     
     public String getGameVariation()
     {
@@ -95,5 +101,35 @@ public class TFTMatch implements Serializable
                ", participants=" + participants +
                ", game_variation='" + game_variation + '\'' +
                '}';
+    }
+    
+    public String getEndOfGameResult()
+    {
+        return endOfGameResult;
+    }
+    
+    public long getGameCreation()
+    {
+        return gameCreation;
+    }
+    
+    public long getGameId()
+    {
+        return gameId;
+    }
+    
+    public int getMapId()
+    {
+        return mapId;
+    }
+    
+    public String getTftGameType()
+    {
+        return tft_game_type;
+    }
+    
+    public String getTftSetCoreName()
+    {
+        return tft_set_core_name;
     }
 }
