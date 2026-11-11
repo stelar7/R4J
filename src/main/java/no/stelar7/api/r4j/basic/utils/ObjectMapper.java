@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.basic.utils;
 
+import org.slf4j.*;
 import no.stelar7.api.r4j.basic.utils.sql.*;
 
 import java.lang.reflect.*;
@@ -8,6 +9,8 @@ import java.util.Map.Entry;
 
 public class ObjectMapper<T>
 {
+    private static final Logger logger = LoggerFactory.getLogger(ObjectMapper.class);
+    
     private final Class<T>           clazz;
     private final Map<String, Field> fields          = new LinkedHashMap<>();
     private final Map<String, Field> oneToOneFields  = new LinkedHashMap<>();
@@ -133,7 +136,7 @@ public class ObjectMapper<T>
                 data.put(entry.getKey(), entry.getValue().get(object));
             } catch (IllegalAccessException e)
             {
-                e.printStackTrace();
+                logger.warn("Unable to map the object", e);
             }
         }
         
@@ -154,7 +157,7 @@ public class ObjectMapper<T>
             return dto;
         } catch (Exception e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to map the object", e);
             throw new RuntimeException("Failed to parse database object to type " + row + "..." + clazz.getName());
         }
     }
@@ -189,7 +192,7 @@ public class ObjectMapper<T>
             return preTrans;
         } catch (Exception e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to map the object", e);
         }
         
         return Collections.emptyMap();
@@ -205,7 +208,7 @@ public class ObjectMapper<T>
                 return preTrans;
             } catch (Exception e)
             {
-                e.printStackTrace();
+                logger.warn("Unable to map the object", e);
             }
         }
         
@@ -265,7 +268,7 @@ public class ObjectMapper<T>
             return preTrans;
         } catch (Exception e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to map the object", e);
         }
         
         return Collections.emptyMap();
@@ -284,7 +287,7 @@ public class ObjectMapper<T>
             return new Pair<>(this.clazz, value.toString());
         } catch (Exception e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to map the object", e);
         }
         
         return null;

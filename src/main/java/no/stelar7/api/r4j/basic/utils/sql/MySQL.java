@@ -1,9 +1,12 @@
 package no.stelar7.api.r4j.basic.utils.sql;
 
+import org.slf4j.*;
 import java.sql.*;
 
 public class MySQL
 {
+    private static final Logger logger = LoggerFactory.getLogger(MySQL.class);
+    
     private String hostname;
     private int    portnmbr;
     private String username;
@@ -32,7 +35,7 @@ public class MySQL
             return !this.connection.isClosed() && this.connection.isValid(5);
         } catch (SQLException e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the MySQL connection", e);
             return false;
         }
     }
@@ -50,7 +53,7 @@ public class MySQL
             }
         } catch (final SQLException e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the MySQL connection", e);
         }
     }
     
@@ -64,7 +67,7 @@ public class MySQL
         {
             if (!e.getMessage().contains("doesn't exist"))
             {
-                e.printStackTrace();
+                logger.warn("Problem with the MySQL connection", e);
             }
             return false;
         }
@@ -80,7 +83,7 @@ public class MySQL
         {
             if (!e.getMessage().contains("doesn't exist"))
             {
-                e.printStackTrace();
+                logger.warn("Problem with the MySQL connection", e);
             }
         }
     }
@@ -109,8 +112,7 @@ public class MySQL
             this.connection = DriverManager.getConnection(url, this.username, this.password);
         } catch (final SQLException e)
         {
-            System.err.println("Could not connect to MySQL server! ");
-            System.err.println(e.getMessage());
+            logger.error("Could not connect to MySQL server!", e);
         }
     }
 }

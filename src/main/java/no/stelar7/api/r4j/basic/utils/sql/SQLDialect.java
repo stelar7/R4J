@@ -35,10 +35,41 @@ public enum SQLDialect
         return types.stream().distinct().collect(Collectors.toMap(a -> a, a -> getTypeMap().getOrDefault(a, a)));
     }
     
+    /**
+     * Turns the value into a string literal, escaping the characters that could end the literal early
+     */
+    protected String quote(String value)
+    {
+        StringBuilder sb = new StringBuilder("'");
+        for (char c : value.toCharArray())
+        {
+            switch (c)
+            {
+                case 0:
+                    sb.append("\\0");
+                    break;
+                case 26:
+                    sb.append("\\Z");
+                    break;
+                case '\'':
+                    sb.append("''");
+                    break;
+                case '\\':
+                    sb.append("\\\\");
+                    break;
+                default:
+                    sb.append(c);
+            }
+        }
+
+        return sb.append("'").toString();
+    }
+
     public String convertForInsert(String type, Object value)
     {
-        if (type == null) {
-            System.out.println();
+        if (type == null && value != null)
+        {
+            throw new IllegalArgumentException("Unknown type for value " + value);
         }
         
         if (value == null)
@@ -53,7 +84,7 @@ public enum SQLDialect
         
         if (type.contains("string"))
         {
-            return "\"" + value.toString() + "\"";
+            return quote(value.toString());
         }
     
         if (type.contains("int"))

@@ -36,25 +36,45 @@ public class MySQLCacheProvider implements CacheProvider
             try
             {
                 
-                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", DataCall.getCredentials().getLoLAPIKey()));
-                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", DataCall.getCredentials().getTFTAPIKey()));
-                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", DataCall.getCredentials().getTournamentAPIKey()));
-                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", DataCall.getCredentials().getLORAPIKey()));
-                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", DataCall.getCredentials().getVALAPIKey()));
+                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", databaseName(DataCall.getCredentials().getLoLAPIKey())));
+                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", databaseName(DataCall.getCredentials().getTFTAPIKey())));
+                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", databaseName(DataCall.getCredentials().getTournamentAPIKey())));
+                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", databaseName(DataCall.getCredentials().getLORAPIKey())));
+                sql.getConnection().createStatement().executeUpdate(String.format("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci", databaseName(DataCall.getCredentials().getVALAPIKey())));
                 logger.info("Created new databases!");
                 createMissingTables();
             } catch (APIUnsupportedActionException e)
             {
-                logger.error("You need to set a value for all the API keys to use the SQL cache.");
-                System.exit(0);
+                throw new IllegalStateException("You need to set a value for all the API keys to use the SQL cache.", e);
             }
             
         } catch (SQLException e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the MySQL cache", e);
         }
     }
     
+    /**
+     * The name of the database holding the data fetched with an api key.
+     * The key itself is not used as the name, so it does not end up in the database metadata, logs and backups.
+     */
+    private static String databaseName(String apiKey)
+    {
+        try
+        {
+            byte[]        hash = java.security.MessageDigest.getInstance("SHA-256").digest(apiKey.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder sb   = new StringBuilder("r4j_");
+            for (int i = 0; i < 12; i++)
+            {
+                sb.append(String.format("%02x", hash[i]));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e)
+        {
+            throw new IllegalStateException("SHA-256 is not available", e);
+        }
+    }
+
     private void createMissingTables() throws SQLException
     {
         createValorantTables();
@@ -62,7 +82,7 @@ public class MySQLCacheProvider implements CacheProvider
     
     private void createValorantTables() throws SQLException
     {
-        sql.getConnection().setCatalog(DataCall.getCredentials().getVALAPIKey());
+        sql.getConnection().setCatalog(databaseName(DataCall.getCredentials().getVALAPIKey()));
         
         createTableForClass(VALMatch.class);
         createTableForClass(VALMatchInfo.class);
@@ -322,7 +342,7 @@ public class MySQLCacheProvider implements CacheProvider
             }
         } catch (Exception e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the MySQL cache", e);
         }
     }
     
@@ -344,7 +364,7 @@ public class MySQLCacheProvider implements CacheProvider
             }
         } catch (Exception e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the MySQL cache", e);
         }
         
         return Optional.empty();
@@ -400,7 +420,7 @@ public class MySQLCacheProvider implements CacheProvider
             }
         } catch (SQLException e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the MySQL cache", e);
         }
     }
     
@@ -424,7 +444,7 @@ public class MySQLCacheProvider implements CacheProvider
             }
         } catch (SQLException e)
         {
-            e.printStackTrace();
+            logger.warn("Problem with the MySQL cache", e);
         }
         return -1;
     }
