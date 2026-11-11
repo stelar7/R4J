@@ -39,6 +39,7 @@ import no.stelar7.api.r4j.pojo.val.ranked.Leaderboard;
 public enum URLEndpoint
 {
     V4_SUMMONER_BY_PUUID("lol", "summoner", "v4", "summoners/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Summoner.class),
+    V4_SUMMONER_ME("lol", "summoner", "v4", "summoners/me", Summoner.class),
 
     V5_SPECTATOR_FEATURED("lol", "spectator", "v5", "featured-games", FeaturedGames.class),
     V5_SPECTATOR_CURRENT("lol", "spectator", "v5", "active-games/by-summoner/" + Constants.PUUID_ID_PLACEHOLDER, SpectatorGameInfo.class),
@@ -133,6 +134,7 @@ public enum URLEndpoint
     LOR_EXPEDITIONS_STATE("expeditions-state", "", "", "", LoRExpeditionInfo.class),
 
     V1_TFT_SUMMONER_BY_PUUID("tft", "summoner", "v1", "summoners/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Summoner.class),
+    V1_TFT_SUMMONER_ME("tft", "summoner", "v1", "summoners/me", Summoner.class),
 
     V1_TFT_MATCHLIST("tft", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),
     V1_TFT_MATCH("tft", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
@@ -173,6 +175,7 @@ public enum URLEndpoint
     
     V1_SHARED_ACCOUNT_BY_PUUID("riot", "account", "v1", "accounts/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, RiotAccount.class),
     V1_SHARED_ACCOUNT_BY_TAG("riot", "account", "v1", "accounts/by-riot-id/" + Constants.GAME_NAME_PLACEHOLDER + "/" + Constants.TAG_LINE_PLACEHOLDER, RiotAccount.class),
+    V1_SHARED_ACCOUNT_ME("riot", "account", "v1", "accounts/me", RiotAccount.class),
     V1_SHARED_SHARD_BY_PUUID("riot", "account", "v1", "active-shards/by-game/" + Constants.GAME_PLACEHOLDER + "/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, RiotAccountShard.class),
     V1_SHARED_REGION_BY_PUUID("riot", "account", "v1", "region/by-game/" + Constants.GAME_PLACEHOLDER + "/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, RiotAccountRegion.class),
     
@@ -190,6 +193,11 @@ public enum URLEndpoint
     V5_MATCHLIST_REPLAYS("lol", "match", "v5", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/replays", LOLMatchReplayList.class),
     V5_MATCH("lol", "match", "v5", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
     V5_TIMELINE("lol", "match", "v5", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/timeline", GAMHSMatch.class),
+    
+    V5_MATCH_REPLAYS("lol", "match", "v5", "matches/replays", LOLMatchReplayList.class),
+    V1_RSO_MATCHLIST("lol", "rso-match", "v1", "matches/ids", StringList.class),
+    V1_RSO_MATCH("lol", "rso-match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
+    V1_RSO_TIMELINE("lol", "rso-match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/timeline", GAMHSMatch.class),
     
     V1_CHALLENGES_PERCENTILES("lol", "challenges", "v1", "challenges/percentiles", MultiChallengePercentileMap.class),
     V1_CHALLENGES_PERCENTILES_BY_ID("lol", "challenges", "v1", "challenges/" + Constants.CHALLENGE_ID_PLACEHOLDER + "/percentiles", ChallengePercentileMap.class),

@@ -176,4 +176,22 @@ public class AccountAPI
         }
     }
     
+    /**
+     * The account of a player that signed in with RSO
+     *
+     * @param server      the region to query
+     * @param accessToken the access token of the player
+     * @param keyType     the api key of the product the RSO client belongs to
+     * @return the account, or null if it was not found
+     */
+    public RiotAccount getAccountByAccessToken(RegionShard server, String accessToken, ApiKeyType keyType)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
+                                                       .withAccessToken(accessToken)
+                                                       .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_ME)
+                                                       .withPlatform(server);
+
+        // not cached, as the result depends on who the token belongs to
+        return builder.buildAs(RiotAccount.class);
+    }
 }

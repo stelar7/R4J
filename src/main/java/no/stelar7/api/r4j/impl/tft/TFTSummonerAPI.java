@@ -63,4 +63,21 @@ public class TFTSummonerAPI
             return null;
         }
     }
+    
+    /**
+     * The summoner of a player that signed in with RSO
+     *
+     * @param server      the region to execute against
+     * @param accessToken the access token of the player
+     * @return the summoner, or null if it was not found
+     */
+    public Summoner getSummonerByAccessToken(final LeagueShard server, String accessToken)
+    {
+        // not cached, as the result depends on who the token belongs to
+        return new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                    .withAccessToken(accessToken)
+                                    .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_ME)
+                                    .withPlatform(server)
+                                    .buildAs(Summoner.class);
+    }
 }

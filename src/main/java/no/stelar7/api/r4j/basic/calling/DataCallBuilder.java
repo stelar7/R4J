@@ -371,7 +371,9 @@ public class DataCallBuilder
         
         final List<URLEndpoint> summonerEndpoints = Arrays.asList(
                 URLEndpoint.V4_SUMMONER_BY_PUUID,
-                URLEndpoint.V1_TFT_SUMMONER_BY_PUUID);
+                URLEndpoint.V4_SUMMONER_ME,
+                URLEndpoint.V1_TFT_SUMMONER_BY_PUUID,
+                URLEndpoint.V1_TFT_SUMMONER_ME);
         if (summonerEndpoints.contains(this.dc.getEndpoint()))
         {
             returnValue = postProcessSummoner(returnValue);
@@ -981,6 +983,18 @@ public class DataCallBuilder
         return this;
     }
     
+    /**
+     * Sets the access token of a player that signed in with RSO (sent as "Authorization: Bearer token")
+     *
+     * @param accessToken the access token, with or without the "Bearer " prefix
+     * @return this
+     */
+    public DataCallBuilder withAccessToken(final String accessToken)
+    {
+        this.dc.getUrlHeaders().put(Constants.AUTHORIZATION, accessToken.startsWith("Bearer ") ? accessToken : "Bearer " + accessToken);
+        return this;
+    }
+
     public DataCallBuilder withProxy(String proxy)
     {
         this.dc.setProxy(proxy);
