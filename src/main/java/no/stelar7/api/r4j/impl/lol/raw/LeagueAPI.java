@@ -142,6 +142,16 @@ public final class LeagueAPI
      */
     public List<LeagueEntry> getLeagueEntriesByPUUID(LeagueShard server, String puuid)
     {
+        DataCallBuilder builder = getLeagueEntriesByPUUIDCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        List<LeagueEntry> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
+    }
+
+    // the call getLeagueEntriesByPUUID and its twin make
+    private DataCallBuilder getLeagueEntriesByPUUIDCall(LeagueShard server, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID)
@@ -150,9 +160,8 @@ public final class LeagueAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("id", puuid);
-        
-        List<LeagueEntry> list = builder.buildCached(data);
-        return list != null ? list : Collections.emptyList();
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -278,15 +287,9 @@ public final class LeagueAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("id", puuid);
-        
+            DataCallBuilder builder = getLeagueEntriesByPUUIDCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.<List<LeagueEntry>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
         } catch (RuntimeException e)
         {

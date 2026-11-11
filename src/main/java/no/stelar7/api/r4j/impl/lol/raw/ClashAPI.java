@@ -59,6 +59,16 @@ public class ClashAPI
      */
     public List<ClashPlayer> getPlayerInfoByPuuid(final LeagueShard server, String puuid)
     {
+        DataCallBuilder builder = getPlayerInfoByPuuidCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        List<ClashPlayer> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
+    }
+
+    // the call getPlayerInfoByPuuid and its twin make
+    private DataCallBuilder getPlayerInfoByPuuidCall(final LeagueShard server, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_PLAYER_BY_PUUID)
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withPlatform(server);
@@ -66,9 +76,8 @@ public class ClashAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
-        
-        List<ClashPlayer> list = builder.buildCached(data);
-        return list != null ? list : Collections.emptyList();
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -77,6 +86,15 @@ public class ClashAPI
     @Nullable
     public ClashTeam getTeam(final LeagueShard server, String teamId)
     {
+        DataCallBuilder builder = getTeamCall(server, teamId);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(ClashTeam.class, data);
+    }
+
+    // the call getTeam and its twin make
+    private DataCallBuilder getTeamCall(final LeagueShard server, String teamId)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TEAM_BY_ID)
                                                        .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
                                                        .withPlatform(server);
@@ -84,8 +102,8 @@ public class ClashAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("teamId", teamId);
-        
-        return builder.buildCached(ClashTeam.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -93,14 +111,23 @@ public class ClashAPI
      */
     public List<ClashTournament> getTournaments(final LeagueShard server)
     {
+        DataCallBuilder builder = getTournamentsCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        List<ClashTournament> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
+    }
+
+    // the call getTournaments and its twin make
+    private DataCallBuilder getTournamentsCall(final LeagueShard server)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        
-        List<ClashTournament> list = builder.buildCached(data);
-        return list != null ? list : Collections.emptyList();
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -109,6 +136,15 @@ public class ClashAPI
     @Nullable
     public ClashTournament getTournamentByTeam(final LeagueShard server, String teamId)
     {
+        DataCallBuilder builder = getTournamentByTeamCall(server, teamId);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(ClashTournament.class, data);
+    }
+
+    // the call getTournamentByTeam and its twin make
+    private DataCallBuilder getTournamentByTeamCall(final LeagueShard server, String teamId)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_TEAM)
                                                        .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
                                                        .withPlatform(server);
@@ -116,8 +152,8 @@ public class ClashAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("teamId", teamId);
-        
-        return builder.buildCached(ClashTournament.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -126,6 +162,15 @@ public class ClashAPI
     @Nullable
     public ClashTournament getTournamentById(final LeagueShard server, int tournamentId)
     {
+        DataCallBuilder builder = getTournamentByIdCall(server, tournamentId);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(ClashTournament.class, data);
+    }
+
+    // the call getTournamentById and its twin make
+    private DataCallBuilder getTournamentByIdCall(final LeagueShard server, int tournamentId)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_ID)
                                                        .withURLParameter(Constants.TOURNAMENT_ID_PLACEHOLDER, String.valueOf(tournamentId))
                                                        .withPlatform(server);
@@ -133,8 +178,8 @@ public class ClashAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("tournamentId", tournamentId);
-        
-        return builder.buildCached(ClashTournament.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -146,14 +191,9 @@ public class ClashAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_PLAYER_BY_PUUID)
-                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", puuid);
-        
+            DataCallBuilder builder = getPlayerInfoByPuuidCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.<List<ClashPlayer>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
         } catch (RuntimeException e)
         {
@@ -171,14 +211,9 @@ public class ClashAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TEAM_BY_ID)
-                                                           .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("teamId", teamId);
-        
+            DataCallBuilder builder = getTeamCall(server, teamId);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(ClashTeam.class, data);
         } catch (RuntimeException e)
         {
@@ -196,12 +231,9 @@ public class ClashAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-        
+            DataCallBuilder builder = getTournamentsCall(server);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.<List<ClashTournament>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
         } catch (RuntimeException e)
         {
@@ -219,14 +251,9 @@ public class ClashAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_TEAM)
-                                                           .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("teamId", teamId);
-        
+            DataCallBuilder builder = getTournamentByTeamCall(server, teamId);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(ClashTournament.class, data);
         } catch (RuntimeException e)
         {
@@ -244,14 +271,9 @@ public class ClashAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_ID)
-                                                           .withURLParameter(Constants.TOURNAMENT_ID_PLACEHOLDER, String.valueOf(tournamentId))
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("tournamentId", tournamentId);
-        
+            DataCallBuilder builder = getTournamentByIdCall(server, tournamentId);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(ClashTournament.class, data);
         } catch (RuntimeException e)
         {

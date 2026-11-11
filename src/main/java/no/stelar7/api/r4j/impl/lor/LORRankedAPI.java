@@ -43,6 +43,16 @@ public class LORRankedAPI
     @Nullable
     public List<LoRPlayerRank> getLeaderboard(RuneterraShard server)
     {
+        DataCallBuilder builder = getLeaderboardCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        LoRRankedPlayerList list = builder.buildCached(LoRRankedPlayerList.class, data);
+        return list != null ? list.getPlayers() : null;
+    }
+
+    // the call getLeaderboard and its twin make
+    private DataCallBuilder getLeaderboardCall(RuneterraShard server)
+    {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
                 .withEndpoint(URLEndpoint.V1_LOR_RANKED_LEADERBOARD)
@@ -50,9 +60,8 @@ public class LORRankedAPI
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        
-        LoRRankedPlayerList list = builder.buildCached(LoRRankedPlayerList.class, data);
-        return list != null ? list.getPlayers() : null;
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -64,14 +73,9 @@ public class LORRankedAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context)
-                    .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
-                    .withEndpoint(URLEndpoint.V1_LOR_RANKED_LEADERBOARD)
-                    .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-        
+            DataCallBuilder builder = getLeaderboardCall(server);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(LoRRankedPlayerList.class, data).thenApply(list -> list != null ? list.getPlayers() : null);
         } catch (RuntimeException e)
         {

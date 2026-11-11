@@ -38,6 +38,16 @@ public class TFTMatchAPI
     
     public List<String> getMatchList(RegionShard server, String PUUID, Integer start, Integer count, Long startTime, Long endTime)
     {
+        DataCallBuilder builder = getMatchListCall(server, PUUID, start, count, startTime, endTime);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        List<String> matchList = builder.buildCached(data);
+        return matchList != null ? matchList : Collections.emptyList();
+    }
+
+    // the call getMatchList and its twin make
+    private DataCallBuilder getMatchListCall(RegionShard server, String PUUID, Integer start, Integer count, Long startTime, Long endTime)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCHLIST)
@@ -62,9 +72,8 @@ public class TFTMatchAPI
         data.put("count", count);
         data.put("starttime", startTime);
         data.put("endtime", endTime);
-        
-        List<String> matchList = builder.buildCached(data);
-        return matchList != null ? matchList : Collections.emptyList();
+
+        return builder.withCacheKey(data);
     }
     
     
@@ -96,6 +105,15 @@ public class TFTMatchAPI
     @Nullable
     public GAMHSMatch getMatchRAW(RegionShard platform, String gameId)
     {
+        DataCallBuilder builder = getMatchRAWCall(platform, gameId);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(GAMHSMatch.class, data);
+    }
+
+    // the call getMatchRAW and its twin make
+    private DataCallBuilder getMatchRAWCall(RegionShard platform, String gameId)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCH)
@@ -104,8 +122,8 @@ public class TFTMatchAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("gameid", gameId);
-        
-        return builder.buildCached(GAMHSMatch.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -117,31 +135,9 @@ public class TFTMatchAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_TFT_MATCHLIST)
-                                                           .withQueryParameter(Constants.START_PLACEHOLDER_DATA, String.valueOf(start))
-                                                           .withQueryParameter(Constants.COUNT_PLACEHOLDER_DATA, String.valueOf(count))
-                                                           .withPlatform(server);
+            DataCallBuilder builder = getMatchListCall(server, PUUID, start, count, startTime, endTime);
+            Map<String, Object> data = builder.getCacheKey();
     
-            if (startTime != null)
-            {
-                builder.withQueryParameter(Constants.STARTTIME_PLACEHOLDER_DATA, String.valueOf(startTime));
-            }
-    
-            if (endTime != null)
-            {
-                builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(endTime));
-            }
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", PUUID);
-            data.put("start", start);
-            data.put("count", count);
-            data.put("starttime", startTime);
-            data.put("endtime", endTime);
-        
             return builder.<List<String>>buildCachedAsync(data).thenApply(matchList -> matchList != null ? matchList : Collections.emptyList());
         } catch (RuntimeException e)
         {
@@ -179,15 +175,9 @@ public class TFTMatchAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_TFT_MATCH)
-                                                           .withPlatform(platform);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("gameid", gameId);
-        
+            DataCallBuilder builder = getMatchRAWCall(platform, gameId);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(GAMHSMatch.class, data);
         } catch (RuntimeException e)
         {

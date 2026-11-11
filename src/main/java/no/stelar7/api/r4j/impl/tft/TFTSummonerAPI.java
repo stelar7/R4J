@@ -47,6 +47,15 @@ public class TFTSummonerAPI
     @Nullable
     public Summoner getSummonerByPUUID(final LeagueShard server, String PUUID)
     {
+        DataCallBuilder builder = getSummonerByPUUIDCall(server, PUUID);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(Summoner.class, data);
+    }
+
+    // the call getSummonerByPUUID and its twin make
+    private DataCallBuilder getSummonerByPUUIDCall(final LeagueShard server, String PUUID)
+    {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                 .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
@@ -56,8 +65,8 @@ public class TFTSummonerAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", PUUID);
-        
-        return builder.buildCached(Summoner.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -87,16 +96,9 @@ public class TFTSummonerAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context)
-                    .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
-                    .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
-                    .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID)
-                    .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", PUUID);
-        
+            DataCallBuilder builder = getSummonerByPUUIDCall(server, PUUID);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(Summoner.class, data);
         } catch (RuntimeException e)
         {

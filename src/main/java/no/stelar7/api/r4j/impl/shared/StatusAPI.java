@@ -37,13 +37,22 @@ public final class StatusAPI
     @Nullable
     public PlatformData getShardStatus(LeagueShard server)
     {
+        DataCallBuilder builder = getShardStatusCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(PlatformData.class, data);
+    }
+
+    // the call getShardStatus and its twin make
+    private DataCallBuilder getShardStatusCall(LeagueShard server)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V4_STATUS_LOL)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        
-        return builder.buildCached(PlatformData.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -55,6 +64,15 @@ public final class StatusAPI
     @Nullable
     public PlatformData getTFTShardStatus(LeagueShard server)
     {
+        DataCallBuilder builder = getTFTShardStatusCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+
+        return builder.buildCached(PlatformData.class, data);
+    }
+
+    // the call getTFTShardStatus and its twin make
+    private DataCallBuilder getTFTShardStatusCall(LeagueShard server)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_TFT)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withPlatform(server);
@@ -62,31 +80,49 @@ public final class StatusAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
 
-        return builder.buildCached(PlatformData.class, data);
+        return builder.withCacheKey(data);
     }
 
     @Nullable
     public PlatformData getShardStatus(RuneterraShard server)
+    {
+        DataCallBuilder builder = getShardStatusCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(PlatformData.class, data);
+    }
+
+    // the call getShardStatus and its twin make
+    private DataCallBuilder getShardStatusCall(RuneterraShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_LOR)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        
-        return builder.buildCached(PlatformData.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     @Nullable
     public PlatformData getShardStatus(ValorantShard server)
+    {
+        DataCallBuilder builder = getShardStatusCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(PlatformData.class, data);
+    }
+
+    // the call getShardStatus and its twin make
+    private DataCallBuilder getShardStatusCall(ValorantShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_VAL)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        
-        return builder.buildCached(PlatformData.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -98,12 +134,9 @@ public final class StatusAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V4_STATUS_LOL)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-        
+            DataCallBuilder builder = getShardStatusCall(server);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(PlatformData.class, data);
         } catch (RuntimeException e)
         {
@@ -121,12 +154,8 @@ public final class StatusAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_TFT)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
-                                                           .withPlatform(server);
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
+            DataCallBuilder builder = getTFTShardStatusCall(server);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(PlatformData.class, data);
         } catch (RuntimeException e)
@@ -145,12 +174,9 @@ public final class StatusAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_LOR)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-        
+            DataCallBuilder builder = getShardStatusCall(server);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(PlatformData.class, data);
         } catch (RuntimeException e)
         {
@@ -168,12 +194,9 @@ public final class StatusAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_VAL)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-        
+            DataCallBuilder builder = getShardStatusCall(server);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(PlatformData.class, data);
         } catch (RuntimeException e)
         {

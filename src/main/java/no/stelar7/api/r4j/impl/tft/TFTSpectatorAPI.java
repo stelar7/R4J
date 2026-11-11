@@ -44,6 +44,15 @@ public final class TFTSpectatorAPI
     @Nullable
     public SpectatorGameInfo getCurrentGame(LeagueShard server, String puuid)
     {
+        DataCallBuilder builder = getCurrentGameCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+
+        return builder.buildCached(SpectatorGameInfo.class, data);
+    }
+
+    // the call getCurrentGame and its twin make
+    private DataCallBuilder getCurrentGameCall(LeagueShard server, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V5_TFT_SPECTATOR_CURRENT)
@@ -53,7 +62,7 @@ public final class TFTSpectatorAPI
         data.put("platform", server);
         data.put("puuid", puuid);
 
-        return builder.buildCached(SpectatorGameInfo.class, data);
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -65,14 +74,8 @@ public final class TFTSpectatorAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
-                                                           .withEndpoint(URLEndpoint.V5_TFT_SPECTATOR_CURRENT)
-                                                           .withPlatform(server);
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", puuid);
+            DataCallBuilder builder = getCurrentGameCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(SpectatorGameInfo.class, data);
         } catch (RuntimeException e)

@@ -37,6 +37,15 @@ public class VALContentAPI
     @Nullable
     public Content getContent(ValorantShard server, Optional<String> locale)
     {
+        DataCallBuilder builder = getContentCall(server, locale);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(Content.class, data);
+    }
+
+    // the call getContent and its twin make
+    private DataCallBuilder getContentCall(ValorantShard server, Optional<String> locale)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_CONTENT)
@@ -47,8 +56,8 @@ public class VALContentAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("locale", locale.orElse("null"));
-        
-        return builder.buildCached(Content.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -60,17 +69,9 @@ public class VALContentAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_CONTENT)
-                                                           .withPlatform(server);
+            DataCallBuilder builder = getContentCall(server, locale);
+            Map<String, Object> data = builder.getCacheKey();
     
-            locale.ifPresent(s -> builder.withQueryParameter(Constants.LOCALE_PLACEHOLDER_DATA, s));
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("locale", locale.orElse("null"));
-        
             return builder.buildCachedAsync(Content.class, data);
         } catch (RuntimeException e)
         {

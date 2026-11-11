@@ -50,6 +50,15 @@ public final class MasteryAPI
     @Nullable
     public Integer getMasteryScore(LeagueShard server, String puuid)
     {
+        DataCallBuilder builder = getMasteryScoreCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(Integer.class, data);
+    }
+
+    // the call getMasteryScore and its twin make
+    private DataCallBuilder getMasteryScoreCall(LeagueShard server, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(server);
@@ -57,8 +66,8 @@ public final class MasteryAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
-        
-        return builder.buildCached(Integer.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -161,6 +170,16 @@ public final class MasteryAPI
      */
     public List<ChampionMastery> getChampionMasteries(LeagueShard server, String puuid)
     {
+        DataCallBuilder builder = getChampionMasteriesCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        List<ChampionMastery> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
+    }
+
+    // the call getChampionMasteries and its twin make
+    private DataCallBuilder getChampionMasteriesCall(LeagueShard server, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_PUUID)
                                                        .withPlatform(server);
@@ -168,9 +187,8 @@ public final class MasteryAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
-        
-        List<ChampionMastery> list = builder.buildCached(data);
-        return list != null ? list : Collections.emptyList();
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -182,14 +200,9 @@ public final class MasteryAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", puuid);
-        
+            DataCallBuilder builder = getMasteryScoreCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(Integer.class, data);
         } catch (RuntimeException e)
         {
@@ -252,14 +265,9 @@ public final class MasteryAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withEndpoint(URLEndpoint.V4_MASTERY_BY_PUUID)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", puuid);
-        
+            DataCallBuilder builder = getChampionMasteriesCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.<List<ChampionMastery>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
         } catch (RuntimeException e)
         {

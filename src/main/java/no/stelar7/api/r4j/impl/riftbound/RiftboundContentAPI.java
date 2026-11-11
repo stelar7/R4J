@@ -61,6 +61,15 @@ public final class RiftboundContentAPI
     @Nullable
     public RiftboundContent getContent(RegionShard server, String locale, ApiKeyType keyType)
     {
+        DataCallBuilder builder = getContentCall(server, locale, keyType);
+        Map<String, Object> data = builder.getCacheKey();
+
+        return builder.buildCached(RiftboundContent.class, data);
+    }
+
+    // the call getContent and its twin make
+    private DataCallBuilder getContentCall(RegionShard server, String locale, ApiKeyType keyType)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_RIFTBOUND_CONTENT)
                                                        .withPlatform(server);
@@ -74,7 +83,7 @@ public final class RiftboundContentAPI
         data.put("platform", server);
         data.put("locale", locale);
 
-        return builder.buildCached(RiftboundContent.class, data);
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -103,18 +112,8 @@ public final class RiftboundContentAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
-                                                           .withEndpoint(URLEndpoint.V1_RIFTBOUND_CONTENT)
-                                                           .withPlatform(server);
-
-            if (locale != null)
-            {
-                builder.withQueryParameter(Constants.LOCALE_PLACEHOLDER_DATA, locale);
-            }
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("locale", locale);
+            DataCallBuilder builder = getContentCall(server, locale, keyType);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(RiftboundContent.class, data);
         } catch (RuntimeException e)

@@ -134,6 +134,16 @@ public class TFTLeagueAPI
      */
     public List<TFTLeagueEntry> getLeagueEntriesByPUUID(LeagueShard server, String puuid)
     {
+        DataCallBuilder builder = getLeagueEntriesByPUUIDCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+
+        List<TFTLeagueEntry> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
+    }
+
+    // the call getLeagueEntriesByPUUID and its twin make
+    private DataCallBuilder getLeagueEntriesByPUUIDCall(LeagueShard server, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
@@ -144,8 +154,7 @@ public class TFTLeagueAPI
         data.put("platform", server);
         data.put("puuid", puuid);
 
-        List<TFTLeagueEntry> list = builder.buildCached(data);
-        return list != null ? list : Collections.emptyList();
+        return builder.withCacheKey(data);
     }
 
     /**
@@ -321,6 +330,16 @@ public class TFTLeagueAPI
      */
     public List<TFTTopRatedLadderEntry> getTopRatedLadder(LeagueShard server, GameQueueType queue)
     {
+        DataCallBuilder builder = getTopRatedLadderCall(server, queue);
+        Map<String, Object> data = builder.getCacheKey();
+
+        List<TFTTopRatedLadderEntry> entries = builder.buildCached(TFTTopRatedLadderEntryList.class, data);
+        return entries != null ? entries : Collections.emptyList();
+    }
+
+    // the call getTopRatedLadder and its twin make
+    private DataCallBuilder getTopRatedLadderCall(LeagueShard server, GameQueueType queue)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RATED_LADDER_TOP)
@@ -330,8 +349,7 @@ public class TFTLeagueAPI
         data.put("platform", server);
         data.put("queue", queue);
 
-        List<TFTTopRatedLadderEntry> entries = builder.buildCached(TFTTopRatedLadderEntryList.class, data);
-        return entries != null ? entries : Collections.emptyList();
+        return builder.withCacheKey(data);
     }
     
     private static List<TFTLeagueEntry> entriesOf(TFTLeagueList league)
@@ -348,15 +366,8 @@ public class TFTLeagueAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
-                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID)
-                                                           .withPlatform(server);
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", puuid);
+            DataCallBuilder builder = getLeagueEntriesByPUUIDCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.<List<TFTLeagueEntry>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
         } catch (RuntimeException e)
@@ -502,14 +513,8 @@ public class TFTLeagueAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RATED_LADDER_TOP)
-                                                           .withPlatform(server);
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("queue", queue);
+            DataCallBuilder builder = getTopRatedLadderCall(server, queue);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(TFTTopRatedLadderEntryList.class, data).<List<TFTTopRatedLadderEntry>>thenApply(entries -> entries != null ? entries : Collections.emptyList());
         } catch (RuntimeException e)

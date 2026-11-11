@@ -39,6 +39,16 @@ public class VALMatchAPI
     
     public List<MatchReference> getMatchList(ValorantShard server, String PUUID)
     {
+        DataCallBuilder builder = getMatchListCall(server, PUUID);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        MatchList matchList = builder.buildCached(MatchList.class, data);
+        return matchList != null ? matchList.getHistory() : Collections.emptyList();
+    }
+
+    // the call getMatchList and its twin make
+    private DataCallBuilder getMatchListCall(ValorantShard server, String PUUID)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID)
@@ -47,14 +57,22 @@ public class VALMatchAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", PUUID);
-        
-        MatchList matchList = builder.buildCached(MatchList.class, data);
-        return matchList != null ? matchList.getHistory() : Collections.emptyList();
+
+        return builder.withCacheKey(data);
     }
     
     
     @Nullable
     public RecentMatchList getRecentMatches(ValorantShard platform, GameQueueType queue)
+    {
+        DataCallBuilder builder = getRecentMatchesCall(platform, queue);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(RecentMatchList.class, data);
+    }
+
+    // the call getRecentMatches and its twin make
+    private DataCallBuilder getRecentMatchesCall(ValorantShard platform, GameQueueType queue)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getValue())
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
@@ -64,13 +82,22 @@ public class VALMatchAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("queue", queue);
-        
-        return builder.buildCached(RecentMatchList.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     
     @Nullable
     public VALMatch getMatch(ValorantShard platform, String gameId)
+    {
+        DataCallBuilder builder = getMatchCall(platform, gameId);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(VALMatch.class, data);
+    }
+
+    // the call getMatch and its twin make
+    private DataCallBuilder getMatchCall(ValorantShard platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
@@ -80,8 +107,8 @@ public class VALMatchAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("gameid", gameId);
-        
-        return builder.buildCached(VALMatch.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -93,15 +120,9 @@ public class VALMatchAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", PUUID);
-        
+            DataCallBuilder builder = getMatchListCall(server, PUUID);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(MatchList.class, data).thenApply(matchList -> matchList != null ? matchList.getHistory() : Collections.emptyList());
         } catch (RuntimeException e)
         {
@@ -119,15 +140,9 @@ public class VALMatchAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getValue())
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE)
-                                                           .withPlatform(platform);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("queue", queue);
-        
+            DataCallBuilder builder = getRecentMatchesCall(platform, queue);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(RecentMatchList.class, data);
         } catch (RuntimeException e)
         {
@@ -145,15 +160,9 @@ public class VALMatchAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_MATCH_BY_ID)
-                                                           .withPlatform(platform);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("gameid", gameId);
-        
+            DataCallBuilder builder = getMatchCall(platform, gameId);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(VALMatch.class, data);
         } catch (RuntimeException e)
         {

@@ -38,6 +38,15 @@ public class LORMatchAPI
     @Nullable
     public List<String> getMatchList(RuneterraShard server, String puuid)
     {
+        DataCallBuilder builder = getMatchListCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(data);
+    }
+
+    // the call getMatchList and its twin make
+    private DataCallBuilder getMatchListCall(RuneterraShard server, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
                 .withEndpoint(URLEndpoint.V1_LOR_MATCHES_BY_PUUID)
@@ -47,8 +56,8 @@ public class LORMatchAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
-        
-        return builder.buildCached(data);
+
+        return builder.withCacheKey(data);
     }
     
     public LORMatch getMatch(RuneterraShard platform, String gameId)
@@ -66,6 +75,15 @@ public class LORMatchAPI
     @Nullable
     public GAMHSMatch getMatchRAW(RuneterraShard platform, String gameId)
     {
+        DataCallBuilder builder = getMatchRAWCall(platform, gameId);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(GAMHSMatch.class, data);
+    }
+
+    // the call getMatchRAW and its twin make
+    private DataCallBuilder getMatchRAWCall(RuneterraShard platform, String gameId)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_LOR_MATCH)
@@ -74,8 +92,8 @@ public class LORMatchAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", platform);
         data.put("gameid", gameId);
-        
-        return builder.buildCached(GAMHSMatch.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -87,16 +105,9 @@ public class LORMatchAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context)
-                    .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
-                    .withEndpoint(URLEndpoint.V1_LOR_MATCHES_BY_PUUID)
-                    .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                    .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", puuid);
-        
+            DataCallBuilder builder = getMatchListCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.<List<String>>buildCachedAsync(data);
         } catch (RuntimeException e)
         {
@@ -134,15 +145,9 @@ public class LORMatchAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_LOR_MATCH)
-                                                           .withPlatform(platform);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("gameid", gameId);
-        
+            DataCallBuilder builder = getMatchRAWCall(platform, gameId);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(GAMHSMatch.class, data);
         } catch (RuntimeException e)
         {

@@ -38,29 +38,56 @@ public final class ChallengeAPI
     @Nullable
     public ChallengeConfigInfoList getChallengesList(LeagueShard server)
     {
+        DataCallBuilder builder = getChallengesListCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(ChallengeConfigInfoList.class, data);
+    }
+
+    // the call getChallengesList and its twin make
+    private DataCallBuilder getChallengesListCall(LeagueShard server)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        
-        return builder.buildCached(ChallengeConfigInfoList.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     @Nullable
     public MultiChallengePercentileMap getAllChallengePercentiles(LeagueShard server)
+    {
+        DataCallBuilder builder = getAllChallengePercentilesCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(MultiChallengePercentileMap.class, data);
+    }
+
+    // the call getAllChallengePercentiles and its twin make
+    private DataCallBuilder getAllChallengePercentilesCall(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        
-        return builder.buildCached(MultiChallengePercentileMap.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     @Nullable
     public ChallengeConfigInfo getChallengeInfo(LeagueShard server, Long challengeId)
+    {
+        DataCallBuilder builder = getChallengeInfoCall(server, challengeId);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(ChallengeConfigInfo.class, data);
+    }
+
+    // the call getChallengeInfo and its twin make
+    private DataCallBuilder getChallengeInfoCall(LeagueShard server, Long challengeId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID)
                                                        .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
@@ -69,12 +96,21 @@ public final class ChallengeAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("challenge", challengeId);
-        
-        return builder.buildCached(ChallengeConfigInfo.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     @Nullable
     public ChallengeLeaderboardInfoList getChallengeLeaderboard(LeagueShard server, Long challengeId, ChallengeTierType level, Integer limit)
+    {
+        DataCallBuilder builder = getChallengeLeaderboardCall(server, challengeId, level, limit);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(ChallengeLeaderboardInfoList.class, data);
+    }
+
+    // the call getChallengeLeaderboard and its twin make
+    private DataCallBuilder getChallengeLeaderboardCall(LeagueShard server, Long challengeId, ChallengeTierType level, Integer limit)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL)
                                                        .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
@@ -91,12 +127,21 @@ public final class ChallengeAPI
         data.put("challenge", challengeId);
         data.put("level", level);
         data.put("limit", limit);
-        
-        return builder.buildCached(ChallengeLeaderboardInfoList.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     @Nullable
     public MultiChallengePercentileMap getChallengePercentiles(LeagueShard server, Long challengeId)
+    {
+        DataCallBuilder builder = getChallengePercentilesCall(server, challengeId);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(MultiChallengePercentileMap.class, data);
+    }
+
+    // the call getChallengePercentiles and its twin make
+    private DataCallBuilder getChallengePercentilesCall(LeagueShard server, Long challengeId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
                                                        .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
@@ -105,12 +150,21 @@ public final class ChallengeAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("challenge", challengeId);
-        
-        return builder.buildCached(MultiChallengePercentileMap.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     @Nullable
     public ChallengePlayerInfo getChallengePlayerInfo(LeagueShard server, String puuid)
+    {
+        DataCallBuilder builder = getChallengePlayerInfoCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(ChallengePlayerInfo.class, data);
+    }
+
+    // the call getChallengePlayerInfo and its twin make
+    private DataCallBuilder getChallengePlayerInfoCall(LeagueShard server, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_BY_PLAYER)
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
@@ -119,8 +173,8 @@ public final class ChallengeAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
-        
-        return builder.buildCached(ChallengePlayerInfo.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -132,12 +186,9 @@ public final class ChallengeAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-        
+            DataCallBuilder builder = getChallengesListCall(server);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(ChallengeConfigInfoList.class, data);
         } catch (RuntimeException e)
         {
@@ -155,12 +206,9 @@ public final class ChallengeAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-        
+            DataCallBuilder builder = getAllChallengePercentilesCall(server);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(MultiChallengePercentileMap.class, data);
         } catch (RuntimeException e)
         {
@@ -178,14 +226,9 @@ public final class ChallengeAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID)
-                                                           .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("challenge", challengeId);
-        
+            DataCallBuilder builder = getChallengeInfoCall(server, challengeId);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(ChallengeConfigInfo.class, data);
         } catch (RuntimeException e)
         {
@@ -203,21 +246,8 @@ public final class ChallengeAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL)
-                                                           .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
-                                                           .withURLParameter(Constants.LEVEL_PLACEHOLDER, level.name())
-                                                           .withPlatform(server);
-
-            if (limit != null)
-            {
-                builder = builder.withQueryParameter(Constants.LIMIT_PLACEHOLDER_DATA, String.valueOf(limit));
-            }
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("challenge", challengeId);
-            data.put("level", level);
-            data.put("limit", limit);
+            DataCallBuilder builder = getChallengeLeaderboardCall(server, challengeId, level, limit);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(ChallengeLeaderboardInfoList.class, data);
         } catch (RuntimeException e)
@@ -236,14 +266,9 @@ public final class ChallengeAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
-                                                           .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("challenge", challengeId);
-        
+            DataCallBuilder builder = getChallengePercentilesCall(server, challengeId);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(MultiChallengePercentileMap.class, data);
         } catch (RuntimeException e)
         {
@@ -261,14 +286,9 @@ public final class ChallengeAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_BY_PLAYER)
-                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("puuid", puuid);
-        
+            DataCallBuilder builder = getChallengePlayerInfoCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(ChallengePlayerInfo.class, data);
         } catch (RuntimeException e)
         {

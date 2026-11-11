@@ -148,14 +148,8 @@ public final class MatchV5API
      */
     public List<String> getMatchListByAccessToken(RegionShard server, String accessToken, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
     {
-        DataCallBuilder builder = new DataCallBuilder(context).withAccessToken(accessToken)
-                                                       .withEndpoint(URLEndpoint.V1_RSO_MATCHLIST)
-                                                       .withPlatform(server);
+        DataCallBuilder builder = getMatchListByAccessTokenCall(server, accessToken, queue, type, beginIndex, count, startTime, endTime);
 
-        if (queue != null)
-        {
-            builder.withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getValues()[0].toString());
-        }
         if (type != null)
         {
             builder.withQueryParameter(Constants.TYPE_PLACEHOLDER_DATA, type.getValue());
@@ -179,6 +173,21 @@ public final class MatchV5API
 
         List<String> matches = builder.buildAs(StringList.class);
         return matches != null ? matches : Collections.emptyList();
+    }
+
+    // the call getMatchListByAccessToken and its twin make
+    private DataCallBuilder getMatchListByAccessTokenCall(RegionShard server, String accessToken, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
+    {
+        DataCallBuilder builder = new DataCallBuilder(context).withAccessToken(accessToken)
+                                                       .withEndpoint(URLEndpoint.V1_RSO_MATCHLIST)
+                                                       .withPlatform(server);
+
+        if (queue != null)
+        {
+            builder.withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getValues()[0].toString());
+        }
+
+        return builder;
     }
 
     /**
@@ -281,14 +290,8 @@ public final class MatchV5API
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withAccessToken(accessToken)
-                                                           .withEndpoint(URLEndpoint.V1_RSO_MATCHLIST)
-                                                           .withPlatform(server);
+            DataCallBuilder builder = getMatchListByAccessTokenCall(server, accessToken, queue, type, beginIndex, count, startTime, endTime);
 
-            if (queue != null)
-            {
-                builder.withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getValues()[0].toString());
-            }
 
             if (type != null)
             {

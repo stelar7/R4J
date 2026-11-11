@@ -37,6 +37,15 @@ public class VALRankedAPI
     @Nullable
     public Leaderboard getLeaderboard(ValorantShard platform, String actId, int startIndex, int size)
     {
+        DataCallBuilder builder = getLeaderboardCall(platform, actId, startIndex, size);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(Leaderboard.class, data);
+    }
+
+    // the call getLeaderboard and its twin make
+    private DataCallBuilder getLeaderboardCall(ValorantShard platform, String actId, int startIndex, int size)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)
                                                        .withQueryParameter(Constants.STARTINDEX_PLACEHOLDER_DATA, String.valueOf(startIndex))
                                                        .withQueryParameter(Constants.SIZE_PLACEHOLDER_DATA, String.valueOf(size))
@@ -49,8 +58,8 @@ public class VALRankedAPI
         data.put("actId", actId);
         data.put("startIndex", startIndex);
         data.put("size", size);
-        
-        return builder.buildCached(Leaderboard.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -62,19 +71,9 @@ public class VALRankedAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)
-                                                           .withQueryParameter(Constants.STARTINDEX_PLACEHOLDER_DATA, String.valueOf(startIndex))
-                                                           .withQueryParameter(Constants.SIZE_PLACEHOLDER_DATA, String.valueOf(size))
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT)
-                                                           .withPlatform(platform);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("actId", actId);
-            data.put("startIndex", startIndex);
-            data.put("size", size);
-        
+            DataCallBuilder builder = getLeaderboardCall(platform, actId, startIndex, size);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(Leaderboard.class, data);
         } catch (RuntimeException e)
         {

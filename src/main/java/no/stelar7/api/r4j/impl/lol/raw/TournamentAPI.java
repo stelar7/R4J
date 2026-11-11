@@ -81,6 +81,21 @@ public final class TournamentAPI
     @Nullable
     public List<String> generateTournamentCodes(final TournamentCodeParameters params, final long tournamentId, Integer count)
     {
+        DataCallBuilder builder = generateTournamentCodesCall(params, tournamentId, count);
+        
+        try
+        {
+            return (List<String>) builder.build();
+        } catch (ClassCastException e)
+        {
+            
+            return null;
+        }
+    }
+
+    // the call generateTournamentCodes and its twin make
+    private DataCallBuilder generateTournamentCodesCall(final TournamentCodeParameters params, final long tournamentId, Integer count)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
                                                        .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
@@ -93,15 +108,8 @@ public final class TournamentAPI
         {
             builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_CODES);
         }
-        
-        try
-        {
-            return (List<String>) builder.build();
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+
+        return builder;
     }
     
     /**
@@ -113,12 +121,20 @@ public final class TournamentAPI
     @Nullable
     public TournamentCode getTournamentInfo(final String tournamentCode)
     {
+        DataCallBuilder builder = getTournamentInfoCall(tournamentCode);
+        
+        return builder.buildAs(TournamentCode.class);
+    }
+
+    // the call getTournamentInfo and its twin make
+    private DataCallBuilder getTournamentInfoCall(final String tournamentCode)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(useStub ? URLEndpoint.V5_TOURNAMENT_STUB_CODES_BY_CODE : URLEndpoint.V5_TOURNAMENT_CODES_BY_CODE)
                                                        .withPlatform(RegionShard.AMERICAS);
-        
-        return builder.buildAs(TournamentCode.class);
+
+        return builder;
     }
     
     /**
@@ -152,15 +168,7 @@ public final class TournamentAPI
     @Nullable
     public List<LobbyEvent> getTournamentLobbyInfo(final String tournamentCode)
     {
-        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
-                                                       .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                       .withEndpoint(URLEndpoint.V5_TOURNAMENT_LOBBY_EVENTS)
-                                                       .withPlatform(RegionShard.AMERICAS);
-        
-        if (useStub)
-        {
-            builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_LOBBY_EVENTS);
-        }
+        DataCallBuilder builder = getTournamentLobbyInfoCall(tournamentCode);
         
         try
         {
@@ -171,6 +179,22 @@ public final class TournamentAPI
             
             return null;
         }
+    }
+
+    // the call getTournamentLobbyInfo and its twin make
+    private DataCallBuilder getTournamentLobbyInfoCall(final String tournamentCode)
+    {
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
+                                                       .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withEndpoint(URLEndpoint.V5_TOURNAMENT_LOBBY_EVENTS)
+                                                       .withPlatform(RegionShard.AMERICAS);
+        
+        if (useStub)
+        {
+            builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_LOBBY_EVENTS);
+        }
+
+        return builder;
     }
     
     /**
@@ -186,11 +210,7 @@ public final class TournamentAPI
     @Nullable
     public Long registerAsProvider(final ProviderRegistrationParameters params)
     {
-        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
-                                                       .withEndpoint(URLEndpoint.V5_TOURNAMENT_PROVIDER)
-                                                       .withPostData(params.toJson())
-                                                       .withRequestMethod(Constants.METHOD_POST)
-                                                       .withPlatform(RegionShard.AMERICAS);
+        DataCallBuilder builder = registerAsProviderCall(params);
         
         
         if (useStub)
@@ -206,6 +226,18 @@ public final class TournamentAPI
             return null;
         }
     }
+
+    // the call registerAsProvider and its twin make
+    private DataCallBuilder registerAsProviderCall(final ProviderRegistrationParameters params)
+    {
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
+                                                       .withEndpoint(URLEndpoint.V5_TOURNAMENT_PROVIDER)
+                                                       .withPostData(params.toJson())
+                                                       .withRequestMethod(Constants.METHOD_POST)
+                                                       .withPlatform(RegionShard.AMERICAS);
+
+        return builder;
+    }
     
     /**
      * Returns a TournamentId used to refer to this tournament later on.
@@ -215,6 +247,20 @@ public final class TournamentAPI
      */
     @Nullable
     public Long registerTournament(final TournamentRegistrationParameters params)
+    {
+        DataCallBuilder builder = registerTournamentCall(params);
+        
+        try
+        {
+            return Long.parseLong(builder.build().toString());
+        } catch (NumberFormatException e)
+        {
+            return null;
+        }
+    }
+
+    // the call registerTournament and its twin make
+    private DataCallBuilder registerTournamentCall(final TournamentRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withEndpoint(URLEndpoint.V5_TOURNAMENT_TOURNAMENT)
@@ -226,14 +272,8 @@ public final class TournamentAPI
         {
             builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_TOURNAMENT);
         }
-        
-        try
-        {
-            return Long.parseLong(builder.build().toString());
-        } catch (NumberFormatException e)
-        {
-            return null;
-        }
+
+        return builder;
     }
     
     /**
@@ -268,18 +308,7 @@ public final class TournamentAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
-                                                           .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
-                                                           .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
-                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_CODES)
-                                                           .withPostData(Utils.getGson().toJson(params))
-                                                           .withRequestMethod(Constants.METHOD_POST)
-                                                           .withPlatform(RegionShard.AMERICAS);
-
-            if (useStub)
-            {
-                builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_CODES);
-            }
+            DataCallBuilder builder = generateTournamentCodesCall(params, tournamentId, count);
 
             return builder.buildAsync().thenApply(result -> {
                 try
@@ -306,11 +335,8 @@ public final class TournamentAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
-                                                           .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                           .withEndpoint(useStub ? URLEndpoint.V5_TOURNAMENT_STUB_CODES_BY_CODE : URLEndpoint.V5_TOURNAMENT_CODES_BY_CODE)
-                                                           .withPlatform(RegionShard.AMERICAS);
-        
+            DataCallBuilder builder = getTournamentInfoCall(tournamentCode);
+    
             return builder.buildAsAsync(TournamentCode.class);
         } catch (RuntimeException e)
         {
@@ -355,15 +381,7 @@ public final class TournamentAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
-                                                           .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_LOBBY_EVENTS)
-                                                           .withPlatform(RegionShard.AMERICAS);
-
-            if (useStub)
-            {
-                builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_LOBBY_EVENTS);
-            }
+            DataCallBuilder builder = getTournamentLobbyInfoCall(tournamentCode);
 
             return builder.buildAsync().thenApply(result -> {
                 try
@@ -391,11 +409,7 @@ public final class TournamentAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
-                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_PROVIDER)
-                                                           .withPostData(params.toJson())
-                                                           .withRequestMethod(Constants.METHOD_POST)
-                                                           .withPlatform(RegionShard.AMERICAS);
+            DataCallBuilder builder = registerAsProviderCall(params);
 
             if (useStub)
             {
@@ -427,16 +441,7 @@ public final class TournamentAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
-                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_TOURNAMENT)
-                                                           .withPostData(Utils.getGson().toJson(params))
-                                                           .withRequestMethod(Constants.METHOD_POST)
-                                                           .withPlatform(RegionShard.AMERICAS);
-
-            if (useStub)
-            {
-                builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_TOURNAMENT);
-            }
+            DataCallBuilder builder = registerTournamentCall(params);
 
             return builder.buildAsync().thenApply(result -> {
                 try

@@ -67,6 +67,15 @@ public class AccountAPI
     @Nullable
     public RiotAccount getAccountByTag(RegionShard server, String name, String tag, ApiKeyType keyType)
     {
+        DataCallBuilder builder = getAccountByTagCall(server, name, tag, keyType);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(RiotAccount.class, data);
+    }
+
+    // the call getAccountByTag and its twin make
+    private DataCallBuilder getAccountByTagCall(RegionShard server, String name, String tag, ApiKeyType keyType)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_NAME_PLACEHOLDER, Utils.normalizeString(name))
                                                        .withURLParameter(Constants.TAG_LINE_PLACEHOLDER, Utils.normalizeString(tag))
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
@@ -77,8 +86,8 @@ public class AccountAPI
         data.put("name", Utils.normalizeString(name));
         data.put("tag", Utils.normalizeString(tag));
         data.put("keytype", keyType);
-        
-        return builder.buildCached(RiotAccount.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     @Nullable
@@ -90,6 +99,15 @@ public class AccountAPI
     @Nullable
     public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
     {
+        DataCallBuilder builder = getActiveShardCall(server, game, puuid, keyType);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(RiotAccountShard.class, data);
+    }
+
+    // the call getActiveShard and its twin make
+    private DataCallBuilder getActiveShardCall(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
@@ -99,8 +117,8 @@ public class AccountAPI
         data.put("platform", server);
         data.put("game", game);
         data.put("puuid", puuid);
-        
-        return builder.buildCached(RiotAccountShard.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -115,6 +133,15 @@ public class AccountAPI
     @Nullable
     public RiotAccountRegion getActiveRegion(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
     {
+        DataCallBuilder builder = getActiveRegionCall(server, game, puuid, keyType);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(RiotAccountRegion.class, data);
+    }
+
+    // the call getActiveRegion and its twin make
+    private DataCallBuilder getActiveRegionCall(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
@@ -125,8 +152,8 @@ public class AccountAPI
         data.put("game", game);
         data.put("puuid", puuid);
         data.put("keytype", keyType);
-        
-        return builder.buildCached(RiotAccountRegion.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -140,13 +167,21 @@ public class AccountAPI
     @Nullable
     public RiotAccount getAccountByAccessToken(RegionShard server, String accessToken, ApiKeyType keyType)
     {
+        DataCallBuilder builder = getAccountByAccessTokenCall(server, accessToken, keyType);
+
+        // not cached, as the result depends on who the token belongs to
+        return builder.buildAs(RiotAccount.class);
+    }
+
+    // the call getAccountByAccessToken and its twin make
+    private DataCallBuilder getAccountByAccessTokenCall(RegionShard server, String accessToken, ApiKeyType keyType)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
                                                        .withAccessToken(accessToken)
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_ME)
                                                        .withPlatform(server);
 
-        // not cached, as the result depends on who the token belongs to
-        return builder.buildAs(RiotAccount.class);
+        return builder;
     }
     
     /**
@@ -204,17 +239,9 @@ public class AccountAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_NAME_PLACEHOLDER, Utils.normalizeString(name))
-                                                           .withURLParameter(Constants.TAG_LINE_PLACEHOLDER, Utils.normalizeString(tag))
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
-                                                           .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG)
-                                                           .withPlatform(server);
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("name", Utils.normalizeString(name));
-            data.put("tag", Utils.normalizeString(tag));
-            data.put("keytype", keyType);
-        
+            DataCallBuilder builder = getAccountByTagCall(server, name, tag, keyType);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(RiotAccount.class, data);
         } catch (RuntimeException e)
         {
@@ -242,16 +269,9 @@ public class AccountAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
-                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
-                                                           .withEndpoint(URLEndpoint.V1_SHARED_SHARD_BY_PUUID)
-                                                           .withPlatform(server);
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("game", game);
-            data.put("puuid", puuid);
-        
+            DataCallBuilder builder = getActiveShardCall(server, game, puuid, keyType);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(RiotAccountShard.class, data);
         } catch (RuntimeException e)
         {
@@ -279,17 +299,9 @@ public class AccountAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
-                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
-                                                           .withEndpoint(URLEndpoint.V1_SHARED_REGION_BY_PUUID)
-                                                           .withPlatform(server);
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("game", game);
-            data.put("puuid", puuid);
-            data.put("keytype", keyType);
-        
+            DataCallBuilder builder = getActiveRegionCall(server, game, puuid, keyType);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(RiotAccountRegion.class, data);
         } catch (RuntimeException e)
         {
@@ -307,10 +319,7 @@ public class AccountAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
-                                                           .withAccessToken(accessToken)
-                                                           .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_ME)
-                                                           .withPlatform(server);
+            DataCallBuilder builder = getAccountByAccessTokenCall(server, accessToken, keyType);
 
             // not cached, as the result depends on who the token belongs to
             return builder.buildAsAsync(RiotAccount.class);

@@ -44,6 +44,14 @@ public final class VALAccoladesAPI
     @Nullable
     public JsonElement getAccolades(ValorantShard platform, Boolean enabledOnly)
     {
+        DataCallBuilder builder = getAccoladesCall(platform, enabledOnly);
+
+        return builder.buildAs(JsonElement.class);
+    }
+
+    // the call getAccolades and its twin make
+    private DataCallBuilder getAccoladesCall(ValorantShard platform, Boolean enabledOnly)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_ACCOLADES)
                                                        .withPlatform(platform);
@@ -53,7 +61,7 @@ public final class VALAccoladesAPI
             builder.withQueryParameter(Constants.ENABLED_ONLY_PLACEHOLDER_DATA, String.valueOf(enabledOnly));
         }
 
-        return builder.buildAs(JsonElement.class);
+        return builder;
     }
 
     /**
@@ -64,12 +72,20 @@ public final class VALAccoladesAPI
     @Nullable
     public JsonElement getPlayerAccolades(ValorantShard platform, String puuid)
     {
+        DataCallBuilder builder = getPlayerAccoladesCall(platform, puuid);
+
+        return builder.buildAs(JsonElement.class);
+    }
+
+    // the call getPlayerAccolades and its twin make
+    private DataCallBuilder getPlayerAccoladesCall(ValorantShard platform, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_ACCOLADES_BY_PUUID)
                                                        .withPlatform(platform);
 
-        return builder.buildAs(JsonElement.class);
+        return builder;
     }
     
     /**
@@ -81,14 +97,7 @@ public final class VALAccoladesAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_ACCOLADES)
-                                                           .withPlatform(platform);
-
-            if (enabledOnly != null)
-            {
-                builder.withQueryParameter(Constants.ENABLED_ONLY_PLACEHOLDER_DATA, String.valueOf(enabledOnly));
-            }
+            DataCallBuilder builder = getAccoladesCall(platform, enabledOnly);
 
             return builder.buildAsAsync(JsonElement.class);
         } catch (RuntimeException e)
@@ -107,10 +116,7 @@ public final class VALAccoladesAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_ACCOLADES_BY_PUUID)
-                                                           .withPlatform(platform);
+            DataCallBuilder builder = getPlayerAccoladesCall(platform, puuid);
 
             return builder.buildAsAsync(JsonElement.class);
         } catch (RuntimeException e)

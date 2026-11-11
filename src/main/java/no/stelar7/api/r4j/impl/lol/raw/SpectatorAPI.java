@@ -69,6 +69,15 @@ public final class SpectatorAPI
     @Nullable
     public SpectatorGameInfo getCurrentGame(LeagueShard server, String puuid)
     {
+        DataCallBuilder builder = getCurrentGameCall(server, puuid);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(SpectatorGameInfo.class, data);
+    }
+
+    // the call getCurrentGame and its twin make
+    private DataCallBuilder getCurrentGameCall(LeagueShard server, String puuid)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V5_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
@@ -76,8 +85,8 @@ public final class SpectatorAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("summoner", puuid);
-        
-        return builder.buildCached(SpectatorGameInfo.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -89,14 +98,9 @@ public final class SpectatorAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withEndpoint(URLEndpoint.V5_SPECTATOR_CURRENT)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-            data.put("summoner", puuid);
-        
+            DataCallBuilder builder = getCurrentGameCall(server, puuid);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(SpectatorGameInfo.class, data);
         } catch (RuntimeException e)
         {

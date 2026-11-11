@@ -48,6 +48,15 @@ public final class VALConsoleAPI
     @Nullable
     public VALMatch getMatch(ValorantShard platform, String matchId)
     {
+        DataCallBuilder builder = getMatchCall(platform, matchId);
+        Map<String, Object> data = builder.getCacheKey();
+
+        return builder.buildCached(VALMatch.class, data);
+    }
+
+    // the call getMatch and its twin make
+    private DataCallBuilder getMatchCall(ValorantShard platform, String matchId)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_MATCH_BY_ID)
@@ -57,7 +66,7 @@ public final class VALConsoleAPI
         data.put("platform", platform);
         data.put("gameid", matchId);
 
-        return builder.buildCached(VALMatch.class, data);
+        return builder.withCacheKey(data);
     }
 
     /**
@@ -67,6 +76,16 @@ public final class VALConsoleAPI
      * @return the matches, or an empty list if there are none
      */
     public List<MatchReference> getMatchList(ValorantShard platform, String puuid, ConsolePlatformType platformType)
+    {
+        DataCallBuilder builder = getMatchListCall(platform, puuid, platformType);
+        Map<String, Object> data = builder.getCacheKey();
+
+        MatchList list = builder.buildCached(MatchList.class, data);
+        return list != null ? list.getHistory() : Collections.emptyList();
+    }
+
+    // the call getMatchList and its twin make
+    private DataCallBuilder getMatchListCall(ValorantShard platform, String puuid, ConsolePlatformType platformType)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withQueryParameter(Constants.PLATFORM_TYPE_PLACEHOLDER_DATA, platformType.getValue())
@@ -79,8 +98,7 @@ public final class VALConsoleAPI
         data.put("puuid", puuid);
         data.put("platformType", platformType);
 
-        MatchList list = builder.buildCached(MatchList.class, data);
-        return list != null ? list.getHistory() : Collections.emptyList();
+        return builder.withCacheKey(data);
     }
 
     /**
@@ -91,6 +109,15 @@ public final class VALConsoleAPI
     @Nullable
     public RecentMatchList getRecentMatches(ValorantShard platform, String queue)
     {
+        DataCallBuilder builder = getRecentMatchesCall(platform, queue);
+        Map<String, Object> data = builder.getCacheKey();
+
+        return builder.buildCached(RecentMatchList.class, data);
+    }
+
+    // the call getRecentMatches and its twin make
+    private DataCallBuilder getRecentMatchesCall(ValorantShard platform, String queue)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue)
                                                        .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_RECENT_MATCH_BY_QUEUE)
@@ -100,7 +127,7 @@ public final class VALConsoleAPI
         data.put("platform", platform);
         data.put("queue", queue);
 
-        return builder.buildCached(RecentMatchList.class, data);
+        return builder.withCacheKey(data);
     }
 
     /**
@@ -113,6 +140,15 @@ public final class VALConsoleAPI
      */
     @Nullable
     public Leaderboard getLeaderboard(ValorantShard platform, String actId, ConsolePlatformType platformType, int startIndex, int size)
+    {
+        DataCallBuilder builder = getLeaderboardCall(platform, actId, platformType, startIndex, size);
+        Map<String, Object> data = builder.getCacheKey();
+
+        return builder.buildCached(Leaderboard.class, data);
+    }
+
+    // the call getLeaderboard and its twin make
+    private DataCallBuilder getLeaderboardCall(ValorantShard platform, String actId, ConsolePlatformType platformType, int startIndex, int size)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)
                                                        .withQueryParameter(Constants.PLATFORM_TYPE_PLACEHOLDER_DATA, platformType.getValue())
@@ -129,7 +165,7 @@ public final class VALConsoleAPI
         data.put("startIndex", startIndex);
         data.put("size", size);
 
-        return builder.buildCached(Leaderboard.class, data);
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -141,14 +177,8 @@ public final class VALConsoleAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_MATCH_BY_ID)
-                                                           .withPlatform(platform);
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("gameid", matchId);
+            DataCallBuilder builder = getMatchCall(platform, matchId);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(VALMatch.class, data);
         } catch (RuntimeException e)
@@ -167,16 +197,8 @@ public final class VALConsoleAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                           .withQueryParameter(Constants.PLATFORM_TYPE_PLACEHOLDER_DATA, platformType.getValue())
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_MATCHLIST_BY_PUUID)
-                                                           .withPlatform(platform);
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("puuid", puuid);
-            data.put("platformType", platformType);
+            DataCallBuilder builder = getMatchListCall(platform, puuid, platformType);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(MatchList.class, data).thenApply(list -> list != null ? list.getHistory() : Collections.emptyList());
         } catch (RuntimeException e)
@@ -195,14 +217,8 @@ public final class VALConsoleAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue)
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_RECENT_MATCH_BY_QUEUE)
-                                                           .withPlatform(platform);
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("queue", queue);
+            DataCallBuilder builder = getRecentMatchesCall(platform, queue);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(RecentMatchList.class, data);
         } catch (RuntimeException e)
@@ -221,20 +237,8 @@ public final class VALConsoleAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)
-                                                           .withQueryParameter(Constants.PLATFORM_TYPE_PLACEHOLDER_DATA, platformType.getValue())
-                                                           .withQueryParameter(Constants.STARTINDEX_PLACEHOLDER_DATA, String.valueOf(startIndex))
-                                                           .withQueryParameter(Constants.SIZE_PLACEHOLDER_DATA, String.valueOf(size))
-                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
-                                                           .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_LEADERBOARD_BY_ACT)
-                                                           .withPlatform(platform);
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", platform);
-            data.put("actId", actId);
-            data.put("platformType", platformType);
-            data.put("startIndex", startIndex);
-            data.put("size", size);
+            DataCallBuilder builder = getLeaderboardCall(platform, actId, platformType, startIndex, size);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(Leaderboard.class, data);
         } catch (RuntimeException e)

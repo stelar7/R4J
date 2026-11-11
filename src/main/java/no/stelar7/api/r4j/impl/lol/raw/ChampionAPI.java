@@ -37,13 +37,22 @@ public final class ChampionAPI
     @Nullable
     public ChampionRotationInfo getFreeToPlayRotation(LeagueShard server)
     {
+        DataCallBuilder builder = getFreeToPlayRotationCall(server);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(ChampionRotationInfo.class, data);
+    }
+
+    // the call getFreeToPlayRotation and its twin make
+    private DataCallBuilder getFreeToPlayRotationCall(LeagueShard server)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
-        
-        return builder.buildCached(ChampionRotationInfo.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     /**
@@ -55,12 +64,9 @@ public final class ChampionAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)
-                                                           .withPlatform(server);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", server);
-        
+            DataCallBuilder builder = getFreeToPlayRotationCall(server);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(ChampionRotationInfo.class, data);
         } catch (RuntimeException e)
         {

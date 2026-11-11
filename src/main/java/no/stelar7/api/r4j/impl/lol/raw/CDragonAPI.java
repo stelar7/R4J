@@ -150,6 +150,15 @@ public final class CDragonAPI
     @Nullable
     public CDragonChampion getChampion(String patch, String champion)
     {
+        DataCallBuilder builder = getChampionCall(patch, champion);
+        Map<String, Object> data = builder.getCacheKey();
+
+        return builder.buildCached(CDragonChampion.class, data);
+    }
+
+    // the call getChampion and its twin make
+    private DataCallBuilder getChampionCall(String patch, String champion)
+    {
         // made without limiters, which also means no api key is added to the request
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
@@ -162,7 +171,7 @@ public final class CDragonAPI
         data.put("patch", patch(patch));
         data.put("champion", champion(champion));
 
-        return builder.buildCached(CDragonChampion.class, data);
+        return builder.withCacheKey(data);
     }
 
     /**
@@ -372,17 +381,8 @@ public final class CDragonAPI
     {
         try
         {
-            // made without limiters, which also means no api key is added to the request
-            DataCallBuilder builder = new DataCallBuilder(context)
-                    .withLimiters(false)
-                    .withProxy(baseUrl + Constants.GSVR)
-                    .withEndpoint(URLEndpoint.CDRAGON_CHAMPION_DATA)
-                    .withURLParameter(Constants.VERSION_PLACEHOLDER, patch(patch))
-                    .withURLParameter(Constants.ID_PLACEHOLDER, champion(champion));
-
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("patch", patch(patch));
-            data.put("champion", champion(champion));
+            DataCallBuilder builder = getChampionCall(patch, champion);
+            Map<String, Object> data = builder.getCacheKey();
 
             return builder.buildCachedAsync(CDragonChampion.class, data);
         } catch (RuntimeException e)

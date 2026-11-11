@@ -52,6 +52,7 @@ public class DataCallBuilder
     private static final BiFunction<String, String, String> MERGE_AS_SET = (o, n) -> o + n;
     
     private String requestMethod = "GET";
+    private Map<String, Object> cacheKey;
     private String postData      = "";
     
     /**
@@ -1454,6 +1455,27 @@ public class DataCallBuilder
     {
         this.dc.getUrlHeaders().put(Constants.AUTHORIZATION, accessToken.startsWith("Bearer ") ? accessToken : "Bearer " + accessToken);
         return this;
+    }
+
+    /**
+     * Remembers the place of this call in the cache, so the code that prepares a call can hand over both in one object.
+     * It is not used by the builder itself: pass it to {@link #buildCached(Class, Map)} or one of its relatives.
+     *
+     * @param cacheKey the values identifying this call in the cache (ie. platform, puuid), in a consistent order
+     * @return this
+     */
+    public DataCallBuilder withCacheKey(Map<String, Object> cacheKey)
+    {
+        this.cacheKey = cacheKey;
+        return this;
+    }
+
+    /**
+     * @return what was given to {@link #withCacheKey(Map)}, or null
+     */
+    public Map<String, Object> getCacheKey()
+    {
+        return cacheKey;
     }
 
     public DataCallBuilder withProxy(String proxy)

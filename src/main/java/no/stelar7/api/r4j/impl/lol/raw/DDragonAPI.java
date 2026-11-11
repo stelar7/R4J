@@ -386,6 +386,15 @@ public final class DDragonAPI
     @Nullable
     public Realm getRealm(LeagueShard region)
     {
+        DataCallBuilder builder = getRealmCall(region);
+        Map<String, Object> data = builder.getCacheKey();
+        
+        return builder.buildCached(Realm.class, data);
+    }
+
+    // the call getRealm and its twin make
+    private DataCallBuilder getRealmCall(LeagueShard region)
+    {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
                 .withProxy(baseUrl + Constants.GSVR)
@@ -394,8 +403,8 @@ public final class DDragonAPI
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", region);
-        
-        return builder.buildCached(Realm.class, data);
+
+        return builder.withCacheKey(data);
     }
     
     public Map<Integer, StaticRune> getRunes(String version, String locale)
@@ -480,10 +489,7 @@ public final class DDragonAPI
     
     public List<String> getVersions()
     {
-        DataCallBuilder builder = new DataCallBuilder(context)
-                .withLimiters(false)
-                .withProxy(baseUrl + Constants.GSVR)
-                .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
+        DataCallBuilder builder = getVersionsCall();
         
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -511,6 +517,17 @@ public final class DDragonAPI
         {
             return Collections.emptyList();
         }
+    }
+
+    // the call getVersions and its twin make
+    private DataCallBuilder getVersionsCall()
+    {
+        DataCallBuilder builder = new DataCallBuilder(context)
+                .withLimiters(false)
+                .withProxy(baseUrl + Constants.GSVR)
+                .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
+
+        return builder;
     }
     
     public Map<Integer, StaticPerk> getPerks(String version, String locale)
@@ -1060,15 +1077,9 @@ public final class DDragonAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context)
-                    .withLimiters(false)
-                    .withProxy(baseUrl + Constants.GSVR)
-                    .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
-                    .withEndpoint(URLEndpoint.DDRAGON_REALMS);
-        
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("platform", region);
-        
+            DataCallBuilder builder = getRealmCall(region);
+            Map<String, Object> data = builder.getCacheKey();
+    
             return builder.buildCachedAsync(Realm.class, data);
         } catch (RuntimeException e)
         {
@@ -1204,10 +1215,7 @@ public final class DDragonAPI
     {
         try
         {
-            DataCallBuilder builder = new DataCallBuilder(context)
-                    .withLimiters(false)
-                    .withProxy(baseUrl + Constants.GSVR)
-                    .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
+            DataCallBuilder builder = getVersionsCall();
 
             Map<String, Object> data = new LinkedHashMap<>();
             Optional<?>         chl  = context.getCacheProvider().get(URLEndpoint.DDRAGON_VERSIONS, data);
