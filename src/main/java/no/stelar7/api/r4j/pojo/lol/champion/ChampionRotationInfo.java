@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.champion;
 
+import com.google.gson.annotations.SerializedName;
 import no.stelar7.api.r4j.impl.lol.raw.DDragonAPI;
 import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion;
 
@@ -8,7 +9,10 @@ import java.util.*;
 
 public class ChampionRotationInfo implements Serializable
 {
+    // the api documentation now lists these as "sr" and "newplayer", so both names are accepted
+    @SerializedName(value = "freeChampionIds", alternate = {"sr"})
     private List<Integer> freeChampionIds;
+    @SerializedName(value = "freeChampionIdsForNewPlayers", alternate = {"newplayer"})
     private List<Integer> freeChampionIdsForNewPlayers;
     private int           maxNewPlayerLevel;
     
