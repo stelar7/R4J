@@ -11,6 +11,7 @@ public class StatusUpdate implements Serializable
     private List<String> publish_locations;
     private String       created_at;
     private String       updated_at;
+    private List<StatusContent> translations;
     
     public int getId()
     {
@@ -79,5 +80,10 @@ public class StatusUpdate implements Serializable
                ", created_at='" + created_at + '\'' +
                ", updated_at='" + updated_at + '\'' +
                '}';
+    }
+    
+    public List<StatusContent> getTranslations()
+    {
+        return translations;
     }
 }
