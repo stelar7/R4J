@@ -10,15 +10,19 @@ import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.ratelimiting.RateLimiter;
 
 import java.util.*;
-import java.util.prefs.Preferences;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class DataCall
 {
     
     // Maps for storing limiters
-    private static final Map<ApiKeyType, Map<Enum, Map<Enum, RateLimiter>>> limitersByKeyType = new HashMap<>();
+    private static final Map<ApiKeyType, Map<Enum, Map<Enum, RateLimiter>>> limitersByKeyType = new ConcurrentHashMap<>();
     
-    private static final Map<Enum, Map<Enum, Map<Integer, Integer>>> callData = new HashMap<>();
+    /**
+     * Used when no timeout is set, so a stalled connection can not block a thread (and its parallel-call permit) forever
+     */
+    public static final int DEFAULT_CONNECT_TIMEOUT = 10_000;
+    public static final int DEFAULT_READ_TIMEOUT    = 30_000;
     
     private static APICredentials creds;
     private static int 			  numberOfCallsAllowedInParallel = -1;
@@ -42,26 +46,10 @@ public final class DataCall
     private        boolean     returnRawResponse = false;
     private        LeagueShard defaultPlatform   = LeagueShard.EUW1;
     private        String      urlProxy          = Constants.REQUEST_URL;
-    private static Preferences ratelimiterCache  = Preferences.userRoot().node("no/stelar7/r4j");
     
     public static Map<Enum, Map<Enum, RateLimiter>> getLimiter(ApiKeyType keyType)
     {
-        DataCallBuilder.getGlobalLock().lock();
-        try {
-            return limitersByKeyType.computeIfAbsent(keyType, k -> new HashMap<>());
-        } finally {
-            DataCallBuilder.getGlobalLock().unlock();
-        }
-    }
-    
-    public static Map<Enum, Map<Enum, Map<Integer, Integer>>> getCallData()
-    {
-        return callData;
-    }
-    
-    public static Preferences getRatelimiterCache()
-    {
-        return ratelimiterCache;
+        return limitersByKeyType.computeIfAbsent(keyType, k -> new ConcurrentHashMap<>());
     }
     
     public Map<String, String> getUrlParams()
@@ -250,7 +238,12 @@ public final class DataCall
     
     public int getReadTimeout()
     {
-        return readTimeout == 0 ? globalTimeout : readTimeout;
+        if (readTimeout != 0)
+        {
+            return readTimeout;
+        }
+        
+        return globalTimeout != 0 ? globalTimeout : DEFAULT_READ_TIMEOUT;
     }
     
     public void setReadTimeout(int readTimeout)
@@ -260,7 +253,12 @@ public final class DataCall
     
     public int getConnectTimeout()
     {
-        return connectTimeout == 0 ? globalTimeout : connectTimeout;
+        if (connectTimeout != 0)
+        {
+            return connectTimeout;
+        }
+        
+        return globalTimeout != 0 ? globalTimeout : DEFAULT_CONNECT_TIMEOUT;
     }
     
     public void setConnectTimeout(int connectTimeout)
@@ -273,6 +271,12 @@ public final class DataCall
         return globalTimeout;
     }
     
+    /**
+     * Sets the connect and read timeout (in ms) used by all calls that do not set their own.
+     * 0 means "use the defaults" ({@link #DEFAULT_CONNECT_TIMEOUT} / {@link #DEFAULT_READ_TIMEOUT})
+     *
+     * @param globalTimeout the timeout in ms
+     */
     public static void setGlobalTimeout(int globalTimeout)
     {
         DataCall.globalTimeout = globalTimeout;
