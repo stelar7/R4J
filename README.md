@@ -19,6 +19,7 @@ Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src
 | :------------: | :-------: |
 | V5 compatible? | Yes!      |
 | Rate-limiting? | Set dynamically based on your key, and synced with the counts the api reports |
+| Shared keys?   | Yes, across processes; optionally exact with Redis |
 | RSO endpoints? | Yes, pass the access token of the player |
 
 | Cache      | Supported |
@@ -56,11 +57,37 @@ private void handleSummonerCallback(Summoner u)
 
 To limit how many calls run at the same time (per platform and key), pass the limit when creating the api: `new R4J(creds, 4)`.
 
+## Several keys, several processes
+
+`new R4J(creds)` configures one shared default context. For an instance that shares nothing with it (its own keys, cache, settings and ratelimiters), use an isolated one:
+
+```Java
+R4J other = R4J.isolated(new APICredentials("RGAPI-another-key"));
+other.getContext().setGlobalTimeout(5000);
+```
+
+Several processes (also on different machines) can use the same api key:
+
+* Without any setup, each process follows the call counts the api reports, which include the calls of the others. That stays close to the limits, but calls that are in flight in different processes at the same time can not see each other, so an occasional 429 is possible (and handled).
+* For exact limits, keep the counters in a shared store. A Redis implementation is included; it only needs a way to run a script, so R4J does not depend on a Redis client:
+
+```Java
+JedisPooled jedis = new JedisPooled("localhost", 6379);
+R4JContext.getDefault().setRateLimitStore(new RedisRateLimitStore((script, keys, args) -> jedis.eval(script, keys, args)));
+```
+
+Implement `SharedRateLimitStore` to use something other than Redis. The file system cache can be shared between processes as well.
+
+## Requirements
+
+Java 11 or newer.
+
 ## How do I build and test?
 
 ```
 mvn clean package         # builds, and runs the tests that need no api key
 mvn test -Plive           # also runs the tests that call the real api (put your keys in SecretFile)
+R4J_TEST_REDIS=localhost:6379 mvn test   # also runs the rate limit store tests against a real Redis
 ```
 
 #### TODO:
