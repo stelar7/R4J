@@ -156,6 +156,12 @@ public class TFTLeagueAPI
      */
     public List<TFTLeagueEntry> getLeagueByTierDivision(LeagueShard server, TierDivisionType tierdiv, int page)
     {
+        if (tierdiv == TierDivisionType.UNRANKED)
+        {
+            // there is no league of unranked players
+            return Collections.emptyList();
+        }
+
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
@@ -174,11 +180,11 @@ public class TFTLeagueAPI
             switch (tierdiv)
             {
                 case MASTER_I:
-                    return getMasterLeague(server).getEntries();
+                    return entriesOf(getMasterLeague(server));
                 case GRANDMASTER_I:
-                    return getGrandmasterLeague(server).getEntries();
+                    return entriesOf(getGrandmasterLeague(server));
                 case CHALLENGER_I:
-                    return getChallengerLeague(server).getEntries();
+                    return entriesOf(getChallengerLeague(server));
             }
         }
 
@@ -260,6 +266,12 @@ public class TFTLeagueAPI
      */
     public List<TFTLeagueEntry> getLeagueByTierDivision(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
+        if (tierdiv == TierDivisionType.UNRANKED)
+        {
+            // there is no league of unranked players
+            return Collections.emptyList();
+        }
+
         if (Arrays.asList(TierDivisionType.MASTER_I, TierDivisionType.GRANDMASTER_I, TierDivisionType.CHALLENGER_I).contains(tierdiv))
         {
             if (page > 1)
@@ -322,6 +334,11 @@ public class TFTLeagueAPI
         return entries != null ? entries : Collections.emptyList();
     }
     
+    private static List<TFTLeagueEntry> entriesOf(TFTLeagueList league)
+    {
+        return league != null ? league.getEntries() : Collections.emptyList();
+    }
+
     // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
     
     /**

@@ -83,12 +83,14 @@ public class TFTMatchAPI
     
     public TFTMatch getMatch(RegionShard platform, String gameId)
     {
-        return getMatchRAW(platform, gameId).asTFTMatch();
+        GAMHSMatch raw = getMatchRAW(platform, gameId);
+        return raw != null ? raw.asTFTMatch() : null;
     }
     
     public TFTMetadata getMetadata(RegionShard platform, String gameId)
     {
-        return getMatchRAW(platform, gameId).asTFTMetadata();
+        GAMHSMatch raw = getMatchRAW(platform, gameId);
+        return raw != null ? raw.asTFTMetadata() : null;
     }
     
     @Nullable

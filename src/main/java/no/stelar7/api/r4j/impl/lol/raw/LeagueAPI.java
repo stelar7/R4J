@@ -164,6 +164,12 @@ public final class LeagueAPI
      */
     public List<LeagueEntry> getLeagueByTierDivision(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
+        if (tierdiv == TierDivisionType.UNRANKED)
+        {
+            // there is no league of unranked players
+            return Collections.emptyList();
+        }
+
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
@@ -183,11 +189,11 @@ public final class LeagueAPI
             switch (tierdiv)
             {
                 case MASTER_I:
-                    return getMasterLeague(server, queue).getEntries();
+                    return entriesOf(getMasterLeague(server, queue));
                 case GRANDMASTER_I:
-                    return getGrandmasterLeague(server, queue).getEntries();
+                    return entriesOf(getGrandmasterLeague(server, queue));
                 case CHALLENGER_I:
-                    return getChallengerLeague(server, queue).getEntries();
+                    return entriesOf(getChallengerLeague(server, queue));
             }
         }
         
@@ -224,6 +230,12 @@ public final class LeagueAPI
      */
     public List<LeagueEntry> getLeagueExpByTierDivision(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
+        if (tierdiv == TierDivisionType.UNRANKED)
+        {
+            // there is no league of unranked players
+            return Collections.emptyList();
+        }
+
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
@@ -252,6 +264,11 @@ public final class LeagueAPI
         return new LazyList<>(1, prevValue -> getLeagueExpByTierDivision(server, queue, tierdiv, prevValue + 1));
     }
     
+    private static List<LeagueEntry> entriesOf(LeagueList league)
+    {
+        return league != null ? league.getEntries() : Collections.emptyList();
+    }
+
     // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
     
     /**
