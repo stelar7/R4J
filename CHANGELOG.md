@@ -62,6 +62,7 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * **Non-blocking calls:** `DataCallBuilder.buildAsync`, `buildAsAsync` and `buildCachedAsync` make a call without a thread waiting for the rate limit, the response or the retries. `R4J.async(...)` runs any of the (blocking) api methods in the background.
 * **One exception parent:** every exception R4J throws on purpose now extends `R4JException` (itself a `RuntimeException`), so they can be caught together.
 * **Module name:** the jars declare `Automatic-Module-Name: no.stelar7.r4j`.
+* **Typed match challenges:** `MatchParticipant.getTypedChallenges()` and `getTypedMissions()` give the documented challenges and mission scores as objects with a field each. The maps (`getChallenges()`, `getMissions()`) are unchanged and still hold everything the api sent.
 * **Typed calls:** `DataCallBuilder.buildAs` and `buildCached`, and `withAccessToken` for RSO.
 
 ### Fixed

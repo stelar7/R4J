@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.pojo.lol.match.v5;
 
+import no.stelar7.api.r4j.basic.utils.MapBinder;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 
 import java.io.Serializable;
@@ -179,9 +180,20 @@ public class MatchParticipant implements Serializable
         return bountyLevel;
     }
     
+    /**
+     * @return every challenge the api sent for this participant, by its name. See {@link #getTypedChallenges()} for the documented ones as fields.
+     */
     public Map<String, Object> getChallenges()
     {
         return challenges;
+    }
+
+    /**
+     * @return the challenges in the api documentation as an object with a field each, or null if the api sent no challenges
+     */
+    public MatchChallenges getTypedChallenges()
+    {
+        return MapBinder.bind(challenges, MatchChallenges.class);
     }
     
     public int getChampionExperience()
@@ -1236,8 +1248,19 @@ public class MatchParticipant implements Serializable
                '}';
     }
     
+    /**
+     * @return the mission scores as the api sent them. See {@link #getTypedMissions()}.
+     */
     public Map<String, Object> getMissions()
     {
         return missions;
+    }
+
+    /**
+     * @return the mission scores as an object, or null if the api sent none
+     */
+    public MatchMissions getTypedMissions()
+    {
+        return MapBinder.bind(missions, MatchMissions.class);
     }
 }
