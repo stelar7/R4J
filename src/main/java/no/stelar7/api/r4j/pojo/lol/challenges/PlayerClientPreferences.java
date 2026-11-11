@@ -10,6 +10,9 @@ public class PlayerClientPreferences implements Serializable
     private String     bannerAccent;
     private Double     percentile;
     private List<Long> challengeIds;
+    private String  title;
+    private String  crestBorder;
+    private Integer prestigeCrestBorderLevel;
     
     public String getBannerAccent()
     {
@@ -55,5 +58,20 @@ public class PlayerClientPreferences implements Serializable
                ", percentile=" + percentile +
                ", challengeIds=" + challengeIds +
                '}';
+    }
+    
+    public String getTitle()
+    {
+        return title;
+    }
+    
+    public String getCrestBorder()
+    {
+        return crestBorder;
+    }
+    
+    public Integer getPrestigeCrestBorderLevel()
+    {
+        return prestigeCrestBorderLevel;
     }
 }
