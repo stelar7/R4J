@@ -1,8 +1,8 @@
 package no.stelar7.api.r4j.tests.cache;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import ch.qos.logback.classic.*;
 import no.stelar7.api.r4j.basic.cache.impl.*;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
@@ -32,7 +32,7 @@ public class CacheTest
     @Disabled
     public void testMemoryCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(new MemoryCacheProvider(5));
+        R4JContext.getDefault().setCacheProvider(new MemoryCacheProvider(5));
         
         doCacheStuff();
     }
@@ -41,7 +41,7 @@ public class CacheTest
     @Disabled
     public void testFileSystemCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(fileCache.get());
+        R4JContext.getDefault().setCacheProvider(fileCache.get());
         
         doCacheStuff();
     }
@@ -51,7 +51,7 @@ public class CacheTest
     @Disabled
     public void testTieredMemoryCache() throws InterruptedException
     {
-        DataCall.setCacheProvider(tieredCache.get());
+        R4JContext.getDefault().setCacheProvider(tieredCache.get());
         
         doCacheStuff();
     }
@@ -61,7 +61,7 @@ public class CacheTest
     public void testStaticDataCache()
     {
         
-        DataCall.setCacheProvider(fileCache.get());
+        R4JContext.getDefault().setCacheProvider(fileCache.get());
         r4J.getDDragonAPI().getChampions();
         r4J.getDDragonAPI().getChampions(null, null);
     }
@@ -74,7 +74,7 @@ public class CacheTest
         root.setLevel(Level.INFO);
         
         System.out.println("Fetching summoner for the first time");
-        DataCall.setCacheProvider(fileCache.get());
+        R4JContext.getDefault().setCacheProvider(fileCache.get());
         String id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
         new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
@@ -102,13 +102,13 @@ public class CacheTest
     @AfterEach
     public void clearCacheProvider()
     {
-        DataCall.setCacheProvider(EmptyCacheProvider.INSTANCE);
+        R4JContext.getDefault().setCacheProvider(EmptyCacheProvider.INSTANCE);
     }
     
     
     private void doCacheStuff() throws InterruptedException
     {
-        // DataCall.getCacheProvider().clear(URLEndpoint.V3_MATCH);
+        // R4JContext.getDefault().getCacheProvider().clear(URLEndpoint.V3_MATCH);
         
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         loggerContext.getLogger("no.stelar7.api.r4j.basic.calling.DataCallBuilder").setLevel(Level.INFO);
@@ -158,7 +158,7 @@ public class CacheTest
         
         System.out.println("clearing cache");
         System.out.println();
-        DataCall.getCacheProvider().clear(URLEndpoint.V5_MATCH, Collections.emptyMap());
+        R4JContext.getDefault().getCacheProvider().clear(URLEndpoint.V5_MATCH, Collections.emptyMap());
         
         start = System.currentTimeMillis();
         LOLMatch.get(LeagueShard.EUW1, ref);
@@ -177,12 +177,12 @@ public class CacheTest
         LOLMatch.get(LeagueShard.EUW1, recents.get(2));
         LOLMatch.get(LeagueShard.EUW1, recents.get(3));
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
+        System.out.printf("Cache size: %d%n", R4JContext.getDefault().getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
         
         System.out.println("Waiting for cache timeout");
         TimeUnit.SECONDS.sleep(6);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
+        System.out.printf("Cache size: %d%n", R4JContext.getDefault().getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
         
         System.out.println("Re-fetching cached items");
         start = System.currentTimeMillis();
@@ -192,7 +192,7 @@ public class CacheTest
         LOLMatch.get(LeagueShard.EUW1, recents.get(3));
         System.out.printf("4x fetches took: %dns%n", System.currentTimeMillis() - start);
         
-        System.out.printf("Cache size: %d%n", DataCall.getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
+        System.out.printf("Cache size: %d%n", R4JContext.getDefault().getCacheProvider().getSize(URLEndpoint.V5_MATCH, Collections.emptyMap()));
         System.out.println();
     }
     

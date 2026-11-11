@@ -1,9 +1,9 @@
 package no.stelar7.api.r4j.tests.val;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import ch.qos.logback.classic.*;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.basic.constants.types.val.GameQueueType;
@@ -38,8 +38,8 @@ public class TestVALMatch
     @Test
     public void getList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.getCacheProvider().clear(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, new HashMap<>());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().getCacheProvider().clear(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, new HashMap<>());
         
         R4J         api      = new R4J(SecretFile.CREDS);
         VALMatchAPI matchAPI = api.getVALAPI().getMatchAPI();
@@ -132,7 +132,7 @@ public class TestVALMatch
         
         while (true)
         {
-            DataCall.getCacheProvider().clear(URLEndpoint.V1_VAL_MATCH_BY_ID, new HashMap<>());
+            R4JContext.getDefault().getCacheProvider().clear(URLEndpoint.V1_VAL_MATCH_BY_ID, new HashMap<>());
             Map<String, JsonElement> matches = new HashMap<>();
             Map<String, JsonElement> players = new HashMap<>();
             

@@ -1,9 +1,9 @@
 package no.stelar7.api.r4j.tests.lol.match;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
@@ -32,7 +32,7 @@ public class MatchListV5Test
     @Disabled
     public void testMatchInvalidSpellSlots() throws IOException
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         MatchListBuilder builder = new MatchListBuilder();
         RiotAccount      account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
@@ -108,7 +108,7 @@ public class MatchListV5Test
     @Disabled
     public void testMatchParticipantIds()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         RiotAccount account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
         Summoner    sum     = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
@@ -157,7 +157,7 @@ public class MatchListV5Test
     @Disabled
     public void testMatchListParams()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         RiotAccount account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
         Summoner    sum     = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
@@ -276,7 +276,7 @@ public class MatchListV5Test
     @Disabled
     public void testMatchReplays()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         RiotAccount account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
         Summoner    sum     = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());

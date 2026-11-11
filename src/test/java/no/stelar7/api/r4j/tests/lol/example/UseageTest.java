@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.tests.lol.example;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.pojo.lol.championmastery.ChampionMastery;
@@ -24,7 +24,7 @@ public class UseageTest
     public void testUseage()
     {
         R4J api = new R4J(SecretFile.CREDS);
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         Map<Integer, StaticRune>     runeData      = api.getDDragonAPI().getRunes();
         Map<Integer, StaticMastery>  masteriesData = api.getDDragonAPI().getMasteries();

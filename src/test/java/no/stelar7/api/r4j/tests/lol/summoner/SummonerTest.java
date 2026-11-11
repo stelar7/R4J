@@ -1,8 +1,8 @@
 package no.stelar7.api.r4j.tests.lol.summoner;
 
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.cache.impl.*;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.SummonerCrawler;
 import no.stelar7.api.r4j.impl.R4J;
@@ -33,7 +33,7 @@ public class SummonerTest
     @BeforeAll
     static void before()
     {
-        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
+        R4JContext.getDefault().setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
     }
     
     @Test

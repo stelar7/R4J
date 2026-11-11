@@ -1,8 +1,8 @@
 package no.stelar7.api.r4j.tests.lol.staticdata;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import com.google.gson.*;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.types.lol.SummonerSpellType;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.impl.R4J;
@@ -159,7 +159,7 @@ public class StaticTest
     @Test
     public void testChampionList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         Map<Integer, StaticChampion> list = api.getChampions();
         Assertions.assertTrue(list.size() > 100, "less than 100?");
@@ -168,7 +168,7 @@ public class StaticTest
     @Test
     public void testChampionSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         StaticChampion list = api.getChampion(1);
         double         r    = list.getSpells().get(0).getRange().get(0);
@@ -179,7 +179,7 @@ public class StaticTest
     @Test
     public void testItemList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         Map<Integer, Item> list = api.getItems();
         Assertions.assertTrue(list.size() > 100);
@@ -189,7 +189,7 @@ public class StaticTest
     @Test
     public void testItemSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Item list = api.getItem(1001);
@@ -200,7 +200,7 @@ public class StaticTest
     @Test
     public void testLanguageStrings()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Map<String, String> strings = api.getLanguageStrings();
@@ -209,7 +209,7 @@ public class StaticTest
     @Test
     public void testLanguages()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         List<String> strings = api.getLanguages();
@@ -218,7 +218,7 @@ public class StaticTest
     @Test
     public void testMaps()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Map<String, MapDetails> data = api.getMaps();
@@ -228,7 +228,7 @@ public class StaticTest
     @Test
     public void testMasteryList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Map<Integer, StaticMastery> list = api.getMasteries();
@@ -238,7 +238,7 @@ public class StaticTest
     @Test
     public void testMasterySingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         StaticMastery list = api.getMastery(6131);
@@ -248,7 +248,7 @@ public class StaticTest
     @Test
     public void testProfileIcons()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Map<Long, ProfileIconDetails> data = api.getProfileIcons();
@@ -257,7 +257,7 @@ public class StaticTest
     @Test
     public void testRealms()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Realm data = api.getRealm();
@@ -266,7 +266,7 @@ public class StaticTest
     @Test
     public void testRuneList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Map<Integer, StaticRune> list = api.getRunes();
@@ -276,7 +276,7 @@ public class StaticTest
     @Test
     public void testRuneSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         StaticRune rune = api.getRune(5023);
@@ -293,7 +293,7 @@ public class StaticTest
     @Test
     public void testSummonerSpellList()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Map<Integer, StaticSummonerSpell> list = api.getSummonerSpells();
@@ -303,7 +303,7 @@ public class StaticTest
     @Test
     public void testSummonerSpellSingle()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         StaticSummonerSpell list = api.getSummonerSpell(21);
@@ -314,7 +314,7 @@ public class StaticTest
     @Test
     public void testVersions()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         List<String> data = api.getVersions();
@@ -323,7 +323,7 @@ public class StaticTest
     @Test
     public void testPerkPath()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Map<Integer, PerkPath> paths = api.getPerkPaths();
@@ -332,7 +332,7 @@ public class StaticTest
     @Test
     public void testPerkPathId()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         PerkPath paths = api.getPerkPath(8000);
@@ -341,7 +341,7 @@ public class StaticTest
     @Test
     public void testPerk()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         Map<Integer, StaticPerk> paths = api.getPerks();
@@ -351,7 +351,7 @@ public class StaticTest
     @Test
     public void testPerkId()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         StaticPerk paths = api.getPerk(8005);
@@ -361,7 +361,7 @@ public class StaticTest
     @Test
     public void testTarball()
     {
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
         
         
         String paths = api.getTarball();

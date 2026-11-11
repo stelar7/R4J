@@ -47,18 +47,18 @@ public class RequestPipelineTest
 
         proxy = "http://127.0.0.1:" + server.getAddress().getPort() + "/{game}/{service}/{version}/{resource}";
 
-        oldCredentials = DataCall.getCredentials();
-        oldParallel = DataCall.getNumberOfCallsAllowedInParallel();
-        DataCall.setCredentials(new APICredentials("offline-test-key"));
-        DataCall.setCacheProvider(null);
+        oldCredentials = R4JContext.getDefault().getCredentials();
+        oldParallel = R4JContext.getDefault().getNumberOfCallsAllowedInParallel();
+        R4JContext.getDefault().setCredentials(new APICredentials("offline-test-key"));
+        R4JContext.getDefault().setCacheProvider(null);
     }
 
     @AfterAll
     public static void stopServer()
     {
         server.stop(0);
-        DataCall.setCredentials(oldCredentials);
-        DataCall.setNumberOfCallsAllowedInParallel(oldParallel);
+        R4JContext.getDefault().setCredentials(oldCredentials);
+        R4JContext.getDefault().setNumberOfCallsAllowedInParallel(oldParallel);
     }
 
     private static void respond(HttpExchange exchange, int code, String body) throws IOException
@@ -83,7 +83,7 @@ public class RequestPipelineTest
     @Test
     public void retriesDoNotDeadlockWithASinglePermit()
     {
-        DataCall.setNumberOfCallsAllowedInParallel(1);
+        R4JContext.getDefault().setNumberOfCallsAllowedInParallel(1);
 
         AtomicInteger calls = new AtomicInteger();
         handler = exchange -> {
@@ -103,13 +103,13 @@ public class RequestPipelineTest
         Assertions.assertEquals("EUW1", data.getId());
         Assertions.assertEquals(3, calls.get());
 
-        DataCall.setNumberOfCallsAllowedInParallel(-1);
+        R4JContext.getDefault().setNumberOfCallsAllowedInParallel(-1);
     }
 
     @Test
     public void permitIsReleasedAfterEveryOutcome() throws Exception
     {
-        DataCall.setNumberOfCallsAllowedInParallel(1);
+        R4JContext.getDefault().setNumberOfCallsAllowedInParallel(1);
         handler = exchange -> respond(exchange, 403, "{}");
 
         // if a failed call leaked its permit, the second call would block
@@ -121,7 +121,7 @@ public class RequestPipelineTest
             });
         }
 
-        DataCall.setNumberOfCallsAllowedInParallel(-1);
+        R4JContext.getDefault().setNumberOfCallsAllowedInParallel(-1);
     }
 
     @Test
@@ -408,7 +408,7 @@ public class RequestPipelineTest
 
         statusCall(LeagueShard.OC1).build();
 
-        Map<Enum, RateLimiter> limiters = DataCall.getLimiter(ApiKeyType.LOL).get(LeagueShard.OC1);
+        Map<Enum, RateLimiter> limiters = R4JContext.getDefault().getLimiters(ApiKeyType.LOL).get(LeagueShard.OC1);
         Assertions.assertNotNull(limiters);
 
         RateLimiter app = limiters.get(LeagueShard.OC1);

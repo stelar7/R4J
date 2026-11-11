@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.championmastery;
 
-import no.stelar7.api.r4j.basic.calling.DataCall;
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
@@ -20,10 +20,10 @@ public class ChampionMasteryTest
     
     @BeforeEach
     public void clearCache() {
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_MASTERY_BY_CHAMPION, new HashMap<>());
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_MASTERY_BY_CHAMPION, new HashMap<>());
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_MASTERY_BY_PUUID, new HashMap<>());
-        DataCall.getCacheProvider().clear(URLEndpoint.V4_MASTERY_TOP, new HashMap<>());
+        R4JContext.getDefault().getCacheProvider().clear(URLEndpoint.V4_MASTERY_BY_CHAMPION, new HashMap<>());
+        R4JContext.getDefault().getCacheProvider().clear(URLEndpoint.V4_MASTERY_BY_CHAMPION, new HashMap<>());
+        R4JContext.getDefault().getCacheProvider().clear(URLEndpoint.V4_MASTERY_BY_PUUID, new HashMap<>());
+        R4JContext.getDefault().getCacheProvider().clear(URLEndpoint.V4_MASTERY_TOP, new HashMap<>());
     }
     
     @Test

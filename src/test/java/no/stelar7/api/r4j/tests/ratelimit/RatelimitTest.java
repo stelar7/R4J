@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.ratelimit;
 
-import no.stelar7.api.r4j.basic.calling.DataCall;
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
@@ -24,7 +24,7 @@ public class RatelimitTest
     public void testRateLimitThreaded()
     {
         
-        DataCall.setCacheProvider(null);
+        R4JContext.getDefault().setCacheProvider(null);
         try
         {
             String          name = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
@@ -47,7 +47,7 @@ public class RatelimitTest
     public void testRateLimitVirtualThread()
     {
         
-        DataCall.setCacheProvider(null);
+        R4JContext.getDefault().setCacheProvider(null);
         try
         {
             String   name = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();

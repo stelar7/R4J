@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.tests.shared;
 
-import no.stelar7.api.r4j.basic.calling.DataCall;
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.exceptions.APIResponseException;
 import no.stelar7.api.r4j.impl.R4J;
@@ -14,11 +14,11 @@ public class TestTimeout
     public void getShards()
     {
         R4J api = new R4J(SecretFile.CREDS);
-        DataCall.setCacheProvider(null);
-        DataCall.setGlobalTimeout(1);
+        R4JContext.getDefault().setCacheProvider(null);
+        R4JContext.getDefault().setGlobalTimeout(1);
         Assertions.assertThrows(APIResponseException.class, () -> {
             RiotAccount account = api.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
         });
-        DataCall.setGlobalTimeout(0);
+        R4JContext.getDefault().setGlobalTimeout(0);
     }
 }

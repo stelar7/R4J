@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.tests.lol.div;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
@@ -49,7 +49,7 @@ public class FrameToImageTest
   @Test
   public void testStuff()
   {
-    DataCall.setCacheProvider(new FileSystemCacheProvider());
+    R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
 
     RiotAccount      account = api.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7", ApiKeyType.LOL);
     Summoner         sum     = api.getLoLAPI().getSummonerAPI().getSummonerByPUUID(LeagueShard.EUW1, account.getPUUID());

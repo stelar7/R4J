@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.tests.tft;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.cache.impl.*;
-import no.stelar7.api.r4j.basic.calling.DataCall;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.tft.TFTSummonerAPI;
@@ -31,7 +31,7 @@ public class TestTFTSummoner
     @BeforeAll
     static void before()
     {
-        DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
+        R4JContext.getDefault().setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
     }
     
     @Test
