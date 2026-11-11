@@ -13,6 +13,7 @@ public class LORMatch
     private String               game_version;
     private List<LORParticipant> players;
     private Integer              total_turn_count;
+    private String game_format;
     
     public String getGameMode()
     {
@@ -93,5 +94,10 @@ public class LORMatch
                ", players=" + players +
                ", total_turn_count=" + total_turn_count +
                '}';
+    }
+    
+    public String getGameFormat()
+    {
+        return game_format;
     }
 }
