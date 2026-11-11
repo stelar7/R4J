@@ -7,7 +7,7 @@ package no.stelar7.api.r4j.basic.exceptions;
  * 
  * Callers may treat this as "data unavailable right now" and retry later.
  */
-public class APIEndpointCooldownException extends RuntimeException
+public class APIEndpointCooldownException extends R4JException
 {
     private final long remainingCooldownMs;
 

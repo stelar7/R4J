@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.basic.exceptions;
 
-public class APIDataNotParseableException extends RuntimeException
+public class APIDataNotParseableException extends R4JException
 {
     public APIDataNotParseableException(String data)
     {

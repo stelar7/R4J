@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 
 import java.lang.reflect.Type;
 
-public class APIEnumNotUpToDateException extends RuntimeException
+public class APIEnumNotUpToDateException extends R4JException
 {
     public APIEnumNotUpToDateException(Type type, JsonElement json)
     {

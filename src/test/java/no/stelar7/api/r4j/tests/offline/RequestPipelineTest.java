@@ -148,6 +148,25 @@ public class RequestPipelineTest
     }
 
     @Test
+    public void everyExceptionHasTheSameParent()
+    {
+        // an error from the api
+        handler = exchange -> respond(exchange, 403, "{}");
+        Assertions.assertThrows(R4JException.class, () -> statusCall(LeagueShard.ME1).build());
+        
+        // no valid response in time
+        handler = exchange -> respond(exchange, 500, "{}");
+        Assertions.assertThrows(R4JException.class, () -> statusCall(LeagueShard.ME1).withMaxSleep(0).build());
+        
+        // missing credentials
+        Assertions.assertThrows(R4JException.class, () -> new DataCallBuilder(new R4JContext()).withProxy(proxy).withEndpoint(URLEndpoint.V4_STATUS_LOL).withPlatform(LeagueShard.ME1).build());
+        Assertions.assertThrows(R4JException.class, () -> new APICredentials(null, null, null, null, null).getLoLAPIKey());
+        
+        // and they are still what they were
+        Assertions.assertTrue(RuntimeException.class.isAssignableFrom(R4JException.class));
+    }
+    
+    @Test
     public void methodNotAllowedIsReportedAs405()
     {
         handler = exchange -> respond(exchange, 405, "{}");

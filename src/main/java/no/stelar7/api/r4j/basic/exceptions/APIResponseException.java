@@ -1,6 +1,6 @@
 package no.stelar7.api.r4j.basic.exceptions;
 
-public class APIResponseException extends RuntimeException
+public class APIResponseException extends R4JException
 {
     
     private final APIHTTPErrorReason reason;
