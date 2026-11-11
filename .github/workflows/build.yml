@@ -20,6 +20,6 @@ jobs:
           java-version: 17
           cache: maven
 
-      # compiles for Java 8, and runs the offline tests (the ones that need no api key)
+      # compiles for Java 11, and runs the offline tests (the ones that need no api key)
       - name: Build and test
         run: mvn --batch-mode --no-transfer-progress clean package
