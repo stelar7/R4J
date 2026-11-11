@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.championmastery;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -62,6 +63,7 @@ public class ChampionMasteryBuilder
         return new ChampionMasteryBuilder(platform, this.puuid, this.championId).withContext(this.context);
     }
     
+    @Nullable
     public Integer getMasteryScore()
     {
         if (this.puuid == null || this.platform == LeagueShard.UNKNOWN)
@@ -112,6 +114,7 @@ public class ChampionMasteryBuilder
     }
     
     
+    @Nullable
     public ChampionMastery getChampionMastery()
     {
         if (this.championId == null || this.puuid == null || this.platform == LeagueShard.UNKNOWN)

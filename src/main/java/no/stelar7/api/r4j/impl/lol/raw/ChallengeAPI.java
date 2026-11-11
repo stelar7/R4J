@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -33,6 +34,7 @@ public final class ChallengeAPI
         this.context = context;
     }
     
+    @Nullable
     public ChallengeConfigInfoList getChallengesList(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG)
@@ -44,6 +46,7 @@ public final class ChallengeAPI
         return builder.buildCached(ChallengeConfigInfoList.class, data);
     }
     
+    @Nullable
     public MultiChallengePercentileMap getAllChallengePercentiles(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
@@ -55,6 +58,7 @@ public final class ChallengeAPI
         return builder.buildCached(MultiChallengePercentileMap.class, data);
     }
     
+    @Nullable
     public ChallengeConfigInfo getChallengeInfo(LeagueShard server, Long challengeId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID)
@@ -68,6 +72,7 @@ public final class ChallengeAPI
         return builder.buildCached(ChallengeConfigInfo.class, data);
     }
     
+    @Nullable
     public ChallengeLeaderboardInfoList getChallengeLeaderboard(LeagueShard server, Long challengeId, ChallengeTierType level, Integer limit)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL)
@@ -89,6 +94,7 @@ public final class ChallengeAPI
         return builder.buildCached(ChallengeLeaderboardInfoList.class, data);
     }
     
+    @Nullable
     public MultiChallengePercentileMap getChallengePercentiles(LeagueShard server, Long challengeId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
@@ -102,6 +108,7 @@ public final class ChallengeAPI
         return builder.buildCached(MultiChallengePercentileMap.class, data);
     }
     
+    @Nullable
     public ChallengePlayerInfo getChallengePlayerInfo(LeagueShard server, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_BY_PLAYER)

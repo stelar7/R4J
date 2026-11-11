@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.tft;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -106,6 +107,7 @@ public class TFTLeagueAPI
      * @deprecated Riot announced (2025-05-29) that leagueId is going away; this endpoint is no longer in the tft-league-v1 documentation
      */
     @Deprecated(since = "3.0.0", forRemoval = true)
+    @Nullable
     public TFTLeagueList getLeague(LeagueShard server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())

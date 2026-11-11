@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.val;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
@@ -32,6 +33,7 @@ public class VALRankedAPI
         this.context = context;
     }
     
+    @Nullable
     public Leaderboard getLeaderboard(ValorantShard platform, String actId, int startIndex, int size)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)

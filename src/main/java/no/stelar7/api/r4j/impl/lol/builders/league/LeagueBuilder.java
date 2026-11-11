@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.league;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -94,6 +95,7 @@ public class LeagueBuilder
         return list != null ? list : Collections.emptyList();
     }
     
+    @Nullable
     public LeagueList getLeague()
     {
         

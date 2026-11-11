@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.champion;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.basic.calling.*;
@@ -41,6 +42,7 @@ public class ChampionBuilder
         return new ChampionBuilder(platform).withContext(this.context);
     }
     
+    @Nullable
     public ChampionRotationInfo getFreeToPlayRotation()
     {
         if (this.platform == LeagueShard.UNKNOWN)

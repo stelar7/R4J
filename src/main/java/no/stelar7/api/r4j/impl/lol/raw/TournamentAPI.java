@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
@@ -76,6 +77,7 @@ public final class TournamentAPI
      * @param tournamentId the tournamentId this game is played on
      * @return a list of tournamentcodes
      */
+    @Nullable
     public List<String> generateTournamentCodes(final TournamentCodeParameters params, final long tournamentId, Integer count)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
@@ -107,6 +109,7 @@ public final class TournamentAPI
      * @param tournamentCode The tournament code of the match
      * @return TournamentCode
      */
+    @Nullable
     public TournamentCode getTournamentInfo(final String tournamentCode)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
@@ -145,6 +148,7 @@ public final class TournamentAPI
      * @param tournamentCode The tournament code of the match
      * @return Lobby events
      */
+    @Nullable
     public List<LobbyEvent> getTournamentLobbyInfo(final String tournamentCode)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
@@ -178,6 +182,7 @@ public final class TournamentAPI
      * @param params the provider definition
      * @return provider id
      */
+    @Nullable
     public Long registerAsProvider(final ProviderRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
@@ -207,6 +212,7 @@ public final class TournamentAPI
      * @param params the tournament definition
      * @return the id
      */
+    @Nullable
     public Long registerTournament(final TournamentRegistrationParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())

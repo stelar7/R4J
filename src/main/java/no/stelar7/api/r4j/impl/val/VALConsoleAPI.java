@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.val;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
@@ -43,6 +44,7 @@ public final class VALConsoleAPI
      * @param matchId  the id of the match
      * @return the match, or null if it does not exist
      */
+    @Nullable
     public VALMatch getMatch(ValorantShard platform, String matchId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
@@ -85,6 +87,7 @@ public final class VALConsoleAPI
      * @param queue    the console queue (ie. console_unrated, console_competitive, console_swiftplay, console_deathmatch)
      * @return the ids of recently finished matches, or null if the queue does not exist
      */
+    @Nullable
     public RecentMatchList getRecentMatches(ValorantShard platform, String queue)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue)
@@ -107,6 +110,7 @@ public final class VALConsoleAPI
      * @param size         the amount of players to return (defaults to 200, valid values are 1 to 200)
      * @return the leaderboard, or null if the act does not exist
      */
+    @Nullable
     public Leaderboard getLeaderboard(ValorantShard platform, String actId, ConsolePlatformType platformType, int startIndex, int size)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)

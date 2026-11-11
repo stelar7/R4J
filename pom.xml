@@ -36,6 +36,15 @@
             <version>2.0.13</version>
         </dependency>
 
+        <!-- @Nullable on the methods that can return null. Only needed to compile R4J: the annotations are not kept at runtime,
+             and tools that understand them (IntelliJ, Kotlin) read them from the class files without this jar. -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>24.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- in-progress dependencies -->
         <dependency>
             <groupId>dev.morphia.morphia</groupId>

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -68,6 +69,7 @@ public final class MatchV5API
      */
     @Deprecated(since = "3.0.0", forRemoval = true)
     @SuppressWarnings("removal")
+    @Nullable
     public LOLMatchReplayList getMatchListReplays(RegionShard server, String puuid)
     {
         return new ReplayBuilder(server, puuid).withContext(context).get();
@@ -92,6 +94,7 @@ public final class MatchV5API
      * @param matchId the id to check
      * @return Match
      */
+    @Nullable
     public LOLMatch getMatch(RegionShard server, String matchId)
     {
         return new MatchBuilder(server, matchId).withContext(context).getMatch();
@@ -105,6 +108,7 @@ public final class MatchV5API
      * @param matchId the matchId to find timeline for
      * @return MatchTimeline if avaliable
      */
+    @Nullable
     public LOLTimeline getTimeline(RegionShard server, String matchId)
     {
         return new TimelineBuilder(server, matchId).withContext(context).getTimeline();
@@ -117,6 +121,7 @@ public final class MatchV5API
      * @param accessToken the access token of the player
      * @return the replay urls, or null if nothing was found
      */
+    @Nullable
     public LOLMatchReplayList getMatchReplaysByAccessToken(RegionShard server, String accessToken)
     {
         // the calls using an access token are not cached, as the result depends on who the token belongs to
@@ -183,6 +188,7 @@ public final class MatchV5API
      * @param matchId     the id of the match
      * @return the match, or null if it was not found
      */
+    @Nullable
     public LOLMatch getMatchByAccessToken(RegionShard server, String accessToken, String matchId)
     {
         GAMHSMatch match = new DataCallBuilder(context).withAccessToken(accessToken)
@@ -202,6 +208,7 @@ public final class MatchV5API
      * @param matchId     the id of the match
      * @return the timeline, or null if it was not found
      */
+    @Nullable
     public LOLTimeline getTimelineByAccessToken(RegionShard server, String accessToken, String matchId)
     {
         GAMHSMatch timeline = new DataCallBuilder(context).withAccessToken(accessToken)

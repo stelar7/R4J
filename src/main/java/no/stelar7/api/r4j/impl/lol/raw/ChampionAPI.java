@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.pojo.lol.champion.ChampionRotationInfo;
 import no.stelar7.api.r4j.basic.calling.*;
@@ -32,6 +33,7 @@ public final class ChampionAPI
         this.context = context;
     }
     
+    @Nullable
     public ChampionRotationInfo getFreeToPlayRotation(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)

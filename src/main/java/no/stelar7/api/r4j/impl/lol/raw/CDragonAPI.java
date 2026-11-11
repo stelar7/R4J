@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.pojo.lol.cdragon.CDragonChampion;
@@ -145,6 +146,7 @@ public final class CDragonAPI
      * @param champion the id ("1") or the key ("annie") of the champion
      * @return the champion, or null if it (or the patch) does not exist
      */
+    @Nullable
     public CDragonChampion getChampion(String patch, String champion)
     {
         // made without limiters, which also means no api key is added to the request

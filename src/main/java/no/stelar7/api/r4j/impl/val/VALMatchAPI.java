@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.val;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
@@ -51,6 +52,7 @@ public class VALMatchAPI
     }
     
     
+    @Nullable
     public RecentMatchList getRecentMatches(ValorantShard platform, GameQueueType queue)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getValue())
@@ -66,6 +68,7 @@ public class VALMatchAPI
     }
     
     
+    @Nullable
     public VALMatch getMatch(ValorantShard platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)

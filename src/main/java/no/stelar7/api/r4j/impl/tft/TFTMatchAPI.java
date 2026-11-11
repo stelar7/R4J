@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.tft;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.basic.calling.*;
@@ -89,6 +90,7 @@ public class TFTMatchAPI
         return getMatchRAW(platform, gameId).asTFTMetadata();
     }
     
+    @Nullable
     public GAMHSMatch getMatchRAW(RegionShard platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)

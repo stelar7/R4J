@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 import no.stelar7.api.r4j.pojo.lol.staticdata.realm.Realm;
@@ -105,6 +106,7 @@ public final class DDragonAPI
         return getChampions(version, locale).get(id);
     }
     
+    @Nullable
     public StaticChampion getChampion(int id)
     {
         return getChampion(id, null, null);
@@ -314,11 +316,13 @@ public final class DDragonAPI
      * Always returns euw
      * @return realm euw
      */
+    @Nullable
     public Realm getRealm()
     {
         return getRealm(LeagueShard.EUW1);
     }
     
+    @Nullable
     public Realm getRealm(LeagueShard region)
     {
         DataCallBuilder builder = new DataCallBuilder(context)

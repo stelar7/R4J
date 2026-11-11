@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.shared;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
@@ -35,11 +36,13 @@ public class AccountAPI
         this.context = context;
     }
     
+    @Nullable
     public RiotAccount getAccountByPUUID(RegionShard server, String puuid)
     {
         return getAccountByPUUID(server, puuid, ApiKeyType.VAL);
     }
     
+    @Nullable
     public RiotAccount getAccountByPUUID(RegionShard server, String puuid, ApiKeyType keyType)
     {   
         
@@ -54,11 +57,13 @@ public class AccountAPI
         return builder.buildCached(RiotAccount.class, data);
     }
     
+    @Nullable
     public RiotAccount getAccountByTag(RegionShard server, String name, String tag)
     {
         return getAccountByTag(server, name, tag, ApiKeyType.VAL);
     }
     
+    @Nullable
     public RiotAccount getAccountByTag(RegionShard server, String name, String tag, ApiKeyType keyType)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_NAME_PLACEHOLDER, Utils.normalizeString(name))
@@ -75,11 +80,13 @@ public class AccountAPI
         return builder.buildCached(RiotAccount.class, data);
     }
     
+    @Nullable
     public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid)
     {
         return getActiveShard(server, game, puuid, ApiKeyType.VAL);
     }
     
+    @Nullable
     public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
@@ -98,11 +105,13 @@ public class AccountAPI
     /**
      * The platform the player is active on, for {@link ShardableGame#LOL} or {@link ShardableGame#TFT}
      */
+    @Nullable
     public RiotAccountRegion getActiveRegion(RegionShard server, ShardableGame game, String puuid)
     {
         return getActiveRegion(server, game, puuid, ApiKeyType.LOL);
     }
     
+    @Nullable
     public RiotAccountRegion getActiveRegion(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
@@ -127,6 +136,7 @@ public class AccountAPI
      * @param keyType     the api key of the product the RSO client belongs to
      * @return the account, or null if it was not found
      */
+    @Nullable
     public RiotAccount getAccountByAccessToken(RegionShard server, String accessToken, ApiKeyType keyType)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))

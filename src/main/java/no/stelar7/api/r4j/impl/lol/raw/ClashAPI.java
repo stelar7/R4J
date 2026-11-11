@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -72,6 +73,7 @@ public class ClashAPI
     /**
      * Returns the team you played in
      */
+    @Nullable
     public ClashTeam getTeam(final LeagueShard server, String teamId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TEAM_BY_ID)
@@ -103,6 +105,7 @@ public class ClashAPI
     /**
      * Returns a tournament
      */
+    @Nullable
     public ClashTournament getTournamentByTeam(final LeagueShard server, String teamId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_TEAM)
@@ -119,6 +122,7 @@ public class ClashAPI
     /**
      * Returns a tournament
      */
+    @Nullable
     public ClashTournament getTournamentById(final LeagueShard server, int tournamentId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_ID)

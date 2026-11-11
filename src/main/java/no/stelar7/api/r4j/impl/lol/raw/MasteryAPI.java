@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -45,6 +46,7 @@ public final class MasteryAPI
      * @param puuid  the puuid
      * @return Optional FeaturedGames
      */
+    @Nullable
     public Integer getMasteryScore(LeagueShard server, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)

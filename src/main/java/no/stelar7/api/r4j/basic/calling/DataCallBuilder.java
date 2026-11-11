@@ -7,6 +7,7 @@ import no.stelar7.api.r4j.basic.constants.types.RealmSpecificEnum;
 import no.stelar7.api.r4j.basic.exceptions.*;
 import no.stelar7.api.r4j.basic.ratelimiting.*;
 import no.stelar7.api.r4j.basic.utils.*;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.*;
 
 import javax.net.ssl.*;
@@ -646,6 +647,7 @@ public class DataCallBuilder
      * @param <T>  the type the endpoint returns
      * @return the result, or null if the api returned 404 (or something that is not of the requested type)
      */
+    @Nullable
     public <T> T buildAs(Class<T> type)
     {
         Object result = this.build();
@@ -660,6 +662,7 @@ public class DataCallBuilder
      * @param <T>      the type the endpoint returns
      * @return the result, or null if the api returned 404 (or something that is not of the requested type)
      */
+    @Nullable
     public <T> T buildCached(Class<T> type, Map<String, Object> cacheKey)
     {
         URLEndpoint endpoint = this.dc.getEndpoint();
@@ -682,6 +685,31 @@ public class DataCallBuilder
     }
 
     /**
+     * Like {@link #buildAs(Class)}, with "not found" as an empty Optional instead of null.
+     *
+     * @param type the type the endpoint returns
+     * @param <T>  the type the endpoint returns
+     * @return the result, or empty if the api returned 404 (or something that is not of the requested type)
+     */
+    public <T> Optional<T> buildOptional(Class<T> type)
+    {
+        return Optional.ofNullable(buildAs(type));
+    }
+
+    /**
+     * Like {@link #buildCached(Class, Map)}, with "not found" as an empty Optional instead of null.
+     *
+     * @param type     the type the endpoint returns
+     * @param cacheKey the values identifying this call in the cache (ie. platform, puuid), in a consistent order
+     * @param <T>      the type the endpoint returns
+     * @return the result, or empty if the api returned 404 (or something that is not of the requested type)
+     */
+    public <T> Optional<T> buildCachedOptional(Class<T> type, Map<String, Object> cacheKey)
+    {
+        return Optional.ofNullable(buildCached(type, cacheKey));
+    }
+
+    /**
      * Like {@link #buildCached(Class, Map)}, for the type the endpoint is declared to return.
      * Useful when that type is a list wrapper (ie. the endpoint returns a ClashPlayerList, which is a {@code List<ClashPlayer>}).
      *
@@ -689,6 +717,7 @@ public class DataCallBuilder
      * @param <T>      the type the endpoint returns, or something it can be assigned to
      * @return the result, or null if the api returned 404
      */
+    @Nullable
     @SuppressWarnings("unchecked")
     public <T> T buildCached(Map<String, Object> cacheKey)
     {

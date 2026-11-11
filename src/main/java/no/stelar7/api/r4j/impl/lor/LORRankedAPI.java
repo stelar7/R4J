@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lor;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.RuneterraShard;
@@ -38,6 +39,7 @@ public class LORRankedAPI
      * @param server region to get data from
      * @return LeagueList
      */
+    @Nullable
     public List<LoRPlayerRank> getLeaderboard(RuneterraShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context)

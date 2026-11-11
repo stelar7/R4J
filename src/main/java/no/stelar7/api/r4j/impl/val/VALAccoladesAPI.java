@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.val;
 
+import org.jetbrains.annotations.Nullable;
 import com.google.gson.JsonElement;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -39,6 +40,7 @@ public final class VALAccoladesAPI
      * @param enabledOnly only return the accolades that are enabled (null to use the api default)
      * @return the json returned by the api, or null if nothing was found
      */
+    @Nullable
     public JsonElement getAccolades(ValorantShard platform, Boolean enabledOnly)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
@@ -58,6 +60,7 @@ public final class VALAccoladesAPI
      * @param puuid    the puuid of the player
      * @return the json returned by the api, or null if nothing was found
      */
+    @Nullable
     public JsonElement getPlayerAccolades(ValorantShard platform, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)

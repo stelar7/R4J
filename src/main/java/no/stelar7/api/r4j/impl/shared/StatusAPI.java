@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.shared;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
@@ -32,6 +33,7 @@ public final class StatusAPI
         this.context = context;
     }
     
+    @Nullable
     public PlatformData getShardStatus(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V4_STATUS_LOL)
@@ -49,6 +51,7 @@ public final class StatusAPI
      * @param server the platform to get the status of
      * @return PlatformData
      */
+    @Nullable
     public PlatformData getTFTShardStatus(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_TFT)
@@ -61,6 +64,7 @@ public final class StatusAPI
         return builder.buildCached(PlatformData.class, data);
     }
 
+    @Nullable
     public PlatformData getShardStatus(RuneterraShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_LOR)
@@ -72,6 +76,7 @@ public final class StatusAPI
         return builder.buildCached(PlatformData.class, data);
     }
     
+    @Nullable
     public PlatformData getShardStatus(ValorantShard server)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_VAL)

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.summoner;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -69,6 +70,7 @@ public class SummonerBuilder
      *
      * @return Summoner
      */
+    @Nullable
     public Summoner get()
     {
         DataCallBuilder builder  = new DataCallBuilder(context).withPlatform(this.platform);

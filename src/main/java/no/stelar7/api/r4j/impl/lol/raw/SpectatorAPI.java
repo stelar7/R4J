@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -64,6 +65,7 @@ public final class SpectatorAPI
      * @param puuid  the puuid
      * @return SpectatorGameInfo
      */
+    @Nullable
     public SpectatorGameInfo getCurrentGame(LeagueShard server, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lor;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.RuneterraShard;
@@ -33,6 +34,7 @@ public class LORMatchAPI
         return LORMatchAPI.INSTANCE;
     }
     
+    @Nullable
     public List<String> getMatchList(RuneterraShard server, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder(context)
@@ -58,6 +60,7 @@ public class LORMatchAPI
         return getMatchRAW(platform, gameId).asLORMetadata();
     }
     
+    @Nullable
     public GAMHSMatch getMatchRAW(RuneterraShard platform, String gameId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)

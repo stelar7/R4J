@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.riftbound;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
@@ -56,6 +57,7 @@ public final class RiftboundContentAPI
      * @param keyType which of the keys in the APICredentials has access to the Riftbound api
      * @return the content
      */
+    @Nullable
     public RiftboundContent getContent(RegionShard server, String locale, ApiKeyType keyType)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))

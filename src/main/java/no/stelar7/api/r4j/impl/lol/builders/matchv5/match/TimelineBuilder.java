@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.matchv5.match;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
@@ -64,6 +65,7 @@ public class TimelineBuilder
         return new TimelineBuilder(platform, this.id).withContext(this.context);
     }
     
+    @Nullable
     public LOLTimeline getTimeline()
     {
         GAMHSMatch rawMatch = getTimelineRAW();
@@ -75,6 +77,7 @@ public class TimelineBuilder
         return context.bind(rawMatch.asLOLTimeline());
     }
     
+    @Nullable
     public LOLMetadata getMetadata()
     {
         GAMHSMatch rawMatch = getTimelineRAW();
@@ -86,6 +89,7 @@ public class TimelineBuilder
         return rawMatch.asLOLMatchMetadata();
     }
     
+    @Nullable
     public GAMHSMatch getTimelineRAW()
     {
         if (this.id.isEmpty() || this.platform == RegionShard.UNKNOWN)

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.tft;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -39,6 +40,7 @@ public final class TFTSpectatorAPI
      * @param puuid  the puuid of the player
      * @return SpectatorGameInfo, or null if the player is not in a game
      */
+    @Nullable
     public SpectatorGameInfo getCurrentGame(LeagueShard server, String puuid)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)

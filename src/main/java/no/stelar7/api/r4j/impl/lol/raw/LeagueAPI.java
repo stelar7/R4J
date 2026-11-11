@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.Pair;
@@ -115,6 +116,7 @@ public final class LeagueAPI
      * @deprecated Riot announced (2025-05-29) that leagueId is going away and that this endpoint is retired; it is no longer in the league-v4 documentation
      */
     @Deprecated(since = "3.0.0", forRemoval = true)
+    @Nullable
     public LeagueList getLeague(LeagueShard server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())

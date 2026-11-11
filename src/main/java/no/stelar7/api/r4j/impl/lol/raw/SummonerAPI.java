@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
@@ -37,6 +38,7 @@ public final class SummonerAPI
      * @param PUUID  puuid associated with summoner to retrieve.
      * @return Optional Summoner
      */
+    @Nullable
     public Summoner getSummonerByPUUID(final LeagueShard server, String PUUID)
     {
         return new SummonerBuilder().withContext(context).withPlatform(server).withPUUID(PUUID).get();
@@ -49,6 +51,7 @@ public final class SummonerAPI
      * @param accessToken the access token of the player
      * @return the summoner, or null if it was not found
      */
+    @Nullable
     public Summoner getSummonerByAccessToken(final LeagueShard server, String accessToken)
     {
         // not cached, as the result depends on who the token belongs to

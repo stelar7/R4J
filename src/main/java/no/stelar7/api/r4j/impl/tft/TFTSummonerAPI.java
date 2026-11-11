@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.tft;
 
+import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -42,6 +43,7 @@ public class TFTSummonerAPI
      * @param PUUID  puuid associated with summoner to retrieve.
      * @return Optional Summoner
      */
+    @Nullable
     public Summoner getSummonerByPUUID(final LeagueShard server, String PUUID)
     {
         DataCallBuilder builder = new DataCallBuilder(context)
@@ -64,6 +66,7 @@ public class TFTSummonerAPI
      * @param accessToken the access token of the player
      * @return the summoner, or null if it was not found
      */
+    @Nullable
     public Summoner getSummonerByAccessToken(final LeagueShard server, String accessToken)
     {
         // not cached, as the result depends on who the token belongs to
