@@ -24,6 +24,8 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * **Console output.** Everything R4J printed to `System.out`/`System.err` now goes through slf4j.
 * **File cache.** Items expire by age (time since they were stored) instead of by last access, and `TTL_INFINITY` now really means never (it used to delete everything). New files are json where possible; old cache folders can still be read.
 * **Tiered cache.** A hit no longer refreshes the tier that had the data, so cached data expires even when it is read often.
+* **Lazy lists.** `size()` and `isEmpty()` on a lazily loaded list (ie. from `getMatchList`) now load what they need to answer, instead of reporting what happened to be loaded. `size()` on a long match history therefore makes all the calls needed to count it; use `loadedSize()` for the old behaviour.
+* **File cache cleanup.** Expired files and empty folders are now removed every hour (or more often with a short time to live), also with the default lifetimes.
 * **Tests.** `mvn test` only runs the tests that need no api key. Use `mvn test -Plive` for all of them.
 
 **Deprecated (still there, but on their way out at Riot or never finished):**
@@ -37,6 +39,7 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * **Fields:** the responses of champion mastery, challenges, status, LoR match, match-v5, TFT match and the Valorant match, leaderboard and content apis were brought in line with the documentation.
 * **Several instances:** `R4J.isolated(credentials)` gives an instance with its own keys, cache, settings and limiters. Objects it returns (a `Summoner`, a match) keep using it when they fetch more data.
 * **Sharing an api key between processes:** works without setup by following the call counts the api reports. For exact limits, keep the counters in a shared store with `R4JContext.setRateLimitStore`: `RedisRateLimitStore`, `JdbcRateLimitStore`, or your own `SharedRateLimitStore`.
+* **Tournament callbacks:** `TournamentCallbackListener` receives the result Riot posts after a tournament game.
 * **Caches:** `MemoryCacheProvider` works; `JdbcCacheProvider` caches in any SQL database; the file cache can be shared by several processes.
 * **Riftbound key** in `APICredentials`.
 * **Typed calls:** `DataCallBuilder.buildAs` and `buildCached`, and `withAccessToken` for RSO.
@@ -53,3 +56,5 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * The api key was written to the log at trace level.
 * The connection was not reused after a 429.
 * `MySQLCacheProvider` terminated the JVM on every lookup.
+* A lazily loaded list (ie. from `getMatchList`) claimed to be empty until it was iterated (#112).
+* The file cache kept growing, because expired files were only removed when asked for again and folders were never removed (#61).

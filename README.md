@@ -13,13 +13,25 @@ Summoner    summoner = api.getLoLAPI().getSummonerAPI().getSummonerByPUUID(Leagu
 
 Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src/test/java/no/stelar7/api/r4j/tests), as they provide good examples.
 
+##### What does it cover?
+
+| API | What | Where |
+| :-- | :--- | :---- |
+| Riot API | League of Legends, Teamfight Tactics, VALORANT, Legends of Runeterra, Riftbound, accounts and status: every endpoint on the [developer portal](https://developer.riotgames.com/apis), including tournaments and the RSO (signed-in player) endpoints | `api.getLoLAPI()`, `getTFTAPI()`, `getVALAPI()`, `getLORAPI()`, `getAccountAPI()`, ... |
+| Data Dragon | Static data (champions, items, runes, ...) and images | `api.getDDragonAPI()`, `api.getImageAPI()` |
+| League client (LCU) | Calls to the running client, and its websocket events | `LCUApi`, `LCUSocketReader` |
+| Live client data | Data about the game being played on this machine | `LiveClientDataAPI` |
+| Replay API | Controlling the replay viewer | `ReplayAPI` |
+| LoR client | The Legends of Runeterra game client, and deck codes | `LoRClientAPI`, `LoRDeckCode` |
+| Tournament callbacks | A listener for the result Riot posts after a tournament game | `TournamentCallbackListener` |
+
 ##### What features does it have?
 
 | Type           | Supported |
 | :------------: | :-------: |
 | V5 compatible? | Yes!      |
 | Rate-limiting? | Set dynamically based on your key, and synced with the counts the api reports |
-| Shared keys?   | Yes, across processes; optionally exact with Redis |
+| Shared keys?   | Yes, across processes; optionally exact with Redis or a database |
 | RSO endpoints? | Yes, pass the access token of the player |
 
 | Cache      | Supported |
