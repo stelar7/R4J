@@ -40,7 +40,8 @@ public final class DataCall
     private       int         connectTimeout    = 0;
     private       boolean     returnRawResponse = false;
     private       LeagueShard defaultPlatform   = LeagueShard.EUW1;
-    private       String      urlProxy          = Constants.REQUEST_URL;
+    // null: use the url of the context
+    private       String      urlProxy;
 
     public DataCall()
     {
@@ -209,18 +210,18 @@ public final class DataCall
      * {version}
      * {resource}
      * <p>
-     * The default is https://{platform}.api.riotgames.com/{game}/{service}/{version}/{resource}
+     * The default is the url of the context, which is https://{platform}.api.riotgames.com/{game}/{service}/{version}/{resource} unless changed
      *
-     * @param proxy the url
+     * @param proxy the url, or null to use the url of the context
      */
     public void setProxy(String proxy)
     {
-        urlProxy = proxy == null ? Constants.REQUEST_URL : proxy;
+        urlProxy = proxy;
     }
 
     public String getProxy()
     {
-        return urlProxy;
+        return urlProxy != null ? urlProxy : context.getRequestUrl();
     }
 
     public LeagueShard getDefaultPlatform()

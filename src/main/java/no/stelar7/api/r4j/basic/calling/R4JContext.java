@@ -3,6 +3,7 @@ package no.stelar7.api.r4j.basic.calling;
 import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.cache.CacheProvider;
 import no.stelar7.api.r4j.basic.cache.impl.EmptyCacheProvider;
+import no.stelar7.api.r4j.basic.constants.api.Constants;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.ratelimiting.*;
 import no.stelar7.api.r4j.basic.utils.Pair;
@@ -38,6 +39,8 @@ public final class R4JContext
     private volatile boolean        failFastOnServiceRatelimit     = false;
 
     private volatile SharedRateLimitStore rateLimitStore;
+    
+    private volatile String requestUrl = Constants.REQUEST_URL;
 
     private final Map<ApiKeyType, Map<Enum, Map<Enum, RateLimiter>>> limiters   = new ConcurrentHashMap<>();
     private final Map<Pair<ApiKeyType, Enum>, CallPermits>           permits    = new ConcurrentHashMap<>();
@@ -144,6 +147,30 @@ public final class R4JContext
         return this;
     }
 
+    /**
+     * @return the url calls to the Riot api are made to, with its placeholders
+     */
+    public String getRequestUrl()
+    {
+        return requestUrl;
+    }
+    
+    /**
+     * Sends the calls to the Riot api somewhere else, ie. through a proxy of your own that adds the api key or shares a rate limit.
+     * <p>
+     * The url is a template, in which these parts are filled in for every call: {platform} (ie. euw1 or europe), {game}, {service}, {version} and {resource}.
+     * The default is {@code https://{platform}.api.riotgames.com/{game}/{service}/{version}/{resource}}.
+     * Calls that set their own url (Data Dragon, the local game clients) are not affected.
+     *
+     * @param requestUrl the url template, or null for the default
+     * @return this
+     */
+    public R4JContext setRequestUrl(String requestUrl)
+    {
+        this.requestUrl = requestUrl == null ? Constants.REQUEST_URL : requestUrl;
+        return this;
+    }
+    
     /**
      * @param keyType the key the limiters belong to
      * @return the limiters of the key: platform, then endpoint (the app limiter of a platform is stored under the platform itself)

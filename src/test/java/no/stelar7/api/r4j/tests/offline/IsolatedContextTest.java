@@ -10,6 +10,7 @@ import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.impl.R4J;
 import no.stelar7.api.r4j.impl.lol.raw.SummonerAPI;
+import no.stelar7.api.r4j.impl.shared.StatusAPI;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.status.PlatformData;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
@@ -162,5 +163,21 @@ public class IsolatedContextTest
         VALMatch other = Utils.getGson().fromJson("{\"players\":[{\"puuid\":\"a\"}]}", VALMatch.class);
         R4JContext.getDefault().bind(other);
         Assertions.assertSame(R4JContext.getDefault(), other.getPlayers().get(0).getContext());
+    }
+
+    @Test
+    public void aContextCanSendItsCallsSomewhereElse()
+    {
+        R4JContext elsewhere = new R4JContext(new APICredentials("key-a")).setRequestUrl(proxy);
+        
+        // an ordinary api class, which knows nothing about the url
+        keysSeen.clear();
+        PlatformData status = StatusAPI.getInstance(elsewhere).getShardStatus(LeagueShard.EUW1);
+        
+        Assertions.assertEquals("EUW1", status.getId());
+        Assertions.assertEquals(Collections.singletonList("key-a"), keysSeen);
+        
+        // the default context still goes to Riot
+        Assertions.assertTrue(R4JContext.getDefault().getRequestUrl().contains("api.riotgames.com"));
     }
 }

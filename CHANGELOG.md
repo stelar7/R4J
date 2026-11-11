@@ -63,6 +63,7 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * **One exception parent:** every exception R4J throws on purpose now extends `R4JException` (itself a `RuntimeException`), so they can be caught together.
 * **Module name:** the jars declare `Automatic-Module-Name: no.stelar7.r4j`.
 * **Typed match challenges:** `MatchParticipant.getTypedChallenges()` and `getTypedMissions()` give the documented challenges and mission scores as objects with a field each. The maps (`getChallenges()`, `getMissions()`) are unchanged and still hold everything the api sent.
+* **Proxy support:** `R4JContext.setRequestUrl` sends every call to the Riot api through a url of your choice.
 * **Typed calls:** `DataCallBuilder.buildAs` and `buildCached`, and `withAccessToken` for RSO.
 
 ### Fixed
