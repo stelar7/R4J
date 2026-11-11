@@ -163,7 +163,8 @@ public class ApiAsyncTwinsTest
                                       && returns != void.class
                                       && !lazy
                                       // only reads a setting
-                                      && !method.getName().equals("isStub");
+                                      && !method.getName().equals("isStub")
+                                      && !method.getName().equals("getBaseUrl");
                 if (!callsTheApi)
                 {
                     continue;

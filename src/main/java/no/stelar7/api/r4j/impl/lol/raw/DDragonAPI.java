@@ -45,11 +45,29 @@ public final class DDragonAPI
         this.context = context;
     }
     
+    public static final String DEFAULT_BASE_URL = "https://ddragon.leagueoflegends.com/";
+    
+    private volatile String baseUrl = DEFAULT_BASE_URL;
+    
+    /**
+     * @param baseUrl where to find Data Dragon, ie. a mirror of your own (the files of the tarball, served from a folder). Defaults to {@link #DEFAULT_BASE_URL}.
+     */
+    public void setBaseUrl(String baseUrl)
+    {
+        String url = baseUrl == null ? DEFAULT_BASE_URL : baseUrl;
+        this.baseUrl = url.endsWith("/") ? url : url + "/";
+    }
+    
+    public String getBaseUrl()
+    {
+        return baseUrl;
+    }
+    
     public Map<Integer, StaticChampion> getChampions(String version, String locale)
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_CHAMPION_MANY);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -117,7 +135,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -151,7 +169,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -179,7 +197,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_LANGUAGES);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, "");
@@ -215,7 +233,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_MAPS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -238,7 +256,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
@@ -261,7 +279,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
@@ -294,7 +312,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_PROFILEICONS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -328,7 +346,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
                 .withEndpoint(URLEndpoint.DDRAGON_REALMS);
         
@@ -342,7 +360,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_RUNES);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("rune") : version);
@@ -377,7 +395,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_SUMMONER_SPELLS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -410,7 +428,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_VERSIONS);
         
         
@@ -489,7 +507,7 @@ public final class DDragonAPI
     {
         DataCallBuilder builder = new DataCallBuilder(context)
                 .withLimiters(false)
-                .withProxy(Constants.DDRAGON_PROXY)
+                .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_PERKPATHS);
         
         builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -547,7 +565,7 @@ public final class DDragonAPI
     
     public String getTarball(String version)
     {
-        return "https://ddragon.leagueoflegends.com/cdn/dragontail-{version}.tgz".replace(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        return (baseUrl + "cdn/dragontail-{version}.tgz").replace(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
     }
     
     public String getTarball()
@@ -566,7 +584,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_CHAMPION_MANY);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -645,7 +663,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -704,7 +722,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -753,7 +771,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_MAPS);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -792,7 +810,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
@@ -831,7 +849,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
@@ -890,7 +908,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_PROFILEICONS);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
@@ -939,7 +957,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
                     .withEndpoint(URLEndpoint.DDRAGON_REALMS);
         
@@ -965,7 +983,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_RUNES);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("rune") : version);
@@ -1024,7 +1042,7 @@ public final class DDragonAPI
         {
             DataCallBuilder builder = new DataCallBuilder(context)
                     .withLimiters(false)
-                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_SUMMONER_SPELLS);
         
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
