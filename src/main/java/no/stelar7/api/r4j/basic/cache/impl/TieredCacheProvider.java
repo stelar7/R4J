@@ -53,25 +53,17 @@ public class TieredCacheProvider implements CacheProvider
     private void restoreCache(CacheProvider cacheDepth, URLEndpoint type, Map<String, Object> data)
     {
         
-        boolean shouldUpdate = false;
-        
+        // Only the tiers in front of the one that had the data are filled.
+        // The tier that had it (and the ones behind it) keep their timestamp, otherwise data that is read often would never expire
         for (CacheProvider provider : providers)
         {
             if (provider.equals(cacheDepth))
             {
-                shouldUpdate = true;
+                return;
             }
-            
-            
-            if (!shouldUpdate)
-            {
-                logger.debug("Saved to: {}", provider.getClass().getName());
-                provider.store(type, data);
-            } else
-            {
-                logger.debug("Updating timestamp: {}", provider.getClass().getName());
-                provider.update(type, data);
-            }
+
+            logger.debug("Saved to: {}", provider.getClass().getName());
+            provider.store(type, data);
         }
     }
     
