@@ -225,6 +225,16 @@ public class R4J
         {
             return TFTLeagueAPI.getInstance();
         }
+
+        /**
+         * Gets spectator api.
+         *
+         * @return the spectator api
+         */
+        public TFTSpectatorAPI getSpectatorAPI()
+        {
+            return TFTSpectatorAPI.getInstance();
+        }
         
     }
     

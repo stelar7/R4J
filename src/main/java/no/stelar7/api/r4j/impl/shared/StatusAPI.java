@@ -1,7 +1,7 @@
 package no.stelar7.api.r4j.impl.shared;
 
 import no.stelar7.api.r4j.basic.calling.*;
-import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
+import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
 import no.stelar7.api.r4j.pojo.lol.status.PlatformData;
 
@@ -50,6 +50,24 @@ public final class StatusAPI
         }
     }
     
+    /**
+     * The status of Teamfight Tactics on the platform (uses the TFT api key)
+     *
+     * @param server the platform to get the status of
+     * @return PlatformData
+     */
+    public PlatformData getTFTShardStatus(LeagueShard server)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_STATUS_TFT)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withPlatform(server);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+
+        return builder.buildCached(PlatformData.class, data);
+    }
+
     public PlatformData getShardStatus(RuneterraShard server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_STATUS_LOR)

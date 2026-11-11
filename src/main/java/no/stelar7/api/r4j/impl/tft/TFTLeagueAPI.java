@@ -3,7 +3,7 @@ package no.stelar7.api.r4j.impl.tft;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
-import no.stelar7.api.r4j.basic.constants.types.lol.TierDivisionType;
+import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.basic.utils.*;
 import no.stelar7.api.r4j.pojo.tft.league.*;
 
@@ -300,6 +300,125 @@ public class TFTLeagueAPI
     {
         return new LazyList<>(1, prevValue -> getLeagueByTierDivision(server, tierdiv, prevValue + 1));
     }
+    
+    /**
+     * The master league of a specific queue
+     *
+     * @param server the region to query
+     * @param queue  the queue to query (RANKED_TFT or RANKED_TFT_DOUBLE_UP)
+     * @return LeagueList
+     */
+    public TFTLeagueList getMasterLeague(LeagueShard server, GameQueueType queue)
+    {
+        return getApexLeague(URLEndpoint.V1_TFT_LEAGUE_MASTER, server, queue);
+    }
 
+    /**
+     * The grandmaster league of a specific queue
+     *
+     * @param server the region to query
+     * @param queue  the queue to query (RANKED_TFT or RANKED_TFT_DOUBLE_UP)
+     * @return LeagueList
+     */
+    public TFTLeagueList getGrandmasterLeague(LeagueShard server, GameQueueType queue)
+    {
+        return getApexLeague(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, server, queue);
+    }
 
+    /**
+     * The challenger league of a specific queue
+     *
+     * @param server the region to query
+     * @param queue  the queue to query (RANKED_TFT or RANKED_TFT_DOUBLE_UP)
+     * @return LeagueList
+     */
+    public TFTLeagueList getChallengerLeague(LeagueShard server, GameQueueType queue)
+    {
+        return getApexLeague(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, server, queue);
+    }
+
+    private TFTLeagueList getApexLeague(URLEndpoint endpoint, LeagueShard server, GameQueueType queue)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getApiName())
+                                                       .withEndpoint(endpoint)
+                                                       .withPlatform(server);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+        data.put("queue", queue);
+
+        return builder.buildCached(TFTLeagueList.class, data);
+    }
+
+    /**
+     * @param server  the region to query
+     * @param queue   the queue to query (RANKED_TFT or RANKED_TFT_DOUBLE_UP)
+     * @param tierdiv the tier and division to query
+     * @param page    the page to query (first page is 1)
+     * @return the entries, or an empty list if there are none
+     */
+    public List<TFTLeagueEntry> getLeagueByTierDivision(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
+    {
+        if (Arrays.asList(TierDivisionType.MASTER_I, TierDivisionType.GRANDMASTER_I, TierDivisionType.CHALLENGER_I).contains(tierdiv))
+        {
+            if (page > 1)
+            {
+                return Collections.emptyList();
+            }
+
+            TFTLeagueList apex;
+            if (tierdiv == TierDivisionType.MASTER_I)
+            {
+                apex = getMasterLeague(server, queue);
+            } else if (tierdiv == TierDivisionType.GRANDMASTER_I)
+            {
+                apex = getGrandmasterLeague(server, queue);
+            } else
+            {
+                apex = getChallengerLeague(server, queue);
+            }
+
+            return apex != null ? apex.getEntries() : Collections.emptyList();
+        }
+
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
+                                                       .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getApiName())
+                                                       .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                       .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RANK)
+                                                       .withPlatform(server);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+        data.put("tierdiv", tierdiv);
+        data.put("page", page);
+        data.put("queue", queue);
+
+        List<TFTLeagueEntry> entries = builder.buildCached(TFTLeagueEntryList.class, data);
+        return entries != null ? entries : Collections.emptyList();
+    }
+
+    /**
+     * The top of the rated ladder for a queue (Hyper Roll)
+     *
+     * @param server the region to query
+     * @param queue  the queue to query (RANKED_TFT_TURBO)
+     * @return the entries, or an empty list if there are none
+     */
+    public List<TFTTopRatedLadderEntry> getTopRatedLadder(LeagueShard server, GameQueueType queue)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RATED_LADDER_TOP)
+                                                       .withPlatform(server);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+        data.put("queue", queue);
+
+        List<TFTTopRatedLadderEntry> entries = builder.buildCached(TFTTopRatedLadderEntryList.class, data);
+        return entries != null ? entries : Collections.emptyList();
+    }
 }

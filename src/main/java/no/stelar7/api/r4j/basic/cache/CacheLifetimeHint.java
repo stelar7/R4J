@@ -54,6 +54,7 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V1_TFT_MATCHLIST, MINUTES_10);
         
         DEFAULTS.add(URLEndpoint.V5_SPECTATOR_CURRENT, MINUTES_30);
+        DEFAULTS.add(URLEndpoint.V5_TFT_SPECTATOR_CURRENT, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V5_SPECTATOR_FEATURED, MINUTES_30);
         
         DEFAULTS.add(URLEndpoint.V4_MASTERY_BY_CHAMPION, MINUTES_10);
@@ -68,6 +69,7 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V1_TFT_LEAGUE_MASTER, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V1_TFT_LEAGUE_RANK, MINUTES_30);
+        DEFAULTS.add(URLEndpoint.V1_TFT_LEAGUE_RATED_LADDER_TOP, MINUTES_30);
         
         DEFAULTS.add(URLEndpoint.V4_LEAGUE, MINUTES_30);
         DEFAULTS.add(URLEndpoint.V4_LEAGUE_RANK, MINUTES_30);
@@ -80,6 +82,7 @@ public class CacheLifetimeHint
         DEFAULTS.add(URLEndpoint.V1_LOR_MATCHES_BY_PUUID, MINUTES_30);
     
         DEFAULTS.add(URLEndpoint.V4_STATUS_LOL, MINUTES_1);
+        DEFAULTS.add(URLEndpoint.V1_STATUS_TFT, MINUTES_1);
         DEFAULTS.add(URLEndpoint.V1_STATUS_LOR, MINUTES_1);
         DEFAULTS.add(URLEndpoint.V1_STATUS_VAL, MINUTES_1);
         

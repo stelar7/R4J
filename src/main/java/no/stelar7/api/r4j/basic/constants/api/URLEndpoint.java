@@ -141,6 +141,9 @@ public enum URLEndpoint
     V1_TFT_LEAGUE_MASTER("tft", "league", "v1", "master", TFTLeagueList.class),
     V1_TFT_LEAGUE_GRANDMASTER("tft", "league", "v1", "grandmaster", TFTLeagueList.class),
     V1_TFT_LEAGUE_CHALLENGER("tft", "league", "v1", "challenger", TFTLeagueList.class),
+    V1_TFT_LEAGUE_RATED_LADDER_TOP("tft", "league", "v1", "rated-ladders/" + Constants.QUEUE_PLACEHOLDER + "/top", TFTTopRatedLadderEntryList.class),
+    
+    V5_TFT_SPECTATOR_CURRENT("lol", "spectator/tft", "v5", "active-games/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, SpectatorGameInfo.class),
     
     V1_LOR_RANKED_LEADERBOARD("lor", "ranked", "v1", "leaderboards", LoRRankedPlayerList.class),
     V1_LOR_INVENTORY_CARDS_ME("lor", "inventory", "v1", "cards/me", LoRCardList.class),
@@ -169,6 +172,7 @@ public enum URLEndpoint
     V1_LOR_MATCH("lor", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
     
     V4_STATUS_LOL("lol", "status", "v4", "platform-data", PlatformData.class),
+    V1_STATUS_TFT("tft", "status", "v1", "platform-data", PlatformData.class),
     V1_STATUS_LOR("lor", "status", "v1", "platform-data", PlatformData.class),
     V1_STATUS_VAL("val", "status", "v1", "platform-data", PlatformData.class),
     
