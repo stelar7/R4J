@@ -52,6 +52,7 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * **Tournament callbacks:** `TournamentCallbackListener` receives the result Riot posts after a tournament game.
 * **Caches:** `MemoryCacheProvider` works; `JdbcCacheProvider` caches in any SQL database; the file cache can be shared by several processes.
 * **Riftbound key** in `APICredentials`.
+* **Non-blocking calls:** `DataCallBuilder.buildAsync`, `buildAsAsync` and `buildCachedAsync` make a call without a thread waiting for the rate limit, the response or the retries. `R4J.async(...)` runs any of the (blocking) api methods in the background.
 * **Typed calls:** `DataCallBuilder.buildAs` and `buildCached`, and `withAccessToken` for RSO.
 
 ### Fixed
@@ -65,6 +66,7 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * A 405 was reported as a 403, connection errors lost their cause, and a 429 on a call without limiters threw a `NullPointerException`.
 * The api key was written to the log at trace level.
 * The connection was not reused after a 429.
+* With a shared rate limit store, calls to the same endpoint waited for each other while the store was being asked.
 * `MySQLCacheProvider` terminated the JVM on every lookup.
 * `ImageAPI` built loading screen art urls that do not exist, and rune and mastery icon urls that only work for an old patch. `ImageAPI.getProfileIcon(region, summonerName)` is deprecated, as the service behind it is gone.
 * A lazily loaded list (ie. from `getMatchList`) claimed to be empty until it was iterated (#112).

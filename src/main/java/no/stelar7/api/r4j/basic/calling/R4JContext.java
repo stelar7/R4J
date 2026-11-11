@@ -229,6 +229,79 @@ public final class R4JContext
         return semaphores.computeIfAbsent(new Pair<>(keyType, platform), k -> new Semaphore(permits, true));
     }
 
+    // timers for the non-blocking calls of every context: waiting for a ratelimit or a retry is a scheduled task, not a sleeping thread
+    private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor(r -> {
+        Thread t = new Thread(r, "R4J-timer");
+        t.setDaemon(true);
+        return t;
+    });
+
+    // runs blocking calls for callAsync, and the few non-blocking calls that have to use the blocking transport
+    private static final ExecutorService ASYNC_EXECUTOR = Executors.newCachedThreadPool(r -> {
+        Thread t = new Thread(r, "R4J-async");
+        t.setDaemon(true);
+        return t;
+    });
+
+    private volatile java.net.http.HttpClient httpClient;
+
+    /**
+     * Runs the task after the delay, on the timer thread. The task must not block.
+     */
+    void schedule(Runnable task, long delayMs)
+    {
+        SCHEDULER.schedule(task, Math.max(0, delayMs), TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * @return the executor used to run blocking calls in the background
+     */
+    public Executor getAsyncExecutor()
+    {
+        return ASYNC_EXECUTOR;
+    }
+
+    /**
+     * The http client used by the non-blocking calls ({@code DataCallBuilder.buildAsync()}). It is created on first use,
+     * with the connect timeout of that moment (see {@link #setGlobalTimeout(int)}).
+     */
+    java.net.http.HttpClient getHttpClient()
+    {
+        java.net.http.HttpClient client = httpClient;
+        if (client == null)
+        {
+            synchronized (this)
+            {
+                client = httpClient;
+                if (client == null)
+                {
+                    int connectTimeout = globalTimeout != 0 ? globalTimeout : DataCall.DEFAULT_CONNECT_TIMEOUT;
+                    httpClient = client = java.net.http.HttpClient.newBuilder().connectTimeout(java.time.Duration.ofMillis(connectTimeout)).build();
+                }
+            }
+        }
+
+        return client;
+    }
+
+    /**
+     * Runs a call in the background and gives a future of its result, for the methods of the api classes, which all block:
+     * <pre>{@code
+     * context.callAsync(() -> api.getLoLAPI().getSummonerAPI().getSummonerByPUUID(LeagueShard.EUW1, puuid))
+     *        .thenAccept(summoner -> ...);
+     * }</pre>
+     * This keeps your own thread free, but a background thread waits for each call.
+     * To make calls without any thread waiting, build them with {@code DataCallBuilder.buildAsync()}.
+     *
+     * @param call the call to make
+     * @param <T>  what the call returns
+     * @return a future of what the call returns
+     */
+    public <T> CompletableFuture<T> callAsync(java.util.function.Supplier<T> call)
+    {
+        return CompletableFuture.supplyAsync(call, ASYNC_EXECUTOR);
+    }
+
     /**
      * Tells the object, and everything it contains, which context it was fetched with (see {@link ContextAware}).
      * Objects of the default context are left alone, as that is what they use when nothing is set.

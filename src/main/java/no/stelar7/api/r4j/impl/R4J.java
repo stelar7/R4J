@@ -78,6 +78,23 @@ public class R4J
     }
 
     /**
+     * Runs a call in the background and gives a future of its result:
+     * <pre>{@code
+     * api.async(() -> api.getLoLAPI().getSummonerAPI().getSummonerByPUUID(LeagueShard.EUW1, puuid))
+     *    .thenAccept(summoner -> ...);
+     * }</pre>
+     * See {@link R4JContext#callAsync(java.util.function.Supplier)}.
+     *
+     * @param call the call to make
+     * @param <T>  what the call returns
+     * @return a future of what the call returns
+     */
+    public <T> java.util.concurrent.CompletableFuture<T> async(java.util.function.Supplier<T> call)
+    {
+        return context.callAsync(call);
+    }
+
+    /**
      * @return the context of this instance; use it to change the cache, timeouts and other settings
      */
     public R4JContext getContext()

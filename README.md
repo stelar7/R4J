@@ -56,16 +56,21 @@ For a JAR file: [Releases](https://github.com/stelar7/R4J/releases/)
 
 
 ## How do I async?
-Wrap the method-call in `CompletableFuture`
+
+The methods of the api classes block until they have their answer. To run one in the background:
 
 ```Java
-CompletableFuture.supplyAsync(() -> api.getLoLAPI().getSummonerAPI().getSummonerByPUUID(LeagueShard.EUW1, puuid))
-                 .thenAccept(this::handleSummonerCallback);
+api.async(() -> api.getLoLAPI().getSummonerAPI().getSummonerByPUUID(LeagueShard.EUW1, puuid))
+   .thenAccept(summoner -> System.out.println(summoner));
+```
 
-private void handleSummonerCallback(Summoner u)
-{
-    System.out.println(u);
-}
+That frees your thread, but a background thread waits for each call. If you make a lot of calls at once, build them yourself and no thread waits at all: the rate limit, the request and the retries are all handled in the background.
+
+```Java
+new DataCallBuilder(api.getContext()).withEndpoint(URLEndpoint.V4_STATUS_LOL)
+                                     .withPlatform(LeagueShard.EUW1)
+                                     .buildAsAsync(PlatformData.class)
+                                     .thenAccept(status -> System.out.println(status));
 ```
 
 To limit how many calls run at the same time (per platform and key), pass the limit when creating the api: `new R4J(creds, 4)`.

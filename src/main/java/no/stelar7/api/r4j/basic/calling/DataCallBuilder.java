@@ -18,9 +18,7 @@ import java.security.cert.X509Certificate;
 import java.time.*;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.function.BiFunction;
 
 @SuppressWarnings("rawtypes")
@@ -121,8 +119,8 @@ public class DataCallBuilder
     {
         final String url = this.getURL();
 
-        int attempts         = (retrys != null && retrys.length == 1) ? retrys[0] : 0;
-        int ratelimitRetries = 0;
+        RetryState state = new RetryState();
+        state.attempts = (retrys != null && retrys.length == 1) ? retrys[0] : 0;
 
         // Retries are done in a loop (instead of recursion) so the parallel-call permit is never held while sleeping or re-acquired while already held
         while (true)
@@ -134,119 +132,412 @@ public class DataCallBuilder
                 return null;
             }
 
-            logger.trace("Response: {}", response);
-
-            switch (response.getResponseCode())
+            Object result = interpret(url, response, state);
+            if (result != RETRY)
             {
-                case 200:
-                case 201:
-                case 204:
+                return result;
+            }
+
+            if (state.delay > 0)
+            {
+                try
                 {
-                    String returnValue = response.getResponseData();
-
-                    if (this.dc.shouldReturnRawResponse())
-                    {
-                        return returnValue;
-                    }
-
-                    if (this.dc.getEndpoint() != null)
-                    {
-                        final Class<?> returnType = this.dc.getEndpoint().getType();
-                        returnValue = postProcess(returnValue);
-
-                        return context.bind(Utils.getGson().fromJson(returnValue, returnType));
-                    } else
-                    {
-                        return returnValue;
-                    }
-                }
-
-                case 400:
+                    Thread.sleep(state.delay);
+                } catch (InterruptedException e)
                 {
-                    String reasonText = "Your api request is malformed!\n";
-                    reasonText += url + "\n";
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_400, reasonText + response.getResponseData());
-                }
-
-                case 401:
-                {
-                    String reasonText = "The API denied your request!\n";
-                    reasonText += "Your API key was not present in the request\n";
-                    reasonText += "Make sure you have setup your APICredentials before doing a API call!\n";
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_401, reasonText + response.getResponseData());
-                }
-
-                case 403:
-                {
-                    String reasonText = "The API denied your request!\n";
-                    reasonText += "Possible reasons:\n";
-                    reasonText += " - Your API key is invalid\n";
-                    reasonText += " - You just regenerated the key; wait a few seconds, then try again\n";
-                    reasonText += " - You are trying to call a endpoint you dont have access to\n";
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
-                }
-
-                case 404:
-                {
-                    return new Pair<>(response.getResponseCode(), response.getResponseData());
-                }
-
-                case 405:
-                {
-                    String reasonText = "The API was unable to handle your request due to the wrong HTTP method being used.\n";
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_405, reasonText + response.getResponseData());
-                }
-
-                case 415:
-                {
-                    String reasonText = "The API was unable to handle your request due to an unsupported media type.\n";
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_415, reasonText + response.getResponseData());
-                }
-
-                case 429:
-                {
-                    if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
-                    {
-                        attempts = sleepBeforeRetry(attempts, response.getResponseCode());
-                        continue;
-                    }
-
-                    String error = response.getResponseData() + "429 ratelimit hit! " +
-                                   "Please do not restart your application to refresh the timer! " +
-                                   "This isn't supposed to happen unless you restarted your app before the last limit was hit!";
-
-                    logger.error(error);
-
-                    if (++ratelimitRetries > MAX_RATELIMIT_RETRIES)
-                    {
-                        throw new APIResponseException(APIHTTPErrorReason.ERROR_429, error);
-                    }
-
-                    // the limiter has been told about the Retry-After header, so the next attempt waits for it
-                    continue;
-                }
-
-                case 500:
-                case 502:
-                case 503:
-                case 504:
-                {
-                    attempts = sleepBeforeRetry(attempts, response.getResponseCode());
-                    continue;
-                }
-
-                case 599:
-                {
-                    throw new APIResponseException(APIHTTPErrorReason.ERROR_599, response.getResponseData());
-                }
-
-                default:
-                {
-                    logger.error("Unhandled response code {}: {}", response.getResponseCode(), response.getResponseData());
-                    throw new APINoValidResponseException(response.getResponseData());
+                    Thread.currentThread().interrupt();
+                    throw new APINoValidResponseException("Something interupted the API timeout;" + e.getMessage());
                 }
             }
         }
+    }
+
+    /**
+     * What has to be remembered between the attempts of one call
+     */
+    private static final class RetryState
+    {
+        // the amount of retries done after a server error or a service ratelimit
+        private int  attempts;
+        // the amount of retries done after an application or method ratelimit
+        private int  ratelimitRetries;
+        // how long to wait before the next attempt
+        private long delay;
+    }
+
+    /**
+     * Returned by {@link #interpret(String, DataCallResponse, RetryState)} when the call has to be made again
+     */
+    private static final Object RETRY = new Object();
+
+    /**
+     * Decides what a response means: a result, an exception, or another attempt.
+     * Shared by the blocking and the non-blocking way of making a call.
+     *
+     * @return the result of the call (null and Pair included), or {@link #RETRY} after setting {@code state.delay} to how long to wait first
+     */
+    private Object interpret(String url, DataCallResponse response, RetryState state)
+    {
+        logger.trace("Response: {}", response);
+
+        switch (response.getResponseCode())
+        {
+            case 200:
+            case 201:
+            case 204:
+            {
+                String returnValue = response.getResponseData();
+
+                if (this.dc.shouldReturnRawResponse())
+                {
+                    return returnValue;
+                }
+
+                if (this.dc.getEndpoint() != null)
+                {
+                    final Class<?> returnType = this.dc.getEndpoint().getType();
+                    returnValue = postProcess(returnValue);
+
+                    return context.bind(Utils.getGson().fromJson(returnValue, returnType));
+                } else
+                {
+                    return returnValue;
+                }
+            }
+
+            case 400:
+            {
+                String reasonText = "Your api request is malformed!\n";
+                reasonText += url + "\n";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_400, reasonText + response.getResponseData());
+            }
+
+            case 401:
+            {
+                String reasonText = "The API denied your request!\n";
+                reasonText += "Your API key was not present in the request\n";
+                reasonText += "Make sure you have setup your APICredentials before doing a API call!\n";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_401, reasonText + response.getResponseData());
+            }
+
+            case 403:
+            {
+                String reasonText = "The API denied your request!\n";
+                reasonText += "Possible reasons:\n";
+                reasonText += " - Your API key is invalid\n";
+                reasonText += " - You just regenerated the key; wait a few seconds, then try again\n";
+                reasonText += " - You are trying to call a endpoint you dont have access to\n";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_403, reasonText + response.getResponseData());
+            }
+
+            case 404:
+            {
+                return new Pair<>(response.getResponseCode(), response.getResponseData());
+            }
+
+            case 405:
+            {
+                String reasonText = "The API was unable to handle your request due to the wrong HTTP method being used.\n";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_405, reasonText + response.getResponseData());
+            }
+
+            case 415:
+            {
+                String reasonText = "The API was unable to handle your request due to an unsupported media type.\n";
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_415, reasonText + response.getResponseData());
+            }
+
+            case 429:
+            {
+                if (response.getResponseData().startsWith(RateLimitType.LIMIT_UNDERLYING.getReason()) || response.getResponseData().startsWith(RateLimitType.LIMIT_SERVICE.getReason()))
+                {
+                    state.delay = nextRetryDelay(state, response.getResponseCode());
+                    return RETRY;
+                }
+
+                String error = response.getResponseData() + "429 ratelimit hit! " +
+                               "Please do not restart your application to refresh the timer! " +
+                               "This isn't supposed to happen unless you restarted your app before the last limit was hit!";
+
+                logger.error(error);
+
+                if (++state.ratelimitRetries > MAX_RATELIMIT_RETRIES)
+                {
+                    throw new APIResponseException(APIHTTPErrorReason.ERROR_429, error);
+                }
+
+                // the limiter has been told about the Retry-After header, so the next attempt waits for it
+                state.delay = 0;
+                return RETRY;
+            }
+
+            case 500:
+            case 502:
+            case 503:
+            case 504:
+            {
+                state.delay = nextRetryDelay(state, response.getResponseCode());
+                return RETRY;
+            }
+
+            case 599:
+            {
+                throw new APIResponseException(APIHTTPErrorReason.ERROR_599, response.getResponseData());
+            }
+
+            default:
+            {
+                logger.error("Unhandled response code {}: {}", response.getResponseCode(), response.getResponseData());
+                throw new APINoValidResponseException(response.getResponseData());
+            }
+        }
+    }
+
+    /**
+     * Makes the call without blocking a thread: waiting for the ratelimit, the request itself and the retries all happen in the background.
+     * <p>
+     * The outcome is the same as {@link #build(int...)}: the future completes with the parsed result (or a Pair for a 404),
+     * and completes exceptionally with the exception build() would have thrown.
+     * <p>
+     * Calls to the game client on this machine over https (LCU, live client data, replay api) need certificate checks relaxed per connection,
+     * which only the blocking transport can do; those are run with build() on a background thread instead.
+     *
+     * @return a future of what build() returns
+     */
+    public CompletableFuture<Object> buildAsync()
+    {
+        final String url;
+        try
+        {
+            url = this.getURL();
+
+            URL target = new URL(url);
+            if ("https".equalsIgnoreCase(target.getProtocol()) && isLoopback(target))
+            {
+                return CompletableFuture.supplyAsync(() -> this.build(), context.getAsyncExecutor());
+            }
+        } catch (IOException | RuntimeException e)
+        {
+            return CompletableFuture.failedFuture(e);
+        }
+
+        CompletableFuture<Object> result = new CompletableFuture<>();
+        attemptAsync(url, new RetryState(), result);
+        return result;
+    }
+
+    /**
+     * Like {@link #buildAs(Class)}, without blocking a thread.
+     *
+     * @param type the type the endpoint returns
+     * @param <T>  the type the endpoint returns
+     * @return a future of the result, or of null if the api returned 404 (or something that is not of the requested type)
+     */
+    public <T> CompletableFuture<T> buildAsAsync(Class<T> type)
+    {
+        return buildAsync().thenApply(result -> type.isInstance(result) ? type.cast(result) : null);
+    }
+
+    /**
+     * Like {@link #buildCached(Class, Map)}, without blocking a thread for the call to the api.
+     * The cache itself is read and written directly, so a slow cache (ie. a database) is waited for.
+     *
+     * @param type     the type the endpoint returns
+     * @param cacheKey the values identifying this call in the cache (ie. platform, puuid), in a consistent order
+     * @param <T>      the type the endpoint returns
+     * @return a future of the result, or of null if the api returned 404 (or something that is not of the requested type)
+     */
+    public <T> CompletableFuture<T> buildCachedAsync(Class<T> type, Map<String, Object> cacheKey)
+    {
+        URLEndpoint endpoint = this.dc.getEndpoint();
+
+        try
+        {
+            Optional<?> cached = context.getCacheProvider().get(endpoint, cacheKey);
+            if (cached.isPresent() && type.isInstance(cached.get()))
+            {
+                return CompletableFuture.completedFuture(context.bind(type.cast(cached.get())));
+            }
+        } catch (RuntimeException e)
+        {
+            return CompletableFuture.failedFuture(e);
+        }
+
+        return buildAsAsync(type).thenApply(result -> {
+            if (result != null)
+            {
+                Map<String, Object> data = new LinkedHashMap<>(cacheKey);
+                data.put("value", result);
+                context.getCacheProvider().store(endpoint, data);
+            }
+
+            return result;
+        });
+    }
+
+    /**
+     * How often a call that could not get a parallel-call permit tries again
+     */
+    private static final long PERMIT_POLL_MS = 10;
+
+    /**
+     * One attempt of a non-blocking call. Nothing in here waits: when the call can not be made yet, the attempt is scheduled again.
+     */
+    private void attemptAsync(final String url, final RetryState state, final CompletableFuture<Object> result)
+    {
+        if (result.isDone())
+        {
+            // cancelled by the caller
+            return;
+        }
+
+        try
+        {
+            if (this.dc.useRatelimiter())
+            {
+                if (context.getCredentials() == null)
+                {
+                    throw new APIUnsupportedActionException("No API Creds set!");
+                }
+
+                dc.getUrlHeaders().putIfAbsent(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLoLAPIKey());
+            }
+
+            final ApiKeyType keyTypeUsed = this.dc.getKeyUsedByHeadersUsed();
+            final Enum       platform    = this.dc.getPlatform();
+            final Semaphore  semaphore   = context.getSemaphore(keyTypeUsed, platform);
+
+            if (semaphore != null && !semaphore.tryAcquire())
+            {
+                context.schedule(() -> attemptAsync(url, state, result), PERMIT_POLL_MS);
+                return;
+            }
+
+            boolean handedOver = false;
+            long    wait;
+            try
+            {
+                wait = this.dc.useRatelimiter() ? tryAcquireLimits(keyTypeUsed, platform, this.dc.getEndpoint()) : 0;
+                if (wait == 0)
+                {
+                    logger.trace("Trying url: {}", url);
+
+                    final long sentAt = System.currentTimeMillis();
+                    CompletableFuture<java.net.http.HttpResponse<String>> pending = context.getHttpClient().sendAsync(toRequest(url), java.net.http.HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+                    handedOver = true;
+
+                    pending.whenComplete((httpResponse, error) -> {
+                        try
+                        {
+                            finishCall(keyTypeUsed, platform, semaphore);
+
+                            if (error != null)
+                            {
+                                Throwable cause = error instanceof CompletionException && error.getCause() != null ? error.getCause() : error;
+                                throw new APIResponseException(APIHTTPErrorReason.ERROR_599, APIHTTPErrorReason.ERROR_599.getReason() + " (" + cause + ")", cause);
+                            }
+
+                            int    code        = httpResponse.statusCode();
+                            String limitReason = handleRateLimitHeaders(url, code, name -> httpResponse.headers().firstValue(name).orElse(null), sentAt, Instant.now());
+
+                            DataCallResponse response;
+                            if (limitReason != null)
+                            {
+                                response = new DataCallResponse(code, limitReason);
+                            } else
+                            {
+                                response = new DataCallResponse(code, code == 204 || httpResponse.body() == null ? "" : httpResponse.body());
+                            }
+
+                            Object outcome = interpret(url, response, state);
+                            if (outcome != RETRY)
+                            {
+                                result.complete(outcome);
+                            } else
+                            {
+                                context.schedule(() -> attemptAsync(url, state, result), state.delay);
+                            }
+                        } catch (Throwable t)
+                        {
+                            result.completeExceptionally(t);
+                        }
+                    });
+                    return;
+                }
+            } finally
+            {
+                if (!handedOver && semaphore != null)
+                {
+                    semaphore.release();
+                }
+            }
+
+            // The parallel-call permit was given back, and nothing waits here: the attempt simply runs again when the ratelimit allows it
+            logger.debug("{} {}: waiting {} ms for the ratelimit", platform, this.dc.getEndpoint(), wait);
+            context.schedule(() -> attemptAsync(url, state, result), wait);
+        } catch (Throwable t)
+        {
+            result.completeExceptionally(t);
+        }
+    }
+
+    /**
+     * What has to happen when a call has finished, whatever the outcome
+     */
+    private void finishCall(ApiKeyType keyTypeUsed, Enum platform, Semaphore semaphore)
+    {
+        try
+        {
+            if (this.dc.useRatelimiter())
+            {
+                // lets the next call through if this was the first call of the bucket (see RateLimiter.callFinished)
+                context.getLimiter(keyTypeUsed, platform, platform).callFinished();
+                if (this.dc.getEndpoint() != null)
+                {
+                    context.getLimiter(keyTypeUsed, platform, this.dc.getEndpoint()).callFinished();
+                }
+            }
+        } finally
+        {
+            if (semaphore != null)
+            {
+                semaphore.release();
+            }
+        }
+    }
+
+    /**
+     * The request of the non-blocking transport, with the same headers, method and body as the blocking one sends
+     */
+    private java.net.http.HttpRequest toRequest(String url)
+    {
+        java.net.http.HttpRequest.Builder request = java.net.http.HttpRequest.newBuilder(URI.create(url))
+                                                                             .timeout(Duration.ofMillis(this.dc.getReadTimeout()))
+                                                                             .header("User-Agent", "R4J")
+                                                                             .header("Accept-Charset", "ISO-8859-1,utf-8")
+                                                                             .header("Accept-Language", "en-US")
+                                                                             .header("Cache-Control", "no-store,max-age=0,no-cache")
+                                                                             .header("Expires", "0")
+                                                                             .header("Pragma", "no-cache");
+
+        // setHeader replaces, like setRequestProperty does for the blocking transport
+        request.setHeader("Content-Type", "application/json");
+        this.dc.getUrlHeaders().forEach(request::setHeader);
+
+        java.net.http.HttpRequest.BodyPublisher body = (this.postData != null && !this.postData.isEmpty())
+                                                       ? java.net.http.HttpRequest.BodyPublishers.ofString(this.postData, StandardCharsets.UTF_8)
+                                                       : java.net.http.HttpRequest.BodyPublishers.noBody();
+
+        if (requestMethod.equalsIgnoreCase("PATCH"))
+        {
+            request.setHeader("X-HTTP-Method-Override", "PATCH");
+            request.method("POST", body);
+        } else
+        {
+            request.method(requestMethod.toUpperCase(Locale.ENGLISH), body);
+        }
+
+        return request.build();
     }
 
     /**
@@ -491,16 +782,16 @@ public class DataCallBuilder
     }
     
     /**
-     * Sleeps before the next attempt (500ms longer for each attempt).
+     * How long to wait before the next attempt after a server error or a service ratelimit (500ms longer for each attempt).
      *
-     * @param previousAttempts the amount of retries already done
-     * @param errorCode        the response code that caused the retry
-     * @return the new amount of retries done
-     * @throws APINoValidResponseException if the total time slept is over the max sleep value
+     * @param state     the retries done so far; the attempt is counted
+     * @param errorCode the response code that caused the retry
+     * @return how long to wait, in ms
+     * @throws APINoValidResponseException if the total time waited is over the max sleep value
      */
-    private int sleepBeforeRetry(int previousAttempts, int errorCode)
+    private long nextRetryDelay(RetryState state, int errorCode)
     {
-        int  attempts           = previousAttempts + 1;
+        int  attempts           = ++state.attempts;
         long nextSleepDuration  = attempts * 500L;
         long totalSleepDuration = 0;
         for (int i = 1; i < attempts; i++)
@@ -523,16 +814,7 @@ public class DataCallBuilder
             logger.info("Server error ({}), waiting {} ms then retrying", errorCode, nextSleepDuration);
         }
 
-        try
-        {
-            Thread.sleep(nextSleepDuration);
-        } catch (InterruptedException e)
-        {
-            Thread.currentThread().interrupt();
-            throw new APINoValidResponseException("Something interupted the API timeout;" + e.getMessage());
-        }
-
-        return attempts;
+        return nextSleepDuration;
     }
 
     /**
@@ -664,96 +946,13 @@ public class DataCallBuilder
                 logger.trace(printMe2);
             }
 
-            String appA    = con.getHeaderField("X-App-Rate-Limit");
-            String appB    = con.getHeaderField("X-App-Rate-Limit-Count");
-            String methodA = con.getHeaderField("X-Method-Rate-Limit");
-            String methodB = con.getHeaderField("X-Method-Rate-Limit-Count");
-
-            final ApiKeyType    keyType   = dc.getKeyUsedByHeadersUsed();
-            final Enum          platform  = dc.getPlatform();
-            final URLEndpoint   endpoint  = dc.getEndpoint();
-            final RateLimitType limitType = responseCode == 429 ? RateLimitType.getBestMatch(con.getHeaderField("X-Rate-Limit-Type")) : null;
-
-            // Quickly notify if a ratelimit was hit, we don't wait on any lock
-            if (responseCode == 429)
+            String limitReason = handleRateLimitHeaders(url, responseCode, con::getHeaderField, sentAt, received);
+            if (limitReason != null)
             {
-                logger.debug("All headers: {}", con.getHeaderFields());
-
-                logger.warn("Ratelimit hit for platform: {}, endpoint: {}, method: {}, app limit: {}/{}, method limit: {}/{}",
-                            platform, endpoint, this.requestMethod, appB, appA, methodB, methodA);
-
-                // calls made without limiters (ddragon, local client..) have no limiter to notify
-                RateLimiter methodLimiter = findLimiter(keyType, platform, endpoint);
-                RateLimiter appLimiter    = findLimiter(keyType, platform, platform);
-                String      retryAfter    = con.getHeaderField("Retry-After");
-
-                if (limitType == RateLimitType.LIMIT_METHOD && methodLimiter != null)
-                {
-                    methodLimiter.cooldown(received.toEpochMilli(), retryAfter, false);
-                }
-
-                if (limitType == RateLimitType.LIMIT_USER && appLimiter != null)
-                {
-                    appLimiter.cooldown(received.toEpochMilli(), retryAfter, false);
-                }
-
-                if ((limitType == RateLimitType.LIMIT_UNDERLYING || limitType == RateLimitType.LIMIT_SERVICE) && methodLimiter != null)
-                {
-                    methodLimiter.cooldown(received.toEpochMilli(), retryAfter, context.shouldFailFastOnServiceRatelimit());
-                }
-            }
-
-            if (appA == null)
-            {
-                logger.debug("Header 'X-App-Rate-Limit' missing from call: {} ", url);
-            } else
-            {
-                // app level -> platform
-                updateRatelimiter(appA, appB, platform, platform, sentAt);
-            }
-
-            if (methodA == null)
-            {
-                logger.debug("Header 'X-Method-Rate-Limit' missing from call: {}", url);
-            } else if (endpoint != null)
-            {
-                // method level -> endpoint
-                updateRatelimiter(methodA, methodB, platform, endpoint, sentAt);
-            }
-
-            String deprecationHeader = con.getHeaderField("X-Riot-Deprecated");
-            if (deprecationHeader != null)
-            {
-                try
-                {
-                    logger.info("You are using a deprecated method, this method will stop working at: {}", Instant.ofEpochMilli(Long.parseLong(deprecationHeader)));
-                } catch (NumberFormatException e)
-                {
-                    logger.info("You are using a deprecated method ({})", deprecationHeader);
-                }
-            }
-
-            if (responseCode == 429)
-            {
-                StringBuilder          valueList        = new StringBuilder();
-                Map<Enum, RateLimiter> platformLimiters = context.getLimiters(keyType).get(platform);
-                if (platformLimiters != null)
-                {
-                    platformLimiters.forEach((key, value) -> {
-                        valueList.append(key);
-                        valueList.append("=");
-                        valueList.append(value.getCallCounts());
-                        valueList.append("\n");
-                    });
-                }
-
-                String reasonString = String.format("%s%n%s", limitType.getReason(), valueList.toString().trim());
-                String reason       = String.format("%s%n", reasonString);
-
                 // the body is not used, but has to be read for the connection to be reused
                 drain(con.getErrorStream());
 
-                return new DataCallResponse(responseCode, reason);
+                return new DataCallResponse(responseCode, limitReason);
             }
 
             if (responseCode == 204)
@@ -805,6 +1004,105 @@ public class DataCallBuilder
         {
             // nothing to do, the connection is simply not reused
         }
+    }
+
+    /**
+     * Updates the ratelimiters from the headers of a response: the limits and call counts the server reports,
+     * and the cooldown after a 429. Shared by the blocking and the non-blocking transport.
+     *
+     * @param header gives the value of a response header by its name, or null
+     * @return null, or for a 429 the text describing which limit was hit (used instead of the body of the response)
+     */
+    private String handleRateLimitHeaders(String url, int responseCode, java.util.function.Function<String, String> header, long sentAt, Instant received)
+    {
+        String appA    = header.apply("X-App-Rate-Limit");
+        String appB    = header.apply("X-App-Rate-Limit-Count");
+        String methodA = header.apply("X-Method-Rate-Limit");
+        String methodB = header.apply("X-Method-Rate-Limit-Count");
+
+        final ApiKeyType    keyType   = dc.getKeyUsedByHeadersUsed();
+        final Enum          platform  = dc.getPlatform();
+        final URLEndpoint   endpoint  = dc.getEndpoint();
+        final RateLimitType limitType = responseCode == 429 ? RateLimitType.getBestMatch(header.apply("X-Rate-Limit-Type")) : null;
+
+        // Quickly notify if a ratelimit was hit, we don't wait on any lock
+        if (responseCode == 429)
+        {
+            logger.warn("Ratelimit hit for platform: {}, endpoint: {}, method: {}, app limit: {}/{}, method limit: {}/{}",
+                        platform, endpoint, this.requestMethod, appB, appA, methodB, methodA);
+
+            // calls made without limiters (ddragon, local client..) have no limiter to notify
+            RateLimiter methodLimiter = findLimiter(keyType, platform, endpoint);
+            RateLimiter appLimiter    = findLimiter(keyType, platform, platform);
+            String      retryAfter    = header.apply("Retry-After");
+
+            if (limitType == RateLimitType.LIMIT_METHOD && methodLimiter != null)
+            {
+                methodLimiter.cooldown(received.toEpochMilli(), retryAfter, false);
+            }
+
+            if (limitType == RateLimitType.LIMIT_USER && appLimiter != null)
+            {
+                appLimiter.cooldown(received.toEpochMilli(), retryAfter, false);
+            }
+
+            if ((limitType == RateLimitType.LIMIT_UNDERLYING || limitType == RateLimitType.LIMIT_SERVICE) && methodLimiter != null)
+            {
+                methodLimiter.cooldown(received.toEpochMilli(), retryAfter, context.shouldFailFastOnServiceRatelimit());
+            }
+        }
+
+        if (appA == null)
+        {
+            logger.debug("Header 'X-App-Rate-Limit' missing from call: {} ", url);
+        } else
+        {
+            // app level -> platform
+            updateRatelimiter(appA, appB, platform, platform, sentAt);
+        }
+
+        if (methodA == null)
+        {
+            logger.debug("Header 'X-Method-Rate-Limit' missing from call: {}", url);
+        } else if (endpoint != null)
+        {
+            // method level -> endpoint
+            updateRatelimiter(methodA, methodB, platform, endpoint, sentAt);
+        }
+
+        String deprecationHeader = header.apply("X-Riot-Deprecated");
+        if (deprecationHeader != null)
+        {
+            try
+            {
+                logger.info("You are using a deprecated method, this method will stop working at: {}", Instant.ofEpochMilli(Long.parseLong(deprecationHeader)));
+            } catch (NumberFormatException e)
+            {
+                logger.info("You are using a deprecated method ({})", deprecationHeader);
+            }
+        }
+
+        if (responseCode == 429)
+        {
+            StringBuilder          valueList        = new StringBuilder();
+            Map<Enum, RateLimiter> platformLimiters = context.getLimiters(keyType).get(platform);
+            if (platformLimiters != null)
+            {
+                platformLimiters.forEach((key, value) -> {
+                    valueList.append(key);
+                    valueList.append("=");
+                    valueList.append(value.getCallCounts());
+                    valueList.append("\n");
+                });
+            }
+
+            String reasonString = String.format("%s%n%s", limitType.getReason(), valueList.toString().trim());
+            String reason       = String.format("%s%n", reasonString);
+
+            return reason;
+        }
+
+        return null;
     }
 
     private static boolean isSecretHeader(String key)
