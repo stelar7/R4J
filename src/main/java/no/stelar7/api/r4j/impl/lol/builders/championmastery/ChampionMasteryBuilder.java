@@ -79,24 +79,7 @@ public class ChampionMasteryBuilder
         data.put("puuid", puuid);
         
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, data);
-        if (chl.isPresent())
-        {
-            return (Integer) chl.get();
-        }
-        
-        try
-        {
-            Integer list = (Integer) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, data);
-            return list;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(Integer.class, data);
     }
     
     public List<ChampionMastery> getChampionMasteries()
@@ -114,30 +97,8 @@ public class ChampionMasteryBuilder
         data.put("platform", platform);
         data.put("puuid", puuid);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (List<ChampionMastery>) chl.get();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-            
-            List<ChampionMastery> list = (List<ChampionMastery>) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_PUUID, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<ChampionMastery> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
     
     public List<ChampionMastery> getTopChampions(Integer count)

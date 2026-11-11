@@ -134,23 +134,6 @@ public class LeagueBuilder
         data.put("platform", platform);
         data.put("id", leagueId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE, data);
-        if (chl.isPresent())
-        {
-            return (LeagueList) chl.get();
-        }
-        
-        try
-        {
-            LeagueList list = (LeagueList) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(LeagueList.class, data);
     }
 }

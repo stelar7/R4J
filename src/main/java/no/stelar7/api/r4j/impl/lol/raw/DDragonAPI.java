@@ -484,24 +484,7 @@ public final class DDragonAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", region);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_REALMS, data);
-        if (chl.isPresent())
-        {
-            return (Realm) chl.get();
-        }
-        
-        try
-        {
-            Realm list = (Realm) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_REALMS, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(Realm.class, data);
     }
     
     public Map<Integer, StaticRune> getRunes(String version, String locale)

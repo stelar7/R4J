@@ -40,23 +40,6 @@ public final class ChampionAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
-        if (chl.isPresent())
-        {
-            return (ChampionRotationInfo) chl.get();
-        }
-        
-        try
-        {
-            ChampionRotationInfo cl = (ChampionRotationInfo) builder.build();
-            
-            data.put("value", cl);
-            context.getCacheProvider().store(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
-            
-            return cl;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(ChampionRotationInfo.class, data);
     }
 }

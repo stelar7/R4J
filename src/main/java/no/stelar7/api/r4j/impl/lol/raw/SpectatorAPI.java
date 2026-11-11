@@ -96,23 +96,6 @@ public final class SpectatorAPI
         data.put("platform", server);
         data.put("summoner", puuid);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_CURRENT, data);
-        if (chl.isPresent())
-        {
-            return (SpectatorGameInfo) chl.get();
-        }
-        
-        try
-        {
-            SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
-            
-            data.put("value", fg);
-            context.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_CURRENT, data);
-            
-            return fg;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(SpectatorGameInfo.class, data);
     }
 }

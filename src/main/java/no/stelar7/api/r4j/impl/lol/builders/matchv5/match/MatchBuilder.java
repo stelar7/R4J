@@ -102,23 +102,6 @@ public class MatchBuilder
         data.put("platform", this.platform);
         data.put("gameid", this.id);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_MATCH, data);
-        if (chl.isPresent())
-        {
-            return (GAMHSMatch) chl.get();
-        }
-        
-        Object matchObj = builder.build();
-        if (matchObj instanceof Pair)
-        {
-            return null;
-        }
-        
-        GAMHSMatch match = (GAMHSMatch) matchObj;
-        
-        data.put("value", match);
-        context.getCacheProvider().store(URLEndpoint.V5_MATCH, data);
-        
-        return match;
+        return builder.buildCached(GAMHSMatch.class, data);
     }
 }

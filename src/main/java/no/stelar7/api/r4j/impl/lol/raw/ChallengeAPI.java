@@ -41,24 +41,7 @@ public final class ChallengeAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_CONFIG, data);
-        if (chl.isPresent())
-        {
-            return (ChallengeConfigInfoList) chl.get();
-        }
-        
-        try
-        {
-            ChallengeConfigInfoList cl = (ChallengeConfigInfoList) builder.build();
-            
-            data.put("value", cl);
-            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_CONFIG, data);
-            
-            return cl;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(ChallengeConfigInfoList.class, data);
     }
     
     public MultiChallengePercentileMap getAllChallengePercentiles(LeagueShard server)
@@ -69,24 +52,7 @@ public final class ChallengeAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
-        if (chl.isPresent())
-        {
-            return (MultiChallengePercentileMap) chl.get();
-        }
-        
-        try
-        {
-            MultiChallengePercentileMap cl = (MultiChallengePercentileMap) builder.build();
-            
-            data.put("value", cl);
-            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
-            
-            return cl;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(MultiChallengePercentileMap.class, data);
     }
     
     public ChallengeConfigInfo getChallengeInfo(LeagueShard server, Long challengeId)
@@ -99,24 +65,7 @@ public final class ChallengeAPI
         data.put("platform", server);
         data.put("challenge", challengeId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID, data);
-        if (chl.isPresent())
-        {
-            return (ChallengeConfigInfo) chl.get();
-        }
-        
-        try
-        {
-            ChallengeConfigInfo cl = (ChallengeConfigInfo) builder.build();
-            
-            data.put("value", cl);
-            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID, data);
-            
-            return cl;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(ChallengeConfigInfo.class, data);
     }
     
     public ChallengeLeaderboardInfoList getChallengeLeaderboard(LeagueShard server, Long challengeId, ChallengeTierType level, Integer limit)
@@ -137,24 +86,7 @@ public final class ChallengeAPI
         data.put("level", level);
         data.put("limit", limit);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL, data);
-        if (chl.isPresent())
-        {
-            return (ChallengeLeaderboardInfoList) chl.get();
-        }
-        
-        try
-        {
-            ChallengeLeaderboardInfoList cl = (ChallengeLeaderboardInfoList) builder.build();
-            
-            data.put("value", cl);
-            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL, data);
-            
-            return cl;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(ChallengeLeaderboardInfoList.class, data);
     }
     
     public MultiChallengePercentileMap getChallengePercentiles(LeagueShard server, Long challengeId)
@@ -167,24 +99,7 @@ public final class ChallengeAPI
         data.put("platform", server);
         data.put("challenge", challengeId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
-        if (chl.isPresent())
-        {
-            return (MultiChallengePercentileMap) chl.get();
-        }
-        
-        try
-        {
-            MultiChallengePercentileMap cl = (MultiChallengePercentileMap) builder.build();
-            
-            data.put("value", cl);
-            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
-            
-            return cl;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(MultiChallengePercentileMap.class, data);
     }
     
     public ChallengePlayerInfo getChallengePlayerInfo(LeagueShard server, String puuid)
@@ -197,23 +112,6 @@ public final class ChallengeAPI
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_BY_PLAYER, data);
-        if (chl.isPresent())
-        {
-            return (ChallengePlayerInfo) chl.get();
-        }
-        
-        try
-        {
-            ChallengePlayerInfo cl = (ChallengePlayerInfo) builder.build();
-            
-            data.put("value", cl);
-            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_BY_PLAYER, data);
-            
-            return cl;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(ChallengePlayerInfo.class, data);
     }
 }

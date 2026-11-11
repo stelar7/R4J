@@ -52,25 +52,7 @@ public class TFTLeagueAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
 
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_MASTER, data);
-        if (chl.isPresent())
-        {
-            return (TFTLeagueList) chl.get();
-        }
-
-        try
-        {
-            TFTLeagueList list = (TFTLeagueList) builder.build();
-
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_MASTER, data);
-
-            return list;
-        } catch (ClassCastException e)
-        {
-
-            return null;
-        }
+        return builder.buildCached(TFTLeagueList.class, data);
     }
 
     /**
@@ -90,25 +72,7 @@ public class TFTLeagueAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
 
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, data);
-        if (chl.isPresent())
-        {
-            return (TFTLeagueList) chl.get();
-        }
-
-        try
-        {
-            TFTLeagueList list = (TFTLeagueList) builder.build();
-
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, data);
-
-            return list;
-        } catch (ClassCastException e)
-        {
-
-            return null;
-        }
+        return builder.buildCached(TFTLeagueList.class, data);
     }
 
 
@@ -129,25 +93,7 @@ public class TFTLeagueAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
 
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, data);
-        if (chl.isPresent())
-        {
-            return (TFTLeagueList) chl.get();
-        }
-
-        try
-        {
-            TFTLeagueList list = (TFTLeagueList) builder.build();
-
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, data);
-
-            return list;
-        } catch (ClassCastException e)
-        {
-
-            return null;
-        }
+        return builder.buildCached(TFTLeagueList.class, data);
     }
 
 
@@ -172,25 +118,7 @@ public class TFTLeagueAPI
         data.put("platform", server);
         data.put("leagueid", leagueId);
 
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE, data);
-        if (chl.isPresent())
-        {
-            return (TFTLeagueList) chl.get();
-        }
-
-        try
-        {
-            TFTLeagueList list = (TFTLeagueList) builder.build();
-
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE, data);
-
-            return list;
-        } catch (ClassCastException e)
-        {
-
-            return null;
-        }
+        return builder.buildCached(TFTLeagueList.class, data);
     }
 
     /**
@@ -213,30 +141,8 @@ public class TFTLeagueAPI
         data.put("platform", server);
         data.put("puuid", puuid);
 
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (List<TFTLeagueEntry>) chl.get();
-        }
-
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-
-            List<TFTLeagueEntry> list = (List<TFTLeagueEntry>) ret;
-
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID, data);
-
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<TFTLeagueEntry> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
 
     /**
@@ -278,30 +184,8 @@ public class TFTLeagueAPI
         data.put("tierdiv", tierdiv);
         data.put("page", page);
 
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_RANK, data);
-        if (chl.isPresent())
-        {
-            return (List<TFTLeagueEntry>) chl.get();
-        }
-
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-
-            List<TFTLeagueEntry> list = (List<TFTLeagueEntry>) ret;
-
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_RANK, data);
-
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<TFTLeagueEntry> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
 
     /**

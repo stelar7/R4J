@@ -101,25 +101,7 @@ public class TimelineBuilder
         data.put("platform", platform);
         data.put("matchId", this.id);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_TIMELINE, data);
-        if (chl.isPresent())
-        {
-            return (GAMHSMatch) chl.get();
-        }
-        
-        try
-        {
-            GAMHSMatch timeline = (GAMHSMatch) builder.build();
-            
-            data.put("value", timeline);
-            context.getCacheProvider().store(URLEndpoint.V5_TIMELINE, data);
-            
-            return timeline;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(GAMHSMatch.class, data);
     }
     
     public RegionShard getPlatform()

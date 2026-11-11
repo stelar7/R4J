@@ -48,24 +48,8 @@ public class ClashAPI
         data.put("platform", server);
         data.put("summonerId", summonerId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CLASH_PLAYER_BY_SUMMONER, data);
-        if (chl.isPresent())
-        {
-            return (List<ClashPlayer>) chl.get();
-        }
-        
-        try
-        {
-            List<ClashPlayer> list = (List<ClashPlayer>) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_CLASH_PLAYER_BY_SUMMONER, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<ClashPlayer> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
     
     /**
@@ -81,24 +65,8 @@ public class ClashAPI
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CLASH_PLAYER_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (List<ClashPlayer>) chl.get();
-        }
-        
-        try
-        {
-            List<ClashPlayer> list = (List<ClashPlayer>) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_CLASH_PLAYER_BY_PUUID, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<ClashPlayer> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
     
     /**
@@ -114,24 +82,7 @@ public class ClashAPI
         data.put("platform", server);
         data.put("teamId", teamId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CLASH_TEAM_BY_ID, data);
-        if (chl.isPresent())
-        {
-            return (ClashTeam) chl.get();
-        }
-        
-        try
-        {
-            ClashTeam list = (ClashTeam) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_CLASH_TEAM_BY_ID, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(ClashTeam.class, data);
     }
     
     /**
@@ -145,24 +96,8 @@ public class ClashAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CLASH_TOURNAMENTS, data);
-        if (chl.isPresent())
-        {
-            return (List<ClashTournament>) chl.get();
-        }
-        
-        try
-        {
-            List<ClashTournament> list = (List<ClashTournament>) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_CLASH_TOURNAMENTS, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<ClashTournament> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
     
     /**
@@ -178,24 +113,7 @@ public class ClashAPI
         data.put("platform", server);
         data.put("teamId", teamId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_TEAM, data);
-        if (chl.isPresent())
-        {
-            return (ClashTournament) chl.get();
-        }
-        
-        try
-        {
-            ClashTournament list = (ClashTournament) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_TEAM, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(ClashTournament.class, data);
     }
     
     /**
@@ -211,24 +129,7 @@ public class ClashAPI
         data.put("platform", server);
         data.put("tournamentId", tournamentId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_ID, data);
-        if (chl.isPresent())
-        {
-            return (ClashTournament) chl.get();
-        }
-        
-        try
-        {
-            ClashTournament list = (ClashTournament) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_ID, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(ClashTournament.class, data);
     }
     
 }

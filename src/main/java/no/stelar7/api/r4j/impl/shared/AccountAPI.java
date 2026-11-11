@@ -51,24 +51,7 @@ public class AccountAPI
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (RiotAccount) chl.get();
-        }
-        
-        try
-        {
-            RiotAccount list = (RiotAccount) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(RiotAccount.class, data);
     }
     
     public RiotAccount getAccountByTag(RegionShard server, String name, String tag)
@@ -89,24 +72,7 @@ public class AccountAPI
         data.put("tag", Utils.normalizeString(tag));
         data.put("keytype", keyType);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
-        if (chl.isPresent())
-        {
-            return (RiotAccount) chl.get();
-        }
-        
-        try
-        {
-            RiotAccount list = (RiotAccount) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(RiotAccount.class, data);
     }
     
     public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid)
@@ -126,24 +92,7 @@ public class AccountAPI
         data.put("game", game);
         data.put("puuid", puuid);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (RiotAccountShard) chl.get();
-        }
-        
-        try
-        {
-            RiotAccountShard list = (RiotAccountShard) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(RiotAccountShard.class, data);
     }
     
     /**
@@ -167,24 +116,7 @@ public class AccountAPI
         data.put("puuid", puuid);
         data.put("keytype", keyType);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_SHARED_REGION_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (RiotAccountRegion) chl.get();
-        }
-        
-        try
-        {
-            RiotAccountRegion region = (RiotAccountRegion) builder.build();
-            
-            data.put("value", region);
-            context.getCacheProvider().store(URLEndpoint.V1_SHARED_REGION_BY_PUUID, data);
-            
-            return region;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(RiotAccountRegion.class, data);
     }
     
     /**

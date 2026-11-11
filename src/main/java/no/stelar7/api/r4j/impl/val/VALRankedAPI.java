@@ -47,23 +47,6 @@ public class VALRankedAPI
         data.put("startIndex", startIndex);
         data.put("size", size);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT, data);
-        if (chl.isPresent())
-        {
-            return (Leaderboard) chl.get();
-        }
-        
-        try
-        {
-            Leaderboard match = (Leaderboard) builder.build();
-            
-            data.put("value", match);
-            context.getCacheProvider().store(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT, data);
-            
-            return match;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(Leaderboard.class, data);
     }
 }

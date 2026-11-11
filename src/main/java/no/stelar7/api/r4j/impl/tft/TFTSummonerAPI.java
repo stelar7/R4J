@@ -54,25 +54,7 @@ public class TFTSummonerAPI
         data.put("platform", server);
         data.put("puuid", PUUID);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (Summoner) chl.get();
-        }
-        
-        try
-        {
-            Summoner summoner = (Summoner) builder.build();
-            
-            data.put("value", summoner);
-            context.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, data);
-            
-            return summoner;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(Summoner.class, data);
     }
     
     /**

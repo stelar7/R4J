@@ -355,6 +355,20 @@ public class DataCallBuilder
         return result;
     }
 
+    /**
+     * Like {@link #buildCached(Class, Map)}, for the type the endpoint is declared to return.
+     * Useful when that type is a list wrapper (ie. the endpoint returns a ClashPlayerList, which is a {@code List<ClashPlayer>}).
+     *
+     * @param cacheKey the values identifying this call in the cache, in a consistent order
+     * @param <T>      the type the endpoint returns, or something it can be assigned to
+     * @return the result, or null if the api returned 404
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T buildCached(Map<String, Object> cacheKey)
+    {
+        return (T) buildCached(this.dc.getEndpoint().getType(), cacheKey);
+    }
+    
     private String postProcess(String returnValue)
     {
         final List<URLEndpoint> ddragon = Arrays.asList(URLEndpoint.DDRAGON_CHAMPION_MANY, URLEndpoint.DDRAGON_SUMMONER_SPELLS);

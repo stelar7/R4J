@@ -78,24 +78,7 @@ public class VALMatchAPI
         data.put("platform", platform);
         data.put("queue", queue);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, data);
-        if (chl.isPresent())
-        {
-            return (RecentMatchList) chl.get();
-        }
-        
-        try
-        {
-            RecentMatchList match = (RecentMatchList) builder.build();
-            
-            data.put("value", match);
-            context.getCacheProvider().store(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, data);
-            
-            return match;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(RecentMatchList.class, data);
     }
     
     
@@ -110,23 +93,6 @@ public class VALMatchAPI
         data.put("platform", platform);
         data.put("gameid", gameId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_MATCH_BY_ID, data);
-        if (chl.isPresent())
-        {
-            return (VALMatch) chl.get();
-        }
-        
-        try
-        {
-            VALMatch match = (VALMatch) builder.build();
-            
-            data.put("value", match);
-            context.getCacheProvider().store(URLEndpoint.V1_VAL_MATCH_BY_ID, data);
-            
-            return match;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(VALMatch.class, data);
     }
 }

@@ -61,24 +61,8 @@ public class TFTMatchAPI
         data.put("starttime", startTime);
         data.put("endtime", endTime);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_MATCHLIST, data);
-        if (chl.isPresent())
-        {
-            return (List<String>) chl.get();
-        }
-        
-        Object matchObj = builder.build();
-        if (matchObj instanceof Pair)
-        {
-            return Collections.emptyList();
-        }
-        
-        List<String> matchList = (List<String>) matchObj;
-        
-        data.put("value", matchList);
-        context.getCacheProvider().store(URLEndpoint.V1_TFT_MATCHLIST, data);
-        
-        return matchList;
+        List<String> matchList = builder.buildCached(data);
+        return matchList != null ? matchList : Collections.emptyList();
     }
     
     
@@ -116,23 +100,6 @@ public class TFTMatchAPI
         data.put("platform", platform);
         data.put("gameid", gameId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_MATCH, data);
-        if (chl.isPresent())
-        {
-            return (GAMHSMatch) chl.get();
-        }
-        
-        try
-        {
-            GAMHSMatch match = (GAMHSMatch) builder.build();
-            
-            data.put("value", match);
-            context.getCacheProvider().store(URLEndpoint.V1_TFT_MATCH, data);
-            
-            return match;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(GAMHSMatch.class, data);
     }
 }

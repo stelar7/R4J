@@ -55,25 +55,7 @@ public final class LeagueAPI
         data.put("platform", server);
         data.put("queue", queue);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_MASTER, data);
-        if (chl.isPresent())
-        {
-            return (LeagueList) chl.get();
-        }
-        
-        try
-        {
-            LeagueList list = (LeagueList) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_MASTER, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(LeagueList.class, data);
     }
     
     /**
@@ -97,25 +79,7 @@ public final class LeagueAPI
         data.put("queue", queue);
         
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_GRANDMASTER, data);
-        if (chl.isPresent())
-        {
-            return (LeagueList) chl.get();
-        }
-        
-        try
-        {
-            LeagueList list = (LeagueList) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_GRANDMASTER, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(LeagueList.class, data);
     }
     
     
@@ -138,25 +102,7 @@ public final class LeagueAPI
         data.put("platform", server);
         data.put("queue", queue);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_CHALLENGER, data);
-        if (chl.isPresent())
-        {
-            return (LeagueList) chl.get();
-        }
-        
-        try
-        {
-            LeagueList list = (LeagueList) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_CHALLENGER, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(LeagueList.class, data);
     }
     
     
@@ -180,25 +126,7 @@ public final class LeagueAPI
         data.put("platform", server);
         data.put("leagueid", leagueId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE, data);
-        if (chl.isPresent())
-        {
-            return (LeagueList) chl.get();
-        }
-        
-        try
-        {
-            LeagueList list = (LeagueList) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(LeagueList.class, data);
     }
     
     /**
@@ -220,30 +148,8 @@ public final class LeagueAPI
         data.put("platform", server);
         data.put("id", puuid);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (List<LeagueEntry>) chl.get();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-            
-            List<LeagueEntry> list = (List<LeagueEntry>) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<LeagueEntry> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
     
     /**
@@ -288,30 +194,8 @@ public final class LeagueAPI
         data.put("tierdiv", tierdiv);
         data.put("page", page);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_RANK, data);
-        if (chl.isPresent())
-        {
-            return (List<LeagueEntry>) chl.get();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-            
-            List<LeagueEntry> list = (List<LeagueEntry>) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_RANK, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<LeagueEntry> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
     
     /**

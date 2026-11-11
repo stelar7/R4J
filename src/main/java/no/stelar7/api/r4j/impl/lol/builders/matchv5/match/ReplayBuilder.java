@@ -78,24 +78,7 @@ public class ReplayBuilder
         data.put("platform", platform);
         data.put("puuid", this.id);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_MATCHLIST_REPLAYS, data);
-        if (chl.isPresent())
-        {
-            return (LOLMatchReplayList) chl.get();
-        }
-        
-        try
-        {
-            LOLMatchReplayList replays = (LOLMatchReplayList) builder.build();
-            
-            data.put("value", replays);
-            context.getCacheProvider().store(URLEndpoint.V5_MATCHLIST_REPLAYS, data);
-            
-            return replays;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(LOLMatchReplayList.class, data);
     }
     
     public RegionShard getPlatform()

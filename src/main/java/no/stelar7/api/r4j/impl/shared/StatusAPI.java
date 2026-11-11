@@ -40,25 +40,7 @@ public final class StatusAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_STATUS_LOL, data);
-        if (chl.isPresent())
-        {
-            return (PlatformData) chl.get();
-        }
-        
-        try
-        {
-            PlatformData list = (PlatformData) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V4_STATUS_LOL, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(PlatformData.class, data);
     }
     
     /**
@@ -87,25 +69,7 @@ public final class StatusAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_STATUS_LOR, data);
-        if (chl.isPresent())
-        {
-            return (PlatformData) chl.get();
-        }
-        
-        try
-        {
-            PlatformData list = (PlatformData) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_STATUS_LOR, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(PlatformData.class, data);
     }
     
     public PlatformData getShardStatus(ValorantShard server)
@@ -116,25 +80,7 @@ public final class StatusAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_STATUS_VAL, data);
-        if (chl.isPresent())
-        {
-            return (PlatformData) chl.get();
-        }
-        
-        try
-        {
-            PlatformData list = (PlatformData) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_STATUS_VAL, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildCached(PlatformData.class, data);
     }
     
 }

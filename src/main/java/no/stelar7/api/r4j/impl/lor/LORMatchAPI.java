@@ -86,23 +86,6 @@ public class LORMatchAPI
         data.put("platform", platform);
         data.put("gameid", gameId);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_LOR_MATCH, data);
-        if (chl.isPresent())
-        {
-            return (GAMHSMatch) chl.get();
-        }
-        
-        try
-        {
-            GAMHSMatch match = (GAMHSMatch) builder.build();
-            
-            data.put("value", match);
-            context.getCacheProvider().store(URLEndpoint.V1_LOR_MATCH, data);
-            
-            return match;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(GAMHSMatch.class, data);
     }
 }
