@@ -311,4 +311,44 @@ public final class LeagueAPI
     {
         return new LazyList<>(1, prevValue -> getLeagueByTierDivision(server, queue, tierdiv, prevValue + 1));
     }
+    
+    /**
+     * The experimental league endpoint (league-exp-v4).
+     * Unlike {@link #getLeagueByTierDivision(LeagueShard, GameQueueType, TierDivisionType, int)}, this endpoint also serves the apex tiers (master, grandmaster, challenger) in pages.
+     *
+     * @param server  the region to query
+     * @param queue   the queue to fetch data from (RANKED_SOLO_5x5, RANKED_TFT, RANKED_FLEX_SR or RANKED_FLEX_TT)
+     * @param tierdiv the tier and division to query
+     * @param page    the page to query (first page is 1)
+     * @return the entries, or an empty list if there are none
+     */
+    public List<LeagueEntry> getLeagueExpByTierDivision(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
+    {
+        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
+                                                       .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
+                                                       .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
+                                                       .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                       .withEndpoint(URLEndpoint.V4_LEAGUE_EXP_RANK)
+                                                       .withPlatform(server);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+        data.put("queue", queue);
+        data.put("tierdiv", tierdiv);
+        data.put("page", page);
+
+        List<LeagueEntry> entries = builder.buildCached(LeagueEntryList.class, data);
+        return entries != null ? entries : Collections.emptyList();
+    }
+
+    /**
+     * @param server  the region to query
+     * @param queue   the queue to fetch data from (RANKED_SOLO_5x5, RANKED_TFT, RANKED_FLEX_SR or RANKED_FLEX_TT)
+     * @param tierdiv the tier and division to query
+     * @return a list that loads the next page when it is needed
+     */
+    public LazyList<LeagueEntry> getLeagueExpByTierDivisionLazy(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv)
+    {
+        return new LazyList<>(1, prevValue -> getLeagueExpByTierDivision(server, queue, tierdiv, prevValue + 1));
+    }
 }
