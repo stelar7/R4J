@@ -61,7 +61,7 @@ public interface CacheProvider
     void clearOldCache();
     
     /**
-     * Returns the time in seconds the items are alloweed to live in the cache
+     * Returns the time in milliseconds the items are allowed to live in the cache (or one of TTL_INFINITY, TTL_USE_HINTS)
      *
      * @param type the endpoint
      * @return long
@@ -72,7 +72,7 @@ public interface CacheProvider
     /**
      * Sets the timeout for caches
      *
-     * @param timeToLive how long they should live
+     * @param timeToLive how long they should live, in milliseconds (or one of TTL_INFINITY, TTL_USE_HINTS)
      */
     void setTimeToLiveGlobal(long timeToLive);
     

@@ -9,9 +9,10 @@ import org.slf4j.*;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.FileTime;
-import java.time.*;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Stream;
 
 public class FileSystemCacheProvider implements CacheProvider
 {
@@ -21,7 +22,11 @@ public class FileSystemCacheProvider implements CacheProvider
     private       long              timeToLive;
     private       CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
     
-    private final ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService clearService = Executors.newSingleThreadScheduledExecutor(r -> {
+        Thread t = new Thread(r, "R4J-FileSystemCache-cleaner");
+        t.setDaemon(true);
+        return t;
+    });
     private       ScheduledFuture<?>       clearTask;
     
     public FileSystemCacheProvider(Path pathToFiles, int ttl)
@@ -46,20 +51,26 @@ public class FileSystemCacheProvider implements CacheProvider
     }
     
     @Override
-    public void setTimeToLiveGlobal(long timeToLive)
+    public synchronized void setTimeToLiveGlobal(long timeToLive)
     {
         this.timeToLive = timeToLive;
-        
+
+        if (clearTask != null)
+        {
+            clearTask.cancel(false);
+            clearTask = null;
+        }
+
         if (timeToLive > 0)
         {
             clearTask = clearService.scheduleAtFixedRate(this::clearOldCache, timeToLive, timeToLive, TimeUnit.MILLISECONDS);
-        } else if (timeToLive == CacheProvider.TTL_INFINITY)
-        {
-            if (clearTask != null)
-            {
-                clearTask.cancel(false);
-            }
         }
+    }
+
+    private String getKeyCombination()
+    {
+        // inject api key so cache still works in v4
+        return DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination();
     }
     
     @Override
@@ -75,48 +86,53 @@ public class FileSystemCacheProvider implements CacheProvider
         {
             if (!obj.containsKey("value"))
             {
-                throw new RuntimeException("Invalid cache insert!");
+                throw new IllegalArgumentException("Invalid cache insert!");
             }
-            
-            List<Object> vals      = new ArrayList<>(obj.values());
-            Object       storeItem = obj.get("value");
-            vals.remove(storeItem);
-            
+
+            Object storeItem = obj.get("value");
+
             // if the object we are trying to store is not valid, dont store it.
             if (storeItem == null)
             {
                 return;
             }
-            
-            // inject api key so cache still works in v4
-            vals.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
-            
-            Path storePath = resolvePath(type, vals);
+
+            Path storePath = resolvePath(type, getKeyValues(obj));
             Files.createDirectories(storePath.getParent());
-            try
-            {
-                Files.createFile(storePath);
-            } catch (FileAlreadyExistsException e)
-            {
-                // ignore it
-            }
             writeObject(storePath, storeItem);
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to store data in the cache ({})", type, e);
         }
     }
     
     private void writeObject(Path path, Object obj) throws IOException
     {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutput          out = new ObjectOutputStream(bos);
-        out.writeObject(obj);
-        out.flush();
-        
+        try (ObjectOutputStream out = new ObjectOutputStream(bos))
+        {
+            out.writeObject(obj);
+        }
+
+        // Files.write creates or replaces the file, and sets the modified time the lifetime is counted from
         Files.write(path, bos.toByteArray());
-        
-        bos.close();
+    }
+
+    /**
+     * The values identifying the item in the cache; everything but the item itself, followed by the api key combination
+     */
+    private List<Object> getKeyValues(Map<String, Object> obj)
+    {
+        List<Object> vals = new ArrayList<>();
+        obj.forEach((k, v) -> {
+            if (!"value".equals(k))
+            {
+                vals.add(v);
+            }
+        });
+
+        vals.add(getKeyCombination());
+        return vals;
     }
     
     
@@ -141,22 +157,16 @@ public class FileSystemCacheProvider implements CacheProvider
         {
             if (!obj.containsKey("value"))
             {
-                throw new RuntimeException("Invalid cache insert!");
+                throw new IllegalArgumentException("Invalid cache insert!");
             }
-            
-            List<Object> vals      = new ArrayList<>(obj.values());
-            Object       storeItem = obj.get("value");
-            vals.remove(storeItem);
-            
+
             // if the object we are trying to store is not valid, dont store it.
-            if (storeItem == null)
+            if (obj.get("value") == null)
             {
                 return;
             }
-            
-            vals.add(DataCall.getCredentials().getUniqueKeyCombination());
-            
-            Path storePath = resolvePath(type, vals);
+
+            Path storePath = resolvePath(type, getKeyValues(obj));
             if (Files.exists(storePath))
             {
                 Files.setLastModifiedTime(storePath, FileTime.from(Instant.now()));
@@ -166,25 +176,22 @@ public class FileSystemCacheProvider implements CacheProvider
             }
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to update data in the cache ({})", type, e);
         }
     }
-    
+
     @Override
     public Optional<?> get(URLEndpoint type, Map<String, Object> obj)
     {
-        List<Object> vals = new ArrayList<>(obj.values());
-        
-        // inject api key so cache still works in v4
-        vals.add(DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination());
-        Path filepath = resolvePath(type, vals);
-        
+        List<Object> vals     = getKeyValues(obj);
+        Path         filepath = resolvePath(type, vals);
+
         try
         {
             clearPath(filepath);
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to check the age of the cached data ({})", type, e);
         }
         
         if (!Files.exists(filepath))
@@ -209,6 +216,13 @@ public class FileSystemCacheProvider implements CacheProvider
         } catch (IOException | ClassNotFoundException e)
         {
             logger.info("Data in cache is from an older version of the library, removing it");
+            try
+            {
+                Files.deleteIfExists(filepath);
+            } catch (IOException ignored)
+            {
+                // it is replaced on the next store
+            }
             return Optional.empty();
         }
     }
@@ -230,10 +244,13 @@ public class FileSystemCacheProvider implements CacheProvider
                 return;
             }
             
-            Files.walk(pathToWalk).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+            try (Stream<Path> paths = Files.walk(pathToWalk))
+            {
+                paths.sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+            }
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to clear the cache ({})", type, e);
         }
     }
     
@@ -245,34 +262,39 @@ public class FileSystemCacheProvider implements CacheProvider
             return;
         }
         
-        try
+        if (!Files.exists(home))
         {
-            Files.walk(home).sorted(Comparator.reverseOrder()).forEach(p -> {
+            return;
+        }
+
+        try (Stream<Path> paths = Files.walk(home))
+        {
+            paths.sorted(Comparator.reverseOrder()).forEach(p -> {
                 try
                 {
                     clearPath(p);
-                } catch (IOException e)
+                } catch (IOException | RuntimeException e)
                 {
                     // silent fail
-                    // e.printStackTrace();
                 }
             });
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to clear old data from the cache", e);
         }
     }
     
     private void clearPath(Path p) throws IOException
     {
-        if (!Files.exists(p) || p.equals(home))
+        // no point in deleting the folders..
+        if (!Files.exists(p) || p.equals(home) || Files.isDirectory(p))
         {
             return;
         }
-        
-        LocalDateTime accessTime = ((FileTime) Files.readAttributes(p, "lastAccessTime").get("lastAccessTime")).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        LocalDateTime nowTime    = LocalDateTime.now();
-        long          life       = Duration.between(accessTime, nowTime).getSeconds() * 1000;
+
+        // The age is counted from when the item was stored (or refreshed with update()).
+        // The access time is not used, as many filesystems do not track it, and where it is tracked reading an item would keep it alive forever
+        long life = System.currentTimeMillis() - Files.getLastModifiedTime(p).toMillis();
         
         if (timeToLive != CacheProvider.TTL_USE_HINTS)
         {
@@ -332,10 +354,18 @@ public class FileSystemCacheProvider implements CacheProvider
                 pathToWalk = pathToWalk.resolve(Utils.normalizeString(o.toString()));
             }
             
-            return Files.walk(pathToWalk).filter(p -> !Files.isDirectory(p)).count();
+            if (!Files.exists(pathToWalk))
+            {
+                return 0;
+            }
+
+            try (Stream<Path> paths = Files.walk(pathToWalk))
+            {
+                return paths.filter(p -> !Files.isDirectory(p)).count();
+            }
         } catch (IOException e)
         {
-            e.printStackTrace();
+            logger.warn("Unable to get the size of the cache ({})", type, e);
             return -1;
         }
     }
