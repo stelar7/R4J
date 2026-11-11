@@ -142,6 +142,7 @@ public class MatchParticipant implements Serializable
     private int                 wardsKilled;
     private int                 wardsPlaced;
     private boolean             win;
+    private Map<String, Object> missions;
     
     public int getAllInPings()
     {
@@ -1231,5 +1232,10 @@ public class MatchParticipant implements Serializable
                ", wardsPlaced=" + wardsPlaced +
                ", win=" + win +
                '}';
+    }
+    
+    public Map<String, Object> getMissions()
+    {
+        return missions;
     }
 }

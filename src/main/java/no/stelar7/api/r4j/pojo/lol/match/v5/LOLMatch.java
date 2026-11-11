@@ -28,6 +28,7 @@ public class LOLMatch implements Serializable
     private GameQueueType          queueId;
     private List<MatchTeam>        teams;
     private String                 tournamentCode;
+    private String endOfGameResult;
     
     public static LOLMatch get(LeagueShard shard, String id)
     {
@@ -185,5 +186,10 @@ public class LOLMatch implements Serializable
                ", teams=" + teams +
                ", tournamentCode='" + tournamentCode + '\'' +
                '}';
+    }
+    
+    public String getEndOfGameResult()
+    {
+        return endOfGameResult;
     }
 }

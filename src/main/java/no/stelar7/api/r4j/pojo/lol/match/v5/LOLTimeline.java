@@ -11,6 +11,7 @@ public class LOLTimeline implements Serializable
     private List<TimelineFrame>               frames;
     private long                              gameId;
     private List<TimelineParticipantIdentity> participants;
+    private String endOfGameResult;
     
     public int getFrameInterval()
     {
@@ -62,5 +63,10 @@ public class LOLTimeline implements Serializable
                ", gameId=" + gameId +
                ", participants=" + participants +
                '}';
+    }
+    
+    public String getEndOfGameResult()
+    {
+        return endOfGameResult;
     }
 }
