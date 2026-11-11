@@ -6,7 +6,7 @@ import no.stelar7.api.r4j.basic.constants.api.regions.RegionShard;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import no.stelar7.api.r4j.pojo.lol.tournament.*;
 
-import java.util.List;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 public final class TournamentAPI
@@ -86,6 +86,28 @@ public final class TournamentAPI
                                                        .withPlatform(RegionShard.AMERICAS);
         
         return builder.buildAs(TournamentCode.class);
+    }
+    
+    /**
+     * Get the games played with a tournament code
+     *
+     * @param tournamentCode The tournament code of the match
+     * @return the games, or an empty list if there are none
+     */
+    public List<TournamentGame> getTournamentGames(final String tournamentCode)
+    {
+        if (useStub)
+        {
+            throw new IllegalArgumentException("This method is not useable with the stub API");
+        }
+        
+        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
+                                                       .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withEndpoint(URLEndpoint.V5_TOURNAMENT_GAMES_BY_CODE)
+                                                       .withPlatform(RegionShard.AMERICAS);
+        
+        List<TournamentGame> games = builder.buildAs(TournamentGameList.class);
+        return games != null ? games : Collections.emptyList();
     }
     
     /**

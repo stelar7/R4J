@@ -75,6 +75,7 @@ public enum URLEndpoint
     
     V5_TOURNAMENT_CODES("lol", "tournament", "v5", "codes", StringList.class),
     V5_TOURNAMENT_CODES_BY_CODE("lol", "tournament", "v5", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
+    V5_TOURNAMENT_GAMES_BY_CODE("lol", "tournament", "v5", "games/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentGameList.class),
     V5_TOURNAMENT_LOBBY_EVENTS("lol", "tournament", "v5", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V5_TOURNAMENT_PROVIDER("lol", "tournament", "v5", "providers", Integer.class),
     V5_TOURNAMENT_TOURNAMENT("lol", "tournament", "v5", "tournaments", Integer.class),
