@@ -51,7 +51,7 @@ For maven / gradle / sbt / leiningen:  [Jitpack](https://jitpack.io/#stelar7/R4J
 For a JAR file: [Releases](https://github.com/stelar7/R4J/releases/)
 
 ##### Javadoc?
-[Click here](https://stelar7.github.io/R4J/) (built from master)
+[Click here](https://stelar7.github.io/R4J/) (updated with every release)
 
 
 ## How do I async?
