@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.pojo.lol.championmastery;
 
+import java.util.*;
+
 import java.io.Serializable;
 import java.time.*;
 import java.util.Objects;
@@ -17,6 +19,11 @@ public class ChampionMastery implements Serializable
     private int     tokensEarned;
     private int     championId;
     private long    lastPlayTime;
+    private String              puuid;
+    private int                 markRequiredForNextLevel;
+    private int                 championSeasonMilestone;
+    private NextSeasonMilestone nextSeasonMilestone;
+    private List<String>        milestoneGrades;
     
     
     /**
@@ -162,5 +169,30 @@ public class ChampionMastery implements Serializable
                ", championId=" + championId +
                ", lastPlayTime=" + lastPlayTime +
                '}';
+    }
+    
+    public String getPuuid()
+    {
+        return puuid;
+    }
+    
+    public int getMarkRequiredForNextLevel()
+    {
+        return markRequiredForNextLevel;
+    }
+    
+    public int getChampionSeasonMilestone()
+    {
+        return championSeasonMilestone;
+    }
+    
+    public NextSeasonMilestone getNextSeasonMilestone()
+    {
+        return nextSeasonMilestone;
+    }
+    
+    public List<String> getMilestoneGrades()
+    {
+        return milestoneGrades;
     }
 }
