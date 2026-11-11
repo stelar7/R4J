@@ -11,6 +11,8 @@ public class Leaderboard implements Serializable
     private String                  actId;
     private long                    totalPlayers;
     private List<LeaderboardPlayer> players;
+    private String                    query;
+    private List<Map<String, Object>> tierDetails;
     
     public String getShard()
     {
@@ -62,5 +64,15 @@ public class Leaderboard implements Serializable
                ", totalPlayers=" + totalPlayers +
                ", players=" + players +
                '}';
+    }
+    
+    public String getQuery()
+    {
+        return query;
+    }
+    
+    public List<Map<String, Object>> getTierDetails()
+    {
+        return tierDetails;
     }
 }
