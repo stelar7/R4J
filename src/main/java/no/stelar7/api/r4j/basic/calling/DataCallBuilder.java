@@ -198,9 +198,23 @@ public class DataCallBuilder
                 if (this.dc.getEndpoint() != null)
                 {
                     final Class<?> returnType = this.dc.getEndpoint().getType();
-                    returnValue = postProcess(returnValue);
 
-                    return context.bind(Utils.getGson().fromJson(returnValue, returnType));
+                    Object parsed;
+                    try
+                    {
+                        returnValue = postProcess(returnValue);
+                        parsed = Utils.getGson().fromJson(returnValue, returnType);
+                    } catch (R4JException e)
+                    {
+                        // thrown on purpose while reading the response (ie. an unknown enum value in strict mode)
+                        throw e;
+                    } catch (RuntimeException e)
+                    {
+                        // json of another shape than the endpoint returns, or no json at all
+                        throw new APINoValidResponseException("The response could not be read as " + returnType.getSimpleName() + " (" + e + ")", e);
+                    }
+
+                    return context.bind(parsed);
                 } else
                 {
                     return returnValue;

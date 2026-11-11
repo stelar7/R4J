@@ -70,7 +70,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_CHAMPION_MANY);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        String resolved = version != null ? version : latestVersion();
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -78,7 +84,7 @@ public final class DDragonAPI
         data.put("locale", locale);
         
         StaticChampionList list = builder.buildCached(StaticChampionList.class, data);
-        return list != null ? list.getData() : Collections.emptyMap();
+        return list != null && list.getData() != null ? list.getData() : Collections.emptyMap();
     }
     
     public List<StaticChampion> getChampionsFromId(List<Integer> freeChampionIds)
@@ -138,7 +144,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        String resolved = version != null ? version : latestVersion();
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -146,7 +158,7 @@ public final class DDragonAPI
         data.put("locale", locale);
         
         ItemList list = builder.buildCached(ItemList.class, data);
-        return list != null ? list.getData() : Collections.emptyMap();
+        return list != null && list.getData() != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Integer, Item> getItems()
@@ -172,7 +184,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        String resolved = version != null ? version : latestVersion();
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -180,7 +198,7 @@ public final class DDragonAPI
         data.put("locale", locale);
         
         LanguageStrings list = builder.buildCached(LanguageStrings.class, data);
-        return list != null ? list.getData() : Collections.emptyMap();
+        return list != null && list.getData() != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<String, String> getLanguageStrings()
@@ -236,7 +254,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_MAPS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        String resolved = version != null ? version : latestVersion();
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -244,7 +268,7 @@ public final class DDragonAPI
         data.put("locale", locale);
         
         MapData list = builder.buildCached(MapData.class, data);
-        return list != null ? list.getData() : Collections.emptyMap();
+        return list != null && list.getData() != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<String, MapDetails> getMaps()
@@ -259,7 +283,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
+        String resolved = version != null ? version : realmVersion("mastery");
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -267,7 +297,7 @@ public final class DDragonAPI
         data.put("locale", locale);
         
         StaticMasteryList list = builder.buildCached(StaticMasteryList.class, data);
-        return list != null ? list.getData() : Collections.emptyMap();
+        return list != null && list.getData() != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Integer, StaticMastery> getMasteries()
@@ -282,7 +312,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
+        String resolved = version != null ? version : realmVersion("mastery");
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -315,7 +351,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_PROFILEICONS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        String resolved = version != null ? version : latestVersion();
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -323,7 +365,7 @@ public final class DDragonAPI
         data.put("locale", locale);
         
         ProfileIconData list = builder.buildCached(ProfileIconData.class, data);
-        return list != null ? list.getData() : Collections.emptyMap();
+        return list != null && list.getData() != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Long, ProfileIconDetails> getProfileIcons()
@@ -363,7 +405,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_RUNES);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("rune") : version);
+        String resolved = version != null ? version : realmVersion("rune");
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -371,7 +419,7 @@ public final class DDragonAPI
         data.put("locale", locale);
         
         StaticRuneList list = builder.buildCached(StaticRuneList.class, data);
-        return list != null ? list.getData() : Collections.emptyMap();
+        return list != null && list.getData() != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Integer, StaticRune> getRunes()
@@ -398,7 +446,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_SUMMONER_SPELLS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        String resolved = version != null ? version : latestVersion();
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -406,7 +460,7 @@ public final class DDragonAPI
         data.put("locale", locale);
         
         StaticSummonerSpellList list = builder.buildCached(StaticSummonerSpellList.class, data);
-        return list != null ? list.getData() : Collections.emptyMap();
+        return list != null && list.getData() != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Integer, StaticSummonerSpell> getSummonerSpells()
@@ -510,7 +564,13 @@ public final class DDragonAPI
                 .withProxy(baseUrl + Constants.GSVR)
                 .withEndpoint(URLEndpoint.DDRAGON_PERKPATHS);
         
-        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        String resolved = version != null ? version : latestVersion();
+        if (resolved == null)
+        {
+            // Data Dragon could not tell which version to use
+            return Collections.emptyMap();
+        }
+        builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
         builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
         Map<String, Object> data = new LinkedHashMap<>();
@@ -563,9 +623,32 @@ public final class DDragonAPI
         return getPerkPath(id, null, null);
     }
     
+    /**
+     * @return the newest version, or null if Data Dragon did not answer with a list of versions
+     */
+    private String latestVersion()
+    {
+        List<String> versions = getVersions();
+        return versions.isEmpty() ? null : versions.get(0);
+    }
+    
+    /**
+     * @return the version of data that is no longer updated (masteries and runes), or null if Data Dragon did not answer with a realm
+     */
+    private String realmVersion(String kind)
+    {
+        Realm realm = getRealm();
+        return realm == null || realm.getN() == null ? null : realm.getN().get(kind);
+    }
+    
+    /**
+     * @return the url of the tarball of the version, or null if no version is given and Data Dragon could not tell which is the newest
+     */
+    @Nullable
     public String getTarball(String version)
     {
-        return (baseUrl + "cdn/dragontail-{version}.tgz").replace(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+        String resolved = version != null ? version : latestVersion();
+        return resolved == null ? null : (baseUrl + "cdn/dragontail-{version}.tgz").replace(Constants.VERSION_PLACEHOLDER, resolved);
     }
     
     public String getTarball()
@@ -586,6 +669,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_CHAMPION_MANY);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -593,7 +681,7 @@ public final class DDragonAPI
             data.put("version", version);
             data.put("locale", locale);
         
-            return builder.buildCachedAsync(StaticChampionList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+            return builder.buildCachedAsync(StaticChampionList.class, data).thenApply(list -> list != null && list.getData() != null ? list.getData() : Collections.emptyMap());
         });
     }
     
@@ -660,6 +748,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -667,7 +760,7 @@ public final class DDragonAPI
             data.put("version", version);
             data.put("locale", locale);
         
-            return builder.buildCachedAsync(ItemList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+            return builder.buildCachedAsync(ItemList.class, data).thenApply(list -> list != null && list.getData() != null ? list.getData() : Collections.emptyMap());
         });
     }
     
@@ -714,6 +807,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -721,7 +819,7 @@ public final class DDragonAPI
             data.put("version", version);
             data.put("locale", locale);
         
-            return builder.buildCachedAsync(LanguageStrings.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+            return builder.buildCachedAsync(LanguageStrings.class, data).thenApply(list -> list != null && list.getData() != null ? list.getData() : Collections.emptyMap());
         });
     }
     
@@ -780,6 +878,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_MAPS);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -787,7 +890,7 @@ public final class DDragonAPI
             data.put("version", version);
             data.put("locale", locale);
         
-            return builder.buildCachedAsync(MapData.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+            return builder.buildCachedAsync(MapData.class, data).thenApply(list -> list != null && list.getData() != null ? list.getData() : Collections.emptyMap());
         });
     }
     
@@ -814,6 +917,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -821,7 +929,7 @@ public final class DDragonAPI
             data.put("version", version);
             data.put("locale", locale);
         
-            return builder.buildCachedAsync(StaticMasteryList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+            return builder.buildCachedAsync(StaticMasteryList.class, data).thenApply(list -> list != null && list.getData() != null ? list.getData() : Collections.emptyMap());
         });
     }
     
@@ -848,6 +956,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -902,6 +1015,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_PROFILEICONS);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -909,7 +1027,7 @@ public final class DDragonAPI
             data.put("version", version);
             data.put("locale", locale);
         
-            return builder.buildCachedAsync(ProfileIconData.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+            return builder.buildCachedAsync(ProfileIconData.class, data).thenApply(list -> list != null && list.getData() != null ? list.getData() : Collections.emptyMap());
         });
     }
     
@@ -972,6 +1090,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_RUNES);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -979,7 +1102,7 @@ public final class DDragonAPI
             data.put("version", version);
             data.put("locale", locale);
         
-            return builder.buildCachedAsync(StaticRuneList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+            return builder.buildCachedAsync(StaticRuneList.class, data).thenApply(list -> list != null && list.getData() != null ? list.getData() : Collections.emptyMap());
         });
     }
     
@@ -1026,6 +1149,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_SUMMONER_SPELLS);
         
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
         
@@ -1033,7 +1161,7 @@ public final class DDragonAPI
             data.put("version", version);
             data.put("locale", locale);
         
-            return builder.buildCachedAsync(StaticSummonerSpellList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+            return builder.buildCachedAsync(StaticSummonerSpellList.class, data).thenApply(list -> list != null && list.getData() != null ? list.getData() : Collections.emptyMap());
         });
     }
     
@@ -1182,6 +1310,11 @@ public final class DDragonAPI
                     .withProxy(baseUrl + Constants.GSVR)
                     .withEndpoint(URLEndpoint.DDRAGON_PERKPATHS);
 
+            if (resolved == null)
+            {
+                // Data Dragon could not tell which version to use
+                return CompletableFuture.completedFuture(Collections.emptyMap());
+            }
             builder.withURLParameter(Constants.VERSION_PLACEHOLDER, resolved);
             builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
 
@@ -1236,7 +1369,7 @@ public final class DDragonAPI
      */
     public CompletableFuture<String> getTarballAsync(String version)
     {
-        return versionOrLatestAsync(version).thenApply(resolved -> (baseUrl + "cdn/dragontail-{version}.tgz").replace(Constants.VERSION_PLACEHOLDER, resolved));
+        return versionOrLatestAsync(version).thenApply(resolved -> resolved == null ? null : (baseUrl + "cdn/dragontail-{version}.tgz").replace(Constants.VERSION_PLACEHOLDER, resolved));
     }
     
     /**
@@ -1254,7 +1387,7 @@ public final class DDragonAPI
      */
     private CompletableFuture<String> versionOrLatestAsync(String version)
     {
-        return version != null ? CompletableFuture.completedFuture(version) : getVersionsAsync().thenApply(versions -> versions.get(0));
+        return version != null ? CompletableFuture.completedFuture(version) : getVersionsAsync().thenApply(versions -> versions.isEmpty() ? null : versions.get(0));
     }
 
     /**
@@ -1262,7 +1395,7 @@ public final class DDragonAPI
      */
     private CompletableFuture<String> versionOrRealmAsync(String version, String kind)
     {
-        return version != null ? CompletableFuture.completedFuture(version) : getRealmAsync().thenApply(realm -> realm.getN().get(kind));
+        return version != null ? CompletableFuture.completedFuture(version) : getRealmAsync().thenApply(realm -> realm == null || realm.getN() == null ? null : realm.getN().get(kind));
     }
 
     private static List<StaticChampion> championsFromId(Map<Integer, StaticChampion> all, List<Integer> ids)

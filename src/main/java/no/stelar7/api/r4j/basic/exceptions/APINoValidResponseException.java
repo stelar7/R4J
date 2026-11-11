@@ -8,4 +8,9 @@ public class APINoValidResponseException extends R4JException
         super(responseData);
     }
     
+    public APINoValidResponseException(final String message, final Throwable cause)
+    {
+        super(message, cause);
+    }
+    
 }

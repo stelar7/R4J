@@ -350,6 +350,8 @@ public class ApiAsyncTwinsTest
     public void everyTwinBehavesLikeItsBlockingMethod() throws Exception
     {
         List<String> differences = new ArrayList<>();
+        // a NullPointerException, ClassCastException or the like: whatever the server answers, a call ends in a result or in an exception of this library
+        List<String> accidents   = new ArrayList<>();
         int          compared    = 0;
 
         for (String scenario : Arrays.asList("unknown", "unexpected", "number", "list", "ddragon"))
@@ -393,6 +395,11 @@ public class ApiAsyncTwinsTest
                     String actual   = outcome(() -> ((CompletableFuture<?>) twin.invoke(target, args)).get(30, TimeUnit.SECONDS));
                     compared++;
 
+                    if (expected.startsWith("exception: ") && !expected.contains(".r4j.") && !expected.endsWith("IllegalArgumentException"))
+                    {
+                        accidents.add(scenario + " " + target.getClass().getSimpleName() + "." + name + ": " + expected);
+                    }
+                    
                     if (!expected.equals(actual))
                     {
                         differences.add(scenario + " " + target.getClass().getSimpleName() + "." + name + ": blocking gave [" + expected + "], the twin gave [" + actual + "]");
@@ -402,6 +409,7 @@ public class ApiAsyncTwinsTest
         }
 
         Assertions.assertTrue(differences.isEmpty(), differences.size() + " twins behave differently:\n" + String.join("\n", differences));
+        Assertions.assertTrue(accidents.isEmpty(), accidents.size() + " calls ended in an exception that is not thrown on purpose:\n" + String.join("\n", accidents));
         Assertions.assertTrue(compared > 600, "only " + compared + " comparisons were made");
     }
 }

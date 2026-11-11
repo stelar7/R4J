@@ -37,9 +37,23 @@ public final class ImageAPI
         this.context = context;
     }
     
+    /**
+     * The realm says where the images are (and which version is current)
+     */
+    private Realm realm()
+    {
+        Realm realm = DDragonAPI.getInstance(context).getRealm();
+        if (realm == null || realm.getCDN() == null)
+        {
+            throw new no.stelar7.api.r4j.basic.exceptions.APINoValidResponseException("Data Dragon did not answer with a realm, which is needed to build the url of an image");
+        }
+        
+        return realm;
+    }
+    
     private String buildImageURL(String version, String path, String file)
     {
-        Realm  realm         = DDragonAPI.getInstance(context).getRealm();
+        Realm  realm         = realm();
         String cdn           = realm.getCDN();
         String versionString = version != null ? version : currentVersion(realm, path);
 
@@ -71,7 +85,7 @@ public final class ImageAPI
      */
     private String buildUnversionedImageURL(String path, String file)
     {
-        Realm  realm = DDragonAPI.getInstance(context).getRealm();
+        Realm  realm = realm();
         String cdn   = realm.getCDN();
 
         String preReplace = cdn + Constants.SEPARATOR + path + Constants.SEPARATOR + file;
