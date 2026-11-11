@@ -4,13 +4,17 @@ import no.stelar7.api.r4j.basic.cache.CacheProvider;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.utils.Utils;
+import no.stelar7.api.r4j.pojo.shared.RiotAccount;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.FileTime;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.stream.*;
 
 /**
@@ -123,5 +127,103 @@ public class CacheProviderTest
 
         Assertions.assertEquals("value-a", tiered.get(ENDPOINT, key(LeagueShard.EUW1, "a")).orElse(null));
         Assertions.assertEquals("value-a", memory.get(ENDPOINT, key(LeagueShard.EUW1, "a")).orElse(null));
+    }
+    
+    private List<Path> files(Path dir) throws IOException
+    {
+        try (Stream<Path> walk = Files.walk(dir))
+        {
+            return walk.filter(Files::isRegularFile).collect(Collectors.toList());
+        }
+    }
+    
+    @Test
+    public void fileCacheStoresApiObjectsAsJson(@TempDir Path dir) throws IOException
+    {
+        FileSystemCacheProvider cache    = new FileSystemCacheProvider(dir, CacheProvider.TTL_INFINITY);
+        URLEndpoint             endpoint = URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID;
+        
+        RiotAccount account = Utils.getGson().fromJson("{\"puuid\":\"abc\",\"gameName\":\"Ærlig\",\"tagLine\":\"EUW\"}", RiotAccount.class);
+        cache.store(endpoint, entry(LeagueShard.EUW1, "abc", account));
+        
+        // what is on disk is plain json
+        List<Path> files = files(dir);
+        Assertions.assertEquals(1, files.size());
+        String content = new String(Files.readAllBytes(files.get(0)), StandardCharsets.UTF_8);
+        Assertions.assertTrue(content.startsWith("{") && content.contains("\"gameName\""), content);
+        
+        Object cached = cache.get(endpoint, key(LeagueShard.EUW1, "abc")).orElse(null);
+        Assertions.assertEquals(account, cached);
+        Assertions.assertNotSame(account, cached);
+    }
+    
+    @Test
+    public void fileCacheStillReadsJavaSerializedFiles(@TempDir Path dir) throws IOException
+    {
+        FileSystemCacheProvider cache = new FileSystemCacheProvider(dir, CacheProvider.TTL_INFINITY);
+        
+        // a String is not what this endpoint returns, so it is stored the old way (which is also what older versions wrote)
+        cache.store(ENDPOINT, entry(LeagueShard.EUW1, "a", "value-a"));
+        byte[] content = Files.readAllBytes(files(dir).get(0));
+        Assertions.assertEquals(0xAC, content[0] & 0xFF);
+        Assertions.assertEquals(0xED, content[1] & 0xFF);
+        
+        Assertions.assertEquals("value-a", cache.get(ENDPOINT, key(LeagueShard.EUW1, "a")).orElse(null));
+    }
+    
+    @Test
+    public void fileCacheRemovesUnreadableFiles(@TempDir Path dir) throws IOException
+    {
+        FileSystemCacheProvider cache    = new FileSystemCacheProvider(dir, CacheProvider.TTL_INFINITY);
+        URLEndpoint             endpoint = URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID;
+        
+        RiotAccount account = Utils.getGson().fromJson("{\"puuid\":\"abc\"}", RiotAccount.class);
+        cache.store(endpoint, entry(LeagueShard.EUW1, "abc", account));
+        
+        Path file = files(dir).get(0);
+        Files.write(file, "{ this is not json".getBytes(StandardCharsets.UTF_8));
+        
+        Assertions.assertFalse(cache.get(endpoint, key(LeagueShard.EUW1, "abc")).isPresent());
+        Assertions.assertFalse(Files.exists(file));
+    }
+    
+    /**
+     * Several caches on the same folder, like several processes sharing a cache directory
+     */
+    @Test
+    public void fileCacheCanBeSharedByConcurrentWriters(@TempDir Path dir) throws Exception
+    {
+        URLEndpoint endpoint = URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID;
+        RiotAccount account  = Utils.getGson().fromJson("{\"puuid\":\"abc\",\"gameName\":\"name\",\"tagLine\":\"EUW\"}", RiotAccount.class);
+        
+        ExecutorService      pool = Executors.newFixedThreadPool(6);
+        List<Future<String>> jobs = new ArrayList<>();
+        for (int t = 0; t < 6; t++)
+        {
+            jobs.add(pool.submit(() -> {
+                FileSystemCacheProvider cache = new FileSystemCacheProvider(dir, CacheProvider.TTL_INFINITY);
+                for (int i = 0; i < 150; i++)
+                {
+                    cache.store(endpoint, entry(LeagueShard.EUW1, "abc", account));
+                    Optional<?> cached = cache.get(endpoint, key(LeagueShard.EUW1, "abc"));
+                    
+                    // a reader must never see half a file: the value is either complete or (on a platform that can not replace atomically) absent
+                    if (cached.isPresent() && !account.equals(cached.get()))
+                    {
+                        return "read a damaged value: " + cached.get();
+                    }
+                }
+                return null;
+            }));
+        }
+        
+        for (Future<String> job : jobs)
+        {
+            Assertions.assertNull(job.get(60, TimeUnit.SECONDS));
+        }
+        pool.shutdown();
+        
+        // no temporary files are left behind
+        Assertions.assertEquals(1, files(dir).size());
     }
 }
