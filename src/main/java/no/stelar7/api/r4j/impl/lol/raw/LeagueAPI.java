@@ -155,7 +155,9 @@ public final class LeagueAPI
      * @param server   region to get data from
      * @param leagueId league to get data for
      * @return LeagueList
+     * @deprecated Riot announced (2025-05-29) that leagueId is going away and that this endpoint is retired; it is no longer in the league-v4 documentation
      */
+    @Deprecated
     public LeagueList getLeague(LeagueShard server, String leagueId)
     {
         DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
