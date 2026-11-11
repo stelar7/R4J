@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.sql.DriverManager;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.FileTime;
@@ -225,5 +226,78 @@ public class CacheProviderTest
         
         // no temporary files are left behind
         Assertions.assertEquals(1, files(dir).size());
+    }
+
+    private JdbcCacheProvider h2Cache(long ttl)
+    {
+        // a table per test, so the tests do not see each others data
+        String table = "cache_" + UUID.randomUUID().toString().replace("-", "");
+        return new JdbcCacheProvider(() -> DriverManager.getConnection("jdbc:h2:mem:r4jcache;DB_CLOSE_DELAY=-1"), table, ttl);
+    }
+
+    @Test
+    public void databaseCacheStoresAndReturns()
+    {
+        storesAndReturns(h2Cache(CacheProvider.TTL_INFINITY));
+    }
+
+    @Test
+    public void databaseCacheExpires() throws InterruptedException
+    {
+        JdbcCacheProvider cache = h2Cache(200);
+        cache.store(ENDPOINT, entry(LeagueShard.EUW1, "a", "value-a"));
+        Assertions.assertTrue(cache.get(ENDPOINT, key(LeagueShard.EUW1, "a")).isPresent());
+
+        Thread.sleep(400);
+        Assertions.assertFalse(cache.get(ENDPOINT, key(LeagueShard.EUW1, "a")).isPresent());
+        Assertions.assertEquals(0, cache.getSize(ENDPOINT, Collections.emptyMap()));
+
+        // clearOldCache removes what nobody asked for again
+        cache.store(ENDPOINT, entry(LeagueShard.EUW1, "b", "value-b"));
+        Thread.sleep(400);
+        cache.clearOldCache();
+        Assertions.assertEquals(0, cache.getSize(ENDPOINT, Collections.emptyMap()));
+    }
+
+    @Test
+    public void databaseCacheKeepsApiObjectsAndReplacesThem()
+    {
+        JdbcCacheProvider cache    = h2Cache(CacheProvider.TTL_INFINITY);
+        URLEndpoint       endpoint = URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID;
+
+        RiotAccount first  = Utils.getGson().fromJson("{\"puuid\":\"abc\",\"gameName\":\"\u00c6rlig\",\"tagLine\":\"EUW\"}", RiotAccount.class);
+        RiotAccount second = Utils.getGson().fromJson("{\"puuid\":\"abc\",\"gameName\":\"renamed\",\"tagLine\":\"EUW\"}", RiotAccount.class);
+
+        cache.store(endpoint, entry(LeagueShard.EUW1, "abc", first));
+        Assertions.assertEquals(first, cache.get(endpoint, key(LeagueShard.EUW1, "abc")).orElse(null));
+
+        // storing again replaces the item instead of adding a second one
+        cache.store(endpoint, entry(LeagueShard.EUW1, "abc", second));
+        Assertions.assertEquals(second, cache.get(endpoint, key(LeagueShard.EUW1, "abc")).orElse(null));
+        Assertions.assertEquals(1, cache.getSize(endpoint, Collections.emptyMap()));
+    }
+
+    /**
+     * A real database, when R4J_TEST_JDBC is set to its jdbc url (with the user and password in the url)
+     */
+    @Test
+    public void realDatabaseCacheStoresAndReturns()
+    {
+        String url = System.getProperty("R4J_TEST_JDBC") != null ? System.getProperty("R4J_TEST_JDBC") : System.getenv("R4J_TEST_JDBC");
+        Assumptions.assumeTrue(url != null && !url.isEmpty(), "R4J_TEST_JDBC is not set, skipping the database test");
+
+        String table = "cache_" + UUID.randomUUID().toString().replace("-", "");
+        JdbcCacheProvider cache = new JdbcCacheProvider(() -> DriverManager.getConnection(url), table, CacheProvider.TTL_INFINITY);
+        storesAndReturns(cache);
+
+        // something larger than 64KB, which is where the smaller text types of some databases end
+        StringBuilder name = new StringBuilder();
+        for (int i = 0; i < 20_000; i++)
+        {
+            name.append("æøå ");
+        }
+        RiotAccount big = Utils.getGson().fromJson("{\"puuid\":\"big\",\"gameName\":\"" + name + "\"}", RiotAccount.class);
+        cache.store(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, entry(LeagueShard.EUW1, "big", big));
+        Assertions.assertEquals(big, cache.get(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, key(LeagueShard.EUW1, "big")).orElse(null));
     }
 }

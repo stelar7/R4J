@@ -27,7 +27,7 @@ Check out one of the many [tests](https://github.com/stelar7/R4J/tree/master/src
 | FileSystem | Yes! (the default) |
 | Memory     | Yes!      |
 | Tiered     | Yes! (ie. memory in front of filesystem) |
-| SQL        | Not yet :( |
+| SQL        | Yes! (any database with a JDBC driver, `JdbcCacheProvider`) |
 
 ```Java
 DataCall.setCacheProvider(new TieredCacheProvider(new MemoryCacheProvider(), new FileSystemCacheProvider()));
@@ -100,4 +100,4 @@ R4J_TEST_JDBC="jdbc:postgresql://localhost/db?user=..&password=.." mvn test   # 
 ```
 
 #### TODO:
-* Add support for sql storage
+* Nothing right now

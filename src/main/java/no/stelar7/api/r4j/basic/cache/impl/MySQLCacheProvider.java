@@ -14,6 +14,11 @@ import java.sql.*;
 import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * @deprecated this cache was never finished: it only creates tables for Valorant matches and does not return what it stores.
+ * Use {@link JdbcCacheProvider}, which works with MySQL and other databases.
+ */
+@Deprecated
 @SuppressWarnings("rawtypes")
 public class MySQLCacheProvider implements CacheProvider
 {

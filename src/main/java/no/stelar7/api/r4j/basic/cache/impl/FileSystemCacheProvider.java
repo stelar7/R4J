@@ -5,7 +5,6 @@ import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.utils.Utils;
-import com.google.gson.stream.JsonWriter;
 import org.slf4j.*;
 
 import java.io.*;
@@ -118,77 +117,9 @@ public class FileSystemCacheProvider implements CacheProvider
         }
     }
     
-    /**
-     * Only classes of this library and the JDK can be read from files in the old (java serialization) format
-     */
-    private static final ObjectInputFilter SERIALIZATION_FILTER = ObjectInputFilter.Config.createFilter("no.stelar7.api.r4j.**;java.**;com.google.gson.**;!*");
-
-    /**
-     * Turns the item into the bytes to store.
-     * <p>
-     * The item is stored as json when it is what the endpoint returns and reading the json back gives an equal object.
-     * Json does not break when a field is added to a class, and reading it can not run code.
-     * Everything else (ie. the lists and maps built from the static data) is stored with java serialization, as before.
-     */
-    private byte[] serialize(URLEndpoint type, Object obj) throws IOException
-    {
-        if (obj.getClass() == type.getType())
-        {
-            try
-            {
-                String json = toJson(obj);
-                if (obj.equals(Utils.getGson().fromJson(json, type.getType())))
-                {
-                    return json.getBytes(StandardCharsets.UTF_8);
-                }
-            } catch (RuntimeException e)
-            {
-                logger.debug("{} can not be stored as json, using java serialization", type, e);
-            }
-        }
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try (ObjectOutputStream out = new ObjectOutputStream(bos))
-        {
-            out.writeObject(obj);
-        }
-
-        return bos.toByteArray();
-    }
-
-    private String toJson(Object obj)
-    {
-        // written without the pretty printing of the shared gson instance, to keep the files small
-        StringWriter writer = new StringWriter();
-        Utils.getGson().toJson(obj, obj.getClass(), new JsonWriter(writer));
-        return writer.toString();
-    }
-
-    private Object deserialize(URLEndpoint type, byte[] data) throws IOException, ClassNotFoundException
-    {
-        // java serialization always starts with the bytes AC ED, which is never the start of json
-        boolean serialized = data.length >= 2 && (data[0] & 0xFF) == 0xAC && (data[1] & 0xFF) == 0xED;
-        if (!serialized)
-        {
-            try
-            {
-                return Utils.getGson().fromJson(new String(data, StandardCharsets.UTF_8), type.getType());
-            } catch (RuntimeException e)
-            {
-                throw new IOException("Unreadable json in the cache", e);
-            }
-        }
-
-        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data)))
-        {
-            in.setObjectInputFilter(SERIALIZATION_FILTER);
-            return in.readObject();
-        }
-    }
-
     private void writeObject(Path path, URLEndpoint type, Object obj) throws IOException
     {
-        byte[] data = serialize(type, obj);
+        byte[] data = CacheSerializer.serialize(type, obj);
 
         // Written to a temporary file and then moved in place, so another thread or process sharing the folder never reads half a file.
         // The move also sets the modified time the lifetime is counted from.
@@ -292,7 +223,7 @@ public class FileSystemCacheProvider implements CacheProvider
         
         try
         {
-            Object o = deserialize(type, Files.readAllBytes(filepath));
+            Object o = CacheSerializer.deserialize(type, Files.readAllBytes(filepath));
             logger.debug("Loaded data from cache ({} {} {})", this.getClass().getName(), type, vals);
 
             // if the object we are trying to load is not valid, remove it

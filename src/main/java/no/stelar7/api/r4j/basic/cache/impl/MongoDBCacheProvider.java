@@ -10,6 +10,11 @@ import org.slf4j.*;
 
 import java.util.*;
 
+/**
+ * @deprecated this cache was never finished: it always connects to localhost, ignores the time to live, and does not separate api keys.
+ * Use {@link JdbcCacheProvider} (any SQL database) or {@link FileSystemCacheProvider} instead.
+ */
+@Deprecated
 public class MongoDBCacheProvider implements CacheProvider
 {
     private static final Logger logger = LoggerFactory.getLogger(MongoDBCacheProvider.class);
