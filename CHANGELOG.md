@@ -29,21 +29,23 @@ Most code keeps working unchanged: `new R4J(credentials)`, the static methods on
 * **File cache cleanup.** Expired files and empty folders are now removed every hour (or more often with a short time to live), also with the default lifetimes.
 * **Tests.** `mvn test` only runs the tests that need no api key. Use `mvn test -Plive` for all of them.
 
-**Deprecated, and scheduled for removal in 4.0.0:**
+**Removed:**
 
-Everything below still works as it did (as far as Riot still answers), but is marked `@Deprecated(since = "3.0.0", forRemoval = true)`, so your compiler warns where you use it.
+These are gone. Most were for endpoints Riot no longer documents, so they are not expected to have worked anymore.
 
 | What | Why | Use instead |
 | :--- | :-- | :---------- |
 | `ThirdPartyAPI`, `ThirdPartyCodeBuilder`, `Summoner.getThirdPartyCode()` | third-party-code is no longer in the Riot api documentation | RSO, to prove an account belongs to a player |
 | `SpectatorAPI.getFeaturedGames` | featured-games is no longer in the Riot api documentation | nothing |
 | `MatchV5API.getMatchListReplays(server, puuid)`, `ReplayBuilder` | replaced by an endpoint that needs the access token of the player | `MatchV5API.getMatchReplaysByAccessToken` |
-| `LeagueAPI.getLeague(server, leagueId)`, `TFTLeagueAPI.getLeague(server, leagueId)` | Riot is retiring league ids | the league entries of a player, or the tier and division lists |
+| `LeagueAPI.getLeague(server, leagueId)`, `TFTLeagueAPI.getLeague(server, leagueId)`, `LeagueBuilder.withLeagueId` / `getLeague()`, `SummonerCrawler.crawlLeague()` | Riot is retiring league ids | the league entries of a player, or the tier and division lists |
 | `ClashAPI.getPlayerInfo(server, summonerId)` | summoner ids are no longer handed out | `ClashAPI.getPlayerInfoByPuuid` |
 | `ImageAPI.getProfileIcon(region, summonerName)` | the service behind it no longer exists | `ImageAPI.getProfileIcon(iconId, version)` |
 | `RealmSpesificEnum`, `RealmSpesificEnumSerializer` | the name was misspelled | `RealmSpecificEnum`, `RealmSpecificEnumSerializer` |
 
-**Deprecated, without a removal date:**
+`RiotAccountShard.getShardAsEnum()` now returns a `RealmSpecificEnum`.
+
+**Deprecated:**
 
 * The static settings on `DataCall` (`setCacheProvider`, `setCredentials`, `setGlobalTimeout`, `setDefaultMaxSleep`, ...). They still configure the default context. Use the context itself: `api.getContext().setCacheProvider(...)`.
 * The five and six argument constructors of `APICredentials`. Use `APICredentials.builder()`.

@@ -1,6 +1,7 @@
 package no.stelar7.api.r4j.tests.lol.summoner;
 
 
+import no.stelar7.api.r4j.tests.TestPlayers;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.cache.impl.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -46,7 +47,7 @@ public class SummonerTest
         Summoner s  = new SummonerBuilder().withPlatform(Platform.EUW1).withSummonerId(id).get();
          */
         
-        String      id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        String      id      = TestPlayers.anyPuuid(LeagueShard.EUW1);
         RiotAccount account = r4J.getAccountAPI().getAccountByPUUID(LeagueShard.EUW1.toRegionShard(), id);
         Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         doAssertions.accept(s);
@@ -55,7 +56,7 @@ public class SummonerTest
     @Test
     public void testByPUUID()
     {
-        String      id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        String      id      = TestPlayers.anyPuuid(LeagueShard.EUW1);
         RiotAccount account = r4J.getAccountAPI().getAccountByPUUID(LeagueShard.EUW1.toRegionShard(), id);
         Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
@@ -72,11 +73,6 @@ public class SummonerTest
         Summoner    s       = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         
         SummonerCrawler crawler = new SummonerCrawler(s);
-        System.out.println(crawler.get().size());
-        crawler.crawlLeague();
-        System.out.println(crawler.get().size());
-        
-        crawler = new SummonerCrawler(s);
         System.out.println(crawler.get().size());
         crawler.crawlGames();
         System.out.println(crawler.get().size());

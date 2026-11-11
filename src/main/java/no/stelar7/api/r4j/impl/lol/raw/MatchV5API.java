@@ -62,21 +62,6 @@ public final class MatchV5API
     }
     
     /**
-     * Returns a list of all replays avaliable in the api
-     *
-     * @param server the platform the account is on
-     * @param puuid  the account to check
-     * @deprecated the Riot api documentation only lists /matches/replays, which needs the access token of the player; use {@link #getMatchReplaysByAccessToken(RegionShard, String)}
-     */
-    @Deprecated(since = "3.0.0", forRemoval = true)
-    @SuppressWarnings("removal")
-    @Nullable
-    public LOLMatchReplayList getMatchListReplays(RegionShard server, String puuid)
-    {
-        return new ReplayBuilder(server, puuid).withContext(context).get();
-    }
-    
-    /**
      * Returns an iterator that transforms all {@code MatchReference} to {@code Match}
      *
      * @param server the platform the account is on

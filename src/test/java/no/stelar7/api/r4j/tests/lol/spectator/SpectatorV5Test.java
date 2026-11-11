@@ -9,16 +9,7 @@ import no.stelar7.api.r4j.tests.SecretFile;
 import org.junit.jupiter.api.Test;
 
 public class SpectatorV5Test
-{
-    @Test
-    public void testFeaturedGame()
-    {
-        final R4J    r4J = new R4J(SecretFile.CREDS);
-        SpectatorAPI api = r4J.getLoLAPI().getSpectatorAPI();
-        
-        api.getFeaturedGames(LeagueShard.EUW1).forEach(System.out::println);
-    }
-    
+{    
     @Test
     public void testCurrentGame()
     {

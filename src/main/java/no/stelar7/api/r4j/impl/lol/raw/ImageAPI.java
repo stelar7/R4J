@@ -112,22 +112,6 @@ public final class ImageAPI
     }
     
     /**
-     * Gets profile icon.
-     *
-     * @param region       the region
-     * @param summonerName the summoner name
-     * @return the profile icon
-     * @deprecated the avatar service this url points at no longer exists (the host does not answer), and summoner names are no longer used to look players up.
-     * Get the icon id from the Summoner, and use {@link #getProfileIcon(String, String)}.
-     */
-    @Deprecated(since = "3.0.0", forRemoval = true)
-    public String getProfileIcon(LeagueShard region, String summonerName)
-    {
-        // http://avatar.leagueoflegends.com/region/summonername.png
-        return "http://avatar.leagueoflegends.com/" + region.toString() + Constants.SEPARATOR + summonerName.replace(" ", "%20") + ".png";
-    }
-    
-    /**
      * Gets splash art.
      *
      * @param championKey the champion key

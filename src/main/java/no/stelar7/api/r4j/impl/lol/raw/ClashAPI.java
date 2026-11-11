@@ -36,26 +36,6 @@ public class ClashAPI
     
     /**
      * Returns a list of player data for all active tournaments you are registered in
-     * 
-     * @deprecated use {@link #getPlayerInfoByPuuid(LeagueShard, String)} instead
-     */
-    @Deprecated(since = "3.0.0", forRemoval = true)
-    public List<ClashPlayer> getPlayerInfo(final LeagueShard server, String summonerId)
-    {
-        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_PLAYER_BY_SUMMONER)
-                                                       .withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
-                                                       .withPlatform(server);
-        
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("platform", server);
-        data.put("summonerId", summonerId);
-        
-        List<ClashPlayer> list = builder.buildCached(data);
-        return list != null ? list : Collections.emptyList();
-    }
-    
-    /**
-     * Returns a list of player data for all active tournaments you are registered in
      */
     public List<ClashPlayer> getPlayerInfoByPuuid(final LeagueShard server, String puuid)
     {

@@ -33,41 +33,33 @@ public class LeagueBuilder
     private final LeagueShard   platform;
     private final GameQueueType queue;
     private final String        puuid;
-    private final String        leagueId;
     
     public LeagueBuilder()
     {
         this.platform = LeagueShard.UNKNOWN;
         this.queue = GameQueueType.RANKED_SOLO_5X5;
         this.puuid = null;
-        this.leagueId = null;
     }
     
-    private LeagueBuilder(LeagueShard platform, GameQueueType queue, String puuid, String leagueId)
+    private LeagueBuilder(LeagueShard platform, GameQueueType queue, String puuid)
     {
         this.platform = platform;
         this.queue = queue;
         this.puuid = puuid;
-        this.leagueId = leagueId;
     }
     
     public LeagueBuilder withPlatform(LeagueShard platform)
     {
-        return new LeagueBuilder(platform, this.queue, this.puuid, this.leagueId).withContext(this.context);
+        return new LeagueBuilder(platform, this.queue, this.puuid).withContext(this.context);
     }
     
     public LeagueBuilder withQueue(GameQueueType queue)
     {
-        return new LeagueBuilder(this.platform, queue, this.puuid, this.leagueId).withContext(this.context);
+        return new LeagueBuilder(this.platform, queue, this.puuid).withContext(this.context);
     }
     
     public LeagueBuilder withPuuid(String puuid) {
-      return new LeagueBuilder(this.platform, this.queue, puuid, this.leagueId).withContext(this.context);
-    }
-    
-    public LeagueBuilder withLeagueId(String leagueId)
-    {
-        return new LeagueBuilder(this.platform, this.queue, this.puuid, leagueId).withContext(this.context);
+      return new LeagueBuilder(this.platform, this.queue, puuid).withContext(this.context);
     }
     
     public List<LeagueEntry> getLeagueEntries()
@@ -95,25 +87,4 @@ public class LeagueBuilder
         return list != null ? list : Collections.emptyList();
     }
     
-    @Nullable
-    public LeagueList getLeague()
-    {
-        
-        if (this.platform == LeagueShard.UNKNOWN || this.leagueId == null)
-        {
-            logger.warn("GET called with invalid platform or leagueId");
-            return null;
-        }
-        
-        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, this.platform.name())
-                                                       .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, this.leagueId)
-                                                       .withEndpoint(URLEndpoint.V4_LEAGUE)
-                                                       .withPlatform(this.platform);
-        
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("platform", platform);
-        data.put("id", leagueId);
-        
-        return builder.buildCached(LeagueList.class, data);
-    }
 }

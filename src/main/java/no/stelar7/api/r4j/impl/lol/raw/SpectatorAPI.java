@@ -38,26 +38,6 @@ public final class SpectatorAPI
     
     
     /**
-     * The response object contains the FeaturedGames on the platform.
-     *
-     * @param server the region to execute against
-     * @return Optional FeaturedGames
-     * @deprecated featured-games is no longer listed in the Riot api documentation for spectator-v5
-     */
-    @Deprecated(since = "3.0.0", forRemoval = true)
-    public List<SpectatorGameInfo> getFeaturedGames(LeagueShard server)
-    {
-        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V5_SPECTATOR_FEATURED)
-                                                       .withPlatform(server);
-        
-        Map<String, Object> data = new HashMap<>();
-        data.put("platform", server);
-        
-        FeaturedGames fg = builder.buildCached(FeaturedGames.class, data);
-        return fg != null ? fg.getGameList() : Collections.emptyList();
-    }
-    
-    /**
      * The response object contains the CurrentGame of the summoner.
      * <p>
      * returns null if not in game

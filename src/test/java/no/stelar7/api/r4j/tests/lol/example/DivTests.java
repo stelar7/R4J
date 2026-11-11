@@ -25,7 +25,7 @@ public class DivTests
         Summoner                     summoner  = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
         Map<Integer, StaticChampion> champData = api.getDDragonAPI().getChampions();
         //pfp
-        String pfp = ImageAPI.getInstance().getProfileIcon(region, user);
+        String pfp = ImageAPI.getInstance().getProfileIcon(String.valueOf(summoner.getProfileIconId()), null);
         //name and lv
         int    level = summoner.getSummonerLevel();
         String name  = summoner.getName();

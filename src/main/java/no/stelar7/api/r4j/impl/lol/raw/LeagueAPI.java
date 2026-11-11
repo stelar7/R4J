@@ -109,30 +109,6 @@ public final class LeagueAPI
     
     
     /**
-     * Get league from its ID.
-     *
-     * @param server   region to get data from
-     * @param leagueId league to get data for
-     * @return LeagueList
-     * @deprecated Riot announced (2025-05-29) that leagueId is going away and that this endpoint is retired; it is no longer in the league-v4 documentation
-     */
-    @Deprecated(since = "3.0.0", forRemoval = true)
-    @Nullable
-    public LeagueList getLeague(LeagueShard server, String leagueId)
-    {
-        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(leagueId))
-                                                       .withEndpoint(URLEndpoint.V4_LEAGUE)
-                                                       .withPlatform(server);
-        
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("platform", server);
-        data.put("leagueid", leagueId);
-        
-        return builder.buildCached(LeagueList.class, data);
-    }
-    
-    /**
      * Get league entries for a puuid
      * Empty if unranked
      *

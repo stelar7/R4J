@@ -42,7 +42,6 @@ public enum URLEndpoint
     V4_SUMMONER_BY_PUUID("lol", "summoner", "v4", "summoners/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, Summoner.class),
     V4_SUMMONER_ME("lol", "summoner", "v4", "summoners/me", Summoner.class),
 
-    V5_SPECTATOR_FEATURED("lol", "spectator", "v5", "featured-games", FeaturedGames.class),
     V5_SPECTATOR_CURRENT("lol", "spectator", "v5", "active-games/by-summoner/" + Constants.PUUID_ID_PLACEHOLDER, SpectatorGameInfo.class),
     
     V4_MASTERY_BY_PUUID("lol", "champion-mastery", "v4", "champion-masteries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, ChampionMasteryList.class),
@@ -69,7 +68,6 @@ public enum URLEndpoint
     
     CDRAGON_CHAMPION_DATA("", "", Constants.VERSION_PLACEHOLDER, "/champion/" + Constants.ID_PLACEHOLDER + "/data", CDragonChampion.class),
     
-    V4_LEAGUE("lol", "league", "v4", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, LeagueList.class),
     V4_LEAGUE_ENTRY_BY_PUUID("lol", "league", "v4", "entries/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, LeagueEntryList.class),
     V4_LEAGUE_RANK("lol", "league", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, LeagueEntryList.class),
     V4_LEAGUE_EXP_RANK("lol", "league-exp", "v4", "entries/" + Constants.POSITIONAL_QUEUE_PLACEHOLDER + "/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, LeagueEntryList.class),
@@ -77,7 +75,6 @@ public enum URLEndpoint
     V4_LEAGUE_GRANDMASTER("lol", "league", "v4", "grandmasterleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     V4_LEAGUE_CHALLENGER("lol", "league", "v4", "challengerleagues/by-queue/" + Constants.QUEUE_PLACEHOLDER, LeagueList.class),
     
-    V4_THIRD_PARTY_CODE("lol", "platform", "v4", "third-party-code/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, String.class),
     
     V5_TOURNAMENT_CODES("lol", "tournament", "v5", "codes", StringList.class),
     V5_TOURNAMENT_CODES_BY_CODE("lol", "tournament", "v5", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
@@ -142,7 +139,6 @@ public enum URLEndpoint
     V1_TFT_MATCHLIST("tft", "match", "v1", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),
     V1_TFT_MATCH("tft", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
 
-    V1_TFT_LEAGUE("tft", "league", "v1", "leagues/" + Constants.LEAGUE_ID_PLACEHOLDER, TFTLeagueList.class),
     V1_TFT_LEAGUE_BY_PUUID("tft", "league", "v1", "by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, TFTLeagueEntryList.class),
     V1_TFT_LEAGUE_RANK("tft", "league", "v1", "entries/" + Constants.TIER_PLACEHOLDER + "/" + Constants.DIVISION_PLACEHOLDER, TFTLeagueEntryList.class),
     V1_TFT_LEAGUE_MASTER("tft", "league", "v1", "master", TFTLeagueList.class),
@@ -157,7 +153,6 @@ public enum URLEndpoint
     V1_LOR_DECKS_ME_GET("lor", "deck", "v1", "decks/me", LoRDeckList.class),
     V1_LOR_DECKS_ME_POST("lor", "deck", "v1", "decks/me", String.class),
     
-    V1_CLASH_PLAYER_BY_SUMMONER("lol", "clash", "v1", "players/by-summoner/" + Constants.SUMMONER_ID_PLACEHOLDER, ClashPlayerList.class),
     V1_CLASH_PLAYER_BY_PUUID("lol", "clash", "v1", "players/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, ClashPlayerList.class),
     V1_CLASH_TEAM_BY_ID("lol", "clash", "v1", "teams/" + Constants.TEAM_ID_PLACEHOLDER, ClashTeam.class),
     V1_CLASH_TOURNAMENTS("lol", "clash", "v1", "tournaments", ClashTournamentList.class),
@@ -193,7 +188,6 @@ public enum URLEndpoint
     V1_RIFTBOUND_CONTENT("riftbound", "content", "v1", "contents", RiftboundContent.class),
     
     V5_MATCHLIST("lol", "match", "v5", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/ids", StringList.class),
-    V5_MATCHLIST_REPLAYS("lol", "match", "v5", "matches/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER + "/replays", LOLMatchReplayList.class),
     V5_MATCH("lol", "match", "v5", "matches/" + Constants.MATCH_ID_PLACEHOLDER, GAMHSMatch.class),
     V5_TIMELINE("lol", "match", "v5", "matches/" + Constants.MATCH_ID_PLACEHOLDER + "/timeline", GAMHSMatch.class),
     

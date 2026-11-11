@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.tests.cache;
 
+import no.stelar7.api.r4j.tests.TestPlayers;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import ch.qos.logback.classic.*;
 import no.stelar7.api.r4j.basic.cache.impl.*;
@@ -75,7 +76,7 @@ public class CacheTest
         
         System.out.println("Fetching summoner for the first time");
         R4JContext.getDefault().setCacheProvider(fileCache.get());
-        String id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        String id = TestPlayers.anyPuuid(LeagueShard.EUW1);
         new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         
@@ -117,7 +118,7 @@ public class CacheTest
         
         System.out.println("Fetching a random summoner and their match list");
         
-        String       id      = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        String       id      = TestPlayers.anyPuuid(LeagueShard.EUW1);
         Summoner     s       = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         List<String> recents = new MatchListBuilder().withPlatform(LeagueShard.EUW1).withPuuid(s.getPUUID()).get();
         

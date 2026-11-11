@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.spectator;
 
+import no.stelar7.api.r4j.tests.TestPlayers;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
 import no.stelar7.api.r4j.basic.utils.LazyList;
@@ -38,11 +39,8 @@ public class CurrentGameTest
     {
         final R4J r4J = new R4J(SecretFile.CREDS);
         
-        // Get a game in progess
-        final List<SpectatorGameInfo> game = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.ME1);
-        
-        // Get a summoner from that game
-        final String name    = game.get(1).getParticipants().get(1).getPuuid();
+        // someone who plays a lot
+        final String name    = TestPlayers.anyPuuid(LeagueShard.ME1);
         RiotAccount  account = r4J.getAccountAPI().getAccountByPUUID(LeagueShard.ME1.toRegionShard(), name, ApiKeyType.LOL);
         Summoner     sum     = Summoner.byPUUID(LeagueShard.ME1, account.getPUUID());
         

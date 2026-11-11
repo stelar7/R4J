@@ -1,13 +1,12 @@
 package no.stelar7.api.r4j.basic.constants.api.regions;
 
-import no.stelar7.api.r4j.basic.constants.types.RealmSpesificEnum;
+import no.stelar7.api.r4j.basic.constants.types.RealmSpecificEnum;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 // implements the misspelled interface too (which extends the right one), so code written against it keeps compiling until it is removed
-@SuppressWarnings("removal")
-public enum ValorantShard implements RealmSpesificEnum
+public enum ValorantShard implements RealmSpecificEnum
 {
     /**
      * Unknown platform

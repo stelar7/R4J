@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.pojo.shared;
 
 import com.google.gson.JsonPrimitive;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
-import no.stelar7.api.r4j.basic.constants.types.RealmSpesificEnum;
+import no.stelar7.api.r4j.basic.constants.types.RealmSpecificEnum;
 import no.stelar7.api.r4j.basic.exceptions.APIEnumNotUpToDateException;
 
 import java.io.Serializable;
@@ -29,8 +29,7 @@ public class RiotAccountShard implements Serializable
         return activeShard;
     }
     
-    @SuppressWarnings("removal")
-    public RealmSpesificEnum getShardAsEnum()
+    public RealmSpecificEnum getShardAsEnum()
     {
         if (game.equalsIgnoreCase("val"))
         {

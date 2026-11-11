@@ -40,11 +40,4 @@ public class TestTFTLeague
         List<TFTLeagueEntry> entries = l4j8.getTFTAPI().getLeagueAPI().getLeagueEntriesByPUUID(LeagueShard.EUW1, summoner.getPUUID());
         System.out.println();
     }
-    
-    @Test
-    public void testList()
-    {
-        TFTLeagueList entries = l4j8.getTFTAPI().getLeagueAPI().getLeague(LeagueShard.EUW1, "f72c0910-aa73-11e9-93ca-c81f66dacb22");
-        System.out.println();
-    }
 }

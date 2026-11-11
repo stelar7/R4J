@@ -271,21 +271,6 @@ public class MatchListV5Test
             }
         });
     }
-    
-    @Test
-    @Disabled
-    public void testMatchReplays()
-    {
-        R4JContext.getDefault().setCacheProvider(new FileSystemCacheProvider());
-        
-        RiotAccount account = r4J.getAccountAPI().getAccountByTag(LeagueShard.EUW1.toRegionShard(), "stelar7", "STL7");
-        Summoner    sum     = Summoner.byPUUID(LeagueShard.EUW1, account.getPUUID());
-        
-        ReplayBuilder builder = new ReplayBuilder().withPuuid(sum.getPUUID()).withPlatform(LeagueShard.EUW1.toRegionShard());
-        LOLMatchReplayList replays = builder.get();
-        
-        System.out.println(replays);
-    }
 }
 
 

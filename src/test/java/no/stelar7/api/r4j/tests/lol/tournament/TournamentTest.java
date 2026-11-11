@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.tests.lol.tournament;
 
+import no.stelar7.api.r4j.tests.TestPlayers;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
 import no.stelar7.api.r4j.impl.R4J;
@@ -30,8 +31,7 @@ public class TournamentTest
         
         final int teamSize = 5;
         
-        final SpectatorGameInfo game = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0);
-        List<String>            ids  = game.getParticipants().stream().map(SpectatorParticipant::getPuuid).collect(Collectors.toList());
+        List<String>            ids  = TestPlayers.puuids(LeagueShard.EUW1).subList(0, 10);
         SummonerBuilder         sb   = new SummonerBuilder().withPlatform(LeagueShard.EUW1);
         
         final TournamentCodeUpdateParameters tcinner = new TournamentCodeUpdateParameters(ids,

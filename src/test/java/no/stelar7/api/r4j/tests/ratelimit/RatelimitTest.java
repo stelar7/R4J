@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.tests.ratelimit;
 
+import no.stelar7.api.r4j.tests.TestPlayers;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.R4J;
@@ -27,7 +28,7 @@ public class RatelimitTest
         R4JContext.getDefault().setCacheProvider(null);
         try
         {
-            String          name = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+            String          name = TestPlayers.anyPuuid(LeagueShard.EUW1);
             Summoner        s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(name).get();
             ExecutorService pool = Executors.newFixedThreadPool(8);
             for (int i2 = 0; i2 < 130; i2++)
@@ -50,7 +51,7 @@ public class RatelimitTest
         R4JContext.getDefault().setCacheProvider(null);
         try
         {
-            String   name = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+            String   name = TestPlayers.anyPuuid(LeagueShard.EUW1);
             Summoner s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(name).get();
             
             List<Thread> threadToWait = new ArrayList<>();
@@ -77,7 +78,7 @@ public class RatelimitTest
     public void testRateLimit()
     {
         final R4J test = new R4J(SecretFile.CREDS);
-        String    id   = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        String    id   = TestPlayers.anyPuuid(LeagueShard.EUW1);
         Summoner  s    = new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         for (int i2 = 0; i2 < 130; i2++)
         {
@@ -89,7 +90,7 @@ public class RatelimitTest
     @Disabled
     public void testRateLimitWithSleep() throws InterruptedException
     {
-        String   id = SpectatorAPI.getInstance().getFeaturedGames(LeagueShard.EUW1).get(0).getParticipants().get(0).getPuuid();
+        String   id = TestPlayers.anyPuuid(LeagueShard.EUW1);
 
         new SummonerBuilder().withPlatform(LeagueShard.EUW1).withPUUID(id).get();
         TimeUnit.SECONDS.sleep(10);

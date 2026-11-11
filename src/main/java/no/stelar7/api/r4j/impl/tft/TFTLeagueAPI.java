@@ -100,31 +100,6 @@ public class TFTLeagueAPI
 
 
     /**
-     * Get league from its ID.
-     *
-     * @param server   region to get data from
-     * @param leagueId league to get data for
-     * @return TFTLeagueList
-     * @deprecated Riot announced (2025-05-29) that leagueId is going away; this endpoint is no longer in the tft-league-v1 documentation
-     */
-    @Deprecated(since = "3.0.0", forRemoval = true)
-    @Nullable
-    public TFTLeagueList getLeague(LeagueShard server, String leagueId)
-    {
-        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
-                                                       .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(leagueId))
-                                                       .withEndpoint(URLEndpoint.V1_TFT_LEAGUE)
-                                                       .withPlatform(server);
-
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("platform", server);
-        data.put("leagueid", leagueId);
-
-        return builder.buildCached(TFTLeagueList.class, data);
-    }
-
-    /**
      * Get league entries for a summonerId
      * Empty if unranked
      *
