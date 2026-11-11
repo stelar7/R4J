@@ -80,7 +80,7 @@ public enum URLEndpoint
     V5_TOURNAMENT_TOURNAMENT("lol", "tournament", "v5", "tournaments", Integer.class),
     
     V5_TOURNAMENT_STUB_CODES("lol", "tournament-stub", "v5", "codes", StringList.class),
-    V5_TOURNAMENT_STUB_CODES_BY_CODE("lol", "tournament", "v5", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
+    V5_TOURNAMENT_STUB_CODES_BY_CODE("lol", "tournament-stub", "v5", "codes/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, TournamentCode.class),
     V5_TOURNAMENT_STUB_LOBBY_EVENTS("lol", "tournament-stub", "v5", "lobby-events/by-code/" + Constants.TOURNAMENT_CODE_PLACEHOLDER, LobbyEventWrapper.class),
     V5_TOURNAMENT_STUB_PROVIDER("lol", "tournament-stub", "v5", "providers", Integer.class),
     V5_TOURNAMENT_STUB_TOURNAMENT("lol", "tournament-stub", "v5", "tournaments", Integer.class),

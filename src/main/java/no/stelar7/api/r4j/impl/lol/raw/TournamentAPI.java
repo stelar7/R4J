@@ -73,7 +73,7 @@ public final class TournamentAPI
     }
     
     /**
-     * Get info about a specified tournament
+     * Get info about a specified tournament code
      *
      * @param tournamentCode The tournament code of the match
      * @return TournamentCode
@@ -81,23 +81,11 @@ public final class TournamentAPI
     public TournamentCode getTournamentInfo(final String tournamentCode)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withQueryParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                       .withEndpoint(URLEndpoint.V5_TOURNAMENT_CODES_BY_CODE)
+                                                       .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withEndpoint(useStub ? URLEndpoint.V5_TOURNAMENT_STUB_CODES_BY_CODE : URLEndpoint.V5_TOURNAMENT_CODES_BY_CODE)
                                                        .withPlatform(RegionShard.AMERICAS);
         
-        if (useStub)
-        {
-            throw new IllegalArgumentException("This method is not useable with the stub API");
-        }
-        
-        try
-        {
-            return (TournamentCode) builder.build();
-        } catch (ClassCastException e)
-        {
-            
-            return null;
-        }
+        return builder.buildAs(TournamentCode.class);
     }
     
     /**
@@ -199,8 +187,8 @@ public final class TournamentAPI
     public void updateTournament(final String tournamentCode, final TournamentCodeUpdateParameters params)
     {
         DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
-                                                       .withQueryParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
-                                                       .withEndpoint(URLEndpoint.V5_TOURNAMENT_CODES)
+                                                       .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                       .withEndpoint(URLEndpoint.V5_TOURNAMENT_CODES_BY_CODE)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_PUT)
                                                        .withPlatform(RegionShard.AMERICAS);
