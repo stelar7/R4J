@@ -286,8 +286,8 @@ public class FileSystemCacheProvider implements CacheProvider
     
     private void clearPath(Path p) throws IOException
     {
-        // no point in deleting the folders..
-        if (!Files.exists(p) || p.equals(home) || Files.isDirectory(p))
+        // items never expire, and there is no point in deleting the folders..
+        if (timeToLive == CacheProvider.TTL_INFINITY || !Files.exists(p) || p.equals(home) || Files.isDirectory(p))
         {
             return;
         }
