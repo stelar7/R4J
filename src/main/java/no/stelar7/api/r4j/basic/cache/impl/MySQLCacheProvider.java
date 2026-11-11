@@ -360,7 +360,6 @@ public class MySQLCacheProvider implements CacheProvider
                 {
                     logger.info("Entry found in cache :)");
                 }
-                System.exit(0);
             }
         } catch (Exception e)
         {
