@@ -13,6 +13,7 @@ public class VALMatch implements Serializable
     private List<Player>      players;
     private List<RoundResult> roundResults;
     private List<Team>        teams;
+    private List<Coach> coaches;
     
     public VALMatchInfo getMatchInfo()
     {
@@ -90,5 +91,10 @@ public class VALMatch implements Serializable
         returnMap.put("id", "primary key auto_increment");
         
         return returnMap;
+    }
+    
+    public List<Coach> getCoaches()
+    {
+        return coaches;
     }
 }

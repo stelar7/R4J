@@ -26,6 +26,7 @@ public class RoundResult implements Serializable
     private Location               defuseLocation;
     private List<PlayerRoundStats> playerStats;
     private RoundResultCodeType    roundResultCode;
+    private String winningTeamRole;
     
     public int getRoundNum()
     {
@@ -167,5 +168,10 @@ public class RoundResult implements Serializable
         returnMap.put(VALMatch.class, "id");
         
         return returnMap;
+    }
+    
+    public String getWinningTeamRole()
+    {
+        return winningTeamRole;
     }
 }

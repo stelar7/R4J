@@ -22,6 +22,10 @@ public class Player implements Serializable
     private TierDivisionType competitiveTier;
     private String           playerCard;
     private String           playerTitle;
+    private String  gameName;
+    private String  tagLine;
+    private boolean isObserver;
+    private int     accountLevel;
     
     public String getPUUID()
     {
@@ -144,5 +148,25 @@ public class Player implements Serializable
         returnMap.put(VALMatch.class, "id");
         
         return returnMap;
+    }
+    
+    public String getGameName()
+    {
+        return gameName;
+    }
+    
+    public String getTagLine()
+    {
+        return tagLine;
+    }
+    
+    public boolean isObserver()
+    {
+        return isObserver;
+    }
+    
+    public int getAccountLevel()
+    {
+        return accountLevel;
     }
 }

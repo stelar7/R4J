@@ -24,6 +24,9 @@ public class VALMatchInfo implements Serializable
     private String               gameMode;
     private boolean              isRanked;
     private String               seasonId;
+    private String                    gameVersion;
+    private String                    region;
+    private List<Map<String, Object>> premierMatchInfo;
     
     public String getMatchId()
     {
@@ -162,5 +165,20 @@ public class VALMatchInfo implements Serializable
         returnMap.put(VALMatch.class, "id");
         
         return returnMap;
+    }
+    
+    public String getGameVersion()
+    {
+        return gameVersion;
+    }
+    
+    public String getRegion()
+    {
+        return region;
+    }
+    
+    public List<Map<String, Object>> getPremierMatchInfo()
+    {
+        return premierMatchInfo;
     }
 }
