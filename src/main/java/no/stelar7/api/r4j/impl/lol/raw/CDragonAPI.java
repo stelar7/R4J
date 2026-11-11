@@ -353,16 +353,14 @@ public final class CDragonAPI
         return url(patch, "honor/emblem/" + honorId + "/level/" + level);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
-     * Runs {@link #getChampion} on a background thread.
+     * Like {@link #getChampion}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<CDragonChampion> getChampionAsync(int championId)
     {
-        return context.callAsync(() -> getChampion(championId));
+        return getChampionAsync(null, String.valueOf(championId));
     }
     
     /**

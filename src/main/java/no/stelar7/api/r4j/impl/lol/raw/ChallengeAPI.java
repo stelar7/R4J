@@ -123,8 +123,6 @@ public final class ChallengeAPI
         return builder.buildCached(ChallengePlayerInfo.class, data);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Like {@link #getChallengesList}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *

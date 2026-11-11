@@ -338,8 +338,6 @@ public class TFTLeagueAPI
     {
         return league != null ? league.getEntries() : Collections.emptyList();
     }
-
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
     
     /**
      * Like {@link #getLeagueEntriesByPUUID}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
@@ -419,12 +417,28 @@ public class TFTLeagueAPI
     }
     
     /**
-     * Runs {@link #getTopRatedLadder} on a background thread.
+     * Like {@link #getTopRatedLadder}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<TFTTopRatedLadderEntry>> getTopRatedLadderAsync(LeagueShard server, GameQueueType queue)
     {
-        return context.callAsync(() -> getTopRatedLadder(server, queue));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
+                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                                                           .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RATED_LADDER_TOP)
+                                                           .withPlatform(server);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("queue", queue);
+
+            return builder.buildCachedAsync(TFTTopRatedLadderEntryList.class, data).<List<TFTTopRatedLadderEntry>>thenApply(entries -> entries != null ? entries : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

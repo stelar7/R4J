@@ -555,8 +555,6 @@ public final class DDragonAPI
         return getTarball(null);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Like {@link #getChampions}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
@@ -607,13 +605,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getChampions} on a background thread.
+     * Like {@link #getChampions}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<Integer, StaticChampion>> getChampionsAsync()
     {
-        return context.callAsync(() -> getChampions());
+        return getChampionsAsync(null, null);
     }
     
     /**
@@ -627,13 +625,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getChampion} on a background thread.
+     * Like {@link #getChampion}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<StaticChampion> getChampionAsync(int id)
     {
-        return context.callAsync(() -> getChampion(id));
+        return getChampionAsync(id, null, null);
     }
     
     /**
@@ -666,13 +664,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getItems} on a background thread.
+     * Like {@link #getItems}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<Integer, Item>> getItemsAsync()
     {
-        return context.callAsync(() -> getItems());
+        return getItemsAsync(null, null);
     }
     
     /**
@@ -686,13 +684,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getItem} on a background thread.
+     * Like {@link #getItem}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Item> getItemAsync(int id)
     {
-        return context.callAsync(() -> getItem(id));
+        return getItemAsync(id, null, null);
     }
     
     /**
@@ -725,13 +723,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getLanguageStrings} on a background thread.
+     * Like {@link #getLanguageStrings}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<String, String>> getLanguageStringsAsync()
     {
-        return context.callAsync(() -> getLanguageStrings());
+        return getLanguageStringsAsync(null, null);
     }
     
     /**
@@ -774,13 +772,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getMaps} on a background thread.
+     * Like {@link #getMaps}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<String, MapDetails>> getMapsAsync()
     {
-        return context.callAsync(() -> getMaps());
+        return getMapsAsync(null, null);
     }
     
     /**
@@ -813,13 +811,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getMasteries} on a background thread.
+     * Like {@link #getMasteries}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<Integer, StaticMastery>> getMasteriesAsync()
     {
-        return context.callAsync(() -> getMasteries());
+        return getMasteriesAsync(null, null);
     }
     
     /**
@@ -852,13 +850,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getMasteryTree} on a background thread.
+     * Like {@link #getMasteryTree}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<String, List<List<MasteryTreeItem>>>> getMasteryTreeAsync()
     {
-        return context.callAsync(() -> getMasteryTree());
+        return getMasteryTreeAsync(null, null);
     }
     
     /**
@@ -872,13 +870,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getMastery} on a background thread.
+     * Like {@link #getMastery}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<StaticMastery> getMasteryAsync(int id)
     {
-        return context.callAsync(() -> getMastery(id));
+        return getMasteryAsync(id, null, null);
     }
     
     /**
@@ -911,23 +909,23 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getProfileIcons} on a background thread.
+     * Like {@link #getProfileIcons}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<Long, ProfileIconDetails>> getProfileIconsAsync()
     {
-        return context.callAsync(() -> getProfileIcons());
+        return getProfileIconsAsync(null, null);
     }
     
     /**
-     * Runs {@link #getRealm} on a background thread.
+     * Like {@link #getRealm}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Realm> getRealmAsync()
     {
-        return context.callAsync(() -> getRealm());
+        return getRealmAsync(LeagueShard.EUW1);
     }
     
     /**
@@ -986,13 +984,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getRunes} on a background thread.
+     * Like {@link #getRunes}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<Integer, StaticRune>> getRunesAsync()
     {
-        return context.callAsync(() -> getRunes());
+        return getRunesAsync(null, null);
     }
     
     /**
@@ -1006,13 +1004,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getRune} on a background thread.
+     * Like {@link #getRune}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<StaticRune> getRuneAsync(int id)
     {
-        return context.callAsync(() -> getRune(id));
+        return getRuneAsync(id, null, null);
     }
     
     /**
@@ -1045,13 +1043,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getSummonerSpells} on a background thread.
+     * Like {@link #getSummonerSpells}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<Integer, StaticSummonerSpell>> getSummonerSpellsAsync()
     {
-        return context.callAsync(() -> getSummonerSpells());
+        return getSummonerSpellsAsync(null, null);
     }
     
     /**
@@ -1065,13 +1063,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getSummonerSpell} on a background thread.
+     * Like {@link #getSummonerSpell}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<StaticSummonerSpell> getSummonerSpellAsync(int id)
     {
-        return context.callAsync(() -> getSummonerSpell(id));
+        return getSummonerSpellAsync(id, null, null);
     }
     
     /**
@@ -1095,13 +1093,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getPerks} on a background thread.
+     * Like {@link #getPerks}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<Integer, StaticPerk>> getPerksAsync()
     {
-        return context.callAsync(() -> getPerks());
+        return getPerksAsync(null, null);
     }
     
     /**
@@ -1115,13 +1113,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getPerk} on a background thread.
+     * Like {@link #getPerk}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<StaticPerk> getPerkAsync(int id)
     {
-        return context.callAsync(() -> getPerk(id));
+        return getPerkAsync(id, null, null);
     }
     
     /**
@@ -1135,13 +1133,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getPerkPaths} on a background thread.
+     * Like {@link #getPerkPaths}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Map<Integer, PerkPath>> getPerkPathsAsync()
     {
-        return context.callAsync(() -> getPerkPaths());
+        return getPerkPathsAsync(null, null);
     }
     
     /**
@@ -1155,13 +1153,13 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getPerkPath} on a background thread.
+     * Like {@link #getPerkPath}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<PerkPath> getPerkPathAsync(int id)
     {
-        return context.callAsync(() -> getPerkPath(id));
+        return getPerkPathAsync(id, null, null);
     }
     
     /**
@@ -1175,12 +1173,12 @@ public final class DDragonAPI
     }
     
     /**
-     * Runs {@link #getTarball} on a background thread.
+     * Like {@link #getTarball}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<String> getTarballAsync()
     {
-        return context.callAsync(() -> getTarball());
+        return getTarballAsync(null);
     }
 }

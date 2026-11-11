@@ -108,8 +108,6 @@ public class TFTMatchAPI
         return builder.buildCached(GAMHSMatch.class, data);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Like {@link #getMatchList}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *

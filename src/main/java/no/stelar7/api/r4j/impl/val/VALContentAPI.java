@@ -51,15 +51,31 @@ public class VALContentAPI
         return builder.buildCached(Content.class, data);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
-     * Runs {@link #getContent} on a background thread.
+     * Like {@link #getContent}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Content> getContentAsync(ValorantShard server, Optional<String> locale)
     {
-        return context.callAsync(() -> getContent(server, locale));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
+                                                           .withEndpoint(URLEndpoint.V1_VAL_CONTENT)
+                                                           .withPlatform(server);
+    
+            locale.ifPresent(s -> builder.withQueryParameter(Constants.LOCALE_PLACEHOLDER_DATA, s));
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("locale", locale.orElse("null"));
+        
+            return builder.buildCachedAsync(Content.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

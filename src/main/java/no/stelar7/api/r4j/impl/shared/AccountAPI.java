@@ -149,16 +149,14 @@ public class AccountAPI
         return builder.buildAs(RiotAccount.class);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
-     * Runs {@link #getAccountByPUUID} on a background thread.
+     * Like {@link #getAccountByPUUID}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<RiotAccount> getAccountByPUUIDAsync(RegionShard server, String puuid)
     {
-        return context.callAsync(() -> getAccountByPUUID(server, puuid));
+        return getAccountByPUUIDAsync(server, puuid, ApiKeyType.VAL);
     }
     
     /**
@@ -188,13 +186,13 @@ public class AccountAPI
     }
     
     /**
-     * Runs {@link #getAccountByTag} on a background thread.
+     * Like {@link #getAccountByTag}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<RiotAccount> getAccountByTagAsync(RegionShard server, String name, String tag)
     {
-        return context.callAsync(() -> getAccountByTag(server, name, tag));
+        return getAccountByTagAsync(server, name, tag, ApiKeyType.VAL);
     }
     
     /**
@@ -226,13 +224,13 @@ public class AccountAPI
     }
     
     /**
-     * Runs {@link #getActiveShard} on a background thread.
+     * Like {@link #getActiveShard}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<RiotAccountShard> getActiveShardAsync(RegionShard server, ShardableGame game, String puuid)
     {
-        return context.callAsync(() -> getActiveShard(server, game, puuid));
+        return getActiveShardAsync(server, game, puuid, ApiKeyType.VAL);
     }
     
     /**
@@ -263,13 +261,13 @@ public class AccountAPI
     }
     
     /**
-     * Runs {@link #getActiveRegion} on a background thread.
+     * Like {@link #getActiveRegion}, as a future: see the twin of the method it passes its arguments on to.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<RiotAccountRegion> getActiveRegionAsync(RegionShard server, ShardableGame game, String puuid)
     {
-        return context.callAsync(() -> getActiveRegion(server, game, puuid));
+        return getActiveRegionAsync(server, game, puuid, ApiKeyType.LOL);
     }
     
     /**

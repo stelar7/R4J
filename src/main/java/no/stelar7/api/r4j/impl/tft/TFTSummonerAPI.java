@@ -78,8 +78,6 @@ public class TFTSummonerAPI
                                     .buildAs(Summoner.class);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Like {@link #getSummonerByPUUID}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
@@ -108,12 +106,24 @@ public class TFTSummonerAPI
     }
     
     /**
-     * Runs {@link #getSummonerByAccessToken} on a background thread.
+     * Like {@link #getSummonerByAccessToken}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Summoner> getSummonerByAccessTokenAsync(final LeagueShard server, String accessToken)
     {
-        return context.callAsync(() -> getSummonerByAccessToken(server, accessToken));
+        try
+        {
+            // not cached, as the result depends on who the token belongs to
+            return new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                                        .withAccessToken(accessToken)
+                                        .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_ME)
+                                        .withPlatform(server)
+                                        .buildAsAsync(Summoner.class);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

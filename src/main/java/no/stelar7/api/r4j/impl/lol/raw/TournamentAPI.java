@@ -259,8 +259,6 @@ public final class TournamentAPI
         builder.build();
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Runs {@link #generateTournamentCodes} on a background thread.
      *

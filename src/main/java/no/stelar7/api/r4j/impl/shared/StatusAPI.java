@@ -89,8 +89,6 @@ public final class StatusAPI
         return builder.buildCached(PlatformData.class, data);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Like {@link #getShardStatus}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *

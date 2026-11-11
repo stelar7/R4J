@@ -77,8 +77,6 @@ public final class RiftboundContentAPI
         return builder.buildCached(RiftboundContent.class, data);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Runs {@link #getContent} on a background thread.
      *

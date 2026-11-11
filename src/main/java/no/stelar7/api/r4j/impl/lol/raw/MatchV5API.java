@@ -221,8 +221,6 @@ public final class MatchV5API
         return timeline != null ? context.bind(timeline.asLOLTimeline()) : null;
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Runs {@link #getMatchList} on a background thread.
      *
@@ -254,13 +252,24 @@ public final class MatchV5API
     }
     
     /**
-     * Runs {@link #getMatchReplaysByAccessToken} on a background thread.
+     * Like {@link #getMatchReplaysByAccessToken}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<LOLMatchReplayList> getMatchReplaysByAccessTokenAsync(RegionShard server, String accessToken)
     {
-        return context.callAsync(() -> getMatchReplaysByAccessToken(server, accessToken));
+        try
+        {
+            // the calls using an access token are not cached, as the result depends on who the token belongs to
+            return new DataCallBuilder(context).withAccessToken(accessToken)
+                                        .withEndpoint(URLEndpoint.V5_MATCH_REPLAYS)
+                                        .withPlatform(server)
+                                        .buildAsAsync(LOLMatchReplayList.class);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**

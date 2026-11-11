@@ -62,8 +62,6 @@ public final class SummonerAPI
                                                                       .buildAs(Summoner.class);
     }
     
-    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
-    
     /**
      * Runs {@link #getSummonerByPUUID} on a background thread.
      *
@@ -75,12 +73,23 @@ public final class SummonerAPI
     }
     
     /**
-     * Runs {@link #getSummonerByAccessToken} on a background thread.
+     * Like {@link #getSummonerByAccessToken}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Summoner> getSummonerByAccessTokenAsync(final LeagueShard server, String accessToken)
     {
-        return context.callAsync(() -> getSummonerByAccessToken(server, accessToken));
+        try
+        {
+            // not cached, as the result depends on who the token belongs to
+            return new no.stelar7.api.r4j.basic.calling.DataCallBuilder(context).withAccessToken(accessToken)
+                                                                          .withEndpoint(no.stelar7.api.r4j.basic.constants.api.URLEndpoint.V4_SUMMONER_ME)
+                                                                          .withPlatform(server)
+                                                                          .buildAsAsync(Summoner.class);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }
