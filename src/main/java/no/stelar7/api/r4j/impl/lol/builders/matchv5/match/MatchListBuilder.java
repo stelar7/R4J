@@ -12,6 +12,20 @@ import java.util.*;
 
 public class MatchListBuilder
 {
+    private R4JContext context = R4JContext.getDefault();
+
+    /**
+     * Uses the credentials, cache and limiters of the context instead of the default ones
+     *
+     * @param context the context to use
+     * @return this
+     */
+    public MatchListBuilder withContext(R4JContext context)
+    {
+        this.context = context == null ? R4JContext.getDefault() : context;
+        return this;
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(MatchListBuilder.class);
     
     private final RegionShard        platform;
@@ -47,42 +61,42 @@ public class MatchListBuilder
     
     public MatchListBuilder withPlatform(LeagueShard platform)
     {
-        return new MatchListBuilder(platform, this.puuid, this.queue, this.type, this.start, this.count, this.startTime, this.endTime);
+        return new MatchListBuilder(platform, this.puuid, this.queue, this.type, this.start, this.count, this.startTime, this.endTime).withContext(this.context);
     }
     
     public MatchListBuilder withPuuid(String puuid)
     {
-        return new MatchListBuilder(this.platform, puuid, this.queue, this.type, this.start, this.count, this.startTime, this.endTime);
+        return new MatchListBuilder(this.platform, puuid, this.queue, this.type, this.start, this.count, this.startTime, this.endTime).withContext(this.context);
     }
     
     public MatchListBuilder withQueue(GameQueueType queue)
     {
-        return new MatchListBuilder(this.platform, this.puuid, queue, this.type, this.start, this.count, this.startTime, this.endTime);
+        return new MatchListBuilder(this.platform, this.puuid, queue, this.type, this.start, this.count, this.startTime, this.endTime).withContext(this.context);
     }
     
     public MatchListBuilder withType(MatchlistMatchType type)
     {
-        return new MatchListBuilder(this.platform, this.puuid, this.queue, type, this.start, this.count, this.startTime, this.endTime);
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, type, this.start, this.count, this.startTime, this.endTime).withContext(this.context);
     }
     
     public MatchListBuilder withBeginIndex(Integer start)
     {
-        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, start, this.count, this.startTime, this.endTime);
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, start, this.count, this.startTime, this.endTime).withContext(this.context);
     }
     
     public MatchListBuilder withCount(Integer count)
     {
-        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, count, this.startTime, this.endTime);
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, count, this.startTime, this.endTime).withContext(this.context);
     }
     
     public MatchListBuilder withStartTime(Long startTime)
     {
-        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, this.count, startTime, this.endTime);
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, this.count, startTime, this.endTime).withContext(this.context);
     }
     
     public MatchListBuilder withEndTime(Long endTime)
     {
-        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, this.count, this.startTime, endTime);
+        return new MatchListBuilder(this.platform, this.puuid, this.queue, this.type, this.start, this.count, this.startTime, endTime).withContext(this.context);
     }
     
     public List<String> get()
@@ -93,7 +107,7 @@ public class MatchListBuilder
             return Collections.emptyList();
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
                                                        .withEndpoint(URLEndpoint.V5_MATCHLIST)
                                                        .withPlatform(this.platform);
         
@@ -134,7 +148,7 @@ public class MatchListBuilder
         data.put("startTime", startTime);
         data.put("endTime", endTime);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_MATCHLIST, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_MATCHLIST, data);
         if (chl.isPresent())
         {
             return ((List<String>) chl.get());
@@ -149,7 +163,7 @@ public class MatchListBuilder
         List<String> match = (List<String>) matchObj;
         
         data.put("value", match);
-        DataCall.getCacheProvider().store(URLEndpoint.V5_MATCHLIST, data);
+        context.getCacheProvider().store(URLEndpoint.V5_MATCHLIST, data);
         
         return match;
     }
@@ -168,7 +182,7 @@ public class MatchListBuilder
     
     public MatchIterator getMatchIterator()
     {
-        return new MatchIterator(getLazy());
+        return new MatchIterator(getLazy(), context);
     }
     
 }

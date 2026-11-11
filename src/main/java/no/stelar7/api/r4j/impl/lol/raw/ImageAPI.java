@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.Constants;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
@@ -12,21 +13,32 @@ import no.stelar7.api.r4j.pojo.lol.staticdata.summonerspell.StaticSummonerSpell;
 
 public final class ImageAPI
 {
-    private static final ImageAPI INSTANCE = new ImageAPI();
+    private static final ImageAPI INSTANCE = new ImageAPI(R4JContext.getDefault());
     
     public static ImageAPI getInstance()
     {
         return ImageAPI.INSTANCE;
     }
     
-    private ImageAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static ImageAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(ImageAPI.class, ImageAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private ImageAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     private String buildImageURL(String version, String path, String file)
     {
-        Realm  realm         = DDragonAPI.getInstance().getRealm();
+        Realm  realm         = DDragonAPI.getInstance(context).getRealm();
         String cdn           = realm.getCDN();
         String versionString = version != null ? version : realm.getV();
         
@@ -36,7 +48,7 @@ public final class ImageAPI
     
     private String buildSplashImageURL(String file)
     {
-        Realm  realm = DDragonAPI.getInstance().getRealm();
+        Realm  realm = DDragonAPI.getInstance(context).getRealm();
         String cdn   = realm.getCDN();
         
         String preReplace = cdn + Constants.SEPARATOR + "img/champion/splash" + Constants.SEPARATOR + file;

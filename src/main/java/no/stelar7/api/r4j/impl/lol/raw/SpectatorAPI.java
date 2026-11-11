@@ -11,16 +11,27 @@ import java.util.*;
 public final class SpectatorAPI
 {
     
-    private static final SpectatorAPI INSTANCE = new SpectatorAPI();
+    private static final SpectatorAPI INSTANCE = new SpectatorAPI(R4JContext.getDefault());
     
     public static SpectatorAPI getInstance()
     {
         return SpectatorAPI.INSTANCE;
     }
     
-    private SpectatorAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static SpectatorAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(SpectatorAPI.class, SpectatorAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private SpectatorAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     
@@ -34,13 +45,13 @@ public final class SpectatorAPI
     @Deprecated
     public List<SpectatorGameInfo> getFeaturedGames(LeagueShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V5_SPECTATOR_FEATURED)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V5_SPECTATOR_FEATURED)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new HashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_FEATURED, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_FEATURED, data);
         if (chl.isPresent())
         {
             return ((FeaturedGames) chl.get()).getGameList();
@@ -57,7 +68,7 @@ public final class SpectatorAPI
             FeaturedGames fg = (FeaturedGames) ret;
             
             data.put("value", fg);
-            DataCall.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_FEATURED, data);
+            context.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_FEATURED, data);
             
             return fg.getGameList();
         } catch (ClassCastException e)
@@ -77,7 +88,7 @@ public final class SpectatorAPI
      */
     public SpectatorGameInfo getCurrentGame(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V5_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
         
@@ -85,7 +96,7 @@ public final class SpectatorAPI
         data.put("platform", server);
         data.put("summoner", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_CURRENT, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_CURRENT, data);
         if (chl.isPresent())
         {
             return (SpectatorGameInfo) chl.get();
@@ -96,7 +107,7 @@ public final class SpectatorAPI
             SpectatorGameInfo fg = (SpectatorGameInfo) builder.build();
             
             data.put("value", fg);
-            DataCall.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_CURRENT, data);
+            context.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_CURRENT, data);
             
             return fg;
         } catch (ClassCastException e)

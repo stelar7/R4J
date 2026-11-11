@@ -11,16 +11,27 @@ import java.util.*;
 
 public class TFTLeagueAPI
 {
-    private static final TFTLeagueAPI INSTANCE = new TFTLeagueAPI();
+    private static final TFTLeagueAPI INSTANCE = new TFTLeagueAPI(R4JContext.getDefault());
 
     public static TFTLeagueAPI getInstance()
     {
         return TFTLeagueAPI.INSTANCE;
     }
 
-    private TFTLeagueAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static TFTLeagueAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(TFTLeagueAPI.class, TFTLeagueAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private TFTLeagueAPI(R4JContext context)
+    {
+        this.context = context;
     }
 
     /**
@@ -33,15 +44,15 @@ public class TFTLeagueAPI
     private TFTLeagueList getMasterLeague(LeagueShard server)
     {
 
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_MASTER)
                                                        .withPlatform(server);
 
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
 
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_MASTER, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_MASTER, data);
         if (chl.isPresent())
         {
             return (TFTLeagueList) chl.get();
@@ -52,7 +63,7 @@ public class TFTLeagueAPI
             TFTLeagueList list = (TFTLeagueList) builder.build();
 
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_MASTER, data);
+            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_MASTER, data);
 
             return list;
         } catch (ClassCastException e)
@@ -72,14 +83,14 @@ public class TFTLeagueAPI
     private TFTLeagueList getGrandmasterLeague(LeagueShard server)
     {
 
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
 
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, data);
         if (chl.isPresent())
         {
             return (TFTLeagueList) chl.get();
@@ -90,7 +101,7 @@ public class TFTLeagueAPI
             TFTLeagueList list = (TFTLeagueList) builder.build();
 
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, data);
+            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, data);
 
             return list;
         } catch (ClassCastException e)
@@ -110,15 +121,15 @@ public class TFTLeagueAPI
      */
     private TFTLeagueList getChallengerLeague(LeagueShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
 
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
 
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, data);
         if (chl.isPresent())
         {
             return (TFTLeagueList) chl.get();
@@ -129,7 +140,7 @@ public class TFTLeagueAPI
             TFTLeagueList list = (TFTLeagueList) builder.build();
 
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, data);
+            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, data);
 
             return list;
         } catch (ClassCastException e)
@@ -151,8 +162,8 @@ public class TFTLeagueAPI
     @Deprecated
     public TFTLeagueList getLeague(LeagueShard server, String leagueId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(leagueId))
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE)
                                                        .withPlatform(server);
@@ -161,7 +172,7 @@ public class TFTLeagueAPI
         data.put("platform", server);
         data.put("leagueid", leagueId);
 
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE, data);
         if (chl.isPresent())
         {
             return (TFTLeagueList) chl.get();
@@ -172,7 +183,7 @@ public class TFTLeagueAPI
             TFTLeagueList list = (TFTLeagueList) builder.build();
 
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE, data);
+            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE, data);
 
             return list;
         } catch (ClassCastException e)
@@ -192,8 +203,8 @@ public class TFTLeagueAPI
      */
     public List<TFTLeagueEntry> getLeagueEntriesByPUUID(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID)
                                                        .withPlatform(server);
@@ -202,7 +213,7 @@ public class TFTLeagueAPI
         data.put("platform", server);
         data.put("puuid", puuid);
 
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (List<TFTLeagueEntry>) chl.get();
@@ -219,7 +230,7 @@ public class TFTLeagueAPI
             List<TFTLeagueEntry> list = (List<TFTLeagueEntry>) ret;
 
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID, data);
+            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID, data);
 
             return list;
         } catch (ClassCastException e)
@@ -236,10 +247,10 @@ public class TFTLeagueAPI
      */
     public List<TFTLeagueEntry> getLeagueByTierDivision(LeagueShard server, TierDivisionType tierdiv, int page)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RANK)
                                                        .withPlatform(server);
@@ -267,7 +278,7 @@ public class TFTLeagueAPI
         data.put("tierdiv", tierdiv);
         data.put("page", page);
 
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_RANK, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_LEAGUE_RANK, data);
         if (chl.isPresent())
         {
             return (List<TFTLeagueEntry>) chl.get();
@@ -284,7 +295,7 @@ public class TFTLeagueAPI
             List<TFTLeagueEntry> list = (List<TFTLeagueEntry>) ret;
 
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_RANK, data);
+            context.getCacheProvider().store(URLEndpoint.V1_TFT_LEAGUE_RANK, data);
 
             return list;
         } catch (ClassCastException e)
@@ -341,7 +352,7 @@ public class TFTLeagueAPI
 
     private TFTLeagueList getApexLeague(URLEndpoint endpoint, LeagueShard server, GameQueueType queue)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getApiName())
                                                        .withEndpoint(endpoint)
                                                        .withPlatform(server);
@@ -384,9 +395,9 @@ public class TFTLeagueAPI
             return apex != null ? apex.getEntries() : Collections.emptyList();
         }
 
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getApiName())
                                                        .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RANK)
@@ -411,8 +422,8 @@ public class TFTLeagueAPI
      */
     public List<TFTTopRatedLadderEntry> getTopRatedLadder(LeagueShard server, GameQueueType queue)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RATED_LADDER_TOP)
                                                        .withPlatform(server);
 

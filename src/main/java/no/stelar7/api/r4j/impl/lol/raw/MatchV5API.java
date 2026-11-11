@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.pojo.shared.*;
@@ -15,21 +16,32 @@ import java.util.List;
 
 public final class MatchV5API
 {
-    private static final MatchV5API INSTANCE = new MatchV5API();
+    private static final MatchV5API INSTANCE = new MatchV5API(R4JContext.getDefault());
     
     public static MatchV5API getInstance()
     {
         return MatchV5API.INSTANCE;
     }
     
-    private MatchV5API()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static MatchV5API getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(MatchV5API.class, MatchV5API::new);
+    }
+
+    private final R4JContext context;
+
+    private MatchV5API(R4JContext context)
+    {
+        this.context = context;
     }
     
     public List<String> getMatchList(RegionShard server, String puuid, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
     {
-        return new MatchListBuilder(server, puuid, queue, type, beginIndex, count, startTime, endTime).get();
+        return new MatchListBuilder(server, puuid, queue, type, beginIndex, count, startTime, endTime).withContext(context).get();
     }
     
     /**
@@ -57,7 +69,7 @@ public final class MatchV5API
     @Deprecated
     public LOLMatchReplayList getMatchListReplays(RegionShard server, String puuid)
     {
-        return new ReplayBuilder(server, puuid).get();
+        return new ReplayBuilder(server, puuid).withContext(context).get();
     }
     
     /**
@@ -69,7 +81,7 @@ public final class MatchV5API
      */
     public MatchIterator getMatchIterator(RegionShard server, String puuid)
     {
-        return new MatchIterator(getMatchList(server, puuid));
+        return new MatchIterator(getMatchList(server, puuid), context);
     }
     
     /**
@@ -81,7 +93,7 @@ public final class MatchV5API
      */
     public LOLMatch getMatch(RegionShard server, String matchId)
     {
-        return new MatchBuilder(server, matchId).getMatch();
+        return new MatchBuilder(server, matchId).withContext(context).getMatch();
     }
     
     /**
@@ -94,7 +106,7 @@ public final class MatchV5API
      */
     public LOLTimeline getTimeline(RegionShard server, String matchId)
     {
-        return new TimelineBuilder(server, matchId).getTimeline();
+        return new TimelineBuilder(server, matchId).withContext(context).getTimeline();
     }
     
     /**
@@ -107,7 +119,7 @@ public final class MatchV5API
     public LOLMatchReplayList getMatchReplaysByAccessToken(RegionShard server, String accessToken)
     {
         // the calls using an access token are not cached, as the result depends on who the token belongs to
-        return new DataCallBuilder().withAccessToken(accessToken)
+        return new DataCallBuilder(context).withAccessToken(accessToken)
                                     .withEndpoint(URLEndpoint.V5_MATCH_REPLAYS)
                                     .withPlatform(server)
                                     .buildAs(LOLMatchReplayList.class);
@@ -129,7 +141,7 @@ public final class MatchV5API
      */
     public List<String> getMatchListByAccessToken(RegionShard server, String accessToken, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
     {
-        DataCallBuilder builder = new DataCallBuilder().withAccessToken(accessToken)
+        DataCallBuilder builder = new DataCallBuilder(context).withAccessToken(accessToken)
                                                        .withEndpoint(URLEndpoint.V1_RSO_MATCHLIST)
                                                        .withPlatform(server);
 
@@ -172,7 +184,7 @@ public final class MatchV5API
      */
     public LOLMatch getMatchByAccessToken(RegionShard server, String accessToken, String matchId)
     {
-        GAMHSMatch match = new DataCallBuilder().withAccessToken(accessToken)
+        GAMHSMatch match = new DataCallBuilder(context).withAccessToken(accessToken)
                                                 .withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
                                                 .withEndpoint(URLEndpoint.V1_RSO_MATCH)
                                                 .withPlatform(server)
@@ -191,7 +203,7 @@ public final class MatchV5API
      */
     public LOLTimeline getTimelineByAccessToken(RegionShard server, String accessToken, String matchId)
     {
-        GAMHSMatch timeline = new DataCallBuilder().withAccessToken(accessToken)
+        GAMHSMatch timeline = new DataCallBuilder(context).withAccessToken(accessToken)
                                                    .withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
                                                    .withEndpoint(URLEndpoint.V1_RSO_TIMELINE)
                                                    .withPlatform(server)

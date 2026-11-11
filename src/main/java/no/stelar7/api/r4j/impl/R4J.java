@@ -2,7 +2,7 @@ package no.stelar7.api.r4j.impl;
 
 import no.stelar7.api.r4j.basic.APICredentials;
 import no.stelar7.api.r4j.basic.cache.impl.FileSystemCacheProvider;
-import no.stelar7.api.r4j.basic.calling.DataCall;
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.impl.lol.raw.*;
 import no.stelar7.api.r4j.impl.lor.*;
 import no.stelar7.api.r4j.impl.riftbound.RiftboundContentAPI;
@@ -16,36 +16,88 @@ import no.stelar7.api.r4j.impl.val.*;
 public class R4J
 {
     
+    private final R4JContext context;
+    private final LOLAPI     lolAPI;
+    private final LORAPI     lorAPI;
+    private final TFTAPI     tftAPI;
+    private final VALAPI     valAPI;
+
     /**
      * Constructor for the R4J class.
+     * <p>
+     * This configures the default context, which is shared by every R4J created with this constructor, the static methods on DataCall,
+     * and the getInstance() method of the api classes. Use {@link #isolated(APICredentials)} for an instance that shares nothing.
      *
      * @param creds the API credentials used for the API (your token)
      */
     public R4J(final APICredentials creds)
     {
-        DataCall.setCredentials(creds);
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
+        this(R4JContext.getDefault().setCredentials(creds).setCacheProvider(new FileSystemCacheProvider()));
     }
-    
+
     public R4J(final APICredentials creds, final int numberOfCallsAllowedInParallel)
     {
-        DataCall.setCredentials(creds);
-        DataCall.setCacheProvider(new FileSystemCacheProvider());
-        DataCall.setNumberOfCallsAllowedInParallel(numberOfCallsAllowedInParallel);
+        this(R4JContext.getDefault().setCredentials(creds).setCacheProvider(new FileSystemCacheProvider()).setNumberOfCallsAllowedInParallel(numberOfCallsAllowedInParallel));
+    }
+
+    /**
+     * An R4J using the credentials, cache, settings and ratelimiters of the context.
+     *
+     * @param context the context to use
+     * @return an R4J for the context
+     */
+    public static R4J withContext(final R4JContext context)
+    {
+        return new R4J(context);
     }
     
+    // not public, so "new R4J(null)" is not ambiguous with the credentials constructor
+    private R4J(final R4JContext context)
+    {
+        this.context = context;
+        this.lolAPI = new LOLAPI(context);
+        this.lorAPI = new LORAPI(context);
+        this.tftAPI = new TFTAPI(context);
+        this.valAPI = new VALAPI(context);
+    }
+
+    /**
+     * Creates an R4J with its own context: its own credentials, ratelimiters, settings and (file system) cache.
+     * Nothing is shared with the default context or with other isolated instances, so several sets of api keys can be used side by side.
+     * <p>
+     * Note that the convenience methods on the returned objects that fetch more data (ie. from a Summoner) always use the default context.
+     *
+     * @param creds the API credentials used for the API (your token)
+     * @return a new, independent R4J
+     */
+    public static R4J isolated(final APICredentials creds)
+    {
+        R4JContext context = new R4JContext(creds);
+        context.setCacheProvider(new FileSystemCacheProvider());
+        return new R4J(context);
+    }
+
+    /**
+     * @return the context of this instance; use it to change the cache, timeouts and other settings
+     */
+    public R4JContext getContext()
+    {
+        return context;
+    }
+
     public LOLAPI getLoLAPI()
     {
-        return LOLAPI.INSTANCE;
+        return lolAPI;
     }
     
     public static final class LOLAPI
     {
-        private LOLAPI()
+        private final R4JContext context;
+
+        private LOLAPI(R4JContext context)
         {
+            this.context = context;
         }
-        
-        private static final LOLAPI INSTANCE = new LOLAPI();
         
         /**
          * Gets mastery api.
@@ -54,7 +106,7 @@ public class R4J
          */
         public MasteryAPI getMasteryAPI()
         {
-            return MasteryAPI.getInstance();
+            return MasteryAPI.getInstance(context);
         }
         
         /**
@@ -64,7 +116,7 @@ public class R4J
          */
         public SpectatorAPI getSpectatorAPI()
         {
-            return SpectatorAPI.getInstance();
+            return SpectatorAPI.getInstance(context);
         }
         
         /**
@@ -74,7 +126,7 @@ public class R4J
          */
         public SummonerAPI getSummonerAPI()
         {
-            return SummonerAPI.getInstance();
+            return SummonerAPI.getInstance(context);
         }
         
         /**
@@ -85,7 +137,7 @@ public class R4J
          */
         public TournamentAPI getTournamentAPI(boolean useStub)
         {
-            return TournamentAPI.getInstance(useStub);
+            return TournamentAPI.getInstance(context, useStub);
         }
         
         /**
@@ -95,7 +147,7 @@ public class R4J
          */
         public ChampionAPI getChampionAPI()
         {
-            return ChampionAPI.getInstance();
+            return ChampionAPI.getInstance(context);
         }
         
         /**
@@ -105,7 +157,7 @@ public class R4J
          */
         public MatchV5API getMatchAPI()
         {
-            return MatchV5API.getInstance();
+            return MatchV5API.getInstance(context);
         }
         
         /**
@@ -115,7 +167,7 @@ public class R4J
          */
         public LeagueAPI getLeagueAPI()
         {
-            return LeagueAPI.getInstance();
+            return LeagueAPI.getInstance(context);
         }
         
         /**
@@ -125,7 +177,7 @@ public class R4J
          */
         public ClashAPI getClashAPI()
         {
-            return ClashAPI.getInstance();
+            return ClashAPI.getInstance(context);
         }
         
         /**
@@ -135,22 +187,23 @@ public class R4J
          */
         public ChallengeAPI getChallengeAPI()
         {
-            return ChallengeAPI.getInstance();
+            return ChallengeAPI.getInstance(context);
         }
     }
     
     public LORAPI getLORAPI()
     {
-        return LORAPI.INSTANCE;
+        return lorAPI;
     }
     
     public static final class LORAPI
     {
-        private LORAPI()
+        private final R4JContext context;
+
+        private LORAPI(R4JContext context)
         {
+            this.context = context;
         }
-        
-        private static final R4J.LORAPI INSTANCE = new R4J.LORAPI();
         
         /**
          * Gets ranked api.
@@ -159,7 +212,7 @@ public class R4J
          */
         public LORRankedAPI getRankedAPI()
         {
-            return LORRankedAPI.getInstance();
+            return LORRankedAPI.getInstance(context);
         }
         
         /**
@@ -179,23 +232,24 @@ public class R4J
          */
         public LORMatchAPI getMatchAPI()
         {
-            return LORMatchAPI.getInstance();
+            return LORMatchAPI.getInstance(context);
         }
         
     }
     
     public TFTAPI getTFTAPI()
     {
-        return TFTAPI.INSTANCE;
+        return tftAPI;
     }
     
     public static final class TFTAPI
     {
-        private TFTAPI()
+        private final R4JContext context;
+
+        private TFTAPI(R4JContext context)
         {
+            this.context = context;
         }
-        
-        private static final TFTAPI INSTANCE = new TFTAPI();
         
         /**
          * Gets summoner api.
@@ -204,7 +258,7 @@ public class R4J
          */
         public TFTSummonerAPI getSummonerAPI()
         {
-            return TFTSummonerAPI.getInstance();
+            return TFTSummonerAPI.getInstance(context);
         }
         
         /**
@@ -214,7 +268,7 @@ public class R4J
          */
         public TFTMatchAPI getMatchAPI()
         {
-            return TFTMatchAPI.getInstance();
+            return TFTMatchAPI.getInstance(context);
         }
         
         /**
@@ -224,7 +278,7 @@ public class R4J
          */
         public TFTLeagueAPI getLeagueAPI()
         {
-            return TFTLeagueAPI.getInstance();
+            return TFTLeagueAPI.getInstance(context);
         }
 
         /**
@@ -234,23 +288,24 @@ public class R4J
          */
         public TFTSpectatorAPI getSpectatorAPI()
         {
-            return TFTSpectatorAPI.getInstance();
+            return TFTSpectatorAPI.getInstance(context);
         }
         
     }
     
     public VALAPI getVALAPI()
     {
-        return VALAPI.INSTANCE;
+        return valAPI;
     }
     
     public static final class VALAPI
     {
-        private VALAPI()
+        private final R4JContext context;
+
+        private VALAPI(R4JContext context)
         {
+            this.context = context;
         }
-        
-        private static final VALAPI INSTANCE = new VALAPI();
         
         /**
          * Gets summoner api.
@@ -259,7 +314,7 @@ public class R4J
          */
         public VALContentAPI getContentAPI()
         {
-            return VALContentAPI.getInstance();
+            return VALContentAPI.getInstance(context);
         }
         
         /**
@@ -269,12 +324,12 @@ public class R4J
          */
         public VALMatchAPI getMatchAPI()
         {
-            return VALMatchAPI.getInstance();
+            return VALMatchAPI.getInstance(context);
         }
         
         public VALRankedAPI getRankedAPI()
         {
-            return VALRankedAPI.getInstance();
+            return VALRankedAPI.getInstance(context);
         }
 
         /**
@@ -284,7 +339,7 @@ public class R4J
          */
         public VALAccoladesAPI getAccoladesAPI()
         {
-            return VALAccoladesAPI.getInstance();
+            return VALAccoladesAPI.getInstance(context);
         }
 
         /**
@@ -294,7 +349,7 @@ public class R4J
          */
         public VALConsoleAPI getConsoleAPI()
         {
-            return VALConsoleAPI.getInstance();
+            return VALConsoleAPI.getInstance(context);
         }
     }
     
@@ -305,7 +360,7 @@ public class R4J
      */
     public RiftboundContentAPI getRiftboundContentAPI()
     {
-        return RiftboundContentAPI.getInstance();
+        return RiftboundContentAPI.getInstance(context);
     }
 
     /**
@@ -315,7 +370,7 @@ public class R4J
      */
     public ImageAPI getImageAPI()
     {
-        return ImageAPI.getInstance();
+        return ImageAPI.getInstance(context);
     }
     
     
@@ -326,7 +381,7 @@ public class R4J
      */
     public AccountAPI getAccountAPI()
     {
-        return AccountAPI.getInstance();
+        return AccountAPI.getInstance(context);
     }
     
     
@@ -337,7 +392,7 @@ public class R4J
      */
     public StatusAPI getStatusAPI()
     {
-        return StatusAPI.getInstance();
+        return StatusAPI.getInstance(context);
     }
     
     /**
@@ -347,7 +402,7 @@ public class R4J
      */
     public DDragonAPI getDDragonAPI()
     {
-        return DDragonAPI.getInstance();
+        return DDragonAPI.getInstance(context);
     }
     
 }

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -12,21 +13,32 @@ import no.stelar7.api.r4j.basic.utils.Pair;
 @Deprecated
 public final class ThirdPartyAPI
 {
-    private static final ThirdPartyAPI INSTANCE = new ThirdPartyAPI();
+    private static final ThirdPartyAPI INSTANCE = new ThirdPartyAPI(R4JContext.getDefault());
     
     public static ThirdPartyAPI getInstance()
     {
         return ThirdPartyAPI.INSTANCE;
     }
     
-    private ThirdPartyAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static ThirdPartyAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(ThirdPartyAPI.class, ThirdPartyAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private ThirdPartyAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public boolean checkCode(LeagueShard platform, String summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
                                                        .withPlatform(platform);
         
@@ -47,7 +59,7 @@ public final class ThirdPartyAPI
     
     public String getCode(LeagueShard platform, String summonerId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, summonerId)
                                                        .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
                                                        .withPlatform(platform);
         

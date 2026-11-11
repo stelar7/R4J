@@ -1,0 +1,115 @@
+package no.stelar7.api.r4j.tests.offline;
+
+import com.sun.net.httpserver.HttpServer;
+import no.stelar7.api.r4j.basic.APICredentials;
+import no.stelar7.api.r4j.basic.cache.CacheProvider;
+import no.stelar7.api.r4j.basic.cache.impl.MemoryCacheProvider;
+import no.stelar7.api.r4j.basic.calling.*;
+import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
+import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
+import no.stelar7.api.r4j.basic.constants.types.ApiKeyType;
+import no.stelar7.api.r4j.impl.R4J;
+import no.stelar7.api.r4j.impl.lol.raw.SummonerAPI;
+import no.stelar7.api.r4j.pojo.lol.status.PlatformData;
+import org.junit.jupiter.api.*;
+
+import java.io.*;
+import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.concurrent.*;
+
+/**
+ * Two contexts must not share credentials, caches or ratelimiters.
+ */
+public class IsolatedContextTest
+{
+    private static final String STATUS_JSON = "{\"id\":\"EUW1\",\"name\":\"EU West\",\"locales\":[],\"maintenances\":[],\"incidents\":[]}";
+
+    private static HttpServer   server;
+    private static String       proxy;
+    private static List<String> keysSeen;
+
+    @BeforeAll
+    public static void startServer() throws IOException
+    {
+        keysSeen = new CopyOnWriteArrayList<>();
+        server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+        server.createContext("/", exchange -> {
+            keysSeen.add(exchange.getRequestHeaders().getFirst("X-Riot-Token"));
+            exchange.getResponseHeaders().add("X-App-Rate-Limit", "20:1");
+            exchange.getResponseHeaders().add("X-App-Rate-Limit-Count", "1:1");
+            byte[] bytes = STATUS_JSON.getBytes(StandardCharsets.UTF_8);
+            exchange.sendResponseHeaders(200, bytes.length);
+            try (OutputStream os = exchange.getResponseBody())
+            {
+                os.write(bytes);
+            }
+            exchange.close();
+        });
+        server.setExecutor(Executors.newCachedThreadPool());
+        server.start();
+
+        proxy = "http://127.0.0.1:" + server.getAddress().getPort() + "/{game}/{service}/{version}/{resource}";
+    }
+
+    @AfterAll
+    public static void stopServer()
+    {
+        server.stop(0);
+    }
+
+    private PlatformData status(R4JContext context)
+    {
+        Map<String, Object> key = new LinkedHashMap<>();
+        key.put("platform", LeagueShard.EUW1);
+
+        return new DataCallBuilder(context).withProxy(proxy)
+                                           .withEndpoint(URLEndpoint.V4_STATUS_LOL)
+                                           .withPlatform(LeagueShard.EUW1)
+                                           .buildCached(PlatformData.class, key);
+    }
+
+    @Test
+    public void contextsDoNotShareAnything()
+    {
+        R4JContext a = new R4JContext(new APICredentials("key-a")).setCacheProvider(new MemoryCacheProvider(CacheProvider.TTL_INFINITY));
+        R4JContext b = new R4JContext(new APICredentials("key-b")).setCacheProvider(new MemoryCacheProvider(CacheProvider.TTL_INFINITY));
+
+        keysSeen.clear();
+        Assertions.assertNotNull(status(a));
+        Assertions.assertNotNull(status(b));
+
+        // each call used the key of its own context, and b did not get the value a cached
+        Assertions.assertEquals(Arrays.asList("key-a", "key-b"), keysSeen);
+
+        // the second call of each context comes from its own cache
+        Assertions.assertNotNull(status(a));
+        Assertions.assertNotNull(status(b));
+        Assertions.assertEquals(2, keysSeen.size());
+
+        // each context has its own limiters, and the default context was not touched
+        Assertions.assertEquals(1, a.getLimiters(ApiKeyType.LOL).size());
+        Assertions.assertEquals(1, b.getLimiters(ApiKeyType.LOL).size());
+        Assertions.assertNotSame(a.getLimiter(ApiKeyType.LOL, LeagueShard.EUW1, LeagueShard.EUW1), b.getLimiter(ApiKeyType.LOL, LeagueShard.EUW1, LeagueShard.EUW1));
+        Assertions.assertFalse(R4JContext.getDefault().getLimiters(ApiKeyType.LOL).containsKey(LeagueShard.EUW1));
+    }
+
+    @Test
+    public void isolatedR4JHasItsOwnApis()
+    {
+        R4J first  = R4J.withContext(new R4JContext(new APICredentials("key-a")));
+        R4J second = R4J.isolated(new APICredentials("key-b"));
+
+        Assertions.assertNotSame(first.getContext(), second.getContext());
+        Assertions.assertNotSame(first.getLoLAPI().getSummonerAPI(), second.getLoLAPI().getSummonerAPI());
+        Assertions.assertNotSame(first.getLoLAPI().getSummonerAPI(), SummonerAPI.getInstance());
+
+        // asking the same instance twice gives the same api object
+        Assertions.assertSame(first.getLoLAPI().getSummonerAPI(), first.getLoLAPI().getSummonerAPI());
+        Assertions.assertNotSame(first.getLoLAPI().getTournamentAPI(true), first.getLoLAPI().getTournamentAPI(false));
+
+        // the default context still hands out the shared singletons
+        Assertions.assertSame(SummonerAPI.getInstance(), SummonerAPI.getInstance(R4JContext.getDefault()));
+    }
+}

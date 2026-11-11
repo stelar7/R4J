@@ -1,7 +1,8 @@
 package no.stelar7.api.r4j.basic.cache.impl;
 
 import no.stelar7.api.r4j.basic.cache.*;
-import no.stelar7.api.r4j.basic.calling.DataCall;
+import no.stelar7.api.r4j.basic.APICredentials;
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
 import no.stelar7.api.r4j.basic.utils.Utils;
 import org.slf4j.*;
@@ -22,6 +23,8 @@ public class FileSystemCacheProvider implements CacheProvider
     private       long              timeToLive;
     private       CacheLifetimeHint hints = CacheLifetimeHint.DEFAULTS;
     
+    private volatile R4JContext context = R4JContext.getDefault();
+
     private final ScheduledExecutorService clearService = Executors.newSingleThreadScheduledExecutor(r -> {
         Thread t = new Thread(r, "R4J-FileSystemCache-cleaner");
         t.setDaemon(true);
@@ -70,9 +73,16 @@ public class FileSystemCacheProvider implements CacheProvider
     private String getKeyCombination()
     {
         // inject api key so cache still works in v4
-        return DataCall.getCredentials() == null ? "STATIC_DATA" : DataCall.getCredentials().getUniqueKeyCombination();
+        APICredentials credentials = context.getCredentials();
+        return credentials == null ? "STATIC_DATA" : credentials.getUniqueKeyCombination();
     }
     
+    @Override
+    public void setContext(R4JContext context)
+    {
+        this.context = context;
+    }
+
     @Override
     public void setTimeToLive(CacheLifetimeHint hints)
     {

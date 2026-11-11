@@ -9,22 +9,33 @@ import java.util.*;
 
 public class VALContentAPI
 {
-    private static final VALContentAPI INSTANCE = new VALContentAPI();
+    private static final VALContentAPI INSTANCE = new VALContentAPI(R4JContext.getDefault());
     
     public static VALContentAPI getInstance()
     {
         return VALContentAPI.INSTANCE;
     }
     
-    private VALContentAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static VALContentAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(VALContentAPI.class, VALContentAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private VALContentAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public Content getContent(ValorantShard server, Optional<String> locale)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_CONTENT)
                                                        .withPlatform(server);
     
@@ -34,7 +45,7 @@ public class VALContentAPI
         data.put("platform", server);
         data.put("locale", locale.orElse("null"));
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_VAL_CONTENT, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_CONTENT, data);
         if (chl.isPresent())
         {
             return (Content) chl.get();
@@ -46,7 +57,7 @@ public class VALContentAPI
             Content cont = (Content) ret;
             
             data.put("value", cont);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_VAL_CONTENT, data);
+            context.getCacheProvider().store(URLEndpoint.V1_VAL_CONTENT, data);
             
             return cont;
         } catch (ClassCastException e)

@@ -14,16 +14,27 @@ import java.util.stream.Collectors;
 public final class MasteryAPI
 {
     
-    private static final MasteryAPI INSTANCE = new MasteryAPI();
+    private static final MasteryAPI INSTANCE = new MasteryAPI(R4JContext.getDefault());
     
     public static MasteryAPI getInstance()
     {
         return MasteryAPI.INSTANCE;
     }
     
-    private MasteryAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static MasteryAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(MasteryAPI.class, MasteryAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private MasteryAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     
@@ -36,7 +47,7 @@ public final class MasteryAPI
      */
     public Integer getMasteryScore(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
                                                        .withPlatform(server);
         
@@ -44,7 +55,7 @@ public final class MasteryAPI
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_MASTERY_SCORE, data);
         if (chl.isPresent())
         {
             return (Integer) chl.get();
@@ -55,7 +66,7 @@ public final class MasteryAPI
             Integer list = (Integer) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, data);
+            context.getCacheProvider().store(URLEndpoint.V4_MASTERY_SCORE, data);
             
             return list;
         } catch (ClassCastException e)
@@ -95,7 +106,7 @@ public final class MasteryAPI
      */
     public ChampionMastery getChampionMastery(LeagueShard server, String puuid, int championId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(championId))
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
                                                        .withPlatform(server);
@@ -105,7 +116,7 @@ public final class MasteryAPI
         data.put("puuid", puuid);
         data.put("champion", championId);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
         if (chl.isPresent())
         {
             return (ChampionMastery) chl.get();
@@ -131,7 +142,7 @@ public final class MasteryAPI
                 level.set(mastery, 0);
                 
                 data.put("value", mastery);
-                DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
+                context.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
                 
                 return mastery;
                 
@@ -142,7 +153,7 @@ public final class MasteryAPI
         }
         
         data.put("value", masteryObj);
-        DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
+        context.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
         
         return (ChampionMastery) masteryObj;
     }
@@ -158,7 +169,7 @@ public final class MasteryAPI
      */
     public List<ChampionMastery> getChampionMasteries(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V4_MASTERY_BY_PUUID)
                                                        .withPlatform(server);
         
@@ -166,7 +177,7 @@ public final class MasteryAPI
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (List<ChampionMastery>) chl.get();
@@ -183,7 +194,7 @@ public final class MasteryAPI
             List<ChampionMastery> list = (List<ChampionMastery>) ret;
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_PUUID, data);
+            context.getCacheProvider().store(URLEndpoint.V4_MASTERY_BY_PUUID, data);
             
             return list;
         } catch (ClassCastException e)

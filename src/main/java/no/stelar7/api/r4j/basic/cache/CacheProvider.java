@@ -77,6 +77,16 @@ public interface CacheProvider
     void setTimeToLiveGlobal(long timeToLive);
     
     /**
+     * Called when the cache is given to a context, so it can tell the data of different credentials apart.
+     *
+     * @param context the context the cache is used by
+     */
+    default void setContext(no.stelar7.api.r4j.basic.calling.R4JContext context)
+    {
+        // most caches do not need it
+    }
+
+    /**
      * Sets the timeout for caches
      *
      * @param hints how long they should live

@@ -10,27 +10,38 @@ import java.util.*;
 
 public final class ChallengeAPI
 {
-    private static final ChallengeAPI INSTANCE = new ChallengeAPI();
+    private static final ChallengeAPI INSTANCE = new ChallengeAPI(R4JContext.getDefault());
     
     public static ChallengeAPI getInstance()
     {
         return ChallengeAPI.INSTANCE;
     }
     
-    private ChallengeAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static ChallengeAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(ChallengeAPI.class, ChallengeAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private ChallengeAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public ChallengeConfigInfoList getChallengesList(LeagueShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_CONFIG, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_CONFIG, data);
         if (chl.isPresent())
         {
             return (ChallengeConfigInfoList) chl.get();
@@ -41,7 +52,7 @@ public final class ChallengeAPI
             ChallengeConfigInfoList cl = (ChallengeConfigInfoList) builder.build();
             
             data.put("value", cl);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_CONFIG, data);
+            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_CONFIG, data);
             
             return cl;
         } catch (ClassCastException e)
@@ -52,13 +63,13 @@ public final class ChallengeAPI
     
     public MultiChallengePercentileMap getAllChallengePercentiles(LeagueShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
         if (chl.isPresent())
         {
             return (MultiChallengePercentileMap) chl.get();
@@ -69,7 +80,7 @@ public final class ChallengeAPI
             MultiChallengePercentileMap cl = (MultiChallengePercentileMap) builder.build();
             
             data.put("value", cl);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
+            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
             
             return cl;
         } catch (ClassCastException e)
@@ -80,7 +91,7 @@ public final class ChallengeAPI
     
     public ChallengeConfigInfo getChallengeInfo(LeagueShard server, Long challengeId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID)
                                                        .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
                                                        .withPlatform(server);
         
@@ -88,7 +99,7 @@ public final class ChallengeAPI
         data.put("platform", server);
         data.put("challenge", challengeId);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID, data);
         if (chl.isPresent())
         {
             return (ChallengeConfigInfo) chl.get();
@@ -99,7 +110,7 @@ public final class ChallengeAPI
             ChallengeConfigInfo cl = (ChallengeConfigInfo) builder.build();
             
             data.put("value", cl);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID, data);
+            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_CONFIG_BY_ID, data);
             
             return cl;
         } catch (ClassCastException e)
@@ -110,7 +121,7 @@ public final class ChallengeAPI
     
     public ChallengeLeaderboardInfoList getChallengeLeaderboard(LeagueShard server, Long challengeId, ChallengeTierType level, Integer limit)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL)
                                                        .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
                                                        .withURLParameter(Constants.LEVEL_PLACEHOLDER, level.name())
                                                        .withPlatform(server);
@@ -126,7 +137,7 @@ public final class ChallengeAPI
         data.put("level", level);
         data.put("limit", limit);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL, data);
         if (chl.isPresent())
         {
             return (ChallengeLeaderboardInfoList) chl.get();
@@ -137,7 +148,7 @@ public final class ChallengeAPI
             ChallengeLeaderboardInfoList cl = (ChallengeLeaderboardInfoList) builder.build();
             
             data.put("value", cl);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL, data);
+            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL, data);
             
             return cl;
         } catch (ClassCastException e)
@@ -148,7 +159,7 @@ public final class ChallengeAPI
     
     public MultiChallengePercentileMap getChallengePercentiles(LeagueShard server, Long challengeId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_PERCENTILES)
                                                        .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
                                                        .withPlatform(server);
         
@@ -156,7 +167,7 @@ public final class ChallengeAPI
         data.put("platform", server);
         data.put("challenge", challengeId);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
         if (chl.isPresent())
         {
             return (MultiChallengePercentileMap) chl.get();
@@ -167,7 +178,7 @@ public final class ChallengeAPI
             MultiChallengePercentileMap cl = (MultiChallengePercentileMap) builder.build();
             
             data.put("value", cl);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
+            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_PERCENTILES, data);
             
             return cl;
         } catch (ClassCastException e)
@@ -178,7 +189,7 @@ public final class ChallengeAPI
     
     public ChallengePlayerInfo getChallengePlayerInfo(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_CHALLENGES_BY_PLAYER)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_BY_PLAYER)
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withPlatform(server);
         
@@ -186,7 +197,7 @@ public final class ChallengeAPI
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_BY_PLAYER, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_CHALLENGES_BY_PLAYER, data);
         if (chl.isPresent())
         {
             return (ChallengePlayerInfo) chl.get();
@@ -197,7 +208,7 @@ public final class ChallengeAPI
             ChallengePlayerInfo cl = (ChallengePlayerInfo) builder.build();
             
             data.put("value", cl);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_BY_PLAYER, data);
+            context.getCacheProvider().store(URLEndpoint.V1_CHALLENGES_BY_PLAYER, data);
             
             return cl;
         } catch (ClassCastException e)

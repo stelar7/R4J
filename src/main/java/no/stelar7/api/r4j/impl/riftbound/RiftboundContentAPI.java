@@ -13,16 +13,27 @@ import java.util.*;
  */
 public final class RiftboundContentAPI
 {
-    private static final RiftboundContentAPI INSTANCE = new RiftboundContentAPI();
+    private static final RiftboundContentAPI INSTANCE = new RiftboundContentAPI(R4JContext.getDefault());
 
     public static RiftboundContentAPI getInstance()
     {
         return RiftboundContentAPI.INSTANCE;
     }
 
-    private RiftboundContentAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static RiftboundContentAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(RiftboundContentAPI.class, RiftboundContentAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private RiftboundContentAPI(R4JContext context)
+    {
+        this.context = context;
     }
 
     /**
@@ -34,7 +45,7 @@ public final class RiftboundContentAPI
      */
     public RiftboundContent getContent(RegionShard server, String locale)
     {
-        return getContent(server, locale, DataCall.getCredentials().hasKey(ApiKeyType.RIFTBOUND) ? ApiKeyType.RIFTBOUND : ApiKeyType.LOL);
+        return getContent(server, locale, context.getCredentials().hasKey(ApiKeyType.RIFTBOUND) ? ApiKeyType.RIFTBOUND : ApiKeyType.LOL);
     }
 
     /**
@@ -47,7 +58,7 @@ public final class RiftboundContentAPI
      */
     public RiftboundContent getContent(RegionShard server, String locale, ApiKeyType keyType)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_RIFTBOUND_CONTENT)
                                                        .withPlatform(server);
 

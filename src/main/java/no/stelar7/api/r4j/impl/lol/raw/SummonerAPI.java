@@ -1,22 +1,33 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.impl.lol.builders.summoner.SummonerBuilder;
 import no.stelar7.api.r4j.pojo.lol.summoner.Summoner;
 
 public final class SummonerAPI
 {
-    private static final SummonerAPI INSTANCE = new SummonerAPI();
-    private final SummonerBuilder builder = new SummonerBuilder();
+    private static final SummonerAPI INSTANCE = new SummonerAPI(R4JContext.getDefault());
 
     public static SummonerAPI getInstance()
     {
         return SummonerAPI.INSTANCE;
     }
 
-    private SummonerAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static SummonerAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(SummonerAPI.class, SummonerAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private SummonerAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     /**
@@ -28,7 +39,7 @@ public final class SummonerAPI
      */
     public Summoner getSummonerByPUUID(final LeagueShard server, String PUUID)
     {
-        return builder.withPlatform(server).withPUUID(PUUID).get();
+        return new SummonerBuilder().withContext(context).withPlatform(server).withPUUID(PUUID).get();
     }
     
     /**
@@ -41,7 +52,7 @@ public final class SummonerAPI
     public Summoner getSummonerByAccessToken(final LeagueShard server, String accessToken)
     {
         // not cached, as the result depends on who the token belongs to
-        return new no.stelar7.api.r4j.basic.calling.DataCallBuilder().withAccessToken(accessToken)
+        return new no.stelar7.api.r4j.basic.calling.DataCallBuilder(context).withAccessToken(accessToken)
                                                                       .withEndpoint(no.stelar7.api.r4j.basic.constants.api.URLEndpoint.V4_SUMMONER_ME)
                                                                       .withPlatform(server)
                                                                       .buildAs(Summoner.class);

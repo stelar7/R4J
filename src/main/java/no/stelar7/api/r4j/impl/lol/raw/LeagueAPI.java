@@ -12,16 +12,27 @@ import java.util.*;
 
 public final class LeagueAPI
 {
-    private static final LeagueAPI INSTANCE = new LeagueAPI();
+    private static final LeagueAPI INSTANCE = new LeagueAPI(R4JContext.getDefault());
     
     public static LeagueAPI getInstance()
     {
         return LeagueAPI.INSTANCE;
     }
     
-    private LeagueAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static LeagueAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(LeagueAPI.class, LeagueAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private LeagueAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     /**
@@ -35,7 +46,7 @@ public final class LeagueAPI
     private LeagueList getMasterLeague(LeagueShard server, GameQueueType queue)
     {
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_MASTER)
                                                        .withPlatform(server);
@@ -44,7 +55,7 @@ public final class LeagueAPI
         data.put("platform", server);
         data.put("queue", queue);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_MASTER, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_MASTER, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -55,7 +66,7 @@ public final class LeagueAPI
             LeagueList list = (LeagueList) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_MASTER, data);
+            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_MASTER, data);
             
             return list;
         } catch (ClassCastException e)
@@ -76,7 +87,7 @@ public final class LeagueAPI
     private LeagueList getGrandmasterLeague(LeagueShard server, GameQueueType queue)
     {
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_GRANDMASTER)
                                                        .withPlatform(server);
@@ -86,7 +97,7 @@ public final class LeagueAPI
         data.put("queue", queue);
         
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_GRANDMASTER, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_GRANDMASTER, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -97,7 +108,7 @@ public final class LeagueAPI
             LeagueList list = (LeagueList) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_GRANDMASTER, data);
+            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_GRANDMASTER, data);
             
             return list;
         } catch (ClassCastException e)
@@ -118,7 +129,7 @@ public final class LeagueAPI
      */
     private LeagueList getChallengerLeague(LeagueShard server, GameQueueType queue)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_CHALLENGER)
                                                        .withPlatform(server);
@@ -127,7 +138,7 @@ public final class LeagueAPI
         data.put("platform", server);
         data.put("queue", queue);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_CHALLENGER, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_CHALLENGER, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -138,7 +149,7 @@ public final class LeagueAPI
             LeagueList list = (LeagueList) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_CHALLENGER, data);
+            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_CHALLENGER, data);
             
             return list;
         } catch (ClassCastException e)
@@ -160,7 +171,7 @@ public final class LeagueAPI
     @Deprecated
     public LeagueList getLeague(LeagueShard server, String leagueId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.LEAGUE_ID_PLACEHOLDER, String.valueOf(leagueId))
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE)
                                                        .withPlatform(server);
@@ -169,7 +180,7 @@ public final class LeagueAPI
         data.put("platform", server);
         data.put("leagueid", leagueId);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE, data);
         if (chl.isPresent())
         {
             return (LeagueList) chl.get();
@@ -180,7 +191,7 @@ public final class LeagueAPI
             LeagueList list = (LeagueList) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE, data);
+            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE, data);
             
             return list;
         } catch (ClassCastException e)
@@ -200,7 +211,7 @@ public final class LeagueAPI
      */
     public List<LeagueEntry> getLeagueEntriesByPUUID(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID)
                                                        .withPlatform(server);
@@ -209,7 +220,7 @@ public final class LeagueAPI
         data.put("platform", server);
         data.put("id", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (List<LeagueEntry>) chl.get();
@@ -226,7 +237,7 @@ public final class LeagueAPI
             List<LeagueEntry> list = (List<LeagueEntry>) ret;
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID, data);
+            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID, data);
             
             return list;
         } catch (ClassCastException e)
@@ -244,7 +255,7 @@ public final class LeagueAPI
      */
     public List<LeagueEntry> getLeagueByTierDivision(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
                                                        .withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
@@ -277,7 +288,7 @@ public final class LeagueAPI
         data.put("tierdiv", tierdiv);
         data.put("page", page);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_LEAGUE_RANK, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_LEAGUE_RANK, data);
         if (chl.isPresent())
         {
             return (List<LeagueEntry>) chl.get();
@@ -294,7 +305,7 @@ public final class LeagueAPI
             List<LeagueEntry> list = (List<LeagueEntry>) ret;
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_LEAGUE_RANK, data);
+            context.getCacheProvider().store(URLEndpoint.V4_LEAGUE_RANK, data);
             
             return list;
         } catch (ClassCastException e)
@@ -326,7 +337,7 @@ public final class LeagueAPI
      */
     public List<LeagueEntry> getLeagueExpByTierDivision(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
                                                        .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
                                                        .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
                                                        .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))

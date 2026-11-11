@@ -10,6 +10,20 @@ import java.util.*;
 
 public class TimelineBuilder
 {
+    private R4JContext context = R4JContext.getDefault();
+
+    /**
+     * Uses the credentials, cache and limiters of the context instead of the default ones
+     *
+     * @param context the context to use
+     * @return this
+     */
+    public TimelineBuilder withContext(R4JContext context)
+    {
+        this.context = context == null ? R4JContext.getDefault() : context;
+        return this;
+    }
+
     private final String      id;
     private final RegionShard platform;
     
@@ -42,12 +56,12 @@ public class TimelineBuilder
     
     public TimelineBuilder withId(String id)
     {
-        return new TimelineBuilder(this.platform, id);
+        return new TimelineBuilder(this.platform, id).withContext(this.context);
     }
     
     public TimelineBuilder withPlatform(RegionShard platform)
     {
-        return new TimelineBuilder(platform, this.id);
+        return new TimelineBuilder(platform, this.id).withContext(this.context);
     }
     
     public LOLTimeline getTimeline()
@@ -79,7 +93,7 @@ public class TimelineBuilder
             return null;
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, this.id)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, this.id)
                                                        .withEndpoint(URLEndpoint.V5_TIMELINE)
                                                        .withPlatform(this.platform);
         
@@ -87,7 +101,7 @@ public class TimelineBuilder
         data.put("platform", platform);
         data.put("matchId", this.id);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_TIMELINE, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_TIMELINE, data);
         if (chl.isPresent())
         {
             return (GAMHSMatch) chl.get();
@@ -98,7 +112,7 @@ public class TimelineBuilder
             GAMHSMatch timeline = (GAMHSMatch) builder.build();
             
             data.put("value", timeline);
-            DataCall.getCacheProvider().store(URLEndpoint.V5_TIMELINE, data);
+            context.getCacheProvider().store(URLEndpoint.V5_TIMELINE, data);
             
             return timeline;
         } catch (ClassCastException e)

@@ -10,6 +10,20 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class ChampionBuilder
 {
+    private R4JContext context = R4JContext.getDefault();
+
+    /**
+     * Uses the credentials, cache and limiters of the context instead of the default ones
+     *
+     * @param context the context to use
+     * @return this
+     */
+    public ChampionBuilder withContext(R4JContext context)
+    {
+        this.context = context == null ? R4JContext.getDefault() : context;
+        return this;
+    }
+
     private final LeagueShard platform;
     
     public ChampionBuilder()
@@ -24,7 +38,7 @@ public class ChampionBuilder
     
     public ChampionBuilder withPlatform(LeagueShard platform)
     {
-        return new ChampionBuilder(platform);
+        return new ChampionBuilder(platform).withContext(this.context);
     }
     
     public ChampionRotationInfo getFreeToPlayRotation()
@@ -34,13 +48,13 @@ public class ChampionBuilder
             return null;
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS)
                                                        .withPlatform(this.platform);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", this.platform);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
         if (chl.isPresent())
         {
             return (ChampionRotationInfo) chl.get();
@@ -51,7 +65,7 @@ public class ChampionBuilder
             ChampionRotationInfo cl = (ChampionRotationInfo) builder.build();
             
             data.put("value", cl);
-            DataCall.getCacheProvider().store(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
+            context.getCacheProvider().store(URLEndpoint.V3_CHAMPION_ROTATIONS, data);
             
             return cl;
         } catch (ClassCastException e)

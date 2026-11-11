@@ -12,16 +12,27 @@ import java.util.*;
 public class AccountAPI
 {
     
-    private static final AccountAPI INSTANCE = new AccountAPI();
+    private static final AccountAPI INSTANCE = new AccountAPI(R4JContext.getDefault());
     
     public static AccountAPI getInstance()
     {
         return AccountAPI.INSTANCE;
     }
     
-    private AccountAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static AccountAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(AccountAPI.class, AccountAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private AccountAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public RiotAccount getAccountByPUUID(RegionShard server, String puuid)
@@ -32,15 +43,15 @@ public class AccountAPI
     public RiotAccount getAccountByPUUID(RegionShard server, String puuid, ApiKeyType keyType)
     {   
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (RiotAccount) chl.get();
@@ -51,7 +62,7 @@ public class AccountAPI
             RiotAccount list = (RiotAccount) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, data);
+            context.getCacheProvider().store(URLEndpoint.V1_SHARED_ACCOUNT_BY_PUUID, data);
             
             return list;
         } catch (ClassCastException e)
@@ -67,9 +78,9 @@ public class AccountAPI
     
     public RiotAccount getAccountByTag(RegionShard server, String name, String tag, ApiKeyType keyType)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_NAME_PLACEHOLDER, Utils.normalizeString(name))
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_NAME_PLACEHOLDER, Utils.normalizeString(name))
                                                        .withURLParameter(Constants.TAG_LINE_PLACEHOLDER, Utils.normalizeString(tag))
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
@@ -78,7 +89,7 @@ public class AccountAPI
         data.put("tag", Utils.normalizeString(tag));
         data.put("keytype", keyType);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
         if (chl.isPresent())
         {
             return (RiotAccount) chl.get();
@@ -89,7 +100,7 @@ public class AccountAPI
             RiotAccount list = (RiotAccount) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
+            context.getCacheProvider().store(URLEndpoint.V1_SHARED_ACCOUNT_BY_TAG, data);
             
             return list;
         } catch (ClassCastException e)
@@ -105,9 +116,9 @@ public class AccountAPI
     
     public RiotAccountShard getActiveShard(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_SHARD_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
@@ -115,7 +126,7 @@ public class AccountAPI
         data.put("game", game);
         data.put("puuid", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (RiotAccountShard) chl.get();
@@ -126,7 +137,7 @@ public class AccountAPI
             RiotAccountShard list = (RiotAccountShard) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, data);
+            context.getCacheProvider().store(URLEndpoint.V1_SHARED_SHARD_BY_PUUID, data);
             
             return list;
         } catch (ClassCastException e)
@@ -145,9 +156,9 @@ public class AccountAPI
     
     public RiotAccountRegion getActiveRegion(RegionShard server, ShardableGame game, String puuid, ApiKeyType keyType)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.GAME_PLACEHOLDER, game.getRealmValue())
                                                        .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
                                                        .withEndpoint(URLEndpoint.V1_SHARED_REGION_BY_PUUID)
                                                        .withPlatform(server);
         Map<String, Object> data = new LinkedHashMap<>();
@@ -156,7 +167,7 @@ public class AccountAPI
         data.put("puuid", puuid);
         data.put("keytype", keyType);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_SHARED_REGION_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_SHARED_REGION_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (RiotAccountRegion) chl.get();
@@ -167,7 +178,7 @@ public class AccountAPI
             RiotAccountRegion region = (RiotAccountRegion) builder.build();
             
             data.put("value", region);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_SHARED_REGION_BY_PUUID, data);
+            context.getCacheProvider().store(URLEndpoint.V1_SHARED_REGION_BY_PUUID, data);
             
             return region;
         } catch (ClassCastException e)
@@ -186,7 +197,7 @@ public class AccountAPI
      */
     public RiotAccount getAccountByAccessToken(RegionShard server, String accessToken, ApiKeyType keyType)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getKey(keyType))
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
                                                        .withAccessToken(accessToken)
                                                        .withEndpoint(URLEndpoint.V1_SHARED_ACCOUNT_ME)
                                                        .withPlatform(server);

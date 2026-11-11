@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.thirdparty;
 
+import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -8,6 +9,20 @@ import no.stelar7.api.r4j.basic.utils.Pair;
 @SuppressWarnings("unchecked")
 public class ThirdPartyCodeBuilder
 {
+    private R4JContext context = R4JContext.getDefault();
+
+    /**
+     * Uses the credentials, cache and limiters of the context instead of the default ones
+     *
+     * @param context the context to use
+     * @return this
+     */
+    public ThirdPartyCodeBuilder withContext(R4JContext context)
+    {
+        this.context = context == null ? R4JContext.getDefault() : context;
+        return this;
+    }
+
     
     private final LeagueShard platform;
     private final String      summonerId;
@@ -26,18 +41,18 @@ public class ThirdPartyCodeBuilder
     
     public ThirdPartyCodeBuilder withPlatform(LeagueShard platform)
     {
-        return new ThirdPartyCodeBuilder(platform, this.summonerId);
+        return new ThirdPartyCodeBuilder(platform, this.summonerId).withContext(this.context);
     }
     
     public ThirdPartyCodeBuilder withSummonerId(String id)
     {
-        return new ThirdPartyCodeBuilder(this.platform, id);
+        return new ThirdPartyCodeBuilder(this.platform, id).withContext(this.context);
     }
     
     
     public boolean checkCode()
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
                                                        .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
                                                        .withPlatform(this.platform);
         
@@ -58,7 +73,7 @@ public class ThirdPartyCodeBuilder
     
     public String getCode()
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.SUMMONER_ID_PLACEHOLDER, this.summonerId)
                                                        .withEndpoint(URLEndpoint.V4_THIRD_PARTY_CODE)
                                                        .withPlatform(this.platform);
         

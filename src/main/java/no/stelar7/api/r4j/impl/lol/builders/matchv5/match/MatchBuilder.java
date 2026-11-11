@@ -11,6 +11,20 @@ import java.util.*;
 
 public class MatchBuilder
 {
+    private R4JContext context = R4JContext.getDefault();
+
+    /**
+     * Uses the credentials, cache and limiters of the context instead of the default ones
+     *
+     * @param context the context to use
+     * @return this
+     */
+    public MatchBuilder withContext(R4JContext context)
+    {
+        this.context = context == null ? R4JContext.getDefault() : context;
+        return this;
+    }
+
     
     private final String      id;
     private final RegionShard platform;
@@ -43,12 +57,12 @@ public class MatchBuilder
     
     public MatchBuilder withId(String id)
     {
-        return new MatchBuilder(this.platform, id);
+        return new MatchBuilder(this.platform, id).withContext(this.context);
     }
     
     public MatchBuilder withPlatform(RegionShard platform)
     {
-        return new MatchBuilder(platform, this.id);
+        return new MatchBuilder(platform, this.id).withContext(this.context);
     }
     
     public LOLMatch getMatch()
@@ -80,7 +94,7 @@ public class MatchBuilder
             return null;
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, this.id)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, this.id)
                                                        .withEndpoint(URLEndpoint.V5_MATCH)
                                                        .withPlatform(this.platform);
         
@@ -88,7 +102,7 @@ public class MatchBuilder
         data.put("platform", this.platform);
         data.put("gameid", this.id);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V5_MATCH, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_MATCH, data);
         if (chl.isPresent())
         {
             return (GAMHSMatch) chl.get();
@@ -103,7 +117,7 @@ public class MatchBuilder
         GAMHSMatch match = (GAMHSMatch) matchObj;
         
         data.put("value", match);
-        DataCall.getCacheProvider().store(URLEndpoint.V5_MATCH, data);
+        context.getCacheProvider().store(URLEndpoint.V5_MATCH, data);
         
         return match;
     }

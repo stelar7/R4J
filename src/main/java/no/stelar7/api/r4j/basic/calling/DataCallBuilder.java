@@ -21,8 +21,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiFunction;
 
 @SuppressWarnings("rawtypes")
@@ -30,7 +28,25 @@ public class DataCallBuilder
 {
     private static final Logger logger = LoggerFactory.getLogger(DataCallBuilder.class);
     
-    private final DataCall dc = new DataCall();
+    private final R4JContext context;
+    private final DataCall   dc;
+
+    /**
+     * A call using the default context (the credentials, cache and limiters set through {@code new R4J(creds)} / the static methods on DataCall)
+     */
+    public DataCallBuilder()
+    {
+        this(R4JContext.getDefault());
+    }
+
+    /**
+     * @param context the context to take the credentials, cache, settings and limiters from
+     */
+    public DataCallBuilder(R4JContext context)
+    {
+        this.context = context == null ? R4JContext.getDefault() : context;
+        this.dc = new DataCall(this.context);
+    }
     
     private static final BiFunction<String, String, String> MERGE        = (o, n) -> o + "," + n;
     private static final BiFunction<String, String, String> MERGE_AS_SET = (o, n) -> o + n;
@@ -43,13 +59,6 @@ public class DataCallBuilder
      * (The limiter sleeps for the Retry-After duration between each attempt)
      */
     private static final int MAX_RATELIMIT_RETRIES = 5;
-
-    /**
-     * Pair:> Left: Game, Right: Platform
-     */
-    private static final Map<Pair<ApiKeyType, Enum>, Semaphore> semaphoreContainer = new HashMap<>();
-
-    private static final Lock globalLock = new ReentrantLock();
 
     /**
      * The game client (LCU, live client data, replay api) serves a certificate signed by a Riot root that is not in the JVM truststore.
@@ -250,12 +259,12 @@ public class DataCallBuilder
     {
         if (this.dc.useRatelimiter())
         {
-            if (DataCall.getCredentials() == null)
+            if (context.getCredentials() == null)
             {
                 throw new APIUnsupportedActionException("No API Creds set!");
             }
 
-            dc.getUrlHeaders().putIfAbsent(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getLoLAPIKey());
+            dc.getUrlHeaders().putIfAbsent(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLoLAPIKey());
         }
 
         // resolved after the default key has been added, so the permit and the limiters agree on which key is in use
@@ -263,7 +272,7 @@ public class DataCallBuilder
         final Enum       platform    = this.dc.getPlatform();
 
         // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
-        final Semaphore semaphore = DataCall.getNumberOfCallsAllowedInParallel() > 0 ? getSemaphore(keyTypeUsed, platform) : null;
+        final Semaphore semaphore = context.getSemaphore(keyTypeUsed, platform);
         if (semaphore != null)
         {
             try
@@ -329,7 +338,7 @@ public class DataCallBuilder
     {
         URLEndpoint endpoint = this.dc.getEndpoint();
 
-        Optional<?> cached = DataCall.getCacheProvider().get(endpoint, cacheKey);
+        Optional<?> cached = context.getCacheProvider().get(endpoint, cacheKey);
         if (cached.isPresent() && type.isInstance(cached.get()))
         {
             return type.cast(cached.get());
@@ -340,7 +349,7 @@ public class DataCallBuilder
         {
             Map<String, Object> data = new LinkedHashMap<>(cacheKey);
             data.put("value", result);
-            DataCall.getCacheProvider().store(endpoint, data);
+            context.getCacheProvider().store(endpoint, data);
         }
 
         return result;
@@ -489,11 +498,6 @@ public class DataCallBuilder
         return attempts;
     }
 
-    private static RateLimiter getLimiter(ApiKeyType keyType, Enum platform, Enum endpoint)
-    {
-        return DataCall.getLimiter(keyType).computeIfAbsent(platform, k -> new ConcurrentHashMap<>()).computeIfAbsent(endpoint, k -> new RateLimiter());
-    }
-
     /**
      * Waits until both the app limit (of the platform) and the method limit (of the endpoint on the platform) have a permit, then takes both.
      * Nothing is locked while waiting, so waiting on one platform or endpoint never blocks calls to another.
@@ -501,8 +505,8 @@ public class DataCallBuilder
     private void acquireLimits(ApiKeyType keyType, Enum platform, Enum endpoint) throws InterruptedException
     {
         // for app limits, the "endpoint" is the platform itself
-        RateLimiter app    = getLimiter(keyType, platform, platform);
-        RateLimiter method = endpoint == null ? null : getLimiter(keyType, platform, endpoint);
+        RateLimiter app    = context.getLimiter(keyType, platform, platform);
+        RateLimiter method = endpoint == null ? null : context.getLimiter(keyType, platform, endpoint);
 
         while (true)
         {
@@ -663,7 +667,7 @@ public class DataCallBuilder
 
                 if ((limitType == RateLimitType.LIMIT_UNDERLYING || limitType == RateLimitType.LIMIT_SERVICE) && methodLimiter != null)
                 {
-                    methodLimiter.cooldown(received.toEpochMilli(), retryAfter, DataCall.shouldFailFastOnServiceRatelimit());
+                    methodLimiter.cooldown(received.toEpochMilli(), retryAfter, context.shouldFailFastOnServiceRatelimit());
                 }
             }
 
@@ -700,7 +704,7 @@ public class DataCallBuilder
             if (responseCode == 429)
             {
                 StringBuilder          valueList        = new StringBuilder();
-                Map<Enum, RateLimiter> platformLimiters = DataCall.getLimiter(keyType).get(platform);
+                Map<Enum, RateLimiter> platformLimiters = context.getLimiters(keyType).get(platform);
                 if (platformLimiters != null)
                 {
                     platformLimiters.forEach((key, value) -> {
@@ -756,7 +760,7 @@ public class DataCallBuilder
             return null;
         }
 
-        Map<Enum, RateLimiter> platformLimiters = DataCall.getLimiter(keyType).get(platform);
+        Map<Enum, RateLimiter> platformLimiters = context.getLimiters(keyType).get(platform);
         return platformLimiters == null ? null : platformLimiters.get(endpoint);
     }
 
@@ -765,7 +769,7 @@ public class DataCallBuilder
      */
     private void updateRatelimiter(String limitHeader, String countHeader, Enum platform, Enum endpoint, long sentAt)
     {
-        RateLimiter limiter = getLimiter(dc.getKeyUsedByHeadersUsed(), platform, endpoint);
+        RateLimiter limiter = context.getLimiter(dc.getKeyUsedByHeadersUsed(), platform, endpoint);
 
         try
         {
@@ -1003,26 +1007,5 @@ public class DataCallBuilder
     {
         this.dc.setMaxSleep(maxSleep);
         return this;
-    }
-    
-    private static Semaphore getSemaphore(ApiKeyType keyTypeUsed, Enum platform)
-    {
-        Pair<ApiKeyType, Enum> pair = new Pair<>(keyTypeUsed, platform);
-        int numberOfCallsAllowedInParallel = DataCall.getNumberOfCallsAllowedInParallel();
-        if (numberOfCallsAllowedInParallel <= 0) {
-            throw new IllegalArgumentException("Call allowed in parallel must be greater than 0");
-        }
-        
-        globalLock.lock();
-        try {
-            return semaphoreContainer.computeIfAbsent(pair, k -> new Semaphore(DataCall.getNumberOfCallsAllowedInParallel(), true));
-        } finally {
-            globalLock.unlock();
-        }
-    }
-    
-    public static Lock getGlobalLock()
-    {
-        return globalLock;
     }
 }

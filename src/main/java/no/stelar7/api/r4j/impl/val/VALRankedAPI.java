@@ -9,24 +9,35 @@ import java.util.*;
 
 public class VALRankedAPI
 {
-    private static final VALRankedAPI INSTANCE = new VALRankedAPI();
+    private static final VALRankedAPI INSTANCE = new VALRankedAPI(R4JContext.getDefault());
     
     public static VALRankedAPI getInstance()
     {
         return VALRankedAPI.INSTANCE;
     }
     
-    private VALRankedAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static VALRankedAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(VALRankedAPI.class, VALRankedAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private VALRankedAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public Leaderboard getLeaderboard(ValorantShard platform, String actId, int startIndex, int size)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)
                                                        .withQueryParameter(Constants.STARTINDEX_PLACEHOLDER_DATA, String.valueOf(startIndex))
                                                        .withQueryParameter(Constants.SIZE_PLACEHOLDER_DATA, String.valueOf(size))
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT)
                                                        .withPlatform(platform);
         
@@ -36,7 +47,7 @@ public class VALRankedAPI
         data.put("startIndex", startIndex);
         data.put("size", size);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT, data);
         if (chl.isPresent())
         {
             return (Leaderboard) chl.get();
@@ -47,7 +58,7 @@ public class VALRankedAPI
             Leaderboard match = (Leaderboard) builder.build();
             
             data.put("value", match);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT, data);
+            context.getCacheProvider().store(URLEndpoint.V1_VAL_LEADERBOARD_BY_ACT, data);
             
             return match;
         } catch (ClassCastException e)

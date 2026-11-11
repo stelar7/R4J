@@ -10,6 +10,20 @@ import java.util.*;
 
 public class SummonerBuilder
 {
+    private R4JContext context = R4JContext.getDefault();
+
+    /**
+     * Uses the credentials, cache and limiters of the context instead of the default ones
+     *
+     * @param context the context to use
+     * @return this
+     */
+    public SummonerBuilder withContext(R4JContext context)
+    {
+        this.context = context == null ? R4JContext.getDefault() : context;
+        return this;
+    }
+
 
     private String      puuid;
     private LeagueShard platform;
@@ -26,12 +40,12 @@ public class SummonerBuilder
 
     public SummonerBuilder withPUUID(String puuid)
     {
-        return new SummonerBuilder(puuid, this.platform);
+        return new SummonerBuilder(puuid, this.platform).withContext(this.context);
     }
 
     public SummonerBuilder withPlatform(LeagueShard platform)
     {
-        return new SummonerBuilder(this.puuid, platform);
+        return new SummonerBuilder(this.puuid, platform).withContext(this.context);
     }
 
     public SummonerBuilder setPUUID(String puuid)
@@ -57,7 +71,7 @@ public class SummonerBuilder
      */
     public Summoner get()
     {
-        DataCallBuilder builder  = new DataCallBuilder().withPlatform(this.platform);
+        DataCallBuilder builder  = new DataCallBuilder(context).withPlatform(this.platform);
         URLEndpoint     endpoint = null;
 
 
@@ -70,7 +84,7 @@ public class SummonerBuilder
 
         builder.withEndpoint(endpoint);
 
-        Optional<?> chl = DataCall.getCacheProvider().get(endpoint, data);
+        Optional<?> chl = context.getCacheProvider().get(endpoint, data);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -85,7 +99,7 @@ public class SummonerBuilder
         }
 
         data.put("value", sob);
-        DataCall.getCacheProvider().store(endpoint, data);
+        context.getCacheProvider().store(endpoint, data);
 
         return (Summoner) sob;
     }

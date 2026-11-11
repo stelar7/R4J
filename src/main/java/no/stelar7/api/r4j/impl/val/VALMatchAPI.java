@@ -12,22 +12,33 @@ import java.util.*;
 
 public class VALMatchAPI
 {
-    private static final VALMatchAPI INSTANCE = new VALMatchAPI();
+    private static final VALMatchAPI INSTANCE = new VALMatchAPI(R4JContext.getDefault());
     
     public static VALMatchAPI getInstance()
     {
         return VALMatchAPI.INSTANCE;
     }
     
-    private VALMatchAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static VALMatchAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(VALMatchAPI.class, VALMatchAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private VALMatchAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public List<MatchReference> getMatchList(ValorantShard server, String PUUID)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID)
                                                        .withPlatform(server);
         
@@ -35,7 +46,7 @@ public class VALMatchAPI
         data.put("platform", server);
         data.put("puuid", PUUID);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, data);
         if (chl.isPresent())
         {
             return ((MatchList) chl.get()).getHistory();
@@ -50,7 +61,7 @@ public class VALMatchAPI
         MatchList matchList = (MatchList) matchObj;
         
         data.put("value", matchList);
-        DataCall.getCacheProvider().store(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, data);
+        context.getCacheProvider().store(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, data);
         
         return matchList.getHistory();
     }
@@ -58,8 +69,8 @@ public class VALMatchAPI
     
     public RecentMatchList getRecentMatches(ValorantShard platform, GameQueueType queue)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getValue())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getValue())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE)
                                                        .withPlatform(platform);
         
@@ -67,7 +78,7 @@ public class VALMatchAPI
         data.put("platform", platform);
         data.put("queue", queue);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, data);
         if (chl.isPresent())
         {
             return (RecentMatchList) chl.get();
@@ -78,7 +89,7 @@ public class VALMatchAPI
             RecentMatchList match = (RecentMatchList) builder.build();
             
             data.put("value", match);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, data);
+            context.getCacheProvider().store(URLEndpoint.V1_VAL_RECENT_MATCH_BY_QUEUE, data);
             
             return match;
         } catch (ClassCastException e)
@@ -90,8 +101,8 @@ public class VALMatchAPI
     
     public VALMatch getMatch(ValorantShard platform, String gameId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_MATCH_BY_ID)
                                                        .withPlatform(platform);
         
@@ -99,7 +110,7 @@ public class VALMatchAPI
         data.put("platform", platform);
         data.put("gameid", gameId);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_VAL_MATCH_BY_ID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_MATCH_BY_ID, data);
         if (chl.isPresent())
         {
             return (VALMatch) chl.get();
@@ -110,7 +121,7 @@ public class VALMatchAPI
             VALMatch match = (VALMatch) builder.build();
             
             data.put("value", match);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_VAL_MATCH_BY_ID, data);
+            context.getCacheProvider().store(URLEndpoint.V1_VAL_MATCH_BY_ID, data);
             
             return match;
         } catch (ClassCastException e)

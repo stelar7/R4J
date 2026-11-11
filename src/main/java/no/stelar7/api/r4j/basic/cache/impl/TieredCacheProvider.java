@@ -98,6 +98,12 @@ public class TieredCacheProvider implements CacheProvider
     }
     
     @Override
+    public void setContext(no.stelar7.api.r4j.basic.calling.R4JContext context)
+    {
+        providers.forEach(p -> p.setContext(context));
+    }
+
+    @Override
     public void setTimeToLive(CacheLifetimeHint hints)
     {
         // this is ignored for tiered caches as the individuals control it themself

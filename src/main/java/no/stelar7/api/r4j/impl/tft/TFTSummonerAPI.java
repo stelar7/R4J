@@ -11,16 +11,27 @@ public class TFTSummonerAPI
 {
     
     
-    private static final TFTSummonerAPI INSTANCE = new TFTSummonerAPI();
+    private static final TFTSummonerAPI INSTANCE = new TFTSummonerAPI(R4JContext.getDefault());
     
     public static TFTSummonerAPI getInstance()
     {
         return TFTSummonerAPI.INSTANCE;
     }
     
-    private TFTSummonerAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static TFTSummonerAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(TFTSummonerAPI.class, TFTSummonerAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private TFTSummonerAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     
@@ -33,8 +44,8 @@ public class TFTSummonerAPI
      */
     public Summoner getSummonerByPUUID(final LeagueShard server, String PUUID)
     {
-        DataCallBuilder builder = new DataCallBuilder()
-                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context)
+                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                 .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
                 .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID)
                 .withPlatform(server);
@@ -43,7 +54,7 @@ public class TFTSummonerAPI
         data.put("platform", server);
         data.put("puuid", PUUID);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (Summoner) chl.get();
@@ -54,7 +65,7 @@ public class TFTSummonerAPI
             Summoner summoner = (Summoner) builder.build();
             
             data.put("value", summoner);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, data);
+            context.getCacheProvider().store(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID, data);
             
             return summoner;
         } catch (ClassCastException e)
@@ -74,7 +85,7 @@ public class TFTSummonerAPI
     public Summoner getSummonerByAccessToken(final LeagueShard server, String accessToken)
     {
         // not cached, as the result depends on who the token belongs to
-        return new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        return new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                     .withAccessToken(accessToken)
                                     .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_ME)
                                     .withPlatform(server)

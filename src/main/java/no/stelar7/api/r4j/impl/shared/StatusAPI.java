@@ -9,27 +9,38 @@ import java.util.*;
 
 public final class StatusAPI
 {
-    private static final StatusAPI INSTANCE = new StatusAPI();
+    private static final StatusAPI INSTANCE = new StatusAPI(R4JContext.getDefault());
     
     public static StatusAPI getInstance()
     {
         return StatusAPI.INSTANCE;
     }
     
-    private StatusAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static StatusAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(StatusAPI.class, StatusAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private StatusAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public PlatformData getShardStatus(LeagueShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V4_STATUS_LOL)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V4_STATUS_LOL)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V4_STATUS_LOL, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_STATUS_LOL, data);
         if (chl.isPresent())
         {
             return (PlatformData) chl.get();
@@ -40,7 +51,7 @@ public final class StatusAPI
             PlatformData list = (PlatformData) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V4_STATUS_LOL, data);
+            context.getCacheProvider().store(URLEndpoint.V4_STATUS_LOL, data);
             
             return list;
         } catch (ClassCastException e)
@@ -58,8 +69,8 @@ public final class StatusAPI
      */
     public PlatformData getTFTShardStatus(LeagueShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_STATUS_TFT)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_TFT)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withPlatform(server);
 
         Map<String, Object> data = new LinkedHashMap<>();
@@ -70,13 +81,13 @@ public final class StatusAPI
 
     public PlatformData getShardStatus(RuneterraShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_STATUS_LOR)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_LOR)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_STATUS_LOR, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_STATUS_LOR, data);
         if (chl.isPresent())
         {
             return (PlatformData) chl.get();
@@ -87,7 +98,7 @@ public final class StatusAPI
             PlatformData list = (PlatformData) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_STATUS_LOR, data);
+            context.getCacheProvider().store(URLEndpoint.V1_STATUS_LOR, data);
             
             return list;
         } catch (ClassCastException e)
@@ -99,13 +110,13 @@ public final class StatusAPI
     
     public PlatformData getShardStatus(ValorantShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V1_STATUS_VAL)
+        DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_VAL)
                                                        .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_STATUS_VAL, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_STATUS_VAL, data);
         if (chl.isPresent())
         {
             return (PlatformData) chl.get();
@@ -116,7 +127,7 @@ public final class StatusAPI
             PlatformData list = (PlatformData) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_STATUS_VAL, data);
+            context.getCacheProvider().store(URLEndpoint.V1_STATUS_VAL, data);
             
             return list;
         } catch (ClassCastException e)

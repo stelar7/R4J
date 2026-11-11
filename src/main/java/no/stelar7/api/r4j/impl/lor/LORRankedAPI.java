@@ -9,10 +9,22 @@ import java.util.*;
 
 public class LORRankedAPI
 {
-    private static final LORRankedAPI INSTANCE = new LORRankedAPI();
+    private static final LORRankedAPI INSTANCE = new LORRankedAPI(R4JContext.getDefault());
     
-    private LORRankedAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static LORRankedAPI getInstance(R4JContext context)
     {
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(LORRankedAPI.class, LORRankedAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private LORRankedAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public static LORRankedAPI getInstance()
@@ -28,15 +40,15 @@ public class LORRankedAPI
      */
     public List<LoRPlayerRank> getLeaderboard(RuneterraShard server)
     {
-        DataCallBuilder builder = new DataCallBuilder()
-                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getLORAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context)
+                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
                 .withEndpoint(URLEndpoint.V1_LOR_RANKED_LEADERBOARD)
                 .withPlatform(server);
         
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);
         if (chl.isPresent())
         {
             return ((LoRRankedPlayerList) chl.get()).getPlayers();
@@ -47,7 +59,7 @@ public class LORRankedAPI
             LoRRankedPlayerList list = (LoRRankedPlayerList) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);
+            context.getCacheProvider().store(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);
             
             return list.getPlayers();
         } catch (ClassCastException e)

@@ -10,10 +10,22 @@ import java.util.*;
 
 public class LORMatchAPI
 {
-    private static final LORMatchAPI INSTANCE = new LORMatchAPI();
+    private static final LORMatchAPI INSTANCE = new LORMatchAPI(R4JContext.getDefault());
     
-    private LORMatchAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static LORMatchAPI getInstance(R4JContext context)
     {
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(LORMatchAPI.class, LORMatchAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private LORMatchAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public static LORMatchAPI getInstance()
@@ -23,8 +35,8 @@ public class LORMatchAPI
     
     public List<String> getMatchList(RuneterraShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder()
-                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getLORAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context)
+                .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
                 .withEndpoint(URLEndpoint.V1_LOR_MATCHES_BY_PUUID)
                 .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                 .withPlatform(server);
@@ -33,7 +45,7 @@ public class LORMatchAPI
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_LOR_MATCHES_BY_PUUID, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_LOR_MATCHES_BY_PUUID, data);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -44,7 +56,7 @@ public class LORMatchAPI
             List<String> list = (List<String>) builder.build();
             
             data.put("value", list);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_LOR_MATCHES_BY_PUUID, data);
+            context.getCacheProvider().store(URLEndpoint.V1_LOR_MATCHES_BY_PUUID, data);
             
             return list;
         } catch (ClassCastException e)
@@ -65,8 +77,8 @@ public class LORMatchAPI
     
     public GAMHSMatch getMatchRAW(RuneterraShard platform, String gameId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getLORAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getLORAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_LOR_MATCH)
                                                        .withPlatform(platform);
         
@@ -74,7 +86,7 @@ public class LORMatchAPI
         data.put("platform", platform);
         data.put("gameid", gameId);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_LOR_MATCH, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_LOR_MATCH, data);
         if (chl.isPresent())
         {
             return (GAMHSMatch) chl.get();
@@ -85,7 +97,7 @@ public class LORMatchAPI
             GAMHSMatch match = (GAMHSMatch) builder.build();
             
             data.put("value", match);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_LOR_MATCH, data);
+            context.getCacheProvider().store(URLEndpoint.V1_LOR_MATCH, data);
             
             return match;
         } catch (ClassCastException e)

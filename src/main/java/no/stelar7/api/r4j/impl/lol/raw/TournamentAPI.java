@@ -12,27 +12,56 @@ import java.util.*;
 public final class TournamentAPI
 {
     
-    private static final TournamentAPI INSTANCE      = new TournamentAPI(false);
-    private static final TournamentAPI INSTANCE_STUB = new TournamentAPI(true);
-    
-    private boolean useStub;
-    
+    private static final TournamentAPI INSTANCE      = new TournamentAPI(R4JContext.getDefault(), false);
+    private static final TournamentAPI INSTANCE_STUB = new TournamentAPI(R4JContext.getDefault(), true);
+
+    private final R4JContext context;
+    private       boolean    useStub;
+
     public void useStub(boolean useStub)
     {
         this.useStub = useStub;
     }
-    
+
     public static TournamentAPI getInstance(boolean useStub)
     {
         return useStub ? INSTANCE_STUB : INSTANCE;
     }
-    
-    private TournamentAPI(boolean useStub)
+
+    /**
+     * @param context the context to take the credentials and limiters from
+     * @param useStub if true, returns the -stub instance
+     * @return the api belonging to the context
+     */
+    public static TournamentAPI getInstance(R4JContext context, boolean useStub)
     {
+        if (context == null || context == R4JContext.getDefault())
+        {
+            return getInstance(useStub);
+        }
+
+        // the two variants are separate objects, like the default ones
+        return useStub ? context.getApi(StubHolder.class, c -> new StubHolder(new TournamentAPI(c, true))).api
+                       : context.getApi(TournamentAPI.class, c -> new TournamentAPI(c, false));
+    }
+
+    private static final class StubHolder
+    {
+        private final TournamentAPI api;
+
+        private StubHolder(TournamentAPI api)
+        {
+            this.api = api;
+        }
+    }
+
+    private TournamentAPI(R4JContext context, boolean useStub)
+    {
+        this.context = context;
         this.useStub = useStub;
     }
-    
-    
+
+
     public boolean isStub()
     {
         return useStub;
@@ -49,7 +78,7 @@ public final class TournamentAPI
      */
     public List<String> generateTournamentCodes(final TournamentCodeParameters params, final long tournamentId, Integer count)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
                                                        .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
                                                        .withEndpoint(URLEndpoint.V5_TOURNAMENT_CODES)
@@ -80,7 +109,7 @@ public final class TournamentAPI
      */
     public TournamentCode getTournamentInfo(final String tournamentCode)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(useStub ? URLEndpoint.V5_TOURNAMENT_STUB_CODES_BY_CODE : URLEndpoint.V5_TOURNAMENT_CODES_BY_CODE)
                                                        .withPlatform(RegionShard.AMERICAS);
@@ -101,7 +130,7 @@ public final class TournamentAPI
             throw new IllegalArgumentException("This method is not useable with the stub API");
         }
         
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V5_TOURNAMENT_GAMES_BY_CODE)
                                                        .withPlatform(RegionShard.AMERICAS);
@@ -118,7 +147,7 @@ public final class TournamentAPI
      */
     public List<LobbyEvent> getTournamentLobbyInfo(final String tournamentCode)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V5_TOURNAMENT_LOBBY_EVENTS)
                                                        .withPlatform(RegionShard.AMERICAS);
@@ -151,7 +180,7 @@ public final class TournamentAPI
      */
     public Long registerAsProvider(final ProviderRegistrationParameters params)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withEndpoint(URLEndpoint.V5_TOURNAMENT_PROVIDER)
                                                        .withPostData(params.toJson())
                                                        .withRequestMethod(Constants.METHOD_POST)
@@ -180,7 +209,7 @@ public final class TournamentAPI
      */
     public Long registerTournament(final TournamentRegistrationParameters params)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withEndpoint(URLEndpoint.V5_TOURNAMENT_TOURNAMENT)
                                                        .withPostData(Utils.getGson().toJson(params))
                                                        .withRequestMethod(Constants.METHOD_POST)
@@ -208,7 +237,7 @@ public final class TournamentAPI
      */
     public void updateTournament(final String tournamentCode, final TournamentCodeUpdateParameters params)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTournamentAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
                                                        .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
                                                        .withEndpoint(URLEndpoint.V5_TOURNAMENT_CODES_BY_CODE)
                                                        .withPostData(Utils.getGson().toJson(params))

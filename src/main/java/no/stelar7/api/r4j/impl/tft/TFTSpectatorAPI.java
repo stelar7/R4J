@@ -9,16 +9,27 @@ import java.util.*;
 
 public final class TFTSpectatorAPI
 {
-    private static final TFTSpectatorAPI INSTANCE = new TFTSpectatorAPI();
+    private static final TFTSpectatorAPI INSTANCE = new TFTSpectatorAPI(R4JContext.getDefault());
 
     public static TFTSpectatorAPI getInstance()
     {
         return TFTSpectatorAPI.INSTANCE;
     }
 
-    private TFTSpectatorAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static TFTSpectatorAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(TFTSpectatorAPI.class, TFTSpectatorAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private TFTSpectatorAPI(R4JContext context)
+    {
+        this.context = context;
     }
 
     /**
@@ -30,8 +41,8 @@ public final class TFTSpectatorAPI
      */
     public SpectatorGameInfo getCurrentGame(LeagueShard server, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V5_TFT_SPECTATOR_CURRENT)
                                                        .withPlatform(server);
 

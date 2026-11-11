@@ -15,16 +15,27 @@ import java.util.*;
  */
 public final class VALConsoleAPI
 {
-    private static final VALConsoleAPI INSTANCE = new VALConsoleAPI();
+    private static final VALConsoleAPI INSTANCE = new VALConsoleAPI(R4JContext.getDefault());
 
     public static VALConsoleAPI getInstance()
     {
         return VALConsoleAPI.INSTANCE;
     }
 
-    private VALConsoleAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static VALConsoleAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(VALConsoleAPI.class, VALConsoleAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private VALConsoleAPI(R4JContext context)
+    {
+        this.context = context;
     }
 
     /**
@@ -34,8 +45,8 @@ public final class VALConsoleAPI
      */
     public VALMatch getMatch(ValorantShard platform, String matchId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_MATCH_BY_ID)
                                                        .withPlatform(platform);
 
@@ -54,9 +65,9 @@ public final class VALConsoleAPI
      */
     public List<MatchReference> getMatchList(ValorantShard platform, String puuid, ConsolePlatformType platformType)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
                                                        .withQueryParameter(Constants.PLATFORM_TYPE_PLACEHOLDER_DATA, platformType.getValue())
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_MATCHLIST_BY_PUUID)
                                                        .withPlatform(platform);
 
@@ -76,8 +87,8 @@ public final class VALConsoleAPI
      */
     public RecentMatchList getRecentMatches(ValorantShard platform, String queue)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.QUEUE_PLACEHOLDER, queue)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.QUEUE_PLACEHOLDER, queue)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_RECENT_MATCH_BY_QUEUE)
                                                        .withPlatform(platform);
 
@@ -98,11 +109,11 @@ public final class VALConsoleAPI
      */
     public Leaderboard getLeaderboard(ValorantShard platform, String actId, ConsolePlatformType platformType, int startIndex, int size)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.ACT_ID_PLACEHOLDER, actId)
                                                        .withQueryParameter(Constants.PLATFORM_TYPE_PLACEHOLDER_DATA, platformType.getValue())
                                                        .withQueryParameter(Constants.STARTINDEX_PLACEHOLDER_DATA, String.valueOf(startIndex))
                                                        .withQueryParameter(Constants.SIZE_PLACEHOLDER_DATA, String.valueOf(size))
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_CONSOLE_LEADERBOARD_BY_ACT)
                                                        .withPlatform(platform);
 

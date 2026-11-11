@@ -11,16 +11,27 @@ import no.stelar7.api.r4j.basic.constants.api.regions.ValorantShard;
  */
 public final class VALAccoladesAPI
 {
-    private static final VALAccoladesAPI INSTANCE = new VALAccoladesAPI();
+    private static final VALAccoladesAPI INSTANCE = new VALAccoladesAPI(R4JContext.getDefault());
 
     public static VALAccoladesAPI getInstance()
     {
         return VALAccoladesAPI.INSTANCE;
     }
 
-    private VALAccoladesAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static VALAccoladesAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(VALAccoladesAPI.class, VALAccoladesAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private VALAccoladesAPI(R4JContext context)
+    {
+        this.context = context;
     }
 
     /**
@@ -30,7 +41,7 @@ public final class VALAccoladesAPI
      */
     public JsonElement getAccolades(ValorantShard platform, Boolean enabledOnly)
     {
-        DataCallBuilder builder = new DataCallBuilder().withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_ACCOLADES)
                                                        .withPlatform(platform);
 
@@ -49,8 +60,8 @@ public final class VALAccoladesAPI
      */
     public JsonElement getPlayerAccolades(ValorantShard platform, String puuid)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getVALAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getVALAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_VAL_ACCOLADES_BY_PUUID)
                                                        .withPlatform(platform);
 

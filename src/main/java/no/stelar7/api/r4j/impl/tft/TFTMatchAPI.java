@@ -11,22 +11,33 @@ import java.util.*;
 
 public class TFTMatchAPI
 {
-    private static final TFTMatchAPI INSTANCE = new TFTMatchAPI();
+    private static final TFTMatchAPI INSTANCE = new TFTMatchAPI(R4JContext.getDefault());
     
     public static TFTMatchAPI getInstance()
     {
         return TFTMatchAPI.INSTANCE;
     }
     
-    private TFTMatchAPI()
+    /**
+     * @param context the context to take the credentials, cache and limiters from
+     * @return the api belonging to the context
+     */
+    public static TFTMatchAPI getInstance(R4JContext context)
     {
-        // Hide public constructor
+        return context == null || context == R4JContext.getDefault() ? INSTANCE : context.getApi(TFTMatchAPI.class, TFTMatchAPI::new);
+    }
+
+    private final R4JContext context;
+
+    private TFTMatchAPI(R4JContext context)
+    {
+        this.context = context;
     }
     
     public List<String> getMatchList(RegionShard server, String PUUID, Integer start, Integer count, Long startTime, Long endTime)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCHLIST)
                                                        .withQueryParameter(Constants.START_PLACEHOLDER_DATA, String.valueOf(start))
                                                        .withQueryParameter(Constants.COUNT_PLACEHOLDER_DATA, String.valueOf(count))
@@ -50,7 +61,7 @@ public class TFTMatchAPI
         data.put("starttime", startTime);
         data.put("endtime", endTime);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCHLIST, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_MATCHLIST, data);
         if (chl.isPresent())
         {
             return (List<String>) chl.get();
@@ -65,7 +76,7 @@ public class TFTMatchAPI
         List<String> matchList = (List<String>) matchObj;
         
         data.put("value", matchList);
-        DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_MATCHLIST, data);
+        context.getCacheProvider().store(URLEndpoint.V1_TFT_MATCHLIST, data);
         
         return matchList;
     }
@@ -81,7 +92,7 @@ public class TFTMatchAPI
      */
     public MatchIterator getMatchIterator(RegionShard server, String puuid, Integer start, Integer count, Long startTime, Long endTime)
     {
-        return new MatchIterator(getMatchList(server, puuid, start, count, startTime, endTime));
+        return new MatchIterator(getMatchList(server, puuid, start, count, startTime, endTime), context);
     }
     
     public TFTMatch getMatch(RegionShard platform, String gameId)
@@ -96,8 +107,8 @@ public class TFTMatchAPI
     
     public GAMHSMatch getMatchRAW(RegionShard platform, String gameId)
     {
-        DataCallBuilder builder = new DataCallBuilder().withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
-                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, DataCall.getCredentials().getTFTAPIKey())
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, gameId)
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
                                                        .withEndpoint(URLEndpoint.V1_TFT_MATCH)
                                                        .withPlatform(platform);
         
@@ -105,7 +116,7 @@ public class TFTMatchAPI
         data.put("platform", platform);
         data.put("gameid", gameId);
         
-        Optional<?> chl = DataCall.getCacheProvider().get(URLEndpoint.V1_TFT_MATCH, data);
+        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_TFT_MATCH, data);
         if (chl.isPresent())
         {
             return (GAMHSMatch) chl.get();
@@ -116,7 +127,7 @@ public class TFTMatchAPI
             GAMHSMatch match = (GAMHSMatch) builder.build();
             
             data.put("value", match);
-            DataCall.getCacheProvider().store(URLEndpoint.V1_TFT_MATCH, data);
+            context.getCacheProvider().store(URLEndpoint.V1_TFT_MATCH, data);
             
             return match;
         } catch (ClassCastException e)
