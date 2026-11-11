@@ -271,58 +271,67 @@ public class DataCallBuilder
         final ApiKeyType keyTypeUsed = this.dc.getKeyUsedByHeadersUsed();
         final Enum       platform    = this.dc.getPlatform();
 
-        // We allow only a given number of thread to check limits and make calls at the same time / per platform + game
+        // We allow only a given number of calls to be made at the same time / per platform + game
         final Semaphore semaphore = context.getSemaphore(keyTypeUsed, platform);
-        if (semaphore != null)
-        {
-            try
-            {
-                semaphore.acquire();
-            } catch (InterruptedException e)
-            {
-                logger.error("Interrupted while trying to acquire a permit for the API call: {}", url, e);
-                Thread.currentThread().interrupt();
-                return null;
-            }
-        }
 
-        try
+        while (true)
         {
-            if (this.dc.useRatelimiter())
+            if (semaphore != null)
             {
                 try
                 {
-                    acquireLimits(keyTypeUsed, platform, this.dc.getEndpoint());
+                    semaphore.acquire();
                 } catch (InterruptedException e)
                 {
-                    logger.error("Interrupted while waiting for the ratelimit for the API call: {}", url, e);
+                    logger.error("Interrupted while trying to acquire a permit for the API call: {}", url, e);
                     Thread.currentThread().interrupt();
                     return null;
                 }
             }
 
-            logger.trace("Trying url: {}", url);
-
+            long wait;
             try
             {
-                return this.getResponse(url);
-            } finally
-            {
-                if (this.dc.useRatelimiter())
+                wait = this.dc.useRatelimiter() ? tryAcquireLimits(keyTypeUsed, platform, this.dc.getEndpoint()) : 0;
+                if (wait == 0)
                 {
-                    // lets the next call through if this was the first call of the bucket (see RateLimiter.callFinished)
-                    context.getLimiter(keyTypeUsed, platform, platform).callFinished();
-                    if (this.dc.getEndpoint() != null)
+                    logger.trace("Trying url: {}", url);
+
+                    try
                     {
-                        context.getLimiter(keyTypeUsed, platform, this.dc.getEndpoint()).callFinished();
+                        return this.getResponse(url);
+                    } finally
+                    {
+                        if (this.dc.useRatelimiter())
+                        {
+                            // lets the next call through if this was the first call of the bucket (see RateLimiter.callFinished)
+                            context.getLimiter(keyTypeUsed, platform, platform).callFinished();
+                            if (this.dc.getEndpoint() != null)
+                            {
+                                context.getLimiter(keyTypeUsed, platform, this.dc.getEndpoint()).callFinished();
+                            }
+                        }
                     }
                 }
-            }
-        } finally
-        {
-            if (semaphore != null)
+            } finally
             {
-                semaphore.release();
+                if (semaphore != null)
+                {
+                    semaphore.release();
+                }
+            }
+
+            // The parallel-call permit is not held while waiting for the ratelimit, so a call that has to wait
+            // does not keep calls to other endpoints of the platform from being made.
+            logger.debug("{} {}: waiting {} ms for the ratelimit", platform, this.dc.getEndpoint(), wait);
+            try
+            {
+                Thread.sleep(wait);
+            } catch (InterruptedException e)
+            {
+                logger.error("Interrupted while waiting for the ratelimit for the API call: {}", url, e);
+                Thread.currentThread().interrupt();
+                return null;
             }
         }
     }
@@ -527,54 +536,43 @@ public class DataCallBuilder
     }
 
     /**
-     * Waits until both the app limit (of the platform) and the method limit (of the endpoint on the platform) have a permit, then takes both.
-     * Nothing is locked while waiting, so waiting on one platform or endpoint never blocks calls to another.
+     * Takes a permit from both the app limit (of the platform) and the method limit (of the endpoint on the platform), if both have one.
+     *
+     * @return 0 if both permits were taken, otherwise how long to wait (in ms) before trying again
+     * @throws APIEndpointCooldownException if the endpoint is in a service-limit cooldown, and calls should fail instead of wait
      */
-    private void acquireLimits(ApiKeyType keyType, Enum platform, Enum endpoint) throws InterruptedException
+    private long tryAcquireLimits(ApiKeyType keyType, Enum platform, Enum endpoint)
     {
         // for app limits, the "endpoint" is the platform itself
         RateLimiter app    = context.getLimiter(keyType, platform, platform);
         RateLimiter method = endpoint == null ? null : context.getLimiter(keyType, platform, endpoint);
 
-        while (true)
+        long now = System.currentTimeMillis();
+
+        // Service-limit cooldown in fail-fast mode: the caller prefers an exception over waiting out the cooldown.
+        if (method != null && method.isCooldownFailFast() && method.getCooldownRemaining(now) > 0)
         {
-            long now = System.currentTimeMillis();
-
-            // Service-limit cooldown in fail-fast mode: waiting here would hold the caller thread (and its parallel-call permit) for the whole cooldown.
-            if (method != null && method.isCooldownFailFast())
-            {
-                long remaining = method.getCooldownRemaining(now);
-                if (remaining > 0)
-                {
-                    throw new APIEndpointCooldownException(endpoint.name(), remaining);
-                }
-            }
-
-            long wait = app.tryAcquire(now);
-            if (wait == 0 && method != null)
-            {
-                wait = method.tryAcquire(now);
-                if (wait != 0)
-                {
-                    // the call is not made yet, so it should not count against the app limit while we wait for the method limit
-                    app.release();
-                }
-            }
-
-            if (wait == 0)
-            {
-                return;
-            }
-
-            // a cooldown started by another process (sharing the limits through a store) is only known after asking for a permit
-            if (method != null && method.isCooldownFailFast() && method.getCooldownRemaining(now) > 0)
-            {
-                throw new APIEndpointCooldownException(endpoint.name(), method.getCooldownRemaining(now));
-            }
-
-            logger.debug("{} {}: waiting {} ms for the ratelimit", platform, endpoint, wait);
-            Thread.sleep(wait);
+            throw new APIEndpointCooldownException(endpoint.name(), method.getCooldownRemaining(now));
         }
+
+        long wait = app.tryAcquire(now);
+        if (wait == 0 && method != null)
+        {
+            wait = method.tryAcquire(now);
+            if (wait != 0)
+            {
+                // the call is not made yet, so it should not count against the app limit while we wait for the method limit
+                app.release();
+            }
+        }
+
+        // a cooldown started by another process (sharing the limits through a store) is only known after asking for a permit
+        if (wait != 0 && method != null && method.isCooldownFailFast() && method.getCooldownRemaining(now) > 0)
+        {
+            throw new APIEndpointCooldownException(endpoint.name(), method.getCooldownRemaining(now));
+        }
+
+        return wait;
     }
 
     /**

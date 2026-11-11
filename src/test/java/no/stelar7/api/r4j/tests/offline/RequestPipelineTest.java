@@ -334,6 +334,36 @@ public class RequestPipelineTest
     }
 
     @Test
+    public void waitingForTheRatelimitDoesNotHoldAParallelCallPermit() throws Exception
+    {
+        // one call at a time per platform, and its own context so the limit does not affect the other tests
+        R4JContext context = new R4JContext(new APICredentials("permit-key")).setNumberOfCallsAllowedInParallel(1);
+        handler = exchange -> respond(exchange, 200, exchange.getRequestURI().getPath().contains("champion-rotations") ? "{}" : STATUS_JSON);
+
+        // the status endpoint is in a cooldown for 4 seconds (Retry-After: 3 + 1s margin)
+        context.getLimiter(ApiKeyType.LOL, LeagueShard.PH2, URLEndpoint.V4_STATUS_LOL).cooldown(System.currentTimeMillis(), "3", false);
+
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        try
+        {
+            Future<Object> waiting = pool.submit(() -> new DataCallBuilder(context).withProxy(proxy).withEndpoint(URLEndpoint.V4_STATUS_LOL).withPlatform(LeagueShard.PH2).build());
+            Thread.sleep(300);
+            Assertions.assertFalse(waiting.isDone());
+
+            // another endpoint of the same platform is not stuck behind the call that is waiting
+            Future<Object> other = pool.submit(() -> new DataCallBuilder(context).withProxy(proxy).withEndpoint(URLEndpoint.V3_CHAMPION_ROTATIONS).withPlatform(LeagueShard.PH2).build());
+            Assertions.assertNotNull(other.get(2, TimeUnit.SECONDS));
+            Assertions.assertFalse(waiting.isDone());
+
+            // and the waiting call goes through once the cooldown is over
+            Assertions.assertNotNull(waiting.get(10, TimeUnit.SECONDS));
+        } finally
+        {
+            pool.shutdownNow();
+        }
+    }
+
+    @Test
     public void ratelimitedCallWithoutLimitersDoesNotCrash()
     {
         // no X-Rate-Limit-Type header means a service limit, which is retried with a backoff
