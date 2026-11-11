@@ -277,6 +277,16 @@ public class R4J
         }
 
         /**
+         * Gets accolades api.
+         *
+         * @return the accolades api
+         */
+        public VALAccoladesAPI getAccoladesAPI()
+        {
+            return VALAccoladesAPI.getInstance();
+        }
+
+        /**
          * Gets the api for the console versions of the match and ranked endpoints.
          *
          * @return the console api

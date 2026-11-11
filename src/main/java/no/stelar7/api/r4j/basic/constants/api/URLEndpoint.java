@@ -159,6 +159,8 @@ public enum URLEndpoint
     V1_CLASH_TOURNAMENTS_BY_ID("lol", "clash", "v1", "tournaments/" + Constants.TOURNAMENT_ID_PLACEHOLDER, ClashTournament.class),
     
     V1_VAL_CONTENT("val", "content", "v1", "contents", Content.class),
+    V1_VAL_ACCOLADES("val", "accolades", "v1", "accolades", JsonElement.class),
+    V1_VAL_ACCOLADES_BY_PUUID("val", "accolades", "v1", "players/" + Constants.PUUID_ID_PLACEHOLDER, JsonElement.class),
     V1_VAL_MATCH_BY_ID("val", "match", "v1", "matches/" + Constants.MATCH_ID_PLACEHOLDER, VALMatch.class),
     V1_VAL_MATCHLIST_BY_PUUID("val", "match", "v1", "matchlists/by-puuid/" + Constants.PUUID_ID_PLACEHOLDER, no.stelar7.api.r4j.pojo.val.matchlist.MatchList.class),
     V1_VAL_RECENT_MATCH_BY_QUEUE("val", "match", "v1", "recent-matches/by-queue/" + Constants.QUEUE_PLACEHOLDER, RecentMatchList.class),
