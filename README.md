@@ -86,6 +86,10 @@ R4JContext.getDefault().setRateLimitStore(new JdbcRateLimitStore(dataSource));
 
 Implement `SharedRateLimitStore` to use something else. The file system cache can be shared between processes as well.
 
+## Upgrading
+
+See the [changelog](CHANGELOG.md) for what changed in 3.0.0 and what to look out for when coming from 2.x.
+
 ## Requirements
 
 Java 11 or newer.
