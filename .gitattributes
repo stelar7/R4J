@@ -1,1 +1,3 @@
+# Everything that is text is stored and checked out with LF line endings, on every platform
+* text=auto eol=lf
 *.java text eol=lf
