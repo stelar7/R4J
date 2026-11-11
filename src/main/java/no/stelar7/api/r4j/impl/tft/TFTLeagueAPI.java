@@ -367,53 +367,130 @@ public class TFTLeagueAPI
     }
     
     /**
-     * Runs {@link #getLeagueByTierDivision} on a background thread.
+     * Like {@link #getLeagueByTierDivision}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<TFTLeagueEntry>> getLeagueByTierDivisionAsync(LeagueShard server, TierDivisionType tierdiv, int page)
     {
-        return context.callAsync(() -> getLeagueByTierDivision(server, tierdiv, page));
+        try
+        {
+            if (tierdiv == TierDivisionType.UNRANKED)
+            {
+                // there is no league of unranked players
+                return CompletableFuture.completedFuture(Collections.emptyList());
+            }
+
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                           .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
+                                                           .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
+                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                                                           .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                           .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RANK)
+                                                           .withPlatform(server);
+
+            if (Arrays.asList(TierDivisionType.MASTER_I, TierDivisionType.GRANDMASTER_I, TierDivisionType.CHALLENGER_I).contains(tierdiv))
+            {
+                if (page > 1)
+                {
+                    return CompletableFuture.completedFuture(Collections.emptyList());
+                }
+
+                URLEndpoint apex = tierdiv == TierDivisionType.MASTER_I ? URLEndpoint.V1_TFT_LEAGUE_MASTER
+                                                                        : tierdiv == TierDivisionType.GRANDMASTER_I ? URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER : URLEndpoint.V1_TFT_LEAGUE_CHALLENGER;
+                return apexLeagueAsync(apex, server).thenApply(TFTLeagueAPI::entriesOf);
+            }
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("tierdiv", tierdiv);
+            data.put("page", page);
+
+            return builder.<List<TFTLeagueEntry>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
-     * Runs {@link #getMasterLeague} on a background thread.
+     * Like {@link #getMasterLeague}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<TFTLeagueList> getMasterLeagueAsync(LeagueShard server, GameQueueType queue)
     {
-        return context.callAsync(() -> getMasterLeague(server, queue));
+        return getApexLeagueAsync(URLEndpoint.V1_TFT_LEAGUE_MASTER, server, queue);
     }
     
     /**
-     * Runs {@link #getGrandmasterLeague} on a background thread.
+     * Like {@link #getGrandmasterLeague}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<TFTLeagueList> getGrandmasterLeagueAsync(LeagueShard server, GameQueueType queue)
     {
-        return context.callAsync(() -> getGrandmasterLeague(server, queue));
+        return getApexLeagueAsync(URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER, server, queue);
     }
     
     /**
-     * Runs {@link #getChallengerLeague} on a background thread.
+     * Like {@link #getChallengerLeague}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<TFTLeagueList> getChallengerLeagueAsync(LeagueShard server, GameQueueType queue)
     {
-        return context.callAsync(() -> getChallengerLeague(server, queue));
+        return getApexLeagueAsync(URLEndpoint.V1_TFT_LEAGUE_CHALLENGER, server, queue);
     }
     
     /**
-     * Runs {@link #getLeagueByTierDivision} on a background thread.
+     * Like {@link #getLeagueByTierDivision}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<TFTLeagueEntry>> getLeagueByTierDivisionAsync(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
-        return context.callAsync(() -> getLeagueByTierDivision(server, queue, tierdiv, page));
+        try
+        {
+            if (tierdiv == TierDivisionType.UNRANKED)
+            {
+                // there is no league of unranked players
+                return CompletableFuture.completedFuture(Collections.emptyList());
+            }
+
+            if (Arrays.asList(TierDivisionType.MASTER_I, TierDivisionType.GRANDMASTER_I, TierDivisionType.CHALLENGER_I).contains(tierdiv))
+            {
+                if (page > 1)
+                {
+                    return CompletableFuture.completedFuture(Collections.emptyList());
+                }
+
+                URLEndpoint apex = tierdiv == TierDivisionType.MASTER_I ? URLEndpoint.V1_TFT_LEAGUE_MASTER
+                                                                        : tierdiv == TierDivisionType.GRANDMASTER_I ? URLEndpoint.V1_TFT_LEAGUE_GRANDMASTER : URLEndpoint.V1_TFT_LEAGUE_CHALLENGER;
+                return getApexLeagueAsync(apex, server, queue).thenApply(TFTLeagueAPI::entriesOf);
+            }
+
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
+                                                           .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
+                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                                                           .withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getApiName())
+                                                           .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                           .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_RANK)
+                                                           .withPlatform(server);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("tierdiv", tierdiv);
+            data.put("page", page);
+            data.put("queue", queue);
+
+            return builder.buildCachedAsync(TFTLeagueEntryList.class, data).<List<TFTLeagueEntry>>thenApply(entries -> entries != null ? entries : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
@@ -435,6 +512,46 @@ public class TFTLeagueAPI
             data.put("queue", queue);
 
             return builder.buildCachedAsync(TFTTopRatedLadderEntryList.class, data).<List<TFTTopRatedLadderEntry>>thenApply(entries -> entries != null ? entries : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * The master, grandmaster or challenger league without a queue, like the blocking methods for them fetch it
+     */
+    private CompletableFuture<TFTLeagueList> apexLeagueAsync(URLEndpoint endpoint, LeagueShard server)
+    {
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                                                       .withEndpoint(endpoint)
+                                                       .withPlatform(server);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+
+        return builder.buildCachedAsync(TFTLeagueList.class, data);
+    }
+
+    /**
+     * Like getApexLeague, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     */
+    private CompletableFuture<TFTLeagueList> getApexLeagueAsync(URLEndpoint endpoint, LeagueShard server, GameQueueType queue)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                                                           .withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getApiName())
+                                                           .withEndpoint(endpoint)
+                                                           .withPlatform(server);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("queue", queue);
+
+            return builder.buildCachedAsync(TFTLeagueList.class, data);
         } catch (RuntimeException e)
         {
             // what the blocking method would have thrown before making the call (ie. a missing api key)

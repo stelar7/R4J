@@ -1,5 +1,7 @@
 package no.stelar7.api.r4j.impl.lol.builders.matchv5.match;
 
+import java.util.function.BiFunction;
+import java.util.concurrent.CompletableFuture;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
 import no.stelar7.api.r4j.basic.constants.api.regions.*;
@@ -107,6 +109,39 @@ public class MatchListBuilder
             return Collections.emptyList();
         }
         
+        List<String> match = prepare((builder, data) -> builder.<List<String>>buildCached(data));
+        return match != null ? match : Collections.emptyList();
+    }
+
+    /**
+     * Like {@link #get}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<String>> getAsync()
+    {
+        try
+        {
+            if (this.puuid == null || this.platform == RegionShard.UNKNOWN)
+            {
+                logger.error("PUUID or Platform not present, returning empty list");
+                return CompletableFuture.completedFuture(Collections.emptyList());
+            }
+
+            return this.<CompletableFuture<List<String>>>prepare((builder, data) -> builder.buildCachedAsync(data))
+                       .thenApply(match -> match != null ? match : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+
+    /**
+     * Puts the call and its place in the cache together, and hands them to what makes the call
+     */
+    private <R> R prepare(BiFunction<DataCallBuilder, Map<String, Object>, R> finish)
+    {
         DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
                                                        .withEndpoint(URLEndpoint.V5_MATCHLIST)
                                                        .withPlatform(this.platform);
@@ -148,8 +183,7 @@ public class MatchListBuilder
         data.put("startTime", startTime);
         data.put("endTime", endTime);
         
-        List<String> match = builder.buildCached(data);
-        return match != null ? match : Collections.emptyList();
+        return finish.apply(builder, data);
     }
     
     public LazyList<String> getLazy()

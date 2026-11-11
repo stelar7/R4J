@@ -260,13 +260,41 @@ public final class TournamentAPI
     }
     
     /**
-     * Runs {@link #generateTournamentCodes} on a background thread.
+     * Like {@link #generateTournamentCodes}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<String>> generateTournamentCodesAsync(final TournamentCodeParameters params, final long tournamentId, Integer count)
     {
-        return context.callAsync(() -> generateTournamentCodes(params, tournamentId, count));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
+                                                           .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_COUNT, String.valueOf(count != null ? count : 1))
+                                                           .withQueryParameter(Constants.URL_PARAM_TOURNAMENT_ID, String.valueOf(tournamentId))
+                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_CODES)
+                                                           .withPostData(Utils.getGson().toJson(params))
+                                                           .withRequestMethod(Constants.METHOD_POST)
+                                                           .withPlatform(RegionShard.AMERICAS);
+
+            if (useStub)
+            {
+                builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_CODES);
+            }
+
+            return builder.buildAsync().thenApply(result -> {
+                try
+                {
+                    return (List<String>) result;
+                } catch (ClassCastException e)
+                {
+                    return null;
+                }
+            });
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
@@ -292,42 +320,137 @@ public final class TournamentAPI
     }
     
     /**
-     * Runs {@link #getTournamentGames} on a background thread.
+     * Like {@link #getTournamentGames}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<TournamentGame>> getTournamentGamesAsync(final String tournamentCode)
     {
-        return context.callAsync(() -> getTournamentGames(tournamentCode));
+        try
+        {
+            if (useStub)
+            {
+                throw new IllegalArgumentException("This method is not useable with the stub API");
+            }
+
+            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
+                                                           .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_GAMES_BY_CODE)
+                                                           .withPlatform(RegionShard.AMERICAS);
+
+            return builder.buildAsAsync(TournamentGameList.class).<List<TournamentGame>>thenApply(games -> games != null ? games : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
-     * Runs {@link #getTournamentLobbyInfo} on a background thread.
+     * Like {@link #getTournamentLobbyInfo}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<LobbyEvent>> getTournamentLobbyInfoAsync(final String tournamentCode)
     {
-        return context.callAsync(() -> getTournamentLobbyInfo(tournamentCode));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
+                                                           .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_LOBBY_EVENTS)
+                                                           .withPlatform(RegionShard.AMERICAS);
+
+            if (useStub)
+            {
+                builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_LOBBY_EVENTS);
+            }
+
+            return builder.buildAsync().thenApply(result -> {
+                try
+                {
+                    LobbyEventWrapper lew = (LobbyEventWrapper) result;
+                    return lew.getEventList();
+                } catch (ClassCastException e)
+                {
+                    return null;
+                }
+            });
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
-     * Runs {@link #registerAsProvider} on a background thread.
+     * Like {@link #registerAsProvider}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Long> registerAsProviderAsync(final ProviderRegistrationParameters params)
     {
-        return context.callAsync(() -> registerAsProvider(params));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
+                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_PROVIDER)
+                                                           .withPostData(params.toJson())
+                                                           .withRequestMethod(Constants.METHOD_POST)
+                                                           .withPlatform(RegionShard.AMERICAS);
+
+            if (useStub)
+            {
+                builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_PROVIDER);
+            }
+
+            return builder.buildAsync().thenApply(result -> {
+                try
+                {
+                    return Long.parseLong(result.toString());
+                } catch (NumberFormatException e)
+                {
+                    return null;
+                }
+            });
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
-     * Runs {@link #registerTournament} on a background thread.
+     * Like {@link #registerTournament}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Long> registerTournamentAsync(final TournamentRegistrationParameters params)
     {
-        return context.callAsync(() -> registerTournament(params));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
+                                                           .withEndpoint(URLEndpoint.V5_TOURNAMENT_TOURNAMENT)
+                                                           .withPostData(Utils.getGson().toJson(params))
+                                                           .withRequestMethod(Constants.METHOD_POST)
+                                                           .withPlatform(RegionShard.AMERICAS);
+
+            if (useStub)
+            {
+                builder.withEndpoint(URLEndpoint.V5_TOURNAMENT_STUB_TOURNAMENT);
+            }
+
+            return builder.buildAsync().thenApply(result -> {
+                try
+                {
+                    return Long.parseLong(result.toString());
+                } catch (NumberFormatException e)
+                {
+                    return null;
+                }
+            });
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

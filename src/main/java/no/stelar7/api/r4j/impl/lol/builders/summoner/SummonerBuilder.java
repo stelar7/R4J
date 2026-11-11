@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.summoner;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -87,5 +88,30 @@ public class SummonerBuilder
         builder.withEndpoint(endpoint);
 
         return builder.buildCached(Summoner.class, data);
+    }
+    
+    /**
+     * Like {@link #get}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Summoner> getAsync()
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withPlatform(this.platform)
+                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, this.puuid)
+                                                           .withEndpoint(URLEndpoint.V4_SUMMONER_BY_PUUID);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", platform);
+            data.put("puuid", this.puuid);
+
+            return builder.buildCachedAsync(Summoner.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

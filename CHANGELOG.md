@@ -59,14 +59,13 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * **Tournament callbacks:** `TournamentCallbackListener` receives the result Riot posts after a tournament game.
 * **Caches:** `MemoryCacheProvider` works; `JdbcCacheProvider` caches in any SQL database; the file cache can be shared by several processes.
 * **Riftbound key** in `APICredentials`, and `APICredentials.builder()` to name each key instead of passing five or six strings in the right order (those constructors are deprecated).
-* **Non-blocking calls:** every method of the api classes has an `...Async` twin returning a `CompletableFuture`. For most single calls no thread waits for the rate limit, the response or the retries; twins of methods that make several calls run the blocking method on a background thread. `DataCallBuilder.buildAsync`, `buildAsAsync` and `buildCachedAsync` do the same for your own calls, and `R4J.async(...)` runs anything in the background.
+* **Non-blocking calls:** every method of the api classes has an `...Async` twin returning a `CompletableFuture`. No thread waits for the rate limit, the response or the retries, also when a method makes more than one call. The summoner, match list, match and timeline builders have `getAsync()` / `getMatchAsync()` / `getTimelineAsync()`. `DataCallBuilder.buildAsync`, `buildAsAsync` and `buildCachedAsync` do the same for your own calls, and `R4J.async(...)` runs anything in the background.
 * **One exception parent:** every exception R4J throws on purpose now extends `R4JException` (itself a `RuntimeException`), so they can be caught together.
 * **Module name:** the jars declare `Automatic-Module-Name: no.stelar7.r4j`.
 * **Typed match challenges:** `MatchParticipant.getTypedChallenges()` and `getTypedMissions()` give the documented challenges and mission scores as objects with a field each. The maps (`getChallenges()`, `getMissions()`) are unchanged and still hold everything the api sent.
 * **Proxy support:** `R4JContext.setRequestUrl` sends every call to the Riot api through a url of your choice.
 * **Nullability:** the api methods that return null when nothing is found are marked `@Nullable` (JetBrains annotations), so IntelliJ warns about unchecked use and Kotlin sees them as nullable types. The methods that return a list return an empty list instead, as before.
 * **Typed calls:** `DataCallBuilder.buildAs` and `buildCached`, and `withAccessToken` for RSO.
-* **Data Dragon mirror:** `DDragonAPI.setBaseUrl` reads Data Dragon from somewhere else, ie. the files of its tarball served from a folder of your own.
 * **Compressed responses:** every call asks for gzip (`Accept-Encoding: gzip`), which the Riot api and Data Dragon both answer with. Data Dragon files arrive four to seven times smaller. Set the header yourself on a call (`withHeader("Accept-Encoding", "identity")`) to switch it off.
 
 ### Fixed

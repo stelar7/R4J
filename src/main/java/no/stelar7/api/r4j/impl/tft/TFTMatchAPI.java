@@ -151,23 +151,23 @@ public class TFTMatchAPI
     }
     
     /**
-     * Runs {@link #getMatch} on a background thread.
+     * Like {@link #getMatch}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<TFTMatch> getMatchAsync(RegionShard platform, String gameId)
     {
-        return context.callAsync(() -> getMatch(platform, gameId));
+        return getMatchRAWAsync(platform, gameId).thenApply(raw -> raw != null ? raw.asTFTMatch() : null);
     }
     
     /**
-     * Runs {@link #getMetadata} on a background thread.
+     * Like {@link #getMetadata}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<TFTMetadata> getMetadataAsync(RegionShard platform, String gameId)
     {
-        return context.callAsync(() -> getMetadata(platform, gameId));
+        return getMatchRAWAsync(platform, gameId).thenApply(raw -> raw != null ? raw.asTFTMetadata() : null);
     }
     
     /**

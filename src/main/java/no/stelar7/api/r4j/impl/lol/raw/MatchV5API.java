@@ -222,33 +222,33 @@ public final class MatchV5API
     }
     
     /**
-     * Runs {@link #getMatchList} on a background thread.
+     * Like {@link #getMatchList}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<String>> getMatchListAsync(RegionShard server, String puuid, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
     {
-        return context.callAsync(() -> getMatchList(server, puuid, queue, type, beginIndex, count, startTime, endTime));
+        return new MatchListBuilder(server, puuid, queue, type, beginIndex, count, startTime, endTime).withContext(context).getAsync();
     }
     
     /**
-     * Runs {@link #getMatch} on a background thread.
+     * Like {@link #getMatch}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<LOLMatch> getMatchAsync(RegionShard server, String matchId)
     {
-        return context.callAsync(() -> getMatch(server, matchId));
+        return new MatchBuilder(server, matchId).withContext(context).getMatchAsync();
     }
     
     /**
-     * Runs {@link #getTimeline} on a background thread.
+     * Like {@link #getTimeline}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<LOLTimeline> getTimelineAsync(RegionShard server, String matchId)
     {
-        return context.callAsync(() -> getTimeline(server, matchId));
+        return new TimelineBuilder(server, matchId).withContext(context).getTimelineAsync();
     }
     
     /**
@@ -273,32 +273,97 @@ public final class MatchV5API
     }
     
     /**
-     * Runs {@link #getMatchListByAccessToken} on a background thread.
+     * Like {@link #getMatchListByAccessToken}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<String>> getMatchListByAccessTokenAsync(RegionShard server, String accessToken, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
     {
-        return context.callAsync(() -> getMatchListByAccessToken(server, accessToken, queue, type, beginIndex, count, startTime, endTime));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withAccessToken(accessToken)
+                                                           .withEndpoint(URLEndpoint.V1_RSO_MATCHLIST)
+                                                           .withPlatform(server);
+
+            if (queue != null)
+            {
+                builder.withQueryParameter(Constants.QUEUE_PLACEHOLDER_DATA, queue.getValues()[0].toString());
+            }
+
+            if (type != null)
+            {
+                builder.withQueryParameter(Constants.TYPE_PLACEHOLDER_DATA, type.getValue());
+            }
+
+            if (beginIndex != null)
+            {
+                builder.withQueryParameter(Constants.START_PLACEHOLDER_DATA, String.valueOf(beginIndex));
+            }
+
+            if (count != null)
+            {
+                builder.withQueryParameter(Constants.COUNT_PLACEHOLDER_DATA, String.valueOf(count));
+            }
+
+            if (startTime != null)
+            {
+                builder.withQueryParameter(Constants.STARTTIME_PLACEHOLDER_DATA, String.valueOf(startTime));
+            }
+
+            if (endTime != null)
+            {
+                builder.withQueryParameter(Constants.ENDTIME_PLACEHOLDER_DATA, String.valueOf(endTime));
+            }
+
+            return builder.buildAsAsync(StringList.class).<List<String>>thenApply(matches -> matches != null ? matches : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
-     * Runs {@link #getMatchByAccessToken} on a background thread.
+     * Like {@link #getMatchByAccessToken}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<LOLMatch> getMatchByAccessTokenAsync(RegionShard server, String accessToken, String matchId)
     {
-        return context.callAsync(() -> getMatchByAccessToken(server, accessToken, matchId));
+        try
+        {
+            return new DataCallBuilder(context).withAccessToken(accessToken)
+                                        .withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
+                                        .withEndpoint(URLEndpoint.V1_RSO_MATCH)
+                                        .withPlatform(server)
+                                        .buildAsAsync(GAMHSMatch.class)
+                                        .thenApply(raw -> raw != null ? context.bind(raw.asLOLMatch()) : null);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
-     * Runs {@link #getTimelineByAccessToken} on a background thread.
+     * Like {@link #getTimelineByAccessToken}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<LOLTimeline> getTimelineByAccessTokenAsync(RegionShard server, String accessToken, String matchId)
     {
-        return context.callAsync(() -> getTimelineByAccessToken(server, accessToken, matchId));
+        try
+        {
+            return new DataCallBuilder(context).withAccessToken(accessToken)
+                                        .withURLParameter(Constants.MATCH_ID_PLACEHOLDER, matchId)
+                                        .withEndpoint(URLEndpoint.V1_RSO_TIMELINE)
+                                        .withPlatform(server)
+                                        .buildAsAsync(GAMHSMatch.class)
+                                        .thenApply(raw -> raw != null ? context.bind(raw.asLOLTimeline()) : null);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

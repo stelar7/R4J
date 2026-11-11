@@ -63,13 +63,13 @@ public final class SummonerAPI
     }
     
     /**
-     * Runs {@link #getSummonerByPUUID} on a background thread.
+     * Like {@link #getSummonerByPUUID}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<Summoner> getSummonerByPUUIDAsync(final LeagueShard server, String PUUID)
     {
-        return context.callAsync(() -> getSummonerByPUUID(server, PUUID));
+        return new SummonerBuilder().withContext(context).withPlatform(server).withPUUID(PUUID).getAsync();
     }
     
     /**

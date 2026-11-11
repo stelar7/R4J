@@ -296,22 +296,104 @@ public final class LeagueAPI
     }
     
     /**
-     * Runs {@link #getLeagueByTierDivision} on a background thread.
+     * Like {@link #getLeagueByTierDivision}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<LeagueEntry>> getLeagueByTierDivisionAsync(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
-        return context.callAsync(() -> getLeagueByTierDivision(server, queue, tierdiv, page));
+        try
+        {
+            if (tierdiv == TierDivisionType.UNRANKED)
+            {
+                // there is no league of unranked players
+                return CompletableFuture.completedFuture(Collections.emptyList());
+            }
+
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                           .withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
+                                                           .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
+                                                           .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
+                                                           .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                           .withEndpoint(URLEndpoint.V4_LEAGUE_RANK)
+                                                           .withPlatform(server);
+
+            if (Arrays.asList(TierDivisionType.MASTER_I, TierDivisionType.GRANDMASTER_I, TierDivisionType.CHALLENGER_I).contains(tierdiv))
+            {
+                if (page > 1)
+                {
+                    return CompletableFuture.completedFuture(Collections.emptyList());
+                }
+
+                URLEndpoint apex = tierdiv == TierDivisionType.MASTER_I ? URLEndpoint.V4_LEAGUE_MASTER
+                                                                        : tierdiv == TierDivisionType.GRANDMASTER_I ? URLEndpoint.V4_LEAGUE_GRANDMASTER : URLEndpoint.V4_LEAGUE_CHALLENGER;
+                return apexLeagueAsync(apex, server, queue).thenApply(LeagueAPI::entriesOf);
+            }
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("queue", queue);
+            data.put("tierdiv", tierdiv);
+            data.put("page", page);
+
+            return builder.<List<LeagueEntry>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
-     * Runs {@link #getLeagueExpByTierDivision} on a background thread.
+     * Like {@link #getLeagueExpByTierDivision}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<LeagueEntry>> getLeagueExpByTierDivisionAsync(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
     {
-        return context.callAsync(() -> getLeagueExpByTierDivision(server, queue, tierdiv, page));
+        try
+        {
+            if (tierdiv == TierDivisionType.UNRANKED)
+            {
+                // there is no league of unranked players
+                return CompletableFuture.completedFuture(Collections.emptyList());
+            }
+
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.POSITIONAL_QUEUE_PLACEHOLDER, queue.getApiName())
+                                                           .withURLParameter(Constants.TIER_PLACEHOLDER, tierdiv.getTier())
+                                                           .withURLParameter(Constants.DIVISION_PLACEHOLDER, tierdiv.getDivision())
+                                                           .withQueryParameter(Constants.PAGE_PLACEHOLDER_DATA, String.valueOf(page))
+                                                           .withEndpoint(URLEndpoint.V4_LEAGUE_EXP_RANK)
+                                                           .withPlatform(server);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("queue", queue);
+            data.put("tierdiv", tierdiv);
+            data.put("page", page);
+
+            return builder.buildCachedAsync(LeagueEntryList.class, data).<List<LeagueEntry>>thenApply(entries -> entries != null ? entries : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * The master, grandmaster or challenger league of a queue, like the blocking methods for them fetch it
+     */
+    private CompletableFuture<LeagueList> apexLeagueAsync(URLEndpoint endpoint, LeagueShard server, GameQueueType queue)
+    {
+        DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                       .withURLParameter(Constants.QUEUE_PLACEHOLDER, queue.getApiName())
+                                                       .withEndpoint(endpoint)
+                                                       .withPlatform(server);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("platform", server);
+        data.put("queue", queue);
+
+        return builder.buildCachedAsync(LeagueList.class, data);
     }
 }

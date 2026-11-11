@@ -78,13 +78,20 @@ public final class RiftboundContentAPI
     }
     
     /**
-     * Runs {@link #getContent} on a background thread.
+     * Like {@link #getContent}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<RiftboundContent> getContentAsync(RegionShard server, String locale)
     {
-        return context.callAsync(() -> getContent(server, locale));
+        try
+        {
+            return getContentAsync(server, locale, context.getCredentials().hasKey(ApiKeyType.RIFTBOUND) ? ApiKeyType.RIFTBOUND : ApiKeyType.LOL);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**

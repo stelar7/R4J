@@ -41,6 +41,17 @@ public class ApiAsyncTwinsTest
         server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         server.createContext("/", exchange -> {
             String path = exchange.getRequestURI().getPath();
+            if (path.contains("/slow/"))
+            {
+                // a Data Dragon that takes its time
+                try
+                {
+                    Thread.sleep(700);
+                } catch (InterruptedException e)
+                {
+                    Thread.currentThread().interrupt();
+                }
+            }
             String body;
             if (path.contains("/unknown"))
             {
@@ -52,7 +63,7 @@ public class ApiAsyncTwinsTest
             } else if (path.contains("/list"))
             {
                 body = "[]";
-            } else if (path.contains("/ddragon"))
+            } else if (path.contains("/ddragon") || path.contains("/slow/"))
             {
                 // a small Data Dragon
                 if (path.endsWith("versions.json") || path.endsWith("languages.json"))
@@ -237,6 +248,25 @@ public class ApiAsyncTwinsTest
         Assertions.assertTrue(nothing.getLoLAPI().getLeagueAPI().getLeagueByTierDivision(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.UNRANKED, 1).isEmpty());
         Assertions.assertTrue(nothing.getLoLAPI().getLeagueAPI().getLeagueExpByTierDivision(LeagueShard.EUW1, GameQueueType.RANKED_SOLO_5X5, TierDivisionType.UNRANKED, 1).isEmpty());
         Assertions.assertTrue(nothing.getTFTAPI().getLeagueAPI().getLeagueByTierDivision(LeagueShard.EUW1, TierDivisionType.UNRANKED, 1).isEmpty());
+    }
+
+    /**
+     * A twin that needs the newest version first used to look it up with a blocking call, before returning its future
+     */
+    @Test
+    public void aTwinThatMakesTwoCallsDoesNotWaitForTheFirst() throws Exception
+    {
+        R4J slow = R4J.withContext(new R4JContext(APICredentials.builder().lol("lol-key").build()));
+        slow.getDDragonAPI().setBaseUrl("http://127.0.0.1:" + server.getAddress().getPort() + "/slow/");
+
+        long                                                                                         start  = System.nanoTime();
+        CompletableFuture<Map<Integer, no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampion>> future = slow.getDDragonAPI().getChampionsAsync();
+        long                                                                                         waited = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
+
+        // the server takes 700 ms for the versions, and as long again for the champions
+        Assertions.assertTrue(waited < 500, "getChampionsAsync returned after " + waited + " ms");
+        Assertions.assertFalse(future.isDone());
+        Assertions.assertEquals("Annie", future.get(20, TimeUnit.SECONDS).get(1).getName());
     }
 
     /**

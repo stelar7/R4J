@@ -195,13 +195,36 @@ public final class ChallengeAPI
     }
     
     /**
-     * Runs {@link #getChallengeLeaderboard} on a background thread.
+     * Like {@link #getChallengeLeaderboard}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<ChallengeLeaderboardInfoList> getChallengeLeaderboardAsync(LeagueShard server, Long challengeId, ChallengeTierType level, Integer limit)
     {
-        return context.callAsync(() -> getChallengeLeaderboard(server, challengeId, level, limit));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CHALLENGES_LEADERBOARD_BY_LEVEL)
+                                                           .withURLParameter(Constants.CHALLENGE_ID_PLACEHOLDER, String.valueOf(challengeId))
+                                                           .withURLParameter(Constants.LEVEL_PLACEHOLDER, level.name())
+                                                           .withPlatform(server);
+
+            if (limit != null)
+            {
+                builder = builder.withQueryParameter(Constants.LIMIT_PLACEHOLDER_DATA, String.valueOf(limit));
+            }
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("challenge", challengeId);
+            data.put("level", level);
+            data.put("limit", limit);
+
+            return builder.buildCachedAsync(ChallengeLeaderboardInfoList.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**

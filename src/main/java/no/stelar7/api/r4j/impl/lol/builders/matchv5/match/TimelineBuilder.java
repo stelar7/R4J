@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.builders.matchv5.match;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -116,5 +117,45 @@ public class TimelineBuilder
     public String getID()
     {
         return this.id;
+    }
+    
+    /**
+     * Like {@link #getTimeline}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<LOLTimeline> getTimelineAsync()
+    {
+        return getTimelineRAWAsync().thenApply(raw -> raw == null ? null : context.bind(raw.asLOLTimeline()));
+    }
+
+    /**
+     * Like {@link #getTimelineRAW}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<GAMHSMatch> getTimelineRAWAsync()
+    {
+        try
+        {
+            if (this.id.isEmpty() || this.platform == RegionShard.UNKNOWN)
+            {
+                return CompletableFuture.completedFuture(null);
+            }
+
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.MATCH_ID_PLACEHOLDER, this.id)
+                                                           .withEndpoint(URLEndpoint.V5_TIMELINE)
+                                                           .withPlatform(this.platform);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", this.platform);
+            data.put("matchId", this.id);
+
+            return builder.buildCachedAsync(GAMHSMatch.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

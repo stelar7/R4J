@@ -64,7 +64,9 @@ api.getStatusAPI().getShardStatusAsync(LeagueShard.EUW1)
    .thenAccept(status -> System.out.println(status));
 ```
 
-For most single calls no thread waits while the call is being made: the rate limit, the request and the retries are handled in the background. The twins of methods that make several calls (most of Data Dragon, and anything going through a builder) run the blocking method on a background thread instead; their javadoc says which kind they are.
+No thread waits while the call is being made: the rate limit, the request and the retries are handled in the background, also for the methods that make more than one call (ie. Data Dragon looking up the newest version first). The cache is read and written directly, so a slow cache (ie. a database) is waited for.
+
+The builders have the same: `SummonerBuilder.getAsync()`, `MatchListBuilder.getAsync()`, `MatchBuilder.getMatchAsync()` and `TimelineBuilder.getTimelineAsync()`.
 
 `api.async(() -> ...)` runs anything else in the background, and `DataCallBuilder.buildAsync()` is the non-blocking way to make a call of your own.
 

@@ -107,7 +107,14 @@ public final class MasteryAPI
             return (ChampionMastery) chl.get();
         }
         
-        Object masteryObj = builder.build();
+        return championMasteryFrom(builder.build(), data, puuid, championId);
+    }
+
+    /**
+     * What the answer of the api means: a mastery, or (for a champion that was never played) a mastery of level 0. Either is put in the cache.
+     */
+    private ChampionMastery championMasteryFrom(Object masteryObj, Map<String, Object> data, String puuid, int championId)
+    {
         if (masteryObj instanceof Pair)
         {
             try
@@ -192,23 +199,48 @@ public final class MasteryAPI
     }
     
     /**
-     * Runs {@link #getTopChampions} on a background thread.
+     * Like {@link #getTopChampions}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<List<ChampionMastery>> getTopChampionsAsync(LeagueShard server, String puuid, Integer count)
     {
-        return context.callAsync(() -> getTopChampions(server, puuid, count));
+        return getChampionMasteriesAsync(server, puuid).thenApply(list -> list.stream().sorted(Comparator.comparing(ChampionMastery::getChampionPoints).reversed())
+                                                                               .limit(count != null ? count : 3)
+                                                                               .collect(Collectors.toList()));
     }
     
     /**
-     * Runs {@link #getChampionMastery} on a background thread.
+     * Like {@link #getChampionMastery}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
      *
      * @return a future of what the blocking method returns
      */
     public CompletableFuture<ChampionMastery> getChampionMasteryAsync(LeagueShard server, String puuid, int championId)
     {
-        return context.callAsync(() -> getChampionMastery(server, puuid, championId));
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                           .withURLParameter(Constants.CHAMPION_ID_PLACEHOLDER, String.valueOf(championId))
+                                                           .withEndpoint(URLEndpoint.V4_MASTERY_BY_CHAMPION)
+                                                           .withPlatform(server);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("puuid", puuid);
+            data.put("champion", championId);
+
+            Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V4_MASTERY_BY_CHAMPION, data);
+            if (chl.isPresent())
+            {
+                return CompletableFuture.completedFuture((ChampionMastery) chl.get());
+            }
+
+            return builder.buildAsync().thenApply(masteryObj -> championMasteryFrom(masteryObj, data, puuid, championId));
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
     
     /**
