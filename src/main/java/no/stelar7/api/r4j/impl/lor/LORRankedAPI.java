@@ -48,23 +48,7 @@ public class LORRankedAPI
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);
-        if (chl.isPresent())
-        {
-            return ((LoRRankedPlayerList) chl.get()).getPlayers();
-        }
-        
-        try
-        {
-            LoRRankedPlayerList list = (LoRRankedPlayerList) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_LOR_RANKED_LEADERBOARD, data);
-            
-            return list.getPlayers();
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        LoRRankedPlayerList list = builder.buildCached(LoRRankedPlayerList.class, data);
+        return list != null ? list.getPlayers() : null;
     }
 }

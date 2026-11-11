@@ -90,30 +90,8 @@ public class LeagueBuilder
                                                      .withPlatform(this.platform);
         data.put("id", puuid);
 
-        Optional<?> chl = context.getCacheProvider().get(endpoint, data);
-        if (chl.isPresent())
-        {
-            return (List<LeagueEntry>) chl.get();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-            
-            List<LeagueEntry> list = (List<LeagueEntry>) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(endpoint, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        List<LeagueEntry> list = builder.buildCached(data);
+        return list != null ? list : Collections.emptyList();
     }
     
     public LeagueList getLeague()

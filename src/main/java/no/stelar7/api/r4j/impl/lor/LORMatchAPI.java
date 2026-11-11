@@ -45,24 +45,7 @@ public class LORMatchAPI
         data.put("platform", server);
         data.put("puuid", puuid);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_LOR_MATCHES_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return (List<String>) chl.get();
-        }
-        
-        try
-        {
-            List<String> list = (List<String>) builder.build();
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.V1_LOR_MATCHES_BY_PUUID, data);
-            
-            return list;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(data);
     }
     
     public LORMatch getMatch(RuneterraShard platform, String gameId)

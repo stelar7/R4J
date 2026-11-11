@@ -45,24 +45,6 @@ public class VALContentAPI
         data.put("platform", server);
         data.put("locale", locale.orElse("null"));
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_CONTENT, data);
-        if (chl.isPresent())
-        {
-            return (Content) chl.get();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            Content cont = (Content) ret;
-            
-            data.put("value", cont);
-            context.getCacheProvider().store(URLEndpoint.V1_VAL_CONTENT, data);
-            
-            return cont;
-        } catch (ClassCastException e)
-        {
-            return null;
-        }
+        return builder.buildCached(Content.class, data);
     }
 }

@@ -57,30 +57,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_CHAMPION_MANY, data);
-        if (chl.isPresent())
-        {
-            return ((StaticChampionList) chl.get()).getData();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            StaticChampionList list = (StaticChampionList) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_CHAMPION_MANY, data);
-            
-            return list.getData();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        StaticChampionList list = builder.buildCached(StaticChampionList.class, data);
+        return list != null ? list.getData() : Collections.emptyMap();
     }
     
     public List<StaticChampion> getChampionsFromId(List<Integer> freeChampionIds)
@@ -146,30 +124,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_ITEMS, data);
-        if (chl.isPresent())
-        {
-            return ((ItemList) chl.get()).getData();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            ItemList list = (ItemList) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_ITEMS, data);
-            
-            return list.getData();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        ItemList list = builder.buildCached(ItemList.class, data);
+        return list != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Integer, Item> getItems()
@@ -202,30 +158,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, data);
-        if (chl.isPresent())
-        {
-            return ((LanguageStrings) chl.get()).getData();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            LanguageStrings list = (LanguageStrings) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_LANGUAGE_STRINGS, data);
-            
-            return list.getData();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        LanguageStrings list = builder.buildCached(LanguageStrings.class, data);
+        return list != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<String, String> getLanguageStrings()
@@ -288,30 +222,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_MAPS, data);
-        if (chl.isPresent())
-        {
-            return ((MapData) chl.get()).getData();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            MapData list = (MapData) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_MAPS, data);
-            
-            return list.getData();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        MapData list = builder.buildCached(MapData.class, data);
+        return list != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<String, MapDetails> getMaps()
@@ -333,30 +245,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, data);
-        if (chl.isPresent())
-        {
-            return ((StaticMasteryList) chl.get()).getData();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            StaticMasteryList list = (StaticMasteryList) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, data);
-            
-            return list.getData();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        StaticMasteryList list = builder.buildCached(StaticMasteryList.class, data);
+        return list != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Integer, StaticMastery> getMasteries()
@@ -378,30 +268,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_MASTERIES, data);
-        if (chl.isPresent())
-        {
-            return ((StaticMasteryList) chl.get()).getTree();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            StaticMasteryList list = (StaticMasteryList) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_MASTERIES, data);
-            
-            return list.getTree();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        StaticMasteryList list = builder.buildCached(StaticMasteryList.class, data);
+        return list != null ? list.getTree() : Collections.emptyMap();
     }
     
     public Map<String, List<List<MasteryTreeItem>>> getMasteryTree()
@@ -433,30 +301,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_PROFILEICONS, data);
-        if (chl.isPresent())
-        {
-            return ((ProfileIconData) chl.get()).getData();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            ProfileIconData list = (ProfileIconData) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_PROFILEICONS, data);
-            
-            return list.getData();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        ProfileIconData list = builder.buildCached(ProfileIconData.class, data);
+        return list != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Long, ProfileIconDetails> getProfileIcons()
@@ -501,30 +347,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_RUNES, data);
-        if (chl.isPresent())
-        {
-            return ((StaticRuneList) chl.get()).getData();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            StaticRuneList list = (StaticRuneList) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_RUNES, data);
-            
-            return list.getData();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        StaticRuneList list = builder.buildCached(StaticRuneList.class, data);
+        return list != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Integer, StaticRune> getRunes()
@@ -558,30 +382,8 @@ public final class DDragonAPI
         data.put("version", version);
         data.put("locale", locale);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.DDRAGON_SUMMONER_SPELLS, data);
-        if (chl.isPresent())
-        {
-            return ((StaticSummonerSpellList) chl.get()).getData();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyMap();
-            }
-            
-            StaticSummonerSpellList list = (StaticSummonerSpellList) ret;
-            
-            data.put("value", list);
-            context.getCacheProvider().store(URLEndpoint.DDRAGON_SUMMONER_SPELLS, data);
-            
-            return list.getData();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyMap();
-        }
+        StaticSummonerSpellList list = builder.buildCached(StaticSummonerSpellList.class, data);
+        return list != null ? list.getData() : Collections.emptyMap();
     }
     
     public Map<Integer, StaticSummonerSpell> getSummonerSpells()

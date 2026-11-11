@@ -148,24 +148,8 @@ public class MatchListBuilder
         data.put("startTime", startTime);
         data.put("endTime", endTime);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_MATCHLIST, data);
-        if (chl.isPresent())
-        {
-            return ((List<String>) chl.get());
-        }
-        
-        Object matchObj = builder.build();
-        if (matchObj instanceof Pair)
-        {
-            return Collections.emptyList();
-        }
-        
-        List<String> match = (List<String>) matchObj;
-        
-        data.put("value", match);
-        context.getCacheProvider().store(URLEndpoint.V5_MATCHLIST, data);
-        
-        return match;
+        List<String> match = builder.buildCached(data);
+        return match != null ? match : Collections.emptyList();
     }
     
     public LazyList<String> getLazy()

@@ -51,30 +51,8 @@ public final class SpectatorAPI
         Map<String, Object> data = new HashMap<>();
         data.put("platform", server);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V5_SPECTATOR_FEATURED, data);
-        if (chl.isPresent())
-        {
-            return ((FeaturedGames) chl.get()).getGameList();
-        }
-        
-        try
-        {
-            Object ret = builder.build();
-            if (ret instanceof Pair)
-            {
-                return Collections.emptyList();
-            }
-            
-            FeaturedGames fg = (FeaturedGames) ret;
-            
-            data.put("value", fg);
-            context.getCacheProvider().store(URLEndpoint.V5_SPECTATOR_FEATURED, data);
-            
-            return fg.getGameList();
-        } catch (ClassCastException e)
-        {
-            return Collections.emptyList();
-        }
+        FeaturedGames fg = builder.buildCached(FeaturedGames.class, data);
+        return fg != null ? fg.getGameList() : Collections.emptyList();
     }
     
     /**

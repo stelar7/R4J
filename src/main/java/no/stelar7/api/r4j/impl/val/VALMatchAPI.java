@@ -46,24 +46,8 @@ public class VALMatchAPI
         data.put("platform", server);
         data.put("puuid", PUUID);
         
-        Optional<?> chl = context.getCacheProvider().get(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, data);
-        if (chl.isPresent())
-        {
-            return ((MatchList) chl.get()).getHistory();
-        }
-        
-        Object matchObj = builder.build();
-        if (matchObj instanceof Pair)
-        {
-            return Collections.emptyList();
-        }
-        
-        MatchList matchList = (MatchList) matchObj;
-        
-        data.put("value", matchList);
-        context.getCacheProvider().store(URLEndpoint.V1_VAL_MATCHLIST_BY_PUUID, data);
-        
-        return matchList.getHistory();
+        MatchList matchList = builder.buildCached(MatchList.class, data);
+        return matchList != null ? matchList.getHistory() : Collections.emptyList();
     }
     
     
