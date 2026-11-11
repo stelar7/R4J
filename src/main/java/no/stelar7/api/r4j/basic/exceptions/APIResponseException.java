@@ -12,6 +12,13 @@ public class APIResponseException extends RuntimeException
         this.data = response;
     }
     
+    public APIResponseException(APIHTTPErrorReason errorCode, String response, Throwable cause)
+    {
+        super(cause);
+        this.reason = errorCode;
+        this.data = response;
+    }
+    
     @Override
     public String getMessage()
     {
