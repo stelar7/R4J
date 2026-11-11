@@ -232,21 +232,19 @@ public class RequestPipelineTest
         Assertions.assertNotNull(limiters);
 
         RateLimiter app = limiters.get(LeagueShard.OC1);
-        Assertions.assertTrue(app instanceof BurstRateLimiter, "the app limiter should be built from the X-App-Rate-Limit header");
-        Assertions.assertEquals(2, app.getLimits().size());
-
+        Assertions.assertEquals(2, app.getLimits().size(), "the app limiter should get its limits from the X-App-Rate-Limit header");
+        
         // we made 1 call, but the server says 55 calls were made in the 120s window (another process, or a restart)
-        long count120 = app.getCallCountInTime().entrySet().stream()
+        long count120 = app.getCallCounts().entrySet().stream()
                            .filter(e -> e.getKey().getTimeframeInMS() == TimeUnit.SECONDS.toMillis(120))
-                           .mapToLong(e -> e.getValue().get())
+                           .mapToLong(Map.Entry::getValue)
                            .findFirst().orElse(-1);
         Assertions.assertEquals(55, count120);
-
+        
         RateLimiter method = limiters.get(URLEndpoint.V4_STATUS_LOL);
-        Assertions.assertTrue(method instanceof BurstRateLimiter);
         Assertions.assertEquals(1, method.getLimits().size());
     }
-
+    
     @Test
     public void waitingOnOnePlatformDoesNotBlockAnother() throws Exception
     {

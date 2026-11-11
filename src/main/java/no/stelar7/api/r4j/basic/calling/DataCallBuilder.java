@@ -49,11 +49,6 @@ public class DataCallBuilder
      */
     private static final Map<Pair<ApiKeyType, Enum>, Semaphore> semaphoreContainer = new HashMap<>();
 
-    /**
-     * Pair:> Left: Game, Right: (Platform, Endpoint)
-     */
-    private static final Map<Pair<ApiKeyType, Object>, Lock> lockContainer = new HashMap<>();
-
     private static final Lock globalLock = new ReentrantLock();
 
     /**
@@ -286,20 +281,15 @@ public class DataCallBuilder
         {
             if (this.dc.useRatelimiter())
             {
-                Instant closestValidityDateTime;
-                Instant appValidityDateTime;
-                Instant methodValidityDateTime;
-
-                do
+                try
                 {
-                    // app limit
-                    appValidityDateTime = applyLimit(platform, platform);
-
-                    // method limit
-                    methodValidityDateTime = this.dc.getEndpoint() == null ? Instant.MAX : applyLimit(platform, this.dc.getEndpoint());
-
-                    closestValidityDateTime = appValidityDateTime.isBefore(methodValidityDateTime) ? appValidityDateTime : methodValidityDateTime;
-                } while (Instant.now().isAfter(closestValidityDateTime)); // If the validity date is in the past, we need to wait for the ratelimiter to update
+                    acquireLimits(keyTypeUsed, platform, this.dc.getEndpoint());
+                } catch (InterruptedException e)
+                {
+                    logger.error("Interrupted while waiting for the ratelimit for the API call: {}", url, e);
+                    Thread.currentThread().interrupt();
+                    return null;
+                }
             }
 
             logger.trace("Trying url: {}", url);
@@ -499,32 +489,53 @@ public class DataCallBuilder
         return attempts;
     }
 
-    private Instant applyLimit(Enum platform, Enum endpoint)
+    private static RateLimiter getLimiter(ApiKeyType keyType, Enum platform, Enum endpoint)
     {
-        ApiKeyType keyType = this.dc.getKeyUsedByHeadersUsed();
+        return DataCall.getLimiter(keyType).computeIfAbsent(platform, k -> new ConcurrentHashMap<>()).computeIfAbsent(endpoint, k -> new RateLimiter());
+    }
 
-        // The lock is per key + platform + endpoint, so waiting on a limit on one platform does not block the same endpoint on another platform
-        Lock lock = getLock(keyType, platform, endpoint);
-        lock.lock();
-        try
+    /**
+     * Waits until both the app limit (of the platform) and the method limit (of the endpoint on the platform) have a permit, then takes both.
+     * Nothing is locked while waiting, so waiting on one platform or endpoint never blocks calls to another.
+     */
+    private void acquireLimits(ApiKeyType keyType, Enum platform, Enum endpoint) throws InterruptedException
+    {
+        // for app limits, the "endpoint" is the platform itself
+        RateLimiter app    = getLimiter(keyType, platform, platform);
+        RateLimiter method = endpoint == null ? null : getLimiter(keyType, platform, endpoint);
+
+        while (true)
         {
-            RateLimiter limitr;
-            globalLock.lock();
+            long now = System.currentTimeMillis();
 
-            try
+            // Service-limit cooldown in fail-fast mode: waiting here would hold the caller thread (and its parallel-call permit) for the whole cooldown.
+            if (method != null && method.isCooldownFailFast())
             {
-                Map<Enum, RateLimiter> child = DataCall.getLimiter(keyType).computeIfAbsent(platform, k -> new ConcurrentHashMap<>());
-                limitr = child.computeIfAbsent(endpoint, k -> new CounterRateLimiter());
-            } finally
-            {
-                globalLock.unlock();
+                long remaining = method.getCooldownRemaining(now);
+                if (remaining > 0)
+                {
+                    throw new APIEndpointCooldownException(endpoint.name(), remaining);
+                }
             }
 
-            // Here endpoint is the equivalent to platform when treating app limits, equivalent to endpoint when treating method limits
-            return limitr.acquire(keyType, endpoint);
-        } finally
-        {
-            lock.unlock();
+            long wait = app.tryAcquire(now);
+            if (wait == 0 && method != null)
+            {
+                wait = method.tryAcquire(now);
+                if (wait != 0)
+                {
+                    // the call is not made yet, so it should not count against the app limit while we wait for the method limit
+                    app.release();
+                }
+            }
+
+            if (wait == 0)
+            {
+                return;
+            }
+
+            logger.debug("{} {}: waiting {} ms for the ratelimit", platform, endpoint, wait);
+            Thread.sleep(wait);
         }
     }
 
@@ -642,17 +653,17 @@ public class DataCallBuilder
 
                 if (limitType == RateLimitType.LIMIT_METHOD && methodLimiter != null)
                 {
-                    methodLimiter.updateSleep(received, retryAfter, platform);
+                    methodLimiter.cooldown(received.toEpochMilli(), retryAfter, false);
                 }
 
                 if (limitType == RateLimitType.LIMIT_USER && appLimiter != null)
                 {
-                    appLimiter.updateSleep(received, retryAfter, platform);
+                    appLimiter.cooldown(received.toEpochMilli(), retryAfter, false);
                 }
 
                 if ((limitType == RateLimitType.LIMIT_UNDERLYING || limitType == RateLimitType.LIMIT_SERVICE) && methodLimiter != null)
                 {
-                    methodLimiter.updateSleep(received, retryAfter, platform, DataCall.shouldFailFastOnServiceRatelimit());
+                    methodLimiter.cooldown(received.toEpochMilli(), retryAfter, DataCall.shouldFailFastOnServiceRatelimit());
                 }
             }
 
@@ -695,7 +706,7 @@ public class DataCallBuilder
                     platformLimiters.forEach((key, value) -> {
                         valueList.append(key);
                         valueList.append("=");
-                        valueList.append(value.getCallCountInTime());
+                        valueList.append(value.getCallCounts());
                         valueList.append("\n");
                     });
                 }
@@ -750,56 +761,34 @@ public class DataCallBuilder
     }
 
     /**
-     * Makes sure the limiter matches the limits the server reported, then syncs our call count with the count the server reported.
+     * Makes sure the limiter obeys the limits the server reported, then syncs our call count with the count the server reported.
      */
     private void updateRatelimiter(String limitHeader, String countHeader, Enum platform, Enum endpoint, long sentAt)
     {
-        RateLimiter limiter;
+        RateLimiter limiter = getLimiter(dc.getKeyUsedByHeadersUsed(), platform, endpoint);
 
-        globalLock.lock();
         try
         {
-            limiter = createRatelimiterIfMissing(limitHeader, platform, endpoint);
+            if (limiter.updateLimits(parseLimits(limitHeader)))
+            {
+                logger.debug("Updated Ratelimit For {}: {}", endpoint, limiter.getLimits());
+            }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e)
         {
             logger.warn("Unable to parse ratelimit header '{}'", limitHeader);
             return;
-        } finally
-        {
-            globalLock.unlock();
         }
 
         if (countHeader != null)
         {
             try
             {
-                limiter.syncWithServerCounts(parseLimitFromHeader(countHeader), sentAt);
+                limiter.syncWithServerCounts(parseLimitFromHeader(countHeader), sentAt, System.currentTimeMillis());
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e)
             {
                 logger.warn("Unable to parse ratelimit count header '{}'", countHeader);
             }
         }
-    }
-
-    private RateLimiter createRatelimiterIfMissing(String methodA, Enum platform, Enum endpoint)
-    {
-        Map<Enum, RateLimiter> child = DataCall.getLimiter(dc.getKeyUsedByHeadersUsed()).computeIfAbsent(platform, k -> new ConcurrentHashMap<>());
-
-        RateLimiter oldLimit   = child.get(endpoint);
-        RateLimiter newerLimit = createLimiter(methodA);
-
-        if (newerLimit.equals(oldLimit))
-        {
-            return oldLimit;
-        }
-
-        newerLimit.mergeFrom(oldLimit);
-        child.put(endpoint, newerLimit);
-
-        logger.debug("Updating Ratelimit For {}", endpoint);
-        logger.debug("{}", newerLimit.getLimits());
-
-        return newerLimit;
     }
 
     private Map<Integer, Integer> parseLimitFromHeader(String headerValue)
@@ -817,19 +806,26 @@ public class DataCallBuilder
         return timeout;
     }
     
-    public RateLimiter createLimiter(String limitCount)
+    private List<RateLimit> parseLimits(String limitHeader)
     {
-        Map<Integer, Integer> timeout = parseLimitFromHeader(limitCount);
-        
         List<RateLimit> limits = new ArrayList<>();
-        for (Entry<Integer, Integer> entry : timeout.entrySet())
+        for (Entry<Integer, Integer> entry : parseLimitFromHeader(limitHeader).entrySet())
         {
             limits.add(new RateLimit(entry.getValue(), entry.getKey(), TimeUnit.SECONDS));
         }
-        
-        return new BurstRateLimiter(limits);
+
+        return limits;
     }
-    
+
+    /**
+     * @param limitHeader the value of a X-App-Rate-Limit or X-Method-Rate-Limit header (ie. "20:1,100:120")
+     * @return a limiter obeying those limits
+     */
+    public RateLimiter createLimiter(String limitHeader)
+    {
+        return new RateLimiter(parseLimits(limitHeader));
+    }
+
     /**
      * Generates the URL to use for the call.
      *
@@ -1025,33 +1021,6 @@ public class DataCallBuilder
         }
     }
     
-    /**
-     * The lock guarding the limiter for this key + platform + endpoint.
-     * (for app limits, the endpoint is the platform itself)
-     */
-    public static Lock getLock(ApiKeyType keyType, Enum platform, Enum endpoint)
-    {
-        Pair<ApiKeyType, Object> pair = new Pair<>(keyType, new Pair<>(platform, endpoint));
-
-        globalLock.lock();
-        try
-        {
-            return lockContainer.computeIfAbsent(pair, k -> new ReentrantLock());
-        } finally
-        {
-            globalLock.unlock();
-        }
-    }
-
-    /**
-     * @deprecated this lock is shared by every platform; use {@link #getLock(ApiKeyType, Enum, Enum)}
-     */
-    @Deprecated
-    public static Lock getLock(ApiKeyType keyType, Enum platformOrEndpoint)
-    {
-        return getLock(keyType, null, platformOrEndpoint);
-    }
-
     public static Lock getGlobalLock()
     {
         return globalLock;
