@@ -209,6 +209,14 @@ public class AsyncPipelineTest
         Assertions.assertEquals("name=a%20b", query.get());
     }
 
+    /**
+     * The threads R4J uses to run blocking calls in the background (which the non-blocking calls must not need)
+     */
+    private static long backgroundThreads()
+    {
+        return Thread.getAllStackTraces().keySet().stream().filter(t -> t.getName().startsWith("R4J-async")).count();
+    }
+    
     @Test
     public void theRatelimitIsObeyedWithoutBlockingThreads() throws Exception
     {
@@ -242,16 +250,17 @@ public class AsyncPipelineTest
 
         R4JContext                            context = context();
         List<CompletableFuture<PlatformData>> calls   = new ArrayList<>();
-        int                                   threads = Thread.activeCount();
+        long backgroundThreads = backgroundThreads();
         for (int i = 0; i < 8; i++)
         {
             calls.add(statusCall(context).buildAsAsync(PlatformData.class));
         }
 
-        // eight calls are waiting for their turn, but not eight threads
+        // Eight calls are waiting for their turn. None of them holds one of our threads while it waits:
+        // the only threads R4J itself uses for this are its single timer thread and the workers of the http client.
         Thread.sleep(300);
-        Assertions.assertTrue(Thread.activeCount() - threads < 6, "threads before: " + threads + ", now: " + Thread.activeCount());
-
+        Assertions.assertEquals(backgroundThreads, backgroundThreads(), "background threads were started to wait for the calls");
+        
         for (CompletableFuture<PlatformData> call : calls)
         {
             Assertions.assertNotNull(call.get(30, TimeUnit.SECONDS));
