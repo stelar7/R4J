@@ -2,164 +2,201 @@ package no.stelar7.api.r4j.basic.cache.impl;
 
 import no.stelar7.api.r4j.basic.cache.*;
 import no.stelar7.api.r4j.basic.constants.api.URLEndpoint;
-import no.stelar7.api.r4j.basic.utils.Pair;
-import no.stelar7.api.r4j.pojo.lol.staticdata.champion.StaticChampionList;
 import org.slf4j.*;
 
-import java.time.*;
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.concurrent.*;
 
+/**
+ * Keeps the responses in memory.
+ * Items are keyed on the endpoint and the parameters of the call, in the order they were added to the map.
+ */
 public class MemoryCacheProvider implements CacheProvider
 {
     private static final Logger logger = LoggerFactory.getLogger(MemoryCacheProvider.class);
-    
-    private       Pair<StaticChampionList, LocalDateTime> champions;
-    
-    private final ScheduledExecutorService clearService = Executors.newScheduledThreadPool(1);
-    private       ScheduledFuture<?>       clearTask;
-    private       long                     timeToLive;
-    private       CacheLifetimeHint        hints        = CacheLifetimeHint.DEFAULTS;
-    
+
+    private static final class CacheEntry
+    {
+        private final Object value;
+        private final long   insertedAt;
+
+        private CacheEntry(Object value)
+        {
+            this.value = value;
+            this.insertedAt = System.currentTimeMillis();
+        }
+    }
+
+    private final Map<URLEndpoint, Map<List<String>, CacheEntry>> cache = new ConcurrentHashMap<>();
+
+    private final ScheduledExecutorService clearService = Executors.newSingleThreadScheduledExecutor(r -> {
+        Thread t = new Thread(r, "R4J-MemoryCache-cleaner");
+        t.setDaemon(true);
+        return t;
+    });
+
+    private ScheduledFuture<?> clearTask;
+    private long               timeToLive;
+    private CacheLifetimeHint  hints = CacheLifetimeHint.DEFAULTS;
+
     /**
-     * Creates a memory cache, where items expire after ttl seconds
+     * Creates a memory cache, where items expire after ttl milliseconds
      *
-     * @param ttl the amount of time to keep cached items (in seconds)
+     * @param ttl the amount of time to keep cached items (in milliseconds), or one of {@link CacheProvider#TTL_INFINITY}, {@link CacheProvider#TTL_USE_HINTS}
      */
     public MemoryCacheProvider(long ttl)
     {
         setTimeToLiveGlobal(ttl);
     }
-    
+
     public MemoryCacheProvider()
     {
         this(CacheProvider.TTL_USE_HINTS);
     }
-    
-    
+
+
     @Override
-    public void setTimeToLiveGlobal(long timeToLive)
+    public synchronized void setTimeToLiveGlobal(long timeToLive)
     {
         this.timeToLive = timeToLive;
-        
-        if (timeToLive > 0)
+
+        if (clearTask != null)
         {
-            clearTask = clearService.scheduleAtFixedRate(this::clearOldCache, timeToLive, timeToLive, TimeUnit.SECONDS);
-        } else
-        {
-            if (clearTask != null)
-            {
-                clearTask.cancel(false);
-            }
+            clearTask.cancel(false);
+            clearTask = null;
         }
+
+        if (timeToLive == CacheProvider.TTL_INFINITY)
+        {
+            return;
+        }
+
+        // expired items are never returned by get(), this only makes sure unused items do not stay in memory
+        long interval = timeToLive > 0 ? timeToLive : TimeUnit.MINUTES.toMillis(1);
+        clearTask = clearService.scheduleAtFixedRate(this::clearOldCache, interval, interval, TimeUnit.MILLISECONDS);
     }
-    
+
     @Override
     public void setTimeToLive(CacheLifetimeHint hints)
     {
         this.hints = hints;
     }
-    
-    
+
+    private List<String> toKey(Map<String, Object> data)
+    {
+        List<String> key = new ArrayList<>();
+        data.forEach((k, v) -> {
+            if (!"value".equals(k))
+            {
+                key.add(String.valueOf(v));
+            }
+        });
+
+        return key;
+    }
+
+    private boolean isExpired(URLEndpoint type, CacheEntry entry)
+    {
+        long ttl = getTimeToLive(type);
+        if (ttl == CacheProvider.TTL_INFINITY)
+        {
+            return false;
+        }
+
+        return System.currentTimeMillis() - entry.insertedAt > ttl;
+    }
+
+    private boolean matchesFilter(List<String> key, List<String> filter)
+    {
+        return key.size() >= filter.size() && key.subList(0, filter.size()).equals(filter);
+    }
+
     @Override
     public void store(URLEndpoint type, Map<String, Object> obj)
     {
+        if (!obj.containsKey("value"))
+        {
+            throw new IllegalArgumentException("Invalid cache insert!");
+        }
+
         // if the object we are trying to store is not valid, dont store it.
-        if (obj.get("value") == null)
+        Object value = obj.get("value");
+        if (value == null)
         {
             return;
         }
-        
-        switch (type)
-        {
-            default:
-                break;
-        }
+
+        cache.computeIfAbsent(type, k -> new ConcurrentHashMap<>()).put(toKey(obj), new CacheEntry(value));
     }
-    
-    
+
+
     @Override
     public void update(URLEndpoint type, Map<String, Object> obj)
     {
         store(type, obj);
     }
-    
+
     @Override
     public Optional<?> get(URLEndpoint type, Map<String, Object> data)
     {
-        Object      platform = data.get("platform");
-        Optional<?> opt;
-        
-        switch (type)
+        Map<List<String>, CacheEntry> entries = cache.get(type);
+        if (entries == null)
         {
-            default:
-            {
-                opt = Optional.empty();
-            }
+            return Optional.empty();
         }
-        
-        if (opt.isPresent())
+
+        List<String> key   = toKey(data);
+        CacheEntry   entry = entries.get(key);
+        if (entry == null)
         {
-            logger.debug("Loaded data from cache ({} {} {})", this.getClass().getName(), type, data);
+            return Optional.empty();
         }
-        
-        return opt;
+
+        if (isExpired(type, entry))
+        {
+            entries.remove(key, entry);
+            return Optional.empty();
+        }
+
+        logger.debug("Loaded data from cache ({} {} {})", this.getClass().getName(), type, data);
+        return Optional.of(entry.value);
     }
-    
+
     @Override
     public void clear(URLEndpoint type, Map<String, Object> filter)
     {
-        switch (type)
+        Map<List<String>, CacheEntry> entries = cache.get(type);
+        if (entries == null)
         {
-            default:
-                break;
+            return;
         }
+
+        List<String> filterKey = toKey(filter);
+        entries.keySet().removeIf(key -> matchesFilter(key, filterKey));
     }
-    
+
     @Override
     public void clearOldCache()
     {
+        cache.forEach((type, entries) -> entries.values().removeIf(entry -> isExpired(type, entry)));
     }
-    
+
     @Override
     public long getTimeToLive(URLEndpoint type)
     {
         return timeToLive == TTL_USE_HINTS ? hints.get(type) : timeToLive;
     }
-    
+
     @Override
     public long getSize(URLEndpoint type, Map<String, Object> filter)
     {
-        long size = 0;
-        return size;
-    }
-    
-    private void clearOldCache(URLEndpoint endpoint, Map<?, LocalDateTime> data)
-    {
-        List<Entry<?, LocalDateTime>> list = new ArrayList<>(data.entrySet());
-        
-        // cant do that because of a wildcard
-        //noinspection RedundantComparatorComparing
-        list.sort(Comparator.comparing(Entry::getValue));
-        
-        for (Entry<?, LocalDateTime> entry : list)
+        Map<List<String>, CacheEntry> entries = cache.get(type);
+        if (entries == null)
         {
-            long life = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() - entry.getValue().toInstant(ZoneOffset.UTC).toEpochMilli();
-            if (timeToLive != CacheProvider.TTL_USE_HINTS)
-            {
-                if (timeToLive < life)
-                {
-                    data.remove(entry.getKey());
-                }
-            } else
-            {
-                long expectedLife = hints.get(endpoint);
-                if (expectedLife < life)
-                {
-                    data.remove(entry.getKey());
-                }
-            }
+            return 0;
         }
+
+        List<String> filterKey = toKey(filter);
+        return entries.keySet().stream().filter(key -> matchesFilter(key, filterKey)).count();
     }
 }
