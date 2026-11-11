@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.tft;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -319,5 +320,94 @@ public class TFTLeagueAPI
 
         List<TFTTopRatedLadderEntry> entries = builder.buildCached(TFTTopRatedLadderEntryList.class, data);
         return entries != null ? entries : Collections.emptyList();
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Like {@link #getLeagueEntriesByPUUID}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<TFTLeagueEntry>> getLeagueEntriesByPUUIDAsync(LeagueShard server, String puuid)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                           .withEndpoint(URLEndpoint.V1_TFT_LEAGUE_BY_PUUID)
+                                                           .withPlatform(server);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("puuid", puuid);
+
+            return builder.<List<TFTLeagueEntry>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getLeagueByTierDivision} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<TFTLeagueEntry>> getLeagueByTierDivisionAsync(LeagueShard server, TierDivisionType tierdiv, int page)
+    {
+        return context.callAsync(() -> getLeagueByTierDivision(server, tierdiv, page));
+    }
+    
+    /**
+     * Runs {@link #getMasterLeague} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<TFTLeagueList> getMasterLeagueAsync(LeagueShard server, GameQueueType queue)
+    {
+        return context.callAsync(() -> getMasterLeague(server, queue));
+    }
+    
+    /**
+     * Runs {@link #getGrandmasterLeague} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<TFTLeagueList> getGrandmasterLeagueAsync(LeagueShard server, GameQueueType queue)
+    {
+        return context.callAsync(() -> getGrandmasterLeague(server, queue));
+    }
+    
+    /**
+     * Runs {@link #getChallengerLeague} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<TFTLeagueList> getChallengerLeagueAsync(LeagueShard server, GameQueueType queue)
+    {
+        return context.callAsync(() -> getChallengerLeague(server, queue));
+    }
+    
+    /**
+     * Runs {@link #getLeagueByTierDivision} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<TFTLeagueEntry>> getLeagueByTierDivisionAsync(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
+    {
+        return context.callAsync(() -> getLeagueByTierDivision(server, queue, tierdiv, page));
+    }
+    
+    /**
+     * Runs {@link #getTopRatedLadder} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<TFTTopRatedLadderEntry>> getTopRatedLadderAsync(LeagueShard server, GameQueueType queue)
+    {
+        return context.callAsync(() -> getTopRatedLadder(server, queue));
     }
 }

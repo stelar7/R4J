@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.calling.DataCallBuilder;
@@ -218,5 +219,77 @@ public final class MatchV5API
                                                    .buildAs(GAMHSMatch.class);
 
         return timeline != null ? context.bind(timeline.asLOLTimeline()) : null;
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Runs {@link #getMatchList} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<String>> getMatchListAsync(RegionShard server, String puuid, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
+    {
+        return context.callAsync(() -> getMatchList(server, puuid, queue, type, beginIndex, count, startTime, endTime));
+    }
+    
+    /**
+     * Runs {@link #getMatch} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<LOLMatch> getMatchAsync(RegionShard server, String matchId)
+    {
+        return context.callAsync(() -> getMatch(server, matchId));
+    }
+    
+    /**
+     * Runs {@link #getTimeline} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<LOLTimeline> getTimelineAsync(RegionShard server, String matchId)
+    {
+        return context.callAsync(() -> getTimeline(server, matchId));
+    }
+    
+    /**
+     * Runs {@link #getMatchReplaysByAccessToken} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<LOLMatchReplayList> getMatchReplaysByAccessTokenAsync(RegionShard server, String accessToken)
+    {
+        return context.callAsync(() -> getMatchReplaysByAccessToken(server, accessToken));
+    }
+    
+    /**
+     * Runs {@link #getMatchListByAccessToken} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<String>> getMatchListByAccessTokenAsync(RegionShard server, String accessToken, GameQueueType queue, MatchlistMatchType type, Integer beginIndex, Integer count, Long startTime, Long endTime)
+    {
+        return context.callAsync(() -> getMatchListByAccessToken(server, accessToken, queue, type, beginIndex, count, startTime, endTime));
+    }
+    
+    /**
+     * Runs {@link #getMatchByAccessToken} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<LOLMatch> getMatchByAccessTokenAsync(RegionShard server, String accessToken, String matchId)
+    {
+        return context.callAsync(() -> getMatchByAccessToken(server, accessToken, matchId));
+    }
+    
+    /**
+     * Runs {@link #getTimelineByAccessToken} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<LOLTimeline> getTimelineByAccessTokenAsync(RegionShard server, String accessToken, String matchId)
+    {
+        return context.callAsync(() -> getTimelineByAccessToken(server, accessToken, matchId));
     }
 }

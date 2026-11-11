@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
@@ -554,4 +555,632 @@ public final class DDragonAPI
         return getTarball(null);
     }
     
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Like {@link #getChampions}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticChampion>> getChampionsAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_CHAMPION_MANY);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(StaticChampionList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getChampionsFromId} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<StaticChampion>> getChampionsFromIdAsync(List<Integer> freeChampionIds)
+    {
+        return context.callAsync(() -> getChampionsFromId(freeChampionIds));
+    }
+    
+    /**
+     * Runs {@link #getChampionsFromId} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<StaticChampion>> getChampionsFromIdAsync(List<Integer> freeChampionIds, String version, String locale)
+    {
+        return context.callAsync(() -> getChampionsFromId(freeChampionIds, version, locale));
+    }
+    
+    /**
+     * Runs {@link #getChampions} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticChampion>> getChampionsAsync()
+    {
+        return context.callAsync(() -> getChampions());
+    }
+    
+    /**
+     * Runs {@link #getChampion} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticChampion> getChampionAsync(int id, String version, String locale)
+    {
+        return context.callAsync(() -> getChampion(id, version, locale));
+    }
+    
+    /**
+     * Runs {@link #getChampion} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticChampion> getChampionAsync(int id)
+    {
+        return context.callAsync(() -> getChampion(id));
+    }
+    
+    /**
+     * Like {@link #getItems}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, Item>> getItemsAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_ITEMS);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(ItemList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getItems} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, Item>> getItemsAsync()
+    {
+        return context.callAsync(() -> getItems());
+    }
+    
+    /**
+     * Runs {@link #getItem} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Item> getItemAsync(int id, String version, String locale)
+    {
+        return context.callAsync(() -> getItem(id, version, locale));
+    }
+    
+    /**
+     * Runs {@link #getItem} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Item> getItemAsync(int id)
+    {
+        return context.callAsync(() -> getItem(id));
+    }
+    
+    /**
+     * Like {@link #getLanguageStrings}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<String, String>> getLanguageStringsAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_LANGUAGE_STRINGS);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(LanguageStrings.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getLanguageStrings} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<String, String>> getLanguageStringsAsync()
+    {
+        return context.callAsync(() -> getLanguageStrings());
+    }
+    
+    /**
+     * Runs {@link #getLanguages} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<String>> getLanguagesAsync()
+    {
+        return context.callAsync(() -> getLanguages());
+    }
+    
+    /**
+     * Like {@link #getMaps}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<String, MapDetails>> getMapsAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_MAPS);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(MapData.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getMaps} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<String, MapDetails>> getMapsAsync()
+    {
+        return context.callAsync(() -> getMaps());
+    }
+    
+    /**
+     * Like {@link #getMasteries}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticMastery>> getMasteriesAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(StaticMasteryList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getMasteries} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticMastery>> getMasteriesAsync()
+    {
+        return context.callAsync(() -> getMasteries());
+    }
+    
+    /**
+     * Like {@link #getMasteryTree}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<String, List<List<MasteryTreeItem>>>> getMasteryTreeAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_MASTERIES);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("mastery") : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(StaticMasteryList.class, data).thenApply(list -> list != null ? list.getTree() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getMasteryTree} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<String, List<List<MasteryTreeItem>>>> getMasteryTreeAsync()
+    {
+        return context.callAsync(() -> getMasteryTree());
+    }
+    
+    /**
+     * Runs {@link #getMastery} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticMastery> getMasteryAsync(int id, String version, String locale)
+    {
+        return context.callAsync(() -> getMastery(id, version, locale));
+    }
+    
+    /**
+     * Runs {@link #getMastery} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticMastery> getMasteryAsync(int id)
+    {
+        return context.callAsync(() -> getMastery(id));
+    }
+    
+    /**
+     * Like {@link #getProfileIcons}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Long, ProfileIconDetails>> getProfileIconsAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_PROFILEICONS);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(ProfileIconData.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getProfileIcons} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Long, ProfileIconDetails>> getProfileIconsAsync()
+    {
+        return context.callAsync(() -> getProfileIcons());
+    }
+    
+    /**
+     * Runs {@link #getRealm} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Realm> getRealmAsync()
+    {
+        return context.callAsync(() -> getRealm());
+    }
+    
+    /**
+     * Like {@link #getRealm}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Realm> getRealmAsync(LeagueShard region)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withURLParameter(Constants.REGION_PLACEHOLDER, region.getRealmValue())
+                    .withEndpoint(URLEndpoint.DDRAGON_REALMS);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", region);
+        
+            return builder.buildCachedAsync(Realm.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Like {@link #getRunes}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticRune>> getRunesAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_RUNES);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getRealm().getN().get("rune") : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(StaticRuneList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getRunes} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticRune>> getRunesAsync()
+    {
+        return context.callAsync(() -> getRunes());
+    }
+    
+    /**
+     * Runs {@link #getRune} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticRune> getRuneAsync(int id, String version, String locale)
+    {
+        return context.callAsync(() -> getRune(id, version, locale));
+    }
+    
+    /**
+     * Runs {@link #getRune} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticRune> getRuneAsync(int id)
+    {
+        return context.callAsync(() -> getRune(id));
+    }
+    
+    /**
+     * Like {@link #getSummonerSpells}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticSummonerSpell>> getSummonerSpellsAsync(String version, String locale)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(Constants.DDRAGON_PROXY)
+                    .withEndpoint(URLEndpoint.DDRAGON_SUMMONER_SPELLS);
+        
+            builder.withURLParameter(Constants.VERSION_PLACEHOLDER, version == null ? getVersions().get(0) : version);
+            builder.withURLParameter(Constants.LOCALE_PLACEHOLDER, locale == null ? "en_US" : locale);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("version", version);
+            data.put("locale", locale);
+        
+            return builder.buildCachedAsync(StaticSummonerSpellList.class, data).thenApply(list -> list != null ? list.getData() : Collections.emptyMap());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getSummonerSpells} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticSummonerSpell>> getSummonerSpellsAsync()
+    {
+        return context.callAsync(() -> getSummonerSpells());
+    }
+    
+    /**
+     * Runs {@link #getSummonerSpell} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticSummonerSpell> getSummonerSpellAsync(int id, String version, String locale)
+    {
+        return context.callAsync(() -> getSummonerSpell(id, version, locale));
+    }
+    
+    /**
+     * Runs {@link #getSummonerSpell} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticSummonerSpell> getSummonerSpellAsync(int id)
+    {
+        return context.callAsync(() -> getSummonerSpell(id));
+    }
+    
+    /**
+     * Runs {@link #getVersions} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<String>> getVersionsAsync()
+    {
+        return context.callAsync(() -> getVersions());
+    }
+    
+    /**
+     * Runs {@link #getPerks} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticPerk>> getPerksAsync(String version, String locale)
+    {
+        return context.callAsync(() -> getPerks(version, locale));
+    }
+    
+    /**
+     * Runs {@link #getPerks} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, StaticPerk>> getPerksAsync()
+    {
+        return context.callAsync(() -> getPerks());
+    }
+    
+    /**
+     * Runs {@link #getPerk} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticPerk> getPerkAsync(int id, String version, String locale)
+    {
+        return context.callAsync(() -> getPerk(id, version, locale));
+    }
+    
+    /**
+     * Runs {@link #getPerk} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<StaticPerk> getPerkAsync(int id)
+    {
+        return context.callAsync(() -> getPerk(id));
+    }
+    
+    /**
+     * Runs {@link #getPerkPaths} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, PerkPath>> getPerkPathsAsync(String version, String locale)
+    {
+        return context.callAsync(() -> getPerkPaths(version, locale));
+    }
+    
+    /**
+     * Runs {@link #getPerkPaths} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Map<Integer, PerkPath>> getPerkPathsAsync()
+    {
+        return context.callAsync(() -> getPerkPaths());
+    }
+    
+    /**
+     * Runs {@link #getPerkPath} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<PerkPath> getPerkPathAsync(int id, String version, String locale)
+    {
+        return context.callAsync(() -> getPerkPath(id, version, locale));
+    }
+    
+    /**
+     * Runs {@link #getPerkPath} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<PerkPath> getPerkPathAsync(int id)
+    {
+        return context.callAsync(() -> getPerkPath(id));
+    }
+    
+    /**
+     * Runs {@link #getTarball} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<String> getTarballAsync(String version)
+    {
+        return context.callAsync(() -> getTarball(version));
+    }
+    
+    /**
+     * Runs {@link #getTarball} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<String> getTarballAsync()
+    {
+        return context.callAsync(() -> getTarball());
+    }
 }

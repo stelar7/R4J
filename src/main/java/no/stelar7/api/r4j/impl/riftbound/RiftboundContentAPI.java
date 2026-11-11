@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.riftbound;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -74,5 +75,47 @@ public final class RiftboundContentAPI
         data.put("locale", locale);
 
         return builder.buildCached(RiftboundContent.class, data);
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Runs {@link #getContent} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<RiftboundContent> getContentAsync(RegionShard server, String locale)
+    {
+        return context.callAsync(() -> getContent(server, locale));
+    }
+    
+    /**
+     * Like {@link #getContent}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<RiftboundContent> getContentAsync(RegionShard server, String locale, ApiKeyType keyType)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getKey(keyType))
+                                                           .withEndpoint(URLEndpoint.V1_RIFTBOUND_CONTENT)
+                                                           .withPlatform(server);
+
+            if (locale != null)
+            {
+                builder.withQueryParameter(Constants.LOCALE_PLACEHOLDER_DATA, locale);
+            }
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("locale", locale);
+
+            return builder.buildCachedAsync(RiftboundContent.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

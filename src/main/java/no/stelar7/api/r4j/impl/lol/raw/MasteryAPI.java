@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -165,4 +166,75 @@ public final class MasteryAPI
         return list != null ? list : Collections.emptyList();
     }
     
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Like {@link #getMasteryScore}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Integer> getMasteryScoreAsync(LeagueShard server, String puuid)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                           .withEndpoint(URLEndpoint.V4_MASTERY_SCORE)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("puuid", puuid);
+        
+            return builder.buildCachedAsync(Integer.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getTopChampions} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<ChampionMastery>> getTopChampionsAsync(LeagueShard server, String puuid, Integer count)
+    {
+        return context.callAsync(() -> getTopChampions(server, puuid, count));
+    }
+    
+    /**
+     * Runs {@link #getChampionMastery} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<ChampionMastery> getChampionMasteryAsync(LeagueShard server, String puuid, int championId)
+    {
+        return context.callAsync(() -> getChampionMastery(server, puuid, championId));
+    }
+    
+    /**
+     * Like {@link #getChampionMasteries}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<ChampionMastery>> getChampionMasteriesAsync(LeagueShard server, String puuid)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                           .withEndpoint(URLEndpoint.V4_MASTERY_BY_PUUID)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("puuid", puuid);
+        
+            return builder.<List<ChampionMastery>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
 }

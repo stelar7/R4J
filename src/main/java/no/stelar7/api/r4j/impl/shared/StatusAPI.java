@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.shared;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -88,4 +89,98 @@ public final class StatusAPI
         return builder.buildCached(PlatformData.class, data);
     }
     
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Like {@link #getShardStatus}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<PlatformData> getShardStatusAsync(LeagueShard server)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V4_STATUS_LOL)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+        
+            return builder.buildCachedAsync(PlatformData.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Like {@link #getTFTShardStatus}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<PlatformData> getTFTShardStatusAsync(LeagueShard server)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_TFT)
+                                                           .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                                                           .withPlatform(server);
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+
+            return builder.buildCachedAsync(PlatformData.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Like {@link #getShardStatus}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<PlatformData> getShardStatusAsync(RuneterraShard server)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_LOR)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+        
+            return builder.buildCachedAsync(PlatformData.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Like {@link #getShardStatus}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<PlatformData> getShardStatusAsync(ValorantShard server)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_STATUS_VAL)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+        
+            return builder.buildCachedAsync(PlatformData.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
 }

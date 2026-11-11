@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -350,5 +351,46 @@ public final class CDragonAPI
     public String getHonorEmblem(String patch, int honorId, int level)
     {
         return url(patch, "honor/emblem/" + honorId + "/level/" + level);
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Runs {@link #getChampion} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<CDragonChampion> getChampionAsync(int championId)
+    {
+        return context.callAsync(() -> getChampion(championId));
+    }
+    
+    /**
+     * Like {@link #getChampion}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<CDragonChampion> getChampionAsync(String patch, String champion)
+    {
+        try
+        {
+            // made without limiters, which also means no api key is added to the request
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withLimiters(false)
+                    .withProxy(baseUrl + Constants.GSVR)
+                    .withEndpoint(URLEndpoint.CDRAGON_CHAMPION_DATA)
+                    .withURLParameter(Constants.VERSION_PLACEHOLDER, patch(patch))
+                    .withURLParameter(Constants.ID_PLACEHOLDER, champion(champion));
+
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("patch", patch(patch));
+            data.put("champion", champion(champion));
+
+            return builder.buildCachedAsync(CDragonChampion.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -136,4 +137,128 @@ public class ClashAPI
         return builder.buildCached(ClashTournament.class, data);
     }
     
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Like {@link #getPlayerInfoByPuuid}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<ClashPlayer>> getPlayerInfoByPuuidAsync(final LeagueShard server, String puuid)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_PLAYER_BY_PUUID)
+                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("puuid", puuid);
+        
+            return builder.<List<ClashPlayer>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Like {@link #getTeam}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<ClashTeam> getTeamAsync(final LeagueShard server, String teamId)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TEAM_BY_ID)
+                                                           .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("teamId", teamId);
+        
+            return builder.buildCachedAsync(ClashTeam.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Like {@link #getTournaments}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<ClashTournament>> getTournamentsAsync(final LeagueShard server)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+        
+            return builder.<List<ClashTournament>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Like {@link #getTournamentByTeam}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<ClashTournament> getTournamentByTeamAsync(final LeagueShard server, String teamId)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_TEAM)
+                                                           .withURLParameter(Constants.TEAM_ID_PLACEHOLDER, teamId)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("teamId", teamId);
+        
+            return builder.buildCachedAsync(ClashTournament.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Like {@link #getTournamentById}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<ClashTournament> getTournamentByIdAsync(final LeagueShard server, int tournamentId)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withEndpoint(URLEndpoint.V1_CLASH_TOURNAMENTS_BY_ID)
+                                                           .withURLParameter(Constants.TOURNAMENT_ID_PLACEHOLDER, String.valueOf(tournamentId))
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("tournamentId", tournamentId);
+        
+            return builder.buildCachedAsync(ClashTournament.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
 }

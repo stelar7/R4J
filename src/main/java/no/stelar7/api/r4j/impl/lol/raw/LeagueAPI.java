@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.constants.types.lol.*;
@@ -249,5 +250,53 @@ public final class LeagueAPI
     public LazyList<LeagueEntry> getLeagueExpByTierDivisionLazy(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv)
     {
         return new LazyList<>(1, prevValue -> getLeagueExpByTierDivision(server, queue, tierdiv, prevValue + 1));
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Like {@link #getLeagueEntriesByPUUID}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<LeagueEntry>> getLeagueEntriesByPUUIDAsync(LeagueShard server, String puuid)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withURLParameter(Constants.REGION_PLACEHOLDER, server.name())
+                                                           .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, puuid)
+                                                           .withEndpoint(URLEndpoint.V4_LEAGUE_ENTRY_BY_PUUID)
+                                                           .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("id", puuid);
+        
+            return builder.<List<LeagueEntry>>buildCachedAsync(data).thenApply(list -> list != null ? list : Collections.emptyList());
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getLeagueByTierDivision} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<LeagueEntry>> getLeagueByTierDivisionAsync(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
+    {
+        return context.callAsync(() -> getLeagueByTierDivision(server, queue, tierdiv, page));
+    }
+    
+    /**
+     * Runs {@link #getLeagueExpByTierDivision} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<LeagueEntry>> getLeagueExpByTierDivisionAsync(LeagueShard server, GameQueueType queue, TierDivisionType tierdiv, int page)
+    {
+        return context.callAsync(() -> getLeagueExpByTierDivision(server, queue, tierdiv, page));
     }
 }

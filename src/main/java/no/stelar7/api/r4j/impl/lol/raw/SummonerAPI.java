@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.R4JContext;
 import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
@@ -59,5 +60,27 @@ public final class SummonerAPI
                                                                       .withEndpoint(no.stelar7.api.r4j.basic.constants.api.URLEndpoint.V4_SUMMONER_ME)
                                                                       .withPlatform(server)
                                                                       .buildAs(Summoner.class);
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Runs {@link #getSummonerByPUUID} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Summoner> getSummonerByPUUIDAsync(final LeagueShard server, String PUUID)
+    {
+        return context.callAsync(() -> getSummonerByPUUID(server, PUUID));
+    }
+    
+    /**
+     * Runs {@link #getSummonerByAccessToken} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Summoner> getSummonerByAccessTokenAsync(final LeagueShard server, String accessToken)
+    {
+        return context.callAsync(() -> getSummonerByAccessToken(server, accessToken));
     }
 }

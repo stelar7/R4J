@@ -377,6 +377,20 @@ public class DataCallBuilder
     }
 
     /**
+     * Like {@link #buildCachedAsync(Class, Map)}, for the type the endpoint is declared to return.
+     * Useful when that type is a list wrapper (ie. the endpoint returns a ClashPlayerList, which is a {@code List<ClashPlayer>}).
+     *
+     * @param cacheKey the values identifying this call in the cache, in a consistent order
+     * @param <T>      the type the endpoint returns, or something it can be assigned to
+     * @return a future of the result, or of null if the api returned 404
+     */
+    @SuppressWarnings("unchecked")
+    public <T> CompletableFuture<T> buildCachedAsync(Map<String, Object> cacheKey)
+    {
+        return (CompletableFuture<T>) buildCachedAsync(this.dc.getEndpoint().getType(), cacheKey);
+    }
+    
+    /**
      * One attempt of a non-blocking call. Nothing in here waits: when the call can not be made yet, the attempt is scheduled again.
      */
     private void attemptAsync(final String url, final RetryState state, final CompletableFuture<Object> result)

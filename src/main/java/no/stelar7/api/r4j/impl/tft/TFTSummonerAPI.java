@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.tft;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -75,5 +76,44 @@ public class TFTSummonerAPI
                                     .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_ME)
                                     .withPlatform(server)
                                     .buildAs(Summoner.class);
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Like {@link #getSummonerByPUUID}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Summoner> getSummonerByPUUIDAsync(final LeagueShard server, String PUUID)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context)
+                    .withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTFTAPIKey())
+                    .withURLParameter(Constants.PUUID_ID_PLACEHOLDER, PUUID)
+                    .withEndpoint(URLEndpoint.V1_TFT_SUMMONER_BY_PUUID)
+                    .withPlatform(server);
+        
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("platform", server);
+            data.put("puuid", PUUID);
+        
+            return builder.buildCachedAsync(Summoner.class, data);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getSummonerByAccessToken} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Summoner> getSummonerByAccessTokenAsync(final LeagueShard server, String accessToken)
+    {
+        return context.callAsync(() -> getSummonerByAccessToken(server, accessToken));
     }
 }

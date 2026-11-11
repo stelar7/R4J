@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.val;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -48,5 +49,17 @@ public class VALContentAPI
         data.put("locale", locale.orElse("null"));
         
         return builder.buildCached(Content.class, data);
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Runs {@link #getContent} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Content> getContentAsync(ValorantShard server, Optional<String> locale)
+    {
+        return context.callAsync(() -> getContent(server, locale));
     }
 }

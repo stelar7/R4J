@@ -57,21 +57,16 @@ For a JAR file: [Releases](https://github.com/stelar7/R4J/releases/)
 
 ## How do I async?
 
-The methods of the api classes block until they have their answer. To run one in the background:
+Every method of the api classes has a twin ending in `Async` that returns a `CompletableFuture`:
 
 ```Java
-api.async(() -> api.getLoLAPI().getSummonerAPI().getSummonerByPUUID(LeagueShard.EUW1, puuid))
-   .thenAccept(summoner -> System.out.println(summoner));
+api.getStatusAPI().getShardStatusAsync(LeagueShard.EUW1)
+   .thenAccept(status -> System.out.println(status));
 ```
 
-That frees your thread, but a background thread waits for each call. If you make a lot of calls at once, build them yourself and no thread waits at all: the rate limit, the request and the retries are all handled in the background.
+For most single calls no thread waits while the call is being made: the rate limit, the request and the retries are handled in the background. The twins of methods that make several calls (most of Data Dragon, and anything going through a builder) run the blocking method on a background thread instead; their javadoc says which kind they are.
 
-```Java
-new DataCallBuilder(api.getContext()).withEndpoint(URLEndpoint.V4_STATUS_LOL)
-                                     .withPlatform(LeagueShard.EUW1)
-                                     .buildAsAsync(PlatformData.class)
-                                     .thenAccept(status -> System.out.println(status));
-```
+`api.async(() -> ...)` runs anything else in the background, and `DataCallBuilder.buildAsync()` is the non-blocking way to make a call of your own.
 
 To limit how many calls run at the same time (per platform and key), pass the limit when creating the api: `new R4J(creds, 4)`.
 

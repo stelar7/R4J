@@ -59,7 +59,7 @@ Everything below still works as it did (as far as Riot still answers), but is ma
 * **Tournament callbacks:** `TournamentCallbackListener` receives the result Riot posts after a tournament game.
 * **Caches:** `MemoryCacheProvider` works; `JdbcCacheProvider` caches in any SQL database; the file cache can be shared by several processes.
 * **Riftbound key** in `APICredentials`, and `APICredentials.builder()` to name each key instead of passing five or six strings in the right order (those constructors are deprecated).
-* **Non-blocking calls:** `DataCallBuilder.buildAsync`, `buildAsAsync` and `buildCachedAsync` make a call without a thread waiting for the rate limit, the response or the retries. `R4J.async(...)` runs any of the (blocking) api methods in the background.
+* **Non-blocking calls:** every method of the api classes has an `...Async` twin returning a `CompletableFuture`. For most single calls no thread waits for the rate limit, the response or the retries; twins of methods that make several calls run the blocking method on a background thread. `DataCallBuilder.buildAsync`, `buildAsAsync` and `buildCachedAsync` do the same for your own calls, and `R4J.async(...)` runs anything in the background.
 * **One exception parent:** every exception R4J throws on purpose now extends `R4JException` (itself a `RuntimeException`), so they can be caught together.
 * **Module name:** the jars declare `Automatic-Module-Name: no.stelar7.r4j`.
 * **Typed match challenges:** `MatchParticipant.getTypedChallenges()` and `getTypedMissions()` give the documented challenges and mission scores as objects with a field each. The maps (`getChallenges()`, `getMissions()`) are unchanged and still hold everything the api sent.

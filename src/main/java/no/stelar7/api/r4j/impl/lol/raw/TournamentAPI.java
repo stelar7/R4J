@@ -1,5 +1,6 @@
 package no.stelar7.api.r4j.impl.lol.raw;
 
+import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.Nullable;
 import no.stelar7.api.r4j.basic.calling.*;
 import no.stelar7.api.r4j.basic.constants.api.*;
@@ -256,5 +257,79 @@ public final class TournamentAPI
         }
         
         builder.build();
+    }
+    
+    // ---- Generated: the ...Async twin of every method above. Do not edit by hand; they follow the blocking methods.
+    
+    /**
+     * Runs {@link #generateTournamentCodes} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<String>> generateTournamentCodesAsync(final TournamentCodeParameters params, final long tournamentId, Integer count)
+    {
+        return context.callAsync(() -> generateTournamentCodes(params, tournamentId, count));
+    }
+    
+    /**
+     * Like {@link #getTournamentInfo}, without a thread waiting for the answer: the ratelimit, the request and the retries are handled in the background.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<TournamentCode> getTournamentInfoAsync(final String tournamentCode)
+    {
+        try
+        {
+            DataCallBuilder builder = new DataCallBuilder(context).withHeader(Constants.X_RIOT_TOKEN_HEADER_KEY, context.getCredentials().getTournamentAPIKey())
+                                                           .withURLParameter(Constants.TOURNAMENT_CODE_PLACEHOLDER, tournamentCode)
+                                                           .withEndpoint(useStub ? URLEndpoint.V5_TOURNAMENT_STUB_CODES_BY_CODE : URLEndpoint.V5_TOURNAMENT_CODES_BY_CODE)
+                                                           .withPlatform(RegionShard.AMERICAS);
+        
+            return builder.buildAsAsync(TournamentCode.class);
+        } catch (RuntimeException e)
+        {
+            // what the blocking method would have thrown before making the call (ie. a missing api key)
+            return CompletableFuture.failedFuture(e);
+        }
+    }
+    
+    /**
+     * Runs {@link #getTournamentGames} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<TournamentGame>> getTournamentGamesAsync(final String tournamentCode)
+    {
+        return context.callAsync(() -> getTournamentGames(tournamentCode));
+    }
+    
+    /**
+     * Runs {@link #getTournamentLobbyInfo} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<List<LobbyEvent>> getTournamentLobbyInfoAsync(final String tournamentCode)
+    {
+        return context.callAsync(() -> getTournamentLobbyInfo(tournamentCode));
+    }
+    
+    /**
+     * Runs {@link #registerAsProvider} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Long> registerAsProviderAsync(final ProviderRegistrationParameters params)
+    {
+        return context.callAsync(() -> registerAsProvider(params));
+    }
+    
+    /**
+     * Runs {@link #registerTournament} on a background thread.
+     *
+     * @return a future of what the blocking method returns
+     */
+    public CompletableFuture<Long> registerTournamentAsync(final TournamentRegistrationParameters params)
+    {
+        return context.callAsync(() -> registerTournament(params));
     }
 }
