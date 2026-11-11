@@ -134,7 +134,7 @@ public final class LeagueAPI
      * Empty if unranked
      *
      * @param server     region to get data from
-     * @param summonerId summoner to get data for
+     * @param puuid      the player to get data for
      * @return List of LeagueEntry
      */
     public List<LeagueEntry> getLeagueEntriesByPUUID(LeagueShard server, String puuid)
