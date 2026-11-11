@@ -16,6 +16,7 @@ public class APICredentials
     private final String LORAPIKey;
     private final String VALAPIKey;
     private final String tournamentApiKey;
+    private final String riftboundAPIKey;
     
     /**
      * Instantiates new API credentials.
@@ -28,6 +29,22 @@ public class APICredentials
      */
     public APICredentials(final String lol, final String tournament, final String tft, final String lor, final String val)
     {
+        this(lol, tournament, tft, lor, val, null);
+    }
+    
+    /**
+     * Instantiates new API credentials.
+     *
+     * @param lol        the lol key
+     * @param tournament the tournament key
+     * @param tft        the tft key
+     * @param lor        the lor key
+     * @param val        the val key
+     * @param riftbound  the riftbound key
+     */
+    public APICredentials(final String lol, final String tournament, final String tft, final String lor, final String val, final String riftbound)
+    {
+        this.riftboundAPIKey = riftbound;
         this.lolAPIKey = lol;
         this.tournamentApiKey = tournament;
         this.TFTAPIKey = tft;
@@ -58,7 +75,7 @@ public class APICredentials
      */
     public APICredentials(final String api)
     {
-        this(api, api, api, api, api);
+        this(api, api, api, api, api, api);
     }
     
     /**
@@ -132,6 +149,70 @@ public class APICredentials
         return this.tournamentApiKey;
     }
     
+    /**
+     * Gets the riftbound key.
+     *
+     * @return the key
+     */
+    public String getRiftboundAPIKey()
+    {
+        if (this.riftboundAPIKey == null)
+        {
+            throw new APIUnsupportedActionException("RIFTBOUND key not set!");
+        }
+        return this.riftboundAPIKey;
+    }
+    
+    /**
+     * @param type the product
+     * @return true if a key is set for the product
+     */
+    public boolean hasKey(ApiKeyType type)
+    {
+        return getRawKey(type) != null;
+    }
+    
+    private String getRawKey(ApiKeyType type)
+    {
+        switch (type)
+        {
+            case LOL:
+                return lolAPIKey;
+            case TOURNAMENT:
+                return tournamentApiKey;
+            case TFT:
+                return TFTAPIKey;
+            case VAL:
+                return VALAPIKey;
+            case LOR:
+                return LORAPIKey;
+            case RIFTBOUND:
+                return riftboundAPIKey;
+            default:
+                return null;
+        }
+    }
+    
+    /**
+     * Finds which product a key belongs to. If the same key is used for several products, the first one in the order
+     * LOL, TFT, VAL, LOR, TOURNAMENT, RIFTBOUND is returned.
+     *
+     * @param key the key
+     * @return the product, or UNKNOWN if the key is not one of the keys in these credentials
+     */
+    public ApiKeyType getKeyType(String key)
+    {
+        for (ApiKeyType type : new ApiKeyType[]{ApiKeyType.LOL, ApiKeyType.TFT, ApiKeyType.VAL, ApiKeyType.LOR, ApiKeyType.TOURNAMENT, ApiKeyType.RIFTBOUND})
+        {
+            if (key.equals(getRawKey(type)))
+            {
+                return type;
+            }
+        }
+        
+        return ApiKeyType.UNKNOWN;
+    }
+    
     public String getKey(ApiKeyType type) {
         switch (type) {
             case LOL:
@@ -144,6 +225,8 @@ public class APICredentials
                 return getVALAPIKey();
             case LOR:
                 return getLORAPIKey();
+            case RIFTBOUND:
+                return getRiftboundAPIKey();
             default:
                 throw new APIUnsupportedActionException("API key not set!");
         }
@@ -152,6 +235,11 @@ public class APICredentials
     public String getUniqueKeyCombination()
     {
         String unique = lolAPIKey + "separator" + tournamentApiKey + "separator" + TFTAPIKey + "separator" + LORAPIKey + "separator" + VALAPIKey;
+        if (riftboundAPIKey != null && !riftboundAPIKey.equals(lolAPIKey))
+        {
+            // only added when it is a key of its own, so the cache location of existing credentials does not change
+            unique += "separator" + riftboundAPIKey;
+        }
         try
         {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

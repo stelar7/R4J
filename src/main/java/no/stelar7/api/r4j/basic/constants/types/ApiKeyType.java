@@ -7,6 +7,7 @@ public enum ApiKeyType
     TFT,
     VAL,
     LOR,
+    RIFTBOUND,
     NONE,
     UNKNOWN;
 }

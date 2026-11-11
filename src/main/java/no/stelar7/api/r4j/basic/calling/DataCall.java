@@ -75,19 +75,8 @@ public final class DataCall
             return ApiKeyType.NONE;
         }
         
-        if (keyUsed.equals(creds.getLoLAPIKey())){
-            return ApiKeyType.LOL;
-        } else if (keyUsed.equals(creds.getTFTAPIKey())) {
-            return ApiKeyType.TFT;
-        } else if (keyUsed.equals(creds.getVALAPIKey())) {
-            return ApiKeyType.VAL;
-        } else if (keyUsed.equals(creds.getLORAPIKey())) {
-            return ApiKeyType.LOR;
-        }else if (keyUsed.equals(creds.getTournamentAPIKey())) {
-            return ApiKeyType.TOURNAMENT;
-        }
-        
-        return ApiKeyType.UNKNOWN;
+        // compared without the getters, as those throw when a key for another product is not set
+        return creds == null ? ApiKeyType.UNKNOWN : creds.getKeyType(keyUsed);
     }
     
     public Enum getPlatform()

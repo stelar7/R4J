@@ -26,7 +26,7 @@ public final class RiftboundContentAPI
     }
 
     /**
-     * All the sets and cards in the game, using the LoL api key.
+     * All the sets and cards in the game, using the Riftbound api key (or the LoL key, if no Riftbound key is set).
      *
      * @param server the region to query (AMERICAS, ASIA or EUROPE)
      * @param locale the locale to get the content in (ie. "en"), or null to use the api default
@@ -34,7 +34,7 @@ public final class RiftboundContentAPI
      */
     public RiftboundContent getContent(RegionShard server, String locale)
     {
-        return getContent(server, locale, ApiKeyType.LOL);
+        return getContent(server, locale, DataCall.getCredentials().hasKey(ApiKeyType.RIFTBOUND) ? ApiKeyType.RIFTBOUND : ApiKeyType.LOL);
     }
 
     /**
