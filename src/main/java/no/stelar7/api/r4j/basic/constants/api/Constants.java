@@ -35,6 +35,7 @@ public final class Constants
     public static final String COUNT_PLACEHOLDER_DATA      = "count";
     public static final String TYPE_PLACEHOLDER_DATA       = "type";
     public static final String PAGE_PLACEHOLDER_DATA       = "page";
+    public static final String PLATFORM_TYPE_PLACEHOLDER_DATA = "platformType";
     
     public static final String TOURNAMENT_ID_PLACEHOLDER    = "{tournamentId}";
     public static final String TEAM_ID_PLACEHOLDER          = "{teamId}";

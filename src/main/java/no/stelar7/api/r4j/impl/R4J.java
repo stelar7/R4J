@@ -275,6 +275,16 @@ public class R4J
         {
             return VALRankedAPI.getInstance();
         }
+
+        /**
+         * Gets the api for the console versions of the match and ranked endpoints.
+         *
+         * @return the console api
+         */
+        public VALConsoleAPI getConsoleAPI()
+        {
+            return VALConsoleAPI.getInstance();
+        }
     }
     
     /**
