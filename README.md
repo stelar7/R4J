@@ -101,6 +101,21 @@ R4JContext.getDefault().setRateLimitStore(new JdbcRateLimitStore(dataSource));
 
 Implement `SharedRateLimitStore` to use something else. The file system cache can be shared between processes as well.
 
+## A proxy or a mirror
+
+The calls to the Riot api can go through a url of your own, ie. a proxy that adds the api key or shares a rate limit. The parts in braces are filled in for every call:
+
+```Java
+api.getContext().setRequestUrl("https://my-proxy.example/{platform}/{game}/{service}/{version}/{resource}");
+```
+
+Data Dragon and CommunityDragon can be read from a mirror, ie. the files of the Data Dragon tarball served from a folder:
+
+```Java
+api.getDDragonAPI().setBaseUrl("https://my-mirror.example/ddragon/");
+api.getCDragonAPI().setBaseUrl("https://my-mirror.example/cdragon/");
+```
+
 ## Upgrading
 
 See the [changelog](CHANGELOG.md) for what changed in 3.0.0 and what to look out for when coming from 2.x.
