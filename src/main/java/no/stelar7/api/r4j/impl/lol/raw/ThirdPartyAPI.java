@@ -6,6 +6,10 @@ import no.stelar7.api.r4j.basic.constants.api.regions.LeagueShard;
 import no.stelar7.api.r4j.basic.utils.Pair;
 
 @SuppressWarnings("unchecked")
+/**
+ * @deprecated third-party-code is no longer listed in the Riot api documentation, and it is looked up by summoner id, which the api no longer hands out
+ */
+@Deprecated
 public final class ThirdPartyAPI
 {
     private static final ThirdPartyAPI INSTANCE = new ThirdPartyAPI();

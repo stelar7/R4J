@@ -29,7 +29,9 @@ public final class SpectatorAPI
      *
      * @param server the region to execute against
      * @return Optional FeaturedGames
+     * @deprecated featured-games is no longer listed in the Riot api documentation for spectator-v5
      */
+    @Deprecated
     public List<SpectatorGameInfo> getFeaturedGames(LeagueShard server)
     {
         DataCallBuilder builder = new DataCallBuilder().withEndpoint(URLEndpoint.V5_SPECTATOR_FEATURED)
